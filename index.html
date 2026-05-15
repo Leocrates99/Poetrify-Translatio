@@ -2246,6 +2246,298 @@ body[data-lang="greco"] .entry-summary-lemma { font-family: 'Times New Roman', s
   align-items: center;
   gap: 4px;
 }
+
+/* ============================================
+   MODALITÀ BATCH — taggare più parole nella stessa categoria
+   ============================================ */
+.batch-toggle-btn {
+  padding: 5px 11px;
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(135deg, var(--poetrify-primary), rgba(217, 70, 161, 0.9));
+  color: white;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all var(--transition-base);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--font-ui);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.batch-toggle-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.30);
+}
+.batch-toggle-btn.active {
+  background: linear-gradient(135deg, var(--poetrify-primary-dark), rgba(217, 70, 161, 1));
+  box-shadow: 0 0 0 3px var(--poetrify-primary-pale);
+}
+.batch-toggle-btn::before {
+  content: '⚡';
+  font-size: 12px;
+}
+
+.batch-bar {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.08), rgba(217, 70, 161, 0.06));
+  border: 1.5px solid var(--poetrify-primary);
+  border-radius: var(--radius-md);
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 8px rgba(124, 58, 237, 0.10);
+}
+.batch-bar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.batch-bar-title {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--poetrify-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.batch-bar-title::before { content: '⚡'; font-size: 14px; filter: drop-shadow(0 1px 1px rgba(217, 70, 161, 0.4)); }
+.batch-bar-controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+@media (max-width: 600px) {
+  .batch-bar-controls { grid-template-columns: 1fr; }
+}
+.batch-bar-controls .field-block-label {
+  font-size: 10px;
+  margin-bottom: 3px;
+}
+.batch-bar-controls select {
+  padding: 7px 10px;
+  border: 1px solid var(--poetrify-primary-border);
+  border-radius: var(--radius-sm);
+  background: var(--poetrify-paper);
+  font-family: var(--font-ui);
+  font-size: 13px;
+  color: var(--poetrify-ink);
+  width: 100%;
+}
+.batch-bar-controls select:focus {
+  outline: none;
+  border-color: var(--poetrify-primary);
+  box-shadow: 0 0 0 2px var(--poetrify-primary-pale);
+}
+.batch-bar-hint {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--poetrify-ink-soft);
+  font-style: italic;
+  padding: 7px 12px;
+  background: var(--poetrify-paper);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--poetrify-primary);
+  line-height: 1.45;
+}
+.batch-bar-hint strong {
+  color: var(--poetrify-primary);
+  font-style: normal;
+  font-weight: 700;
+}
+.batch-bar-hint em {
+  color: var(--poetrify-accent);
+  font-weight: 600;
+}
+
+/* Token in modalità batch: hover preview + applied state */
+.tokenizer.batch-active .token:not(.token-punct) {
+  cursor: pointer;
+  transition: all 100ms ease;
+}
+.tokenizer.batch-active .token:not(.token-punct):not(.batch-applied):hover {
+  background: var(--poetrify-primary-pale) !important;
+  border-color: var(--poetrify-primary) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 3px 8px var(--poetrify-shadow-strong);
+}
+.token.batch-applied {
+  outline: 2px solid var(--poetrify-success);
+  outline-offset: 1px;
+  background: rgba(47, 133, 90, 0.10) !important;
+}
+.token .batch-check {
+  display: inline-block;
+  margin-left: 4px;
+  color: var(--poetrify-success);
+  font-weight: 700;
+  font-size: 12px;
+  filter: drop-shadow(0 1px 1px rgba(47, 133, 90, 0.25));
+}
+
+.batch-stats {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--poetrify-sepia);
+  font-style: italic;
+}
+.batch-stats strong { color: var(--poetrify-primary); font-style: normal; font-weight: 700; }
+
+/* ============================================
+   SINGULARIA / PLURALIA TANTUM (radio sostantivi)
+   ============================================ */
+.tantum-options {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 10px;
+  background: var(--poetrify-ivory);
+  border: 1px solid var(--poetrify-rule-soft);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-family: var(--font-ui);
+}
+.tantum-options label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  color: var(--poetrify-ink);
+  padding: 2px 0;
+}
+.tantum-options input[type="radio"] {
+  accent-color: var(--poetrify-primary);
+  cursor: pointer;
+}
+.tantum-options em {
+  font-style: italic;
+  color: var(--poetrify-primary);
+  font-weight: 600;
+}
+.tantum-options .tantum-hint {
+  font-size: 10px;
+  color: var(--poetrify-sepia);
+  font-style: italic;
+  margin-top: 2px;
+}
+
+/* ============================================
+   CONCORDANZE NELLA FRASE
+   ============================================ */
+.concordances-section {
+  grid-column: 1 / -1;
+  background: rgba(245, 244, 240, 0.6);
+  border: 1px solid var(--poetrify-rule-soft);
+  border-left: 4px solid var(--poetrify-primary);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-top: 8px;
+}
+.concordances-title {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--poetrify-primary);
+  margin-bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.concordances-title::before { content: '⇆'; font-size: 14px; }
+.concordance-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.concordance-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--poetrify-sepia);
+  font-weight: 600;
+  white-space: nowrap;
+  margin-right: 4px;
+}
+.concordance-chip {
+  display: inline-flex;
+  align-items: baseline;
+  padding: 3px 9px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 13px;
+  background: var(--poetrify-paper);
+  border: 1px solid var(--poetrify-rule-soft);
+  color: var(--poetrify-ink);
+  transition: all 100ms ease;
+}
+body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', serif; }
+.concordance-chip.strong-match {
+  font-weight: 700;
+  background: rgba(47, 133, 90, 0.12);
+  border-color: rgba(47, 133, 90, 0.50);
+  color: var(--poetrify-success);
+}
+.concordance-chip.partial-match {
+  background: rgba(214, 158, 46, 0.10);
+  border-color: rgba(214, 158, 46, 0.40);
+  color: var(--poetrify-warning);
+}
+.concordance-chip.governed-match {
+  font-weight: 700;
+  background: rgba(245, 124, 0, 0.14);
+  border-color: rgba(245, 124, 0, 0.55);
+  color: #8a4500;
+}
+.concordance-chip-meta {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  margin-left: 5px;
+  opacity: 0.75;
+  font-weight: 500;
+}
+
+/* ============================================
+   ELLISI (elementi sottintesi)
+   ============================================ */
+.ellipsis-row {
+  background: linear-gradient(135deg, rgba(120, 113, 108, 0.05), rgba(156, 107, 60, 0.04));
+  border-color: var(--poetrify-sepia-soft);
+}
+.entry-card.is-elliptical,
+.proposition-card.is-elliptical {
+  border-style: dashed !important;
+  background: rgba(120, 113, 108, 0.04);
+}
+.entry-card.is-elliptical .entry-card-header,
+.proposition-card.is-elliptical .entry-card-header {
+  opacity: 0.95;
+}
+.entry-summary-ellipsis {
+  display: inline-block;
+  padding: 1px 6px;
+  font-family: var(--font-ui);
+  font-size: 9px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: rgba(120, 113, 108, 0.20);
+  color: var(--poetrify-sepia);
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--poetrify-sepia);
+}
 .token.token-punct.clickable-punct {
   cursor: pointer;
   border-style: dashed;
@@ -3056,8 +3348,394 @@ body[data-lang="greco"] .entry-summary-lemma { font-family: 'Times New Roman', s
   .brano-meta .meta-field:nth-child(3) { display: none; }
 }
 
+/* ============================================
+   RESPONSIVE — adattamento per tablet portrait e telefono
+   Breakpoints: 1100 (sidebar mini) · 900 (tablet) · 720 (mobile) · 480 (phone) · 360 (small phone)
+   ============================================ */
+
+/* TABLET LANDSCAPE / DESKTOP STRETTO — 900px */
+@media (max-width: 900px) {
+  .topbar { padding: 12px 16px; gap: 14px; }
+  .brano-meta { gap: 8px; }
+  .save-status #save-text { font-size: 10px; }
+  .editor { padding: 26px 28px 32px; }
+  .section-letter { font-size: 52px; }
+  .section-title h1 { font-size: 26px; }
+  .archive-stats { grid-template-columns: repeat(2, 1fr); }
+  .translation-intro { grid-template-columns: 1fr 1fr; }
+  .modal { max-width: 92vw; }
+}
+
+/* MOBILE / TABLET PORTRAIT — 720px
+   Trasforma la sidebar in barra orizzontale superiore + topbar a 2 righe + preview overlay */
+@media (max-width: 720px) {
+  body { font-size: 14px; }
+
+  /* TOPBAR a due righe: brand+stato sopra, meta sotto */
+  .topbar {
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto;
+    padding: 10px 12px;
+    gap: 8px 12px;
+  }
+  .brand { grid-column: 1; grid-row: 1; }
+  .save-status { grid-column: 2; grid-row: 1; }
+  .brand-mark { font-size: 22px; }
+  .brand-sub { display: none; }
+  .save-status #save-text { display: none; }
+  .save-status .save-dot { width: 10px; height: 10px; }
+  .brano-meta {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    grid-template-columns: 1fr 1fr auto;
+    gap: 6px;
+  }
+  .brano-meta .meta-field:nth-child(3) { display: none; }
+  .meta-field input, .meta-field select { font-size: 13px; padding: 5px 8px; }
+  .lang-toggle { padding: 2px; }
+  .lang-toggle button { padding: 4px 10px; font-size: 11px; }
+
+  /* MAIN: layout a colonna unica, sidebar in alto */
+  .main {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto 1fr;
+    overflow: visible;
+  }
+  .main.preview-open {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto 1fr;
+  }
+
+  /* SIDEBAR orizzontale */
+  .sidebar {
+    flex-direction: row;
+    border-right: none;
+    border-bottom: 1px solid var(--poetrify-rule-soft);
+    padding: 6px 6px 6px 10px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    align-items: stretch;
+    gap: 0;
+  }
+  .sidebar::-webkit-scrollbar { height: 4px; }
+  .sidebar-section-label { display: none; }
+  .tab-list {
+    flex-direction: row;
+    flex: 1;
+    gap: 0;
+    min-width: 0;
+  }
+  .tab-item {
+    padding: 8px 12px;
+    border-left: none;
+    border-bottom: 3px solid transparent;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+  }
+  .tab-item.active {
+    border-left-color: transparent !important;
+    border-bottom-color: var(--poetrify-primary);
+  }
+  .tab-letter { font-size: 18px; }
+  .tab-title { display: none; }
+  .tab-progress {
+    position: static !important;
+    transform: none !important;
+    margin-left: 0;
+    width: 18px; height: 18px;
+    font-size: 9px;
+    flex-shrink: 0;
+  }
+  .sidebar-actions {
+    flex-direction: row;
+    margin-top: 0;
+    padding: 4px 0 4px 8px;
+    border-top: none;
+    border-left: 1px solid var(--poetrify-rule-soft);
+    gap: 4px;
+  }
+  .sidebar-btn {
+    padding: 6px 8px;
+    width: auto;
+    justify-content: center;
+  }
+  .sidebar-btn span { display: none; }
+
+  /* EDITOR: padding ridotto e spazio extra in fondo per il bottombar fisso */
+  .editor { padding: 18px 14px 80px; }
+  .editor-content { max-width: 100%; }
+
+  /* SEZIONI compatte */
+  .section-header { margin-bottom: 20px; padding-bottom: 14px; }
+  .section-letter { font-size: 42px; margin-right: 10px; }
+  .section-title h1 { font-size: 22px; }
+  .section-title p { font-size: 13px; }
+  .subsection { padding: 16px 14px; margin-bottom: 14px; }
+  .subsection-header { gap: 8px; padding-bottom: 8px; }
+
+  /* FIELD groups in colonna unica */
+  .field-group, .field-group.cols-3 { grid-template-columns: 1fr; }
+  .entry-fields { grid-template-columns: 1fr; }
+  .prop-meta { grid-template-columns: 1fr !important; }
+  .lemma-grid { grid-template-columns: 1fr; }
+
+  /* ENTRY cards più compatte */
+  .entry-card, .proposition-card { padding: 14px; }
+  .entry-card.is-collapsed, .proposition-card.is-collapsed { padding: 8px 12px; }
+  .entry-card .entry-card-header, .proposition-card .entry-card-header {
+    flex-wrap: wrap;
+  }
+  .entry-summary {
+    width: 100%;
+    order: 0;
+  }
+  .entry-toggle-btn { width: 30px; height: 30px; }
+
+  /* TOKEN più piccoli ma cliccabili */
+  .token { font-size: 16px; padding: 3px 7px; }
+  .token-grid { line-height: 2.2; }
+  .token-pos-marker { font-size: 8px; margin-left: 3px; }
+
+  /* TOKENIZER azioni */
+  .token-action-bar { padding: 8px 10px; }
+
+  /* WIZARD stepper compatto */
+  .wizard-pane { padding: 14px 14px; }
+  .wizard-stepper { gap: 2px; }
+  .wizard-step { min-width: 64px; padding: 8px 10px; }
+  .wizard-step-num { font-size: 16px; }
+  .wizard-step-label { font-size: 9px; }
+  .wizard-title { font-size: 18px; }
+  .wizard-sentence-tab { padding: 5px 10px; font-size: 10px; }
+
+  /* PREVIEW pane come overlay laterale */
+  .preview {
+    position: fixed !important;
+    top: 0; right: 0; bottom: 0;
+    width: 92vw;
+    max-width: 420px;
+    z-index: 150;
+    border-left: 1px solid var(--poetrify-rule);
+    box-shadow: -8px 0 32px rgba(44, 53, 57, 0.25);
+    transform: translateX(100%);
+    transition: transform 250ms ease;
+    display: flex !important;
+  }
+  .main.preview-open .preview { transform: translateX(0); }
+  .preview-content { padding: 18px 20px; }
+
+  /* MODALI: full-width, scroll interno */
+  .modal-backdrop { padding: 10px; align-items: flex-start; padding-top: 30px; }
+  .modal {
+    padding: 22px 18px;
+    max-width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: var(--radius-md);
+  }
+  .modal-title { font-size: 20px; }
+  .modal-subtitle { font-size: 13px; margin-bottom: 18px; }
+  .export-grid { grid-template-columns: 1fr; }
+  .export-option { padding: 12px 14px; }
+  .mode-grid { grid-template-columns: 1fr; }
+
+  /* BOTTOMBAR fisso e compatto */
+  .bottombar {
+    padding: 8px 12px;
+    gap: 6px;
+    flex-wrap: wrap;
+    position: sticky;
+    bottom: 0;
+  }
+  .export-group { gap: 6px; flex: 1; min-width: 0; }
+  .export-label { display: none; }
+  .btn-export { padding: 6px 10px; font-size: 12px; }
+  .stats { font-size: 11px; gap: 10px; }
+  .stat-item { white-space: nowrap; }
+  .btn-preview-toggle { padding: 6px 10px; font-size: 11px; }
+
+  /* GREEK KEYBOARD: posizione e dimensione adattate */
+  .greek-kbd-panel {
+    left: 6px;
+    right: 6px;
+    bottom: 64px;
+    max-height: 55vh;
+  }
+  .greek-kbd-toggle {
+    width: 46px;
+    height: 46px;
+    bottom: 70px;
+    right: 14px;
+    font-size: 22px;
+  }
+  .kbd-header { padding: 10px 12px; }
+  .kbd-title { font-size: 14px; }
+  .kbd-active-field-hint { width: 100%; order: 3; font-size: 10px; }
+  .kbd-content { padding: 12px 14px; }
+
+  /* ARCHIVE compact */
+  .archive-card { grid-template-columns: 1fr; gap: 10px; }
+  .archive-toolbar { padding: 10px 12px; }
+  .archive-filter-group { width: 100%; overflow-x: auto; }
+  .archive-stat-card { padding: 10px 12px; }
+  .archive-stat-value { font-size: 22px; }
+  .archive-card-actions { justify-content: flex-start; }
+
+  /* TRANSLATION compact */
+  .translation-intro { grid-template-columns: 1fr; }
+  .translation-sentence-card { padding: 14px 14px; }
+  .ordo-chip { min-width: 130px; max-width: 100%; flex: 1 1 130px; }
+  .ts-section-title { flex-wrap: wrap; }
+
+  /* SYNTAX TREE: scroll orizzontale già nativo, riduci card */
+  .tree-card { min-width: 130px; max-width: 200px; padding: 8px 10px; }
+  .tree-card-text { font-size: 11px; }
+
+  /* PROPOSITION badge sigla un po' più piccolo */
+  .prop-sigla-badge { min-width: 30px; height: 24px; font-size: 14px; }
+
+  /* LEGEND chips più piccoli */
+  .pos-legend { font-size: 9px; gap: 3px 6px; }
+  .pos-legend-item { padding: 1px 5px; }
+
+  /* SUGGESTION hint compact */
+  .suggestion-hint { font-size: 10px; padding: 4px 8px; }
+}
+
+/* PHONE PORTRAIT — 480px */
+@media (max-width: 480px) {
+  body { font-size: 13px; }
+  .topbar { padding: 8px 10px; }
+  .brand-mark { font-size: 19px; }
+  .brano-meta { grid-template-columns: 1fr auto; }
+  .brano-meta .meta-field:nth-child(2) { display: none; }
+
+  .editor { padding: 14px 10px 90px; }
+  .section-letter { font-size: 36px; margin-right: 8px; }
+  .section-title h1 { font-size: 19px; letter-spacing: -0.01em; }
+  .section-title p { font-size: 12px; }
+
+  .subsection { padding: 12px 11px; }
+  .subsection-number { font-size: 15px; }
+  .subsection-title { font-size: 15px; }
+
+  .entry-card, .proposition-card { padding: 12px; }
+  .entry-summary-word { font-size: 14px; }
+  .entry-summary-meta { font-size: 10px; }
+
+  .token { font-size: 15px; padding: 2px 6px; }
+  .token-grid { line-height: 2.0; }
+
+  /* LEMMA section compatto */
+  .lemma-section { padding: 10px 12px; }
+  .lemma-input { padding: 5px 8px; font-size: 12px; }
+  .lemma-input.lemma-final { font-size: 14px; }
+
+  /* WIZARD ulteriormente compatto */
+  .wizard-stepper { padding: 2px 0; }
+  .wizard-step { min-width: 56px; padding: 6px 8px; }
+  .wizard-step-num { font-size: 14px; }
+  .wizard-step-label { font-size: 8px; }
+  .wizard-title { font-size: 17px; }
+  .wizard-eyebrow { font-size: 10px; letter-spacing: 0.08em; }
+  .wizard-instructions { font-size: 12px; padding: 8px 12px; }
+  .wizard-nav { gap: 6px; }
+  .wizard-nav-buttons { width: 100%; justify-content: stretch; }
+  .wizard-nav-buttons .btn { flex: 1; justify-content: center; min-width: 0; }
+
+  /* GREEK KEYBOARD: keyboard più stretta */
+  .greek-kbd-panel { bottom: 60px; max-height: 50vh; }
+  .greek-kbd-toggle { width: 42px; height: 42px; bottom: 66px; right: 10px; font-size: 18px; }
+  .kbd-key { font-size: 18px; min-width: 30px; height: 30px; }
+  .kbd-row { grid-template-columns: 1fr; }
+  .kbd-row-label { text-align: left; padding-top: 0; font-size: 9px; }
+  .kbd-row-keys { gap: 3px; }
+  .kbd-vowel-btn { width: 36px; height: 36px; font-size: 18px; }
+  .kbd-toolbar { gap: 4px; }
+  .kbd-tool-btn { padding: 4px 8px; font-size: 11px; }
+  .kbd-case-toggle { font-size: 10px; padding: 0 6px; }
+
+  /* ARCHIVIO stat-card 2x2 */
+  .archive-stats { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .archive-stat-card { padding: 10px; }
+  .archive-stat-value { font-size: 20px; }
+  .archive-stat-label { font-size: 9px; }
+  .archive-card-title { font-size: 15px; flex-wrap: wrap; gap: 6px; }
+  .archive-card-meta { font-size: 11px; gap: 3px 10px; }
+
+  /* TRANSLATION */
+  .translation-sentence-card { padding: 12px 12px; }
+  .ts-original { padding: 8px 10px; font-size: 13px; }
+  .ordo-chip { min-width: 100%; max-width: 100%; }
+  .translation-textarea { font-size: 13px; padding: 8px 10px; }
+
+  /* TREE: card ancora più piccolo */
+  .tree-card { min-width: 110px; max-width: 170px; padding: 7px 9px; font-size: 11px; }
+  .tree-card-sigla { min-width: 28px; height: 22px; font-size: 13px; padding: 0 5px; }
+  .tree-card-tipo { font-size: 10px; }
+  .tree-card-text { font-size: 10px; }
+
+  /* BOTTOM bar: anche più compatta */
+  .bottombar { padding: 6px 10px; }
+  .stats { display: none; } /* nascondi statistiche su phone */
+  .btn-export { padding: 5px 9px; font-size: 11px; }
+  .btn-export svg { width: 12px; height: 12px; }
+
+  /* MODALI */
+  .modal-backdrop { padding: 6px; padding-top: 20px; }
+  .modal { padding: 18px 14px; }
+  .modal-title { font-size: 18px; }
+
+  /* TOKEN action bar: stack su mobile */
+  .token-action-bar {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .token-action-bar select { min-width: 100%; }
+  .token-action-bar .target-word { font-size: 14px; }
+
+  /* PREVIEW: full screen su phone */
+  .preview { width: 100vw !important; max-width: 100vw !important; }
+
+  /* SENTENCE card actions: smaller */
+  .sentence-header div { flex-wrap: wrap; gap: 3px; }
+  .sentence-card { padding: 12px 14px; }
+}
+
+/* PHONE PORTRAIT MOLTO STRETTO — 360px */
+@media (max-width: 360px) {
+  .topbar { padding: 6px 8px; }
+  .brand-mark { font-size: 17px; }
+  .brano-meta .meta-field:nth-child(1) input { padding: 4px 6px; font-size: 11px; }
+
+  .editor { padding: 12px 8px 90px; }
+  .section-letter { font-size: 32px; margin-right: 6px; }
+  .section-title h1 { font-size: 17px; }
+
+  .wizard-step { min-width: 50px; }
+
+  .greek-kbd-toggle { width: 38px; height: 38px; }
+
+  .tab-item { padding: 6px 10px; }
+  .tab-letter { font-size: 16px; }
+}
+
+/* INTERAZIONI TOUCH — pulsanti più cliccabili su tutti i mobile */
+@media (hover: none) and (pointer: coarse) {
+  .btn, .btn-export, .sidebar-btn, .entry-toggle-btn, .kbd-key, .kbd-tool-btn,
+  .field-toolbar-btn, .preview-copy-btn, .archive-filter-btn, .wizard-sentence-tab {
+    min-height: 36px;
+  }
+  .token { min-height: 32px; }
+  .entry-drag-handle { padding: 4px 6px; }
+  .ordo-chip-delete { opacity: 1; }
+  .field-toolbar { opacity: 1; }
+}
+
 @media print {
-  .topbar, .sidebar, .bottombar, .preview { display: none; }
+  .topbar, .sidebar, .bottombar, .preview, .greek-kbd-toggle, .greek-kbd-panel { display: none; }
   .main { grid-template-columns: 1fr; }
   body { background: white; }
 }
@@ -3864,7 +4542,31 @@ function predictLatinNoun(entry) {
     return { tema:'', desinenza:ending, lemma:'', confidence:'low',
       hint:`La parola «${entry.word||'…'}» dovrebbe terminare in -${ending} per ${entry.caso.toLowerCase()} ${entry.numero?.toLowerCase()}. Forma irregolare? Usa Eccezione.` };
   }
-  return { tema: stem, desinenza: ending, lemma: pattern.lemma(stem, entry.genere), confidence: 'high' };
+
+  // GESTIONE TANTUM — il lemma cambia se il sostantivo è singularia o pluralia tantum
+  let lemma = pattern.lemma(stem, entry.genere);
+  let confidence = 'high';
+  let hint = '';
+
+  if (entry.tantum === 'pluralia') {
+    const decl = entry.declinazione;
+    let pluralLemma = '';
+    if (decl === 'I (-a, -ae)') pluralLemma = `${stem}ae, -arum`;
+    else if (decl === 'II (-us/-er/-um, -i)') pluralLemma = (entry.genere === 'Neutro') ? `${stem}a, -orum` : `${stem}i, -orum`;
+    else if (decl === 'III (varia)') pluralLemma = `${stem}es, -ium`;
+    else if (decl === 'IV (-us, -us)') pluralLemma = (entry.genere === 'Neutro') ? `${stem}ua, -uum` : `${stem}us, -uum`;
+    else if (decl === 'V (-es, -ei)') pluralLemma = `${stem}es, -erum`;
+    if (pluralLemma) {
+      lemma = `${pluralLemma} (plur. tantum)`;
+      confidence = 'medium';
+      hint = 'Pluralia tantum: il lemma del vocabolario è dato in forma plurale (es. <em>Athenae, -arum · castra, -orum · arma, -orum · litterae, -arum</em>).';
+    }
+  } else if (entry.tantum === 'singularia') {
+    lemma = `${lemma} (sing. tantum)`;
+    hint = 'Singularia tantum: il nome esiste solo al singolare (es. <em>Roma, -ae · aurum, -i · ferrum, -i</em>).';
+  }
+
+  return { tema: stem, desinenza: ending, lemma, confidence, hint };
 }
 
 function predictLatinAdjective(entry) {
@@ -3930,7 +4632,19 @@ function predictGreekNoun(entry) {
     if (!ending) return null;
     const stem = findStem(entry.word, ending);
     if (stem === null) return { tema:'', desinenza:ending, lemma:'', confidence:'low', hint:`«${entry.word||'…'}» non termina in -${ending}` };
-    return { tema: stem, desinenza: ending, lemma: pattern.lemma(stem, entry.genere), confidence:'high' };
+    let lemma = pattern.lemma(stem, entry.genere);
+    let hint = '';
+    let confidence = 'high';
+    if (entry.tantum === 'pluralia') {
+      const art = entry.genere === 'Neutro' ? 'τά' : (entry.genere === 'Femminile' ? 'αἱ' : 'οἱ');
+      lemma = (entry.genere === 'Neutro') ? `${art} ${stem}α, -ων (plur. tantum)` : `${art} ${stem}οι, -ων (plur. tantum)`;
+      hint = 'Pluralia tantum (greco): lemma in forma plurale.';
+      confidence = 'medium';
+    } else if (entry.tantum === 'singularia') {
+      lemma = `${lemma} (sing. tantum)`;
+      hint = 'Singularia tantum: il nome esiste solo al singolare.';
+    }
+    return { tema: stem, desinenza: ending, lemma, confidence, hint };
   }
 
   if (entry.declinazione.startsWith('I')) {
@@ -5268,6 +5982,464 @@ function renderConnettiviAnalysis(sentence) {
 
 let connSel = { sentenceId: null, tokenIdx: null, kind: null };
 
+/* ============================================
+   MODALITÀ BATCH — taggare più parole con la stessa categoria
+   ============================================ */
+let batchMode = { active: false, mode: null, dimension: null, value: null };
+
+function toggleBatchMode(mode) {
+  if (batchMode.active && batchMode.mode === mode) {
+    batchMode = { active: false, mode: null, dimension: null, value: null };
+  } else {
+    // Reset altri stati transitori
+    pending = { mode: null, sentenceId: null, tokenIdx: null };
+    logicSel = { sentenceId: null, indices: [] };
+    periodaleSel = { sentenceId: null, indices: [] };
+    connSel = { sentenceId: null, tokenIdx: null, kind: null };
+    batchMode = {
+      active: true,
+      mode: mode,
+      dimension: mode === 'grammar' ? 'partOfSpeech' : 'funzione',
+      value: null
+    };
+  }
+  renderEditor();
+}
+
+function setBatchDimension(dim) {
+  batchMode.dimension = dim;
+  batchMode.value = null;
+  renderEditor();
+}
+
+function setBatchValue(val) {
+  batchMode.value = val || null;
+  renderEditor();
+}
+
+function getBatchDimensions(lang) {
+  // Lista delle dimensioni disponibili per la modalità grammatica
+  return [
+    { key: 'partOfSpeech', label: 'Parte del discorso' },
+    { key: 'caso',         label: 'Caso (sost./agg./pron./art.)' },
+    { key: 'numero',       label: 'Numero (sing./plur./duale)' },
+    { key: 'genere',       label: 'Genere (m./f./n.)' },
+    { key: 'declinazione', label: 'Declinazione (sostantivi)' },
+    { key: 'classe',       label: 'Classe (aggettivi)' },
+    { key: 'grado',        label: 'Grado (positivo/comp./sup.)' },
+    { key: 'coniugazione', label: 'Coniugazione (verbi)' },
+    { key: 'verboForma',   label: 'Forma del verbo' },
+    { key: 'tempo',        label: 'Tempo (verbi)' },
+    { key: 'modo',         label: 'Modo (verbi)' },
+    { key: 'persona',      label: 'Persona (verbi)' },
+    { key: 'diatesi',      label: 'Diatesi (verbi)' },
+    { key: 'pronomeTipo',  label: 'Tipo di pronome' },
+  ];
+}
+
+function getBatchValueOptions(dimension, lang) {
+  if (!dimension) return [];
+  const t = TAXONOMIES[lang];
+  if (!t) return [];
+  if (dimension === 'partOfSpeech') return t.parts;
+  if (dimension === 'caso')         return t.caso;
+  if (dimension === 'numero')       return t.numero;
+  if (dimension === 'genere')       return t.genere;
+  if (dimension === 'declinazione') return t.declinazioni;
+  if (dimension === 'classe')       return t.classeAgg || [];
+  if (dimension === 'grado')        return t.grado;
+  if (dimension === 'coniugazione') return t.verboConiugazione;
+  if (dimension === 'verboForma')   return t.verboForma;
+  if (dimension === 'tempo')        return t.verboTempoFinito || [];
+  if (dimension === 'modo')         return t.verboModo;
+  if (dimension === 'persona')      return t.verboPersona;
+  if (dimension === 'diatesi')      return t.verboDiatesi;
+  if (dimension === 'pronomeTipo')  return t.pronomeTipo;
+  return [];
+}
+
+function renderBatchBar(mode) {
+  if (!batchMode.active || batchMode.mode !== mode) return '';
+  const lang = state.meta.lingua;
+
+  if (mode === 'grammar') {
+    const dimensions = getBatchDimensions(lang);
+    const valueOpts = getBatchValueOptions(batchMode.dimension, lang);
+    const dimLabel = (dimensions.find(d => d.key === batchMode.dimension) || {}).label || batchMode.dimension;
+    return `
+      <div class="batch-bar">
+        <div class="batch-bar-header">
+          <span class="batch-bar-title">Modalità batch · grammaticale</span>
+          <button class="btn btn-ghost btn-sm" onclick="toggleBatchMode('grammar')">✕ Esci dalla modalità batch</button>
+        </div>
+        <div class="batch-bar-controls">
+          <div>
+            <label class="field-block-label">Dimensione</label>
+            <select onchange="setBatchDimension(this.value)">
+              ${dimensions.map(d => `<option value="${d.key}" ${batchMode.dimension === d.key ? 'selected' : ''}>${escapeHtml(d.label)}</option>`).join('')}
+            </select>
+          </div>
+          <div>
+            <label class="field-block-label">Valore da assegnare</label>
+            <select onchange="setBatchValue(this.value)">
+              <option value="">— scegli un valore —</option>
+              ${valueOpts.map(v => `<option value="${escapeHtml(v)}" ${batchMode.value === v ? 'selected' : ''}>${escapeHtml(v)}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+        <div class="batch-bar-hint">
+          ${batchMode.value
+            ? `Ora <strong>clicca le parole</strong> che corrispondono a <em>${escapeHtml(dimLabel)} = ${escapeHtml(batchMode.value)}</em>. Ogni click crea o aggiorna l'entry della singola parola in modo <em>distributivo</em> (un'entry per parola, non un blocco unico). Click di nuovo per rimuovere il tag.`
+            : `Scegli un <strong>valore</strong> per cominciare. Poi clicca tutte le parole che condividono quella categoria.`}
+        </div>
+      </div>`;
+  }
+
+  if (mode === 'logic') {
+    return `
+      <div class="batch-bar">
+        <div class="batch-bar-header">
+          <span class="batch-bar-title">Modalità batch · logica</span>
+          <button class="btn btn-ghost btn-sm" onclick="toggleBatchMode('logic')">✕ Esci dalla modalità batch</button>
+        </div>
+        <div class="batch-bar-controls">
+          <div style="grid-column: 1 / -1;">
+            <label class="field-block-label">Funzione sintattica da assegnare</label>
+            <select onchange="setBatchValue(this.value)">
+              <option value="">— scegli una funzione —</option>
+              ${FUNZIONI_LOGICHE.map(f => `<option value="${escapeHtml(f)}" ${batchMode.value === f ? 'selected' : ''}>${escapeHtml(f)}</option>`).join('')}
+            </select>
+          </div>
+        </div>
+        <div class="batch-bar-hint">
+          ${batchMode.value
+            ? `Clicca le parole che svolgono la funzione di <em>${escapeHtml(batchMode.value)}</em>. Ogni parola diventa un sintagma monoparola autonomo (per sintagmi multi-parola usa la modalità normale con Shift+click).`
+            : `Scegli una <strong>funzione sintattica</strong> (es. <em>Soggetto</em>, <em>Predicato verbale</em>, <em>Complemento oggetto</em>) per cominciare il batch tagging.`}
+        </div>
+      </div>`;
+  }
+
+  return '';
+}
+
+function applyBatchTag(sentenceId, tokenIdx) {
+  if (!batchMode.active || !batchMode.value || !batchMode.dimension) return;
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const tokens = tokenizeSentence(sentence.original);
+  const tok = tokens.find(t => t.idx === tokenIdx);
+  if (!tok || tok.kind !== 'word') return;
+
+  if (batchMode.mode === 'grammar') {
+    let entry = sentence.grammar.find(e => e.tokenIndex === tokenIdx);
+    // Toggle: se la entry esiste e ha già questo valore per la dimensione, rimuovi solo questa dimensione
+    if (entry && entry[batchMode.dimension] === batchMode.value) {
+      delete entry[batchMode.dimension];
+      // Se cambia partOfSpeech, ripulisce campi morfologici stantii
+      // Se l'entry non ha più contenuti significativi, eliminala
+      const hasContent = entry.partOfSpeech || entry.caso || entry.numero || entry.genere ||
+                         entry.note || entry.lemma || entry.tempo || entry.modo || entry.coniugazione ||
+                         entry.declinazione || entry.classe;
+      if (!hasContent) {
+        sentence.grammar = sentence.grammar.filter(e => e.id !== entry.id);
+      }
+    } else {
+      if (!entry) {
+        entry = makeEntry('grammar');
+        entry.word = tok.text;
+        entry.tokenIndex = tokenIdx;
+        insertEntrySorted(sentence.grammar, entry, 'grammar');
+      }
+      entry[batchMode.dimension] = batchMode.value;
+      // Se viene assegnata una dimensione specifica per non-Verbo, popola partOfSpeech in modo coerente
+      // (es. assegnando caso, suggerisce che è un nome/aggettivo/pronome — non lo settiamo automaticamente per non sovrascrivere)
+    }
+  } else if (batchMode.mode === 'logic') {
+    // Cerca una entry MONO-token già esistente per questo tokenIdx
+    let entry = sentence.logic.find(e =>
+      Array.isArray(e.tokenIndices) && e.tokenIndices.length === 1 && e.tokenIndices[0] === tokenIdx);
+    if (entry && entry.funzione === batchMode.value) {
+      // Toggle: rimuovi l'entry
+      sentence.logic = sentence.logic.filter(e => e.id !== entry.id);
+    } else {
+      // Rimuovi il token da eventuali sintagmi multi-token preesistenti (non più conflitto)
+      sentence.logic.forEach(e => {
+        if (Array.isArray(e.tokenIndices) && e.tokenIndices.includes(tokenIdx) && e.tokenIndices.length > 1) {
+          e.tokenIndices = e.tokenIndices.filter(i => i !== tokenIdx);
+          // Aggiorna phrase ricostruendola
+          const orig = tokens.filter(t => e.tokenIndices.includes(t.idx)).map(t => t.text).join(' ');
+          e.phrase = orig;
+        }
+      });
+      // Rimuovi anche sintagmi mono-token con SAME token (se diversi da entry trovata)
+      sentence.logic = sentence.logic.filter(e =>
+        !(Array.isArray(e.tokenIndices) && e.tokenIndices.length === 1 && e.tokenIndices[0] === tokenIdx && (!entry || e.id !== entry.id))
+      );
+      if (!entry) {
+        entry = makeEntry('logic');
+        entry.phrase = tok.text;
+        entry.tokenIndices = [tokenIdx];
+        insertEntrySorted(sentence.logic, entry, 'logic');
+      }
+      entry.funzione = batchMode.value;
+    }
+  }
+  persistCurrent();
+  renderEditor();
+  renderSidebarTabs();
+}
+
+function tokenHasBatchValue(tok, mode) {
+  if (!batchMode.active || batchMode.mode !== mode || !batchMode.value) return false;
+  if (mode === 'grammar') {
+    return tok.grammarEntry && tok.grammarEntry[batchMode.dimension] === batchMode.value;
+  }
+  if (mode === 'logic') {
+    return tok.logicEntry && tok.logicEntry.funzione === batchMode.value;
+  }
+  return false;
+}
+
+function countBatchApplied(sentence, mode) {
+  if (!batchMode.active || batchMode.mode !== mode || !batchMode.value) return 0;
+  if (mode === 'grammar') {
+    return (sentence.grammar || []).filter(e => e[batchMode.dimension] === batchMode.value).length;
+  }
+  if (mode === 'logic') {
+    return (sentence.logic || []).filter(e => e.funzione === batchMode.value).length;
+  }
+  return 0;
+}
+
+/* ============================================
+   ELLISSI — preset di elementi sottintesi
+   ============================================ */
+const ELLIPSIS_PRESETS = {
+  // — Verbi esse latino —
+  'lat-est':    { type:'grammar', label:'est (3ª sing. pres. ind. att.)',     word:'est',    partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Singolare', lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-sunt':   { type:'grammar', label:'sunt (3ª plur. pres. ind. att.)',    word:'sunt',   partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Plurale',   lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-sum':    { type:'grammar', label:'sum (1ª sing. pres. ind. att.)',     word:'sum',    partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'1ª', numero:'Singolare', lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-es':     { type:'grammar', label:'es (2ª sing. pres. ind. att.)',      word:'es',     partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'2ª', numero:'Singolare', lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-sumus':  { type:'grammar', label:'sumus (1ª plur. pres. ind. att.)',   word:'sumus',  partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'1ª', numero:'Plurale',   lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-estis':  { type:'grammar', label:'estis (2ª plur. pres. ind. att.)',   word:'estis',  partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'2ª', numero:'Plurale',   lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-erat':   { type:'grammar', label:'erat (3ª sing. imperf. ind. att.)',  word:'erat',   partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Imperfetto',   modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Singolare', lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-erant':  { type:'grammar', label:'erant (3ª plur. imperf. ind. att.)', word:'erant',  partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Imperfetto',   modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Plurale',   lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-sit':    { type:'grammar', label:'sit (3ª sing. pres. cong. att.)',    word:'sit',    partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Congiuntivo',diatesi:'Attiva', persona:'3ª', numero:'Singolare', lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-sint':   { type:'grammar', label:'sint (3ª plur. pres. cong. att.)',   word:'sint',   partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Congiuntivo',diatesi:'Attiva', persona:'3ª', numero:'Plurale',   lemma:'sum, es, fui, esse', lemmaCustom:true },
+  // — Verbi εἰμί greco —
+  'gr-esti':    { type:'grammar', label:'ἐστί(ν) (3ª sing. pres. ind. att.)',  word:'ἐστί',   partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Presente', modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Singolare', lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
+  'gr-eisi':    { type:'grammar', label:'εἰσί(ν) (3ª plur. pres. ind. att.)',  word:'εἰσί',   partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Presente', modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Plurale',   lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
+  'gr-eimi':    { type:'grammar', label:'εἰμί (1ª sing. pres. ind. att.)',     word:'εἰμί',   partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Presente', modo:'Indicativo', diatesi:'Attiva', persona:'1ª', numero:'Singolare', lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
+  'gr-en':      { type:'grammar', label:'ἦν (3ª sing. imperf. ind. att.)',     word:'ἦν',     partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Imperfetto', modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Singolare', lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
+  'gr-esan':    { type:'grammar', label:'ἦσαν (3ª plur. imperf. ind. att.)',   word:'ἦσαν',   partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Imperfetto', modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Plurale',   lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
+  // — Pronomi soggetto sottinteso (latino) —
+  'lat-is':     { type:'grammar', label:'is (egli — pron. sogg. sottinteso)', word:'is',     partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Maschile', numero:'Singolare', caso:'Nominativo', persona:'3ª', lemma:'is, ea, id', lemmaCustom:true },
+  'lat-ea':     { type:'grammar', label:'ea (ella)',                          word:'ea',     partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Femminile',numero:'Singolare', caso:'Nominativo', persona:'3ª', lemma:'is, ea, id', lemmaCustom:true },
+  'lat-ille':   { type:'grammar', label:'ille (quello)',                      word:'ille',   partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Maschile', numero:'Singolare', caso:'Nominativo', persona:'3ª', lemma:'ille, illa, illud', lemmaCustom:true },
+  'lat-ei':     { type:'grammar', label:'ei / ii (essi)',                     word:'ei',     partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Maschile', numero:'Plurale',   caso:'Nominativo', persona:'3ª', lemma:'is, ea, id', lemmaCustom:true },
+  // — Logici generici —
+  'gen-sogg':   { type:'logic',   label:'[soggetto sottinteso]',              phrase:'[soggetto sottinteso]',                       funzione:'Soggetto' },
+  'gen-od':     { type:'logic',   label:'[oggetto sottinteso]',               phrase:'[oggetto sottinteso]',                        funzione:'Complemento oggetto' },
+  'gen-term':   { type:'logic',   label:'[compl. di termine sottinteso]',    phrase:'[compl. di termine sottinteso]',              funzione:'Complemento di termine' },
+  'gen-spec':   { type:'logic',   label:'[compl. di specificazione sottinteso]', phrase:'[compl. di specificazione sottinteso]', funzione:'Complemento di specificazione' },
+  'gen-luogo':  { type:'logic',   label:'[compl. di luogo sottinteso]',       phrase:'[compl. di luogo sottinteso]',                funzione:'Complemento di luogo (stato in)' },
+};
+
+function addEllipticalEntry(sentenceId) {
+  const sel = document.getElementById('new-ellipsis-preset-' + sentenceId);
+  if (!sel || !sel.value) { showToast('Scegli un preset di ellissi'); return; }
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const preset = ELLIPSIS_PRESETS[sel.value];
+  if (!preset) return;
+
+  if (preset.type === 'grammar') {
+    const entry = makeEntry('grammar');
+    Object.keys(preset).forEach(k => {
+      if (k === 'type' || k === 'label') return;
+      entry[k] = preset[k];
+    });
+    entry.isElliptical = true;
+    entry.tokenIndex = null; // nessun token nel testo
+    sentence.grammar.push(entry); // alla fine (no posizione)
+    showToast(`Sottinteso «${preset.word}» aggiunto`);
+  } else if (preset.type === 'logic') {
+    const entry = makeEntry('logic');
+    Object.keys(preset).forEach(k => {
+      if (k === 'type' || k === 'label') return;
+      entry[k] = preset[k];
+    });
+    entry.isElliptical = true;
+    entry.tokenIndices = []; // nessun token
+    sentence.logic.push(entry);
+    showToast(`Sottinteso «${preset.phrase}» aggiunto`);
+  }
+  if (sel) sel.value = '';
+  persistCurrent();
+  renderEditor();
+  renderSidebarTabs();
+}
+
+function renderEllipsisRow(sentenceId, scope) {
+  // scope: 'grammar' | 'logic'
+  const grammarPresets = Object.entries(ELLIPSIS_PRESETS).filter(([_, p]) => p.type === 'grammar');
+  const logicPresets   = Object.entries(ELLIPSIS_PRESETS).filter(([_, p]) => p.type === 'logic');
+
+  const verbiOpts = grammarPresets
+    .filter(([k]) => k.startsWith('lat-') && !['lat-is','lat-ea','lat-ille','lat-ei'].includes(k))
+    .map(([k, p]) => `<option value="${k}">${escapeHtml(p.label)}</option>`).join('');
+  const verbiGrOpts = grammarPresets
+    .filter(([k]) => k.startsWith('gr-'))
+    .map(([k, p]) => `<option value="${k}">${escapeHtml(p.label)}</option>`).join('');
+  const pronOpts = grammarPresets
+    .filter(([k]) => ['lat-is','lat-ea','lat-ille','lat-ei'].includes(k))
+    .map(([k, p]) => `<option value="${k}">${escapeHtml(p.label)}</option>`).join('');
+  const logicOpts = logicPresets
+    .map(([k, p]) => `<option value="${k}">${escapeHtml(p.label)}</option>`).join('');
+
+  return `
+    <div class="subsection ellipsis-row">
+      <div class="subsection-header">
+        <span class="subsection-number">⊕</span>
+        <span class="subsection-title">Elemento sottinteso (ellisi)</span>
+        <span class="subsection-hint">verbi, soggetti, complementi non presenti nel testo ma impliciti</span>
+      </div>
+      <div class="add-entry-row">
+        <div class="field-block" style="flex: 2;">
+          <label class="field-block-label">Scegli un preset</label>
+          <select class="field-select" id="new-ellipsis-preset-${sentenceId}">
+            <option value="">— scegli un'ellisi —</option>
+            <optgroup label="Verbi esse (latino) sottintesi">${verbiOpts}</optgroup>
+            <optgroup label="Verbi εἰμί (greco) sottintesi">${verbiGrOpts}</optgroup>
+            <optgroup label="Pronomi soggetto sottintesi (latino)">${pronOpts}</optgroup>
+            <optgroup label="Funzioni sintattiche generiche">${logicOpts}</optgroup>
+          </select>
+        </div>
+        <button class="btn btn-brand-soft" onclick="addEllipticalEntry('${sentenceId}')">+ Aggiungi sottinteso</button>
+      </div>
+    </div>`;
+}
+
+/* ============================================
+   CONCORDANZE — accordi caso/numero/genere + reggenza verbi
+   ============================================ */
+function findConcordances(entry, sentence) {
+  if (!entry || !entry.partOfSpeech) return { strong: [], partial: [], governed: [] };
+  const isNominal = ['Sostantivo','Aggettivo','Pronome','Articolo','Numerale'].includes(entry.partOfSpeech);
+  const isVerb = entry.partOfSpeech === 'Verbo';
+  const all = (sentence.grammar || []).filter(e => e.id !== entry.id && e.partOfSpeech);
+
+  if (isNominal) {
+    if (!entry.caso) return { strong: [], partial: [], governed: [] };
+    const strong = [];
+    const partial = [];
+    all.forEach(e => {
+      const otherNominal = ['Sostantivo','Aggettivo','Pronome','Articolo','Numerale'].includes(e.partOfSpeech);
+      if (!otherNominal) return;
+      if (!e.caso || e.caso !== entry.caso) return; // serve almeno il caso
+      const nMatch = entry.numero && e.numero === entry.numero;
+      const gMatch = entry.genere && e.genere === entry.genere;
+      if (nMatch && gMatch) strong.push(e);
+      else partial.push(e);
+    });
+    return { strong, partial, governed: [] };
+  }
+  if (isVerb) {
+    const reggenza = entry.reggenza || 'Accusativo';
+    const governed = all.filter(e => e.caso === reggenza);
+    return { strong: [], partial: [], governed };
+  }
+  return { strong: [], partial: [], governed: [] };
+}
+
+function renderConcordances(sentenceId, entry, lang) {
+  if (!entry.partOfSpeech) return '';
+  const isNominal = ['Sostantivo','Aggettivo','Pronome','Articolo','Numerale'].includes(entry.partOfSpeech);
+  const isVerb = entry.partOfSpeech === 'Verbo';
+  if (!isNominal && !isVerb) return '';
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return '';
+
+  const matches = findConcordances(entry, sentence);
+
+  let governedCaseField = '';
+  if (isVerb) {
+    governedCaseField = `
+      <div class="field-block" style="margin-bottom: 10px;">
+        <label class="field-block-label">Reggenza del verbo · caso retto (oltre o invece dell'accusativo)</label>
+        <select class="field-select" onchange="updateGrammarField('${sentenceId}','${entry.id}','reggenza',this.value)">
+          <option value="" ${!entry.reggenza ? 'selected' : ''}>— accusativo standard (default per OD) —</option>
+          <option value="Genitivo" ${entry.reggenza === 'Genitivo' ? 'selected' : ''}>Genitivo (gr.: ἀκούω, μέμνημαι, ἄρχω, ἐπιμελοῦμαι · lat.: misereor, paeniteo)</option>
+          <option value="Dativo" ${entry.reggenza === 'Dativo' ? 'selected' : ''}>Dativo (lat.: parco, persuadeo, noceo, faveo · gr.: πιστεύω, βοηθέω, ἕπομαι)</option>
+          <option value="Ablativo" ${entry.reggenza === 'Ablativo' ? 'selected' : ''}>Ablativo (lat.: utor, fruor, fungor, potior, vescor)</option>
+          <option value="Doppio Accusativo" ${entry.reggenza === 'Doppio Accusativo' ? 'selected' : ''}>Doppio Accusativo (lat.: doceo, rogo · gr.: αἰτέω, διδάσκω, ἐρωτάω)</option>
+          <option value="Accusativo + Infinito" ${entry.reggenza === 'Accusativo + Infinito' ? 'selected' : ''}>Accusativo + Infinito (verba dicendi/sentiendi)</option>
+        </select>
+      </div>`;
+  }
+
+  let bodyHtml = '';
+  if (isNominal) {
+    if (matches.strong.length === 0 && matches.partial.length === 0) {
+      bodyHtml = `<div class="muted-text" style="font-size:11px;font-style:italic;">${entry.caso ? 'Nessun termine concorda con questa voce nella frase analizzata.' : 'Definisci almeno il <strong>caso</strong> per scoprire le concordanze.'}</div>`;
+    } else {
+      const renderChip = (e, strong) => {
+        const metaBits = [];
+        if (e.numero) metaBits.push(e.numero.toLowerCase().slice(0,4));
+        if (e.genere) metaBits.push(e.genere.toLowerCase().slice(0,3));
+        const meta = metaBits.join(' ');
+        return `<span class="concordance-chip ${strong ? 'strong-match' : 'partial-match'}" title="${escapeHtml(e.partOfSpeech)}${e.caso ? ' · ' + e.caso : ''}${e.numero ? ' · ' + e.numero : ''}${e.genere ? ' · ' + e.genere : ''}">${escapeHtml(e.word || '(?)')}${meta ? `<span class="concordance-chip-meta">${meta}</span>` : ''}</span>`;
+      };
+      if (matches.strong.length > 0) {
+        bodyHtml += `<div class="concordance-row"><span class="concordance-label">Concordi · stesso caso, numero e genere:</span> ${matches.strong.map(e => renderChip(e, true)).join('')}</div>`;
+      }
+      if (matches.partial.length > 0) {
+        bodyHtml += `<div class="concordance-row"><span class="concordance-label">Parziali · stesso caso ma diverso numero/genere:</span> ${matches.partial.map(e => renderChip(e, false)).join('')}</div>`;
+      }
+    }
+  }
+  if (isVerb) {
+    const govCase = entry.reggenza || 'Accusativo';
+    if (matches.governed.length === 0) {
+      bodyHtml += `<div class="muted-text" style="font-size:11px;font-style:italic;">Nessuna parola della frase è in ${govCase.toLowerCase()}.</div>`;
+    } else {
+      const renderChip = (e) => {
+        const metaBits = [];
+        if (e.numero) metaBits.push(e.numero.toLowerCase().slice(0,4));
+        if (e.genere) metaBits.push(e.genere.toLowerCase().slice(0,3));
+        const meta = metaBits.join(' ');
+        return `<span class="concordance-chip governed-match" title="${escapeHtml(e.partOfSpeech)}${e.caso ? ' · ' + e.caso : ''}">${escapeHtml(e.word || '(?)')}${meta ? `<span class="concordance-chip-meta">${meta}</span>` : ''}</span>`;
+      };
+      bodyHtml += `<div class="concordance-row"><span class="concordance-label">Argomenti retti · ${govCase.toLowerCase()}:</span> ${matches.governed.map(e => renderChip(e)).join('')}</div>`;
+    }
+  }
+
+  return `
+    <div class="concordances-section">
+      <div class="concordances-title">${isVerb ? 'Reggenza & argomenti del verbo' : 'Concordanze nella frase'}</div>
+      ${governedCaseField}
+      ${bodyHtml}
+    </div>`;
+}
+
+/* ============================================
+   TANTUM — radio per Singularia / Pluralia tantum (sostantivi)
+   ============================================ */
+function renderTantumField(sentenceId, entry) {
+  if (entry.partOfSpeech !== 'Sostantivo') return '';
+  const cur = entry.tantum || '';
+  return `
+    <div class="field-block" style="grid-column: 1/-1;">
+      <label class="field-block-label">Numero invariabile · Tantum</label>
+      <div class="tantum-options">
+        <label><input type="radio" name="tantum-${entry.id}" value="" ${cur === '' ? 'checked' : ''} onchange="updateGrammarField('${sentenceId}','${entry.id}','tantum','')"> Variabile (numero normale, singolare e plurale)</label>
+        <label><input type="radio" name="tantum-${entry.id}" value="singularia" ${cur === 'singularia' ? 'checked' : ''} onchange="updateGrammarField('${sentenceId}','${entry.id}','tantum','singularia')"> <em>Singularia tantum</em> — solo singolare (es. <em>Roma, -ae · ferrum, -i · aurum, -i</em>)</label>
+        <label><input type="radio" name="tantum-${entry.id}" value="pluralia" ${cur === 'pluralia' ? 'checked' : ''} onchange="updateGrammarField('${sentenceId}','${entry.id}','tantum','pluralia')"> <em>Pluralia tantum</em> — solo plurale (es. <em>castra, -orum · arma, -orum · Athenae, -arum · litterae, -arum</em>)</label>
+        ${cur ? `<span class="tantum-hint">↳ Il lemma sarà adeguato di conseguenza nella sezione sottostante.</span>` : ''}
+      </div>
+    </div>`;
+}
+
 function renderConnettiviActionBar(sentence) {
   if (connSel.sentenceId !== sentence.id || connSel.tokenIdx == null) return '';
   const tokens = tokenizeSentence(sentence.original);
@@ -5867,6 +7039,8 @@ function renderGrammarAnalysis(sentence) {
       </div>
     </div>`;
 
+  const ellipsisHtml = renderEllipsisRow(sentence.id, 'grammar');
+
   let entriesHtml;
   if (sentence.grammar.length === 0) {
     entriesHtml = `<div class="entry-empty">Nessuna voce. Clicca una parola della frase qui sopra per assegnarle una parte del discorso.</div>`;
@@ -5876,7 +7050,7 @@ function renderGrammarAnalysis(sentence) {
       : '';
     entriesHtml = tools + `<div class="entry-list">${sentence.grammar.map(entry => renderGrammarEntry(sentence.id, entry, lang)).join('')}</div>`;
   }
-  return translationField + tokenizerHtml + addRow + entriesHtml;
+  return translationField + tokenizerHtml + addRow + ellipsisHtml + entriesHtml;
 }
 
 /* ============================================
@@ -5914,17 +7088,32 @@ function renderTokenizer(sentence, mode) {
 
   const tokensHtml = tokens.map(tok => renderTokenChip(sentence, tok, mode)).join('');
 
+  // Modalità batch attiva per grammar/logic
+  const batchActive = batchMode.active && batchMode.mode === mode;
+  const supportsBatch = mode === 'grammar' || mode === 'logic';
+  const batchToggleBtn = supportsBatch
+    ? `<button class="batch-toggle-btn ${batchActive ? 'active' : ''}" onclick="toggleBatchMode('${mode}')" title="Tagga più parole con la stessa categoria">Modalità batch</button>`
+    : '';
+  const batchBar = batchActive ? renderBatchBar(mode) : '';
+  const batchStats = (batchActive && batchMode.value)
+    ? `<div class="batch-stats" style="margin-bottom:10px;">Già taggate con questa categoria: <strong>${countBatchApplied(sentence, mode)}</strong> parol${countBatchApplied(sentence, mode) === 1 ? 'a' : 'e'}</div>`
+    : '';
+
   return `
     <div class="subsection">
-      <div class="tokenizer">
+      <div class="tokenizer${batchActive ? ' batch-active' : ''}">
         <div class="tokenizer-header">
           <span class="tokenizer-title">${title}</span>
-          ${counter}
+          <div style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
+            ${counter}
+            ${batchToggleBtn}
+          </div>
         </div>
-        <div class="method-note" style="font-size:12px;margin-bottom:14px;">${helperText}</div>
+        ${batchActive ? batchBar : `<div class="method-note" style="font-size:12px;margin-bottom:14px;">${helperText}</div>`}
+        ${batchStats}
         <div class="token-grid">${tokensHtml}</div>
         <div class="tokenizer-progress-bar"><div class="tokenizer-progress-fill" style="width:${pct}%;"></div></div>
-        ${actionBar}
+        ${batchActive ? '' : actionBar}
         ${legendHtml}
       </div>
     </div>`;
@@ -6001,6 +7190,12 @@ function renderTokenChip(sentence, tok, mode) {
       classes.push('token-selected');
     }
     onClick = `onclick="onPeriodaleTokenClick(event, '${sentence.id}', ${tok.idx})"`;
+  }
+
+  // BATCH MODE: aggiungi indicatore visivo se il token ha già il valore batch
+  if (batchMode.active && batchMode.mode === mode && batchMode.value && tokenHasBatchValue(tok, mode)) {
+    classes.push('batch-applied');
+    marker += '<span class="batch-check" title="Già taggato">✓</span>';
   }
 
   return `<span class="${classes.join(' ')}"${inlineStyle} ${onClick} title="${title}">${escapeHtml(tok.text)}${marker}</span>`;
@@ -6449,25 +7644,32 @@ function renderGrammarEntry(sentenceId, entry, lang) {
     </div>`;
 
   const lemmaSection = renderLemmaSection(sentenceId, entry, lang);
+  const tantumField = renderTantumField(sentenceId, entry);
+  const concordancesSection = renderConcordances(sentenceId, entry, lang);
 
   const collapsed = isEntryCollapsed(entry);
   const summary = makeGrammarSummary(entry, lang);
   const caseGroup = caseGroupForGrammarEntry(entry);
+  const ellipticalCls = entry.isElliptical ? ' is-elliptical' : '';
+  const wordDisplay = entry.word || (entry.isElliptical ? '[sottinteso]' : '(parola da inserire)');
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','grammar', event)">
-         <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.word ? '' : ' placeholder'}">${escapeHtml(entry.word || '(parola da inserire)')}</span>
+         ${entry.isElliptical ? '<span class="entry-summary-ellipsis">sottinteso</span>' : ''}
+         <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.word ? '' : ' placeholder'}">${escapeHtml(wordDisplay)}</span>
          ${summary}
        </div>`
-    : `<div style="flex: 1;">
-         <label class="field-block-label">Parola</label>
+    : `${entry.isElliptical ? '<span class="entry-summary-ellipsis" style="margin-right:8px;">sottinteso</span>' : ''}
+       <div style="flex: 1;">
+         <label class="field-block-label">Parola${entry.isElliptical ? ' (sottintesa)' : ''}</label>
          <input class="field-input ${isGreek ? 'greek' : ''}" type="text"
                 style="font-size: 18px; font-weight: 700; color: var(--poetrify-primary); padding: 8px 12px; font-family: ${isGreek ? 'var(--font-classical)' : 'var(--font-body)'};"
                 value="${escapeHtml(entry.word || '')}"
-                oninput="updateGrammarField('${sentenceId}', '${entry.id}', 'word', this.value)">
+                oninput="updateGrammarField('${sentenceId}', '${entry.id}', 'word', this.value)"
+                placeholder="${entry.isElliptical ? '[forma sottintesa]' : ''}">
        </div>`;
 
   return `
-    <div class="entry-card case-${caseGroup}${collapsed ? ' is-collapsed' : ''}" ${entryDragAttrs(sentenceId, entry.id, 'grammar')}>
+    <div class="entry-card case-${caseGroup}${collapsed ? ' is-collapsed' : ''}${ellipticalCls}" ${entryDragAttrs(sentenceId, entry.id, 'grammar')}>
       <div class="entry-card-header">
         ${entryDragHandle()}
         ${headerInner}
@@ -6480,7 +7682,9 @@ function renderGrammarEntry(sentenceId, entry, lang) {
         <div class="entry-fields">
           ${partSelector}
           ${fieldsHtml}
+          ${tantumField}
           ${lemmaSection}
+          ${concordancesSection}
           ${noteField}
         </div>
       </div>`}
@@ -6614,20 +7818,23 @@ function renderLogicEntry(sentenceId, entry, lang) {
   const collapsed = isEntryCollapsed(entry);
   const summary = makeLogicSummary(entry);
   const caseGroup = funzioneToCaseGroup(entry.funzione);
+  const ellipticalCls = entry.isElliptical ? ' is-elliptical' : '';
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','logic', event)">
+         ${entry.isElliptical ? '<span class="entry-summary-ellipsis">sottinteso</span>' : ''}
          <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.phrase ? '' : ' placeholder'}">${escapeHtml(entry.phrase || '(sintagma da inserire)')}</span>
          ${summary}
        </div>`
-    : `<div style="flex: 1;">
-         <label class="field-block-label">Parola o sintagma</label>
+    : `${entry.isElliptical ? '<span class="entry-summary-ellipsis" style="margin-right:8px;">sottinteso</span>' : ''}
+       <div style="flex: 1;">
+         <label class="field-block-label">Parola o sintagma${entry.isElliptical ? ' (sottinteso)' : ''}</label>
          <input class="field-input ${isGreek ? 'greek' : ''}" type="text"
                 style="font-size: 16px; font-weight: 600; color: var(--poetrify-primary); font-family: ${isGreek ? 'var(--font-classical)' : 'var(--font-body)'};"
                 value="${escapeHtml(entry.phrase || '')}"
                 oninput="updateLogicField('${sentenceId}', '${entry.id}', 'phrase', this.value)">
        </div>`;
   return `
-    <div class="entry-card case-${caseGroup}${collapsed ? ' is-collapsed' : ''}" ${entryDragAttrs(sentenceId, entry.id, 'logic')}>
+    <div class="entry-card case-${caseGroup}${collapsed ? ' is-collapsed' : ''}${ellipticalCls}" ${entryDragAttrs(sentenceId, entry.id, 'logic')}>
       <div class="entry-card-header">
         ${entryDragHandle()}
         ${headerInner}
@@ -7058,18 +8265,33 @@ function updateGrammarField(sentenceId, entryId, key, value) {
   if (!sentence) return;
   const entry = sentence.grammar.find(e => e.id === entryId);
   if (!entry) return;
-  entry[key] = value;
+
+  // Per il campo "tantum", il valore vuoto significa "rimuovi"
+  if (key === 'tantum' && (value === '' || value == null)) {
+    delete entry.tantum;
+  } else if (key === 'reggenza' && (value === '' || value == null)) {
+    delete entry.reggenza;
+  } else {
+    entry[key] = value;
+  }
+
   if (key === 'partOfSpeech' || key === 'verboForma') {
     const schema = getMorphSchema(state.meta.lingua, entry);
-    const validKeys = new Set(['word','partOfSpeech','note','id','tokenIndex','lemma','lemmaCustom','tema','desinenza'].concat(schema.map(f => f.key)).concat(schema.map(f => f.key + '__mode')));
+    // Campi sempre protetti: dati identificativi, lemma, attributi extra (tantum, reggenza, ellisi)
+    const validKeys = new Set([
+      'word','partOfSpeech','note','id','tokenIndex',
+      'lemma','lemmaCustom','tema','desinenza',
+      'tantum','reggenza','isElliptical','_expanded'
+    ].concat(schema.map(f => f.key)).concat(schema.map(f => f.key + '__mode')));
     Object.keys(entry).forEach(k => {
       if (!validKeys.has(k)) delete entry[k];
     });
   }
   persistCurrent();
-  // Re-renderizza per aggiornare schema (partOfSpeech / forma verbale) e/o predizione lemma
-  const lemmaImpactingKeys = ['partOfSpeech','verboForma','pronomeTipo','declinazione','classe','coniugazione','genere','numero','caso','tempo','modo','diatesi','persona'];
-  if (lemmaImpactingKeys.includes(key)) renderEditor();
+  // Re-renderizza per aggiornare schema (partOfSpeech / forma verbale) e/o predizione lemma e concordanze
+  const reloadKeys = ['partOfSpeech','verboForma','pronomeTipo','declinazione','classe','coniugazione',
+                      'genere','numero','caso','tempo','modo','diatesi','persona','tantum','reggenza'];
+  if (reloadKeys.includes(key)) renderEditor();
 }
 
 function deleteGrammarEntry(sentenceId, entryId) {
@@ -7167,6 +8389,15 @@ function toggleFieldMode(sentenceId, entryId, fieldKey, entryType) {
    TOKEN SELECTOR — handlers di interazione
    ============================================ */
 function onGrammarTokenClick(sentenceId, tokenIdx) {
+  // Modalità batch grammatica: applica tag corrente
+  if (batchMode.active && batchMode.mode === 'grammar') {
+    if (!batchMode.value) {
+      showToast('Scegli prima un valore dalla barra batch');
+      return;
+    }
+    applyBatchTag(sentenceId, tokenIdx);
+    return;
+  }
   // Annulla eventuale selezione logica residua
   logicSel = { sentenceId: null, indices: [] };
   // Se sto già editando questo stesso token, chiudo (toggle)
@@ -7236,6 +8467,15 @@ function removeTokenAssignment(sentenceId, type, tokenIdx) {
 }
 
 function onLogicTokenClick(event, sentenceId, tokenIdx) {
+  // Modalità batch logica: applica funzione corrente al token (entry monoparola)
+  if (batchMode.active && batchMode.mode === 'logic') {
+    if (!batchMode.value) {
+      showToast('Scegli prima una funzione dalla barra batch');
+      return;
+    }
+    applyBatchTag(sentenceId, tokenIdx);
+    return;
+  }
   // Annulla eventuale selezione grammaticale
   pending = { mode: null, sentenceId: null, tokenIdx: null };
 
