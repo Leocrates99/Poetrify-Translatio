@@ -834,94 +834,122 @@ body[data-lang="greco"] .token-action-bar .target-word { font-family: var(--font
 
 .syntax-tree {
   display: flex;
+  flex-direction: row;
+  gap: 60px;
+  padding: 24px 12px 18px;
+  align-items: flex-start;
   justify-content: center;
   min-width: max-content;
-  padding: 10px 8px 18px;
 }
-.syntax-tree ul {
-  position: relative;
-  padding-top: 32px;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  list-style: none;
-}
-.syntax-tree > ul { padding-top: 0; }
 
-.syntax-tree li {
-  position: relative;
-  padding: 0 12px;
-  list-style: none;
+/* Cluster orizzontale: anchor + sue coordinate, fianco a fianco */
+.cluster-row {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 0;
+}
+
+/* Colonna verticale di un singolo membro del cluster: card sopra, subs sotto */
+.member-column {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0;
+  position: relative;
 }
 
-/* Linea verticale dal sommo del li che sale alla linea orizzontale dei fratelli */
-.syntax-tree li::before {
+/* Linea orizzontale che collega due coordinate */
+.coord-line {
+  align-self: flex-start;
+  display: inline-block;
+  width: 32px;
+  height: 3px;
+  background: linear-gradient(90deg, var(--poetrify-primary) 0%, var(--poetrify-primary) 50%, var(--poetrify-primary) 100%);
+  margin-top: 32px;
+  flex-shrink: 0;
+  opacity: 0.7;
+  border-radius: 2px;
+  position: relative;
+}
+.coord-line::after {
+  content: '∞';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-ui);
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--poetrify-primary);
+  background: var(--poetrify-paper);
+  padding: 1px 4px;
+  border-radius: 999px;
+  border: 1px solid var(--poetrify-primary-border);
+  opacity: 0.85;
+}
+
+/* Contenitore delle subordinate sotto la card */
+.member-column > .sub-children {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 36px;
+  position: relative;
+  padding-top: 28px;
+  margin-top: 6px;
+}
+
+/* Linea verticale dal padre alla base della linea-bus delle subordinate */
+.member-column > .sub-children::before {
   content: '';
   position: absolute;
   top: 0;
   left: 50%;
   width: 2px;
-  height: 16px;
+  height: 14px;
   background: var(--poetrify-rule);
   transform: translateX(-50%);
 }
-/* Linea orizzontale tra fratelli (sotto il padre) */
-.syntax-tree li::after {
+
+/* Linea orizzontale "bus" — solo se 2+ subordinate */
+.member-column > .sub-children:has(> :nth-child(2))::after {
   content: '';
   position: absolute;
-  top: 16px;
-  left: 0;
-  right: 0;
+  top: 14px;
+  left: 12%;
+  right: 12%;
   height: 2px;
   background: var(--poetrify-rule);
 }
-.syntax-tree li:only-child::after { display: none; }
-.syntax-tree li:only-child::before { height: 16px; }
-.syntax-tree li:first-child:not(:only-child)::after { left: 50%; }
-.syntax-tree li:last-child:not(:only-child)::after { right: 50%; }
 
-/* Radice — niente linee in arrivo dall'alto */
-.syntax-tree > ul > li::before { display: none; }
-.syntax-tree > ul > li::after { display: none; }
-/* Ma se ci sono più radici coordinate fra loro, traccia una linea orizzontale piena */
-.syntax-tree > ul > li:not(:only-child) {
-  margin-top: 0;
-}
-.syntax-tree > ul.has-coord-roots > li::before {
-  display: block;
-  top: -10px;
-  height: 10px;
-}
-.syntax-tree > ul.has-coord-roots > li::after {
-  display: block;
-  top: -10px;
-}
-.syntax-tree > ul.has-coord-roots > li:first-child::after { left: 50%; }
-.syntax-tree > ul.has-coord-roots > li:last-child::after { right: 50%; }
-.syntax-tree > ul.has-coord-roots {
-  padding-top: 16px;
+.member-column > .sub-children > * {
+  position: relative;
 }
 
-/* Linea verticale che parte dal padre verso il blocco figli */
-.syntax-tree li > ul {
-  /* ::before del padre disegna l'uscita verso il basso */
-}
-.syntax-tree li.has-children::before {
-  /* nessun cambiamento qui — la linea ascendente è già definita sopra */
+/* Ogni subordinata: linea verticale dal bus (o dal padre se figlio unico) verso la propria card */
+.member-column > .sub-children > *::before {
+  content: '';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  width: 2px;
+  height: 14px;
+  background: var(--poetrify-rule);
+  transform: translateX(-50%);
 }
 
 /* Card della proposizione */
 .tree-card {
-  margin-top: 22px;
   position: relative;
   background: var(--poetrify-paper);
   border: 1.5px solid var(--poetrify-rule);
   border-radius: var(--radius-md);
   padding: 10px 12px;
-  min-width: 160px;
+  min-width: 170px;
   max-width: 240px;
   text-align: left;
   box-shadow: 0 1px 3px var(--poetrify-shadow);
@@ -936,9 +964,6 @@ body[data-lang="greco"] .token-action-bar .target-word { font-family: var(--font
   outline: 3px solid var(--poetrify-primary-pale);
   outline-offset: 1px;
 }
-
-/* La radice non ha margin-top extra */
-.syntax-tree > ul > li > .tree-card { margin-top: 0; }
 
 .tree-card-header {
   display: flex;
@@ -1256,6 +1281,166 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: 'Times New R
 }
 
 /* ============================================
+   PROFILO UTENTE (medie / biennio / triennio)
+   Adatta la UX al livello scolastico senza alterare il brand.
+   ============================================ */
+body[data-profile="medie"] .profile-triennio-only,
+body[data-profile="biennio"] .profile-triennio-only,
+body[data-profile="medie"] .profile-biennio-plus {
+  display: none !important;
+}
+/* Le medie usano solo latino + guidata: nascondi anche scelta lingua e mode toggle */
+body[data-profile="medie"] .lang-toggle,
+body[data-profile="medie"] .mode-switch,
+body[data-profile="medie"] .mode-toggle-banner {
+  display: none !important;
+}
+/* Tipografia leggermente più ariosa per le medie — niente font diversi, solo dimensioni */
+body[data-profile="medie"] .method-note,
+body[data-profile="medie"] .lemma-hint,
+body[data-profile="medie"] .suggestion-hint,
+body[data-profile="medie"] .wizard-instructions,
+body[data-profile="medie"] .section-title p,
+body[data-profile="medie"] .field-hint {
+  font-size: 13.5px;
+  line-height: 1.7;
+}
+body[data-profile="medie"] .section-title h1 { font-size: 24px; }
+body[data-profile="medie"] .wizard-step-label { font-size: 12px; }
+
+/* Profilo chip: clickabile per riaprire il modale del profilo */
+.profile-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px 4px 8px;
+  background: var(--poetrify-paper);
+  border: 1px solid var(--poetrify-rule);
+  border-radius: 999px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--poetrify-ink);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+}
+.profile-chip:hover {
+  background: var(--poetrify-ivory);
+  border-color: var(--poetrify-primary);
+  color: var(--poetrify-primary);
+}
+.profile-chip-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--poetrify-primary);
+  display: inline-block;
+}
+.profile-chip[data-profile="medie"]    .profile-chip-dot { background: #2f855a; }
+.profile-chip[data-profile="biennio"]  .profile-chip-dot { background: #d69e2e; }
+.profile-chip[data-profile="triennio"] .profile-chip-dot { background: var(--poetrify-primary); }
+.profile-chip-label { font-weight: 600; }
+.profile-chip-edit {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  opacity: 0.55;
+  text-transform: none;
+  letter-spacing: 0.02em;
+}
+
+/* Cards selezione profilo nel modale di benvenuto */
+.profile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 14px;
+  margin: 18px 0 8px;
+}
+@media (max-width: 820px) { .profile-grid { grid-template-columns: 1fr; } }
+.profile-card {
+  text-align: left;
+  background: var(--poetrify-paper);
+  border: 1.5px solid var(--poetrify-rule);
+  border-radius: var(--radius-md);
+  padding: 18px 16px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 0.18s ease;
+  font-family: var(--font-body);
+  position: relative;
+}
+.profile-card:hover {
+  border-color: var(--poetrify-primary);
+  background: var(--poetrify-ivory);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(24, 0, 172, 0.08);
+}
+.profile-card .profile-card-badge {
+  position: absolute; top: 12px; right: 12px;
+  font-family: var(--font-ui);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(24, 0, 172, 0.08);
+  color: var(--poetrify-primary);
+}
+.profile-card-icon {
+  font-family: var(--font-display);
+  font-size: 32px;
+  line-height: 1;
+  color: var(--poetrify-primary);
+  font-weight: 600;
+}
+.profile-card[data-profile="medie"]    .profile-card-icon { color: #2f855a; }
+.profile-card[data-profile="biennio"]  .profile-card-icon { color: #d69e2e; }
+.profile-card[data-profile="triennio"] .profile-card-icon { color: var(--poetrify-primary); }
+.profile-card-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--poetrify-ink);
+  line-height: 1.2;
+}
+.profile-card-sub {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--poetrify-sepia);
+}
+.profile-card-desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--poetrify-ink-soft);
+}
+.profile-card-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+.profile-card-features span {
+  font-family: var(--font-ui);
+  font-size: 10.5px;
+  padding: 2px 8px;
+  background: rgba(0, 0, 0, 0.04);
+  border-radius: 999px;
+  color: var(--poetrify-sepia);
+}
+.profile-modal-foot {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-style: italic;
+  color: var(--poetrify-sepia-soft);
+  text-align: center;
+  margin-top: 14px;
+}
+
+/* ============================================
    MODALE SELEZIONE MODALITÀ + WIZARD GUIDATO
    ============================================ */
 .mode-grid {
@@ -1537,6 +1722,23 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: 'Times New R
 .field-select option.not-suggested {
   font-weight: 400;
   color: var(--poetrify-ink-soft);
+}
+/* Optgroup (gruppi per caso nei selettori dei complementi) */
+.field-select optgroup,
+select optgroup {
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-style: italic;
+  color: var(--poetrify-primary);
+  background: var(--poetrify-primary-pale);
+}
+.field-select optgroup option,
+select optgroup option {
+  font-weight: 400;
+  font-style: normal;
+  color: var(--poetrify-ink);
+  background: var(--poetrify-paper);
+  padding-left: 8px;
 }
 
 /* ============================================
@@ -2373,6 +2575,62 @@ body[data-lang="greco"] .entry-summary-lemma { font-family: 'Times New Roman', s
   outline: 2px solid var(--poetrify-success);
   outline-offset: 1px;
   background: rgba(47, 133, 90, 0.10) !important;
+}
+/* Modalità batch: neutralizza i colori delle altre categorie per non confondere */
+.token.token-batch-mode {
+  background: transparent !important;
+  border-color: var(--poetrify-rule-soft) !important;
+  color: var(--poetrify-ink-soft) !important;
+  box-shadow: none !important;
+}
+.token.token-batch-mode.batch-applied {
+  background: rgba(47, 133, 90, 0.12) !important;
+  border-color: var(--poetrify-success) !important;
+  color: var(--poetrify-success) !important;
+}
+/* Candidato: PoS pertinente alla dimensione batch attiva → leggero risalto */
+.token.token-batch-mode.batch-candidate {
+  background: var(--poetrify-primary-tint) !important;
+  border-color: var(--poetrify-primary-border) !important;
+  color: var(--poetrify-primary) !important;
+  border-style: solid !important;
+  font-weight: 600;
+}
+.token.token-batch-mode.batch-candidate:not(.batch-applied):hover {
+  background: var(--poetrify-primary-pale) !important;
+  transform: translateY(-2px);
+}
+/* Selezione transitoria del blocco (batch logica multi-token) */
+.token.batch-block-selected {
+  outline: 2.5px dashed var(--poetrify-primary) !important;
+  outline-offset: 2px;
+  background: rgba(124, 58, 237, 0.10) !important;
+  z-index: 2;
+}
+/* Token con la dimensione corrente già occupata da un altro valore (mutuamente esclusivo) */
+.token.token-batch-mode.batch-occupied {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: var(--poetrify-sepia-soft) !important;
+  text-decoration: line-through;
+  text-decoration-style: dotted;
+  text-decoration-color: var(--poetrify-sepia-soft);
+  opacity: 0.5;
+  font-style: italic;
+}
+.token.token-batch-mode.batch-occupied:hover {
+  opacity: 0.85;
+  text-decoration: none;
+}
+.token.token-batch-mode .batch-occupied-mark {
+  font-family: var(--font-ui);
+  font-size: 9px;
+  font-weight: 600;
+  margin-left: 4px;
+  opacity: 0.7;
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  display: inline-block;
 }
 .token .batch-check {
   display: inline-block;
@@ -3772,6 +4030,11 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
     </div>
 
     <div class="save-status">
+      <button class="profile-chip" id="profile-chip" onclick="openProfileModal()" title="Cambia profilo utente" style="display:none;">
+        <span class="profile-chip-dot"></span>
+        <span class="profile-chip-label" id="profile-chip-label">—</span>
+        <span class="profile-chip-edit">cambia</span>
+      </button>
       <span class="save-dot"></span>
       <span id="save-text">salvato automaticamente</span>
     </div>
@@ -3919,6 +4182,59 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   </div>
 </div>
 
+<!-- MODALE PROFILO UTENTE — benvenuto + ri-selezione -->
+<div class="modal-backdrop" id="modal-profile">
+  <div class="modal" style="max-width: 880px;">
+    <h3 class="modal-title">A chi si rivolge Poetrify?</h3>
+    <p class="modal-subtitle">Scegli il tuo profilo: l'officina si adatterà al tuo livello mostrando solo gli strumenti che ti servono davvero. Potrai cambiare profilo in qualsiasi momento dal segnale in alto a destra.</p>
+    <div class="profile-grid">
+      <button class="profile-card" data-profile="medie" onclick="selectProfile('medie')">
+        <span class="profile-card-badge">Avvio</span>
+        <span class="profile-card-icon">A</span>
+        <span class="profile-card-title">Studente delle medie</span>
+        <span class="profile-card-sub">Primo incontro con il latino</span>
+        <span class="profile-card-desc">Solo latino, modalità guidata passo-passo. Niente analisi sintattico-periodale, niente tantum né reggenze: ci concentriamo su frasi, verbi e prime declinazioni con un linguaggio amichevole.</span>
+        <span class="profile-card-features">
+          <span>solo latino</span>
+          <span>guidata 6 step</span>
+          <span>vocabolario base</span>
+        </span>
+      </button>
+      <button class="profile-card" data-profile="biennio" onclick="selectProfile('biennio')">
+        <span class="profile-card-badge">Intermedio</span>
+        <span class="profile-card-icon">B</span>
+        <span class="profile-card-title">Biennio del liceo</span>
+        <span class="profile-card-sub">Latino e primi passi col greco</span>
+        <span class="profile-card-desc">Latino e greco a disposizione, libera scelta tra modalità libera e guidata. Lemma, analisi logica completa e traduzione con ordo verborum. Filtriamo gli strumenti più specialistici.</span>
+        <span class="profile-card-features">
+          <span>latino + greco</span>
+          <span>libera o guidata</span>
+          <span>analisi logica</span>
+          <span>traduzione</span>
+        </span>
+      </button>
+      <button class="profile-card" data-profile="triennio" onclick="selectProfile('triennio')">
+        <span class="profile-card-badge">Avanzato</span>
+        <span class="profile-card-icon">C</span>
+        <span class="profile-card-title">Triennio liceo classico · Università</span>
+        <span class="profile-card-sub">Filologia classica completa</span>
+        <span class="profile-card-desc">Tutti gli strumenti dell'officina: sintattico-periodale con albero a cluster, tantum (singularia / pluralia), reggenze nelle concordanze, batch mode, lemma con eccezioni e ordo verborum espanso.</span>
+        <span class="profile-card-features">
+          <span>tutto</span>
+          <span>batch mode</span>
+          <span>tantum + reggenze</span>
+          <span>sintattico-periodale</span>
+          <span>ordo verborum</span>
+        </span>
+      </button>
+    </div>
+    <p class="profile-modal-foot">La scelta resta salvata sul tuo dispositivo — potrai aggiornarla cliccando sulla pastiglia del profilo accanto al titolo.</p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeProfileModal()" id="profile-modal-skip">Decido dopo</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 <div id="export-render-target" style="position: absolute; left: -10000px; top: 0; width: 800px;"></div>
 
@@ -4014,23 +4330,74 @@ const TAXONOMIES = {
   },
 };
 
-const FUNZIONI_LOGICHE = [
-  'Soggetto', 'Predicato verbale', 'Predicato nominale', 'Copula', 'Parte nominale',
-  'Apposizione', 'Attributo', 'Complemento predicativo del soggetto', 'Complemento predicativo dell\'oggetto',
-  'Complemento oggetto', 'Complemento di termine', 'Complemento di specificazione',
-  'Complemento di agente', 'Complemento di causa efficiente',
-  'Complemento di luogo (stato in)', 'Complemento di luogo (moto a)', 'Complemento di luogo (moto da)', 'Complemento di luogo (moto per)',
-  'Complemento di tempo determinato', 'Complemento di tempo continuato',
-  'Complemento di modo', 'Complemento di mezzo o strumento', 'Complemento di causa', 'Complemento di fine o scopo',
-  'Complemento di compagnia', 'Complemento di unione', 'Complemento di qualità', 'Complemento di materia',
-  'Complemento di argomento', 'Complemento di limitazione', 'Complemento partitivo', 'Complemento di abbondanza',
-  'Complemento di privazione', 'Complemento di allontanamento o separazione', 'Complemento di origine',
-  'Complemento di denominazione', 'Complemento di vocazione', 'Complemento di età', 'Complemento di stima',
-  'Complemento di prezzo', 'Complemento di colpa', 'Complemento di pena', 'Complemento di paragone',
-  'Complemento di vantaggio', 'Complemento di svantaggio', 'Complemento concessivo', 'Complemento di esclusione',
-  'Dativo etico', 'Dativo di possesso', 'Genitivo soggettivo', 'Genitivo oggettivo',
-  'Altro / da specificare',
+/* Funzioni logiche raggruppate per caso di pertinenza
+   (nominativo · accusativo · genitivo · dativo · ablativo · vocativo · misti). */
+const FUNZIONI_LOGICHE_GROUPED = [
+  { group: 'Predicato verbale',
+    items: ['Predicato verbale'] },
+  { group: 'Caso nominativo · soggetto, copulativi e affini',
+    items: [
+      'Soggetto', 'Predicato nominale', 'Copula', 'Parte nominale',
+      'Apposizione', 'Attributo', 'Complemento predicativo del soggetto',
+    ] },
+  { group: 'Caso accusativo · oggetto e affini',
+    items: [
+      'Complemento oggetto', "Complemento predicativo dell'oggetto",
+      'Complemento di luogo (moto a)', 'Complemento di tempo continuato',
+      'Complemento di età',
+    ] },
+  { group: 'Caso genitivo · specificazione, partitivo e affini',
+    items: [
+      'Complemento di specificazione', 'Genitivo soggettivo', 'Genitivo oggettivo',
+      'Complemento partitivo', 'Complemento di qualità', 'Complemento di abbondanza',
+      'Complemento di privazione', 'Complemento di colpa', 'Complemento di pena',
+      'Complemento di stima', 'Complemento di prezzo', 'Complemento di paragone',
+      'Complemento di argomento',
+    ] },
+  { group: 'Caso dativo · termine, vantaggio, fine',
+    items: [
+      'Complemento di termine', 'Complemento di vantaggio', 'Complemento di svantaggio',
+      'Dativo etico', 'Dativo di possesso', 'Complemento di fine o scopo',
+    ] },
+  { group: 'Caso ablativo · mezzo, modo, luogo, tempo, agente',
+    items: [
+      'Complemento di agente', 'Complemento di causa efficiente',
+      'Complemento di mezzo o strumento', 'Complemento di modo',
+      'Complemento di compagnia', 'Complemento di unione',
+      'Complemento di causa', 'Complemento di luogo (stato in)',
+      'Complemento di luogo (moto da)', 'Complemento di luogo (moto per)',
+      'Complemento di tempo determinato', 'Complemento di materia',
+      'Complemento di origine', 'Complemento di allontanamento o separazione',
+      'Complemento di limitazione',
+    ] },
+  { group: 'Caso vocativo',
+    items: [
+      'Complemento di vocazione',
+    ] },
+  { group: 'Misti / con preposizione / multi-caso',
+    items: [
+      'Complemento concessivo', 'Complemento di esclusione',
+      'Complemento di denominazione',
+      'Altro / da specificare',
+    ] },
 ];
+
+// Versione piatta per i consumatori che hanno bisogno della lista completa (batch, validazione, suggerimenti)
+const FUNZIONI_LOGICHE = FUNZIONI_LOGICHE_GROUPED.reduce((acc, g) => acc.concat(g.items), []);
+
+/* Helper · genera <option> dei "Complementi" raggruppate per caso con suggerimenti e marker ★ */
+function renderFunzioneOptions(currentValue, suggestedSet) {
+  const sugg = suggestedSet || new Set();
+  return FUNZIONI_LOGICHE_GROUPED.map(g => {
+    const opts = g.items.map(opt => {
+      const isSugg = sugg.has(opt);
+      const cls = isSugg ? 'suggested' : (sugg.size > 0 ? 'not-suggested' : '');
+      const marker = isSugg ? '★ ' : '';
+      return `<option value="${escapeHtml(opt)}" ${currentValue === opt ? 'selected' : ''} class="${cls}">${marker}${escapeHtml(opt)}</option>`;
+    }).join('');
+    return `<optgroup label="${escapeHtml(g.group)}">${opts}</optgroup>`;
+  }).join('');
+}
 
 const PROPOSIZIONI = {
   ruolo: ['Principale', 'Coordinata', 'Subordinata'],
@@ -4168,6 +4535,99 @@ const defaultState = () => ({
 
 let state = defaultState();
 
+/* ============================================
+   PROFILO UTENTE — gestione tier didattici
+   ============================================ */
+const PROFILE_STORAGE_KEY = 'poetrify-user-profile';
+const PROFILE_LABELS = {
+  medie:    'Medie',
+  biennio:  'Biennio',
+  triennio: 'Triennio/Univ.'
+};
+const PROFILE_FULL_LABELS = {
+  medie:    'Studente delle medie',
+  biennio:  'Studente del biennio',
+  triennio: 'Triennio / Università'
+};
+
+function getUserProfile() {
+  try {
+    const v = localStorage.getItem(PROFILE_STORAGE_KEY);
+    if (v === 'medie' || v === 'biennio' || v === 'triennio') return v;
+  } catch (e) {}
+  return null;
+}
+
+function applyProfileToBody() {
+  const profile = getUserProfile();
+  if (profile) {
+    document.body.dataset.profile = profile;
+  } else {
+    delete document.body.dataset.profile;
+  }
+  updateProfileChip();
+}
+
+function updateProfileChip() {
+  const chip = document.getElementById('profile-chip');
+  if (!chip) return;
+  const profile = getUserProfile();
+  if (!profile) {
+    chip.style.display = 'none';
+    return;
+  }
+  chip.style.display = 'inline-flex';
+  chip.dataset.profile = profile;
+  const label = document.getElementById('profile-chip-label');
+  if (label) label.textContent = PROFILE_LABELS[profile] || profile;
+}
+
+function openProfileModal() {
+  const modal = document.getElementById('modal-profile');
+  if (!modal) return;
+  // Se nessun profilo è ancora scelto, "Decido dopo" rimane visibile ma comportamento sicuro
+  modal.classList.add('open');
+}
+
+function closeProfileModal() {
+  const modal = document.getElementById('modal-profile');
+  if (!modal) return;
+  modal.classList.remove('open');
+  // Se l'utente skippa al primo avvio, applichiamo un fallback prudente: triennio (tutto visibile)
+  if (!getUserProfile()) {
+    try { localStorage.setItem(PROFILE_STORAGE_KEY, 'triennio'); } catch (e) {}
+    applyProfileToBody();
+  }
+}
+
+function selectProfile(profile) {
+  if (!['medie', 'biennio', 'triennio'].includes(profile)) return;
+  const previous = getUserProfile();
+  try { localStorage.setItem(PROFILE_STORAGE_KEY, profile); } catch (e) {}
+  applyProfileToBody();
+  closeModal('modal-profile');
+
+  // Le medie sono vincolate a latino + guidata: adatta lo stato corrente in modo non distruttivo
+  if (profile === 'medie') {
+    if (state.meta.lingua !== 'latino') {
+      state.meta.lingua = 'latino';
+    }
+    if (state.mode !== 'guided') {
+      state.mode = 'guided';
+      if (!state.guidedStep) state.guidedStep = 1;
+    }
+    // se eravamo su un tab nascosto, rientra al brano
+    if (state.currentAnalysisTab === 'periodale') state.currentAnalysisTab = 'grammaticale';
+  }
+
+  if (typeof renderAll === 'function') renderAll();
+  if (previous && previous !== profile) {
+    showToast(`Profilo aggiornato → ${PROFILE_FULL_LABELS[profile]}`);
+  } else if (!previous) {
+    showToast(`Benvenuto · profilo ${PROFILE_FULL_LABELS[profile]}`);
+  }
+}
+
 function persistCurrent() {
   // Non salvare progetti vuoti (per evitare voci fantasma in archivio)
   const isEmpty = !state.meta.testoOriginale && !state.meta.titolo && !state.meta.autore && !state.meta.opera && (!state.sentences || state.sentences.length === 0);
@@ -4223,9 +4683,32 @@ function deleteProjectById(id) {
 /* 4. UTILITY */
 function splitTextIntoSentences(text) {
   if (!text || !text.trim()) return [];
-  const regex = /([^.!?·;]+[.!?·;]?)/g;
-  const matches = text.match(regex) || [];
-  return matches.map(s => s.trim()).filter(s => s.length > 0);
+  // Spezza SOLO sul punto fermo (.). Esclude i punti che fungono da abbreviativi:
+  // - una singola lettera maiuscola isolata prima del punto (es. M. Lucius, P. Cornelius, M.T. Cicero)
+  // - eventuali catene di iniziali (M.T.), riconosciute perché la lettera è preceduta da '.' o spazio o inizio
+  const isAbbreviation = (idx) => {
+    if (idx === 0) return false;
+    const c1 = text[idx - 1];
+    if (!/^[A-ZΑ-ΩΆΈΉΊΌΎΏ]$/.test(c1)) return false; // deve essere una lettera maiuscola (lat. e gr.)
+    if (idx === 1) return true; // "M." all'inizio del testo
+    const c2 = text[idx - 2];
+    // La lettera è isolata se prima c'è spazio, inizio frase, '.', '(' o '['
+    return /\s/.test(c2) || c2 === '.' || c2 === '(' || c2 === '[' || c2 === '«' || c2 === '"';
+  };
+
+  const sentences = [];
+  let buffer = '';
+  for (let i = 0; i < text.length; i++) {
+    buffer += text[i];
+    if (text[i] === '.' && !isAbbreviation(i)) {
+      const trimmed = buffer.trim();
+      if (trimmed.length > 0) sentences.push(trimmed);
+      buffer = '';
+    }
+  }
+  const tail = buffer.trim();
+  if (tail.length > 0) sentences.push(tail);
+  return sentences;
 }
 
 function makeSentence(text) {
@@ -5112,6 +5595,8 @@ function renderSidebarTabs() {
   let tabs;
   const hasTranslation = state.sentences.some(s => (s.translation || s.translationFinal || (s.ordoVerborum || []).length)) ||
                           state.meta.traduzione || state.meta.traduzioneBella;
+  const profile = getUserProfile();
+  const isMedie = profile === 'medie';
   if (state.mode === 'guided') {
     tabs = [
       { num: 1, letter: 'A', title: 'Brano', enabled: true,
@@ -5122,7 +5607,7 @@ function renderSidebarTabs() {
         badge: state.sentences.length > 0 ? `${Math.min(state.guidedStep || 1, 6)}/6` : '·' },
       { num: 5, letter: 'E', title: 'Traduzione',
         enabled: !!state.meta.testoOriginale,
-        hasContent: hasTranslation },
+        hasContent: hasTranslation, hideForMedie: true },
       { num: 4, letter: 'D', title: 'Archivio', enabled: true,
         hasContent: archiveCount > 0, badge: archiveCount },
     ];
@@ -5138,11 +5623,13 @@ function renderSidebarTabs() {
         hasContent: state.sentences.some(s => s.grammar.length || s.logic.length || s.periodale.length) },
       { num: 5, letter: 'E', title: 'Traduzione',
         enabled: !!state.meta.testoOriginale,
-        hasContent: hasTranslation },
+        hasContent: hasTranslation, hideForMedie: true },
       { num: 4, letter: 'D', title: 'Archivio', enabled: true,
         hasContent: archiveCount > 0, badge: archiveCount },
     ];
   }
+  // Per il profilo medie filtra le schede non pertinenti
+  if (isMedie) tabs = tabs.filter(t => !t.hideForMedie);
   list.innerHTML = tabs.map(t => `
     <li class="tab-item ${state.currentStep === t.num ? 'active' : ''} ${t.enabled ? '' : 'disabled'}"
         ${t.enabled ? `onclick="goToStep(${t.num})"` : ''}>
@@ -5299,7 +5786,7 @@ function renderStep3Html() {
       <div class="analysis-tabs">
         <button class="analysis-tab ${state.currentAnalysisTab === 'grammaticale' ? 'active' : ''}" onclick="switchAnalysisTab('grammaticale')">Grammaticale</button>
         <button class="analysis-tab ${state.currentAnalysisTab === 'logica' ? 'active' : ''}" onclick="switchAnalysisTab('logica')">Logica</button>
-        <button class="analysis-tab ${state.currentAnalysisTab === 'periodale' ? 'active' : ''}" onclick="switchAnalysisTab('periodale')">Sintattico-periodale</button>
+        <button class="analysis-tab profile-biennio-plus ${state.currentAnalysisTab === 'periodale' ? 'active' : ''}" onclick="switchAnalysisTab('periodale')">Sintattico-periodale</button>
       </div>
       <div id="analysis-content">${renderAnalysisContent(sentence)}</div>
       <div class="flex-between" style="margin-top: 24px;">
@@ -5538,35 +6025,62 @@ function isGuidedStepCompleteAllSentences(step) {
   return state.sentences.every(s => isGuidedStepComplete(step, s));
 }
 
+function getVisibleGuidedSteps() {
+  // Le medie saltano la tappa 4 (sintattico-periodale): rimangono 5 tappe
+  const profile = getUserProfile();
+  if (profile === 'medie') return GUIDED_STEPS_META.filter(s => s.num !== 4);
+  return GUIDED_STEPS_META.slice();
+}
+
+function clampVisibleGuidedStep(num) {
+  const visible = getVisibleGuidedSteps();
+  if (visible.find(s => s.num === num)) return num;
+  // se l'attuale è 4 ma è nascosta, salta avanti
+  for (let i = num; i <= 6; i++) {
+    if (visible.find(s => s.num === i)) return i;
+  }
+  for (let i = num; i >= 1; i--) {
+    if (visible.find(s => s.num === i)) return i;
+  }
+  return visible[0].num;
+}
+
 function renderGuidedWizard() {
   if (state.sentences.length === 0) {
     // Prima volta: facciamo la scomposizione automatica + transition al wizard
     return renderGuidedFirstRun();
   }
-  const currentStep = Math.max(1, Math.min(6, state.guidedStep || 1));
+  const visibleSteps = getVisibleGuidedSteps();
+  const totalSteps = visibleSteps.length;
+  let rawStep = Math.max(1, Math.min(6, state.guidedStep || 1));
+  const currentStep = clampVisibleGuidedStep(rawStep);
+  if (currentStep !== rawStep) state.guidedStep = currentStep;
   const meta = GUIDED_STEPS_META[currentStep - 1];
+  // Posizione 1-based fra le tappe visibili (per il "tappa X di N")
+  const currentVisibleIdx = visibleSteps.findIndex(s => s.num === currentStep);
+  const currentVisiblePos = currentVisibleIdx + 1;
 
-  const stepperHtml = GUIDED_STEPS_META.map(s => {
+  const stepperHtml = visibleSteps.map((s, i) => {
     const isActive = s.num === currentStep;
     const isDone = isGuidedStepCompleteAllSentences(s.num);
     const cls = `wizard-step ${isActive ? 'active' : ''} ${isDone ? 'completed' : ''}`;
     return `<button class="${cls}" onclick="goToGuidedStep(${s.num})">
-      <span class="wizard-step-num">${s.num}</span>
+      <span class="wizard-step-num">${i + 1}</span>
       <span class="wizard-step-label">${s.label}</span>
     </button>`;
   }).join('');
 
-  const completedCount = GUIDED_STEPS_META.filter(s => isGuidedStepCompleteAllSentences(s.num)).length;
-  const pct = Math.round((completedCount / 6) * 100);
+  const completedCount = visibleSteps.filter(s => isGuidedStepCompleteAllSentences(s.num)).length;
+  const pct = Math.round((completedCount / totalSteps) * 100);
 
   const header = `
     <div class="wizard-pane">
       <div class="wizard-header">
         <div>
-          <div class="wizard-eyebrow">Modalità guidata · tappa ${currentStep} di 6</div>
+          <div class="wizard-eyebrow">Modalità guidata · tappa ${currentVisiblePos} di ${totalSteps}</div>
           <h2 class="wizard-title">${escapeHtml(meta.title)}</h2>
         </div>
-        <div class="wizard-progress-pct"><strong>${completedCount}</strong>/6 tappe completate · ${pct}%</div>
+        <div class="wizard-progress-pct"><strong>${completedCount}</strong>/${totalSteps} tappe completate · ${pct}%</div>
       </div>
       <div class="wizard-stepper">${stepperHtml}</div>
       <div class="wizard-instructions">${meta.instructions}</div>
@@ -5584,14 +6098,19 @@ function renderGuidedWizard() {
     ? '✓ Tappa completata su tutte le frasi'
     : 'Quando hai finito questa tappa, passa alla successiva';
 
+  // Calcola prev/next fra le sole tappe visibili
+  const prevStepObj = currentVisibleIdx > 0 ? visibleSteps[currentVisibleIdx - 1] : null;
+  const nextStepObj = currentVisibleIdx < totalSteps - 1 ? visibleSteps[currentVisibleIdx + 1] : null;
+  const isMedie = getUserProfile() === 'medie';
+
   const nav = `
     <div class="wizard-nav">
       <div class="wizard-nav-info">${navInfo}</div>
       <div class="wizard-nav-buttons">
-        ${currentStep > 1 ? `<button class="btn btn-ghost btn-sm" onclick="goToGuidedStep(${currentStep - 1})">← Tappa precedente</button>` : ''}
-        ${currentStep < 6 ? `<button class="btn btn-primary btn-sm" onclick="goToGuidedStep(${currentStep + 1})">Tappa successiva (${GUIDED_STEPS_META[currentStep].label}) →</button>`
-                          : `<button class="btn btn-primary btn-sm" onclick="completeGuided()">✓ Concludi analisi guidata</button>`}
-        <button class="btn btn-ghost btn-sm" onclick="switchMode('free')" title="Passa alla modalità libera per usare tutti gli strumenti senza ordine">↔ Passa a libera</button>
+        ${prevStepObj ? `<button class="btn btn-ghost btn-sm" onclick="goToGuidedStep(${prevStepObj.num})">← Tappa precedente</button>` : ''}
+        ${nextStepObj ? `<button class="btn btn-primary btn-sm" onclick="goToGuidedStep(${nextStepObj.num})">Tappa successiva (${nextStepObj.label}) →</button>`
+                      : `<button class="btn btn-primary btn-sm" onclick="completeGuided()">✓ Concludi analisi guidata</button>`}
+        ${isMedie ? '' : `<button class="btn btn-ghost btn-sm" onclick="switchMode('free')" title="Passa alla modalità libera per usare tutti gli strumenti senza ordine">↔ Passa a libera</button>`}
       </div>
     </div>`;
 
@@ -5629,11 +6148,14 @@ function startGuidedSegmentation() {
 }
 
 function goToGuidedStep(num) {
-  state.guidedStep = Math.max(1, Math.min(6, num));
+  const clamped = Math.max(1, Math.min(6, num));
+  // Rispetta i filtri di profilo: per le medie la tappa 4 (sintattico-periodale) è nascosta
+  const safe = clampVisibleGuidedStep(clamped);
+  state.guidedStep = safe;
   state.guidedSentenceIdx = 0;
   // Allineo la tab interna dell'analisi (se l'utente passa a libera in seguito)
-  if (num === 2 || num === 6) state.currentAnalysisTab = 'grammaticale';
-  else if (num === 4 || num === 5) state.currentAnalysisTab = 'logica';
+  if (safe === 2 || safe === 6) state.currentAnalysisTab = 'grammaticale';
+  else if (safe === 4 || safe === 5) state.currentAnalysisTab = 'logica';
   persistCurrent();
   renderEditor();
   renderSidebarTabs();
@@ -5985,11 +6507,11 @@ let connSel = { sentenceId: null, tokenIdx: null, kind: null };
 /* ============================================
    MODALITÀ BATCH — taggare più parole con la stessa categoria
    ============================================ */
-let batchMode = { active: false, mode: null, dimension: null, value: null };
+let batchMode = { active: false, mode: null, dimension: null, value: null, tempSelection: [], tempSentenceId: null };
 
 function toggleBatchMode(mode) {
   if (batchMode.active && batchMode.mode === mode) {
-    batchMode = { active: false, mode: null, dimension: null, value: null };
+    batchMode = { active: false, mode: null, dimension: null, value: null, tempSelection: [], tempSentenceId: null };
   } else {
     // Reset altri stati transitori
     pending = { mode: null, sentenceId: null, tokenIdx: null };
@@ -6000,7 +6522,9 @@ function toggleBatchMode(mode) {
       active: true,
       mode: mode,
       dimension: mode === 'grammar' ? 'partOfSpeech' : 'funzione',
-      value: null
+      value: null,
+      tempSelection: [],
+      tempSentenceId: null,
     };
   }
   renderEditor();
@@ -6009,11 +6533,20 @@ function toggleBatchMode(mode) {
 function setBatchDimension(dim) {
   batchMode.dimension = dim;
   batchMode.value = null;
+  batchMode.tempSelection = [];
   renderEditor();
 }
 
 function setBatchValue(val) {
   batchMode.value = val || null;
+  // Cambio di valore: svuota la selezione temporanea perché era per la funzione precedente
+  batchMode.tempSelection = [];
+  renderEditor();
+}
+
+function clearBatchBlockSelection() {
+  batchMode.tempSelection = [];
+  batchMode.tempSentenceId = null;
   renderEditor();
 }
 
@@ -6058,7 +6591,7 @@ function getBatchValueOptions(dimension, lang) {
   return [];
 }
 
-function renderBatchBar(mode) {
+function renderBatchBar(mode, sentence) {
   if (!batchMode.active || batchMode.mode !== mode) return '';
   const lang = state.meta.lingua;
 
@@ -6096,26 +6629,49 @@ function renderBatchBar(mode) {
   }
 
   if (mode === 'logic') {
+    // Mostra l'attuale blocco selezionato (se presente) e i pulsanti di conferma
+    // Risolvi la frase corretta: prima quella passata dal tokenizer, poi quella registrata nel tempSentenceId,
+    // poi fallback all'idx di sessione (guidata o libera).
+    const tempSel = batchMode.tempSelection || [];
+    let targetSentence = sentence
+      || (batchMode.tempSentenceId ? state.sentences.find(s => s.id === batchMode.tempSentenceId) : null)
+      || state.sentences[state.currentSentenceIdx || state.guidedSentenceIdx || 0]
+      || state.sentences[0];
+    let blockPreview = '';
+    if (tempSel.length > 0 && targetSentence) {
+      const tokens = tokenizeSentence(targetSentence.original);
+      const sortedIdx = [...tempSel].sort((a, b) => a - b);
+      const phrase = sortedIdx.map(i => (tokens.find(t => t.idx === i) || {}).text).filter(Boolean).join(' ');
+      blockPreview = `<div class="batch-bar-hint" style="margin-top:8px;background:rgba(124,58,237,0.06);border-left-color:var(--poetrify-primary);">
+        <strong>Blocco in costruzione (${tempSel.length} parol${tempSel.length === 1 ? 'a' : 'e'}):</strong> «${escapeHtml(phrase)}»
+        <div style="display:inline-flex;gap:6px;margin-left:10px;flex-wrap:wrap;">
+          <button class="btn btn-primary btn-sm" onclick="confirmBatchLogicBlock('${targetSentence.id}')">✓ Conferma blocco come <em>${escapeHtml(batchMode.value || '...')}</em></button>
+          <button class="btn btn-ghost btn-sm" onclick="clearBatchBlockSelection()">↺ Svuota</button>
+        </div>
+      </div>`;
+    }
+
     return `
       <div class="batch-bar">
         <div class="batch-bar-header">
-          <span class="batch-bar-title">Modalità batch · logica</span>
+          <span class="batch-bar-title">Modalità batch · logica · costruzione blocchi</span>
           <button class="btn btn-ghost btn-sm" onclick="toggleBatchMode('logic')">✕ Esci dalla modalità batch</button>
         </div>
         <div class="batch-bar-controls">
           <div style="grid-column: 1 / -1;">
-            <label class="field-block-label">Funzione sintattica da assegnare</label>
+            <label class="field-block-label">Funzione sintattica da assegnare ai blocchi che costruirai</label>
             <select onchange="setBatchValue(this.value)">
               <option value="">— scegli una funzione —</option>
-              ${FUNZIONI_LOGICHE.map(f => `<option value="${escapeHtml(f)}" ${batchMode.value === f ? 'selected' : ''}>${escapeHtml(f)}</option>`).join('')}
+              ${renderFunzioneOptions(batchMode.value, new Set())}
             </select>
           </div>
         </div>
         <div class="batch-bar-hint">
           ${batchMode.value
-            ? `Clicca le parole che svolgono la funzione di <em>${escapeHtml(batchMode.value)}</em>. Ogni parola diventa un sintagma monoparola autonomo (per sintagmi multi-parola usa la modalità normale con Shift+click).`
-            : `Scegli una <strong>funzione sintattica</strong> (es. <em>Soggetto</em>, <em>Predicato verbale</em>, <em>Complemento oggetto</em>) per cominciare il batch tagging.`}
+            ? `Clicca <strong>una o più parole consecutive (o sparse)</strong> per comporre il <em>blocco-sintagma</em>. Poi premi <strong>«Conferma blocco»</strong>: viene creato <em>un solo sintagma</em> con tutte quelle parole come ${escapeHtml(batchMode.value)}. Per il blocco successivo basta ricominciare a cliccare — la funzione resta impostata, quindi puoi creare più <em>${escapeHtml(batchMode.value)}</em> distinti nello stesso brano.`
+            : `Scegli una <strong>funzione sintattica</strong> (es. <em>Complemento oggetto</em>) per cominciare. Poi cliccando le parole costruirai blocchi-sintagma multipli, ciascuno confermato singolarmente.`}
         </div>
+        ${blockPreview}
       </div>`;
   }
 
@@ -6155,34 +6711,16 @@ function applyBatchTag(sentenceId, tokenIdx) {
       // (es. assegnando caso, suggerisce che è un nome/aggettivo/pronome — non lo settiamo automaticamente per non sovrascrivere)
     }
   } else if (batchMode.mode === 'logic') {
-    // Cerca una entry MONO-token già esistente per questo tokenIdx
-    let entry = sentence.logic.find(e =>
-      Array.isArray(e.tokenIndices) && e.tokenIndices.length === 1 && e.tokenIndices[0] === tokenIdx);
-    if (entry && entry.funzione === batchMode.value) {
-      // Toggle: rimuovi l'entry
-      sentence.logic = sentence.logic.filter(e => e.id !== entry.id);
-    } else {
-      // Rimuovi il token da eventuali sintagmi multi-token preesistenti (non più conflitto)
-      sentence.logic.forEach(e => {
-        if (Array.isArray(e.tokenIndices) && e.tokenIndices.includes(tokenIdx) && e.tokenIndices.length > 1) {
-          e.tokenIndices = e.tokenIndices.filter(i => i !== tokenIdx);
-          // Aggiorna phrase ricostruendola
-          const orig = tokens.filter(t => e.tokenIndices.includes(t.idx)).map(t => t.text).join(' ');
-          e.phrase = orig;
-        }
-      });
-      // Rimuovi anche sintagmi mono-token con SAME token (se diversi da entry trovata)
-      sentence.logic = sentence.logic.filter(e =>
-        !(Array.isArray(e.tokenIndices) && e.tokenIndices.length === 1 && e.tokenIndices[0] === tokenIdx && (!entry || e.id !== entry.id))
-      );
-      if (!entry) {
-        entry = makeEntry('logic');
-        entry.phrase = tok.text;
-        entry.tokenIndices = [tokenIdx];
-        insertEntrySorted(sentence.logic, entry, 'logic');
-      }
-      entry.funzione = batchMode.value;
+    // Accumula i token nel blocco corrente (selezione temporanea)
+    // Il blocco verrà confermato come UN SINTAGMA con "Conferma blocco"
+    if (batchMode.tempSentenceId !== sentenceId) {
+      // Cambio di frase: svuota la selezione precedente
+      batchMode.tempSelection = [];
+      batchMode.tempSentenceId = sentenceId;
     }
+    const i = batchMode.tempSelection.indexOf(tokenIdx);
+    if (i >= 0) batchMode.tempSelection.splice(i, 1); // toggle off
+    else batchMode.tempSelection.push(tokenIdx);       // toggle on
   }
   persistCurrent();
   renderEditor();
@@ -6200,6 +6738,58 @@ function tokenHasBatchValue(tok, mode) {
   return false;
 }
 
+function tokenIsBatchBlockSelected(tok) {
+  return batchMode.active && batchMode.mode === 'logic'
+    && Array.isArray(batchMode.tempSelection) && batchMode.tempSelection.includes(tok.idx);
+}
+
+function confirmBatchLogicBlock(sentenceId) {
+  if (!batchMode.active || batchMode.mode !== 'logic') return;
+  if (!batchMode.value) { showToast('Scegli prima la funzione sintattica'); return; }
+  const indices = (batchMode.tempSelection || []).slice();
+  if (indices.length === 0) { showToast('Clicca almeno una parola per il blocco'); return; }
+  // Usa l'id della frase su cui la selezione è stata fatta (più affidabile)
+  const effectiveSentenceId = batchMode.tempSentenceId || sentenceId;
+  const sentence = state.sentences.find(s => s.id === effectiveSentenceId);
+  if (!sentence) {
+    showToast('Frase non trovata · selezione persa, riprova');
+    batchMode.tempSelection = [];
+    batchMode.tempSentenceId = null;
+    renderEditor();
+    return;
+  }
+  const sortedIdx = indices.sort((a, b) => a - b);
+  const tokens = tokenizeSentence(sentence.original);
+  const phrase = sortedIdx.map(i => (tokens.find(t => t.idx === i) || {}).text).filter(Boolean).join(' ');
+
+  // Rimuovi i token selezionati da qualsiasi sintagma esistente (per evitare sovrapposizioni)
+  (sentence.logic || []).forEach(e => {
+    if (Array.isArray(e.tokenIndices)) {
+      e.tokenIndices = e.tokenIndices.filter(i => !sortedIdx.includes(i));
+    }
+  });
+  // Rimuovi entries svuotate
+  sentence.logic = (sentence.logic || []).filter(e =>
+    (Array.isArray(e.tokenIndices) && e.tokenIndices.length > 0) || e.isElliptical
+  );
+
+  // Crea un NUOVO sintagma unico per il blocco
+  const entry = makeEntry('logic');
+  entry.phrase = phrase;
+  entry.tokenIndices = sortedIdx;
+  entry.funzione = batchMode.value;
+  insertEntrySorted(sentence.logic, entry, 'logic');
+
+  // Resetta la selezione temporanea per poter creare il PROSSIMO blocco con la stessa funzione
+  batchMode.tempSelection = [];
+  batchMode.tempSentenceId = null;
+
+  persistCurrent();
+  renderEditor();
+  renderSidebarTabs();
+  showToast(`Sintagma «${phrase}» creato (${batchMode.value})`);
+}
+
 function countBatchApplied(sentence, mode) {
   if (!batchMode.active || batchMode.mode !== mode || !batchMode.value) return 0;
   if (mode === 'grammar') {
@@ -6209,6 +6799,63 @@ function countBatchApplied(sentence, mode) {
     return (sentence.logic || []).filter(e => e.funzione === batchMode.value).length;
   }
   return 0;
+}
+
+/* Mappa: per ogni dimensione grammaticale, le parti del discorso candidate */
+function getBatchCandidatePoS(dimension) {
+  const map = {
+    partOfSpeech: null, // tutti sono candidati
+    caso:         ['Sostantivo','Aggettivo','Pronome','Articolo','Numerale'],
+    numero:       ['Sostantivo','Aggettivo','Pronome','Articolo','Numerale','Verbo'],
+    genere:       ['Sostantivo','Aggettivo','Pronome','Articolo','Numerale'],
+    declinazione: ['Sostantivo'],
+    classe:       ['Aggettivo'],
+    grado:        ['Aggettivo','Avverbio'],
+    coniugazione: ['Verbo'],
+    verboForma:   ['Verbo'],
+    tempo:        ['Verbo'],
+    modo:         ['Verbo'],
+    persona:      ['Verbo','Pronome'],
+    diatesi:      ['Verbo'],
+    pronomeTipo:  ['Pronome'],
+  };
+  return map[dimension]; // null = tutti, [] = nessuno, [...] = elenco
+}
+
+function isTokenBatchCandidate(tok) {
+  if (!batchMode.active || batchMode.mode !== 'grammar' || !batchMode.dimension) return false;
+  const candPos = getBatchCandidatePoS(batchMode.dimension);
+  if (candPos === null) return true; // tutte le parole candidate
+  if (!tok.grammarEntry || !tok.grammarEntry.partOfSpeech) return false;
+  return candPos.includes(tok.grammarEntry.partOfSpeech);
+}
+
+/* Restituisce lo stato del token nella modalità batch grammatica:
+   'applied'   → ha già il valore batch corrente (✓)
+   'occupied'  → ha già un altro valore per la stessa dimensione (mutuamente esclusivo)
+   'candidate' → PoS adatta, dimensione ancora vuota → in evidenza
+   'neutral'   → fuori dal pool di candidati o senza PoS
+*/
+function getTokenBatchState(tok) {
+  if (!batchMode.active || batchMode.mode !== 'grammar' || !batchMode.dimension) return 'neutral';
+  const ge = tok.grammarEntry;
+  const dim = batchMode.dimension;
+  const val = batchMode.value;
+
+  // Già assegnato col valore corrente
+  if (ge && val && ge[dim] === val) return 'applied';
+  // Già assegnato con un valore DIVERSO per la stessa dimensione: mutuamente esclusivo
+  if (ge && val && ge[dim] && ge[dim] !== val) return 'occupied';
+  // Sostantivo + dim = 'numero' + tantum impostato → categoria di fatto bloccata
+  if (ge && dim === 'numero' && ge.tantum === 'singularia' && val === 'Plurale') return 'occupied';
+  if (ge && dim === 'numero' && ge.tantum === 'pluralia'  && val === 'Singolare') return 'occupied';
+
+  // Verifica se la PoS è candidata per questa dimensione
+  const candPos = getBatchCandidatePoS(dim);
+  if (candPos === null) return 'candidate';
+  if (!ge || !ge.partOfSpeech) return 'neutral';
+  if (candPos.includes(ge.partOfSpeech)) return 'candidate';
+  return 'neutral';
 }
 
 /* ============================================
@@ -6365,7 +7012,7 @@ function renderConcordances(sentenceId, entry, lang) {
   let governedCaseField = '';
   if (isVerb) {
     governedCaseField = `
-      <div class="field-block" style="margin-bottom: 10px;">
+      <div class="field-block profile-triennio-only" style="margin-bottom: 10px;">
         <label class="field-block-label">Reggenza del verbo · caso retto (oltre o invece dell'accusativo)</label>
         <select class="field-select" onchange="updateGrammarField('${sentenceId}','${entry.id}','reggenza',this.value)">
           <option value="" ${!entry.reggenza ? 'selected' : ''}>— accusativo standard (default per OD) —</option>
@@ -6429,7 +7076,7 @@ function renderTantumField(sentenceId, entry) {
   if (entry.partOfSpeech !== 'Sostantivo') return '';
   const cur = entry.tantum || '';
   return `
-    <div class="field-block" style="grid-column: 1/-1;">
+    <div class="field-block profile-triennio-only" style="grid-column: 1/-1;">
       <label class="field-block-label">Numero invariabile · Tantum</label>
       <div class="tantum-options">
         <label><input type="radio" name="tantum-${entry.id}" value="" ${cur === '' ? 'checked' : ''} onchange="updateGrammarField('${sentenceId}','${entry.id}','tantum','')"> Variabile (numero normale, singolare e plurale)</label>
@@ -6781,7 +7428,15 @@ function renderTranslationSentenceCard(sentence, idx) {
 }
 
 function renderOrdoChip(sentenceId, ordo, idx) {
-  const sourceTag = ordo.sourceLogicId ? '<span class="ordo-chip-source">da logica</span>' : '';
+  // Etichetta: se proviene dalla logica e ha funzione, mostra la funzione (es. "Compl. oggetto")
+  let sourceTag = '';
+  if (ordo.sourceLogicId) {
+    if (ordo.funzione) {
+      sourceTag = `<span class="ordo-chip-source" title="Sintagma importato dalla logica">${escapeHtml(ordo.funzione)}</span>`;
+    } else {
+      sourceTag = '<span class="ordo-chip-source">da logica</span>';
+    }
+  }
   return `
     <div class="ordo-chip" draggable="true"
          ondragstart="onOrdoDragStart(event, '${sentenceId}', '${ordo.id}')"
@@ -6814,7 +7469,7 @@ function updateSentenceTranslationFinal(sentenceId, value) {
 function addOrdoElement(sentenceId) {
   const sentence = state.sentences.find(s => s.id === sentenceId);
   if (!sentence) return;
-  sentence.ordoVerborum = sentence.ordoVerborum || [];
+  if (!Array.isArray(sentence.ordoVerborum)) sentence.ordoVerborum = [];
   sentence.ordoVerborum.push(makeOrdoElement('', ''));
   persistCurrent();
   renderEditor();
@@ -6843,21 +7498,40 @@ function deleteOrdoElement(sentenceId, ordoId) {
 function importOrdoFromLogic(sentenceId) {
   const sentence = state.sentences.find(s => s.id === sentenceId);
   if (!sentence) return;
-  const existing = sentence.ordoVerborum || [];
+  // Inizializzazione difensiva (frasi salvate prima dell'aggiunta del campo)
+  if (!Array.isArray(sentence.ordoVerborum)) sentence.ordoVerborum = [];
   // Prendi i sintagmi della logica ordinati per posizione nel testo
   const sintagmi = (sentence.logic || []).slice().sort((a, b) => entrySortKey(a, 'logic') - entrySortKey(b, 'logic'));
-  if (sintagmi.length === 0) { showToast('Nessun sintagma nella logica · creane qualcuno nella scheda C / Analisi'); return; }
+  if (sintagmi.length === 0) {
+    showToast('Nessun sintagma nella logica · creane qualcuno nella scheda C / Analisi');
+    return;
+  }
   // Aggiungi solo quelli non già importati (in base a sourceLogicId)
-  const existingSources = new Set(existing.map(o => o.sourceLogicId).filter(Boolean));
+  const existingSources = new Set(sentence.ordoVerborum.map(o => o.sourceLogicId).filter(Boolean));
+  const tokens = tokenizeSentence(sentence.original);
   const added = [];
   sintagmi.forEach(l => {
     if (existingSources.has(l.id)) return;
-    const o = makeOrdoElement(l.phrase, '', l.id);
+    // Ricostruisci la phrase dalla tokenIndices della logica (fonte sempre aggiornata)
+    let phrase = l.phrase || '';
+    if (Array.isArray(l.tokenIndices) && l.tokenIndices.length > 0) {
+      const sortedIdx = [...l.tokenIndices].sort((a, b) => a - b);
+      const rebuilt = sortedIdx.map(i => (tokens.find(t => t.idx === i) || {}).text).filter(Boolean).join(' ');
+      if (rebuilt) phrase = rebuilt;
+    }
+    // Etichetta funzione (utile per non confondersi quando si traduce)
+    const italianHint = ''; // lasciamo vuoto; l'utente compila il valore italiano
+    const o = makeOrdoElement(phrase, italianHint, l.id);
+    // Aggiungi anche metadata utili per la traduzione
+    if (l.funzione) o.funzione = l.funzione;
     sentence.ordoVerborum.push(o);
     added.push(o);
   });
-  if (added.length === 0) showToast('I sintagmi della logica sono già stati importati');
-  else showToast(`Importati ${added.length} sintagm${added.length === 1 ? 'a' : 'i'} dalla logica`);
+  if (added.length === 0) {
+    showToast('Tutti i sintagmi della logica sono già stati importati');
+  } else {
+    showToast(`Importati ${added.length} sintagm${added.length === 1 ? 'a' : 'i'} dalla logica`);
+  }
   persistCurrent();
   renderEditor();
   renderSidebarTabs();
@@ -7092,9 +7766,9 @@ function renderTokenizer(sentence, mode) {
   const batchActive = batchMode.active && batchMode.mode === mode;
   const supportsBatch = mode === 'grammar' || mode === 'logic';
   const batchToggleBtn = supportsBatch
-    ? `<button class="batch-toggle-btn ${batchActive ? 'active' : ''}" onclick="toggleBatchMode('${mode}')" title="Tagga più parole con la stessa categoria">Modalità batch</button>`
+    ? `<button class="batch-toggle-btn profile-biennio-plus ${batchActive ? 'active' : ''}" onclick="toggleBatchMode('${mode}')" title="Tagga più parole con la stessa categoria">Modalità batch</button>`
     : '';
-  const batchBar = batchActive ? renderBatchBar(mode) : '';
+  const batchBar = batchActive ? renderBatchBar(mode, sentence) : '';
   const batchStats = (batchActive && batchMode.value)
     ? `<div class="batch-stats" style="margin-bottom:10px;">Già taggate con questa categoria: <strong>${countBatchApplied(sentence, mode)}</strong> parol${countBatchApplied(sentence, mode) === 1 ? 'a' : 'e'}</div>`
     : '';
@@ -7130,7 +7804,30 @@ function renderTokenChip(sentence, tok, mode) {
   let inlineStyle = '';
 
   if (mode === 'grammar') {
-    if (tok.grammarEntry && tok.grammarEntry.partOfSpeech) {
+    // BATCH MODE: l'anteprima nasconde le altre categorie; mostra solo ✓, candidati pertinenti e occupati
+    if (batchMode.active && batchMode.mode === 'grammar') {
+      classes.push('token-batch-mode');
+      const batchState = getTokenBatchState(tok);
+      if (batchState === 'applied') {
+        classes.push('batch-applied');
+        marker = `<span class="batch-check" title="Già taggato con ${batchMode.value}">✓</span>`;
+        title = `Già ${batchMode.dimension} = ${batchMode.value} · click per rimuovere`;
+      } else if (batchState === 'occupied') {
+        // Categoria mutuamente esclusiva già occupata da un altro valore (es. genere=Femminile quando batch è Maschile)
+        classes.push('batch-occupied');
+        const existing = tok.grammarEntry ? tok.grammarEntry[batchMode.dimension] : '';
+        const ttExist = existing || (tok.grammarEntry && tok.grammarEntry.tantum ? '(tantum)' : '');
+        title = `${batchMode.dimension} già impostato come «${ttExist}» (mutuamente esclusivo)`;
+        marker = `<span class="batch-occupied-mark" title="${ttExist}">${posShort(tok.grammarEntry.partOfSpeech) || '·'}</span>`;
+      } else if (batchState === 'candidate') {
+        classes.push('batch-candidate');
+        title = `Candidato per ${batchMode.dimension} · click per assegnare ${batchMode.value || ''}`;
+      } else {
+        classes.push('token-untagged');
+        title = `Non rilevante per ${batchMode.dimension}`;
+      }
+      onClick = `onclick="onGrammarTokenClick('${sentence.id}', ${tok.idx})"`;
+    } else if (tok.grammarEntry && tok.grammarEntry.partOfSpeech) {
       const group = caseGroupForGrammarEntry(tok.grammarEntry);
       classes.push('case-' + group);
       classes.push('token-accent-start'); // un grammar token = un'entry, sempre "inizio"
@@ -7147,7 +7844,7 @@ function renderTokenChip(sentence, tok, mode) {
     if (pending.mode === 'grammar' && pending.sentenceId === sentence.id && pending.tokenIdx === tok.idx) {
       classes.push('token-pending');
     }
-    onClick = `onclick="onGrammarTokenClick('${sentence.id}', ${tok.idx})"`;
+    if (!onClick) onClick = `onclick="onGrammarTokenClick('${sentence.id}', ${tok.idx})"`;
   } else if (mode === 'logic') {
     if (tok.logicEntry && tok.logicEntry.funzione) {
       const group = funzioneToCaseGroup(tok.logicEntry.funzione);
@@ -7192,10 +7889,17 @@ function renderTokenChip(sentence, tok, mode) {
     onClick = `onclick="onPeriodaleTokenClick(event, '${sentence.id}', ${tok.idx})"`;
   }
 
-  // BATCH MODE: aggiungi indicatore visivo se il token ha già il valore batch
-  if (batchMode.active && batchMode.mode === mode && batchMode.value && tokenHasBatchValue(tok, mode)) {
+  // BATCH MODE: indicatore visivo per token che ha già il valore batch (per modalità logica
+  // la classe 'batch-applied' è già impostata sopra nel ramo logica; la aggiungiamo qui per grammar
+  // se non già aggiunta da token-batch-mode)
+  if (batchMode.active && batchMode.mode === mode && batchMode.value && tokenHasBatchValue(tok, mode) && !classes.includes('batch-applied')) {
     classes.push('batch-applied');
     marker += '<span class="batch-check" title="Già taggato">✓</span>';
+  }
+
+  // BATCH LOGICA: token nel blocco di costruzione corrente
+  if (tokenIsBatchBlockSelected(tok)) {
+    classes.push('batch-block-selected');
   }
 
   return `<span class="${classes.join(' ')}"${inlineStyle} ${onClick} title="${title}">${escapeHtml(tok.text)}${marker}</span>`;
@@ -7311,7 +8015,7 @@ function renderLogicActionBar(sentence) {
       <span class="target-word">${escapeHtml(phrase)}</span>
       <select id="pending-logic-select">
         <option value="">— scegli funzione sintattica —</option>
-        ${FUNZIONI_LOGICHE.map(f => `<option value="${escapeHtml(f)}" ${f === currentFn ? 'selected' : ''}>${escapeHtml(f)}</option>`).join('')}
+        ${renderFunzioneOptions(currentFn, new Set())}
       </select>
       <button class="btn btn-primary btn-sm" onclick="confirmPendingLogic('${sentence.id}')">${existingEntry ? 'Aggiorna' : 'Crea sintagma'}</button>
       ${existingEntry ? `<button class="btn btn-danger-soft btn-sm" onclick="removeLogicEntryById('${sentence.id}', '${existingEntry.id}')">Rimuovi</button>` : ''}
@@ -7540,76 +8244,117 @@ function renderSyntaxTree(sentence) {
     return `<div class="syntax-tree-wrap"><div class="syntax-tree-header"><span class="syntax-tree-title">Albero sintattico</span></div><div class="syntax-tree-empty">Nessuna proposizione ancora analizzata. Costruiscine almeno una col selettore qui sopra per veder crescere l'albero.</div></div>`;
   }
 
-  // Calcola il "tree parent" effettivo di ogni proposizione
-  // Coordinate: si appoggiano sull'ancora (il primo non-coord risalendo la catena dipendeDa)
-  // e diventano fratelli dell'ancora nel tree
-  const idToEntry = new Map(annotated.map(p => [p.id, p]));
-  const treeParentOf = new Map();
-  annotated.forEach(p => {
-    if (p.ruolo === 'Principale' || p.ruolo === 'principale' || !p.dipendeDa) {
-      treeParentOf.set(p.id, null);
-      return;
-    }
-    const anchor = periodaleAnchorOf(p, annotated);
-    if (p.ruolo === 'Coordinata' || p.ruolo === 'coordinata') {
-      // sib dell'ancora → tree parent = dipendeDa dell'ancora (o null)
-      treeParentOf.set(p.id, anchor.dipendeDa || null);
+  // Raccolgo i ROOT: principali (no dipendeDa) o senza ancora a cui appoggiarsi
+  const roots = annotated.filter(p => {
+    const r = (p.ruolo || '').toLowerCase();
+    if (r === 'principale' || !p.dipendeDa) return true;
+    // Coordinate o subordinate orfane (dipendeDa non trovato): trattate come roots
+    return !annotated.some(x => x.id === p.dipendeDa);
+  });
+
+  const visited = new Set();
+  // I roots che sono coordinate vanno raggruppati con l'eventuale principale del cluster
+  // Per semplicità raggruppo i root: prendo come ancora il primo non-coord, oppure il primo della catena
+  const rootAnchors = [];
+  roots.forEach(r => {
+    if (visited.has(r.id)) return;
+    const ru = (r.ruolo || '').toLowerCase();
+    if (ru === 'principale' || ru === '') {
+      rootAnchors.push(r);
+    } else if (ru === 'coordinata') {
+      // È una coordinata orfana → la tratto come ancora di se stessa
+      rootAnchors.push(r);
     } else {
-      treeParentOf.set(p.id, p.dipendeDa || null);
+      rootAnchors.push(r);
     }
   });
 
-  // Children index per costruire ricorsivamente
-  const childrenOf = new Map();
-  annotated.forEach(p => {
-    const tp = treeParentOf.get(p.id);
-    if (!childrenOf.has(tp)) childrenOf.set(tp, []);
-    childrenOf.get(tp).push(p);
-  });
-
-  const roots = childrenOf.get(null) || [];
-  // Render ricorsivo
-  function renderNode(p) {
-    const c = PERIODALE_LEVEL[Math.min(p._level, 7)];
-    const ruoloLabel = (p.ruolo || '').toLowerCase();
-    const sigStyle = `background:${c.bg};border-color:${c.border};color:${c.color};`;
-    const conn = p.connettivo
-      ? `<div class="tree-card-connettivo"><strong>${escapeHtml(p.connettivo)}</strong></div>`
-      : '';
-    const modoLabel = p.modo ? `<div class="tree-card-modo">${escapeHtml(p.modo)}</div>` : '';
-    const textPreview = (p.text || '').length > 60 ? p.text.substring(0, 60) + '…' : (p.text || '');
-    const childrenList = childrenOf.get(p.id) || [];
-    const childrenHtml = childrenList.length > 0
-      ? `<ul>${childrenList.map(renderNode).join('')}</ul>`
-      : '';
-    return `<li>
-      <div class="tree-card" data-ruolo="${ruoloLabel}" onclick="scrollToPeriodaleEntry('${p.id}')" title="Clicca per individuare la voce nell'elenco">
-        <div class="tree-card-header">
-          <span class="tree-card-sigla" style="${sigStyle}">${p._sigla}</span>
-          <span class="tree-card-ruolo">${ruoloLabel || '—'}</span>
-        </div>
-        ${p.tipo ? `<div class="tree-card-tipo">${escapeHtml(p.tipo)}</div>` : ''}
-        ${textPreview ? `<div class="tree-card-text">«${escapeHtml(textPreview)}»</div>` : ''}
-        ${conn}
-        ${modoLabel}
-      </div>
-      ${childrenHtml}
-    </li>`;
-  }
-
-  const hasCoordRoots = roots.filter(r => r.ruolo === 'coordinata' || r.ruolo === 'Coordinata').length > 0 && roots.length > 1;
-  const rootsUl = `<ul${hasCoordRoots ? ' class="has-coord-roots"' : ''}>${roots.map(renderNode).join('')}</ul>`;
+  const rootHtml = rootAnchors.map(p => renderTreeClusterRow(p, annotated, visited)).join('');
 
   const legend = PERIODALE_LEVEL.slice(0, Math.min(8, annotated.reduce((m, p) => Math.max(m, p._level), 0) + 1))
-    .map((c, i) => `<span class="swatch" style="background:${c.bg};border-color:${c.border};color:${c.color};">${c.letter}</span>`).join('');
+    .map((c) => `<span class="swatch" style="background:${c.bg};border-color:${c.border};color:${c.color};">${c.letter}</span>`).join('');
 
   return `
     <div class="syntax-tree-wrap">
       <div class="syntax-tree-header">
-        <span class="syntax-tree-title">Albero sintattico · ${annotated.length} proposizion${annotated.length === 1 ? 'e' : 'i'}</span>
+        <span class="syntax-tree-title">Albero sintattico · ${annotated.length} proposizion${annotated.length === 1 ? 'e' : 'i'} · <em>coordinate in orizzontale, subordinate in verticale</em></span>
         <div class="syntax-tree-legend">${legend}</div>
       </div>
-      <div class="syntax-tree">${rootsUl}</div>
+      <div class="syntax-tree">${rootHtml}</div>
+    </div>`;
+}
+
+/* Rendering di un cluster orizzontale (anchor + sue coordinate) e sotto le rispettive subordinate */
+function renderTreeClusterRow(anchor, allProps, visited) {
+  if (visited.has(anchor.id)) return '';
+
+  // Raccogli i membri del cluster: anchor + tutte le coordinate che fanno catena
+  const members = [anchor];
+  visited.add(anchor.id);
+  let added = true;
+  while (added) {
+    added = false;
+    allProps.forEach(p => {
+      const ru = (p.ruolo || '').toLowerCase();
+      if (ru !== 'coordinata') return;
+      if (visited.has(p.id)) return;
+      // È coordinata di uno dei membri attuali?
+      if (members.some(m => m.id === p.dipendeDa)) {
+        members.push(p);
+        visited.add(p.id);
+        added = true;
+      }
+    });
+  }
+
+  const memberCols = members.map((member, i) => {
+    const sep = i > 0 ? '<span class="coord-line" title="coordinazione"></span>' : '';
+    return sep + renderTreeMemberColumn(member, allProps, visited);
+  }).join('');
+
+  return `<div class="cluster-row">${memberCols}</div>`;
+}
+
+/* Una colonna: card del membro in alto, eventuali subordinate sotto */
+function renderTreeMemberColumn(prop, allProps, visited) {
+  // Subordinate dirette di questo prop (escluse coords, che sono già nel cluster)
+  const subs = allProps.filter(p => {
+    const r = (p.ruolo || '').toLowerCase();
+    return r === 'subordinata' && p.dipendeDa === prop.id && !visited.has(p.id);
+  });
+
+  // Ogni subordinata può a sua volta avere coordinate (forma un proprio cluster) e subordinate
+  const subsHtml = subs.length > 0
+    ? `<div class="sub-children">${subs.map(s => renderTreeClusterRow(s, allProps, visited)).join('')}</div>`
+    : '';
+
+  return `
+    <div class="member-column">
+      <div class="card-wrap">${renderTreePropCard(prop)}</div>
+      ${subsHtml}
+    </div>`;
+}
+
+/* Card visiva di una proposizione */
+function renderTreePropCard(p) {
+  const c = PERIODALE_LEVEL[Math.min(p._level, 7)];
+  const ruoloLabel = (p.ruolo || '').toLowerCase();
+  const sigStyle = `background:${c.bg};border-color:${c.border};color:${c.color};`;
+  const conn = p.connettivo
+    ? `<div class="tree-card-connettivo"><strong>${escapeHtml(p.connettivo)}</strong></div>`
+    : '';
+  const modoLabel = p.modo ? `<div class="tree-card-modo">${escapeHtml(p.modo)}</div>` : '';
+  const textPreview = (p.text || '').length > 60 ? p.text.substring(0, 60) + '…' : (p.text || '');
+  return `
+    <div class="tree-card" data-ruolo="${ruoloLabel}" onclick="scrollToPeriodaleEntry('${p.id}')" title="Clicca per individuare la voce nell'elenco">
+      <div class="tree-card-header">
+        <span class="tree-card-sigla" style="${sigStyle}">${p._sigla}</span>
+        <span class="tree-card-ruolo">${ruoloLabel || '—'}</span>
+      </div>
+      ${p.tipo ? `<div class="tree-card-tipo">${escapeHtml(p.tipo)}</div>` : ''}
+      ${textPreview ? `<div class="tree-card-text">«${escapeHtml(textPreview)}»</div>` : ''}
+      ${conn}
+      ${modoLabel}
     </div>`;
 }
 
@@ -7724,7 +8469,7 @@ function renderLemmaSection(sentenceId, entry, lang) {
     <div class="lemma-section">
       <div class="lemma-header">
         <span class="lemma-title">Lemma · voce da cercare sul vocabolario</span>
-        <label class="lemma-exception-toggle" title="Attiva per inserire manualmente lemma, tema e desinenza (utile per voci irregolari)">
+        <label class="lemma-exception-toggle profile-biennio-plus" title="Attiva per inserire manualmente lemma, tema e desinenza (utile per voci irregolari)">
           <input type="checkbox" ${isCustom ? 'checked' : ''} onchange="toggleLemmaCustom('${sentenceId}', '${entry.id}')">
           ★ Eccezione
         </label>
@@ -7996,12 +8741,18 @@ function renderConditionalField(sentenceId, entry, field, entryType) {
 
   let controlHtml = '';
   if (mode === 'select' && canToggle) {
-    const optsHtml = field.options.map(opt => {
-      const isSugg = suggSet.has(opt);
-      const cls = isSugg ? 'suggested' : (suggSet.size > 0 ? 'not-suggested' : '');
-      const marker = isSugg ? '★ ' : '';
-      return `<option value="${escapeHtml(opt)}" ${value === opt ? 'selected' : ''} class="${cls}">${marker}${escapeHtml(opt)}</option>`;
-    }).join('');
+    let optsHtml;
+    if (entryType === 'logic' && field.key === 'funzione') {
+      // Dropdown raggruppato per caso (Nominativo/Accusativo/Genitivo/Dativo/Ablativo/...)
+      optsHtml = renderFunzioneOptions(value, suggSet);
+    } else {
+      optsHtml = field.options.map(opt => {
+        const isSugg = suggSet.has(opt);
+        const cls = isSugg ? 'suggested' : (suggSet.size > 0 ? 'not-suggested' : '');
+        const marker = isSugg ? '★ ' : '';
+        return `<option value="${escapeHtml(opt)}" ${value === opt ? 'selected' : ''} class="${cls}">${marker}${escapeHtml(opt)}</option>`;
+      }).join('');
+    }
     controlHtml = `
       <select class="field-select" onchange="${updateFn}('${sentenceId}', '${entry.id}', '${field.key}', this.value)">
         <option value="">— scegli —</option>
@@ -8106,6 +8857,11 @@ function onTestoChange(v) { state.meta.testoOriginale = v; persistCurrent(); ren
 function onTraduzioneChange(v) { state.meta.traduzione = v; persistCurrent(); renderPreview(); }
 function onMetaChange(field, v) { state.meta[field] = v; persistCurrent(); renderPreview(); }
 function setLingua(lang) {
+  // Profilo medie: solo latino
+  if (getUserProfile() === 'medie' && lang !== 'latino') {
+    showToast('Il profilo Medie lavora solo sul latino — cambia profilo dalla pastiglia in alto a destra');
+    return;
+  }
   state.meta.lingua = lang;
   persistCurrent();
   syncTopbar();
@@ -8134,6 +8890,11 @@ function newProject() {
   if (state.meta.testoOriginale || state.sentences.length > 0) {
     if (!confirm('Avviare un nuovo progetto? Salva prima il corrente se non l\'hai già fatto.')) return;
   }
+  // Per gli studenti delle medie la modalità è già fissata su guidata + latino
+  if (getUserProfile() === 'medie') {
+    selectMode('guided');
+    return;
+  }
   // Apri il modale di scelta modalità
   document.getElementById('modal-mode').classList.add('open');
 }
@@ -8143,8 +8904,13 @@ function selectMode(mode) {
   state = defaultState();
   state.mode = (mode === 'guided') ? 'guided' : 'free';
   state.guidedStep = 1;
+  // Vincoli profilo medie: solo latino + guidata
+  if (getUserProfile() === 'medie') {
+    state.meta.lingua = 'latino';
+    state.mode = 'guided';
+  }
   renderAll();
-  if (mode === 'guided') {
+  if (state.mode === 'guided') {
     showToast('Modalità guidata avviata · inserisci il testo per cominciare');
   } else {
     showToast('Modalità libera avviata');
@@ -8467,11 +9233,25 @@ function removeTokenAssignment(sentenceId, type, tokenIdx) {
 }
 
 function onLogicTokenClick(event, sentenceId, tokenIdx) {
-  // Modalità batch logica: applica funzione corrente al token (entry monoparola)
+  // Modalità batch logica: aggiungi/rimuovi token al blocco in costruzione
   if (batchMode.active && batchMode.mode === 'logic') {
     if (!batchMode.value) {
       showToast('Scegli prima una funzione dalla barra batch');
       return;
+    }
+    // Shift+click: estendi a un intervallo
+    if (event && event.shiftKey && Array.isArray(batchMode.tempSelection) && batchMode.tempSelection.length > 0 && batchMode.tempSentenceId === sentenceId) {
+      const sentence = state.sentences.find(s => s.id === sentenceId);
+      if (sentence) {
+        const min = Math.min(Math.min.apply(null, batchMode.tempSelection), tokenIdx);
+        const max = Math.max(Math.max.apply(null, batchMode.tempSelection), tokenIdx);
+        const toks = tokenizeSentence(sentence.original);
+        const range = toks.filter(t => t.kind === 'word' && t.idx >= min && t.idx <= max).map(t => t.idx);
+        const set = new Set([...batchMode.tempSelection, ...range]);
+        batchMode.tempSelection = [...set];
+        renderEditor();
+        return;
+      }
     }
     applyBatchTag(sentenceId, tokenIdx);
     return;
@@ -8616,32 +9396,56 @@ function fileName(ext) {
 }
 
 /* ============================================
-   EXPORT — palette inline per resa cross-tool
+   EXPORT — palette inline ottimizzata per Word/PDF/PNG
+   Colori scelti per ALTO CONTRASTO testo/sfondo (testo scuro saturo,
+   sfondo tinta pastello chiarissima, bordi marcati).
    ============================================ */
-const POS_INLINE_STYLE = {
-  'Sostantivo':   'background:rgba(24,0,172,0.15);border:1.5px solid rgba(24,0,172,0.40);color:#0f0070;',
-  'Aggettivo':    'background:rgba(47,133,90,0.18);border:1.5px solid rgba(47,133,90,0.45);color:#1f5c3d;',
-  'Verbo':        'background:rgba(197,48,48,0.16);border:1.5px solid rgba(197,48,48,0.45);color:#8b1f1f;',
-  'Pronome':      'background:rgba(214,158,46,0.20);border:1.5px solid rgba(214,158,46,0.50);color:#7a4f0a;',
-  'Avverbio':     'background:rgba(99,102,241,0.18);border:1.5px solid rgba(99,102,241,0.45);color:#3a3eb0;',
-  'Preposizione': 'background:rgba(107,102,96,0.15);border:1.5px solid rgba(107,102,96,0.45);color:#44403c;',
-  'Congiunzione': 'background:rgba(245,124,0,0.18);border:1.5px solid rgba(245,124,0,0.45);color:#8a4500;',
-  'Articolo':     'background:rgba(56,178,172,0.20);border:1.5px solid rgba(56,178,172,0.50);color:#1c6f6a;',
-  'Interiezione': 'background:rgba(192,38,211,0.16);border:1.5px solid rgba(192,38,211,0.45);color:#7a1d8a;',
-  'Numerale':     'background:rgba(63,81,181,0.18);border:1.5px solid rgba(63,81,181,0.45);color:#2a3781;',
-  'Particella':   'background:rgba(120,113,108,0.18);border:1.5px solid rgba(120,113,108,0.45);color:#4a4540;',
+const CASE_EXPORT_PALETTE = {
+  nominativo: { bg: 'rgba(24, 0, 172, 0.10)',    border: 'rgba(24, 0, 172, 0.65)',    text: '#08003f', strong: 'rgba(24, 0, 172, 0.85)' },
+  verbo:      { bg: 'rgba(197, 48, 48, 0.10)',   border: 'rgba(197, 48, 48, 0.65)',   text: '#6b0f0f', strong: 'rgba(197, 48, 48, 0.85)' },
+  accusativo: { bg: 'rgba(245, 124, 0, 0.12)',   border: 'rgba(245, 124, 0, 0.70)',   text: '#5e2f00', strong: 'rgba(245, 124, 0, 0.90)' },
+  dativo:     { bg: 'rgba(124, 58, 237, 0.10)',  border: 'rgba(124, 58, 237, 0.65)',  text: '#3f1885', strong: 'rgba(124, 58, 237, 0.85)' },
+  ablativo:   { bg: 'rgba(107, 114, 128, 0.10)', border: 'rgba(107, 114, 128, 0.65)', text: '#1f2937', strong: 'rgba(107, 114, 128, 0.85)' },
+  genitivo:   { bg: 'rgba(217, 70, 161, 0.10)',  border: 'rgba(217, 70, 161, 0.65)',  text: '#6b1356', strong: 'rgba(217, 70, 161, 0.90)' },
+  vocativo:   { bg: 'rgba(56, 178, 172, 0.12)',  border: 'rgba(56, 178, 172, 0.65)',  text: '#0d4f4a', strong: 'rgba(56, 178, 172, 0.85)' },
+  locativo:   { bg: 'rgba(107, 114, 128, 0.08)', border: 'rgba(107, 114, 128, 0.50)', text: '#374151', strong: 'rgba(107, 114, 128, 0.70)' },
+  neutro:     { bg: 'rgba(120, 113, 108, 0.06)', border: 'rgba(120, 113, 108, 0.45)', text: '#4a4540', strong: 'rgba(120, 113, 108, 0.55)' },
 };
+function caseExportStyle(group, extras) {
+  const c = CASE_EXPORT_PALETTE[group] || CASE_EXPORT_PALETTE.neutro;
+  return `background:${c.bg};border:1.5px solid ${c.border};color:${c.text};font-weight:600;${extras || ''}`;
+}
+function caseExportColor(group) {
+  return (CASE_EXPORT_PALETTE[group] || CASE_EXPORT_PALETTE.neutro).strong;
+}
+
+/* Compatibilità retro: POS_INLINE_STYLE risolve in base al PoS (mantenuto per legenda).
+   I nuovi consumatori dovrebbero usare caseExportStyle in base al gruppo-caso. */
+const POS_INLINE_STYLE = {
+  'Sostantivo':   caseExportStyle('nominativo'),
+  'Aggettivo':    caseExportStyle('nominativo'),
+  'Verbo':        caseExportStyle('verbo'),
+  'Pronome':      caseExportStyle('nominativo'),
+  'Avverbio':     caseExportStyle('ablativo'),
+  'Preposizione': caseExportStyle('neutro'),
+  'Congiunzione': caseExportStyle('neutro'),
+  'Articolo':     caseExportStyle('nominativo'),
+  'Interiezione': caseExportStyle('neutro'),
+  'Numerale':     caseExportStyle('nominativo'),
+  'Particella':   caseExportStyle('neutro'),
+};
+/* Colori box-shadow sintagmi logici (retro-compat) */
 const LOGIC_FUNC_INLINE_COLOR = {
-  'lf-soggetto':       'rgba(197, 48, 48, 0.7)',
-  'lf-predicato':      'rgba(24, 0, 172, 0.7)',
-  'lf-oggetto':        'rgba(47, 133, 90, 0.7)',
-  'lf-termine':        'rgba(245, 124, 0, 0.7)',
-  'lf-specificazione': 'rgba(56, 178, 172, 0.7)',
-  'lf-luogo':          'rgba(99, 102, 241, 0.7)',
-  'lf-tempo':          'rgba(214, 158, 46, 0.7)',
-  'lf-modo':           'rgba(192, 38, 211, 0.7)',
-  'lf-attributo':      'rgba(63, 81, 181, 0.7)',
-  'lf-altro':          'rgba(120, 113, 108, 0.7)',
+  'lf-soggetto':       caseExportColor('nominativo'),
+  'lf-predicato':      caseExportColor('verbo'),
+  'lf-oggetto':        caseExportColor('accusativo'),
+  'lf-termine':        caseExportColor('dativo'),
+  'lf-specificazione': caseExportColor('genitivo'),
+  'lf-luogo':          caseExportColor('ablativo'),
+  'lf-tempo':          caseExportColor('ablativo'),
+  'lf-modo':           caseExportColor('ablativo'),
+  'lf-attributo':      caseExportColor('nominativo'),
+  'lf-altro':          caseExportColor('neutro'),
 };
 
 function buildExportTokenGridHtml(sentence, lang) {
@@ -8650,30 +9454,55 @@ function buildExportTokenGridHtml(sentence, lang) {
   const ff = isGreek ? "'Times New Roman','GFS Didot',Georgia,serif" : "'Source Serif 4',Georgia,serif";
   const html = tokens.map(t => {
     if (t.kind === 'space') return ' ';
-    if (t.kind === 'punct') return `<span style="color:#a8a39b;">${escapeHtml(t.text)}</span>`;
-    let style = `display:inline-block;padding:2px 7px;margin:2px 1px;border-radius:3px;font-size:14pt;font-family:${ff};`;
-    let logicCss = '';
+    if (t.kind === 'punct') return `<span style="color:#6b6660;font-family:${ff};font-size:13pt;">${escapeHtml(t.text)}</span>`;
+    // Base
+    let style = `display:inline-block;padding:3px 8px;margin:3px 1px;border-radius:3px;font-size:13pt;font-family:${ff};line-height:1.4;`;
+    // Sottolineatura colorata per sintagma logico (se presente)
+    let logicUnderline = '';
     if (t.logicEntry && t.logicEntry.funzione) {
-      const cls = logicFuncClass(t.logicEntry.funzione);
-      const col = LOGIC_FUNC_INLINE_COLOR[cls] || 'rgba(120,113,108,0.7)';
-      logicCss = `box-shadow: inset 0 -3px 0 ${col};`;
+      const lc = funzioneToCaseGroup(t.logicEntry.funzione);
+      const col = caseExportColor(lc);
+      logicUnderline = `box-shadow: inset 0 -3px 0 ${col};`;
     }
-    if (t.grammarEntry && t.grammarEntry.partOfSpeech && POS_INLINE_STYLE[t.grammarEntry.partOfSpeech]) {
-      style += POS_INLINE_STYLE[t.grammarEntry.partOfSpeech] + logicCss;
+    // Colore di sfondo+testo basato sul CASE (non più sulla PoS),
+    // per riflettere la palette unificata della UI: blu=nom, rosso=verbo, arancio=acc, viola=dat, grigio=abl, fucsia=gen.
+    if (t.grammarEntry && t.grammarEntry.partOfSpeech) {
+      const caseGroup = caseGroupForGrammarEntry(t.grammarEntry);
+      style += caseExportStyle(caseGroup) + logicUnderline;
     } else {
-      style += `border:1.5px dashed #d5d2cb;color:#6b6660;` + logicCss;
+      style += `border:1.5px dashed #c5c2b8;color:#6b6660;` + logicUnderline;
     }
-    const marker = t.grammarEntry && t.grammarEntry.partOfSpeech
-      ? `<span style="font-family:'Source Sans 3',sans-serif;font-size:8pt;font-weight:700;text-transform:uppercase;margin-left:4px;opacity:0.75;letter-spacing:0.04em;">${posShort(t.grammarEntry.partOfSpeech)}</span>` : '';
+    // Marker abbreviato (PoS + caso); colore eredita dal chip per coerenza, peso 700 per leggibilità
+    let marker = '';
+    if (t.grammarEntry && t.grammarEntry.partOfSpeech) {
+      const casoAbbr = t.grammarEntry.caso ? ' ' + t.grammarEntry.caso.toLowerCase().slice(0,3) + '.' : '';
+      marker = `<span style="font-family:'Source Sans 3','Helvetica',sans-serif;font-size:8pt;font-weight:700;text-transform:uppercase;margin-left:5px;letter-spacing:0.05em;color:inherit;opacity:0.88;">${posShort(t.grammarEntry.partOfSpeech)}${casoAbbr}</span>`;
+    }
     return `<span style="${style}">${escapeHtml(t.text)}${marker}</span>`;
   }).join('');
-  return `<div style="line-height:2.4;margin:8pt 0;">${html}</div>`;
+  return `<div style="line-height:2.6;margin:10pt 0;padding:6pt 4pt;">${html}</div>`;
 }
 
 function buildPosLegendHtml(lang) {
-  const parts = TAXONOMIES[lang].parts;
-  return `<div style="display:flex;flex-wrap:wrap;gap:4px 8px;font-family:'Source Sans 3',sans-serif;font-size:9pt;color:#6b6660;margin-top:6pt;">
-    ${parts.map(p => POS_INLINE_STYLE[p] ? `<span style="display:inline-flex;align-items:center;gap:5px;padding:2px 6px;border-radius:3px;background:#f5f4f0;font-weight:500;"><span style="display:inline-block;width:10px;height:10px;border-radius:2px;${POS_INLINE_STYLE[p]}"></span>${p}</span>` : '').join('')}
+  // Legenda CASE-BASED (coerente con la UI)
+  const items = [
+    { lbl: 'Nominativo · soggetto e affini', key: 'nominativo' },
+    { lbl: 'Verbo · predicato verbale',      key: 'verbo' },
+    { lbl: 'Accusativo · oggetto, moto a, tempo cont.', key: 'accusativo' },
+    { lbl: 'Dativo · termine, vantaggio, fine', key: 'dativo' },
+    { lbl: 'Genitivo · specificazione, partitivo, qualità', key: 'genitivo' },
+    { lbl: 'Ablativo · mezzo, modo, agente, luogo, tempo det.', key: 'ablativo' },
+    { lbl: 'Vocativo · vocazione', key: 'vocativo' },
+    { lbl: 'Altre parti (avv., prep., cong., part., …)', key: 'neutro' },
+  ];
+  return `<div style="display:flex;flex-wrap:wrap;gap:5px 8px;font-family:'Source Sans 3','Helvetica',sans-serif;font-size:9pt;color:#2c3539;margin-top:8pt;">
+    ${items.map(i => {
+      const c = CASE_EXPORT_PALETTE[i.key];
+      return `<span style="display:inline-flex;align-items:center;gap:6px;padding:3px 8px;border-radius:3px;background:#fcfbf8;border:1px solid #d5d2cb;font-weight:600;">
+        <span style="display:inline-block;width:12px;height:12px;border-radius:2px;background:${c.bg};border:1.5px solid ${c.border};"></span>
+        <span style="color:${c.text};">${escapeHtml(i.lbl)}</span>
+      </span>`;
+    }).join('')}
   </div>`;
 }
 
@@ -8693,7 +9522,17 @@ function projectMd(d) {
   d.sentences.forEach((s, idx) => {
     md += `### Frase ${idx + 1}\n\n`;
     md += `**Testo.** *${escapeMd(s.original)}*\n\n`;
-    if (s.translation) md += `**Resa.** ${escapeMd(s.translation)}\n\n`;
+    if (s.translation)      md += `**Brutta copia.** ${escapeMd(s.translation)}\n\n`;
+    if (s.translationFinal) md += `**Bella copia.** ${escapeMd(s.translationFinal)}\n\n`;
+    if ((s.ordoVerborum || []).length > 0) {
+      md += `**Ordo verborum** (sintagmi disposti per la resa italiana):\n\n`;
+      s.ordoVerborum.forEach((o, i) => {
+        const fnLabel = o.funzione ? ` _(${escapeMd(o.funzione)})_` : '';
+        const itPart = o.italian ? escapeMd(o.italian) : '_(da tradurre)_';
+        md += `${i + 1}. *${escapeMd(o.phrase || '(vuoto)')}*${fnLabel} → ${itPart}\n`;
+      });
+      md += `\n`;
+    }
 
     // Tokenizer testuale: parole con annotazione PoS dal selettore
     const tokens = getTokensWithMeta(s);
@@ -8765,19 +9604,24 @@ function exportWord() {
 <head><meta charset="utf-8"><title>${escapeHtml(state.meta.titolo || 'Poetrify')}</title>
 <style>
 @page{size:A4;margin:2cm;}
-body{font-family:'Source Serif 4',Georgia,serif;line-height:1.7;color:#2c3539;font-size:11pt;}
-h1{font-family:'Playfair Display',Georgia,serif;color:#1800AC;font-size:22pt;border-bottom:2px solid #1800AC;padding-bottom:6pt;font-weight:700;letter-spacing:-0.01em;margin-top:0;}
-h2{font-family:'Playfair Display',Georgia,serif;color:#1800AC;font-size:16pt;margin-top:18pt;font-weight:600;page-break-after:avoid;}
-h3{font-family:'Playfair Display',Georgia,serif;color:#1800AC;font-size:13pt;margin-top:14pt;font-weight:600;page-break-after:avoid;}
-h4{font-family:'Source Sans 3',sans-serif;color:#1800AC;font-size:9pt;margin-top:9pt;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;page-break-after:avoid;}
-p{margin:0 0 6pt;}
-table{border-collapse:collapse;width:100%;font-size:9pt;margin:6pt 0;font-family:'Source Sans 3',sans-serif;page-break-inside:avoid;}
-th,td{border:1px solid #d5d2cb;padding:5pt 7pt;vertical-align:top;text-align:left;}
-th{background:#ede9fc;color:#1800AC;font-weight:bold;text-transform:uppercase;font-size:8pt;letter-spacing:0.06em;}
-blockquote{margin:0;padding:8pt 12pt;border-left:4px solid #1800AC;background:#fcfbf8;font-style:italic;}
-em{color:#5a3fd6;}
-.muted{color:#6b6660;font-size:9pt;}
-hr{border:none;border-top:1px solid #d5d2cb;margin:12pt 0;}
+body{font-family:'Source Serif 4',Georgia,'Times New Roman',serif;line-height:1.6;color:#1a1f24;font-size:11.5pt;}
+h1{font-family:'Playfair Display',Georgia,serif;color:#1800AC;font-size:24pt;border-bottom:2.5pt solid #1800AC;padding-bottom:8pt;font-weight:700;letter-spacing:-0.01em;margin:0 0 12pt 0;}
+h2{font-family:'Playfair Display',Georgia,serif;color:#1800AC;font-size:17pt;margin-top:22pt;margin-bottom:8pt;font-weight:700;page-break-after:avoid;border-bottom:1pt solid #d5d2cb;padding-bottom:4pt;}
+h3{font-family:'Playfair Display',Georgia,serif;color:#0f0070;font-size:14pt;margin-top:18pt;margin-bottom:6pt;font-weight:700;page-break-after:avoid;}
+h4{font-family:'Source Sans 3','Helvetica',sans-serif;color:#1800AC;font-size:10pt;margin-top:14pt;margin-bottom:4pt;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;page-break-after:avoid;border-bottom:0.5pt solid #ede9fc;padding-bottom:2pt;}
+p{margin:0 0 8pt;}
+table{border-collapse:collapse;width:100%;font-size:10pt;margin:8pt 0 12pt;font-family:'Source Sans 3','Helvetica',sans-serif;page-break-inside:avoid;}
+th,td{border:1pt solid #c5c2b8;padding:6pt 9pt;vertical-align:top;text-align:left;line-height:1.45;}
+th{background:#ede9fc;color:#0f0070;font-weight:700;text-transform:uppercase;font-size:9pt;letter-spacing:0.08em;border-bottom:1.5pt solid #1800AC;}
+tbody tr:nth-child(even) td{background:#fafaf7;}
+tbody tr:hover td{background:#f5f4f0;}
+blockquote{margin:8pt 0;padding:10pt 14pt;border-left:4pt solid #1800AC;background:#fcfbf8;font-style:italic;color:#1a1f24;font-size:11.5pt;line-height:1.65;}
+em{color:#3f1885;font-weight:500;}
+strong{color:#08003f;}
+.muted{color:#4a4540;font-size:10pt;}
+hr{border:none;border-top:1pt solid #d5d2cb;margin:14pt 0;}
+ul,ol{margin:6pt 0;padding-left:18pt;}
+li{margin-bottom:3pt;}
 </style></head><body>${html}</body></html>`;
   const blob = new Blob(['﻿', fullHtml], { type: 'application/msword' });
   downloadBlobDirect(blob, fileName('doc'));
@@ -8815,7 +9659,23 @@ function buildPrintHtml(includeTokenGrid) {
   d.sentences.forEach((s, idx) => {
     html += `<h3>Frase ${idx + 1}</h3>`;
     html += `<p><em>${escapeHtml(s.original)}</em></p>`;
-    if (s.translation) html += `<p class="muted"><strong>Resa.</strong> ${escapeHtml(s.translation)}</p>`;
+    if (s.translation)      html += `<p class="muted"><strong>Brutta copia.</strong> ${escapeHtml(s.translation)}</p>`;
+    if (s.translationFinal) html += `<p><strong style="color:#2f855a;">Bella copia.</strong> ${escapeHtml(s.translationFinal)}</p>`;
+    if ((s.ordoVerborum || []).length > 0) {
+      html += `<h4>Ordo verborum (sintagmi disposti per la resa italiana)</h4>`;
+      html += `<table><thead><tr><th style="width:30pt;text-align:center;">#</th><th>Sintagma (lingua originale)</th><th>Funzione</th><th>Resa italiana</th></tr></thead><tbody>`;
+      s.ordoVerborum.forEach((o, i) => {
+        const caseGroup = o.funzione ? funzioneToCaseGroup(o.funzione) : 'neutro';
+        const fnChipStyle = o.funzione ? caseExportStyle(caseGroup, 'padding:2pt 7pt;border-radius:3px;display:inline-block;font-size:9.5pt;white-space:nowrap;') : '';
+        html += `<tr>
+          <td style="text-align:center;font-weight:700;color:#1800AC;font-size:11pt;">${i + 1}</td>
+          <td><em style="font-size:11pt;color:#08003f;font-style:italic;">${escapeHtml(o.phrase || '')}</em></td>
+          <td>${o.funzione ? `<span style="${fnChipStyle}">${escapeHtml(o.funzione)}</span>` : ''}</td>
+          <td style="color:#1a1f24;font-weight:500;">${escapeHtml(o.italian || '<span style=\"color:#a8a39b;font-style:italic;\">(da tradurre)</span>')}</td>
+        </tr>`;
+      });
+      html += `</tbody></table>`;
+    }
 
     if (includeTokenGrid && (s.grammar.some(e => e.tokenIndex != null) || s.logic.some(e => (e.tokenIndices || []).length))) {
       html += `<h4>Mappa cromatica</h4>`;
@@ -8827,14 +9687,16 @@ function buildPrintHtml(includeTokenGrid) {
       html += `<table><thead><tr><th>Parola</th><th>Parte</th><th>Lemma (vocabolario)</th><th>Morfologia</th><th>Note</th></tr></thead><tbody>`;
       s.grammar.forEach(e => {
         const schema = getMorphSchema(d.meta.lingua, e);
-        const morph = schema.map(f => e[f.key] ? `<strong>${f.label}:</strong> ${escapeHtml(e[f.key])}` : null).filter(Boolean).join('; ');
-        const posStyle = POS_INLINE_STYLE[e.partOfSpeech] || '';
+        const morph = schema.map(f => e[f.key] ? `<strong>${f.label}:</strong> ${escapeHtml(e[f.key])}` : null).filter(Boolean).join(' · ');
+        const caseGroup = caseGroupForGrammarEntry(e);
+        const chipStyle = caseExportStyle(caseGroup, 'padding:2pt 7pt;border-radius:3px;display:inline-block;font-size:9.5pt;white-space:nowrap;');
         let lemma = e.lemma || '';
         if (!lemma) {
           const pred = predictLemma(e, d.meta.lingua);
           lemma = (pred && pred.lemma) ? pred.lemma : '';
         }
-        html += `<tr><td><strong>${escapeHtml(e.word)}</strong></td><td><span style="display:inline-block;padding:1px 6px;border-radius:3px;font-size:9pt;${posStyle}">${escapeHtml(e.partOfSpeech || '')}</span></td><td><em>${escapeHtml(lemma)}</em></td><td>${morph}</td><td>${escapeHtml(e.note || '')}</td></tr>`;
+        const wordStyle = `font-size:11pt;color:#08003f;font-weight:700;`;
+        html += `<tr><td style="${wordStyle}">${escapeHtml(e.word)}${e.isElliptical ? ' <span style="font-size:8pt;color:#6b6660;font-style:italic;">[sottinteso]</span>' : ''}</td><td><span style="${chipStyle}">${escapeHtml(e.partOfSpeech || '')}</span></td><td style="color:#3f1885;font-style:italic;font-weight:600;">${escapeHtml(lemma)}</td><td style="color:#1a1f24;">${morph}</td><td style="color:#4a4540;">${escapeHtml(e.note || '')}</td></tr>`;
       });
       html += `</tbody></table>`;
     }
@@ -8842,9 +9704,11 @@ function buildPrintHtml(includeTokenGrid) {
       html += `<h4>Analisi logica</h4>`;
       html += `<table><thead><tr><th>Sintagma</th><th>Funzione</th><th>Note</th></tr></thead><tbody>`;
       s.logic.forEach(e => {
-        const cls = logicFuncClass(e.funzione || '');
-        const col = LOGIC_FUNC_INLINE_COLOR[cls] || '';
-        html += `<tr><td><strong style="${col ? 'box-shadow: inset 0 -3px 0 ' + col + ';padding-bottom:2px;' : ''}">${escapeHtml(e.phrase)}</strong></td><td>${escapeHtml(e.funzione || '')}</td><td>${escapeHtml(e.note || '')}</td></tr>`;
+        const caseGroup = funzioneToCaseGroup(e.funzione || '');
+        const col = caseExportColor(caseGroup);
+        const phraseStyle = `font-weight:700;font-size:11pt;color:#08003f;border-bottom:3px solid ${col};padding-bottom:2pt;display:inline-block;`;
+        const fnChipStyle = caseExportStyle(caseGroup, 'padding:2pt 7pt;border-radius:3px;display:inline-block;font-size:9.5pt;');
+        html += `<tr><td><span style="${phraseStyle}">${escapeHtml(e.phrase)}</span>${e.isElliptical ? ' <span style="font-size:8pt;color:#6b6660;font-style:italic;">[sottinteso]</span>' : ''}</td><td><span style="${fnChipStyle}">${escapeHtml(e.funzione || '')}</span></td><td style="color:#4a4540;">${escapeHtml(e.note || '')}</td></tr>`;
       });
       html += `</tbody></table>`;
     }
@@ -8856,8 +9720,8 @@ function buildPrintHtml(includeTokenGrid) {
         const dipendeDa = e.dipendeDa ? annotated.find(p => p.id === e.dipendeDa) : null;
         const dipendeStr = dipendeDa ? `${dipendeDa._sigla} · ${dipendeDa.text.substring(0, 24)}` : '';
         const c = PERIODALE_LEVEL[Math.min(e._level || 0, 7)];
-        const sigStyle = `background:${c.bg};border:1.5px solid ${c.border};color:${c.color};padding:1px 6px;border-radius:3px;display:inline-block;font-weight:700;`;
-        html += `<tr><td><span style="${sigStyle}">${e._sigla}</span></td><td><strong>${escapeHtml(e.text)}</strong></td><td>${escapeHtml(e.ruolo || '')}</td><td>${escapeHtml(e.tipo || '')}</td><td>${escapeHtml(e.modo || '')}</td><td>${escapeHtml(e.connettivo || '')}</td><td>${escapeHtml(dipendeStr)}</td><td>${escapeHtml(e.note || '')}</td></tr>`;
+        const sigStyle = `background:${c.bg};border:1.5px solid ${c.border};color:${c.color};padding:2pt 8pt;border-radius:3px;display:inline-block;font-weight:700;font-size:10pt;letter-spacing:-0.02em;`;
+        html += `<tr><td><span style="${sigStyle}">${e._sigla}</span></td><td style="font-style:italic;color:#1a1f24;font-weight:500;">${escapeHtml(e.text)}</td><td style="color:#08003f;font-weight:600;">${escapeHtml(e.ruolo || '')}</td><td style="color:#1a1f24;">${escapeHtml(e.tipo || '')}</td><td style="color:#1a1f24;">${escapeHtml(e.modo || '')}</td><td style="color:#1800AC;font-weight:600;font-family:'Source Sans 3',sans-serif;">${escapeHtml(e.connettivo || '')}</td><td style="color:#4a4540;font-size:9pt;">${escapeHtml(dipendeStr)}</td><td style="color:#4a4540;">${escapeHtml(e.note || '')}</td></tr>`;
       });
       html += `</tbody></table>`;
     }
@@ -8901,19 +9765,37 @@ function loadScript(src) {
 async function renderExportToCanvas() {
   // Crea un container offscreen ben dimensionato e attende che le immagini/font siano pronti
   const target = document.getElementById('export-render-target');
-  target.style.cssText = 'position:fixed;top:0;left:-10000px;width:794px;background:#ffffff;';
-  target.innerHTML = `<div class="summary-print" style="width:794px;background:#ffffff;padding:48px 56px;">${buildPrintHtml(true)}</div>`;
+  target.style.cssText = 'position:fixed;top:0;left:-10000px;width:840px;background:#ffffff;';
+  // Stili ad alto contrasto sovrascrivono quelli .summary-print di base
+  const overrideStyles = `<style>
+    .summary-print { font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif !important; font-size: 12pt !important; line-height: 1.6 !important; color: #1a1f24 !important; }
+    .summary-print h1 { font-family: 'Playfair Display', Georgia, serif !important; font-size: 26pt !important; color: #1800AC !important; font-weight: 700 !important; border-bottom: 2.5pt solid #1800AC !important; padding-bottom: 8pt !important; letter-spacing: -0.01em !important; margin: 0 0 14pt 0 !important; }
+    .summary-print h2 { font-family: 'Playfair Display', Georgia, serif !important; font-size: 18pt !important; color: #1800AC !important; font-weight: 700 !important; margin-top: 22pt !important; margin-bottom: 8pt !important; border-bottom: 1pt solid #d5d2cb !important; padding-bottom: 4pt !important; }
+    .summary-print h3 { font-family: 'Playfair Display', Georgia, serif !important; font-size: 15pt !important; color: #0f0070 !important; font-weight: 700 !important; margin-top: 18pt !important; margin-bottom: 6pt !important; }
+    .summary-print h4 { font-family: 'Source Sans 3', 'Helvetica', sans-serif !important; font-size: 11pt !important; color: #1800AC !important; font-weight: 700 !important; margin-top: 14pt !important; margin-bottom: 4pt !important; text-transform: uppercase !important; letter-spacing: 0.1em !important; border-bottom: 0.75pt solid #ede9fc !important; padding-bottom: 2pt !important; }
+    .summary-print p { margin: 0 0 8pt; color: #1a1f24; line-height: 1.65; }
+    .summary-print blockquote { margin: 8pt 0; padding: 10pt 14pt; border-left: 4pt solid #1800AC; background: #fcfbf8; font-style: italic; color: #1a1f24; font-size: 12pt; line-height: 1.7; }
+    .summary-print em { color: #3f1885; font-weight: 500; }
+    .summary-print strong { color: #08003f; }
+    .summary-print .muted { color: #4a4540; font-size: 10pt; }
+    .summary-print table { border-collapse: collapse; width: 100%; font-size: 10.5pt; margin: 10pt 0 14pt; font-family: 'Source Sans 3', 'Helvetica', sans-serif; }
+    .summary-print th, .summary-print td { border: 1pt solid #c5c2b8; padding: 7pt 10pt; vertical-align: top; text-align: left; line-height: 1.5; }
+    .summary-print th { background: #ede9fc; color: #0f0070; font-weight: 700; text-transform: uppercase; font-size: 9.5pt; letter-spacing: 0.08em; border-bottom: 1.5pt solid #1800AC; }
+    .summary-print tbody tr:nth-child(even) td { background: #fafaf7; }
+    .summary-print hr { border: none; border-top: 1pt solid #d5d2cb; margin: 16pt 0; }
+  </style>`;
+  target.innerHTML = overrideStyles + `<div class="summary-print" style="width:840px;background:#ffffff;padding:52px 60px;">${buildPrintHtml(true)}</div>`;
   // Forza reflow + attesa font (best-effort)
   if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch(e){} }
   await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
   await ensureLib('html2canvas');
-  const node = target.firstChild;
+  const node = target.querySelector('.summary-print');
   const canvas = await html2canvas(node, {
-    scale: 2,
+    scale: 2.5,
     backgroundColor: '#ffffff',
     useCORS: true,
     logging: false,
-    windowWidth: 1024,
+    windowWidth: 1100,
     width: node.offsetWidth,
     height: node.offsetHeight,
   });
@@ -9448,6 +10330,14 @@ document.addEventListener('DOMContentLoaded', () => {
     if (state.previewOpen === undefined) state.previewOpen = false;
   }
 
+  // Applica il profilo utente salvato (gating della UI prima del primo render)
+  applyProfileToBody();
+  // Se utente medie: forza latino + guidata anche su progetti caricati
+  if (getUserProfile() === 'medie') {
+    if (state.meta.lingua !== 'latino') state.meta.lingua = 'latino';
+    if (state.mode !== 'guided') { state.mode = 'guided'; if (!state.guidedStep) state.guidedStep = 1; }
+  }
+
   renderAll();
   syncPreviewState();
 
@@ -9455,6 +10345,11 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.modal-backdrop').forEach(bd => {
     bd.addEventListener('click', e => { if (e.target === bd) bd.classList.remove('open'); });
   });
+
+  // Primo avvio: se non c'è alcun profilo, mostra il modale di benvenuto
+  if (!getUserProfile()) {
+    setTimeout(openProfileModal, 250);
+  }
 
   // autosave
   setInterval(() => { if (state.meta.testoOriginale) persistCurrent(); }, 30000);
