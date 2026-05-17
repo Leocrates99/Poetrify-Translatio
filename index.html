@@ -1475,6 +1475,370 @@ body[data-profile="medie"] .wizard-step-label { font-size: 12px; }
 }
 
 /* ============================================
+   SEZIONE F · DIZIONARIO — consultazione parallela
+   ============================================ */
+.dict-method-note { background: rgba(24, 0, 172, 0.04); border-color: rgba(24, 0, 172, 0.15); }
+
+.dict-toolbar {
+  background: var(--poetrify-paper);
+  border: 1px solid var(--poetrify-rule-soft);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  box-shadow: 0 2px 8px var(--poetrify-shadow);
+}
+.dict-toolbar-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.dict-toolbar-row-pos { padding-top: 8px; border-top: 1px dashed var(--poetrify-rule-soft); }
+.dict-toolbar-row-tier { gap: 6px; }
+
+.dict-lang-switch {
+  display: inline-flex;
+  background: var(--poetrify-cream);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  border: 1px solid var(--poetrify-rule-soft);
+  flex-shrink: 0;
+}
+.dict-lang-switch button {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--poetrify-sepia);
+  letter-spacing: 0.04em;
+  transition: all var(--transition-base);
+}
+.dict-lang-switch button.active {
+  background: var(--poetrify-primary);
+  color: var(--poetrify-paper);
+  box-shadow: 0 2px 6px var(--poetrify-shadow-strong);
+}
+
+.dict-search-wrap {
+  position: relative;
+  flex: 1;
+  min-width: 220px;
+}
+.dict-search-input {
+  width: 100%;
+  padding: 9px 36px 9px 14px;
+  border: 1.5px solid var(--poetrify-rule);
+  background: var(--poetrify-ivory);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--poetrify-ink);
+  transition: border-color var(--transition-base);
+}
+.dict-search-input:focus {
+  outline: none;
+  border-color: var(--poetrify-primary);
+  background: white;
+}
+.dict-search-input.dict-greek { font-family: 'Times New Roman', serif; font-size: 16px; }
+.dict-search-clear {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--poetrify-cream);
+  color: var(--poetrify-sepia);
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.dict-search-clear:hover { background: var(--poetrify-rule); color: var(--poetrify-ink); }
+
+.dict-tier-tabs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  background: var(--poetrify-cream);
+  border-radius: var(--radius-md);
+  padding: 3px;
+  border: 1px solid var(--poetrify-rule-soft);
+}
+.dict-tier-tabs button {
+  padding: 5px 11px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--poetrify-sepia);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition-base);
+}
+.dict-tier-tabs button.active {
+  background: var(--poetrify-primary);
+  color: var(--poetrify-paper);
+}
+
+.dict-chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--poetrify-ivory);
+  border: 1px solid var(--poetrify-rule-soft);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--poetrify-sepia);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+}
+.dict-chip:hover { border-color: var(--poetrify-primary); color: var(--poetrify-primary); }
+.dict-chip.active {
+  background: var(--poetrify-primary);
+  color: var(--poetrify-paper);
+  border-color: var(--poetrify-primary);
+}
+.dict-chip-count {
+  font-size: 9.5px;
+  padding: 1px 6px;
+  background: rgba(0, 0, 0, 0.10);
+  border-radius: 999px;
+  font-weight: 700;
+}
+.dict-chip.active .dict-chip-count { background: rgba(255, 255, 255, 0.25); }
+.dict-tier-tabs button.active .dict-chip-count { background: rgba(255, 255, 255, 0.25); }
+
+.dict-stats-bar {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--poetrify-sepia);
+  font-style: italic;
+  margin-bottom: 14px;
+  padding: 0 4px;
+}
+.dict-stats-bar strong { color: var(--poetrify-primary); font-style: normal; }
+
+.dict-group {
+  margin-bottom: 26px;
+}
+.dict-group-title {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--poetrify-ink);
+  margin: 0 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--poetrify-primary);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.dict-group-name { letter-spacing: -0.01em; }
+.dict-group-count {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--poetrify-sepia);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.dict-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.dict-card {
+  background: var(--poetrify-paper);
+  border: 1px solid var(--poetrify-rule-soft);
+  border-left: 3px solid var(--poetrify-primary);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: all var(--transition-base);
+}
+.dict-card:hover {
+  border-color: var(--poetrify-primary);
+  box-shadow: 0 4px 14px rgba(24, 0, 172, 0.06);
+  transform: translateY(-1px);
+}
+.dict-card.tier-alta { border-left-color: var(--poetrify-sepia); }
+.dict-card.tier-altissima { border-left-color: var(--poetrify-primary); }
+
+.dict-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 6px;
+}
+.dict-card-pos {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--poetrify-sepia);
+}
+.dict-tier-badge {
+  font-family: var(--font-ui);
+  font-size: 9.5px;
+  font-weight: 700;
+  padding: 1px 7px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.dict-tier-badge.tier-altissima { background: rgba(24, 0, 172, 0.15); color: var(--poetrify-primary); }
+.dict-tier-badge.tier-alta { background: rgba(120, 113, 108, 0.16); color: var(--poetrify-sepia); }
+
+.dict-card-lemma {
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--poetrify-ink);
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+.dict-greek .dict-card-lemma { font-family: 'Times New Roman', serif; font-size: 18px; }
+
+.dict-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.dict-meta-bit {
+  font-family: var(--font-ui);
+  font-size: 9.5px;
+  padding: 1px 6px;
+  background: var(--poetrify-cream);
+  color: var(--poetrify-sepia);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  text-transform: lowercase;
+  letter-spacing: 0.03em;
+}
+
+.dict-card-info {
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--poetrify-ink-soft);
+  line-height: 1.45;
+}
+.dict-card-note {
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  color: var(--poetrify-sepia);
+  line-height: 1.4;
+  padding: 4px 8px;
+  background: var(--poetrify-cream);
+  border-radius: var(--radius-sm);
+  border-left: 2px solid var(--poetrify-rule);
+}
+
+.dict-card-forms {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--poetrify-rule-soft);
+  position: relative;
+}
+.dict-form {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 11px;
+  padding: 1px 6px;
+  background: var(--poetrify-ivory);
+  color: var(--poetrify-ink);
+  border-radius: 3px;
+  border: 1px solid var(--poetrify-rule-soft);
+}
+.dict-greek .dict-form { font-family: 'Times New Roman', serif; font-size: 13px; }
+.dict-form-more {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  padding: 1px 8px;
+  background: rgba(24, 0, 172, 0.10);
+  color: var(--poetrify-primary);
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.dict-form-extra { display: none; }
+.dict-card-forms.expanded .dict-form-extra { display: contents; }
+.dict-card-forms.expanded .dict-form-more { display: none; }
+
+.dict-empty {
+  text-align: center;
+  padding: 50px 24px;
+  background: var(--poetrify-paper);
+  border: 2px dashed var(--poetrify-rule-soft);
+  border-radius: var(--radius-md);
+}
+.dict-empty-icon {
+  font-size: 36px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+.dict-empty-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--poetrify-ink);
+  margin-bottom: 6px;
+}
+.dict-empty-desc {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-style: italic;
+  color: var(--poetrify-sepia);
+  max-width: 460px;
+  margin: 0 auto 14px;
+  line-height: 1.5;
+}
+
+/* Adattamento mobile per la sezione F */
+@media (max-width: 720px) {
+  .dict-toolbar { padding: 10px; position: static; }
+  .dict-toolbar-row { gap: 6px; }
+  .dict-search-wrap { min-width: 100%; order: 10; }
+  .dict-lang-switch { width: 100%; justify-content: center; }
+  .dict-lang-switch button { flex: 1; }
+  .dict-tier-tabs { width: 100%; }
+  .dict-tier-tabs button { flex: 1; justify-content: center; }
+  .dict-toolbar-row-pos {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 4px;
+  }
+  .dict-toolbar-row-pos .dict-chip { flex-shrink: 0; }
+  .dict-grid { grid-template-columns: 1fr; gap: 10px; }
+  .dict-group-title { font-size: 15px; }
+  .dict-card { padding: 10px 12px; }
+  .dict-card-lemma { font-size: 15px; }
+  .dict-greek .dict-card-lemma { font-size: 17px; }
+}
+
+/* ============================================
    MODALE SELEZIONE MODALITÀ + WIZARD GUIDATO
    ============================================ */
 .mode-grid {
@@ -2268,6 +2632,51 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
 .lemma-confidence.low    { background: rgba(197,48,48,0.12); color: var(--poetrify-danger); }
 .lemma-confidence.manual { background: rgba(156, 107, 60, 0.18); color: var(--poetrify-accent); }
 .lemma-confidence.none   { background: var(--poetrify-cream); color: var(--poetrify-sepia); }
+
+/* Badge "dal dizionario" — segnala match diretto da dizionario di frequenza */
+.dict-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 9.5px;
+  font-weight: 700;
+  margin-left: 6px;
+  font-family: var(--font-ui);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  vertical-align: middle;
+  background: rgba(24, 0, 172, 0.10);
+  color: var(--poetrify-primary);
+  border: 1px solid rgba(24, 0, 172, 0.25);
+}
+.dict-badge.tier-altissima { background: rgba(24, 0, 172, 0.18); }
+.dict-badge.tier-alta      { background: rgba(24, 0, 172, 0.10); }
+.dict-badge-icon { font-size: 11px; line-height: 1; }
+/* Pillola suggerimento PoS dentro la token-action-bar */
+.dict-suggest-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: rgba(24, 0, 172, 0.08);
+  border: 1px solid rgba(24, 0, 172, 0.22);
+  color: var(--poetrify-primary);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  margin-left: auto;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dict-suggest-pill em {
+  font-family: var(--font-body);
+  font-style: italic;
+  color: var(--poetrify-ink);
+}
 .lemma-hint {
   font-family: var(--font-body);
   font-style: italic;
@@ -4602,6 +5011,8 @@ const defaultState = () => ({
   mode: 'free',          // 'free' | 'guided'
   guidedStep: 1,         // 1..6
   guidedSentenceIdx: 0,  // current sentence within a guided substep
+  // Filtri della sezione F · Dizionario — persistenti per ogni progetto
+  dictFilters: { lang: '', query: '', tier: 'tutti', pos: 'tutti' },
 });
 
 let state = defaultState();
@@ -5072,6 +5483,595 @@ function findStem(word, ending) {
   return w;
 }
 
+/* ==================================================================================
+   DIZIONARIO DI ALTA FREQUENZA — latino e greco
+   Mappa forma flessa → lemma canonico per le voci più ricorrenti dei corpora scolastici
+   (Cesare, Cicerone, Sallustio, Tito Livio, Tacito · Senofonte, Platone, Demostene,
+   Lisia, Tucidide, Erodoto, Omero). Permette:
+     · ricerca diretta forma→lemma senza dover compilare declinazione/coniugazione
+     · suggerimento automatico della parte del discorso
+     · alta confidenza nella predizione
+   Tier: 'altissima' (≈top 100) · 'alta' (≈top 500). Per il greco le chiavi sono già in
+   forma normalizzata (NFD senza diacritici, minuscolo) per matching robusto.
+   ================================================================================== */
+
+/* ─── LATINO ─────────────────────────────────────────────────────────────────────── */
+const LATIN_FREQ_DICT = (() => {
+  const D = {};
+  const add = (forms, lemma, pos, tier, extra) => {
+    (Array.isArray(forms) ? forms : [forms]).forEach(f => {
+      D[f.toLowerCase()] = Object.assign({ lemma, pos, tier: tier || 'alta' }, extra || {});
+    });
+  };
+
+  // VERBO ESSERE — sum
+  add(['sum','es','est','sumus','estis','sunt','eram','eras','erat','eramus','eratis','erant',
+       'ero','eris','erit','erimus','eritis','erunt','fui','fuisti','fuit','fuimus','fuistis','fuerunt','fuere',
+       'fueram','fuerat','fuerant','fuero','fuerit','fuerint','sim','sis','sit','simus','sitis','sint',
+       'essem','esses','esset','essemus','essetis','essent','fuerim','fuerit','fuerint',
+       'esse','fuisse','fore','futurus','futura','futurum','ens','entis'],
+      'sum, es, fui, esse', 'Verbo', 'altissima', { info: 'verbo essere; ausiliare e copulativo' });
+
+  // possum, posse — composto di sum
+  add(['possum','potes','potest','possumus','potestis','possunt','poteram','poterat','poterant',
+       'potero','poterit','potuit','potuerit','possim','possit','possent','posse','potens','potentis'],
+      'possum, potes, potui, posse', 'Verbo', 'altissima');
+
+  // habeo — possessione
+  add(['habeo','habes','habet','habemus','habetis','habent','habebam','habebat','habebant',
+       'habebo','habebit','habui','habuit','habuerunt','habuere','habuerat','habuissem',
+       'habere','habens','habentis','habuisse','habiturus','habitus','habita','habitum'],
+      'habeo, -es, habui, habitum, -ere', 'Verbo', 'altissima');
+
+  // facio
+  add(['facio','facis','facit','facimus','facitis','faciunt','faciebam','faciebat','faciebant',
+       'faciam','facies','faciet','feci','fecit','fecerunt','fecere','fecerat','fecissem',
+       'facere','faciens','facientis','fecisse','facturus','facta','factus','factum','factis','factos'],
+      'facio, -is, feci, factum, -ere', 'Verbo', 'altissima');
+
+  // dico
+  add(['dico','dicis','dicit','dicimus','dicitis','dicunt','dicebat','dicebant',
+       'dicam','dices','dicet','dixi','dixit','dixerunt','dixere','dixerat','dixisset',
+       'dicere','dicens','dicentis','dixisse','dicturus','dictus','dicta','dictum'],
+      'dico, -is, dixi, dictum, -ere', 'Verbo', 'altissima');
+
+  // video
+  add(['video','vides','videt','videmus','videtis','vident','videbam','videbat','videbant',
+       'videbo','videbit','vidi','vidit','viderunt','videre','viderat','vidissem',
+       'videre','videns','videntis','vidisse','visurus','visus','visa','visum',
+       'videor','videtur','videbatur','visus est'],
+      'video, -es, vidi, visum, -ere', 'Verbo', 'altissima');
+
+  // volo / nolo / malo
+  add(['volo','vis','vult','volumus','vultis','volunt','volebam','volebat','volebant',
+       'volam','volet','volui','voluit','voluerunt','velim','velit','vellem','vellet',
+       'velle','volens','volentis','voluisse'],
+      'volo, vis, volui, velle', 'Verbo', 'altissima');
+  add(['nolo','non vis','non vult','nolumus','non vultis','nolunt','nolebam','nolui','noluit',
+       'nolim','nolit','nollem','nollet','nolle','nolens'],
+      'nolo, non vis, nolui, nolle', 'Verbo', 'alta');
+  add(['malo','mavis','mavult','malumus','mavultis','malunt','malui','maluit','mallem','malle'],
+      'malo, mavis, malui, malle', 'Verbo', 'alta');
+
+  // eo
+  add(['eo','is','it','imus','itis','eunt','ibam','ibat','ibant','ibo','ibit','ii','ivi','iit','iverunt','iere','ierat',
+       'eam','eat','eant','irem','iret','ire','iens','euntis','iisse','ivisse','iturus','itum'],
+      'eo, is, ii (ivi), itum, ire', 'Verbo', 'alta');
+
+  // do
+  add(['do','das','dat','damus','datis','dant','dabam','dabat','dabant','dabo','dabit',
+       'dedi','dedit','dederunt','dedere','dederat','dem','det','dent','darem','daret',
+       'dare','dans','dantis','dedisse','daturus','datus','data','datum'],
+      'do, das, dedi, datum, dare', 'Verbo', 'altissima');
+
+  // capio, accipio, recipio, incipio
+  add(['capio','capis','capit','capimus','capitis','capiunt','capiebat','capiam','cepi','cepit','ceperunt','cepere',
+       'capere','capiens','cepisse','capturus','captus','capta','captum'],
+      'capio, -is, cepi, captum, -ere', 'Verbo', 'alta');
+  add(['accipio','accipit','accipiunt','accepi','accepit','accipere','acceptus','accepta','acceptum'],
+      'accipio, -is, accepi, acceptum, -ere', 'Verbo', 'alta');
+
+  // pono, mitto, scribo, lego, ago, duco, gero, peto
+  add(['pono','ponis','ponit','ponunt','posui','posuit','ponere','positus','posita','positum'],
+      'pono, -is, posui, positum, -ere', 'Verbo', 'alta');
+  add(['mitto','mittit','mittunt','misi','misit','miserunt','misere','mittere','missus','missa','missum'],
+      'mitto, -is, misi, missum, -ere', 'Verbo', 'alta');
+  add(['scribo','scribit','scribunt','scripsi','scripsit','scribere','scriptus','scripta','scriptum'],
+      'scribo, -is, scripsi, scriptum, -ere', 'Verbo', 'alta');
+  add(['lego','legis','legit','legunt','legi','legit','legerunt','legere','lectus','lecta','lectum'],
+      'lego, -is, legi, lectum, -ere', 'Verbo', 'alta');
+  add(['ago','agis','agit','agimus','agunt','agebat','agam','egi','egit','egerunt','agere','agens','agentis','actus','acta','actum'],
+      'ago, -is, egi, actum, -ere', 'Verbo', 'altissima');
+  add(['duco','ducis','ducit','ducunt','duxi','duxit','duxerunt','ducere','ducens','dux','ductus','ducta','ductum'],
+      'duco, -is, duxi, ductum, -ere', 'Verbo', 'alta');
+  add(['gero','geris','gerit','gerunt','gessi','gessit','gerere','gerens','gestus','gesta','gestum'],
+      'gero, -is, gessi, gestum, -ere', 'Verbo', 'alta');
+  add(['peto','petis','petit','petunt','petivi','petiit','petierunt','petere','petitus','petita','petitum'],
+      'peto, -is, petivi/-ii, petitum, -ere', 'Verbo', 'alta');
+
+  // venio, veni, sento, sentio, audio
+  add(['venio','venit','veniunt','veniebat','veni','venit','venerunt','venere','venerat','venire','veniens','venturus'],
+      'venio, -is, veni, ventum, -ire', 'Verbo', 'alta');
+  add(['audio','audit','audiunt','audivi','audiit','audire','audiens','auditus','audita','auditum'],
+      'audio, -is, audivi, auditum, -ire', 'Verbo', 'alta');
+  add(['sentio','sentit','sentiunt','sensi','sensit','sentire','sentiens','sensus','sensa','sensum'],
+      'sentio, -is, sensi, sensum, -ire', 'Verbo', 'alta');
+
+  // SOSTANTIVI altissima frequenza
+  add(['res','rei','rerum','rebus','rem'], 'res, rei', 'Sostantivo', 'altissima', { gen: 'F', dec: 'V' });
+  add(['dies','diei','diem','dierum','diebus'], 'dies, diei', 'Sostantivo', 'altissima', { gen: 'M', dec: 'V' });
+  add(['homo','hominis','homini','hominem','homines','hominum','hominibus','homine'],
+      'homo, hominis', 'Sostantivo', 'altissima', { gen: 'M', dec: 'III' });
+  add(['vir','viri','viro','virum','viri','virorum','viris','viros'],
+      'vir, viri', 'Sostantivo', 'altissima', { gen: 'M', dec: 'II' });
+  add(['deus','dei','deo','deum','dii','di','deorum','diis','dis','deos'],
+      'deus, dei', 'Sostantivo', 'altissima', { gen: 'M', dec: 'II' });
+  add(['rex','regis','regi','regem','reges','regum','regibus'],
+      'rex, regis', 'Sostantivo', 'altissima', { gen: 'M', dec: 'III' });
+  add(['urbs','urbis','urbi','urbem','urbes','urbium','urbibus'],
+      'urbs, urbis', 'Sostantivo', 'alta', { gen: 'F', dec: 'III' });
+  add(['bellum','belli','bello','bella','bellorum','bellis'],
+      'bellum, -i', 'Sostantivo', 'altissima', { gen: 'N', dec: 'II' });
+  add(['pater','patris','patri','patrem','patres','patrum','patribus'],
+      'pater, patris', 'Sostantivo', 'alta', { gen: 'M', dec: 'III' });
+  add(['mater','matris','matri','matrem','matres','matrum','matribus'],
+      'mater, matris', 'Sostantivo', 'alta', { gen: 'F', dec: 'III' });
+  add(['filius','filii','filio','filium','filii','filiorum','filiis','filios'],
+      'filius, -ii', 'Sostantivo', 'alta', { gen: 'M', dec: 'II' });
+  add(['liber','libri','libro','librum','libri','librorum','libris','libros'],
+      'liber, -bri', 'Sostantivo', 'alta', { gen: 'M', dec: 'II' });
+  add(['tempus','temporis','tempori','tempora','temporum','temporibus'],
+      'tempus, -oris', 'Sostantivo', 'altissima', { gen: 'N', dec: 'III' });
+  add(['corpus','corporis','corpori','corpora','corporum','corporibus'],
+      'corpus, -oris', 'Sostantivo', 'alta', { gen: 'N', dec: 'III' });
+  add(['caput','capitis','capiti','capita','capitum','capitibus'],
+      'caput, capitis', 'Sostantivo', 'alta', { gen: 'N', dec: 'III' });
+  add(['locus','loci','loco','locum','loca','locorum','locis','locos'],
+      'locus, -i', 'Sostantivo', 'alta', { gen: 'M', dec: 'II', note: 'plur. neutro: loca' });
+  add(['miles','militis','militi','militem','milites','militum','militibus'],
+      'miles, militis', 'Sostantivo', 'alta', { gen: 'M', dec: 'III' });
+  add(['hostis','hostis','hosti','hostem','hostes','hostium','hostibus'],
+      'hostis, hostis', 'Sostantivo', 'alta', { gen: 'M', dec: 'III' });
+  add(['civis','civis','civi','civem','cives','civium','civibus'],
+      'civis, civis', 'Sostantivo', 'alta', { gen: 'M/F', dec: 'III' });
+  add(['amicus','amici','amico','amicum','amici','amicorum','amicis','amicos'],
+      'amicus, -i', 'Sostantivo', 'alta', { gen: 'M', dec: 'II' });
+  add(['exercitus','exercitus','exercitui','exercitum','exercituum','exercitibus','exercitus'],
+      'exercitus, -us', 'Sostantivo', 'alta', { gen: 'M', dec: 'IV' });
+  add(['causa','causae','causam','causarum','causis','causas'],
+      'causa, -ae', 'Sostantivo', 'alta', { gen: 'F', dec: 'I' });
+  add(['vita','vitae','vitam','vitarum','vitis','vitas'],
+      'vita, -ae', 'Sostantivo', 'alta', { gen: 'F', dec: 'I' });
+  add(['animus','animi','animo','animum','animi','animorum','animis','animos'],
+      'animus, -i', 'Sostantivo', 'alta', { gen: 'M', dec: 'II' });
+  add(['anima','animae','animam','animarum','animis','animas'],
+      'anima, -ae', 'Sostantivo', 'alta', { gen: 'F', dec: 'I' });
+  add(['populus','populi','populo','populum','populi','populorum','populis','populos'],
+      'populus, -i', 'Sostantivo', 'alta', { gen: 'M', dec: 'II' });
+  add(['senatus','senatui','senatum','senatus','senatuum','senatibus'],
+      'senatus, -us', 'Sostantivo', 'alta', { gen: 'M', dec: 'IV' });
+  add(['consul','consulis','consuli','consulem','consules','consulum','consulibus'],
+      'consul, -ulis', 'Sostantivo', 'alta', { gen: 'M', dec: 'III' });
+
+  // AGGETTIVI alta freq (forme nom. m/f/n principali + flessione comune)
+  add(['bonus','bona','bonum','boni','bonae','bono','bonam','bonos','bonas','bonis','bonarum','bonorum'],
+      'bonus, -a, -um', 'Aggettivo', 'altissima');
+  add(['malus','mala','malum','mali','malae','malo','malam','malos','malas','malis'],
+      'malus, -a, -um', 'Aggettivo', 'altissima');
+  add(['magnus','magna','magnum','magni','magnae','magno','magnam','magnos','magnas','magnis','magnarum','magnorum'],
+      'magnus, -a, -um', 'Aggettivo', 'altissima');
+  add(['parvus','parva','parvum','parvi','parvae','parvo','parvam','parvos','parvas','parvis'],
+      'parvus, -a, -um', 'Aggettivo', 'alta');
+  add(['multus','multa','multum','multi','multae','multo','multam','multos','multas','multis','multarum','multorum'],
+      'multus, -a, -um', 'Aggettivo', 'altissima');
+  add(['omnis','omne','omnia','omnes','omnium','omnibus','omnem'],
+      'omnis, -e', 'Aggettivo', 'altissima');
+  add(['totus','tota','totum','totius','toti','totos','totas'],
+      'totus, -a, -um', 'Aggettivo', 'alta');
+  add(['solus','sola','solum','solius','soli'],
+      'solus, -a, -um', 'Aggettivo', 'alta');
+  add(['fortis','forte','fortes','fortia','fortium','fortibus','fortem'],
+      'fortis, -e', 'Aggettivo', 'alta');
+  add(['altus','alta','altum','alti','altae','altis'],
+      'altus, -a, -um', 'Aggettivo', 'alta');
+  add(['novus','nova','novum','novi','novae'],
+      'novus, -a, -um', 'Aggettivo', 'alta');
+  add(['primus','prima','primum','primi','primae'],
+      'primus, -a, -um', 'Aggettivo', 'altissima', { note: 'numerale ordinale' });
+
+  // PRONOMI personali e dimostrativi
+  add(['ego','mei','mihi','me','mecum'], 'ego, mei', 'Pronome', 'altissima', { tipo: 'Personale' });
+  add(['tu','tui','tibi','te','tecum'], 'tu, tui', 'Pronome', 'altissima', { tipo: 'Personale' });
+  add(['nos','nostri','nostrum','nobis','nobiscum'], 'nos, nostrum/nostri', 'Pronome', 'altissima', { tipo: 'Personale' });
+  add(['vos','vestri','vestrum','vobis','vobiscum'], 'vos, vestrum/vestri', 'Pronome', 'altissima', { tipo: 'Personale' });
+  add(['sui','sibi','se','sese','secum'], 'sui, sibi, se', 'Pronome', 'altissima', { tipo: 'Riflessivo' });
+  add(['is','ea','id','eius','ei','eum','eam','eos','eas','eorum','earum','eis','iis'],
+      'is, ea, id', 'Pronome', 'altissima', { tipo: 'Determinativo' });
+  add(['hic','haec','hoc','huius','huic','hunc','hanc','hos','has','horum','harum','his'],
+      'hic, haec, hoc', 'Pronome', 'altissima', { tipo: 'Dimostrativo' });
+  add(['ille','illa','illud','illius','illi','illum','illam','illos','illas','illorum','illarum','illis'],
+      'ille, illa, illud', 'Pronome', 'altissima', { tipo: 'Dimostrativo' });
+  add(['iste','ista','istud','istius','istum','istam'],
+      'iste, ista, istud', 'Pronome', 'alta', { tipo: 'Dimostrativo' });
+  add(['ipse','ipsa','ipsum','ipsius','ipsi','ipsum','ipsam','ipsos','ipsas','ipsorum','ipsis'],
+      'ipse, ipsa, ipsum', 'Pronome', 'alta', { tipo: 'Determinativo' });
+  add(['idem','eadem','idem','eiusdem','eidem','eundem','eandem','eosdem','easdem','eorundem','isdem','iisdem'],
+      'idem, eadem, idem', 'Pronome', 'alta', { tipo: 'Determinativo' });
+  add(['qui','quae','quod','cuius','cui','quem','quam','quos','quas','quorum','quarum','quibus','quibuscum','quibusdam'],
+      'qui, quae, quod', 'Pronome', 'altissima', { tipo: 'Relativo' });
+  add(['quis','quid','cuius','cui','quem','quibus'],
+      'quis, quid', 'Pronome', 'alta', { tipo: 'Interrogativo' });
+  add(['aliquis','aliquid','alicuius','alicui','aliquem','aliqua','aliquod'],
+      'aliquis, aliquid', 'Pronome', 'alta', { tipo: 'Indefinito' });
+  add(['nemo','neminem','nemini','neminis','nullius'],
+      'nemo, neminis', 'Pronome', 'alta', { tipo: 'Indefinito' });
+  add(['nihil','nihili','nihilo'], 'nihil', 'Pronome', 'alta', { tipo: 'Indefinito' });
+
+  // AVVERBI altissima frequenza
+  add(['non','haud','ne'], '—', 'Avverbio', 'altissima', { tipo: 'Di negazione', note: 'avverbio di negazione' });
+  add(['etiam','quoque'], '—', 'Avverbio', 'altissima', { tipo: 'Di affermazione' });
+  add(['semper','numquam','saepe','interdum','aliquando','olim'], '—', 'Avverbio', 'alta', { tipo: 'Di tempo' });
+  add(['nunc','tunc','tum','iam','iamque','adhuc','statim','protinus','mox','postea'], '—', 'Avverbio', 'alta', { tipo: 'Di tempo' });
+  add(['hodie','heri','cras','pridie','postridie'], '—', 'Avverbio', 'alta', { tipo: 'Di tempo' });
+  add(['hic','huc','illic','illuc','ibi','inde','unde','ubi','ubique','usquam'], '—', 'Avverbio', 'alta', { tipo: 'Di luogo' });
+  add(['bene','male','recte','optime','pessime'], '—', 'Avverbio', 'alta', { tipo: 'Di modo' });
+  add(['valde','satis','admodum','vix','tantum','magis','minus','plus','multum','parum'],
+      '—', 'Avverbio', 'alta', { tipo: 'Di quantità' });
+  add(['quam','tam','ita','sic','tantum','quanto','tanto','quo','eo'],
+      '—', 'Avverbio', 'alta', { tipo: 'Di modo', note: 'avverbi correlativi' });
+  add(['cur','quare','quamobrem','quamdiu','quando'], '—', 'Avverbio', 'alta', { tipo: 'Interrogativo' });
+
+  // CONGIUNZIONI
+  add(['et','atque','ac','-que','que'], 'et', 'Congiunzione', 'altissima', { note: 'coordinante copulativa' });
+  add(['sed','at','autem','vero','tamen','verum','ceterum'],
+      'sed', 'Congiunzione', 'altissima', { note: 'coordinante avversativa' });
+  add(['aut','vel','sive','seu','-ve'],
+      'aut', 'Congiunzione', 'alta', { note: 'coordinante disgiuntiva' });
+  add(['nam','enim','etenim','namque','quippe'],
+      'nam', 'Congiunzione', 'alta', { note: 'coordinante dichiarativa-causale' });
+  add(['ergo','igitur','itaque','proinde'],
+      'ergo', 'Congiunzione', 'alta', { note: 'coordinante conclusiva' });
+  add(['neque','nec'],
+      'neque', 'Congiunzione', 'altissima', { note: 'coordinante copulativa negativa' });
+  add(['ut','uti','ne','quominus','quin'],
+      'ut', 'Congiunzione', 'altissima', { note: 'subordinante finale/consecutiva' });
+  add(['cum','quom'],
+      'cum', 'Congiunzione', 'altissima', { note: 'subordinante temporale/causale/concessiva (cum + cong.)' });
+  add(['si','nisi','sin','etsi','tametsi','etiamsi'],
+      'si', 'Congiunzione', 'altissima', { note: 'subordinante condizionale' });
+  add(['quia','quod','quoniam','quando','quandoquidem'],
+      'quia', 'Congiunzione', 'alta', { note: 'subordinante causale' });
+  add(['postquam','antequam','priusquam','dum','donec','quoad','simulac','simulatque'],
+      'postquam', 'Congiunzione', 'alta', { note: 'subordinante temporale' });
+  add(['quamquam','quamvis','licet'],
+      'quamquam', 'Congiunzione', 'alta', { note: 'subordinante concessiva' });
+
+  // PREPOSIZIONI
+  add(['in'], 'in', 'Preposizione', 'altissima', { note: '+ acc. (moto) / + abl. (stato)' });
+  add(['ex','e'], 'ex (e)', 'Preposizione', 'altissima', { note: '+ abl.' });
+  add(['ab','a','abs'], 'ab (a, abs)', 'Preposizione', 'altissima', { note: '+ abl.' });
+  add(['de'], 'de', 'Preposizione', 'altissima', { note: '+ abl.' });
+  add(['cum'], 'cum', 'Preposizione', 'altissima', { note: '+ abl. (compagnia/modo)' });
+  add(['sine','absque'], 'sine', 'Preposizione', 'alta', { note: '+ abl.' });
+  add(['sub','super'], 'sub', 'Preposizione', 'alta', { note: '+ acc./abl.' });
+  add(['per'], 'per', 'Preposizione', 'altissima', { note: '+ acc.' });
+  add(['ad'], 'ad', 'Preposizione', 'altissima', { note: '+ acc.' });
+  add(['ante','post','contra','propter','secundum','iuxta','adversus','circum','circa'],
+      'ante', 'Preposizione', 'alta', { note: '+ acc.' });
+  add(['inter','intra','extra','apud'],
+      'inter', 'Preposizione', 'alta', { note: '+ acc.' });
+  add(['prae','pro','ob'], 'prae', 'Preposizione', 'alta', { note: '+ abl./acc.' });
+
+  return D;
+})();
+
+/* ─── GRECO ──────────────────────────────────────────────────────────────────────── */
+/* Le chiavi sono SEMPRE in forma normalizzata (NFD, niente diacritici, minuscolo).
+   Il match avviene tramite normalizeText(word). Il lemma di output mantiene i
+   diacritici originali per leggibilità. */
+const GREEK_FREQ_DICT = (() => {
+  const D = {};
+  const add = (forms, lemma, pos, tier, extra) => {
+    (Array.isArray(forms) ? forms : [forms]).forEach(f => {
+      D[normalizeText(f)] = Object.assign({ lemma, pos, tier: tier || 'alta' }, extra || {});
+    });
+  };
+
+  // ARTICOLO ὁ ἡ τό
+  add(['ὁ','ἡ','τό','τοῦ','τῆς','τοῦ','τῷ','τῇ','τῷ','τόν','τήν','τό',
+       'οἱ','αἱ','τά','τῶν','τοῖς','ταῖς','τοῖς','τούς','τάς','τά','τώ','τοῖν','ταῖν'],
+      'ὁ, ἡ, τό', 'Articolo', 'altissima');
+
+  // εἰμί
+  add(['εἰμί','εἶ','ἐστί','ἐστίν','ἐσμέν','ἐστέ','εἰσί','εἰσίν','ἦν','ἦσθα','ἦσαν','ἦμεν','ἦτε',
+       'ἔσομαι','ἔσται','ἔσονται','ὦ','ᾖς','ᾖ','ὦμεν','ἦτε','ὦσι','εἴην','εἴη','εἶναι','ὤν','οὖσα','ὄν','ὄντος','οὔσης','ὄντες'],
+      'εἰμί, ἔσομαι', 'Verbo', 'altissima', { info: 'verbo essere' });
+
+  // ἔχω
+  add(['ἔχω','ἔχεις','ἔχει','ἔχομεν','ἔχετε','ἔχουσι','ἔχουσιν','εἶχον','εἶχε','εἶχεν','εἶχον',
+       'ἕξω','ἔξεις','σχήσω','ἔσχον','ἔσχε','ἔσχεν','ἔσχομεν','ἔσχον','ἐσχήκα','ἔχειν','σχεῖν','ἔχων','ἔχουσα','ἔχον','σχών','σχοῦσα','σχόν'],
+      'ἔχω, ἕξω/σχήσω, ἔσχον, ἔσχηκα', 'Verbo', 'altissima');
+
+  // λέγω (anche εἶπον)
+  add(['λέγω','λέγεις','λέγει','λέγομεν','λέγετε','λέγουσι','λέγουσιν','ἔλεγον','ἔλεγε','ἔλεγεν',
+       'λέξω','ἐρῶ','ἐρεῖ','εἶπον','εἶπε','εἶπεν','εἴπομεν','εἶπον','εἴρηκα','λέγειν','εἰπεῖν','λέγων','λέγουσα','λέγον','εἰπών','εἰποῦσα','εἰπόν'],
+      'λέγω, λέξω/ἐρῶ, εἶπον, εἴρηκα', 'Verbo', 'altissima');
+
+  // ποιέω / ποιῶ (contratto)
+  add(['ποιέω','ποιῶ','ποιεῖς','ποιεῖ','ποιοῦμεν','ποιεῖτε','ποιοῦσι','ἐποίουν','ἐποίει','ἐποίουν',
+       'ποιήσω','ἐποίησα','ἐποίησε','ἐποίησαν','πεποίηκα','ποιεῖν','ποιῶν','ποιοῦσα','ποιοῦν','ποιήσας'],
+      'ποιέω, ποιήσω, ἐποίησα, πεποίηκα', 'Verbo', 'altissima');
+
+  // ὁράω → εἶδον
+  add(['ὁράω','ὁρῶ','ὁρᾷς','ὁρᾷ','ὁρῶμεν','ὁρᾶτε','ὁρῶσι','ἑώρων','ἑώρα','ὄψομαι','ὄψεται',
+       'εἶδον','εἶδε','εἶδεν','εἴδομεν','εἶδον','ἑώρακα','ὁρᾶν','ἰδεῖν','ὁρῶν','ἰδών','ἰδοῦσα','ἰδόν'],
+      'ὁράω, ὄψομαι, εἶδον, ἑώρακα', 'Verbo', 'alta');
+
+  // οἶδα (perfetto con valore presente)
+  add(['οἶδα','οἶσθα','οἶδε','οἶδεν','ἴσμεν','ἴστε','ἴσασι','ᾔδειν','ᾔδει','ᾔδεσαν',
+       'εἴσομαι','εἴσεται','εἰδέναι','εἰδώς','εἰδυῖα','εἰδός'],
+      'οἶδα, εἴσομαι', 'Verbo', 'altissima');
+
+  // δίδωμι, τίθημι, ἵστημι (athematic)
+  add(['δίδωμι','δίδως','δίδωσι','δίδωσιν','δίδομεν','δίδοτε','διδόασι','ἐδίδουν','ἐδίδου','ἐδίδοσαν',
+       'δώσω','δώσει','ἔδωκα','ἔδωκε','ἔδωκαν','δέδωκα','διδόναι','δοῦναι','διδούς','δούς','δοῦσα'],
+      'δίδωμι, δώσω, ἔδωκα, δέδωκα', 'Verbo', 'alta');
+  add(['τίθημι','τίθης','τίθησι','τίθησιν','τίθεμεν','τίθετε','τιθέασι','ἐτίθην','ἐτίθει','ἐτίθεσαν',
+       'θήσω','ἔθηκα','ἔθηκε','τέθηκα','τιθέναι','θεῖναι','τιθείς','θείς'],
+      'τίθημι, θήσω, ἔθηκα, τέθηκα', 'Verbo', 'alta');
+  add(['ἵστημι','ἵστης','ἵστησι','ἵστησιν','ἵσταμεν','ἵστατε','ἱστᾶσι','ἵστην','ἵστη','ἵστασαν',
+       'στήσω','ἔστησα','ἔστην','ἕστηκα','ἑστάναι','ἵστασθαι','ἱστάς','στάς'],
+      'ἵστημι, στήσω, ἔστησα/ἔστην, ἕστηκα', 'Verbo', 'alta');
+
+  // ἔρχομαι → ἦλθον
+  add(['ἔρχομαι','ἔρχει','ἔρχεται','ἐρχόμεθα','ἔρχεσθε','ἔρχονται','ᾔειν','ἔλθω','ἔλθῃς','ἔλθῃ',
+       'εἶμι','εἶ','εἶσι','ἴμεν','ἴτε','ἴασι','ἦλθον','ἦλθε','ἦλθεν','ἤλθομεν','ἦλθον','ἐλήλυθα','ἔρχεσθαι','ἐλθεῖν','ἐρχόμενος','ἐλθών','ἐλθοῦσα'],
+      'ἔρχομαι, εἶμι, ἦλθον, ἐλήλυθα', 'Verbo', 'alta');
+
+  // γίγνομαι → ἐγενόμην
+  add(['γίγνομαι','γίγνεται','γίγνονται','ἐγιγνόμην','ἐγίγνετο','ἐγίγνοντο',
+       'γενήσομαι','γενήσεται','ἐγενόμην','ἐγένετο','ἐγένοντο','γέγονα','γίγνεσθαι','γενέσθαι','γιγνόμενος','γενόμενος'],
+      'γίγνομαι, γενήσομαι, ἐγενόμην, γέγονα/γεγένημαι', 'Verbo', 'alta');
+
+  // φέρω / ἤνεγκον
+  add(['φέρω','φέρεις','φέρει','φέρομεν','φέρετε','φέρουσι','ἔφερον','ἔφερε','οἴσω','οἴσει','ἤνεγκα','ἤνεγκε','ἤνεγκον','ἐνήνοχα','φέρειν','ἐνεγκεῖν','φέρων','ἐνέγκας','ἐνεγκών'],
+      'φέρω, οἴσω, ἤνεγκα/ἤνεγκον, ἐνήνοχα', 'Verbo', 'alta');
+
+  // ἀκούω
+  add(['ἀκούω','ἀκούεις','ἀκούει','ἤκουον','ἤκουσα','ἤκουσε','ἀκούσομαι','ἀκήκοα','ἀκούειν','ἀκούσας'],
+      'ἀκούω, ἀκούσομαι, ἤκουσα, ἀκήκοα', 'Verbo', 'alta');
+
+  // SOSTANTIVI altissima
+  add(['λόγος','λόγου','λόγῳ','λόγον','λόγε','λόγοι','λόγων','λόγοις','λόγους'],
+      'ὁ λόγος, -ου', 'Sostantivo', 'altissima', { gen: 'M', dec: 'II' });
+  add(['ἄνθρωπος','ἀνθρώπου','ἀνθρώπῳ','ἄνθρωπον','ἄνθρωπε','ἄνθρωποι','ἀνθρώπων','ἀνθρώποις','ἀνθρώπους'],
+      'ὁ ἄνθρωπος, -ου', 'Sostantivo', 'altissima', { gen: 'M', dec: 'II' });
+  add(['θεός','θεοῦ','θεῷ','θεόν','θεέ','θεοί','θεῶν','θεοῖς','θεούς'],
+      'ὁ θεός, -οῦ', 'Sostantivo', 'altissima', { gen: 'M', dec: 'II' });
+  add(['βίος','βίου','βίῳ','βίον','βίοι','βίων','βίοις','βίους'],
+      'ὁ βίος, -ου', 'Sostantivo', 'alta', { gen: 'M', dec: 'II' });
+  add(['χρόνος','χρόνου','χρόνῳ','χρόνον','χρόνοι','χρόνων'],
+      'ὁ χρόνος, -ου', 'Sostantivo', 'alta', { gen: 'M', dec: 'II' });
+  add(['νόμος','νόμου','νόμῳ','νόμον','νόμοι','νόμων','νόμοις','νόμους'],
+      'ὁ νόμος, -ου', 'Sostantivo', 'altissima', { gen: 'M', dec: 'II' });
+  add(['δῆμος','δήμου','δήμῳ','δῆμον','δῆμοι','δήμων'],
+      'ὁ δῆμος, -ου', 'Sostantivo', 'alta', { gen: 'M', dec: 'II' });
+  add(['πόλις','πόλεως','πόλει','πόλιν','πόλεις','πόλεων','πόλεσι','πόλεσιν'],
+      'ἡ πόλις, -εως', 'Sostantivo', 'altissima', { gen: 'F', dec: 'III' });
+  add(['βασιλεύς','βασιλέως','βασιλεῖ','βασιλέα','βασιλεῖς','βασιλέων','βασιλεῦσι'],
+      'ὁ βασιλεύς, -έως', 'Sostantivo', 'alta', { gen: 'M', dec: 'III' });
+  add(['ἀρχή','ἀρχῆς','ἀρχῇ','ἀρχήν','ἀρχαί','ἀρχῶν','ἀρχαῖς','ἀρχάς'],
+      'ἡ ἀρχή, -ῆς', 'Sostantivo', 'alta', { gen: 'F', dec: 'I' });
+  add(['ψυχή','ψυχῆς','ψυχῇ','ψυχήν','ψυχαί','ψυχῶν','ψυχαῖς','ψυχάς'],
+      'ἡ ψυχή, -ῆς', 'Sostantivo', 'alta', { gen: 'F', dec: 'I' });
+  add(['μοῦσα','μούσης','μούσῃ','μοῦσαν','μοῦσαι','μουσῶν','μούσαις','μούσας'],
+      'ἡ μοῦσα, -ης', 'Sostantivo', 'alta', { gen: 'F', dec: 'I' });
+  add(['ἡμέρα','ἡμέρας','ἡμέρᾳ','ἡμέραν','ἡμέραι','ἡμερῶν','ἡμέραις'],
+      'ἡ ἡμέρα, -ας', 'Sostantivo', 'alta', { gen: 'F', dec: 'I' });
+  add(['γῆ','γῆς','γῇ','γῆν'],
+      'ἡ γῆ, γῆς', 'Sostantivo', 'alta', { gen: 'F', dec: 'I' });
+  add(['ἀνήρ','ἀνδρός','ἀνδρί','ἄνδρα','ἄνερ','ἄνδρες','ἀνδρῶν','ἀνδράσι','ἄνδρας'],
+      'ὁ ἀνήρ, ἀνδρός', 'Sostantivo', 'altissima', { gen: 'M', dec: 'III' });
+  add(['γυνή','γυναικός','γυναικί','γυναῖκα','γύναι','γυναῖκες','γυναικῶν','γυναιξί','γυναῖκας'],
+      'ἡ γυνή, γυναικός', 'Sostantivo', 'alta', { gen: 'F', dec: 'III' });
+  add(['πατήρ','πατρός','πατρί','πατέρα','πάτερ','πατέρες','πατέρων','πατράσι'],
+      'ὁ πατήρ, πατρός', 'Sostantivo', 'alta', { gen: 'M', dec: 'III' });
+  add(['μήτηρ','μητρός','μητρί','μητέρα','μῆτερ','μητέρες','μητέρων','μητράσι'],
+      'ἡ μήτηρ, μητρός', 'Sostantivo', 'alta', { gen: 'F', dec: 'III' });
+  add(['πόλεμος','πολέμου','πολέμῳ','πόλεμον','πόλεμοι','πολέμων'],
+      'ὁ πόλεμος, -ου', 'Sostantivo', 'alta', { gen: 'M', dec: 'II' });
+
+  // AGGETTIVI
+  add(['ἀγαθός','ἀγαθή','ἀγαθόν','ἀγαθοῦ','ἀγαθῆς','ἀγαθῷ','ἀγαθῇ','ἀγαθόν','ἀγαθήν','ἀγαθοί','ἀγαθαί','ἀγαθά'],
+      'ἀγαθός, -ή, -όν', 'Aggettivo', 'altissima');
+  add(['κακός','κακή','κακόν','κακοῦ','κακῆς','κακῷ','κακῇ','κακοί','κακαί','κακά'],
+      'κακός, -ή, -όν', 'Aggettivo', 'altissima');
+  add(['καλός','καλή','καλόν','καλοῦ','καλῆς','καλῷ','καλῇ','καλοί','καλαί','καλά'],
+      'καλός, -ή, -όν', 'Aggettivo', 'altissima');
+  add(['μέγας','μεγάλη','μέγα','μεγάλου','μεγάλης','μεγάλῳ','μεγάλῃ','μέγαν','μεγάλην','μέγα','μεγάλοι','μεγάλαι','μεγάλα','μεγάλων'],
+      'μέγας, μεγάλη, μέγα', 'Aggettivo', 'altissima');
+  add(['πολύς','πολλή','πολύ','πολλοῦ','πολλῆς','πολλῷ','πολλῇ','πολύν','πολλήν','πολύ','πολλοί','πολλαί','πολλά','πολλῶν'],
+      'πολύς, πολλή, πολύ', 'Aggettivo', 'altissima');
+  add(['πᾶς','πᾶσα','πᾶν','παντός','πάσης','παντί','πάσῃ','πάντα','πᾶσαν','πᾶν','πάντες','πᾶσαι','πάντα','πάντων','πάσαις','πᾶσι'],
+      'πᾶς, πᾶσα, πᾶν', 'Aggettivo', 'altissima');
+  add(['ἀληθής','ἀληθές','ἀληθοῦς','ἀληθεῖ','ἀληθῆ','ἀληθεῖς','ἀληθῶν','ἀληθέσι'],
+      'ἀληθής, -ές', 'Aggettivo', 'alta');
+  add(['ἕτερος','ἑτέρα','ἕτερον'], 'ἕτερος, -α, -ον', 'Aggettivo', 'alta');
+  add(['ἄλλος','ἄλλη','ἄλλο','ἄλλου','ἄλλης','ἄλλῳ','ἄλλον','ἄλλην','ἄλλο','ἄλλοι','ἄλλαι','ἄλλα','ἄλλων'],
+      'ἄλλος, -η, -ο', 'Pronome', 'altissima', { tipo: 'Indefinito', note: 'spesso pronominalmente "altro"' });
+  add(['ἕκαστος','ἑκάστη','ἕκαστον'], 'ἕκαστος, -η, -ον', 'Aggettivo', 'alta');
+
+  // PRONOMI
+  add(['ἐγώ','ἐμοῦ','μου','ἐμοί','μοι','ἐμέ','με'],
+      'ἐγώ, ἐμοῦ', 'Pronome', 'altissima', { tipo: 'Personale' });
+  add(['σύ','σοῦ','σου','σοί','σοι','σέ','σε'],
+      'σύ, σοῦ', 'Pronome', 'altissima', { tipo: 'Personale' });
+  add(['ἡμεῖς','ἡμῶν','ἡμῖν','ἡμᾶς'],
+      'ἡμεῖς, ἡμῶν', 'Pronome', 'altissima', { tipo: 'Personale' });
+  add(['ὑμεῖς','ὑμῶν','ὑμῖν','ὑμᾶς'],
+      'ὑμεῖς, ὑμῶν', 'Pronome', 'altissima', { tipo: 'Personale' });
+  add(['αὐτός','αὐτή','αὐτό','αὐτοῦ','αὐτῆς','αὐτῷ','αὐτῇ','αὐτόν','αὐτήν','αὐτό','αὐτοί','αὐταί','αὐτά','αὐτῶν','αὐτοῖς','αὐταῖς','αὐτούς','αὐτάς'],
+      'αὐτός, -ή, -ό', 'Pronome', 'altissima', { tipo: 'Determinativo', note: 'attributivo "stesso", predicativo "egli/lui"' });
+  add(['οὗτος','αὕτη','τοῦτο','τούτου','ταύτης','τούτῳ','ταύτῃ','τοῦτον','ταύτην','τοῦτο','οὗτοι','αὗται','ταῦτα','τούτων'],
+      'οὗτος, αὕτη, τοῦτο', 'Pronome', 'altissima', { tipo: 'Dimostrativo' });
+  add(['ἐκεῖνος','ἐκείνη','ἐκεῖνο','ἐκείνου','ἐκείνης','ἐκείνῳ','ἐκείνῃ','ἐκεῖνον','ἐκείνην','ἐκεῖνο','ἐκεῖνοι','ἐκεῖναι','ἐκεῖνα'],
+      'ἐκεῖνος, -η, -ο', 'Pronome', 'altissima', { tipo: 'Dimostrativo' });
+  add(['ὅδε','ἥδε','τόδε','τοῦδε','τῆσδε','τῷδε','τῇδε','τόνδε','τήνδε','τόδε','οἵδε','αἵδε','τάδε','τῶνδε'],
+      'ὅδε, ἥδε, τόδε', 'Pronome', 'alta', { tipo: 'Dimostrativo' });
+  add(['ὅς','ἥ','ὅ','οὗ','ἧς','ᾧ','ᾗ','ὅν','ἥν','ὅ','οἵ','αἵ','ἅ','ὧν','οἷς','αἷς','οὕς','ἅς'],
+      'ὅς, ἥ, ὅ', 'Pronome', 'altissima', { tipo: 'Relativo' });
+  add(['τίς','τί','τίνος','τίνι','τίνα','τίνες','τίνων'],
+      'τίς, τί', 'Pronome', 'alta', { tipo: 'Interrogativo' });
+  add(['τις','τι','τινός','τινί','τινά','τινές','τινῶν'],
+      'τις, τι', 'Pronome', 'alta', { tipo: 'Indefinito' });
+
+  // AVVERBI / NEGAZIONI
+  add(['οὐ','οὐκ','οὐχ'], '—', 'Avverbio', 'altissima', { tipo: 'Di negazione', note: 'negazione oggettiva' });
+  add(['μή','μηδέ'], '—', 'Avverbio', 'altissima', { tipo: 'Di negazione', note: 'negazione soggettiva/proibitiva' });
+  add(['εὖ'], '—', 'Avverbio', 'alta', { tipo: 'Di modo' });
+  add(['κακῶς'], '—', 'Avverbio', 'alta', { tipo: 'Di modo' });
+  add(['καλῶς'], '—', 'Avverbio', 'alta', { tipo: 'Di modo' });
+  add(['μᾶλλον','ἧττον','μάλιστα','πάνυ','σφόδρα','λίαν'],
+      '—', 'Avverbio', 'alta', { tipo: 'Di quantità' });
+  add(['νῦν','τότε','ἀεί','αἰεί','οὔποτε','μηδέποτε','πάλιν','αὖθις','ἤδη','ποτέ'],
+      '—', 'Avverbio', 'alta', { tipo: 'Di tempo' });
+  add(['ἐνταῦθα','ἐνθάδε','ἐκεῖ','αὐτοῦ','πανταχοῦ','οὐδαμοῦ'],
+      '—', 'Avverbio', 'alta', { tipo: 'Di luogo' });
+  add(['πῶς','ποῦ','πότε','πόθεν','ποῖ','πῇ'],
+      '—', 'Avverbio', 'alta', { tipo: 'Interrogativo' });
+  add(['ὥσπερ','ὡς','οὕτω','οὕτως'],
+      '—', 'Avverbio', 'alta', { tipo: 'Di modo' });
+
+  // PARTICELLE — caratteristiche del greco
+  add(['μέν'], 'μέν', 'Particella', 'altissima', { note: 'particella correlativa (μέν…δέ)' });
+  add(['δέ'], 'δέ', 'Congiunzione', 'altissima', { note: 'coordinante avversativa/copulativa, postpositiva' });
+  add(['γάρ'], 'γάρ', 'Congiunzione', 'altissima', { note: 'subordinante esplicativa-causale, postpositiva' });
+  add(['οὖν'], 'οὖν', 'Particella', 'altissima', { note: 'conclusiva, postpositiva' });
+  add(['δή'], 'δή', 'Particella', 'alta', { note: 'enfatica' });
+  add(['τοι'], 'τοι', 'Particella', 'alta', { note: 'enfatica' });
+  add(['γε'], 'γε', 'Particella', 'alta', { note: 'limitativa/enfatica' });
+  add(['ἄρα'], 'ἄρα', 'Particella', 'alta', { note: 'inferenziale' });
+  add(['τε'], 'τε', 'Congiunzione', 'altissima', { note: 'coordinante copulativa (τε…καί)' });
+
+  // CONGIUNZIONI
+  add(['καί'], 'καί', 'Congiunzione', 'altissima', { note: 'copulativa "e/anche"' });
+  add(['ἀλλά'], 'ἀλλά', 'Congiunzione', 'altissima', { note: 'avversativa forte' });
+  add(['ἤ'], 'ἤ', 'Congiunzione', 'alta', { note: 'disgiuntiva o comparativa' });
+  add(['εἰ','εἴπερ'], 'εἰ', 'Congiunzione', 'altissima', { note: 'condizionale (+ ind./ott.)' });
+  add(['ἐάν','ἤν','ἄν'], 'ἐάν', 'Congiunzione', 'altissima', { note: 'condizionale (+ cong.)' });
+  add(['ὅτε','ὅταν','ἐπεί','ἐπειδή','ἕως','πρίν','μέχρι'],
+      'ὅτε', 'Congiunzione', 'alta', { note: 'temporale' });
+  add(['ὅτι','διότι'],
+      'ὅτι', 'Congiunzione', 'altissima', { note: 'dichiarativa/causale' });
+  add(['ἵνα','ὅπως'],
+      'ἵνα', 'Congiunzione', 'altissima', { note: 'finale (+ cong.)' });
+
+  // PREPOSIZIONI
+  add(['ἐν'], 'ἐν', 'Preposizione', 'altissima', { note: '+ dat.' });
+  add(['εἰς','ἐς'], 'εἰς', 'Preposizione', 'altissima', { note: '+ acc.' });
+  add(['ἐκ','ἐξ'], 'ἐκ', 'Preposizione', 'altissima', { note: '+ gen.' });
+  add(['ἀπό'], 'ἀπό', 'Preposizione', 'altissima', { note: '+ gen.' });
+  add(['πρός'], 'πρός', 'Preposizione', 'altissima', { note: '+ acc./gen./dat.' });
+  add(['παρά'], 'παρά', 'Preposizione', 'alta', { note: '+ acc./gen./dat.' });
+  add(['σύν','ξύν'], 'σύν', 'Preposizione', 'alta', { note: '+ dat.' });
+  add(['διά'], 'διά', 'Preposizione', 'altissima', { note: '+ acc./gen.' });
+  add(['κατά'], 'κατά', 'Preposizione', 'altissima', { note: '+ acc./gen.' });
+  add(['μετά'], 'μετά', 'Preposizione', 'altissima', { note: '+ acc./gen.' });
+  add(['ἀνά'], 'ἀνά', 'Preposizione', 'alta', { note: '+ acc.' });
+  add(['ὑπό'], 'ὑπό', 'Preposizione', 'altissima', { note: '+ acc./gen./dat. (agente)' });
+  add(['ὑπέρ'], 'ὑπέρ', 'Preposizione', 'alta', { note: '+ acc./gen.' });
+  add(['ἀντί'], 'ἀντί', 'Preposizione', 'alta', { note: '+ gen.' });
+  add(['περί'], 'περί', 'Preposizione', 'altissima', { note: '+ acc./gen./dat.' });
+  add(['ἐπί'], 'ἐπί', 'Preposizione', 'altissima', { note: '+ acc./gen./dat.' });
+  add(['ἀμφί'], 'ἀμφί', 'Preposizione', 'alta', { note: '+ acc./gen./dat.' });
+  add(['πρό'], 'πρό', 'Preposizione', 'alta', { note: '+ gen.' });
+
+  return D;
+})();
+
+/* ─── LOOKUP UNIFICATO ──────────────────────────────────────────────────────────── */
+function lookupHighFreqDict(word, lang) {
+  if (!word) return null;
+  const dict = lang === 'greco' ? GREEK_FREQ_DICT : (lang === 'latino' ? LATIN_FREQ_DICT : null);
+  if (!dict) return null;
+  const key = lang === 'greco' ? normalizeText(word) : word.toLowerCase().trim();
+  return dict[key] || null;
+}
+
+/* Suggerisce parte del discorso dalla parola se è nel dizionario di alta frequenza.
+   Usato dalla UI grammaticale per pre-selezionare la categoria probabile. */
+function suggestPosFromDict(word, lang) {
+  const hit = lookupHighFreqDict(word, lang);
+  return hit ? hit.pos : null;
+}
+
+/* ─── AGGREGAZIONE PER LEMMA ──────────────────────────────────────────────────────
+   Costruisce l'indice inverso lemma → { pos, tier, note, forme[] } per la sezione F
+   (consultazione del dizionario). Calcolato una sola volta al primo uso e cachato. */
+let _LEMMA_INDEX_CACHE = { latino: null, greco: null };
+function buildLemmaIndex(lang) {
+  if (_LEMMA_INDEX_CACHE[lang]) return _LEMMA_INDEX_CACHE[lang];
+  const source = lang === 'greco' ? GREEK_FREQ_DICT : LATIN_FREQ_DICT;
+  const byLemma = new Map();
+  for (const formKey in source) {
+    const info = source[formKey];
+    // Chiave del raggruppamento: lemma + pos (così "in" prep e "in" altro restano distinti)
+    const groupKey = info.lemma + '::' + info.pos;
+    let group = byLemma.get(groupKey);
+    if (!group) {
+      group = {
+        lemma: info.lemma,
+        pos: info.pos,
+        tier: info.tier,
+        note: info.note || '',
+        info: info.info || '',
+        tipo: info.tipo || '',
+        gen: info.gen || '',
+        dec: info.dec || '',
+        forms: []
+      };
+      byLemma.set(groupKey, group);
+    }
+    // tier "altissima" vince su "alta" se eterogeneo
+    if (info.tier === 'altissima') group.tier = 'altissima';
+    group.forms.push(formKey);
+  }
+  // Ordina le forme alfabeticamente
+  byLemma.forEach(g => g.forms.sort());
+  const arr = Array.from(byLemma.values());
+  // Ordina per pos (categoria), poi tier (altissima prima), poi lemma alfabetico
+  const posOrder = ['Verbo','Sostantivo','Aggettivo','Pronome','Articolo','Avverbio','Preposizione','Congiunzione','Particella','Numerale','Interiezione'];
+  arr.sort((a, b) => {
+    const pa = posOrder.indexOf(a.pos); const pb = posOrder.indexOf(b.pos);
+    if (pa !== pb) return (pa < 0 ? 99 : pa) - (pb < 0 ? 99 : pb);
+    if (a.tier !== b.tier) return a.tier === 'altissima' ? -1 : 1;
+    return a.lemma.localeCompare(b.lemma, 'it');
+  });
+  _LEMMA_INDEX_CACHE[lang] = arr;
+  return arr;
+}
+
+/* Filtra l'indice per query testuale (lemma, note, forme), tier, categoria */
+function filterLemmaIndex(lang, opts) {
+  opts = opts || {};
+  const all = buildLemmaIndex(lang);
+  const q = (opts.query || '').trim().toLowerCase();
+  const qNorm = q ? normalizeText(q) : '';
+  const tier = opts.tier || 'tutti';   // 'tutti'|'altissima'|'alta'
+  const pos = opts.pos || 'tutti';     // 'tutti' o nome PoS
+  return all.filter(e => {
+    if (tier !== 'tutti' && e.tier !== tier) return false;
+    if (pos !== 'tutti' && e.pos !== pos) return false;
+    if (!q) return true;
+    // Match contro lemma, info, note, forme (forme già normalizzate per greco)
+    if (e.lemma.toLowerCase().includes(q)) return true;
+    if (normalizeText(e.lemma).includes(qNorm)) return true;
+    if (e.note && e.note.toLowerCase().includes(q)) return true;
+    if (e.info && e.info.toLowerCase().includes(q)) return true;
+    return e.forms.some(f => f.includes(qNorm) || f.includes(q));
+  });
+}
+
 function predictLatinNoun(entry) {
   const pattern = LATIN_NOUN_ENDINGS[entry.declinazione];
   if (!pattern) {
@@ -5270,6 +6270,33 @@ function predictGreekVerb(entry) {
 function predictLemma(entry, lang) {
   if (!entry || !entry.partOfSpeech) return null;
   const part = entry.partOfSpeech;
+
+  /* 0. DIZIONARIO DI ALTA FREQUENZA — match diretto forma → lemma.
+        Ha la priorità: se la parola è nel corpus scolastico, restituiamo subito il
+        lemma canonico con confidenza alta, evitando di tentare regole morfologiche
+        approssimative. Compatibile col PoS solo se l'utente l'ha già confermato. */
+  const hit = lookupHighFreqDict(entry.word, lang);
+  if (hit) {
+    const posCompatible = !part || part === hit.pos
+      || (part === 'Articolo' && hit.pos === 'Articolo')
+      || (part === 'Pronome' && (hit.pos === 'Pronome' || hit.pos === 'Aggettivo'));
+    if (posCompatible) {
+      const tierLabel = hit.tier === 'altissima' ? 'altissima' : 'alta';
+      let hint = `Dal dizionario di ${tierLabel} frequenza` + (hit.note ? ` · ${hit.note}` : '');
+      if (hit.info) hint += ` · ${hit.info}`;
+      return {
+        tema: '',
+        desinenza: '',
+        lemma: hit.lemma,
+        confidence: 'high',
+        hint,
+        fromDict: true,
+        dictTier: hit.tier,
+        dictPos: hit.pos
+      };
+    }
+  }
+
   if (lang === 'latino') {
     if (part === 'Sostantivo') return predictLatinNoun(entry);
     if (part === 'Aggettivo')  return predictLatinAdjective(entry);
@@ -5681,6 +6708,8 @@ function renderSidebarTabs() {
         hasContent: hasTranslation, hideForMedie: true },
       { num: 4, letter: 'D', title: 'Archivio', enabled: true,
         hasContent: archiveCount > 0, badge: archiveCount },
+      { num: 6, letter: 'F', title: 'Dizionario', enabled: true,
+        hasContent: true, badge: '📖' },
     ];
   } else {
     tabs = [
@@ -5697,6 +6726,8 @@ function renderSidebarTabs() {
         hasContent: hasTranslation, hideForMedie: true },
       { num: 4, letter: 'D', title: 'Archivio', enabled: true,
         hasContent: archiveCount > 0, badge: archiveCount },
+      { num: 6, letter: 'F', title: 'Dizionario', enabled: true,
+        hasContent: true, badge: '📖' },
     ];
   }
   // Per il profilo medie filtra le schede non pertinenti
@@ -5721,6 +6752,7 @@ function renderEditor() {
   else if (state.currentStep === 3) c.innerHTML = renderStep3Html();
   else if (state.currentStep === 4) c.innerHTML = renderArchiveHtml();
   else if (state.currentStep === 5) c.innerHTML = renderTranslationHtml();
+  else if (state.currentStep === 6) c.innerHTML = renderDictionaryHtml();
   if (state.currentStep === 1) {
     const t = document.getElementById('field-testo');
     const tr = document.getElementById('field-traduzione');
@@ -7439,6 +8471,178 @@ function renderTranslationHtml() {
     + globalSection;
 }
 
+/* ============================================
+   SEZIONE F · DIZIONARIO — consultazione parallela
+   ============================================ */
+function getDictLang() {
+  // Se l'utente ha esplicitamente scelto una lingua nel filtro, la rispettiamo;
+  // altrimenti seguiamo la lingua corrente del progetto
+  const f = state.dictFilters || {};
+  return f.lang || state.meta.lingua || 'latino';
+}
+
+function setDictFilter(key, value) {
+  if (!state.dictFilters) state.dictFilters = { lang: '', query: '', tier: 'tutti', pos: 'tutti' };
+  state.dictFilters[key] = value;
+  persistCurrent();
+  // Re-render solo il pannello, mantenendo il focus sull'input di ricerca
+  const c = document.getElementById('editor-content');
+  if (c) c.innerHTML = renderDictionaryHtml();
+  if (key === 'query') {
+    const input = document.getElementById('dict-search-input');
+    if (input) {
+      input.focus();
+      const v = input.value;
+      input.setSelectionRange(v.length, v.length);
+    }
+  }
+}
+
+function resetDictFilters() {
+  state.dictFilters = { lang: '', query: '', tier: 'tutti', pos: 'tutti' };
+  persistCurrent();
+  const c = document.getElementById('editor-content');
+  if (c) c.innerHTML = renderDictionaryHtml();
+}
+
+function renderDictionaryHtml() {
+  if (!state.dictFilters) state.dictFilters = { lang: '', query: '', tier: 'tutti', pos: 'tutti' };
+  const f = state.dictFilters;
+  const lang = getDictLang();
+  const isGreek = lang === 'greco';
+  const langClass = isGreek ? 'dict-greek' : 'dict-latin';
+
+  const filtered = filterLemmaIndex(lang, { query: f.query, tier: f.tier, pos: f.pos });
+  const allLangCount = buildLemmaIndex(lang).length;
+
+  // Contatori per categoria sull'intero indice (per i chips di filtro categoria)
+  const allItems = buildLemmaIndex(lang);
+  const posCounts = {};
+  allItems.forEach(e => { posCounts[e.pos] = (posCounts[e.pos] || 0) + 1; });
+  const posChips = Object.keys(posCounts)
+    .sort((a, b) => posCounts[b] - posCounts[a])
+    .map(p => `<button class="dict-chip ${f.pos === p ? 'active' : ''}" onclick="setDictFilter('pos','${p}')">${p} <span class="dict-chip-count">${posCounts[p]}</span></button>`)
+    .join('');
+
+  // Conteggi per tier (sull'indice filtrato per categoria)
+  const baseForTier = filterLemmaIndex(lang, { query: '', tier: 'tutti', pos: f.pos });
+  const tierAltissimaCount = baseForTier.filter(e => e.tier === 'altissima').length;
+  const tierAltaCount = baseForTier.filter(e => e.tier === 'alta').length;
+
+  // Raggruppamento per pos per la visualizzazione
+  const groups = {};
+  filtered.forEach(e => {
+    if (!groups[e.pos]) groups[e.pos] = [];
+    groups[e.pos].push(e);
+  });
+  const posOrder = ['Verbo','Sostantivo','Aggettivo','Pronome','Articolo','Avverbio','Preposizione','Congiunzione','Particella','Numerale','Interiezione'];
+  const orderedGroups = posOrder.filter(p => groups[p]).concat(Object.keys(groups).filter(p => !posOrder.includes(p)));
+
+  const filterBar = `
+    <div class="dict-toolbar">
+      <div class="dict-toolbar-row">
+        <div class="dict-lang-switch" role="tablist" aria-label="Lingua del dizionario">
+          <button class="${lang === 'latino' ? 'active' : ''}" onclick="setDictFilter('lang','latino')">LAT · Latino</button>
+          <button class="${lang === 'greco'  ? 'active' : ''}" onclick="setDictFilter('lang','greco')">ΕΛ · Greco</button>
+        </div>
+        <div class="dict-search-wrap">
+          <input id="dict-search-input" type="search" class="dict-search-input ${langClass}"
+                 placeholder="${isGreek ? 'Cerca lemma, forma o nota… (es. λόγος, αὐτός, οὖν)' : 'Cerca lemma, forma o nota… (es. sum, qui, postquam)'}"
+                 value="${escapeHtml(f.query || '')}"
+                 oninput="setDictFilter('query', this.value)">
+          ${f.query ? `<button class="dict-search-clear" onclick="setDictFilter('query','')" title="Pulisci">✕</button>` : ''}
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="resetDictFilters()" title="Azzera tutti i filtri">↻ Reimposta</button>
+      </div>
+      <div class="dict-toolbar-row dict-toolbar-row-tier">
+        <div class="dict-tier-tabs">
+          <button class="${f.tier === 'tutti' ? 'active' : ''}" onclick="setDictFilter('tier','tutti')">Tutti i tier <span class="dict-chip-count">${tierAltissimaCount + tierAltaCount}</span></button>
+          <button class="${f.tier === 'altissima' ? 'active' : ''}" onclick="setDictFilter('tier','altissima')">★ Altissima frequenza <span class="dict-chip-count">${tierAltissimaCount}</span></button>
+          <button class="${f.tier === 'alta' ? 'active' : ''}" onclick="setDictFilter('tier','alta')">☆ Alta frequenza <span class="dict-chip-count">${tierAltaCount}</span></button>
+        </div>
+      </div>
+      <div class="dict-toolbar-row dict-toolbar-row-pos">
+        <button class="dict-chip ${f.pos === 'tutti' ? 'active' : ''}" onclick="setDictFilter('pos','tutti')">Tutte le categorie <span class="dict-chip-count">${allLangCount}</span></button>
+        ${posChips}
+      </div>
+    </div>`;
+
+  const statsBar = `<div class="dict-stats-bar">
+    <strong>${filtered.length}</strong> voci ${filtered.length === allLangCount ? '(intero corpus)' : `su ${allLangCount}`}
+    ${f.query ? `· per «<em>${escapeHtml(f.query)}</em>»` : ''}
+    ${f.pos !== 'tutti' ? `· categoria <strong>${f.pos}</strong>` : ''}
+    ${f.tier !== 'tutti' ? `· tier <strong>${f.tier === 'altissima' ? 'altissima frequenza' : 'alta frequenza'}</strong>` : ''}
+  </div>`;
+
+  let bodyHtml = '';
+  if (filtered.length === 0) {
+    bodyHtml = `<div class="dict-empty">
+      <div class="dict-empty-icon">📖</div>
+      <div class="dict-empty-title">Nessuna voce corrisponde ai filtri attuali</div>
+      <div class="dict-empty-desc">Prova ad allargare la ricerca (svuota il testo o cambia categoria/tier) oppure ${isGreek ? 'cambia lingua su Latino' : 'cambia lingua su Greco'}.</div>
+      <button class="btn btn-primary btn-sm" onclick="resetDictFilters()">↻ Reimposta filtri</button>
+    </div>`;
+  } else {
+    bodyHtml = orderedGroups.map(pos => {
+      const items = groups[pos];
+      const cards = items.map(e => renderDictionaryCard(e, lang)).join('');
+      return `<section class="dict-group">
+        <h2 class="dict-group-title">
+          <span class="dict-group-name">${escapeHtml(pos)}</span>
+          <span class="dict-group-count">${items.length} voc${items.length === 1 ? 'e' : 'i'}</span>
+        </h2>
+        <div class="dict-grid">${cards}</div>
+      </section>`;
+    }).join('');
+  }
+
+  const intro = `<div class="method-note dict-method-note">
+    <strong>Dizionario di consultazione.</strong> Raccoglie le voci di altissima e alta frequenza dei corpora scolastici (Cesare, Cicerone, Tito Livio, Tacito per il latino; Senofonte, Platone, Lisia, Demostene, Tucidide, Erodoto per il greco), già usate dal motore di predizione del lemma. Puoi consultarlo <strong>in parallelo</strong> all'analisi: cerca per <em>lemma</em>, <em>forma flessa</em>, <em>nota grammaticale</em>; filtra per categoria o tier di frequenza. Per il greco la ricerca ignora i diacritici (puoi cercare «${isGreek ? 'autos' : 'lyo'}» e troverai «${isGreek ? 'αὐτός' : 'λύω'}»).
+  </div>`;
+
+  return sectionHeader('F', 'Dizionario · alta e altissima frequenza',
+    `corpus scolastico ${isGreek ? 'greco antico' : 'latino classico'} · consultabile in parallelo a brano e analisi`)
+    + intro
+    + filterBar
+    + statsBar
+    + `<div class="${langClass}">${bodyHtml}</div>`;
+}
+
+function renderDictionaryCard(entry, lang) {
+  const tierLabel = entry.tier === 'altissima' ? 'altissima' : 'alta';
+  const tierIcon = entry.tier === 'altissima' ? '★' : '☆';
+  const showAllForms = (entry.forms || []).length;
+  // Mostra le prime 8 forme inline; "+N" se ce ne sono altre, espandibili con click
+  const maxInline = 8;
+  const inlineForms = entry.forms.slice(0, maxInline);
+  const restCount = entry.forms.length - inlineForms.length;
+  const formsHtml = inlineForms.map(f => `<span class="dict-form">${escapeHtml(f)}</span>`).join('');
+  const moreFormsHtml = restCount > 0
+    ? `<button class="dict-form-more" onclick="this.parentElement.classList.toggle('expanded')">+${restCount} altre</button>
+       <span class="dict-form-extra">${entry.forms.slice(maxInline).map(f => `<span class="dict-form">${escapeHtml(f)}</span>`).join('')}</span>`
+    : '';
+
+  const meta = [];
+  if (entry.gen) meta.push(`<span class="dict-meta-bit">genere ${entry.gen}</span>`);
+  if (entry.dec) meta.push(`<span class="dict-meta-bit">${entry.dec} dec.</span>`);
+  if (entry.tipo) meta.push(`<span class="dict-meta-bit">${entry.tipo}</span>`);
+
+  return `<article class="dict-card tier-${entry.tier}">
+    <header class="dict-card-header">
+      <span class="dict-card-pos">${escapeHtml(entry.pos)}</span>
+      <span class="dict-tier-badge tier-${entry.tier}" title="Tier ${tierLabel}">${tierIcon} ${tierLabel}</span>
+    </header>
+    <div class="dict-card-lemma">${escapeHtml(entry.lemma)}</div>
+    ${meta.length ? `<div class="dict-card-meta">${meta.join('')}</div>` : ''}
+    ${entry.info ? `<div class="dict-card-info">${escapeHtml(entry.info)}</div>` : ''}
+    ${entry.note ? `<div class="dict-card-note"><em>${escapeHtml(entry.note)}</em></div>` : ''}
+    <div class="dict-card-forms" title="${entry.forms.length} forme indicizzate">
+      ${formsHtml}
+      ${moreFormsHtml}
+    </div>
+  </article>`;
+}
+
 function renderTranslationSentenceCard(sentence, idx) {
   const ordo = sentence.ordoVerborum || [];
   const hasBrutta = !!sentence.translation;
@@ -8052,17 +9256,28 @@ function renderGrammarActionBar(sentence) {
   const lang = state.meta.lingua;
   const grammarEntry = (sentence.grammar || []).find(e => e.tokenIndex === pending.tokenIdx);
   const currentPart = grammarEntry ? grammarEntry.partOfSpeech : '';
+  // Suggerimento PoS dal dizionario di alta frequenza — pre-seleziona se l'utente non
+  // ha ancora confermato una categoria.
+  const dictHit = lookupHighFreqDict(tok.text, lang);
+  const suggestedPart = (!currentPart && dictHit) ? dictHit.pos : '';
+  const dictBadge = dictHit
+    ? `<span class="dict-suggest-pill" title="${escapeHtml(dictHit.lemma)}${dictHit.note ? ' · ' + escapeHtml(dictHit.note) : ''}">📖 dal dizionario · <strong>${escapeHtml(dictHit.pos)}</strong> · <em>${escapeHtml(dictHit.lemma)}</em></span>`
+    : '';
   return `
     <div class="token-action-bar">
       <span class="label">Parola selezionata</span>
       <span class="target-word">${escapeHtml(tok.text)}</span>
       <select id="pending-pos-select">
         <option value="">— scegli parte del discorso —</option>
-        ${TAXONOMIES[lang].parts.map(p => `<option value="${p}" ${p === currentPart ? 'selected' : ''}>${p}</option>`).join('')}
+        ${TAXONOMIES[lang].parts.map(p => {
+          const selected = (p === currentPart) || (!currentPart && p === suggestedPart);
+          return `<option value="${p}" ${selected ? 'selected' : ''}>${p}${(!currentPart && p === suggestedPart) ? ' · suggerito' : ''}</option>`;
+        }).join('')}
       </select>
       <button class="btn btn-primary btn-sm" onclick="confirmPendingGrammar('${sentence.id}')">${grammarEntry ? 'Aggiorna' : 'Assegna'}</button>
       ${grammarEntry ? `<button class="btn btn-danger-soft btn-sm" onclick="removeTokenAssignment('${sentence.id}', 'grammar', ${pending.tokenIdx})">Rimuovi</button>` : ''}
       <button class="btn btn-ghost btn-sm" onclick="cancelPending()">Annulla</button>
+      ${dictBadge}
     </div>`;
 }
 
@@ -8561,7 +9776,7 @@ function renderLemmaSection(sentenceId, entry, lang) {
                  placeholder="${readonly ? '(dedotta automaticamente)' : 'es. -ae · -o · -ω'}">
         </div>
         <div class="lemma-full">
-          <label class="field-block-label">Lemma da vocabolario <span class="lemma-confidence ${confidence}">${confLabel[confidence] || confidence}</span></label>
+          <label class="field-block-label">Lemma da vocabolario <span class="lemma-confidence ${confidence}">${confLabel[confidence] || confidence}</span>${pred && pred.fromDict ? `<span class="dict-badge tier-${pred.dictTier}" title="Match dal dizionario di ${pred.dictTier} frequenza"><span class="dict-badge-icon">📖</span>${pred.dictTier} freq.</span>` : ''}</label>
           <input class="lemma-input lemma-final ${roCls}" type="text" value="${escapeHtml(lemma)}"
                  ${ro}
                  ${isCustom ? `oninput="updateGrammarField('${sentenceId}','${entry.id}','lemma',this.value)"` : ''}
