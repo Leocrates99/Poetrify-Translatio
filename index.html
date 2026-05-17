@@ -2,7 +2,8 @@
 <html lang="it">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#1800AC">
 <title>Poetrify Translator — Officina del greco e del latino</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -69,7 +70,18 @@ html, body {
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* Evita scroll a livello body — la nostra .app gestisce tutto internamente.
+     Su iOS impedisce anche che la pagina si "muova" sotto i pannelli fissi. */
+  overflow: hidden;
+  overscroll-behavior: none;
+  /* Rispetta safe-area su iPhone notch/dynamic island */
+  padding: env(safe-area-inset-top, 0) env(safe-area-inset-right, 0) 0 env(safe-area-inset-left, 0);
+  box-sizing: border-box;
 }
+body { -webkit-tap-highlight-color: transparent; }
+/* Touch action: niente double-tap zoom su elementi interattivi → tap istantaneo */
+button, .tab-item, .token, .wizard-step, .analysis-tab,
+.sidebar-btn, .profile-chip, .btn, .btn-export, .lang-toggle button { touch-action: manipulation; }
 
 button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 input, textarea, select { font-family: inherit; color: inherit; }
@@ -81,7 +93,13 @@ input, textarea, select { font-family: inherit; color: inherit; }
   display: grid;
   grid-template-rows: auto 1fr auto;
   height: 100vh;
+  /* Fallback per browser senza dvh: usa lvh/svh dove possibile, poi dvh per iOS/Android con browser chrome dinamica */
+  height: 100svh;
+  height: 100dvh;
+  min-height: 0;
   overflow: hidden;
+  /* Evita che il pull-to-refresh chiuda l'app quando si è in cima */
+  overscroll-behavior: contain;
 }
 
 /* TOP BAR */
@@ -189,6 +207,8 @@ input, textarea, select { font-family: inherit; color: inherit; }
   display: grid;
   grid-template-columns: 230px 1fr 0fr;
   overflow: hidden;
+  min-height: 0;
+  min-width: 0;
   transition: grid-template-columns var(--transition-base);
 }
 .main.preview-open { grid-template-columns: 230px 1fr minmax(360px, 0.85fr); }
@@ -199,8 +219,12 @@ input, textarea, select { font-family: inherit; color: inherit; }
   border-right: 1px solid var(--poetrify-rule-soft);
   padding: 24px 0;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   display: flex;
   flex-direction: column;
+  min-height: 0;
+  min-width: 0;
 }
 .sidebar-section-label {
   font-size: 10px;
@@ -295,10 +319,15 @@ input, textarea, select { font-family: inherit; color: inherit; }
 /* EDITOR */
 .editor {
   overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   background: var(--poetrify-ivory);
   padding: 32px 48px 48px;
+  min-height: 0;
+  min-width: 0;
 }
-.editor-content { max-width: 920px; margin: 0 auto; }
+.editor-content { max-width: 920px; margin: 0 auto; min-width: 0; }
 
 .section-header {
   margin-bottom: 28px;
@@ -519,9 +548,13 @@ body[data-lang="greco"] .current-sentence-banner .text { font-family: var(--font
   padding: 4px;
   border-radius: var(--radius-md);
   border: 1px solid var(--poetrify-rule-soft);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
 }
+.analysis-tabs::-webkit-scrollbar { height: 0; }
 .analysis-tab {
-  flex: 1;
+  flex: 1 0 auto;
   padding: 8px 14px;
   font-family: var(--font-ui);
   font-size: 13px;
@@ -530,6 +563,7 @@ body[data-lang="greco"] .current-sentence-banner .text { font-family: var(--font
   border-radius: var(--radius-sm);
   transition: all var(--transition-base);
   text-align: center;
+  white-space: nowrap;
 }
 .analysis-tab.active {
   background: var(--poetrify-paper);
@@ -1558,8 +1592,13 @@ body[data-profile="medie"] .wizard-step-label { font-size: 12px; }
   gap: 4px;
   margin-bottom: 16px;
   overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
   padding: 4px 0;
 }
+.wizard-step { scroll-snap-align: start; }
 .wizard-step {
   flex: 1;
   min-width: 90px;
@@ -1650,10 +1689,13 @@ body[data-profile="medie"] .wizard-step-label { font-size: 12px; }
   gap: 4px;
   margin-bottom: 14px;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
   padding: 4px 0;
   border-bottom: 1px solid var(--poetrify-rule-soft);
   padding-bottom: 10px;
 }
+.wizard-sentence-tab { flex-shrink: 0; white-space: nowrap; }
 .wizard-sentence-tab {
   padding: 6px 12px;
   border-radius: var(--radius-sm);
@@ -2813,7 +2855,7 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
    ============================================ */
 .greek-kbd-toggle {
   position: fixed;
-  bottom: 64px;
+  bottom: calc(64px + env(safe-area-inset-bottom, 0px));
   right: 28px;
   width: 52px;
   height: 52px;
@@ -3333,6 +3375,9 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
 .preview-content {
   flex: 1;
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
+  min-height: 0;
   padding: 22px 26px;
   font-family: var(--font-body);
   font-size: 15px;
@@ -3459,6 +3504,9 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   align-items: center;
   justify-content: center;
   padding: 16px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 .modal-backdrop.open { display: flex; }
 .modal {
@@ -3467,6 +3515,10 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   padding: 32px;
   max-width: 540px;
   width: 100%;
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
   box-shadow: 0 12px 40px rgba(44, 53, 57, 0.25);
 }
 .modal-title {
@@ -3629,7 +3681,13 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
 @media (max-width: 720px) {
   body { font-size: 14px; }
 
-  /* TOPBAR a due righe: brand+stato sopra, meta sotto */
+  /* APP: altezza dinamica e overflow hidden per impedire doppio scroll (viewport + interno). */
+  .app {
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  /* TOPBAR a due righe: brand+stato sopra, meta sotto. */
   .topbar {
     grid-template-columns: 1fr auto;
     grid-template-rows: auto auto;
@@ -3652,19 +3710,23 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   .meta-field input, .meta-field select { font-size: 13px; padding: 5px 8px; }
   .lang-toggle { padding: 2px; }
   .lang-toggle button { padding: 4px 10px; font-size: 11px; }
+  /* Profile chip su mobile: testo "cambia" via, solo pastiglia */
+  .profile-chip-edit { display: none; }
+  .profile-chip { padding: 3px 8px; font-size: 10px; }
 
-  /* MAIN: layout a colonna unica, sidebar in alto */
+  /* MAIN: layout a colonna unica — sidebar (auto) + editor (1fr scrollabile). */
   .main {
     grid-template-columns: 1fr !important;
     grid-template-rows: auto 1fr;
-    overflow: visible;
+    overflow: hidden;
+    min-height: 0;
   }
   .main.preview-open {
     grid-template-columns: 1fr !important;
     grid-template-rows: auto 1fr;
   }
 
-  /* SIDEBAR orizzontale */
+  /* SIDEBAR orizzontale — barra di navigazione scheda A/B/C/D sopra l'editor */
   .sidebar {
     flex-direction: row;
     border-right: none;
@@ -3672,10 +3734,15 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
     padding: 6px 6px 6px 10px;
     overflow-x: auto;
     overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
     align-items: stretch;
     gap: 0;
+    background: var(--poetrify-paper);
+    flex-shrink: 0;
   }
   .sidebar::-webkit-scrollbar { height: 4px; }
+  .sidebar::-webkit-scrollbar-thumb { background: var(--poetrify-rule); border-radius: 2px; }
   .sidebar-section-label { display: none; }
   .tab-list {
     flex-direction: row;
@@ -3721,8 +3788,8 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   }
   .sidebar-btn span { display: none; }
 
-  /* EDITOR: padding ridotto e spazio extra in fondo per il bottombar fisso */
-  .editor { padding: 18px 14px 80px; }
+  /* EDITOR: padding ridotto. Il bottombar è già una riga della griglia .app, non serve padding extra. */
+  .editor { padding: 18px 14px 24px; }
   .editor-content { max-width: 100%; }
 
   /* SEZIONI compatte */
@@ -3799,14 +3866,18 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   .export-option { padding: 12px 14px; }
   .mode-grid { grid-template-columns: 1fr; }
 
-  /* BOTTOMBAR fisso e compatto */
+  /* BOTTOMBAR compatto — è già auto-row della griglia .app, niente sticky che duplichi lo strato */
   .bottombar {
     padding: 8px 12px;
     gap: 6px;
-    flex-wrap: wrap;
-    position: sticky;
-    bottom: 0;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-shrink: 0;
+    /* Safe area iOS — evita di finire sotto il home indicator */
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
   }
+  .bottombar::-webkit-scrollbar { height: 3px; }
   .export-group { gap: 6px; flex: 1; min-width: 0; }
   .export-label { display: none; }
   .btn-export { padding: 6px 10px; font-size: 12px; }
@@ -3814,17 +3885,17 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   .stat-item { white-space: nowrap; }
   .btn-preview-toggle { padding: 6px 10px; font-size: 11px; }
 
-  /* GREEK KEYBOARD: posizione e dimensione adattate */
+  /* GREEK KEYBOARD: posizione e dimensione adattate, con safe-area iOS */
   .greek-kbd-panel {
     left: 6px;
     right: 6px;
-    bottom: 64px;
-    max-height: 55vh;
+    bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+    max-height: 55svh;
   }
   .greek-kbd-toggle {
     width: 46px;
     height: 46px;
-    bottom: 70px;
+    bottom: calc(70px + env(safe-area-inset-bottom, 0px));
     right: 14px;
     font-size: 22px;
   }
@@ -3904,8 +3975,8 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   .wizard-nav-buttons .btn { flex: 1; justify-content: center; min-width: 0; }
 
   /* GREEK KEYBOARD: keyboard più stretta */
-  .greek-kbd-panel { bottom: 60px; max-height: 50vh; }
-  .greek-kbd-toggle { width: 42px; height: 42px; bottom: 66px; right: 10px; font-size: 18px; }
+  .greek-kbd-panel { bottom: calc(60px + env(safe-area-inset-bottom, 0px)); max-height: 50svh; }
+  .greek-kbd-toggle { width: 42px; height: 42px; bottom: calc(66px + env(safe-area-inset-bottom, 0px)); right: 10px; font-size: 18px; }
   .kbd-key { font-size: 18px; min-width: 30px; height: 30px; }
   .kbd-row { grid-template-columns: 1fr; }
   .kbd-row-label { text-align: left; padding-top: 0; font-size: 9px; }
