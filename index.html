@@ -2237,6 +2237,190 @@ body[data-profile="medie"] .wizard-step-label { font-size: 12px; }
   color: var(--poetrify-sepia);
 }
 .paradigm-empty em { font-style: italic; color: var(--poetrify-primary); font-weight: 600; }
+.paradigm-tantum-note {
+  background: rgba(214, 158, 46, 0.12);
+  border-left: 3px solid var(--poetrify-warning);
+  color: var(--poetrify-ink);
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  padding: 8px 12px;
+  margin-bottom: 14px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  line-height: 1.5;
+}
+.paradigm-tantum-note strong { color: var(--poetrify-warning); }
+
+/* ============================================
+   EVIDENZIA DESINENZE — toggle e stile rosso/grassetto
+   ============================================ */
+.paradigm-header-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+.paradigm-highlight-toggle {
+  padding: 7px 14px;
+  border: 1.5px solid var(--poetrify-rule);
+  background: var(--poetrify-paper);
+  color: var(--poetrify-sepia);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  touch-action: manipulation;
+}
+.paradigm-highlight-toggle:hover {
+  border-color: var(--poetrify-danger);
+  color: var(--poetrify-danger);
+}
+.paradigm-highlight-toggle.active {
+  background: rgba(197, 48, 48, 0.10);
+  border-color: var(--poetrify-danger);
+  color: var(--poetrify-danger);
+}
+/* La desinenza è sempre wrapped in span.paradigm-ending,
+   ma il colore distintivo si attiva solo quando body ha .paradigm-highlight-on */
+.paradigm-ending {
+  color: inherit;
+  font-weight: inherit;
+  transition: color 0.15s ease, font-weight 0.15s ease;
+}
+body.paradigm-highlight-on .paradigm-ending {
+  color: var(--poetrify-danger);
+  font-weight: 700;
+}
+@media (max-width: 720px) {
+  .paradigm-header-actions { flex-wrap: wrap; gap: 6px; }
+  .paradigm-highlight-toggle { font-size: 10px; padding: 6px 10px; }
+}
+
+/* ============================================
+   PONTE COMUNICATIVO ANALISI PERIODALE
+   ============================================ */
+.periodale-bridge {
+  background: linear-gradient(135deg, rgba(24, 0, 172, 0.04), rgba(214, 158, 46, 0.04));
+  border: 1px solid rgba(24, 0, 172, 0.18);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  margin-bottom: 18px;
+  font-family: var(--font-body);
+}
+.periodale-bridge-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px dashed rgba(24, 0, 172, 0.2);
+  flex-wrap: wrap;
+}
+.periodale-bridge-icon { font-size: 18px; }
+.periodale-bridge-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--poetrify-primary);
+  letter-spacing: -0.01em;
+}
+.periodale-bridge-hint {
+  font-style: italic;
+  font-size: 11.5px;
+  color: var(--poetrify-sepia);
+}
+.periodale-bridge-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.periodale-bridge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: baseline;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.periodale-bridge-label {
+  font-family: var(--font-ui);
+  font-size: 10.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--poetrify-sepia);
+  font-weight: 700;
+  margin-right: 4px;
+  flex-shrink: 0;
+}
+.periodale-bridge-chip {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid;
+}
+body[data-lang="greco"] .periodale-bridge-chip { font-family: 'Times New Roman', serif; font-size: 14px; }
+.periodale-bridge-chip.verb-chip {
+  background: rgba(24, 0, 172, 0.10);
+  color: var(--poetrify-primary);
+  border-color: rgba(24, 0, 172, 0.25);
+}
+.periodale-bridge-chip.conn-chip {
+  background: rgba(214, 158, 46, 0.14);
+  color: #8a6500;
+  border-color: rgba(214, 158, 46, 0.35);
+}
+.periodale-bridge-chip.async-chip {
+  background: rgba(120, 113, 108, 0.14);
+  color: var(--poetrify-sepia);
+  border-color: rgba(120, 113, 108, 0.3);
+  font-style: italic;
+}
+.periodale-bridge-empty {
+  font-style: italic;
+  font-size: 12.5px;
+  color: var(--poetrify-sepia);
+  padding: 6px 0;
+}
+.periodale-bridge-advice {
+  margin-top: 8px;
+  padding: 8px 10px;
+  background: rgba(255, 255, 255, 0.6);
+  border-left: 3px solid var(--poetrify-accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--poetrify-ink);
+}
+.periodale-bridge-advice strong { color: var(--poetrify-accent); }
+.periodale-bridge-advice em { font-style: italic; color: var(--poetrify-primary); font-weight: 600; }
+.periodale-bridge-actions {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed rgba(24, 0, 172, 0.2);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.periodale-flag-single {
+  font-weight: 600;
+  background: var(--poetrify-primary);
+  color: var(--poetrify-paper);
+}
+.periodale-flag-single:hover { background: var(--poetrify-primary-dark, #0f0070); }
+@media (max-width: 720px) {
+  .periodale-bridge { padding: 10px 12px; }
+  .periodale-bridge-title { font-size: 13px; }
+  .periodale-bridge-hint { display: block; width: 100%; }
+  .periodale-bridge-chip { font-size: 12.5px; padding: 2px 7px; }
+  .periodale-flag-single { width: 100%; padding: 10px; min-height: 44px; }
+}
 
 /* ============================================
    MOBILE — Modale paradigma · adattamento touch/tablet/telefono
@@ -5452,7 +5636,7 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   </div>
 </div>
 
-<!-- MODALE PARADIGMA — declinazione completa di sostantivi/aggettivi · coniugazione completa di verbi (latino) -->
+<!-- MODALE PARADIGMA — declinazione completa di sostantivi/aggettivi · coniugazione completa di verbi -->
 <div class="modal-backdrop" id="modal-paradigm">
   <div class="modal modal-paradigm">
     <header class="paradigm-modal-header">
@@ -5460,7 +5644,12 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
         <h3 class="modal-title" id="paradigm-modal-title">Paradigma</h3>
         <p class="modal-subtitle paradigm-modal-subtitle" id="paradigm-modal-subtitle"></p>
       </div>
-      <button class="paradigm-close-btn" onclick="closeParadigmModal()" title="Chiudi (Esc)">✕</button>
+      <div class="paradigm-header-actions">
+        <button class="paradigm-highlight-toggle" id="paradigm-highlight-toggle" onclick="toggleParadigmEndingHighlight()" title="Mostra le desinenze in rosso/grassetto">
+          Evidenzia desinenze
+        </button>
+        <button class="paradigm-close-btn" onclick="closeParadigmModal()" title="Chiudi (Esc)">✕</button>
+      </div>
     </header>
     <div id="paradigm-modal-body" class="paradigm-modal-body"></div>
   </div>
@@ -5530,7 +5719,7 @@ const TAXONOMIES = {
     verboTempoInfinito: ['Presente', 'Perfetto', 'Futuro'],
     verboTempoParticipio: ['Presente', 'Perfetto', 'Futuro'],
     verboModo: ['Indicativo', 'Congiuntivo', 'Imperativo'],
-    verboDiatesi: ['Attiva', 'Passiva'],
+    verboDiatesi: ['Attiva', 'Passiva', 'Deponente', 'Semideponente'],
     verboPersona: ['1ª', '2ª', '3ª'],
     avverbioTipo: ['Di modo', 'Di luogo', 'Di tempo', 'Di quantità', 'Di affermazione', 'Di negazione', 'Di dubbio', 'Interrogativo'],
     preposizioneRetta: ['Accusativo', 'Ablativo', 'Accusativo o ablativo', 'Genitivo'],
@@ -5553,7 +5742,7 @@ const TAXONOMIES = {
     verboTempoInfinito: ['Presente', 'Futuro', 'Aoristo', 'Perfetto'],
     verboTempoParticipio: ['Presente', 'Futuro', 'Aoristo', 'Perfetto'],
     verboModo: ['Indicativo', 'Congiuntivo', 'Ottativo', 'Imperativo'],
-    verboDiatesi: ['Attiva', 'Media', 'Passiva', 'Medio-passiva'],
+    verboDiatesi: ['Attiva', 'Media', 'Passiva', 'Medio-passiva', 'Deponente'],
     verboPersona: ['1ª', '2ª', '3ª'],
     avverbioTipo: ['Di modo', 'Di luogo', 'Di tempo', 'Di quantità', 'Di affermazione', 'Di negazione', 'Interrogativo'],
     preposizioneRetta: ['Genitivo', 'Dativo', 'Accusativo', 'Più casi'],
@@ -6214,6 +6403,9 @@ function parseLatinLemma(lemma, pos) {
     // 1a sing perf: ...i (e.g. amavi, monui, legi, audivi)
     // supino: ...um
     // infinito: ...are/-ēre/-ĕre/-ire
+    // Forma abbreviata: "amo, -as, -avi, -atum, -are" — perfetto e supino
+    //   iniziano con `-` e devono essere ricostruiti con il prefisso comune
+    //   (= radice della prima persona del presente senza vocale tematica)
     const parts = lemma.split(/,\s*/).map(s => s.trim());
     if (parts.length >= 5) {
       const [pres1, pres2, perf, sup, inf] = parts;
@@ -6231,11 +6423,33 @@ function parseLatinLemma(lemma, pos) {
       if (conj === 'III-io') presStem = pres1.replace(/io$/, '');
       else if (conj === 'IV') presStem = pres1.replace(/io$/, '');
       else if (conj === 'II') presStem = pres1.replace(/eo$/, '');
+
+      // Ricostruisci forme se abbreviate con trattino.
+      // Per il perfetto: il "prefisso comune" è il tema del presente meno l'eventuale
+      // vocale tematica. Per coniugazione I la vocale è 'a' (am-o → am-, vocale a)
+      // Per la coniug. è più sicuro usare presStem stesso quando il perfetto inizia con -.
+      const expandFromDash = (raw, suffixLetter) => {
+        if (!raw) return raw;
+        let s = String(raw).trim();
+        if (s.startsWith('-')) {
+          s = s.replace(/^-+/, '');
+          // Determina il prefisso. Per la I conj. (amo, am-avi): presStem 'am' + 'avi' = 'amavi'
+          // Per la II conj. (moneo, mon-ui): presStem 'mon' + 'ui' = 'monui' (presStem qui è già 'mon' senza eo)
+          // Per la III conj. (lego, leg-i): presStem 'leg' + 'i' = 'legi'
+          // Per la IV conj. (audio, aud-ivi): presStem 'aud' + 'ivi' = 'audivi'
+          // Quindi il prefisso = presStem stesso (senza vocale tematica)
+          s = presStem + s;
+        }
+        return s;
+      };
+      const perfFull = expandFromDash(perf);
+      const supFull = expandFromDash(sup);
+
       // Tema del perfetto (rimuove la -i finale)
-      const perfStem = (perf || '').replace(/i$/, '').replace(/[-\s]/g, '');
+      const perfStem = perfFull.replace(/i$/, '').replace(/\s/g, '');
       // Tema del supino (rimuove la -um finale)
-      const supStem = (sup || '').replace(/um$/, '').replace(/[-\s]/g, '');
-      return { type: 'verb-reg', conj, presStem, perfStem, supStem, lemma, parts };
+      const supStem = supFull.replace(/um$/, '').replace(/\s/g, '');
+      return { type: 'verb-reg', conj, presStem, perfStem, supStem, lemma, parts: [pres1, pres2, perfFull, supFull, inf] };
     }
     return null;
   }
@@ -6271,7 +6485,9 @@ function parseLatinLemma(lemma, pos) {
 
   // SOSTANTIVI: determina declinazione dal lemma "nom, gen"
   if (pos === 'Sostantivo') {
-    if (/pluralia tantum/i.test(lemma)) {
+    const isSingTantum = /\bsing\. tantum\b/i.test(lemma) || /\bsingularia tantum\b/i.test(lemma);
+    const isPlurTantum = /\bplur\. tantum\b/i.test(lemma) || /\bpluralia tantum\b/i.test(lemma);
+    if (isPlurTantum) {
       // Es. "castra, -orum" pluralia
       const m = norm.match(/^(\w+?)(a|i|es),\s*-?(\w+)/);
       if (m) {
@@ -6280,49 +6496,48 @@ function parseLatinLemma(lemma, pos) {
         if (ending === 'a' && /orum/.test(gen)) decl = 'II-pl'; // arma, castra
         else if (ending === 'ae' || /arum/.test(gen)) decl = 'I-pl'; // litterae
         else if (ending === 'es' && /ium|um/.test(gen)) decl = 'III-pl';
-        return { type: 'noun-pl-tantum', decl, stem: m[1], lemma };
+        return { type: 'noun-pl-tantum', decl, stem: m[1], lemma, noSing: true };
       }
     }
     const parts = lemma.split(/,\s*/).map(s => s.trim());
     if (parts.length < 2) return null;
     const nom = parts[0].toLowerCase();
     const gen = parts[1].replace(/^-/, '').toLowerCase();
+    // Helper per propagare flag tantum
+    const wrap = (obj) => Object.assign(obj, isSingTantum ? { noPlur: true } : {}, isPlurTantum ? { noSing: true } : {});
     // I dec
     if (nom.endsWith('a') && gen.endsWith('ae')) {
-      return { type: 'noun', decl: 'I', gen: 'F', stem: nom.slice(0, -1), lemma };
+      return wrap({ type: 'noun', decl: 'I', gen: 'F', stem: nom.slice(0, -1), lemma });
     }
     // II dec M (-us, -i)
-    if (nom.endsWith('us') && gen === 'i') return { type: 'noun', decl: 'II', gen: 'M', stem: nom.slice(0, -2), lemma };
+    if (nom.endsWith('us') && gen === 'i') return wrap({ type: 'noun', decl: 'II', gen: 'M', stem: nom.slice(0, -2), lemma });
     // II dec N (-um, -i)
-    if (nom.endsWith('um') && gen === 'i') return { type: 'noun', decl: 'II', gen: 'N', stem: nom.slice(0, -2), lemma };
+    if (nom.endsWith('um') && gen === 'i') return wrap({ type: 'noun', decl: 'II', gen: 'N', stem: nom.slice(0, -2), lemma });
     // II dec M (-er, -i)
-    if (nom.endsWith('er') && gen === 'i') return { type: 'noun', decl: 'II-er', gen: 'M', stem: nom.slice(0, -2), nom, lemma, hasE: true };
+    if (nom.endsWith('er') && gen === 'i') return wrap({ type: 'noun', decl: 'II-er', gen: 'M', stem: nom.slice(0, -2), nom, lemma, hasE: true });
     if (nom.endsWith('er') && gen.endsWith('i')) {
       const stem = gen.slice(0, -1);
-      return { type: 'noun', decl: 'II-er', gen: 'M', stem, nom, lemma, hasE: nom.slice(0,-2) + 'er' === stem + 'er' };
+      return wrap({ type: 'noun', decl: 'II-er', gen: 'M', stem, nom, lemma, hasE: nom.slice(0,-2) + 'er' === stem + 'er' });
     }
-    if (nom === 'vir' && gen === 'viri') return { type: 'noun', decl: 'II-er', gen: 'M', stem: 'vir', nom: 'vir', lemma };
+    if (nom === 'vir' && gen === 'viri') return wrap({ type: 'noun', decl: 'II-er', gen: 'M', stem: 'vir', nom: 'vir', lemma });
     // V dec (-es, -ei)
     if (nom.endsWith('es') && gen.endsWith('ei')) {
-      return { type: 'noun', decl: 'V', gen: 'F', stem: gen.slice(0, -2), lemma };
+      return wrap({ type: 'noun', decl: 'V', gen: 'F', stem: gen.slice(0, -2), lemma });
     }
     // IV dec (-us, -us)
-    if (nom.endsWith('us') && gen === 'us') return { type: 'noun', decl: 'IV', gen: 'M', stem: nom.slice(0, -2), lemma };
+    if (nom.endsWith('us') && gen === 'us') return wrap({ type: 'noun', decl: 'IV', gen: 'M', stem: nom.slice(0, -2), lemma });
     // IV dec N (-u, -us)
-    if (nom.endsWith('u') && gen === 'us') return { type: 'noun', decl: 'IV', gen: 'N', stem: nom.slice(0, -1), lemma };
+    if (nom.endsWith('u') && gen === 'us') return wrap({ type: 'noun', decl: 'IV', gen: 'N', stem: nom.slice(0, -1), lemma });
     // III dec — usa il tema del genitivo
     const genStem = gen.replace(/is$/, '').replace(/os$/, '');
     if (genStem && genStem !== gen) {
-      // determina sottotipo: parisillabo (gen.-is = nom + -is) o imparisillabo
       const isParisillabo = nom.length + 1 === gen.length && nom.endsWith('is');
-      // neutri della III: comunemente -us/-or genitivo -oris (corpus/corporis), -en/-inis (carmen/carminis), -e/-is (mare, maris)
       let gender = 'M';
       if (nom.endsWith('um') || nom.endsWith('us') || nom.endsWith('en') || nom.endsWith('ur') || nom === 'caput' || nom.endsWith('e')) {
-        // euristica neutri
         if (/^(opus|corpus|tempus|genus|vulnus|pectus|nemus|onus|frigus|litus|munus|scelus|caput)$/i.test(nom) ||
             nom.endsWith('en') || nom.endsWith('e') || nom.endsWith('ar') || nom.endsWith('ur')) gender = 'N';
       }
-      return { type: 'noun', decl: 'III', gen: gender, stem: genStem, nom, lemma, parisillabo: isParisillabo };
+      return wrap({ type: 'noun', decl: 'III', gen: gender, stem: genStem, nom, lemma, parisillabo: isParisillabo });
     }
     return null;
   }
@@ -6332,26 +6547,27 @@ function parseLatinLemma(lemma, pos) {
 /* Genera la tabella di declinazione di un sostantivo */
 function buildNounParadigm(parsed) {
   if (!parsed) return null;
-  const { decl, gen, stem, nom } = parsed;
+  const { decl, gen, stem, nom, noSing, noPlur } = parsed;
   const rows = {};
-  if (decl === 'I') {
+  if (decl === 'I' || decl === 'I-pl') {
     rows.sing = { Nominativo: stem+'a', Genitivo: stem+'ae', Dativo: stem+'ae', Accusativo: stem+'am', Vocativo: stem+'a', Ablativo: stem+'ā' };
     rows.plur = { Nominativo: stem+'ae', Genitivo: stem+'arum', Dativo: stem+'is', Accusativo: stem+'as', Vocativo: stem+'ae', Ablativo: stem+'is' };
-  } else if (decl === 'II' && gen === 'M') {
+  } else if ((decl === 'II' || decl === 'II-pl') && gen === 'M') {
     rows.sing = { Nominativo: stem+'us', Genitivo: stem+'i', Dativo: stem+'o', Accusativo: stem+'um', Vocativo: stem+'e', Ablativo: stem+'o' };
     rows.plur = { Nominativo: stem+'i', Genitivo: stem+'orum', Dativo: stem+'is', Accusativo: stem+'os', Vocativo: stem+'i', Ablativo: stem+'is' };
-  } else if (decl === 'II' && gen === 'N') {
+  } else if ((decl === 'II' || decl === 'II-pl') && (gen === 'N' || decl === 'II-pl')) {
+    // II-pl con neutri pluralia (es. castra, arma, dona)
     rows.sing = { Nominativo: stem+'um', Genitivo: stem+'i', Dativo: stem+'o', Accusativo: stem+'um', Vocativo: stem+'um', Ablativo: stem+'o' };
     rows.plur = { Nominativo: stem+'a', Genitivo: stem+'orum', Dativo: stem+'is', Accusativo: stem+'a', Vocativo: stem+'a', Ablativo: stem+'is' };
   } else if (decl === 'II-er') {
     const sNom = nom || (stem + 'er');
     rows.sing = { Nominativo: sNom, Genitivo: stem+'i', Dativo: stem+'o', Accusativo: stem+'um', Vocativo: sNom, Ablativo: stem+'o' };
     rows.plur = { Nominativo: stem+'i', Genitivo: stem+'orum', Dativo: stem+'is', Accusativo: stem+'os', Vocativo: stem+'i', Ablativo: stem+'is' };
-  } else if (decl === 'III' && gen !== 'N') {
+  } else if ((decl === 'III' || decl === 'III-pl') && gen !== 'N') {
     const sNom = nom || (stem + (parsed.parisillabo ? 'is' : ''));
     rows.sing = { Nominativo: sNom, Genitivo: stem+'is', Dativo: stem+'i', Accusativo: stem+'em', Vocativo: sNom, Ablativo: stem+'e' };
     rows.plur = { Nominativo: stem+'es', Genitivo: stem+(parsed.parisillabo ? 'ium' : 'um'), Dativo: stem+'ibus', Accusativo: stem+'es', Vocativo: stem+'es', Ablativo: stem+'ibus' };
-  } else if (decl === 'III' && gen === 'N') {
+  } else if ((decl === 'III' || decl === 'III-pl') && gen === 'N') {
     const sNom = nom || stem;
     rows.sing = { Nominativo: sNom, Genitivo: stem+'is', Dativo: stem+'i', Accusativo: sNom, Vocativo: sNom, Ablativo: stem+'e' };
     rows.plur = { Nominativo: stem+'a', Genitivo: stem+(parsed.parisillabo ? 'ium' : 'um'), Dativo: stem+'ibus', Accusativo: stem+'a', Vocativo: stem+'a', Ablativo: stem+'ibus' };
@@ -6367,7 +6583,9 @@ function buildNounParadigm(parsed) {
   } else {
     return null;
   }
-  return { gender: gen, rows };
+  // Pluralia tantum: nessun singolare
+  const effNoSing = noSing || /-pl$/.test(decl || '') || parsed.type === 'noun-pl-tantum';
+  return { gender: gen, rows, noSing: effNoSing || false, noPlur: noPlur || false, decl };
 }
 
 /* Genera la tabella per un aggettivo I classe (-us/-a/-um, anche -er/-a/-um) */
@@ -6788,30 +7006,180 @@ function buildIrregularVerbParadigm(parsed) {
 }
 
 /* ──────────────────────────────────────────────────────────────────────────────
-   Renderer HTML delle tabelle paradigmatiche per la modale del dizionario
+   EVIDENZIATORE DESINENZE — separa tema dalla desinenza per markatura visiva.
+   Riceve una forma flessa e un insieme di desinenze candidate per il paradigma;
+   restituisce un oggetto { stem, ending } con la corrispondenza più lunga.
    ────────────────────────────────────────────────────────────────────────── */
+function _splitStemEnding(form, candidateEndings) {
+  if (!form || !candidateEndings || !candidateEndings.length) {
+    return { stem: form || '', ending: '' };
+  }
+  // Cerca la desinenza più lunga che la forma termina con (in NFD per match indipendente da accenti)
+  const formNFD = form.normalize('NFD');
+  const formNorm = _grStrip(form);
+  let best = null;
+  for (const e of candidateEndings) {
+    if (!e || e === '—') continue;
+    const eNFD = e.normalize('NFD');
+    const eNorm = _grStrip(e);
+    if (!eNorm) continue;
+    // Match sul piano "stripped" per essere indipendenti dagli accenti
+    if (formNorm.endsWith(eNorm)) {
+      // Verifica che dalla forma si possa effettivamente troncare quella lunghezza
+      // (tenuto conto dei combining marks)
+      if (!best || eNorm.length > best.normLen) {
+        best = { ending: e, normLen: eNorm.length };
+      }
+    }
+  }
+  if (!best) return { stem: form, ending: '' };
+  // Trova la posizione di taglio sulla stringa NFC originale, contando i caratteri-base
+  let baseCount = 0;
+  const totalBaseChars = _grStrip(form).length;
+  const targetBase = totalBaseChars - best.normLen;
+  let cutPos = form.length;
+  for (let i = 0; i < form.length; i++) {
+    const cc = form.charCodeAt(i);
+    // Salta combining marks
+    if (cc >= 0x0300 && cc <= 0x036f) continue;
+    if (baseCount === targetBase) { cutPos = i; break; }
+    baseCount++;
+  }
+  return { stem: form.slice(0, cutPos), ending: form.slice(cutPos) };
+}
+
+/* Renderizza una forma flessa con la desinenza marcata in rosso+grassetto
+   se markEndings=true e la desinenza è disponibile.
+   `endingsForCase` è l'array delle desinenze applicabili al caso (es. ['α','ας','ᾳ',...]). */
+function _renderFormHighlighted(form, endingsForCase, markEndings) {
+  if (!markEndings || !form || form === '—') return escapeHtml(form || '—');
+  if (!endingsForCase || !endingsForCase.length) return escapeHtml(form);
+  const split = _splitStemEnding(form, endingsForCase);
+  if (!split.ending) return escapeHtml(form);
+  return escapeHtml(split.stem) + '<span class="paradigm-ending">' + escapeHtml(split.ending) + '</span>';
+}
+
+/* Stato globale del toggle "evidenzia desinenze" per la modale paradigma corrente.
+   Persistito in localStorage per ricordare la preferenza dell'utente. */
+function getParadigmHighlightEndings() {
+  try { return localStorage.getItem('poetrify-paradigm-mark') === '1'; } catch (e) { return false; }
+}
+function setParadigmHighlightEndings(on) {
+  try { localStorage.setItem('poetrify-paradigm-mark', on ? '1' : '0'); } catch (e) {}
+}
+function toggleParadigmEndingHighlight() {
+  const newState = !getParadigmHighlightEndings();
+  setParadigmHighlightEndings(newState);
+  // Rigenera la modale
+  const body = document.getElementById('paradigm-modal-body');
+  if (body) {
+    document.body.classList.toggle('paradigm-highlight-on', newState);
+  }
+  const btn = document.getElementById('paradigm-highlight-toggle');
+  if (btn) {
+    btn.classList.toggle('active', newState);
+    btn.textContent = newState ? '✓ Desinenze evidenziate' : 'Evidenzia desinenze';
+  }
+}
+
+/* Desinenze standard per ciascuna declinazione/coniugazione (con accenti tipici).
+   Usate per identificare la desinenza nelle forme generate. */
+const _LAT_NOUN_ENDINGS_BY_DECL = {
+  'I':     { sing: ['a','ae','am','ā','o','i','os','us','um','e','u','es','em','ei','ebus','arum','is','as'],
+             plur: ['ae','arum','is','as'] },
+  'II':    { sing: ['us','i','o','um','e','er','ir'],
+             plur: ['i','orum','is','os','a'] },
+  'III':   { sing: ['s','is','i','em','e'],
+             plur: ['es','um','ium','ibus','a'] },
+  'IV':    { sing: ['us','ū','ui','um','u'],
+             plur: ['us','uum','ibus','ua'] },
+  'V':     { sing: ['es','ei','em','e'],
+             plur: ['es','erum','ebus'] }
+};
+const _LAT_VERB_ENDINGS = {
+  pres_ind_act:    ['o','s','t','mus','tis','nt','io','as','at','amus','atis','ant','eo','es','et','emus','etis','ent','is','it','imus','itis','unt','iunt'],
+  impf_ind_act:    ['bam','bas','bat','bamus','batis','bant','iebam','iebas','iebat','iebamus','iebatis','iebant'],
+  fut_ind_act:     ['bo','bis','bit','bimus','bitis','bunt','am','es','et','emus','etis','ent','iam','ies','iet','iemus','ietis','ient'],
+  perf_ind_act:    ['i','isti','it','imus','istis','erunt','ere'],
+  pluper_ind_act:  ['eram','eras','erat','eramus','eratis','erant'],
+  futp_ind_act:    ['ero','eris','erit','erimus','eritis','erint'],
+  pass:            ['or','ris','tur','mur','mini','ntur','aris','atur','amur','amini','antur','eris','etur','emur','emini','entur','iris','itur','imur','imini','iuntur','iris']
+};
+const _GR_NOUN_ENDINGS_FLAT = [
+  // I dec
+  'α','ας','ᾳ','αν','ης','ῃ','ην','η','ων','αις','αι','ας','ῶν','αρων','ων',
+  // II dec
+  'ος','ου','ῳ','ον','ε','οι','ων','οις','ους','α',
+  // III dec
+  'εως','ει','ιν','ι','εις','εων','εσι','εσιν','ος','σι','σιν','ν','ωσι','ασι','ασιν','ως',
+  'εύς','έως','εῖ','έα','εῦ','εῖς','έων','εῦσι','εῦσιν','έας',
+  'ύς','ύος','ύι','ύν','ύ','ύες','ύσι','ύσιν','ῦς','ύων',
+  'οῦς','οῦ','ῷ','οῦν','οῖ','ῶν','οῖς',
+  'ατος','ατι','α','ατα','άτων','ασι','ασιν',
+  // forme generali
+  'σι(ν)','εσι(ν)','αις','ων','α','ες','ας'
+];
+const _GR_VERB_ENDINGS_FLAT = [
+  'ω','εις','ει','ομεν','ετε','ουσι','ουσιν',
+  'ον','ες','ε','ες','ομεν','ετε','ον','εν',
+  'σω','σεις','σει','σομεν','σετε','σουσι',
+  'σα','σας','σε','σαμεν','σατε','σαν','σεν',
+  'α','ας','ε','αμεν','ατε','ασι','ασιν','αν',
+  'η','ης','ει','εμεν','ετε','εσαν','ησαν',
+  'μαι','σαι','ται','μεθα','σθε','νται',
+  'μην','σο','το','μεθα','σθε','ντο',
+  'ωμαι','ῃ','ηται','ωμεθα','ησθε','ωνται',
+  'ομαι','ει','εται','όμεθα','εσθε','ονται','όμενος','ομενος',
+  'σόμενος','σόμεθα','σεσθαι','σόμενος','σαμενος','σάμενος',
+  'ην','ης','η','ημεν','ητε','ησαν','ηναι','είς','έντος',
+  'σθαι','εσθαι','σασθαι','έσθαι','σαι','ναι','έναι',
+  'ων','οντος','ονθαι','ώς','ότος','μενος','μένος',
+  // contratti
+  'ῶ','ᾷς','ᾷ','ῶμεν','ᾶτε','ῶσι',
+  'εῖς','εῖ','οῦμεν','εῖτε','οῦσι',
+  'οῖς','οῖ','οῦτε',
+  // ottativi
+  'οιμι','οις','οι','οιμεν','οιτε','οιεν',
+  'οιμην','οιο','οιτο','οίμεθα','οισθε','οιντο',
+  // congiuntivi
+  'ω','ῃς','ῃ','ωμεν','ητε','ωσι'
+];
+
 function renderNounParadigmHtml(paradigm, lemma) {
   if (!paradigm) return `<p class="muted-text">Paradigma non disponibile per <em>${escapeHtml(lemma)}</em>.</p>`;
-  const { rows } = paradigm;
-  const sing = rows.sing || {}, plur = rows.plur || {};
-  const tr = LAT_CASES.map(c => `<tr>
-    <th>${c}</th>
-    <td>${escapeHtml(sing[c] || '—')}</td>
-    <td>${escapeHtml(plur[c] || '—')}</td>
-  </tr>`).join('');
-  return `<table class="paradigm-table">
-    <thead><tr><th></th><th>Singolare</th><th>Plurale</th></tr></thead>
+  const { rows, noSing, noPlur } = paradigm;
+  const showSing = !noSing && rows.sing;
+  const showPlur = !noPlur && rows.plur;
+  let header = '<tr><th></th>';
+  if (showSing) header += '<th>Singolare</th>';
+  if (showPlur) header += '<th>Plurale</th>';
+  header += '</tr>';
+  const endings = _LAT_NOUN_ENDINGS_BY_DECL[paradigm.decl] || { sing: [], plur: [] };
+  const allEndings = (endings.sing || []).concat(endings.plur || []);
+  const tr = LAT_CASES.map(c => {
+    let row = `<tr><th>${c}</th>`;
+    if (showSing) row += `<td>${_renderFormHighlighted((rows.sing && rows.sing[c]) || '—', allEndings, true)}</td>`;
+    if (showPlur) row += `<td>${_renderFormHighlighted((rows.plur && rows.plur[c]) || '—', allEndings, true)}</td>`;
+    row += '</tr>';
+    return row;
+  }).join('');
+  let banner = '';
+  if (noSing) banner = '<div class="paradigm-tantum-note"><strong>Pluralia tantum:</strong> il sostantivo è attestato solo al plurale.</div>';
+  else if (noPlur) banner = '<div class="paradigm-tantum-note"><strong>Singularia tantum:</strong> il sostantivo è attestato solo al singolare.</div>';
+  return banner + `<table class="paradigm-table">
+    <thead>${header}</thead>
     <tbody>${tr}</tbody>
   </table>`;
 }
 
 function renderAdjParadigmHtml(p, lemma) {
   if (!p) return `<p class="muted-text">Paradigma non disponibile per <em>${escapeHtml(lemma)}</em>.</p>`;
+  const allLatEnds = ['us','a','um','i','ae','o','am','as','os','is','orum','arum','am','o','e','er','ir','arum','orum','ibus','es','um','ium'];
   const renderGenderTable = (rows, gLabel) => {
     const tr = LAT_CASES.map(c => `<tr>
       <th>${c}</th>
-      <td>${escapeHtml(rows.sing[c] || '—')}</td>
-      <td>${escapeHtml(rows.plur[c] || '—')}</td>
+      <td>${_renderFormHighlighted(rows.sing[c] || '—', allLatEnds, true)}</td>
+      <td>${_renderFormHighlighted(rows.plur[c] || '—', allLatEnds, true)}</td>
     </tr>`).join('');
     return `<div class="paradigm-genere-block">
       <h4 class="paradigm-genere-title">${gLabel}</h4>
@@ -6844,7 +7212,7 @@ function renderVerbConjugationHtml(verbPar) {
       const tempi = ['Presente','Imperfetto','Futuro','Perfetto','Piuccheperfetto','Futuro anteriore'];
       const rows = tempi.filter(t => vp.indicativo[t]).map(t => {
         const arr = vp.indicativo[t] || [];
-        return `<tr><th>${t}</th>${LAT_PERSONS.map((pers, i) => `<td data-person="${pers}">${escapeHtml(arr[i] || '—')}</td>`).join('')}</tr>`;
+        return `<tr><th>${t}</th>${LAT_PERSONS.map((pers, i) => `<td data-person="${pers}">${_renderFormHighlighted(arr[i] || '—', _LAT_VERB_ENDINGS.pres_ind_act.concat(_LAT_VERB_ENDINGS.impf_ind_act, _LAT_VERB_ENDINGS.fut_ind_act, _LAT_VERB_ENDINGS.perf_ind_act, _LAT_VERB_ENDINGS.pluper_ind_act, _LAT_VERB_ENDINGS.futp_ind_act, _LAT_VERB_ENDINGS.pass), true)}</td>`).join('')}</tr>`;
       }).join('');
       html += `<h4 class="paradigm-mode-title">Indicativo</h4>
         <table class="paradigm-conjugation">
@@ -6857,7 +7225,7 @@ function renderVerbConjugationHtml(verbPar) {
       const tempi = ['Presente','Imperfetto','Perfetto','Piuccheperfetto'];
       const rows = tempi.filter(t => vp.congiuntivo[t]).map(t => {
         const arr = vp.congiuntivo[t] || [];
-        return `<tr><th>${t}</th>${LAT_PERSONS.map((pers, i) => `<td data-person="${pers}">${escapeHtml(arr[i] || '—')}</td>`).join('')}</tr>`;
+        return `<tr><th>${t}</th>${LAT_PERSONS.map((pers, i) => `<td data-person="${pers}">${_renderFormHighlighted(arr[i] || '—', _LAT_VERB_ENDINGS.pres_ind_act.concat(_LAT_VERB_ENDINGS.impf_ind_act, _LAT_VERB_ENDINGS.fut_ind_act, _LAT_VERB_ENDINGS.perf_ind_act, _LAT_VERB_ENDINGS.pluper_ind_act, _LAT_VERB_ENDINGS.futp_ind_act, _LAT_VERB_ENDINGS.pass), true)}</td>`).join('')}</tr>`;
       }).join('');
       html += `<h4 class="paradigm-mode-title">Congiuntivo</h4>
         <table class="paradigm-conjugation">
@@ -6869,7 +7237,7 @@ function renderVerbConjugationHtml(verbPar) {
     if (vp.imperativo) {
       const rows = Object.keys(vp.imperativo).map(t => {
         const arr = vp.imperativo[t] || [];
-        return `<tr><th>${t}</th>${LAT_PERSONS.map((pers, i) => `<td data-person="${pers}">${escapeHtml(arr[i] || '—')}</td>`).join('')}</tr>`;
+        return `<tr><th>${t}</th>${LAT_PERSONS.map((pers, i) => `<td data-person="${pers}">${_renderFormHighlighted(arr[i] || '—', _LAT_VERB_ENDINGS.pres_ind_act.concat(_LAT_VERB_ENDINGS.impf_ind_act, _LAT_VERB_ENDINGS.fut_ind_act, _LAT_VERB_ENDINGS.perf_ind_act, _LAT_VERB_ENDINGS.pluper_ind_act, _LAT_VERB_ENDINGS.futp_ind_act, _LAT_VERB_ENDINGS.pass), true)}</td>`).join('')}</tr>`;
       }).join('');
       html += `<h4 class="paradigm-mode-title">Imperativo</h4>
         <table class="paradigm-conjugation">
@@ -6996,8 +7364,10 @@ function _fixGreekParadigmAccents(par) {
 /* CONTRAZIONI VOCALICHE GRECHE (per verbi contratti -άω, -έω, -όω)
    Tabella che combina vocale tematica + desinenza tematica.
    Conserva accenti circonflessi quando la contrazione cade su sillaba accentata. */
+/* Le mappe di contrazione greche usano chiavi senza accento (lookup tramite _grStrip).
+   Restituiscono la forma contratta GIÀ ACCENTATA correttamente. */
 function _contractAlpha(ending) {
-  // α + ...
+  const key = _grStrip(ending);
   const map = {
     'ω': 'ῶ', 'ομαι': 'ῶμαι', 'εις': 'ᾷς', 'ει': 'ᾷ', 'ομεν': 'ῶμεν',
     'ετε': 'ᾶτε', 'ουσι': 'ῶσι', 'ουσιν': 'ῶσιν',
@@ -7006,28 +7376,36 @@ function _contractAlpha(ending) {
     'ομην': 'ώμην', 'ου': 'ῶ', 'ετο': 'ᾶτο', 'ομεθα': 'ώμεθα',
     'εσθε': 'ᾶσθε', 'οντο': 'ῶντο',
     'εται': 'ᾶται', 'εσθαι': 'ᾶσθαι',
-    'εσαι': 'ᾷ', 'εις_o': 'ᾷς'
+    'εσαι': 'ᾷ',
+    'ωμαι': 'ῶμαι', 'ῃς': 'ᾷς', 'ῃ': 'ᾷ', 'ωμεν': 'ῶμεν', 'ητε': 'ᾶτε', 'ωσι': 'ῶσι',
+    'οιμι': 'ῷμι', 'οις': 'ῷς', 'οι': 'ῷ', 'οιμεν': 'ῷμεν', 'οιτε': 'ῷτε', 'οιεν': 'ῷεν',
+    'ωσιν': 'ῶσιν', 'ηται': 'ᾶται', 'ησθε': 'ᾶσθε', 'ωνται': 'ῶνται',
+    'οιμην': 'ῷμην', 'οιο': 'ῷο', 'οιτο': 'ῷτο', 'οιμεθα': 'ῷμεθα', 'οισθε': 'ῷσθε', 'οιντο': 'ῷντο'
   };
-  return map[ending] || ('α' + ending);
+  return map[key] || ('α' + ending);
 }
 
 function _contractEpsilon(ending) {
-  // ε + ...
+  const key = _grStrip(ending);
   const map = {
     'ω': 'ῶ', 'ομαι': 'οῦμαι', 'εις': 'εῖς', 'ει': 'εῖ', 'ομεν': 'οῦμεν',
     'ετε': 'εῖτε', 'ουσι': 'οῦσι', 'ουσιν': 'οῦσιν',
-    'ε': 'ει', 'η': 'η', 'ῃ': 'ῃ',
+    'ε': 'ει', 'η': 'η', 'ῃ': 'ῇ',
     'ον': 'ουν', 'οντος': 'οῦντος', 'ων': 'ῶν',
     'ομην': 'ούμην', 'ου': 'οῦ', 'ετο': 'εῖτο', 'ομεθα': 'ούμεθα',
     'εσθε': 'εῖσθε', 'οντο': 'οῦντο',
     'εται': 'εῖται', 'εσθαι': 'εῖσθαι',
-    'εσαι': 'εῖ'
+    'εσαι': 'ῇ',
+    'ωμαι': 'ῶμαι', 'ῃς': 'ῇς', 'ῃ': 'ῇ', 'ωμεν': 'ῶμεν', 'ητε': 'ῆτε', 'ωσι': 'ῶσι',
+    'οιμι': 'οῖμι', 'οις': 'οῖς', 'οι': 'οῖ', 'οιμεν': 'οῖμεν', 'οιτε': 'οῖτε', 'οιεν': 'οῖεν',
+    'ωσιν': 'ῶσιν', 'ηται': 'ῆται', 'ησθε': 'ῆσθε', 'ωνται': 'ῶνται',
+    'οιμην': 'οίμην', 'οιο': 'οῖο', 'οιτο': 'οῖτο', 'οιμεθα': 'οίμεθα', 'οισθε': 'οῖσθε', 'οιντο': 'οῖντο'
   };
-  return map[ending] || ('ε' + ending);
+  return map[key] || ('ε' + ending);
 }
 
 function _contractOmicron(ending) {
-  // ο + ...
+  const key = _grStrip(ending);
   const map = {
     'ω': 'ῶ', 'ομαι': 'οῦμαι', 'εις': 'οῖς', 'ει': 'οῖ', 'ομεν': 'οῦμεν',
     'ετε': 'οῦτε', 'ουσι': 'οῦσι', 'ουσιν': 'οῦσιν',
@@ -7036,13 +7414,196 @@ function _contractOmicron(ending) {
     'ομην': 'ούμην', 'ου': 'οῦ', 'ετο': 'οῦτο', 'ομεθα': 'ούμεθα',
     'εσθε': 'οῦσθε', 'οντο': 'οῦντο',
     'εται': 'οῦται', 'εσθαι': 'οῦσθαι',
-    'εσαι': 'οῖ'
+    'εσαι': 'οῖ',
+    'ωμαι': 'ῶμαι', 'ῃς': 'οῖς', 'ῃ': 'οῖ', 'ωμεν': 'ῶμεν', 'ητε': 'ῶτε', 'ωσι': 'ῶσι',
+    'οιμι': 'οῖμι', 'οις': 'οῖς', 'οι': 'οῖ', 'οιμεν': 'οῖμεν', 'οιτε': 'οῖτε', 'οιεν': 'οῖεν',
+    'ωσιν': 'ῶσιν', 'ηται': 'ῶται', 'ησθε': 'ῶσθε', 'ωνται': 'ῶνται'
   };
-  return map[ending] || ('ο' + ending);
+  return map[key] || ('ο' + ending);
 }
 
-/* Aggiunge augmento alla forma (per impf./aor./ppf.) */
+/* AUGMENTO GRECO — applica le regole standard (Neri Μέθοδος §§ verbo):
+   - Augmento sillabico: consonante iniziale → ἐ- (prefisso)
+   - Augmento temporale: vocale iniziale → allungamento
+     α / ε → η ; ο → ω ; ι → ῑ ; υ → ῡ ; η/ω → invariati
+     αι / ᾳ → ῃ ; ει → ῃ ; οι → ῳ ; αυ → ηυ ; ευ → ηυ
+   Lo spirito iniziale (dolce/aspro) si conserva sulla vocale aumentata. */
+const _GR_AUG_VOWEL_MAP = {
+  'α':'η','ε':'η','η':'η','ο':'ω','ω':'ω','ι':'ι','υ':'υ',
+  'αι':'ῃ','ει':'ῃ','οι':'ῳ','αυ':'ηυ','ευ':'ηυ'
+};
+function _greekAugment(stem) {
+  if (!stem) return stem;
+  const stripped = _grStrip(stem);
+  const first2 = stripped.slice(0, 2);
+  const first1 = stripped.charAt(0);
+  let nReplace = 0, augNew = '', useTemporal = false;
+  if (_GR_AUG_VOWEL_MAP[first2]) {
+    nReplace = 2; augNew = _GR_AUG_VOWEL_MAP[first2]; useTemporal = true;
+  } else if (_GR_AUG_VOWEL_MAP[first1]) {
+    nReplace = 1; augNew = _GR_AUG_VOWEL_MAP[first1]; useTemporal = true;
+  }
+  if (useTemporal) {
+    // Conserva lo spirito eventuale del primo carattere originale
+    // Cerca lo spirito (dolce U+0313 o aspro U+0314) nei primi nReplace caratteri.
+    // Nei dittonghi greci lo spirito si scrive sulla SECONDA vocale, quindi
+    // dobbiamo controllare entrambi i caratteri iniziali.
+    let spirit = '';
+    for (let n = 0; n < nReplace; n++) {
+      const chNFD = stem.charAt(n).normalize('NFD');
+      for (let i = 0; i < chNFD.length; i++) {
+        const cc = chNFD.charCodeAt(i);
+        if (cc === 0x0313 || cc === 0x0314) { spirit = String.fromCharCode(cc); break; }
+      }
+      if (spirit) break;
+    }
+    const augWithSpirit = spirit
+      ? (augNew.charAt(0) + spirit + augNew.slice(1)).normalize('NFC')
+      : augNew;
+    return augWithSpirit + stem.slice(nReplace);
+  }
+  return 'ἐ' + stem;
+}
+
+/* RADDOPPIAMENTO DEL PERFETTO — regole canoniche:
+   1) Consonante semplice non aspirata: C + ε + tema (es. λύω → λέλυκα)
+   2) Aspirata (φ θ χ): raddoppia con tenue (π τ κ) + ε (es. φιλέω → πεφίληκα)
+   3) Doppia consonante (ζ ξ ψ), cluster consonantico (escluso muta+liquida),
+      σ-cluster, ρ-: solo augmento sillabico ἐ-
+   4) Vocale iniziale: come augmento temporale
+   5) Muta + liquida (γρ, κλ, ecc.) ammette reduplicazione */
+function _greekReduplicate(stem) {
+  if (!stem) return stem;
+  const stripped = _grStrip(stem);
+  const c1 = stripped.charAt(0);
+  const c2 = stripped.charAt(1) || '';
+  if (/[αεηιουω]/.test(c1)) return _greekAugment(stem);
+  if (c1 === 'ζ' || c1 === 'ξ' || c1 === 'ψ') return 'ἐ' + stem;
+  if (c1 === 'ρ') return 'ἐρ' + stem;
+  if (c1 === 'σ' && /[βγδθκλμνπρτφχ]/.test(c2)) return 'ἐ' + stem;
+  if (/[βγδθκπτφχ]/.test(c1) && /[βγδθκπτφχσν]/.test(c2) && !/[λρμν]/.test(c2)) {
+    return 'ἐ' + stem;
+  }
+  const aspirateMap = { 'φ':'π', 'θ':'τ', 'χ':'κ' };
+  if (aspirateMap[c1]) {
+    return aspirateMap[c1] + 'ε' + stem;
+  }
+  return c1 + 'ε' + stem;
+}
+
+/* ACCENTO RECESSIVO DEI VERBI GRECI.
+   Regola fondamentale: l'accento va il più lontano possibile dalla fine,
+   compatibilmente con la legge del trisillabismo.
+   - Se la sillaba finale è BREVE, l'accento va sulla TERZULTIMA (proparossitono)
+   - Se la sillaba finale è LUNGA, l'accento va sulla PENULTIMA (parossitono)
+   Sillaba lunga: vocale lunga (η, ω, ᾱ, ῑ, ῡ) o dittongo o vocale+2cons.
+   Sillaba breve: ε, ο, brevi ᾰ ῐ ῠ in sillaba aperta.
+   Eccezione delle finali in -αι/-οι: brevi in nominali e ottativo, lunghe altrove.
+   Per uso pragmatico applichiamo l'algoritmo solo se il chiamante lo richiede;
+   nei casi finali (perfetto plurale, ecc.) si invoca esplicitamente. */
+function _isShortFinal(ending) {
+  // Approssimazione: i finali bisillabici -μεν, -τε, -σαν, -σι, -σιν sono brevi
+  // perché la finale è sillaba aperta o seguita da -ν.
+  // Le finali in -ομεν, -ετε, -αμεν, -ατε, -ασι sono di per sé brevi.
+  const last = ending.slice(-3);
+  const last2 = ending.slice(-2);
+  if (/[ηω]$/.test(_grStrip(ending))) return false; // η, ω = lunghi
+  if (/(αι|οι|ει|ου|αυ|ευ|υι)$/.test(_grStrip(ending))) {
+    // αι/οι finali sono BREVI in verbi finiti (eccezione)
+    if (/(αι|οι)$/.test(_grStrip(ending))) return true;
+    return false;
+  }
+  if (/[αιυ]$/.test(_grStrip(ending))) return true; // ᾰ ῐ ῠ brevi (default scolastico)
+  if (/[εο]$/.test(_grStrip(ending))) return true;
+  return true;
+}
+
+function _countGreekSyllables(s) {
+  if (!s) return 0;
+  const norm = _grStrip(s);
+  // Conta gruppi vocalici (eventuali dittonghi conteggiano 1)
+  const matches = norm.match(/(αι|αυ|ει|ευ|οι|ου|υι|ηυ|ωυ|[αεηιουω])/g);
+  return matches ? matches.length : 0;
+}
+
+function _placeRecessiveAccent(form) {
+  // Rimuove tutti gli accenti tonali, poi posiziona uno solo secondo la regola recessiva.
+  // Lavora su NFD per riconoscere correttamente le vocali con spiriti.
+  if (!form) return form;
+  const bareNFC = _stripGreekTone(form);
+  const bareNFD = bareNFC.normalize('NFD');
+  // Le sillabe sono trovate ignorando i combining marks
+  const sylRegex = /(αι|αυ|ει|ευ|οι|ου|υι|ηυ|ωυ|[αεηιουω])/gi;
+  // Pulizia: rimuovi temporaneamente i combining marks per il match
+  const noMark = bareNFD.replace(/[̀-ͯ]/g, '');
+  const positions = [];
+  let mm;
+  const reg = new RegExp(sylRegex);
+  while ((mm = reg.exec(noMark)) !== null) positions.push({ idxNoMark: mm.index, syll: mm[1] });
+  const syls = positions.length;
+  if (syls < 2) return bareNFC;
+  // Determina la finale
+  const finalSyl = positions[positions.length - 1].syll;
+  const finalIsShort =
+    /^(αι|οι)$/.test(finalSyl) ||      // αι/οι finali nei verbi sono brevi
+    /^[εο]$/.test(finalSyl) ||
+    /^[αιυ]$/.test(finalSyl);
+  const finalIsLong =
+    /^[ηω]$/.test(finalSyl) ||
+    /^(αυ|ει|ευ|ου|υι|ηυ|ωυ)$/.test(finalSyl);
+  // Sillaba di destinazione
+  let targetSylIdx;
+  if (syls >= 3 && finalIsShort) targetSylIdx = positions.length - 3; // terzultima
+  else targetSylIdx = positions.length - 2; // penultima
+  if (targetSylIdx < 0) return bareNFC;
+  const targetIdxNoMark = positions[targetSylIdx].idxNoMark;
+  // Mappa la posizione "noMark" alla posizione corrispondente in bareNFD
+  // (i combining marks possono spostare gli indici)
+  let countBase = 0;
+  let targetIdxNFD = 0;
+  for (let i = 0; i < bareNFD.length; i++) {
+    const cc = bareNFD.charCodeAt(i);
+    if (cc >= 0x0300 && cc <= 0x036f) continue; // combining mark
+    if (countBase === targetIdxNoMark) { targetIdxNFD = i; break; }
+    countBase++;
+  }
+  // Inserisce U+0301 (combining acute) dopo il primo carattere base della vocale/dittongo
+  // ma DOPO eventuali combining marks (spirito) e PRIMA di iota sottoscritto se presente.
+  // L'ordine canonico greco è: vocale → spirito → accento → iota_sub.
+  let insertAt = targetIdxNFD + 1;
+  // Salta eventuali spiriti (U+0313, U+0314) e segni di lunghezza già presenti
+  while (insertAt < bareNFD.length) {
+    const cc = bareNFD.charCodeAt(insertAt);
+    if (cc === 0x0313 || cc === 0x0314 || cc === 0x0304 || cc === 0x0306) {
+      insertAt++; // sta dopo lo spirito/macron/breve
+    } else {
+      break;
+    }
+  }
+  const result = (bareNFD.slice(0, insertAt) + '́' + bareNFD.slice(insertAt)).normalize('NFC');
+  return result;
+}
+
+/* MODIFICAZIONI FONETICHE alla giuntura tema + σ:
+   labiale (π β φ) + σ → ψ
+   gutturale (κ γ χ) + σ → ξ
+   dentale (τ δ θ) + σ → σ (dentale cade) */
+function _greekStemBeforeSigma(stem) {
+  if (!stem) return { stem: stem, dropSigma: false };
+  const stripped = _grStrip(stem);
+  const lastChar = stripped.slice(-1);
+  if (/[πβφ]/.test(lastChar)) return { stem: stem.slice(0, -1) + 'ψ', dropSigma: true };
+  if (/[κγχ]/.test(lastChar)) return { stem: stem.slice(0, -1) + 'ξ', dropSigma: true };
+  if (/[τδθ]/.test(lastChar)) return { stem: stem.slice(0, -1), dropSigma: false };
+  return { stem: stem, dropSigma: false };
+}
+
+/* Aggiunge augmento alla forma (per impf./aor./ppf.) — wrapper retrocompatibile */
 function _addAugment(stem) {
+  return _greekAugment(stem);
+}
+// === vecchio _addAugment disabilitato ===
+function _addAugment_OLD(stem) {
   if (!stem) return stem;
   const ch = _grStrip(stem)[0];
   // Vocale iniziale: ε→η, α→η, ο→ω, ι→ῑ, υ→ῡ
@@ -7075,7 +7636,12 @@ function parseGreekLemma(lemma, pos) {
       'εχω': 'echo',
       'φημι': 'phemi',
       'ερχομαι': 'erchomai',
-      'ηκω': 'heko'
+      'ηκω': 'heko',
+      'διδωμι': 'didomi',
+      'τιθημι': 'tithemi',
+      'ιστημι': 'histemi',
+      'δεικνυμι': 'deiknumi',
+      'ιημι': 'iemi'
     };
     const firstWord = norm.match(/^([^\s,;·]+)/);
     if (firstWord && irrMap[firstWord[1]]) {
@@ -7165,12 +7731,13 @@ function parseGreekLemma(lemma, pos) {
       }
     }
 
-    // Tema del perfetto attivo (κα/α) — es. λέλυκα → λελυκ
+    // Tema del perfetto attivo — togli solo la desinenza -α finale.
+    // Il κ è parte del tema (perfetto κappatico/sigmatico), va conservato.
+    // Es. λέλυκα → λελυκ ; γέγραφα → γεγραφ ; πέπομφα → πεπομφ
     let perfStem = '';
     if (perfForm) {
       const pnorm = _grStrip(perfForm);
-      if (/κα$/.test(pnorm)) perfStem = perfForm.replace(/κα$/, '');
-      else if (/α$/.test(pnorm)) perfStem = perfForm.replace(/α$/, '');
+      if (/α$/.test(pnorm)) perfStem = perfForm.replace(/α$/, '');
     }
 
     // Tema del perfetto medio-passivo (mai con augmento, raddoppiamento)
@@ -7200,84 +7767,151 @@ function parseGreekLemma(lemma, pos) {
   // ───────────── SOSTANTIVI ─────────────
   if (pos === 'Sostantivo') {
     // Lemma greco tipico: "ὁ λόγος, -ου", "ἡ μοῦσα, -ης", "τό σῶμα, -ατος", "ἡ πόλις, -εως"
-    // Estrai articolo, nominativo, genitivo (terminazione)
-    const m = raw.match(/^(ὁ|ἡ|τό|οἱ|αἱ|τά)?\s*([^\s,;·]+)\s*[,·]\s*-?([^\s,;·)]+)/);
+    // Estrai articolo (con qualsiasi accento), nominativo, genitivo
+    const isSingTantum = /\bsing\. tantum\b/i.test(raw) || /\bsingularia tantum\b/i.test(raw);
+    const isPlurTantum = /\bplur\. tantum\b/i.test(raw) || /\bpluralia tantum\b/i.test(raw);
+    const wrapGr = (obj) => Object.assign(obj, isSingTantum ? { noPlur: true } : {}, isPlurTantum ? { noSing: true } : {});
+    const tokens = raw.split(/\s+/);
+    let idx = 0;
+    let article = '';
+    let gender = '';
+    if (tokens.length > 0) {
+      const t0n = _grStrip(tokens[0]);
+      const artMap = { 'ο':'M', 'η':'F', 'το':'N', 'οι':'M', 'αι':'F', 'τα':'N' };
+      if (artMap[t0n]) {
+        article = tokens[0];
+        gender = artMap[t0n];
+        idx = 1;
+      }
+    }
+    const rest = tokens.slice(idx).join(' ');
+    const m = rest.match(/^([^\s,;·]+)\s*[,·]\s*-?([^\s,;·)]+)/);
     if (!m) return null;
-    const article = m[1] || '';
-    const nom = m[2];
-    const genEnd = m[3];
-    const gender = article === 'ὁ' ? 'M' : article === 'ἡ' ? 'F' : article === 'τό' ? 'N' : '';
+    const nom = m[1];
+    const genEnd = m[2];
     const nomN = _grStrip(nom);
     const genEndN = _grStrip(genEnd);
 
-    // I decl. (femm. -η/-α/-α impura, masc. -ης/-ας)
-    // Femm. -η, -ης: μάχη, μάχης
-    if (/[ηῃ]$/.test(_grStrip(nom)) && (genEndN === 'ης' || /ης$/.test(genEndN))) {
-      const stem = nom.slice(0, -1);
-      return { type: 'gr-noun', decl: 'I-eta', gender: 'F', stem, nom, lemma };
+    // Estrai eventuale genitivo completo (per la III declinazione il "-stem" è ricavato
+    // dal genitivo intero, non solo dalla desinenza)
+    const genFullMatch = rest.match(/^[^\s,;·]+\s*[,·]\s*([^\s,;·)]+)/);
+    const genFull = genFullMatch ? genFullMatch[1] : '';
+    const genFullN = _grStrip(genFull);
+
+    // ── I DECLINAZIONE ── (vocali tematiche -α/-η)
+    // Femm. -η, -ης: μάχη, μάχης (vocale lunga η stabile)
+    if (/[ηῃ]$/.test(nomN) && /ης$/.test(genEndN)) {
+      return wrapGr({ type: 'gr-noun', decl: 'I-eta', gender: 'F', stem: nom.slice(0, -1), nom, lemma });
     }
-    // Femm. -α impura, -ας (dopo ε/ι/ρ): χώρα, χώρας
-    if (/[αᾳ]$/.test(_grStrip(nom)) && (genEndN === 'ας' || /ας$/.test(genEndN))) {
-      const stem = nom.slice(0, -1);
-      return { type: 'gr-noun', decl: 'I-alpha-pura', gender: 'F', stem, nom, lemma };
+    // Femm. -ᾱ pura, -ᾱς (dopo ε, ι, ρ): χώρα, χώρας
+    if (/α$/.test(nomN) && /ας$/.test(genEndN)) {
+      return wrapGr({ type: 'gr-noun', decl: 'I-alpha-pura', gender: 'F', stem: nom.slice(0, -1), nom, lemma });
     }
-    // Femm. -α pura ma genitivo in -ης (es. μοῦσα, μούσης; θάλαττα, θαλάττης)
-    if (/[αᾳ]$/.test(_grStrip(nom)) && (genEndN === 'ης' || /ης$/.test(genEndN))) {
-      const stem = nom.slice(0, -1);
-      return { type: 'gr-noun', decl: 'I-alpha-impura', gender: 'F', stem, nom, lemma };
+    // Femm. -α impura, -ης (dopo altre consonanti, spec. sibilanti): μοῦσα, μούσης; θάλαττα, θαλάττης
+    if (/α$/.test(nomN) && /ης$/.test(genEndN)) {
+      return wrapGr({ type: 'gr-noun', decl: 'I-alpha-impura', gender: 'F', stem: nom.slice(0, -1), nom, lemma });
     }
-    // Masc. I -ης, gen. -ου: πολίτης, πολίτου / στρατιώτης
-    if (/ης$/.test(_grStrip(nom)) && genEndN === 'ου') {
-      const stem = nom.slice(0, -2);
-      return { type: 'gr-noun', decl: 'I-masc-es', gender: 'M', stem, nom, lemma };
+    // Masch. I -ης, -ου: πολίτης, πολίτου / στρατιώτης (anche δικαστής)
+    if (/ης$/.test(nomN) && /ου$/.test(genEndN)) {
+      return wrapGr({ type: 'gr-noun', decl: 'I-masc-es', gender: 'M', stem: nom.slice(0, -2), nom, lemma });
     }
-    // Masc. I -ας, gen. -ου: νεανίας, νεανίου
-    if (/ας$/.test(_grStrip(nom)) && genEndN === 'ου') {
-      const stem = nom.slice(0, -2);
-      return { type: 'gr-noun', decl: 'I-masc-as', gender: 'M', stem, nom, lemma };
+    // Masch. I -ας, -ου: νεανίας, νεανίου
+    if (/ας$/.test(nomN) && /ου$/.test(genEndN)) {
+      return wrapGr({ type: 'gr-noun', decl: 'I-masc-as', gender: 'M', stem: nom.slice(0, -2), nom, lemma });
     }
-    // II decl. -ος, -ου (m/f): λόγος, λόγου
-    if (/ος$/.test(_grStrip(nom)) && genEndN === 'ου') {
-      const stem = nom.slice(0, -2);
-      return { type: 'gr-noun', decl: 'II', gender: gender || 'M', stem, nom, lemma };
+
+    // ── II DECLINAZIONE ── (vocale tematica -ο)
+    // Masch./Femm. -ος, -ου: λόγος, λόγου; νόσος, νόσου (femminile)
+    if (/ος$/.test(nomN) && /ου$/.test(genEndN)) {
+      return wrapGr({ type: 'gr-noun', decl: 'II', gender: gender || 'M', stem: nom.slice(0, -2), nom, lemma });
     }
-    // II decl. neutro -ον, -ου: δῶρον, δώρου
-    if (/ον$/.test(_grStrip(nom)) && genEndN === 'ου') {
-      const stem = nom.slice(0, -2);
-      return { type: 'gr-noun', decl: 'II', gender: 'N', stem, nom, lemma };
+    // Neutro -ον, -ου: δῶρον, δώρου
+    if (/ον$/.test(nomN) && /ου$/.test(genEndN)) {
+      return wrapGr({ type: 'gr-noun', decl: 'II', gender: 'N', stem: nom.slice(0, -2), nom, lemma });
     }
-    // III decl. — usa il tema del genitivo
-    // Casi tipici: φύλαξ, φύλακος; γέρων, γέροντος; πατήρ, πατρός; πόλις, πόλεως; τέλος, τέλους
-    if (genEndN === 'εως') {
-      // -ις/-εως (πόλις, δύναμις) — tema in -ι che alterna con -ε davanti a vocale
-      const stem = nom.slice(0, -2); // toglie -ις
-      return { type: 'gr-noun', decl: 'III-is', gender: gender || 'F', stem, nom, lemma };
+    // II contratta (νοῦς, πλοῦς): -οῦς, -οῦ
+    if (/[οω]υς$/.test(nomN) && /[οω]υ$/.test(genEndN)) {
+      return wrapGr({ type: 'gr-noun', decl: 'II-contr', gender: gender || 'M', stem: nom.slice(0, -3), nom, lemma });
     }
-    if (genEndN === 'εος' || genEndN === 'ους') {
-      // -ος / -ους neutri (τέλος, τέλους; γένος, γένους)
-      const stem = nom.slice(0, -2); // -ος
-      return { type: 'gr-noun', decl: 'III-os-neut', gender: 'N', stem, nom, lemma };
+    // II attica (νεώς, λεώς): -ως, -ω
+    if (/ως$/.test(nomN) && /ω$/.test(genEndN) && genEndN === 'ω') {
+      return wrapGr({ type: 'gr-noun', decl: 'II-att', gender: gender || 'M', stem: nom.slice(0, -2), nom, lemma });
     }
-    if (genEndN === 'εως_basileus' || /εως$/.test(genEndN) && /ευς$/.test(nomN)) {
-      // -εύς / -έως (βασιλεύς, βασιλέως)
-      const stem = nom.replace(/[εἐ]ύς$/, '').replace(/εως$/, '');
-      return { type: 'gr-noun', decl: 'III-eus', gender: 'M', stem: nom.slice(0, -2), nom, lemma };
+
+    // ── III DECLINAZIONE ── (temi consonantici o vocalici, tema dal genitivo)
+    // Approccio: ricaviamo il tema (stem) togliendo la desinenza -ος o -ως dal genitivo,
+    // e classifichiamo per la fine del tema.
+
+    // III in -εύς/-έως: βασιλεύς, βασιλέως (DEVE precedere -υς/-εως)
+    if (/ευς$/.test(nomN) && /εως$/.test(genEndN)) {
+      // Tema = nom senza -ευς (es. βασιλεύς → βασιλ)
+      return wrapGr({ type: 'gr-noun', decl: 'III-eus', gender: gender || 'M', stem: nom.slice(0, -3), nom, lemma });
     }
-    if (/^(εύς|εὐς)$/.test(nom.slice(-3)) || /ευς$/.test(nomN)) {
-      // βασιλεύς, gen. -έως (anche se mal-codificato)
-      const stem = nom.slice(0, -2); // toglie -ύς
-      return { type: 'gr-noun', decl: 'III-eus', gender: 'M', stem, nom, lemma };
+    // III in -ις/-εως: πόλις, πόλεως (tema in -ι alternante con -ε)
+    if (/εως$/.test(genEndN) && /ις$/.test(nomN)) {
+      return wrapGr({ type: 'gr-noun', decl: 'III-is-eos', gender: gender || 'F', stem: nom.slice(0, -2), nom, lemma });
     }
-    // Generico III decl.: ricava tema dal genitivo
-    // Es. φύλαξ, φύλακος → stem φύλακ; γέρων, γέροντος → stem γέροντ; πατήρ, πατρός → stem πατ(ε)ρ
-    if (/[οω]ς$/.test(genEndN) || /[οω]ν$/.test(genEndN)) {
-      // Genitivo completo (es. "ἀνδρός"). Non sempre disponibile come endings.
-      // Strategia: prendi il genitivo come stringa intera fino a -ος/-ων, considerandolo tema
-      const genFull = (raw.match(/[,·]\s*([^\s,;·]+)/) || [])[1] || '';
-      const stem = genFull.replace(/[ος]$/, '').replace(/ος$/, '');
-      return { type: 'gr-noun', decl: 'III-cons', gender: gender || 'M', stem, nom, lemma, fullGen: genFull };
+    // III in -υς/-εως: πῆχυς (raro)
+    if (/εως$/.test(genEndN) && /υς$/.test(nomN)) {
+      return wrapGr({ type: 'gr-noun', decl: 'III-us-eos', gender: gender || 'M', stem: nom.slice(0, -2), nom, lemma });
     }
-    return { type: 'gr-noun', decl: 'III-cons', gender: gender || 'M', stem: nom, nom, lemma };
+    // III neutri in -ος/-ους (sigmatici): τέλος, τέλους; γένος, γένους
+    if (/ος$/.test(nomN) && /ους$/.test(genEndN)) {
+      return wrapGr({ type: 'gr-noun', decl: 'III-sigm-neut', gender: 'N', stem: nom.slice(0, -2), nom, lemma });
+    }
+    // III sigmatici masch. in -ης/-ους (nomi propri come Σωκράτης)
+    if (/ης$/.test(nomN) && /ους$/.test(genEndN)) {
+      return wrapGr({ type: 'gr-noun', decl: 'III-sigm-masc', gender: gender || 'M', stem: nom.slice(0, -2), nom, lemma });
+    }
+    // III in -υς/-υος (stabile): ἰχθύς, ἰχθύος; βότρυς (tema in -υ)
+    if (/υς$/.test(nomN) && /υος$/.test(genEndN)) {
+      return wrapGr({ type: 'gr-noun', decl: 'III-us-uos', gender: gender || 'M', stem: nom.slice(0, -2), nom, lemma });
+    }
+
+    // III in genitivo -ος → analizza il tema (consonantico)
+    if (/ος$/.test(genEndN)) {
+      // Tema = genitivo - 'ος'
+      const stem = genFull.replace(/ος$/, '').replace(/[όὸ]ς$/, '');
+      const stemStripped = _grStrip(stem);
+      const stemLast = stemStripped.slice(-1);
+      const stemLast2 = stemStripped.slice(-2);
+      // Determina sottotipo dal carattere finale del tema
+      let subType = 'III-cons'; // default
+      // Tema in -ντ (γέρων/γέροντος, λέων/λέοντος, ἄρχων/ἄρχοντος, part.)
+      if (stemLast2 === 'ντ') subType = 'III-nt';
+      // Tema in -ρ (ῥήτωρ, ῥήτορος; sofeore με apofonia: πατήρ, πατρός)
+      else if (stemLast === 'ρ') {
+        // Distinguo apofonici (πατήρ, μήτηρ, θυγάτηρ, ἀνήρ) dai regolari (ῥήτωρ)
+        if (/^(πατ|μητ|θυγατ|ανδ|γαστ)$/.test(stemStripped)) subType = 'III-r-apof';
+        else subType = 'III-r';
+      }
+      // Tema in -ν (αἰών/αἰῶνος, ἀγών/ἀγῶνος, ποιμήν, λιμήν, δαίμων)
+      else if (stemLast === 'ν') subType = 'III-n';
+      // Tema in -μ (raro: doma → δῶμα/δώματος)
+      // Tema in -ξ/-ψ/-σ finali — dipende dalla giuntura fonetica iniziale del gen.
+      // Tema in -κ/-γ/-χ (gutturali): φύλαξ/φύλακος → tema φύλακ
+      else if (/[κγχ]/.test(stemLast)) subType = 'III-gutt';
+      // Tema in -π/-β/-φ (labiali): Ἄραψ/Ἄραβος → tema Ἄραβ
+      else if (/[πβφ]/.test(stemLast)) subType = 'III-lab';
+      // Tema in -τ/-δ/-θ (dentali): ἐλπίς/ἐλπίδος → tema ἐλπίδ
+      else if (/[τδθ]/.test(stemLast)) subType = 'III-dent';
+      // Tema in vocale (raro)
+      else if (/[αεηιουω]/.test(stemLast)) subType = 'III-vow';
+      // Determina genere euristicamente (per neutri che terminano in -μα, -μα/-ματος)
+      let g = gender || 'M';
+      if (/μα$/.test(nomN) && /ματος$/.test(genEndN)) {
+        subType = 'III-ma-neut';
+        g = 'N';
+      } else if (/(αρ|ωρ|υρ)$/.test(nomN) && /ατος$/.test(genEndN)) {
+        // γάλα, γάλακτος; ὕδωρ, ὕδατος (irregolare)
+        g = 'N';
+      } else if (gender === '' && /^(ων|ηρ|ωρ|ις|ξ|ψ|ς|ν|ρ)$/.test(stemStripped.slice(-2))) {
+        g = 'M';
+      }
+      return wrapGr({ type: 'gr-noun', decl: subType, gender: g, stem, nom, lemma, fullGen: genFull });
+    }
+    // Fallback: III cons generico
+    return wrapGr({ type: 'gr-noun', decl: 'III-cons', gender: gender || 'M', stem: nom, nom, lemma, fullGen: genFull });
   }
 
   // ───────────── AGGETTIVI ─────────────
@@ -7331,52 +7965,143 @@ function parseGreekLemma(lemma, pos) {
 
 function buildGreekNounParadigm(parsed) {
   if (!parsed || parsed.type !== 'gr-noun') return null;
-  const { decl, gender, stem, nom } = parsed;
+  const { decl, gender, stem, nom, noSing, noPlur, fullGen } = parsed;
   const rows = { sing: {}, plur: {} };
+  // Tema "nudo" senza accento per la composizione delle forme accentate
+  const stemBare = _stripGreekTone(stem || '');
 
+  // === I DECLINAZIONE ===
   if (decl === 'I-eta') {
     rows.sing = { Nominativo: stem+'η', Genitivo: stem+'ης', Dativo: stem+'ῃ', Accusativo: stem+'ην', Vocativo: stem+'η' };
-    rows.plur = { Nominativo: stem+'αι', Genitivo: stem+'ῶν', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' };
+    rows.plur = { Nominativo: stem+'αι', Genitivo: stemBare+'ῶν', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' };
   } else if (decl === 'I-alpha-pura') {
     rows.sing = { Nominativo: stem+'α', Genitivo: stem+'ας', Dativo: stem+'ᾳ', Accusativo: stem+'αν', Vocativo: stem+'α' };
-    rows.plur = { Nominativo: stem+'αι', Genitivo: stem+'ῶν', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' };
+    rows.plur = { Nominativo: stem+'αι', Genitivo: stemBare+'ῶν', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' };
   } else if (decl === 'I-alpha-impura') {
     rows.sing = { Nominativo: stem+'α', Genitivo: stem+'ης', Dativo: stem+'ῃ', Accusativo: stem+'αν', Vocativo: stem+'α' };
-    rows.plur = { Nominativo: stem+'αι', Genitivo: stem+'ῶν', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' };
+    rows.plur = { Nominativo: stem+'αι', Genitivo: stemBare+'ῶν', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' };
   } else if (decl === 'I-masc-es') {
-    rows.sing = { Nominativo: stem+'ης', Genitivo: stem+'ου', Dativo: stem+'ῃ', Accusativo: stem+'ην', Vocativo: stem+'η' };
-    rows.plur = { Nominativo: stem+'αι', Genitivo: stem+'ῶν', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' };
+    rows.sing = { Nominativo: stem+'ης', Genitivo: stem+'ου', Dativo: stem+'ῃ', Accusativo: stem+'ην', Vocativo: stem+'α' };
+    rows.plur = { Nominativo: stem+'αι', Genitivo: stemBare+'ῶν', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' };
   } else if (decl === 'I-masc-as') {
     rows.sing = { Nominativo: stem+'ας', Genitivo: stem+'ου', Dativo: stem+'ᾳ', Accusativo: stem+'αν', Vocativo: stem+'α' };
-    rows.plur = { Nominativo: stem+'αι', Genitivo: stem+'ῶν', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' };
-  } else if (decl === 'II' && gender !== 'N') {
+    rows.plur = { Nominativo: stem+'αι', Genitivo: stemBare+'ῶν', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' };
+  }
+
+  // === II DECLINAZIONE ===
+  else if (decl === 'II' && gender !== 'N') {
     rows.sing = { Nominativo: stem+'ος', Genitivo: stem+'ου', Dativo: stem+'ῳ', Accusativo: stem+'ον', Vocativo: stem+'ε' };
     rows.plur = { Nominativo: stem+'οι', Genitivo: stem+'ων', Dativo: stem+'οις', Accusativo: stem+'ους', Vocativo: stem+'οι' };
   } else if (decl === 'II' && gender === 'N') {
     rows.sing = { Nominativo: stem+'ον', Genitivo: stem+'ου', Dativo: stem+'ῳ', Accusativo: stem+'ον', Vocativo: stem+'ον' };
     rows.plur = { Nominativo: stem+'α', Genitivo: stem+'ων', Dativo: stem+'οις', Accusativo: stem+'α', Vocativo: stem+'α' };
-  } else if (decl === 'III-is') {
-    // πόλις, πόλεως
+  } else if (decl === 'II-contr') {
+    // II contratta (νοῦς, νοῦ): contrazione οο→ου, οε→ου, οι→οι
+    rows.sing = { Nominativo: stem+'οῦς', Genitivo: stem+'οῦ', Dativo: stem+'ῷ', Accusativo: stem+'οῦν', Vocativo: stem+'οῦ' };
+    rows.plur = { Nominativo: stem+'οῖ', Genitivo: stem+'ῶν', Dativo: stem+'οῖς', Accusativo: stem+'οῦς', Vocativo: stem+'οῖ' };
+  } else if (decl === 'II-att') {
+    // II attica (νεώς, λεώς, λαγώς): genitivo invariato in -ω
+    rows.sing = { Nominativo: stem+'ως', Genitivo: stem+'ω', Dativo: stem+'ῳ', Accusativo: stem+'ων', Vocativo: stem+'ως' };
+    rows.plur = { Nominativo: stem+'ῳ', Genitivo: stem+'ων', Dativo: stem+'ῳς', Accusativo: stem+'ως', Vocativo: stem+'ῳ' };
+  }
+
+  // === III DECLINAZIONE ===
+  else if (decl === 'III-is-eos') {
+    // πόλις, πόλεως — tema in -ι alternante con -ε. Acc. plur. nom = εις per attrazione
     rows.sing = { Nominativo: stem+'ις', Genitivo: stem+'εως', Dativo: stem+'ει', Accusativo: stem+'ιν', Vocativo: stem+'ι' };
-    rows.plur = { Nominativo: stem+'εις', Genitivo: stem+'εων', Dativo: stem+'εσι', Accusativo: stem+'εις', Vocativo: stem+'εις' };
-  } else if (decl === 'III-os-neut') {
-    // τέλος, τέλους
-    rows.sing = { Nominativo: stem+'ος', Genitivo: stem+'ους', Dativo: stem+'ει', Accusativo: stem+'ος', Vocativo: stem+'ος' };
-    rows.plur = { Nominativo: stem+'η', Genitivo: stem+'ῶν', Dativo: stem+'εσι', Accusativo: stem+'η', Vocativo: stem+'η' };
+    rows.plur = { Nominativo: stem+'εις', Genitivo: stem+'εων', Dativo: stem+'εσι(ν)', Accusativo: stem+'εις', Vocativo: stem+'εις' };
+  } else if (decl === 'III-us-eos') {
+    // πῆχυς, πήχεως — tema in -υ alternante con -ε (raro)
+    rows.sing = { Nominativo: stem+'υς', Genitivo: stem+'εως', Dativo: stem+'ει', Accusativo: stem+'υν', Vocativo: stem+'υ' };
+    rows.plur = { Nominativo: stem+'εις', Genitivo: stem+'εων', Dativo: stem+'εσι(ν)', Accusativo: stem+'εις', Vocativo: stem+'εις' };
   } else if (decl === 'III-eus') {
-    // βασιλεύς, βασιλέως
+    // βασιλεύς, βασιλέως — tema in -ευ alternante con -ε
     rows.sing = { Nominativo: stem+'εύς', Genitivo: stem+'έως', Dativo: stem+'εῖ', Accusativo: stem+'έα', Vocativo: stem+'εῦ' };
-    rows.plur = { Nominativo: stem+'εῖς', Genitivo: stem+'έων', Dativo: stem+'εῦσι', Accusativo: stem+'έας', Vocativo: stem+'εῖς' };
-  } else if (decl === 'III-cons') {
-    // Generico: usa il tema del genitivo (parsed.stem). Approssimazione: tema + desinenze III.
-    // sing: nom (originale), gen + ος, dat + ι, acc + α, voc = nom o tema
-    const sNom = nom;
-    rows.sing = { Nominativo: sNom, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: sNom };
-    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: stem+'σι', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+    rows.plur = { Nominativo: stem+'εῖς', Genitivo: stem+'έων', Dativo: stem+'εῦσι(ν)', Accusativo: stem+'έας', Vocativo: stem+'εῖς' };
+  } else if (decl === 'III-us-uos') {
+    // ἰχθύς, ἰχθύος — tema in -υ stabile
+    rows.sing = { Nominativo: stem+'ύς', Genitivo: stem+'ύος', Dativo: stem+'ύι', Accusativo: stem+'ύν', Vocativo: stem+'ύ' };
+    rows.plur = { Nominativo: stem+'ύες', Genitivo: stem+'ύων', Dativo: stem+'ύσι(ν)', Accusativo: stem+'ῦς', Vocativo: stem+'ύες' };
+  } else if (decl === 'III-sigm-neut') {
+    // τέλος, τέλους (gen. < *τέλεσος) — neutri sigmatici
+    rows.sing = { Nominativo: stem+'ος', Genitivo: stem+'ους', Dativo: stem+'ει', Accusativo: stem+'ος', Vocativo: stem+'ος' };
+    rows.plur = { Nominativo: stem+'η', Genitivo: stemBare+'ῶν', Dativo: stem+'εσι(ν)', Accusativo: stem+'η', Vocativo: stem+'η' };
+  } else if (decl === 'III-sigm-masc') {
+    // Σωκράτης, Σωκράτους (nomi propri) — sigmatici maschili
+    rows.sing = { Nominativo: stem+'ης', Genitivo: stem+'ους', Dativo: stem+'ει', Accusativo: stem+'η', Vocativo: stem+'ες' };
+    // Plurale raro per nomi propri
+    rows.plur = null;
+  } else if (decl === 'III-gutt') {
+    // Gutturali (φύλαξ/φύλακος): tema κ/γ/χ. Davanti a σ → ξ. Dat. plur. -σι → -ξι
+    const stemLast = _grStrip(stem).slice(-1);
+    const ksiForm = stem.slice(0, -1) + 'ξ'; // tema_senza_consonante + ξ
+    rows.sing = { Nominativo: ksiForm, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: ksiForm };
+    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: stem.slice(0,-1)+'ξι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+  } else if (decl === 'III-lab') {
+    // Labiali (π/β/φ): davanti a σ → ψ
+    const psiForm = stem.slice(0, -1) + 'ψ';
+    rows.sing = { Nominativo: psiForm, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: psiForm };
+    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: stem.slice(0,-1)+'ψι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+  } else if (decl === 'III-dent') {
+    // Dentali (τ/δ/θ): cadono davanti a σ. Nom. sing. spesso = tema + σ (es. ἐλπίς)
+    const nomForm = nom || (stem.slice(0, -1) + 'ς');
+    rows.sing = { Nominativo: nomForm, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: nomForm };
+    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: stem.slice(0,-1)+'σι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+  } else if (decl === 'III-n') {
+    // Tema in -ν (αἰών/αἰῶνος, λιμήν, ποιμήν): caduta del ν davanti a σ del dat. plur.
+    rows.sing = { Nominativo: nom, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: nom };
+    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: stem.slice(0,-1)+'σι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+  } else if (decl === 'III-nt') {
+    // Tema in -ντ (γέρων/γέροντος, λέων/λέοντος, ἄρχων/ἄρχοντος, participi).
+    // ντ + σ del dat. plur. → σ con allungamento di compenso: ο → ου (γέρ-οντ → γέρ-ουσι),
+    // ε → ει (λέ-οντ → λέ-ουσι ... ma λέ-ων → λέ-οντ-ος, dat. λέουσι).
+    // Strategia: il "tema dat. plur." si ricava dal nominativo togliendo -ων → +ουσι.
+    const ntShortStem = nom ? nom.replace(/ων$/i, '') : stem.slice(0, -3);
+    rows.sing = { Nominativo: nom, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: nom };
+    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: ntShortStem+'ουσι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+  } else if (decl === 'III-r') {
+    // Tema in -ρ regolare (ῥήτωρ, ῥήτορος): dat. plur. -ρσι
+    rows.sing = { Nominativo: nom, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: nom };
+    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: stem+'σι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+  } else if (decl === 'III-r-apof') {
+    // Tema in -ρ apofonico (πατήρ/πατρός, μήτηρ/μητρός, ἀνήρ/ἀνδρός, θυγάτηρ)
+    // L'alternanza η/ε/zero comporta forme diverse a seconda della grammatica
+    // Approssimazione semplificata che usa i casi standard del lemma
+    rows.sing = { Nominativo: nom, Genitivo: stem+'ός', Dativo: stem+'ί', Accusativo: stem+'έρα', Vocativo: stem+'ερ' };
+    rows.plur = { Nominativo: stem+'έρες', Genitivo: stem+'έρων', Dativo: stem+'ράσι(ν)', Accusativo: stem+'έρας', Vocativo: stem+'έρες' };
+  } else if (decl === 'III-ma-neut') {
+    // Neutri in -μα/-ματος (σῶμα, ὄνομα, πρᾶγμα).
+    // Il tema esteso è (σωματ-), il nominativo singolare è una forma ridotta (σῶμα).
+    // Dat. plur. -μασι con caduta del τ davanti a σ.
+    // Lo stem qui è il genitivo - 'ος' (es. σώματ).
+    const stemNoTau = stem.replace(/τ$/, ''); // σώμα
+    rows.sing = { Nominativo: nom || (stemNoTau), Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: nom || stemNoTau, Vocativo: nom || stemNoTau };
+    rows.plur = { Nominativo: stem+'α', Genitivo: stemBare+'ων', Dativo: stemNoTau+'σι(ν)', Accusativo: stem+'α', Vocativo: stem+'α' };
+  } else if (decl === 'III-vow') {
+    // Tema in vocale (raro): trattato genericamente
+    rows.sing = { Nominativo: nom, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: nom };
+    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: stem+'σι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+  } else if (decl === 'III-cons' || /^III-/.test(decl || '')) {
+    // Fallback generico per III declinazione consonantica
+    rows.sing = { Nominativo: nom, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: nom };
+    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: stem+'σι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
   } else {
     return null;
   }
-  return { gender, rows };
+
+  // Per gender N della III: nom = acc = voc; plur in -α
+  if (gender === 'N' && /^III-/.test(decl) && decl !== 'III-sigm-neut' && decl !== 'III-ma-neut') {
+    if (rows.sing) {
+      rows.sing.Accusativo = rows.sing.Nominativo;
+      rows.sing.Vocativo = rows.sing.Nominativo;
+    }
+    if (rows.plur) {
+      rows.plur.Accusativo = rows.plur.Nominativo;
+      rows.plur.Vocativo = rows.plur.Nominativo;
+    }
+  }
+
+  return _fixGreekParadigmAccents({ gender, rows, noSing: !!noSing, noPlur: !!noPlur, decl, stem });
 }
 
 function buildGreekAdjParadigm(parsed) {
@@ -7398,7 +8123,7 @@ function buildGreekAdjParadigm(parsed) {
       sing: { Nominativo: stem+'όν', Genitivo: stem+'οῦ', Dativo: stem+'ῷ', Accusativo: stem+'όν', Vocativo: stem+'όν' },
       plur: { Nominativo: stem+'ά', Genitivo: stem+'ῶν', Dativo: stem+'οῖς', Accusativo: stem+'ά', Vocativo: stem+'ά' }
     };
-    return { kind: 'three-genders', M: mk(M), F: mk(F), N: mk(N) };
+    return _fixGreekParadigmAccents({ kind: 'three-genders', M: mk(M), F: mk(F), N: mk(N) });
   }
   if (kind === 'aos-a-on') {
     // δίκαιος, δικαία, δίκαιον
@@ -7414,7 +8139,7 @@ function buildGreekAdjParadigm(parsed) {
       sing: { Nominativo: stem+'ον', Genitivo: stem+'ου', Dativo: stem+'ῳ', Accusativo: stem+'ον', Vocativo: stem+'ον' },
       plur: { Nominativo: stem+'α', Genitivo: stem+'ων', Dativo: stem+'οις', Accusativo: stem+'α', Vocativo: stem+'α' }
     };
-    return { kind: 'three-genders', M: mk(M), F: mk(F), N: mk(N) };
+    return _fixGreekParadigmAccents({ kind: 'three-genders', M: mk(M), F: mk(F), N: mk(N) });
   }
   if (kind === 'aos-on') {
     // ἄδικος, ἄδικον (2 uscite)
@@ -7426,7 +8151,7 @@ function buildGreekAdjParadigm(parsed) {
       sing: { Nominativo: stem+'ον', Genitivo: stem+'ου', Dativo: stem+'ῳ', Accusativo: stem+'ον', Vocativo: stem+'ον' },
       plur: { Nominativo: stem+'α', Genitivo: stem+'ων', Dativo: stem+'οις', Accusativo: stem+'α', Vocativo: stem+'α' }
     };
-    return { kind: 'two-endings', MF, N };
+    return _fixGreekParadigmAccents({ kind: 'two-endings', MF, N });
   }
   if (kind === 'us-eia-u') {
     // ἡδύς, ἡδεῖα, ἡδύ
@@ -7442,7 +8167,7 @@ function buildGreekAdjParadigm(parsed) {
       sing: { Nominativo: stem+'ύ', Genitivo: stem+'έος', Dativo: stem+'εῖ', Accusativo: stem+'ύ', Vocativo: stem+'ύ' },
       plur: { Nominativo: stem+'έα', Genitivo: stem+'έων', Dativo: stem+'έσι', Accusativo: stem+'έα', Vocativo: stem+'έα' }
     };
-    return { kind: 'three-endings', M, F, N };
+    return _fixGreekParadigmAccents({ kind: 'three-endings', M, F, N });
   }
   if (kind === 'es-es') {
     // ἀληθής, ἀληθές
@@ -7454,7 +8179,7 @@ function buildGreekAdjParadigm(parsed) {
       sing: { Nominativo: stem+'ές', Genitivo: stem+'οῦς', Dativo: stem+'εῖ', Accusativo: stem+'ές', Vocativo: stem+'ές' },
       plur: { Nominativo: stem+'ῆ', Genitivo: stem+'ῶν', Dativo: stem+'έσι', Accusativo: stem+'ῆ', Vocativo: stem+'ῆ' }
     };
-    return { kind: 'two-endings', MF, N };
+    return _fixGreekParadigmAccents({ kind: 'two-endings', MF, N });
   }
   if (kind === 'on-on') {
     // εὐδαίμων, εὔδαιμον (gen. εὐδαίμονος)
@@ -7466,7 +8191,7 @@ function buildGreekAdjParadigm(parsed) {
       sing: { Nominativo: stem+'ον', Genitivo: stem+'ονος', Dativo: stem+'ονι', Accusativo: stem+'ον', Vocativo: stem+'ον' },
       plur: { Nominativo: stem+'ονα', Genitivo: stem+'όνων', Dativo: stem+'οσι', Accusativo: stem+'ονα', Vocativo: stem+'ονα' }
     };
-    return { kind: 'two-endings', MF, N };
+    return _fixGreekParadigmAccents({ kind: 'two-endings', MF, N });
   }
   return null;
 }
@@ -7533,23 +8258,27 @@ function buildGreekVerbParadigm(parsed) {
   }
 
   // ─── IMPERFETTO (solo indicativo) ───
-  const augStem = _addAugment(stem);
-  const impfIndAct = !medDep ? [
-    augStem + (kind==='con-a'?'ων':kind==='con-e'?'ουν':kind==='con-o'?'ουν':'ον'),
-    augStem + (kind==='con-a'?'ᾶς':kind==='con-e'?'εῖς':kind==='con-o'?'οῦς':'ες'),
-    augStem + (kind==='con-a'?'ᾶ':kind==='con-e'?'εῖ':kind==='con-o'?'οῦ':'ε'),
-    augStem + (kind==='con-a'?'ῶμεν':kind==='con-e'?'οῦμεν':kind==='con-o'?'οῦμεν':'ομεν'),
-    augStem + (kind==='con-a'?'ᾶτε':kind==='con-e'?'εῖτε':kind==='con-o'?'οῦτε':'ετε'),
-    augStem + (kind==='con-a'?'ων':kind==='con-e'?'ουν':kind==='con-o'?'ουν':'ον')
-  ] : null;
-  const impfIndMP = [
-    augStem + (kind==='con-a'?'ώμην':kind==='con-e'?'ούμην':kind==='con-o'?'ούμην':'ομην'),
-    augStem + (kind==='con-a'?'ῶ':kind==='con-e'?'οῦ':kind==='con-o'?'οῦ':'ου'),
-    augStem + (kind==='con-a'?'ᾶτο':kind==='con-e'?'εῖτο':kind==='con-o'?'οῦτο':'ετο'),
-    augStem + (kind==='con-a'?'ώμεθα':kind==='con-e'?'ούμεθα':kind==='con-o'?'ούμεθα':'ομεθα'),
-    augStem + (kind==='con-a'?'ᾶσθε':kind==='con-e'?'εῖσθε':kind==='con-o'?'οῦσθε':'εσθε'),
-    augStem + (kind==='con-a'?'ῶντο':kind==='con-e'?'οῦντο':kind==='con-o'?'οῦντο':'οντο')
-  ];
+  // Accento recessivo: per i verbi tematici l'imperfetto produce
+  // ἔλυον/ἔλυες/ἔλυε(ν)/ἐλύομεν/ἐλύετε/ἔλυον (terzultima nelle brevi, penultima nelle lunghe).
+  // Per i contratti le desinenze della mappa _contractAlpha/Epsilon/Omicron sono già accentate.
+  const augStem = _addAugment(_stripGreekTone(stem));
+  const _impfEndAct = {
+    tem:  ['ον', 'ες', 'ε', 'ομεν', 'ετε', 'ον'],
+    'con-a': ['ων', 'ᾶς', 'ᾶ', 'ῶμεν', 'ᾶτε', 'ων'],
+    'con-e': ['ουν', 'εῖς', 'εῖ', 'οῦμεν', 'εῖτε', 'ουν'],
+    'con-o': ['ουν', 'οῦς', 'οῦ', 'οῦμεν', 'οῦτε', 'ουν']
+  };
+  const _impfEndMP = {
+    tem:  ['ομην', 'ου', 'ετο', 'ομεθα', 'εσθε', 'οντο'],
+    'con-a': ['ώμην', 'ῶ', 'ᾶτο', 'ώμεθα', 'ᾶσθε', 'ῶντο'],
+    'con-e': ['ούμην', 'οῦ', 'εῖτο', 'ούμεθα', 'εῖσθε', 'οῦντο'],
+    'con-o': ['ούμην', 'οῦ', 'οῦτο', 'ούμεθα', 'οῦσθε', 'οῦντο']
+  };
+  const impfKey = kind === 'con-a' || kind === 'con-e' || kind === 'con-o' ? kind : 'tem';
+  const impfIndAct = !medDep
+    ? _impfEndAct[impfKey].map(e => kind === 'tem' ? _placeRecessiveAccent(augStem + e) : augStem + e)
+    : null;
+  const impfIndMP = _impfEndMP[impfKey].map(e => kind === 'tem' ? _placeRecessiveAccent(augStem + e) : augStem + e);
 
   // ─── FUTURO ───
   let futIndAct = null, futIndMid = null, futOttAct = null, futOttMid = null;
@@ -7571,77 +8300,114 @@ function buildGreekVerbParadigm(parsed) {
   let aorIndAct = null, aorCongAct = null, aorOttAct = null, aorImpAct = null, aorInfAct = '', aorPartAct = '';
   let aorIndMid = null, aorCongMid = null, aorOttMid = null, aorImpMid = null, aorInfMid = '', aorPartMid = '';
   if (aorStem) {
-    const aorAug = _addAugment(aorStem);
+    // Tema dell'aoristo SENZA accento (gli accenti verranno determinati dalle desinenze
+    // o dall'algoritmo recessivo). Il tema originale (dal lemma) potrebbe avere un
+    // accento residuo che però si sposta in maniera regolare nelle persone plurali.
+    const aorStemBare = _stripGreekTone(aorStem);
+    const aorAug = _addAugment(aorStemBare);
+    const _rec = (s) => _placeRecessiveAccent(s);
     if (aorKind === 'sigm') {
-      // Aoristo I sigmatico
+      // Aoristo I sigmatico — ἔλυσα, ἔλυσας, ἔλυσε(ν), ἐλύσαμεν, ἐλύσατε, ἔλυσαν
       if (!medDep) {
-        aorIndAct = [aorAug+'σα', aorAug+'σας', aorAug+'σε', aorAug+'σαμεν', aorAug+'σατε', aorAug+'σαν'];
-        aorCongAct = [aorStem+'σω', aorStem+'σῃς', aorStem+'σῃ', aorStem+'σωμεν', aorStem+'σητε', aorStem+'σωσι'];
-        aorOttAct = [aorStem+'σαιμι', aorStem+'σαις', aorStem+'σαι', aorStem+'σαιμεν', aorStem+'σαιτε', aorStem+'σαιεν'];
-        aorImpAct = ['—', aorStem+'σον', '—', '—', aorStem+'σατε', '—'];
-        aorInfAct = aorStem+'σαι';
-        aorPartAct = aorStem+'σας, '+aorStem+'σαντος';
+        aorIndAct = [_rec(aorAug+'σα'), _rec(aorAug+'σας'), _rec(aorAug+'σε'), _rec(aorAug+'σαμεν'), _rec(aorAug+'σατε'), _rec(aorAug+'σαν')];
+        aorCongAct = [_rec(aorStemBare+'σω'), _rec(aorStemBare+'σῃς'), _rec(aorStemBare+'σῃ'), _rec(aorStemBare+'σωμεν'), _rec(aorStemBare+'σητε'), _rec(aorStemBare+'σωσι')];
+        aorOttAct = [_rec(aorStemBare+'σαιμι'), _rec(aorStemBare+'σαις'), _rec(aorStemBare+'σαι'), _rec(aorStemBare+'σαιμεν'), _rec(aorStemBare+'σαιτε'), _rec(aorStemBare+'σαιεν')];
+        aorImpAct = ['—', _rec(aorStemBare+'σον'), '—', '—', _rec(aorStemBare+'σατε'), '—'];
+        aorInfAct = aorStemBare+'σαι';  // accento speciale, lasciamo senza
+        aorPartAct = _rec(aorStemBare+'σας')+', '+aorStemBare+'σαντος';
       }
-      aorIndMid = [aorAug+'σάμην', aorAug+'σω', aorAug+'σατο', aorAug+'σάμεθα', aorAug+'σασθε', aorAug+'σαντο'];
-      aorCongMid = [aorStem+'σωμαι', aorStem+'σῃ', aorStem+'σηται', aorStem+'σωμεθα', aorStem+'σησθε', aorStem+'σωνται'];
-      aorOttMid = [aorStem+'σαίμην', aorStem+'σαιο', aorStem+'σαιτο', aorStem+'σαίμεθα', aorStem+'σαισθε', aorStem+'σαιντο'];
-      aorImpMid = ['—', aorStem+'σαι', '—', '—', aorStem+'σασθε', '—'];
-      aorInfMid = aorStem+'σασθαι';
-      aorPartMid = aorStem+'σάμενος, -η, -ον';
+      aorIndMid = [_rec(aorAug+'σαμην'), _rec(aorAug+'σω'), _rec(aorAug+'σατο'), _rec(aorAug+'σαμεθα'), _rec(aorAug+'σασθε'), _rec(aorAug+'σαντο')];
+      aorCongMid = [_rec(aorStemBare+'σωμαι'), _rec(aorStemBare+'σῃ'), _rec(aorStemBare+'σηται'), _rec(aorStemBare+'σωμεθα'), _rec(aorStemBare+'σησθε'), _rec(aorStemBare+'σωνται')];
+      aorOttMid = [_rec(aorStemBare+'σαιμην'), _rec(aorStemBare+'σαιο'), _rec(aorStemBare+'σαιτο'), _rec(aorStemBare+'σαιμεθα'), _rec(aorStemBare+'σαισθε'), _rec(aorStemBare+'σαιντο')];
+      aorImpMid = ['—', _rec(aorStemBare+'σαι'), '—', '—', _rec(aorStemBare+'σασθε'), '—'];
+      aorInfMid = _rec(aorStemBare+'σασθαι');
+      aorPartMid = _rec(aorStemBare+'σαμενος')+', -η, -ον';
     } else if (aorKind === 'tem') {
-      // Aoristo II tematico: ἔλιπον, λίπω, λίποιμι, λιπέ, λιπεῖν, λιπών
+      // Aoristo II tematico — ἔλιπον, ἔλιπες, ἔλιπε(ν), ἐλίπομεν, ἐλίπετε, ἔλιπον
+      // Nota: aoristo II ha accento sulle desinenze in cong./ott./imp./inf./part.
       if (!medDep) {
-        aorIndAct = [aorAug+'ον', aorAug+'ες', aorAug+'ε', aorAug+'ομεν', aorAug+'ετε', aorAug+'ον'];
-        aorCongAct = [aorStem+'ω', aorStem+'ῃς', aorStem+'ῃ', aorStem+'ωμεν', aorStem+'ητε', aorStem+'ωσι'];
-        aorOttAct = [aorStem+'οιμι', aorStem+'οις', aorStem+'οι', aorStem+'οιμεν', aorStem+'οιτε', aorStem+'οιεν'];
-        aorImpAct = ['—', aorStem+'έ', '—', '—', aorStem+'ετε', '—'];
-        aorInfAct = aorStem+'εῖν';
-        aorPartAct = aorStem+'ών, '+aorStem+'όντος';
+        aorIndAct = [_rec(aorAug+'ον'), _rec(aorAug+'ες'), _rec(aorAug+'ε'), _rec(aorAug+'ομεν'), _rec(aorAug+'ετε'), _rec(aorAug+'ον')];
+        aorCongAct = [aorStemBare+'ῶ', aorStemBare+'ῇς', aorStemBare+'ῇ', aorStemBare+'ῶμεν', aorStemBare+'ῆτε', aorStemBare+'ῶσι'];
+        aorOttAct = [aorStemBare+'οιμι', aorStemBare+'οις', aorStemBare+'οι', aorStemBare+'οιμεν', aorStemBare+'οιτε', aorStemBare+'οιεν'].map(_rec);
+        aorImpAct = ['—', aorStemBare+'έ', '—', '—', _rec(aorStemBare+'ετε'), '—'];
+        aorInfAct = aorStemBare+'εῖν';
+        aorPartAct = aorStemBare+'ών, '+aorStemBare+'όντος';
       }
-      aorIndMid = [aorAug+'όμην', aorAug+'ου', aorAug+'ετο', aorAug+'όμεθα', aorAug+'εσθε', aorAug+'οντο'];
-      aorCongMid = [aorStem+'ωμαι', aorStem+'ῃ', aorStem+'ηται', aorStem+'ωμεθα', aorStem+'ησθε', aorStem+'ωνται'];
-      aorOttMid = [aorStem+'οίμην', aorStem+'οιο', aorStem+'οιτο', aorStem+'οίμεθα', aorStem+'οισθε', aorStem+'οιντο'];
-      aorImpMid = ['—', aorStem+'οῦ', '—', '—', aorStem+'εσθε', '—'];
-      aorInfMid = aorStem+'εσθαι';
-      aorPartMid = aorStem+'όμενος, -η, -ον';
+      aorIndMid = [_rec(aorAug+'ομην'), _rec(aorAug+'ου'), _rec(aorAug+'ετο'), _rec(aorAug+'ομεθα'), _rec(aorAug+'εσθε'), _rec(aorAug+'οντο')];
+      aorCongMid = [aorStemBare+'ῶμαι', aorStemBare+'ῇ', aorStemBare+'ῆται', aorStemBare+'ώμεθα', aorStemBare+'ῆσθε', aorStemBare+'ῶνται'];
+      aorOttMid = [aorStemBare+'οίμην', aorStemBare+'οιο', aorStemBare+'οιτο', aorStemBare+'οίμεθα', aorStemBare+'οισθε', aorStemBare+'οιντο'];
+      aorImpMid = ['—', aorStemBare+'οῦ', '—', '—', _rec(aorStemBare+'εσθε'), '—'];
+      aorInfMid = aorStemBare+'έσθαι';
+      aorPartMid = aorStemBare+'όμενος, -η, -ον';
     } else if (aorKind === 'asig') {
-      // Aoristo asigmatico (μένω → ἔμεινα): desinenze come sigmatico ma senza σ
+      // Aoristo asigmatico — ἔμεινα, ἔμεινας, ἔμεινε(ν), ἐμείναμεν, ἐμείνατε, ἔμειναν
       if (!medDep) {
-        aorIndAct = [aorAug+'α', aorAug+'ας', aorAug+'ε', aorAug+'αμεν', aorAug+'ατε', aorAug+'αν'];
-        aorCongAct = [aorStem+'ω', aorStem+'ῃς', aorStem+'ῃ', aorStem+'ωμεν', aorStem+'ητε', aorStem+'ωσι'];
-        aorOttAct = [aorStem+'αιμι', aorStem+'αις', aorStem+'αι', aorStem+'αιμεν', aorStem+'αιτε', aorStem+'αιεν'];
-        aorImpAct = ['—', aorStem+'ον', '—', '—', aorStem+'ατε', '—'];
-        aorInfAct = aorStem+'αι';
-        aorPartAct = aorStem+'ας, '+aorStem+'αντος';
+        aorIndAct = [_rec(aorAug+'α'), _rec(aorAug+'ας'), _rec(aorAug+'ε'), _rec(aorAug+'αμεν'), _rec(aorAug+'ατε'), _rec(aorAug+'αν')];
+        aorCongAct = [aorStemBare+'ω', aorStemBare+'ῃς', aorStemBare+'ῃ', aorStemBare+'ωμεν', aorStemBare+'ητε', aorStemBare+'ωσι'].map(_rec);
+        aorOttAct = [aorStemBare+'αιμι', aorStemBare+'αις', aorStemBare+'αι', aorStemBare+'αιμεν', aorStemBare+'αιτε', aorStemBare+'αιεν'].map(_rec);
+        aorImpAct = ['—', _rec(aorStemBare+'ον'), '—', '—', _rec(aorStemBare+'ατε'), '—'];
+        aorInfAct = _rec(aorStemBare+'αι');
+        aorPartAct = _rec(aorStemBare+'ας')+', '+aorStemBare+'αντος';
       }
     }
   }
 
   // ─── PERFETTO ATTIVO ───
+  // L'accento recessivo del perfetto sposta l'accento sulla penultima del tema
+  // nelle persone plurali (es. λέλυκα ma λελύκαμεν, λελύκατε, λελύκασι).
   let perfIndAct = null, perfInfAct = '', perfPartAct = '';
   if (perfStem) {
-    perfIndAct = [perfStem+'α', perfStem+'ας', perfStem+'ε', perfStem+'αμεν', perfStem+'ατε', perfStem+'ασι'];
-    perfInfAct = perfStem+'έναι';
-    perfPartAct = perfStem+'ώς, '+perfStem+'ότος';
+    perfIndAct = [
+      _placeRecessiveAccent(perfStem+'α'),    // λέλυκα
+      _placeRecessiveAccent(perfStem+'ας'),   // λέλυκας
+      _placeRecessiveAccent(perfStem+'ε'),    // λέλυκε
+      _placeRecessiveAccent(perfStem+'αμεν'), // λελύκαμεν
+      _placeRecessiveAccent(perfStem+'ατε'),  // λελύκατε
+      _placeRecessiveAccent(perfStem+'ασι')   // λελύκασι
+    ];
+    perfInfAct = _placeRecessiveAccent(perfStem+'έναι');
+    perfPartAct = _placeRecessiveAccent(perfStem+'ώς')+', '+_placeRecessiveAccent(perfStem+'ότος');
   }
 
   // ─── PERFETTO MEDIO-PASSIVO ───
   let perfIndMP = null, perfInfMP = '', perfPartMP = '';
   if (perfMPStem) {
-    perfIndMP = [perfMPStem+'μαι', perfMPStem+'σαι', perfMPStem+'ται', perfMPStem+'μεθα', perfMPStem+'σθε', perfMPStem+'νται'];
-    perfInfMP = perfMPStem+'σθαι';
-    perfPartMP = perfMPStem+'μένος, -η, -ον';
+    perfIndMP = [
+      _placeRecessiveAccent(perfMPStem+'μαι'),
+      _placeRecessiveAccent(perfMPStem+'σαι'),
+      _placeRecessiveAccent(perfMPStem+'ται'),
+      _placeRecessiveAccent(perfMPStem+'μεθα'),
+      _placeRecessiveAccent(perfMPStem+'σθε'),
+      _placeRecessiveAccent(perfMPStem+'νται')
+    ];
+    perfInfMP = _placeRecessiveAccent(perfMPStem+'σθαι');
+    perfPartMP = _placeRecessiveAccent(perfMPStem+'μένος')+', -η, -ον';
   }
 
   // ─── PIUCCHEPERFETTO ATTIVO ───
   let ppfIndAct = null, ppfIndMP = null;
   if (perfStem) {
-    const ppfAug = _addAugment(perfStem);
-    ppfIndAct = [ppfAug+'η', ppfAug+'ης', ppfAug+'ει', ppfAug+'εμεν', ppfAug+'ετε', ppfAug+'εσαν'];
+    // Per il piuccheperfetto il tema si augmenta (se non già aumentato dal raddoppiamento)
+    const ppfAug = _addAugment(_stripGreekTone(perfStem));
+    ppfIndAct = [
+      _placeRecessiveAccent(ppfAug+'η'),
+      _placeRecessiveAccent(ppfAug+'ης'),
+      _placeRecessiveAccent(ppfAug+'ει'),
+      _placeRecessiveAccent(ppfAug+'εμεν'),
+      _placeRecessiveAccent(ppfAug+'ετε'),
+      _placeRecessiveAccent(ppfAug+'εσαν')
+    ];
   }
   if (perfMPStem) {
-    const ppfMP = _addAugment(perfMPStem);
-    ppfIndMP = [ppfMP+'μην', ppfMP+'σο', ppfMP+'το', ppfMP+'μεθα', ppfMP+'σθε', ppfMP+'ντο'];
+    const ppfMP = _addAugment(_stripGreekTone(perfMPStem));
+    ppfIndMP = [
+      _placeRecessiveAccent(ppfMP+'μην'),
+      _placeRecessiveAccent(ppfMP+'σο'),
+      _placeRecessiveAccent(ppfMP+'το'),
+      _placeRecessiveAccent(ppfMP+'μεθα'),
+      _placeRecessiveAccent(ppfMP+'σθε'),
+      _placeRecessiveAccent(ppfMP+'ντο')
+    ];
   }
 
   // ─── AORISTO PASSIVO ───
@@ -7699,7 +8465,7 @@ function buildGreekVerbParadigm(parsed) {
     Futuro: futPassInd ? { Indicativo: futPassInd, Ottativo: futPassOtt, Infinito: futPassInf, Participio: futPassPart } : null
   }) : null;
 
-  return { kind: 'gr-verb-reg', active, midpass, passOnly, info: parsed };
+  return _fixGreekParadigmAccents({ kind: 'gr-verb-reg', active, midpass, passOnly, info: parsed });
 }
 
 /* Paradigmi irregolari greci (εἰμί, οἶδα, ἔχω, ecc.) — semplificati con tutti i tempi
@@ -7839,11 +8605,196 @@ function buildGreekIrregularParadigm(parsed) {
         Imperfetto: { Indicativo: ['ἧκον','ἧκες','ἧκε','ἥκομεν','ἥκετε','ἧκον'] },
         Futuro: { Indicativo: ['ἥξω','ἥξεις','ἥξει','ἥξομεν','ἥξετε','ἥξουσι'], Infinito: 'ἥξειν' }
       }
+    },
+    'didomi': {
+      active: {
+        Presente: {
+          Indicativo: ['δίδωμι','δίδως','δίδωσι(ν)','δίδομεν','δίδοτε','διδόασι(ν)'],
+          Congiuntivo: ['διδῶ','διδῷς','διδῷ','διδῶμεν','διδῶτε','διδῶσι(ν)'],
+          Ottativo: ['διδοίην','διδοίης','διδοίη','διδοῖμεν','διδοῖτε','διδοῖεν'],
+          Imperativo: ['—','δίδου','διδότω','—','δίδοτε','διδόντων'],
+          Infinito: 'διδόναι',
+          Participio: 'διδούς, διδοῦσα, διδόν · gen. διδόντος'
+        },
+        Imperfetto: { Indicativo: ['ἐδίδουν','ἐδίδους','ἐδίδου','ἐδίδομεν','ἐδίδοτε','ἐδίδοσαν'] },
+        Futuro: {
+          Indicativo: ['δώσω','δώσεις','δώσει','δώσομεν','δώσετε','δώσουσι(ν)'],
+          Ottativo: ['δώσοιμι','δώσοις','δώσοι','δώσοιμεν','δώσοιτε','δώσοιεν'],
+          Infinito: 'δώσειν',
+          Participio: 'δώσων, δώσουσα, δῶσον'
+        },
+        Aoristo: {
+          Indicativo: ['ἔδωκα','ἔδωκας','ἔδωκε(ν)','ἔδομεν','ἔδοτε','ἔδοσαν'],
+          Congiuntivo: ['δῶ','δῷς','δῷ','δῶμεν','δῶτε','δῶσι(ν)'],
+          Ottativo: ['δοίην','δοίης','δοίη','δοῖμεν','δοῖτε','δοῖεν'],
+          Imperativo: ['—','δός','δότω','—','δότε','δόντων'],
+          Infinito: 'δοῦναι',
+          Participio: 'δούς, δοῦσα, δόν · gen. δόντος'
+        },
+        Perfetto: { Indicativo: ['δέδωκα','δέδωκας','δέδωκε(ν)','δεδώκαμεν','δεδώκατε','δεδώκασι(ν)'], Infinito: 'δεδωκέναι', Participio: 'δεδωκώς' },
+        Piuccheperfetto: { Indicativo: ['ἐδεδώκη','ἐδεδώκης','ἐδεδώκει','ἐδεδώκεμεν','ἐδεδώκετε','ἐδεδώκεσαν'] }
+      },
+      midpass: {
+        Presente: {
+          Indicativo: ['δίδομαι','δίδοσαι','δίδοται','διδόμεθα','δίδοσθε','δίδονται'],
+          Congiuntivo: ['διδῶμαι','διδῷ','διδῶται','διδώμεθα','διδῶσθε','διδῶνται'],
+          Ottativo: ['διδοίμην','διδοῖο','διδοῖτο','διδοίμεθα','διδοῖσθε','διδοῖντο'],
+          Infinito: 'δίδοσθαι',
+          Participio: 'διδόμενος, -η, -ον'
+        },
+        Imperfetto: { Indicativo: ['ἐδιδόμην','ἐδίδοσο','ἐδίδοτο','ἐδιδόμεθα','ἐδίδοσθε','ἐδίδοντο'] },
+        Aoristo: {
+          Indicativo: ['ἐδόμην','ἔδου','ἔδοτο','ἐδόμεθα','ἔδοσθε','ἔδοντο'],
+          Congiuntivo: ['δῶμαι','δῷ','δῶται','δώμεθα','δῶσθε','δῶνται'],
+          Ottativo: ['δοίμην','δοῖο','δοῖτο','δοίμεθα','δοῖσθε','δοῖντο'],
+          Infinito: 'δόσθαι',
+          Participio: 'δόμενος, -η, -ον'
+        },
+        Perfetto: { Indicativo: ['δέδομαι','δέδοσαι','δέδοται','δεδόμεθα','δέδοσθε','δέδονται'], Infinito: 'δεδόσθαι', Participio: 'δεδομένος, -η, -ον' }
+      },
+      passOnly: {
+        Aoristo: {
+          Indicativo: ['ἐδόθην','ἐδόθης','ἐδόθη','ἐδόθημεν','ἐδόθητε','ἐδόθησαν'],
+          Infinito: 'δοθῆναι',
+          Participio: 'δοθείς, δοθεῖσα, δοθέν'
+        },
+        Futuro: {
+          Indicativo: ['δοθήσομαι','δοθήσῃ','δοθήσεται','δοθησόμεθα','δοθήσεσθε','δοθήσονται'],
+          Infinito: 'δοθήσεσθαι',
+          Participio: 'δοθησόμενος, -η, -ον'
+        }
+      }
+    },
+    'tithemi': {
+      active: {
+        Presente: {
+          Indicativo: ['τίθημι','τίθης','τίθησι(ν)','τίθεμεν','τίθετε','τιθέασι(ν)'],
+          Congiuntivo: ['τιθῶ','τιθῇς','τιθῇ','τιθῶμεν','τιθῆτε','τιθῶσι(ν)'],
+          Ottativo: ['τιθείην','τιθείης','τιθείη','τιθεῖμεν','τιθεῖτε','τιθεῖεν'],
+          Imperativo: ['—','τίθει','τιθέτω','—','τίθετε','τιθέντων'],
+          Infinito: 'τιθέναι',
+          Participio: 'τιθείς, τιθεῖσα, τιθέν · gen. τιθέντος'
+        },
+        Imperfetto: { Indicativo: ['ἐτίθην','ἐτίθεις','ἐτίθει','ἐτίθεμεν','ἐτίθετε','ἐτίθεσαν'] },
+        Futuro: { Indicativo: ['θήσω','θήσεις','θήσει','θήσομεν','θήσετε','θήσουσι(ν)'], Infinito: 'θήσειν', Participio: 'θήσων, -ουσα, -ον' },
+        Aoristo: {
+          Indicativo: ['ἔθηκα','ἔθηκας','ἔθηκε(ν)','ἔθεμεν','ἔθετε','ἔθεσαν'],
+          Congiuntivo: ['θῶ','θῇς','θῇ','θῶμεν','θῆτε','θῶσι(ν)'],
+          Ottativo: ['θείην','θείης','θείη','θεῖμεν','θεῖτε','θεῖεν'],
+          Imperativo: ['—','θές','θέτω','—','θέτε','θέντων'],
+          Infinito: 'θεῖναι',
+          Participio: 'θείς, θεῖσα, θέν · gen. θέντος'
+        },
+        Perfetto: { Indicativo: ['τέθηκα','τέθηκας','τέθηκε(ν)','τεθήκαμεν','τεθήκατε','τεθήκασι(ν)'], Infinito: 'τεθηκέναι', Participio: 'τεθηκώς' }
+      },
+      midpass: {
+        Presente: {
+          Indicativo: ['τίθεμαι','τίθεσαι','τίθεται','τιθέμεθα','τίθεσθε','τίθενται'],
+          Congiuntivo: ['τιθῶμαι','τιθῇ','τιθῆται','τιθώμεθα','τιθῆσθε','τιθῶνται'],
+          Ottativo: ['τιθείμην','τιθεῖο','τιθεῖτο','τιθείμεθα','τιθεῖσθε','τιθεῖντο'],
+          Infinito: 'τίθεσθαι',
+          Participio: 'τιθέμενος, -η, -ον'
+        },
+        Imperfetto: { Indicativo: ['ἐτιθέμην','ἐτίθεσο','ἐτίθετο','ἐτιθέμεθα','ἐτίθεσθε','ἐτίθεντο'] },
+        Aoristo: {
+          Indicativo: ['ἐθέμην','ἔθου','ἔθετο','ἐθέμεθα','ἔθεσθε','ἔθεντο'],
+          Infinito: 'θέσθαι',
+          Participio: 'θέμενος, -η, -ον'
+        },
+        Perfetto: { Indicativo: ['τέθειμαι','τέθεισαι','τέθειται','τεθείμεθα','τέθεισθε','τέθεινται'], Infinito: 'τεθεῖσθαι', Participio: 'τεθειμένος' }
+      },
+      passOnly: {
+        Aoristo: { Indicativo: ['ἐτέθην','ἐτέθης','ἐτέθη','ἐτέθημεν','ἐτέθητε','ἐτέθησαν'], Infinito: 'τεθῆναι', Participio: 'τεθείς, -εῖσα, -έν' },
+        Futuro: { Indicativo: ['τεθήσομαι','τεθήσῃ','τεθήσεται','τεθησόμεθα','τεθήσεσθε','τεθήσονται'], Infinito: 'τεθήσεσθαι' }
+      }
+    },
+    'histemi': {
+      active: {
+        Presente: {
+          Indicativo: ['ἵστημι','ἵστης','ἵστησι(ν)','ἵσταμεν','ἵστατε','ἱστᾶσι(ν)'],
+          Congiuntivo: ['ἱστῶ','ἱστῇς','ἱστῇ','ἱστῶμεν','ἱστῆτε','ἱστῶσι(ν)'],
+          Ottativo: ['ἱσταίην','ἱσταίης','ἱσταίη','ἱσταῖμεν','ἱσταῖτε','ἱσταῖεν'],
+          Imperativo: ['—','ἵστη','ἱστάτω','—','ἵστατε','ἱστάντων'],
+          Infinito: 'ἱστάναι',
+          Participio: 'ἱστάς, ἱστᾶσα, ἱστάν'
+        },
+        Imperfetto: { Indicativo: ['ἵστην','ἵστης','ἵστη','ἵσταμεν','ἵστατε','ἵστασαν'] },
+        Futuro: { Indicativo: ['στήσω','στήσεις','στήσει','στήσομεν','στήσετε','στήσουσι(ν)'], Infinito: 'στήσειν' },
+        Aoristo: {
+          Indicativo: ['ἔστησα','ἔστησας','ἔστησε(ν)','ἐστήσαμεν','ἐστήσατε','ἔστησαν · oppure (atematico, intr.) ἔστην, ἔστης, ἔστη, ἔστημεν, ἔστητε, ἔστησαν'],
+          Infinito: 'στῆσαι (trans.) / στῆναι (intr.)',
+          Participio: 'στήσας / στάς, στᾶσα, στάν'
+        },
+        Perfetto: { Indicativo: ['ἕστηκα','ἕστηκας','ἕστηκε(ν)','ἕσταμεν','ἕστατε','ἑστᾶσι(ν)'], Infinito: 'ἑστάναι', Participio: 'ἑστώς, ἑστῶσα, ἑστός' },
+        Piuccheperfetto: { Indicativo: ['εἱστήκη','εἱστήκης','εἱστήκει','εἵσταμεν','εἵστατε','εἱστήκεσαν'] }
+      },
+      midpass: {
+        Presente: {
+          Indicativo: ['ἵσταμαι','ἵστασαι','ἵσταται','ἱστάμεθα','ἵστασθε','ἵστανται'],
+          Infinito: 'ἵστασθαι',
+          Participio: 'ἱστάμενος, -η, -ον'
+        },
+        Imperfetto: { Indicativo: ['ἱστάμην','ἵστασο','ἵστατο','ἱστάμεθα','ἵστασθε','ἵσταντο'] }
+      },
+      passOnly: {
+        Aoristo: { Indicativo: ['ἐστάθην','ἐστάθης','ἐστάθη','ἐστάθημεν','ἐστάθητε','ἐστάθησαν'], Infinito: 'σταθῆναι', Participio: 'σταθείς' }
+      }
+    },
+    'deiknumi': {
+      active: {
+        Presente: {
+          Indicativo: ['δείκνυμι','δείκνυς','δείκνυσι(ν)','δείκνυμεν','δείκνυτε','δεικνύασι(ν)'],
+          Congiuntivo: ['δεικνύω','δεικνύῃς','δεικνύῃ','δεικνύωμεν','δεικνύητε','δεικνύωσι(ν)'],
+          Ottativo: ['δεικνύοιμι','δεικνύοις','δεικνύοι','δεικνύοιμεν','δεικνύοιτε','δεικνύοιεν'],
+          Imperativo: ['—','δείκνυ','δεικνύτω','—','δείκνυτε','δεικνύντων'],
+          Infinito: 'δεικνύναι',
+          Participio: 'δεικνύς, δεικνῦσα, δεικνύν'
+        },
+        Imperfetto: { Indicativo: ['ἐδείκνυν','ἐδείκνυς','ἐδείκνυ','ἐδείκνυμεν','ἐδείκνυτε','ἐδείκνυσαν'] },
+        Futuro: { Indicativo: ['δείξω','δείξεις','δείξει','δείξομεν','δείξετε','δείξουσι(ν)'], Infinito: 'δείξειν' },
+        Aoristo: {
+          Indicativo: ['ἔδειξα','ἔδειξας','ἔδειξε(ν)','ἐδείξαμεν','ἐδείξατε','ἔδειξαν'],
+          Infinito: 'δεῖξαι',
+          Participio: 'δείξας'
+        },
+        Perfetto: { Indicativo: ['δέδειχα','δέδειχας','δέδειχε(ν)','δεδείχαμεν','δεδείχατε','δεδείχασι(ν)'], Infinito: 'δεδειχέναι', Participio: 'δεδειχώς' }
+      },
+      midpass: {
+        Presente: {
+          Indicativo: ['δείκνυμαι','δείκνυσαι','δείκνυται','δεικνύμεθα','δείκνυσθε','δείκνυνται'],
+          Infinito: 'δείκνυσθαι',
+          Participio: 'δεικνύμενος, -η, -ον'
+        },
+        Perfetto: { Indicativo: ['δέδειγμαι','δέδειξαι','δέδεικται','δεδείγμεθα','δέδειχθε','δέδειγνται'], Infinito: 'δεδεῖχθαι' }
+      },
+      passOnly: {
+        Aoristo: { Indicativo: ['ἐδείχθην','ἐδείχθης','ἐδείχθη','ἐδείχθημεν','ἐδείχθητε','ἐδείχθησαν'], Infinito: 'δειχθῆναι', Participio: 'δειχθείς' }
+      }
+    },
+    'iemi': {
+      active: {
+        Presente: {
+          Indicativo: ['ἵημι','ἵης','ἵησι(ν)','ἵεμεν','ἵετε','ἱᾶσι(ν)'],
+          Congiuntivo: ['ἱῶ','ἱῇς','ἱῇ','ἱῶμεν','ἱῆτε','ἱῶσι(ν)'],
+          Ottativo: ['ἱείην','ἱείης','ἱείη','ἱεῖμεν','ἱεῖτε','ἱεῖεν'],
+          Imperativo: ['—','ἵει','ἱέτω','—','ἵετε','ἱέντων'],
+          Infinito: 'ἱέναι',
+          Participio: 'ἱείς, ἱεῖσα, ἱέν'
+        },
+        Imperfetto: { Indicativo: ['ἵην','ἵεις','ἵει','ἵεμεν','ἵετε','ἵεσαν'] },
+        Futuro: { Indicativo: ['ἥσω','ἥσεις','ἥσει','ἥσομεν','ἥσετε','ἥσουσι(ν)'] },
+        Aoristo: {
+          Indicativo: ['ἧκα','ἧκας','ἧκε(ν)','εἷμεν','εἷτε','εἷσαν'],
+          Infinito: 'εἷναι',
+          Participio: 'εἵς, εἷσα, ἕν'
+        },
+        Perfetto: { Indicativo: ['εἷκα','εἷκας','εἷκε(ν)','εἵκαμεν','εἵκατε','εἵκασι(ν)'], Infinito: 'εἱκέναι' }
+      }
     }
   };
   const base = IRR[parsed.kind];
   if (!base) return null;
-  return Object.assign({ kind: 'gr-verb-irr', irrKind: parsed.kind, info: parsed }, base);
+  return _fixGreekParadigmAccents(Object.assign({ kind: 'gr-verb-irr', irrKind: parsed.kind, info: parsed }, base));
 }
 
 /* ─── RENDER HTML — paradigma greco ──────────────────────────────────────────────
@@ -7854,14 +8805,25 @@ const GR_MOOD_ORDER = ['Indicativo','Congiuntivo','Ottativo','Imperativo','Infin
 
 function renderGreekNounParadigmHtml(par, lemma) {
   if (!par) return `<p class="muted-text">Paradigma non disponibile per <em>${escapeHtml(lemma)}</em>.</p>`;
-  const { rows } = par;
-  const tr = GR_CASES.map(c => `<tr>
-    <th>${c}</th>
-    <td>${escapeHtml((rows.sing && rows.sing[c]) || '—')}</td>
-    <td>${escapeHtml((rows.plur && rows.plur[c]) || '—')}</td>
-  </tr>`).join('');
-  return `<table class="paradigm-table greek-paradigm">
-    <thead><tr><th></th><th>Singolare</th><th>Plurale</th></tr></thead>
+  const { rows, noSing, noPlur } = par;
+  const showSing = !noSing && rows.sing;
+  const showPlur = !noPlur && rows.plur;
+  let header = '<tr><th></th>';
+  if (showSing) header += '<th>Singolare</th>';
+  if (showPlur) header += '<th>Plurale</th>';
+  header += '</tr>';
+  const tr = GR_CASES.map(c => {
+    let row = `<tr><th>${c}</th>`;
+    if (showSing) row += `<td>${_renderFormHighlighted((rows.sing && rows.sing[c]) || '—', _GR_NOUN_ENDINGS_FLAT, true)}</td>`;
+    if (showPlur) row += `<td>${_renderFormHighlighted((rows.plur && rows.plur[c]) || '—', _GR_NOUN_ENDINGS_FLAT, true)}</td>`;
+    row += '</tr>';
+    return row;
+  }).join('');
+  let banner = '';
+  if (noSing) banner = '<div class="paradigm-tantum-note"><strong>Pluralia tantum:</strong> il sostantivo è attestato solo al plurale.</div>';
+  else if (noPlur) banner = '<div class="paradigm-tantum-note"><strong>Singularia tantum:</strong> il sostantivo è attestato solo al singolare.</div>';
+  return banner + `<table class="paradigm-table greek-paradigm">
+    <thead>${header}</thead>
     <tbody>${tr}</tbody>
   </table>`;
 }
@@ -7871,8 +8833,8 @@ function renderGreekAdjParadigmHtml(par, lemma) {
   const renderG = (rows, label) => {
     const tr = GR_CASES.map(c => `<tr>
       <th>${c}</th>
-      <td>${escapeHtml((rows.sing && rows.sing[c]) || '—')}</td>
-      <td>${escapeHtml((rows.plur && rows.plur[c]) || '—')}</td>
+      <td>${_renderFormHighlighted((rows.sing && rows.sing[c]) || '—', _GR_NOUN_ENDINGS_FLAT, true)}</td>
+      <td>${_renderFormHighlighted((rows.plur && rows.plur[c]) || '—', _GR_NOUN_ENDINGS_FLAT, true)}</td>
     </tr>`).join('');
     return `<div class="paradigm-genere-block">
       <h4 class="paradigm-genere-title">${label}</h4>
@@ -7911,7 +8873,7 @@ function renderGreekVerbConjugationHtml(verbPar) {
       if (finiteMoods.length) {
         const tbodyRows = finiteMoods.map(m => {
           const arr = td[m];
-          return `<tr><th>${m}</th>${GR_PERSONS.map((p, i) => `<td data-person="${p}">${escapeHtml(arr[i] || '—')}</td>`).join('')}</tr>`;
+          return `<tr><th>${m}</th>${GR_PERSONS.map((p, i) => `<td data-person="${p}">${_renderFormHighlighted(arr[i] || '—', _GR_VERB_ENDINGS_FLAT, true)}</td>`).join('')}</tr>`;
         }).join('');
         html += `<table class="paradigm-conjugation greek-paradigm">
           <thead><tr><th></th>${GR_PERSONS.map(p => `<th>${p}</th>`).join('')}</tr></thead>
@@ -17079,9 +18041,9 @@ function getDictProfilePreset() {
    ────────────────────────────────────────────────────────────────────────── */
 const _PARADIGM_REGISTRY = {};
 let _PARADIGM_REF_COUNTER = 0;
-function registerParadigmRef(lemma, pos, lang) {
+function registerParadigmRef(lemma, pos, lang, hints) {
   const key = 'p' + (++_PARADIGM_REF_COUNTER);
-  _PARADIGM_REGISTRY[key] = { lemma, pos, lang: lang || 'latino' };
+  _PARADIGM_REGISTRY[key] = { lemma, pos, lang: lang || 'latino', hints: hints || {} };
   return key;
 }
 
@@ -17090,13 +18052,18 @@ function openParadigm(key) {
   if (!ref) return;
   const modal = document.getElementById('modal-paradigm');
   if (!modal) return;
-  const { lemma, pos, lang } = ref;
+  const { lemma, pos, lang, hints } = ref;
+  const _hints = hints || {};
   let bodyHtml = '';
   let subtitleSuffix = ' · paradigma completo';
 
   if (lang === 'greco') {
     // ─── PARADIGMA GRECO ───
     const parsed = parseGreekLemma(lemma, pos);
+    if (parsed && pos === 'Sostantivo') {
+      if (_hints.noSing) parsed.noSing = true;
+      if (_hints.noPlur) parsed.noPlur = true;
+    }
     if (!parsed) {
       bodyHtml = `<div class="paradigm-empty">
         <p>Non è possibile generare automaticamente il paradigma per <em>${escapeHtml(lemma)}</em>: forma irregolare o non riconosciuta dal motore morfologico greco.</p>
@@ -17152,6 +18119,10 @@ function openParadigm(key) {
   } else {
     // ─── PARADIGMA LATINO (esistente) ───
     const parsed = parseLatinLemma(lemma, pos);
+    if (parsed && pos === 'Sostantivo') {
+      if (_hints.noSing) parsed.noSing = true;
+      if (_hints.noPlur) parsed.noPlur = true;
+    }
     if (!parsed) {
       bodyHtml = `<div class="paradigm-empty">
         <p>Non è possibile generare automaticamente il paradigma per <em>${escapeHtml(lemma)}</em>: forma irregolare o non riconosciuta dal motore morfologico.</p>
@@ -17188,6 +18159,14 @@ function openParadigm(key) {
   if (subtitle) subtitle.textContent = pos + subtitleSuffix + (lang === 'greco' ? ' · greco' : ' · latino');
   const body = document.getElementById('paradigm-modal-body');
   if (body) body.innerHTML = bodyHtml;
+  // Ripristina lo stato salvato del toggle "evidenzia desinenze"
+  const highlightOn = getParadigmHighlightEndings();
+  document.body.classList.toggle('paradigm-highlight-on', highlightOn);
+  const hbtn = document.getElementById('paradigm-highlight-toggle');
+  if (hbtn) {
+    hbtn.classList.toggle('active', highlightOn);
+    hbtn.textContent = highlightOn ? '✓ Desinenze evidenziate' : 'Evidenzia desinenze';
+  }
   modal.classList.add('open');
 }
 
@@ -17418,7 +18397,13 @@ function renderDictionaryCard(entry, lang, preset) {
   const isDeclinable = (lang === 'latino' || lang === 'greco') && ['Verbo','Sostantivo','Aggettivo'].includes(entry.pos);
   if (isDeclinable) {
     // Pulsante apri paradigma — passa lemma + pos + lang via stato globale per evitare quoting
-    const key = registerParadigmRef(entry.lemma, entry.pos, lang);
+    // Estrai i flag tantum dalla note/info del lemma del dizionario
+    const noteStr = ((entry.note || '') + ' ' + (entry.info || '') + ' ' + (entry.lemma || '')).toLowerCase();
+    const hints = {
+      noSing: /pluralia tantum|plur\. tantum/.test(noteStr),
+      noPlur: /singularia tantum|sing\. tantum/.test(noteStr)
+    };
+    const key = registerParadigmRef(entry.lemma, entry.pos, lang, hints);
     const label = entry.pos === 'Verbo' ? 'Apri coniugazione completa'
       : entry.pos === 'Sostantivo' ? 'Apri declinazione'
       : 'Apri flessione';
@@ -18709,10 +19694,108 @@ function renderLogicEntry(sentenceId, entry, lang) {
     </div>`;
 }
 
+function renderPeriodaleBridge(sentence) {
+  // Ponte comunicativo: dall'analisi grammaticale recupera verbi e congiunzioni/relativi
+  // e li mostra come suggerimenti per la scomposizione in proposizioni.
+  const grammar = sentence.grammar || [];
+  const verbs = grammar.filter(e => e.partOfSpeech === 'Verbo' && e.tokenIndex != null);
+  const conjs = grammar.filter(e =>
+    e.tokenIndex != null && (
+      e.partOfSpeech === 'Congiunzione' ||
+      e.partOfSpeech === 'Particella' ||
+      (e.partOfSpeech === 'Pronome' && (e.pronomeTipo === 'Relativo' || e.pronomeTipo === 'Interrogativo'))
+    )
+  );
+  const asindeti = sentence.asindeti || [];
+  const tokens = tokenizeSentence(sentence.original);
+  const wordOf = (idx) => {
+    const t = tokens.find(tk => tk.idx === idx);
+    return t ? t.text : '';
+  };
+  const propCount = (sentence.periodale || []).length;
+  const isOneVerbSentence = verbs.length === 1 && conjs.length === 0 && asindeti.length === 0;
+  const hasNoProp = propCount === 0;
+
+  // Costruzione segmenti suggeriti: fra ogni connettivo e l'inizio/fine frase oppure
+  // un altro connettivo, contiamo i verbi: se ≥1, è candidato proposizione.
+  let suggestionsHtml = '';
+  if (verbs.length === 0 && conjs.length === 0) {
+    suggestionsHtml = '<div class="periodale-bridge-empty">Completa l\'analisi grammaticale (verbi e congiunzioni) per ricevere suggerimenti automatici sulla scomposizione in proposizioni.</div>';
+  } else {
+    const verbsList = verbs.length
+      ? `<div class="periodale-bridge-row"><span class="periodale-bridge-label">Verbi (${verbs.length}):</span>
+          ${verbs.sort((a,b)=>a.tokenIndex-b.tokenIndex).map(v => `<span class="periodale-bridge-chip verb-chip" title="Verbo a posizione ${v.tokenIndex+1}">${escapeHtml(v.word || wordOf(v.tokenIndex))}</span>`).join('')}
+        </div>`
+      : '<div class="periodale-bridge-row"><span class="periodale-bridge-label">Verbi:</span> <span class="muted-text">— nessuno —</span></div>';
+    const conjList = conjs.length
+      ? `<div class="periodale-bridge-row"><span class="periodale-bridge-label">Connettivi (${conjs.length}):</span>
+          ${conjs.sort((a,b)=>a.tokenIndex-b.tokenIndex).map(c => `<span class="periodale-bridge-chip conn-chip" title="${escapeHtml(c.partOfSpeech)}${c.tipo ? ' · '+c.tipo : ''}">${escapeHtml(c.word || wordOf(c.tokenIndex))}</span>`).join('')}
+        </div>`
+      : '';
+    const asyncRow = asindeti.length
+      ? `<div class="periodale-bridge-row"><span class="periodale-bridge-label">Asindeti:</span>
+          ${asindeti.map(i => `<span class="periodale-bridge-chip async-chip" title="punteggiatura asindetica">${escapeHtml(wordOf(i))}</span>`).join('')}
+        </div>`
+      : '';
+    const advice = verbs.length === 0
+      ? '<div class="periodale-bridge-advice"><strong>⚠ Attenzione:</strong> nessun verbo individuato. Verifica l\'analisi grammaticale.</div>'
+      : verbs.length === 1
+        ? '<div class="periodale-bridge-advice"><strong>💡 Suggerimento:</strong> la frase ha un solo verbo. Se non ci sono espansioni subordinate, puoi marcarla come <em>proposizione principale unica</em> col pulsante qui sotto.</div>'
+        : `<div class="periodale-bridge-advice"><strong>💡 Suggerimento:</strong> ${verbs.length} verbi indicati → almeno ${verbs.length} proposizioni. ${conjs.length ? 'Usa i connettivi sopra per individuare i confini tra le proposizioni e per stabilire le dipendenze (subordinanti vs coordinanti).' : 'Cerca le congiunzioni o i pronomi relativi nella frase per stabilire i confini.'}</div>`;
+    suggestionsHtml = verbsList + conjList + asyncRow + advice;
+  }
+
+  // Pulsante "frase a verbo unico"
+  const singleVerbBtn = isOneVerbSentence && hasNoProp
+    ? `<button class="btn btn-primary btn-sm periodale-flag-single" onclick="flagSentenceAsSingleVerb('${sentence.id}')" title="Marca l'intera frase come proposizione principale: nessuna espansione, nessuna subordinazione">
+        ⚡ Flag rapido: frase a verbo unico (proposizione principale)
+       </button>`
+    : verbs.length === 1 && hasNoProp
+      ? `<button class="btn btn-primary btn-sm periodale-flag-single" onclick="flagSentenceAsSingleVerb('${sentence.id}')" title="Marca l'intera frase come proposizione principale unica">
+          ⚡ Flag rapido: marca la frase come principale unica
+         </button>`
+      : '';
+
+  return `<div class="periodale-bridge">
+    <div class="periodale-bridge-header">
+      <span class="periodale-bridge-icon">🔗</span>
+      <span class="periodale-bridge-title">Ponte con l'analisi grammaticale</span>
+      <span class="periodale-bridge-hint">verbi e connettivi suggeriscono i confini delle proposizioni</span>
+    </div>
+    <div class="periodale-bridge-body">
+      ${suggestionsHtml}
+    </div>
+    ${singleVerbBtn ? '<div class="periodale-bridge-actions">'+singleVerbBtn+'</div>' : ''}
+  </div>`;
+}
+
+/* Marca la frase come unica proposizione principale (per frasi a verbo unico) */
+function flagSentenceAsSingleVerb(sentenceId) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const tokens = tokenizeSentence(sentence.original);
+  const wordIndices = tokens.filter(t => t.kind === 'word').map(t => t.idx);
+  if (wordIndices.length === 0) return;
+  // Crea (o sostituisce) una unica proposizione principale che contiene tutti i token
+  const entry = makeEntry('periodale');
+  entry.tokenIndices = wordIndices;
+  entry.ruolo = 'Principale';
+  // Per il latino il modo predefinito sarà Indicativo; il tipo principale è "Enunciativa"
+  entry.tipo = 'Enunciativa';
+  entry.modo = 'Indicativo';
+  entry.connettivo = '';
+  // Rimuovi tutte le proposizioni esistenti e inserisci la nuova
+  sentence.periodale = [entry];
+  persistCurrent();
+  renderEditor();
+  showToast('Frase marcata come proposizione principale unica');
+}
+
 function renderPeriodaleAnalysis(sentence) {
   const lang = state.meta.lingua;
   const isGreek = lang === 'greco';
 
+  const bridgeHtml = renderPeriodaleBridge(sentence);
   const tokenizerHtml = renderTokenizer(sentence, 'periodale');
   const treeHtml = renderSyntaxTree(sentence);
 
@@ -18728,7 +19811,7 @@ function renderPeriodaleAnalysis(sentence) {
     entriesHtml = tools + annotated.map(entry => renderPeriodaleEntry(sentence.id, entry, lang, annotated)).join('');
   }
 
-  return tokenizerHtml + treeHtml +
+  return bridgeHtml + tokenizerHtml + treeHtml +
     `<div class="subsection">
       <div class="subsection-header">
         <span class="subsection-number">C.3</span>
