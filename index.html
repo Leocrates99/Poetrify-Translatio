@@ -1694,8 +1694,35 @@ body[data-profile="medie"] .wizard-step-label { font-size: 12px; }
   box-shadow: 0 4px 14px rgba(24, 0, 172, 0.06);
   transform: translateY(-1px);
 }
-.dict-card.tier-alta { border-left-color: var(--poetrify-sepia); }
-.dict-card.tier-altissima { border-left-color: var(--poetrify-primary); }
+/* Tier ora come fondo: il bordo sinistro è dedicato alla parte del discorso (vedi sotto).
+   Lo spessore del bordo segnala il tier (alta = 3px, altissima = 5px). */
+.dict-card.tier-alta { border-left-width: 3px; }
+.dict-card.tier-altissima { border-left-width: 5px; }
+
+/* Bordo sinistro per parte del discorso — colori coerenti con la palette dei token */
+.dict-card.pos-sostantivo   { border-left-color: rgba(24, 0, 172, 0.65); }
+.dict-card.pos-aggettivo    { border-left-color: rgba(47, 133, 90, 0.70); }
+.dict-card.pos-verbo        { border-left-color: rgba(197, 48, 48, 0.65); }
+.dict-card.pos-pronome      { border-left-color: rgba(214, 158, 46, 0.75); }
+.dict-card.pos-avverbio     { border-left-color: rgba(99, 102, 241, 0.70); }
+.dict-card.pos-preposizione { border-left-color: rgba(107, 102, 96, 0.70); }
+.dict-card.pos-congiunzione { border-left-color: rgba(245, 124, 0, 0.70); }
+.dict-card.pos-articolo     { border-left-color: rgba(56, 178, 172, 0.75); }
+.dict-card.pos-interiezione { border-left-color: rgba(192, 38, 211, 0.65); }
+.dict-card.pos-numerale     { border-left-color: rgba(63, 81, 181, 0.70); }
+.dict-card.pos-particella   { border-left-color: rgba(120, 113, 108, 0.70); }
+/* Hover: il bordo sinistro PoS rimane coerente; il box-shadow segue il colore del PoS */
+.dict-card.pos-sostantivo:hover   { box-shadow: 0 4px 14px rgba(24, 0, 172, 0.12); border-color: rgba(24, 0, 172, 0.45); }
+.dict-card.pos-aggettivo:hover    { box-shadow: 0 4px 14px rgba(47, 133, 90, 0.14); border-color: rgba(47, 133, 90, 0.50); }
+.dict-card.pos-verbo:hover        { box-shadow: 0 4px 14px rgba(197, 48, 48, 0.13); border-color: rgba(197, 48, 48, 0.50); }
+.dict-card.pos-pronome:hover      { box-shadow: 0 4px 14px rgba(214, 158, 46, 0.14); border-color: rgba(214, 158, 46, 0.55); }
+.dict-card.pos-avverbio:hover     { box-shadow: 0 4px 14px rgba(99, 102, 241, 0.13); border-color: rgba(99, 102, 241, 0.50); }
+.dict-card.pos-preposizione:hover { box-shadow: 0 4px 14px rgba(107, 102, 96, 0.12); border-color: rgba(107, 102, 96, 0.50); }
+.dict-card.pos-congiunzione:hover { box-shadow: 0 4px 14px rgba(245, 124, 0, 0.14); border-color: rgba(245, 124, 0, 0.50); }
+.dict-card.pos-articolo:hover     { box-shadow: 0 4px 14px rgba(56, 178, 172, 0.14); border-color: rgba(56, 178, 172, 0.55); }
+.dict-card.pos-interiezione:hover { box-shadow: 0 4px 14px rgba(192, 38, 211, 0.13); border-color: rgba(192, 38, 211, 0.50); }
+.dict-card.pos-numerale:hover     { box-shadow: 0 4px 14px rgba(63, 81, 181, 0.13); border-color: rgba(63, 81, 181, 0.50); }
+.dict-card.pos-particella:hover   { box-shadow: 0 4px 14px rgba(120, 113, 108, 0.12); border-color: rgba(120, 113, 108, 0.50); }
 
 .dict-card-header {
   display: flex;
@@ -1741,14 +1768,35 @@ body[data-profile="medie"] .wizard-step-label { font-size: 12px; }
 .dict-meta-bit {
   font-family: var(--font-ui);
   font-size: 9.5px;
-  padding: 1px 6px;
+  padding: 2px 7px;
   background: var(--poetrify-cream);
   color: var(--poetrify-sepia);
+  border: 1px solid transparent;
   border-radius: var(--radius-sm);
   font-weight: 600;
   text-transform: lowercase;
   letter-spacing: 0.03em;
 }
+
+/* Chip GENERE — colori distintivi M/F/N */
+.dict-meta-bit.gen-m { background: rgba(99, 102, 241, 0.14);  color: #3a3eb0; border-color: rgba(99, 102, 241, 0.40); }
+.dict-meta-bit.gen-f { background: rgba(217, 70, 161, 0.13);  color: #9d2375; border-color: rgba(217, 70, 161, 0.40); }
+.dict-meta-bit.gen-n { background: rgba(120, 113, 108, 0.16); color: #57534e; border-color: rgba(120, 113, 108, 0.40); }
+
+/* Chip DECLINAZIONE — gradiente cromatico I→V (latino) / I/II/III (greco) */
+.dict-meta-bit.dec-i   { background: rgba(197, 48, 48, 0.12);  color: #8b1f1f; border-color: rgba(197, 48, 48, 0.40); }
+.dict-meta-bit.dec-ii  { background: rgba(47, 133, 90, 0.13);  color: #1f5c3d; border-color: rgba(47, 133, 90, 0.40); }
+.dict-meta-bit.dec-iii { background: rgba(245, 124, 0, 0.14);  color: #8a4500; border-color: rgba(245, 124, 0, 0.40); }
+.dict-meta-bit.dec-iv  { background: rgba(56, 178, 172, 0.16); color: #1c6f6a; border-color: rgba(56, 178, 172, 0.45); }
+.dict-meta-bit.dec-v   { background: rgba(192, 38, 211, 0.13); color: #7a1d8a; border-color: rgba(192, 38, 211, 0.40); }
+
+/* Chip CLASSE AGGETTIVALE */
+.dict-meta-bit.cls-i   { background: rgba(24, 0, 172, 0.10);   color: #1800ac; border-color: rgba(24, 0, 172, 0.40); }
+.dict-meta-bit.cls-ii  { background: rgba(63, 81, 181, 0.13);  color: #2a3781; border-color: rgba(63, 81, 181, 0.42); }
+.dict-meta-bit.cls-iii { background: rgba(214, 158, 46, 0.15); color: #7a4f0a; border-color: rgba(214, 158, 46, 0.42); }
+
+/* Chip TIPO PRONOME — colore neutro ambrato per distinguerlo da genere/decl. */
+.dict-meta-bit.tipo-pron { background: rgba(214, 158, 46, 0.13); color: #7a4f0a; border-color: rgba(214, 158, 46, 0.40); }
 
 .dict-card-info {
   font-family: var(--font-body);
@@ -2382,26 +2430,34 @@ body.paradigm-highlight-on .paradigm-ending {
    desinenza personale (rosso).
    Si attivano quando body ha la classe .paradigm-morph-on
    ============================================ */
-.morph-augment, .morph-redup, .morph-tense, .morph-mood, .morph-ending {
+.morph-augment, .morph-redup, .morph-tense, .morph-mood, .morph-ending, .morph-theme, .morph-nominal {
   color: inherit;
   font-weight: inherit;
   transition: color 0.15s ease, font-weight 0.15s ease, background-color 0.15s ease;
 }
 body.paradigm-morph-on .morph-augment {
   color: #1f8033;       /* verde scuro - aumento */
-  font-weight: 600;
+  font-weight: 700;
 }
 body.paradigm-morph-on .morph-redup {
   color: #7c3aed;       /* viola - raddoppiamento */
-  font-weight: 600;
+  font-weight: 700;
+}
+body.paradigm-morph-on .morph-theme {
+  color: #0e7490;       /* azzurro/teal - vocale tematica */
+  font-weight: 700;
 }
 body.paradigm-morph-on .morph-tense {
   color: #d97706;       /* arancio - suffisso temporale */
-  font-weight: 600;
+  font-weight: 700;
 }
 body.paradigm-morph-on .morph-mood {
   color: #b45309;       /* ambra scuro - suffisso modale */
-  font-weight: 600;
+  font-weight: 700;
+}
+body.paradigm-morph-on .morph-nominal {
+  color: #0891b2;       /* ciano - suffisso nominale (modi non finiti: -nt-, -to-, -tur-, -nd-, -μενο-) */
+  font-weight: 700;
 }
 body.paradigm-morph-on .morph-ending {
   color: var(--poetrify-danger);  /* rosso - desinenza */
@@ -2437,8 +2493,10 @@ body.paradigm-morph-on .paradigm-morph-legend { display: flex; }
 .paradigm-morph-legend-color.lg-aug   { color: #1f8033; }
 .paradigm-morph-legend-color.lg-redup { color: #7c3aed; }
 .paradigm-morph-legend-color.lg-stem  { color: var(--poetrify-ink); }
+.paradigm-morph-legend-color.lg-theme { color: #0e7490; }
 .paradigm-morph-legend-color.lg-tense { color: #d97706; }
 .paradigm-morph-legend-color.lg-mood  { color: #b45309; }
+.paradigm-morph-legend-color.lg-nominal { color: #0891b2; }
 .paradigm-morph-legend-color.lg-ending { color: var(--poetrify-danger); }
 
 /* Toggle morfologico */
@@ -5964,7 +6022,7 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
         <p class="modal-subtitle paradigm-modal-subtitle" id="paradigm-modal-subtitle"></p>
       </div>
       <div class="paradigm-header-actions">
-        <button class="paradigm-morph-toggle" id="paradigm-morph-toggle" onclick="toggleParadigmMorphAnalysis()" title="Colora aumento, raddoppiamento, tema, suffissi e desinenza">
+        <button class="paradigm-morph-toggle" id="paradigm-morph-toggle" onclick="toggleParadigmMorphAnalysis()" title="Colora le componenti morfologiche: tema, vocale tematica, suffissi, desinenze (per verbi, nomi, aggettivi, pronomi)">
           Mostra componenti morfologiche
         </button>
         <button class="paradigm-highlight-toggle" id="paradigm-highlight-toggle" onclick="toggleParadigmEndingHighlight()" title="Mostra le desinenze in rosso/grassetto">
@@ -7409,170 +7467,586 @@ function _splitStemEnding(form, candidateEndings) {
    se markEndings=true e la desinenza è disponibile.
    `endingsForCase` è l'array delle desinenze applicabili al caso (es. ['α','ας','ᾳ',...]). */
 function _renderFormHighlighted(form, endingsForCase, markEndings) {
-  if (!markEndings || !form || form === '—') return escapeHtml(form || '—');
+  if (!form || form === '—') return escapeHtml(form || '—');
   if (!endingsForCase || !endingsForCase.length) return escapeHtml(form);
   const split = _splitStemEnding(form, endingsForCase);
   if (!split.ending) return escapeHtml(form);
+  // Quando il toggle morfologico è attivo, applichiamo le classi morph-stem/morph-ending
+  // anche per nomi/aggettivi/pronomi (non solo verbi). Il CSS .paradigm-morph-on coloreà
+  // tema in nero e desinenza in rosso. Il vecchio toggle "evidenzia desinenze" continua
+  // a funzionare in parallelo tramite .paradigm-ending.
+  const morphOn = (typeof getParadigmMorphAnalysis === 'function') && getParadigmMorphAnalysis();
+  if (morphOn) {
+    return '<span class="morph-stem">' + escapeHtml(split.stem) + '</span>' +
+           '<span class="morph-ending">' + escapeHtml(split.ending) + '</span>';
+  }
+  if (!markEndings) return escapeHtml(form);
   return escapeHtml(split.stem) + '<span class="paradigm-ending">' + escapeHtml(split.ending) + '</span>';
 }
 
 /* ──────────────────────────────────────────────────────────────────────────────
    ANALIZZATORE MORFOLOGICO VERBALE — identifica le componenti di una forma
-   verbale: aumento, raddoppiamento, tema, suffisso temporale, suffisso modale,
-   desinenza personale. Restituisce un array di segmenti annotati per il rendering
-   colorato.
+   verbale: aumento, raddoppiamento, vocale tematica, tema, suffisso temporale,
+   suffisso modale, suffisso nominale (per modi non finiti), desinenza personale.
+   Restituisce un array di segmenti annotati per il rendering colorato.
    ────────────────────────────────────────────────────────────────────────── */
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TABELLE MORFOLOGICHE — LATINO
+   Suffissi temporali, modali e nominali del sistema verbale latino.
+   Le chiavi sono regex/sequenze ordinate dalla più lunga (per evitare match
+   troppo corti — il pattern lungo va sempre tentato prima del corto).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const LAT_VERB_MORPH = {
+  // Vocali tematiche del sistema del presente:
+  //   I:   ā   (ama-)
+  //   II:  ē   (mone-)
+  //   III: e/i (leg-i-mus, leg-u-nt, leg-e-re)
+  //   IV:  ī   (audi-)
+  //   IIIin -io: i (capi-, capi-u-nt)
+  themeVowelByConj: {
+    'I':   ['a', 'ā'],
+    'II':  ['e', 'ē'],
+    'III': ['i', 'u', 'e'],
+    'IV':  ['i', 'ī'],
+  },
+
+  // Sistema dell'INFECTUM (tempi sul tema del presente)
+  infectum: {
+    impfInd: {
+      // Imperfetto indicativo: -bā- / -ēbā-
+      // ordinati dal più lungo al più corto
+      patterns: [
+        { re: /^(iēbā|iēba|iebā|ieba)/, label: 'iēbā' }, // IV con vocale d'appoggio
+        { re: /^(ēbā|ēba|ebā|eba)/,     label: 'ēbā'  }, // III con vocale d'appoggio
+        { re: /^(bā|ba)/,                label: 'bā'   }, // I/II
+      ],
+    },
+    futInd: {
+      // Futuro indicativo: -bō/-bi-/-bu- (I/II) oppure -ā- (1ª) / -ē- (altre) (III/IV)
+      patterns: [
+        { re: /^(bō|bo)/,        label: 'bō' },
+        { re: /^(bunt)/,         label: 'bu' },  // -bu-nt
+        { re: /^(bi)/,           label: 'bi' },
+        { re: /^(bu)/,           label: 'bu' },
+      ],
+      // Per III/IV il "suffisso" è la sola vocale modale -ā-/-ē- (storicamente antico ottativo).
+      // La gestiamo come "vocale modale" — vedi mood section.
+    },
+    congPres: {
+      // Congiuntivo presente:
+      //   I:    -ē- (sostituisce -ā-)
+      //   II:   -eā- (mone-ā-)
+      //   III:  -ā- (leg-ā-)
+      //   IV:   -iā- (audi-ā-)
+      //   anomali (sum, volo, etc.): -ī- (sī-, velī-)
+      patterns: [
+        { re: /^(iā|ia)/, label: 'iā' },
+        { re: /^(eā|ea)/, label: 'eā' },
+        { re: /^(ā|a)/,   label: 'ā'  },
+        { re: /^(ē|e)/,   label: 'ē'  },
+        { re: /^(ī|i)/,   label: 'ī'  },
+      ],
+    },
+    congImpf: {
+      // Congiuntivo imperfetto: -rē- (da *-sē-, rotacismo)
+      // tema + (vocale d'appoggio della coniug.) + rē
+      patterns: [
+        { re: /^(ārē|āre)/, label: 'ārē' },
+        { re: /^(ērē|ēre)/, label: 'ērē' },
+        { re: /^(īrē|īre)/, label: 'īrē' },
+        { re: /^(erē|ere)/, label: 'erē' }, // III: leg-erē-m
+        { re: /^(rē|re)/,   label: 'rē'  },
+        { re: /^(sē|se)/,   label: 'sē'  }, // es-sē-m: non rotacizza
+      ],
+    },
+  },
+
+  // Sistema del PERFECTUM (tempi sul tema del perfetto)
+  perfectum: {
+    ppfInd: {
+      // Piuccheperfetto indicativo: -erā-
+      patterns: [{ re: /^(erā|era)/, label: 'erā' }],
+    },
+    futAnt: {
+      // Futuro anteriore: -erō/-eri-
+      patterns: [
+        { re: /^(erō|ero)/, label: 'erō' },
+        { re: /^(eri)/,     label: 'eri' },
+        { re: /^(er)/,      label: 'er'  },
+      ],
+    },
+    congPerf: {
+      // Congiuntivo perfetto: -erī-
+      patterns: [
+        { re: /^(erī|eri)/, label: 'erī' },
+        { re: /^(er)/,      label: 'er'  },
+      ],
+    },
+    congPpf: {
+      // Congiuntivo piuccheperfetto: -issē- (composto: -is- + -sē-, non rotacizza)
+      patterns: [{ re: /^(issē|isse)/, label: 'issē' }],
+    },
+  },
+
+  // Desinenze personali (raccolte per blocco di sistema/voce)
+  endings: {
+    activePrimary:   ['ō','s','t','mus','tis','nt','m'],
+    activeSecondary: ['m','s','t','mus','tis','nt'],
+    activePerfect:   ['ī','istī','it','imus','istis','ērunt','ēre','erunt'],
+    passivePrimary:  ['or','ris','tur','mur','minī','ntur','re'],
+    passiveSecondary:['r','ris','tur','mur','minī','ntur','re'],
+  },
+
+  // Modi non finiti (suffisso nominale + flessione)
+  nonFinite: {
+    // Infinito presente attivo: -re (rotacismo da -se), -se, -le (vel-le), -re (fer-re)
+    infPresAct: [{ re: /(ārī|ārē|āre|ēre|ere|ire|īrī|īre|re|se|le)$/, label: 'inf-pres-att' }],
+    // Infinito presente passivo: -rī (I/II/IV), -ī (III)
+    infPresPass: [
+      { re: /(ārī|ērī|īrī)$/, label: 'rī' },
+      { re: /(ī)$/,           label: 'ī'  },
+    ],
+    // Infinito perfetto attivo: -isse
+    infPerfAct: [{ re: /(isse)$/, label: 'isse' }],
+    // Participio presente attivo: tema (+ ē per III/IV) + -nt-/-ns + flessione
+    // Tema in nominativo singolare: -ns (caduta -t- + allungamento)
+    // Casi obliqui: -nt-
+    partPres: {
+      stemSuffix: [
+        { re: /(nt)/, label: 'nt' }, // suffisso primario (nei casi obliqui e nei nominativi maschili plurale)
+        { re: /(ns)$/, label: 'ns' }, // nominativo singolare (caduta della dentale)
+      ],
+      themeBefore: [
+        { re: /(ie|iē)/, label: 'iē' }, // IV
+        { re: /(e|ē)/,   label: 'ē'  }, // III/IV vocale d'appoggio
+        { re: /(a|ā)/,   label: 'ā'  }, // I
+      ],
+    },
+    // Participio perfetto passivo: tema-supino + -to-/-so- + flessione aggettivale I cl.
+    partPerf: [
+      { re: /(t)us$/, label: 'tus' },
+      { re: /(s)us$/, label: 'sus' },
+      { re: /(t)a$/,  label: 'ta'  },
+      { re: /(s)a$/,  label: 'sa'  },
+      { re: /(t)um$/, label: 'tum' },
+      { re: /(s)um$/, label: 'sum' },
+    ],
+    // Participio futuro attivo: tema-supino + -tūr-/-sūr- + flessione I cl.
+    partFut: [
+      { re: /(tūr)/, label: 'tūr' },
+      { re: /(sūr)/, label: 'sūr' },
+      { re: /(tur)/, label: 'tur' },
+      { re: /(sur)/, label: 'sur' },
+    ],
+    // Gerundio/Gerundivo: -nd- (preceduto da vocale tematica o vocale d'appoggio)
+    gerund: {
+      pattern: [{ re: /(nd)/, label: 'nd' }],
+      themeBefore: [
+        { re: /(ie|iē)/, label: 'iē' }, // IV
+        { re: /(e|ē)/,   label: 'ē'  }, // III/IV
+        { re: /(a|ā)/,   label: 'ā'  }, // I
+      ],
+    },
+    // Supino: -tum (acc.) / -tū (abl.) sul tema del supino (eventualmente -sum/-sū)
+    supino: [
+      { re: /(tum|tū)$/, label: 'tum' },
+      { re: /(sum|sū)$/, label: 'sum' },
+    ],
+  },
+};
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   TABELLE MORFOLOGICHE — GRECO
+   Suffissi temporali, modali e nominali del sistema verbale greco.
+   Le forme sono in NFD/lowercase normalizzate (le confrontiamo con _grStrip).
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+const GR_VERB_MORPH = {
+  // Vocale tematica ο/ε del sistema tematico
+  themeVowels: ['ο', 'ε'],
+
+  // Aumento
+  augment: {
+    // Aumento sillabico: ε- davanti a consonante
+    sillabic: [
+      { re: /^(ἐ|ἔ|ἕ|ἒ|ἓ|ε|έ)(?=[βγδζθκλμνξπρστφχψ])/, label: 'ε' },
+      { re: /^(ἐρρ|ἔρρ|ερρ|έρρ)/,                       label: 'ερρ' }, // ρ raddoppiata dopo aumento
+    ],
+    // Aumento temporale: vocale iniziale allungata
+    // α/ε → η; ο → ω; ι → ῑ; υ → ῡ; αι/ει → ῃ; οι → ῳ
+    temporal: [
+      { re: /^(ηὐ|ηὑ)/, label: 'ηυ' },
+      { re: /^(ᾐ|ᾔ|ᾗ|ῃ)/, label: 'ῃ' },
+      { re: /^(ᾠ|ᾤ|ᾧ|ῳ)/, label: 'ῳ' },
+      { re: /^(ἠ|ἤ|ἢ|ἥ|ἦ|ἧ|η|ή|ῆ|ἢ)/, label: 'η' }, // da α o ε
+      { re: /^(ὠ|ὤ|ὢ|ὥ|ὦ|ὧ|ω|ώ|ῶ)/, label: 'ω' }, // da ο
+    ],
+  },
+
+  // Raddoppiamento
+  reduplication: {
+    // Sillabico: consonante + ε davanti al tema (incluso Grassmann)
+    sillabic: { re: /^([βγδζκλμνξπρστφχψ])(ε|έ)/, label: 'consonante+ε' },
+    // Attico: prime due lettere + allungamento (caso speciale)
+    attic:   { re: /^(ἀκ|ακ|ἐγρ|εγρ|ἐλ|ελ|ἐνεγκ|ενεγκ)([ηωᾱῑῡ])/, label: 'attico' },
+    // Temporale (verbi che iniziano per vocale): coincide con aumento temporale
+    // Da ζ, ξ, ψ, ρ o nessi consonantici "forti": solo ε-
+    eOnly: { re: /^(ἐ|ε|ἔ|έ)(?=[ζξψρ]|[βγδζθκλμνπτφχψ][βγδζθκλμνπτφχψ])/, label: 'ε' },
+  },
+
+  // Suffissi temporali
+  tense: {
+    // Futuro attivo/medio: -σ- (intervocalico) o -ε/-εσ- nei contratti
+    future:        [{ pattern: 'σ',   label: 'σ' }],
+    // Aoristo I (sigmatico): -σα- (con caduta del σ in liquide/nasali)
+    aoristSigm:    [{ pattern: 'σα',  label: 'σα' }],
+    // Perfetto I (debole, attivo): -κα-
+    perfectWeak:   [{ pattern: 'κα',  label: 'κα' }],
+    // Piuccheperfetto I: -κει-
+    pluperfectI:   [{ pattern: 'κει', label: 'κει' }, { pattern: 'κε',  label: 'κε' }],
+    // Aoristo passivo I: -θη- (forte: -η-)
+    aoristPassI:   [{ pattern: 'θη',  label: 'θη' }, { pattern: 'θε',  label: 'θε' }],
+    aoristPassII:  [{ pattern: 'η',   label: 'η' }],
+    // Futuro passivo I: -θησ-
+    futurePassI:   [{ pattern: 'θησ', label: 'θησ' }],
+    // Aoristo II tematico: nessun suffisso (cambio apofonico del tema)
+  },
+
+  // Suffissi modali
+  mood: {
+    // Congiuntivo: allungamento della vocale tematica (-η-/-ω-)
+    subjunctive: [
+      { pattern: 'ω',  label: 'ω'  },
+      { pattern: 'η',  label: 'η'  },
+      { pattern: 'ῃ',  label: 'ῃ'  },
+      { pattern: 'ωμεν', label: 'ωμεν' },
+      { pattern: 'ητε',  label: 'ητε'  },
+      { pattern: 'ωσι',  label: 'ωσι'  },
+    ],
+    // Ottativo tematico: -ι- → dittongo -οι- col tema
+    // Ottativo atematico/aoristo I: -ιη- / -ι- → -αι- nell'aoristo
+    optativeThematic: [{ pattern: 'οι', label: 'οι' }],
+    optativeAor:      [{ pattern: 'αι', label: 'αι' }],
+    optativeAthem:    [{ pattern: 'ιη', label: 'ιη' }, { pattern: 'ι',  label: 'ι' }],
+    optativeAtem:     [{ pattern: 'ει', label: 'ει' }], // atematici alla 3ª sing.
+  },
+
+  // Desinenze (raggruppate per blocco)
+  endings: {
+    // Primarie attive: -ω, -εις, -ει, -ομεν, -ετε, -ουσι(ν)
+    activePrimary:   ['ω','εις','ει','ομεν','ετε','ουσι','ουσιν'],
+    // Secondarie attive (impf./aor.): -ον, -ες, -ε(ν), -ομεν, -ετε, -ον
+    activeSecondary: ['ον','ες','ε','εν','ομεν','ετε'],
+    // Perfetto attivo: -α, -ας, -ε(ν), -αμεν, -ατε, -ασι(ν)
+    activePerf:      ['α','ας','ε','εν','αμεν','ατε','ασι','ασιν'],
+    // Piuccheperfetto: -η, -ης, -ει(ν), -εμεν, -ετε, -εσαν
+    pluperf:         ['η','ης','ει','ειν','εμεν','ετε','εσαν'],
+    // Medio-passive primarie: -ομαι, -ει/-ῃ, -εται, -ομεθα, -εσθε, -ονται
+    mpPrimary:       ['ομαι','ει','ῃ','εται','ομεθα','εσθε','ονται','όμεθα'],
+    // Medio-passive secondarie: -ομην, -ου, -ετο, -ομεθα, -εσθε, -οντο
+    mpSecondary:     ['ομην','ου','ετο','ομεθα','εσθε','οντο','όμεθα'],
+    // Perfetto medio-passivo (atematico, no vocale tematica): -μαι, -σαι, -ται, -μεθα, -σθε, -νται
+    mpPerf:          ['μαι','σαι','ται','μεθα','σθε','νται'],
+    // Aoristo passivo: -ην, -ης, -η, -ημεν, -ητε, -ησαν
+    aorPass:         ['ην','ης','η','ημεν','ητε','ησαν'],
+    // Imperativo attivo: -ε, -ετω, -ετε, -οντων / aor. -σον, -σατω, -σατε, -σαντων
+    imperativeAct:   ['ε','ετω','ετε','οντων','σον','σατω','σατε','σαντων'],
+  },
+
+  // Modi non finiti / forme nominali del verbo
+  nonFinite: {
+    // Infinito attivo tematico: -ειν (da *-ε-ναι contratto)
+    infActThematic:  [{ pattern: 'ειν', label: 'ειν' }],
+    // Infinito attivo atematico (e perfetto attivo): -ναι / -εναι
+    infActAthematic: [{ pattern: 'εναι', label: 'εναι' }, { pattern: 'ναι',  label: 'ναι' }],
+    // Infinito medio/passivo: -σθαι
+    infMP:           [{ pattern: 'σθαι', label: 'σθαι' }],
+    // Participio attivo: -ντ- (al nominativo: -ων/-ας/-εις)
+    partAct:         [
+      { pattern: 'οντ', label: 'οντ' },
+      { pattern: 'αντ', label: 'αντ' },
+      { pattern: 'εντ', label: 'εντ' },
+      { pattern: 'ντ',  label: 'ντ'  },
+    ],
+    // Participio perfetto attivo: -ωτ-/-στ-/-κως
+    partPerfAct:     [
+      { pattern: 'κως', label: 'κως' },
+      { pattern: 'ωτ',  label: 'ωτ'  },
+      { pattern: 'οτ',  label: 'οτ'  },
+    ],
+    // Participio medio/passivo: -μενο-/-μενη-/-μενον
+    partMP:          [
+      { pattern: 'μενος', label: 'μενος' },
+      { pattern: 'μενη',  label: 'μενη'  },
+      { pattern: 'μενον', label: 'μενον' },
+      { pattern: 'μενοι', label: 'μενοι' },
+      { pattern: 'μεναι', label: 'μεναι' },
+      { pattern: 'μενα',  label: 'μενα'  },
+      { pattern: 'μενο',  label: 'μενο'  },
+    ],
+    // Aggettivo verbale di possibilità/stato: -το- (corrisp. participio perfetto latino)
+    adjPoss:         [{ pattern: 'τος', label: 'τος' }, { pattern: 'τη',  label: 'τη'  }, { pattern: 'τον', label: 'τον' }],
+    // Aggettivo verbale di necessità: -τεο- (corrisp. gerundivo latino)
+    adjNec:          [{ pattern: 'τεος', label: 'τεος' }, { pattern: 'τεα', label: 'τεα' }, { pattern: 'τεον', label: 'τεον' }],
+  },
+};
+
+/* Helper: cerca il match più lungo tra una lista di pattern (string o RegExp).
+   Restituisce { match, length, label } o null. */
+function _matchLongestPattern(workNorm, patterns, position) {
+  let best = null;
+  for (const p of patterns) {
+    if (typeof p === 'string') {
+      if (position === 'start' && workNorm.startsWith(p)) {
+        if (!best || p.length > best.length) best = { match: p, length: p.length, label: p };
+      } else if (position === 'end' && workNorm.endsWith(p)) {
+        if (!best || p.length > best.length) best = { match: p, length: p.length, label: p };
+      }
+    } else if (p && p.re) {
+      const m = (position === 'start')
+        ? workNorm.match(p.re)
+        : (workNorm.match(new RegExp(p.re.source + '$')) || workNorm.match(p.re));
+      if (m && (!best || m[1].length > best.length)) best = { match: m[1], length: m[1].length, label: p.label || m[1] };
+    } else if (p && p.pattern) {
+      if (position === 'start' && workNorm.startsWith(p.pattern)) {
+        if (!best || p.pattern.length > best.length) best = { match: p.pattern, length: p.pattern.length, label: p.label || p.pattern };
+      } else if (position === 'end' && workNorm.endsWith(p.pattern)) {
+        if (!best || p.pattern.length > best.length) best = { match: p.pattern, length: p.pattern.length, label: p.label || p.pattern };
+      }
+    }
+  }
+  return best;
+}
 
 /* Analizza una forma verbale GRECA.
    `info` contiene: { time, mood, voice, parsed } dove parsed è il risultato di
    parseGreekLemma per il verbo (con stem, futStem, aorStem, perfStem, ecc.). */
 function _morphAnalyzeGreek(form, info) {
   if (!form || form === '—') return [{ type: 'empty', text: form || '' }];
-  const fNFD = form.normalize('NFD');
   const fNorm = _grStrip(form);
   if (!info || !info.parsed) return [{ type: 'stem', text: form }];
-  const p = info.parsed;
   const time = info.time || '';
   const mood = info.mood || '';
   const voice = info.voice || '';
   const segs = [];
+  const M = GR_VERB_MORPH;
 
-  // ── AUMENTO (per tempi storici: imperfetto, aoristo, piuccheperfetto)
   let work = form;
   let workNorm = fNorm;
-  const isHist = (time === 'Imperfetto' || time === 'Aoristo' || time === 'Piuccheperfetto') && mood === 'Indicativo';
+
+  // Stati dei segmenti
+  let augment = '', redup = '', stem = '', theme = '', tense = '', moodSuf = '', nominal = '', ending = '';
+
+  const isHist          = (time === 'Imperfetto' || time === 'Aoristo' || time === 'Piuccheperfetto') && mood === 'Indicativo';
+  const isPerf          = (time === 'Perfetto' || time === 'Piuccheperfetto' || time === 'Futuro perfetto');
+  const isNonFinite     = ['Infinito','Participio'].includes(mood) || ['Infinito','Participio'].includes(time);
+
+  /* ── AUMENTO (solo indicativo dei tempi storici) ───────────────────────── */
   if (isHist) {
-    // Aumento sillabico: ε con vari spiriti davanti a consonante
-    const augMatch = work.match(/^(ἐ|ἔ|ἕ|ἢ|ἠ|ἤ|ἥ|ᾐ|ᾗ|ᾔ|ηὐ|ηὑ|ἠ)/);
-    if (augMatch) {
-      segs.push({ type: 'augment', text: augMatch[1] });
-      work = work.slice(augMatch[1].length);
+    let augFound = false;
+    // ρ raddoppiata dopo aumento sillabico (ἐρρ-)
+    let m = work.match(/^(ἐρρ|ἔρρ|ερρ|έρρ)/);
+    if (m) {
+      augment = m[1];
+      work = work.slice(m[1].length);
       workNorm = _grStrip(work);
+      augFound = true;
+    } else {
+      // ε- sillabico davanti a consonante
+      m = work.match(/^(ἐ|ἔ|ἕ|ἒ|ἓ|ε|έ)(?=[βγδζθκλμνξπρστφχψ])/);
+      if (m) {
+        augment = m[1];
+        work = work.slice(m[1].length);
+        workNorm = _grStrip(work);
+        augFound = true;
+      }
+    }
+    // Aumento temporale (allungamento della vocale iniziale)
+    if (!augFound) {
+      m = work.match(/^(ηὐ|ηὑ|ηῦ)/)
+       || work.match(/^(ᾐ|ᾔ|ᾗ|ῃ)/)
+       || work.match(/^(ᾠ|ᾤ|ᾧ|ῳ)/)
+       || work.match(/^(ἠ|ἤ|ἢ|ἥ|ἦ|ἧ|η|ή|ῆ)/)
+       || work.match(/^(ὠ|ὤ|ὢ|ὥ|ὦ|ὧ|ω|ώ|ῶ)/);
+      if (m) { augment = m[1]; work = work.slice(m[1].length); workNorm = _grStrip(work); }
     }
   }
 
-  // ── RADDOPPIAMENTO (per perfetto e piuccheperfetto, sia attivo sia mid./pass.)
-  const isPerf = (time === 'Perfetto' || time === 'Piuccheperfetto' || (time === 'Futuro perfetto'));
+  /* RADDOPPIAMENTO (tutti i modi del sistema del perfetto) */
   if (isPerf && work.length > 1) {
-    // Raddoppiamento consonantico: la consonante iniziale + ε (es. λέλυκα → λε + λυ + κα)
-    // Pattern: consonante + ε/η con spirito, seguita dal tema
-    const redupMatch = work.match(/^([^αεηιουω]ε|[^αεηιουω]ε[ἱ̓])/);
-    if (redupMatch) {
-      segs.push({ type: 'redup', text: redupMatch[1] });
-      work = work.slice(redupMatch[1].length);
+    // 1. Raddoppiamento attico: prime due lettere + allungamento
+    let m = work.match(/^(ἀκ|ακ|ἐλ|ελ|ἐγρ|εγρ|ἐνεγκ|ενεγκ)([ηωᾱῑῡ])/);
+    if (m) {
+      redup = m[1];
+      work = work.slice(m[1].length);
       workNorm = _grStrip(work);
     } else {
-      // Raddoppiamento del raddoppio (ε- davanti a consonante iniziale che non si raddoppia)
-      const eRedupMatch = work.match(/^(ἐ|ἕ|ἔ)/);
-      if (eRedupMatch && isPerf) {
-        segs.push({ type: 'redup', text: eRedupMatch[1] });
-        work = work.slice(eRedupMatch[1].length);
+      // 2. Raddoppiamento sillabico regolare (con Grassmann)
+      m = work.match(/^([βγδζκλμνξπρστφχψ])(ε|έ)(?=[βγδζθκλμνξπρστφχψ])/);
+      if (m) {
+        redup = m[1] + m[2];
+        work = work.slice(redup.length);
+        workNorm = _grStrip(work);
+      } else {
+        // 3. Raddoppiamento temporale (vocale iniziale allungata)
+        m = work.match(/^(ἠ|ἤ|η|ή|ὠ|ὤ|ω|ώ)/);
+        if (m) { redup = m[1]; work = work.slice(m[1].length); workNorm = _grStrip(work); }
+        else {
+          // 4. Sola e- per nessi forti
+          m = work.match(/^(ἐ|ε|ἔ|έ)(?=[ζξψρ])/);
+          if (m) { redup = m[1]; work = work.slice(m[1].length); workNorm = _grStrip(work); }
+        }
+      }
+    }
+  }
+
+  /* MODI NON FINITI: estrai suffisso nominale */
+  if (isNonFinite) {
+    const nfPatterns = [
+      ...M.nonFinite.partMP,
+      ...M.nonFinite.infMP,
+      ...M.nonFinite.infActAthematic,
+      ...M.nonFinite.infActThematic,
+      ...M.nonFinite.partPerfAct,
+      ...M.nonFinite.partAct,
+    ];
+    let bestNF = null;
+    for (const pat of nfPatterns) {
+      if (workNorm.endsWith(pat.pattern) && (!bestNF || pat.pattern.length > bestNF.pattern.length)) {
+        bestNF = pat;
+      }
+    }
+    if (bestNF) {
+      const cutPoint = _findSuffixCutPoint(work, bestNF.pattern);
+      if (cutPoint > 0) {
+        nominal = work.slice(cutPoint);
+        work = work.slice(0, cutPoint);
+        workNorm = _grStrip(work);
+      }
+    }
+  } else {
+    /* DESINENZA (modi finiti) */
+    const allEndings = [
+      ...M.endings.activePrimary,
+      ...M.endings.activeSecondary,
+      ...M.endings.activePerf,
+      ...M.endings.pluperf,
+      ...M.endings.mpPrimary,
+      ...M.endings.mpSecondary,
+      ...M.endings.mpPerf,
+      ...M.endings.aorPass,
+      ...M.endings.imperativeAct,
+      'οιμι','οις','οι','οιμεν','οιτε','οιεν',
+      'οιμην','οιο','οιτο','οισθε','οιντο',
+      'ω','ῃς','ῃ','ωμεν','ητε','ωσι','ωσιν',
+    ];
+    let bestEnding = '', bestEndingLen = 0;
+    for (const e of allEndings) {
+      const eNorm = _grStrip(e);
+      if (!eNorm) continue;
+      if (workNorm.endsWith(eNorm) && eNorm.length > bestEndingLen && eNorm.length <= workNorm.length - 1) {
+        bestEnding = e;
+        bestEndingLen = eNorm.length;
+      }
+    }
+    if (bestEnding) {
+      const split = _splitStemEnding(work, [bestEnding]);
+      if (split.ending) {
+        ending = split.ending;
+        work = split.stem;
         workNorm = _grStrip(work);
       }
     }
   }
 
-  // ── DESINENZA (cerca la più lunga tra le candidate)
-  // Set di candidate desinenze più comuni (in NFD-normalizzato per match)
-  const endingCandidates = [
-    // primarie attive
-    'ω','εις','ει','ομεν','ετε','ουσι','ουσιν',
-    // secondarie attive (impf./aor.)
-    'ον','ες','ε','ομεν','ετε','ον','εν',
-    // attive perfetto
-    'α','ας','αμεν','ατε','ασι','ασιν',
-    // piuccheperfetto
-    'η','ης','ει','εμεν','ετε','εσαν',
-    // medio-passive primarie
-    'ομαι','ει','εται','όμεθα','εσθε','ονται','ομεθα',
-    // medio-passive secondarie
-    'ομην','ου','ετο','όμεθα','εσθε','οντο',
-    // perfetto medio-passivo
-    'μαι','σαι','ται','μεθα','σθε','νται',
-    // aoristo passivo
-    'ην','ης','η','ημεν','ητε','ησαν',
-    // congiuntivo
-    'ω','ῃς','ῃ','ωμεν','ητε','ωσι','ωσιν',
-    // ottativo
-    'οιμι','οις','οι','οιμεν','οιτε','οιεν',
-    'οιμην','οιο','οιτο','οίμεθα','οισθε','οιντο',
-    // imperativo
-    'ε','ετω','ετε','όντων','ου','έσθω','έσθε','έσθων',
-    'σον','σάτω','σατε','σάντων','σαι','σάσθω','σασθε','σάσθων',
-    // inf./part. desinenze
-    'ειν','ναι','σθαι','έναι','ων','ουσα','ον','μενος','μενη','μενον'
-  ];
-  // Tipiche per tempo
-  let bestEndingLen = 0;
-  let bestEnding = '';
-  for (const e of endingCandidates) {
-    const eNorm = _grStrip(e);
-    if (!eNorm) continue;
-    if (workNorm.endsWith(eNorm) && eNorm.length > bestEndingLen && eNorm.length <= workNorm.length - 1) {
-      bestEnding = e;
-      bestEndingLen = eNorm.length;
-    }
-  }
-
-  // Calcola la posizione di taglio della desinenza nel "work" (NFC)
-  let stem = work;
-  let ending = '';
-  if (bestEnding) {
-    const split = _splitStemEnding(work, [bestEnding]);
-    if (split.ending) {
-      stem = split.stem;
-      ending = split.ending;
-    }
-  }
-
-  // ── SUFFISSO TEMPORALE (su `stem`)
-  // Per il greco: σ (futuro/aoristo sigm), κ (perfetto att.), θ/η/εν (aor./fut. pass.), σα (aor. I)
-  let tense = '';
+  /* SUFFISSO TEMPORALE */
+  let tensePatterns = [];
   if (time === 'Futuro' || time === 'Futuro perfetto') {
-    // Tema fut. = stem + σ (oppure σθ per fut. pass.)
-    const sNorm = _grStrip(stem);
-    if (sNorm.endsWith('σ')) { tense = 'σ'; stem = stem.slice(0, -1); }
-    else if (sNorm.endsWith('θησ') || sNorm.endsWith('θ')) { tense = stem.slice(-2); stem = stem.slice(0, -2); }
+    if (voice === 'passOnly') tensePatterns = M.tense.futurePassI;
+    else tensePatterns = M.tense.future;
   } else if (time === 'Aoristo') {
-    if (voice === 'passOnly') {
-      // Aor. pass.: tema + θ (es. ἐ-λύ-θη-ν → stem 'λυ', tense 'θ', mood/ending '-ην')
-      const sNorm = _grStrip(stem);
-      if (sNorm.endsWith('θ')) { tense = 'θ'; stem = stem.slice(0, -1); }
-      else if (sNorm.endsWith('η')) { tense = 'η'; stem = stem.slice(0, -1); }
-    } else {
-      // Aor. sigm.: stem + σ; aor. II tem.: nessun suffisso (cambia il tema vocalico)
-      const sNorm = _grStrip(stem);
-      if (sNorm.endsWith('σ')) { tense = 'σ'; stem = stem.slice(0, -1); }
-    }
-  } else if (time === 'Perfetto' || time === 'Piuccheperfetto') {
-    if (voice === 'active') {
-      const sNorm = _grStrip(stem);
-      if (sNorm.endsWith('κ')) { tense = 'κ'; stem = stem.slice(0, -1); }
+    if (voice === 'passOnly') tensePatterns = [...M.tense.aoristPassI, ...M.tense.aoristPassII];
+    else tensePatterns = M.tense.aoristSigm;
+  } else if (time === 'Perfetto') {
+    if (voice === 'active') tensePatterns = M.tense.perfectWeak;
+  } else if (time === 'Piuccheperfetto') {
+    if (voice === 'active') tensePatterns = [...M.tense.pluperfectI, ...M.tense.perfectWeak];
+  }
+  const sortedTP = tensePatterns.slice().sort((a, b) => b.pattern.length - a.pattern.length);
+  for (const pat of sortedTP) {
+    if (workNorm.endsWith(pat.pattern)) {
+      const cutPoint = _findSuffixCutPoint(work, pat.pattern);
+      if (cutPoint > 0) {
+        tense = work.slice(cutPoint);
+        work = work.slice(0, cutPoint);
+        workNorm = _grStrip(work);
+        break;
+      }
     }
   }
 
-  // ── SUFFISSO MODALE (su `stem`)
-  let moodSuf = '';
+  /* SUFFISSO MODALE */
+  let moodPatterns = [];
   if (mood === 'Ottativo') {
-    // -οι- (tematici), -αιη-/-αιμι (aor. sigm.), -ει- (atematici)
-    const sNorm = _grStrip(stem);
-    if (sNorm.endsWith('οι')) { moodSuf = 'οι'; stem = stem.slice(0, -2); }
-    else if (sNorm.endsWith('αι')) { moodSuf = 'αι'; stem = stem.slice(0, -2); }
-    else if (sNorm.endsWith('ει')) { moodSuf = 'ει'; stem = stem.slice(0, -2); }
+    moodPatterns = [...M.mood.optativeAor, ...M.mood.optativeThematic, ...M.mood.optativeAthem, ...M.mood.optativeAtem];
   } else if (mood === 'Congiuntivo') {
-    // -ω-/-η- (vocale lunga); difficile da estrarre senza ulteriori dati
-    // Skipping per semplicità: la vocale modale sarà inclusa nel tema
+    moodPatterns = M.mood.subjunctive;
+  }
+  const sortedMP = moodPatterns.slice().sort((a, b) => b.pattern.length - a.pattern.length);
+  for (const pat of sortedMP) {
+    if (workNorm.endsWith(pat.pattern)) {
+      const cutPoint = _findSuffixCutPoint(work, pat.pattern);
+      if (cutPoint > 0) {
+        moodSuf = work.slice(cutPoint);
+        work = work.slice(0, cutPoint);
+        workNorm = _grStrip(work);
+        break;
+      }
+    }
   }
 
-  // Compose segments
-  if (stem) segs.push({ type: 'stem', text: stem });
-  if (tense) segs.push({ type: 'tense', text: tense });
-  if (moodSuf) segs.push({ type: 'mood', text: moodSuf });
-  if (ending) segs.push({ type: 'ending', text: ending });
+  /* VOCALE TEMATICA o/e */
+  if (!isNonFinite && workNorm.length > 2) {
+    const lastChar = workNorm.slice(-1);
+    if (M.themeVowels.includes(lastChar)) {
+      theme = work.slice(-1);
+      work = work.slice(0, -1);
+      workNorm = _grStrip(work);
+    }
+  }
+
+  stem = work;
+
+  /* COMPOSIZIONE FINALE */
+  if (augment) segs.push({ type: 'augment', text: augment });
+  if (redup)   segs.push({ type: 'redup',   text: redup   });
+  if (stem)    segs.push({ type: 'stem',    text: stem    });
+  if (theme)   segs.push({ type: 'theme',   text: theme   });
+  if (tense)   segs.push({ type: 'tense',   text: tense   });
+  if (moodSuf) segs.push({ type: 'mood',    text: moodSuf });
+  if (nominal) segs.push({ type: 'nominal', text: nominal });
+  if (ending)  segs.push({ type: 'ending',  text: ending  });
   return segs;
 }
 
-/* Analizza una forma verbale LATINA. */
+/* Helper: trova il punto di taglio per un suffisso normalizzato. */
+function _findSuffixCutPoint(work, suffixNorm) {
+  if (!work || !suffixNorm) return -1;
+  for (let i = work.length - 1; i >= 0; i--) {
+    const slice = work.slice(i);
+    const sliceNorm = _grStrip(slice);
+    if (sliceNorm === suffixNorm) return i;
+    if (sliceNorm.length > suffixNorm.length) return -1;
+  }
+  return -1;
+}
+
+/* Analizza una forma verbale LATINA.
+   Decompone la forma in:
+   [raddoppiamento]? + tema + [vocale tematica]? + [suff. temporale]? + [suff. modale]? + [suff. nominale]? + desinenza
+   In base a tempo/modo/voce sceglie la corretta combinazione di suffissi. */
 function _morphAnalyzeLatin(form, info) {
   if (!form || form === '—') return [{ type: 'empty', text: form || '' }];
   if (!info || !info.parsed) return [{ type: 'stem', text: form }];
@@ -7581,98 +8055,240 @@ function _morphAnalyzeLatin(form, info) {
   const mood = info.mood || '';
   const voice = info.voice || '';
   const segs = [];
+  const M = LAT_VERB_MORPH;
 
-  // Determina lo stem base e i suffissi attesi in base a tempo/modo/diatesi
   const presStem = p.presStem || '';
   const perfStem = p.perfStem || '';
-  const supStem = p.supStem || '';
+  const supStem  = p.supStem  || '';
   const conj = p.conj || 'III';
 
   const work = form;
   const workLower = form.toLowerCase();
 
-  // Raddoppiamento del perfetto latino (alcuni verbi): es. tetigi, pepigi, peperi
-  // Pattern: consonante + e/i + consonante uguale (=raddoppiamento)
-  // Lo applichiamo solo nei tempi del sistema del perfetto
-  let stem = work;
-  let augment = ''; // latino non ha aumento vero
-  let redup = '';
-  let tense = '';
-  let moodSuf = '';
-  let ending = '';
+  // Stato dei segmenti
+  let redup = '', stem = work, theme = '', tense = '', moodSuf = '', nominal = '', ending = '';
 
-  const isPerfectSystem = (time === 'Perfetto' || time === 'Piuccheperfetto' || time === 'Futuro anteriore');
+  const isPerfectSystem  = (time === 'Perfetto' || time === 'Piuccheperfetto' || time === 'Futuro anteriore');
+  const isInfectum       = !isPerfectSystem;
+  const isNonFinite      = ['Infinito','Participio','Gerundio','Gerundivo','Supino'].includes(mood) || ['Infinito','Participio','Gerundio','Gerundivo','Supino'].includes(time);
 
-  if (isPerfectSystem && voice === 'active') {
-    // Usa perfStem come tema
-    if (perfStem && workLower.startsWith(perfStem.toLowerCase())) {
-      // Cerca un raddoppiamento all'inizio del perfStem (es. "tetig" → "te" è raddoppiamento di "tig")
-      const ps = perfStem.toLowerCase();
-      const redupMatch = ps.match(/^([cbdfghjklmnpqrstvxyz])(e|i)([cbdfghjklmnpqrstvxyz])/);
-      if (redupMatch && redupMatch[1] === redupMatch[3]) {
-        redup = perfStem.slice(0, 2);
-        stem = perfStem.slice(2);
-      } else {
+  /* ── MODI NON FINITI ─────────────────────────────────────────────────── */
+  if (isNonFinite) {
+    // Determina il modo non finito specifico
+    const forma = mood || time; // possono essere usati alternativamente
+    if (forma === 'Infinito') {
+      // Infinito perfetto attivo: -isse
+      if (time === 'Perfetto' && voice === 'active' && perfStem && workLower.startsWith(perfStem.toLowerCase())) {
         stem = perfStem;
+        const rest = work.slice(perfStem.length);
+        if (/^isse/i.test(rest)) {
+          nominal = rest.slice(0, 4);
+          ending = rest.slice(4);
+        } else {
+          ending = rest;
+        }
       }
-      let rest = work.slice(perfStem.length);
-      // Suffisso temporale
-      if (time === 'Piuccheperfetto') {
-        // -era-: pluper. ind.
-        if (mood === 'Indicativo' && /^era/.test(rest)) { tense = 'era'; rest = rest.slice(3); }
-        // -isse-: pluper. cong.
-        else if (mood === 'Congiuntivo' && /^isse/.test(rest)) { tense = 'isse'; rest = rest.slice(4); }
-      } else if (time === 'Futuro anteriore') {
-        // -eri-/-er-
-        if (/^eri/.test(rest)) { tense = 'eri'; rest = rest.slice(3); }
-        else if (/^er/.test(rest)) { tense = 'er'; rest = rest.slice(2); }
-      } else if (time === 'Perfetto' && mood === 'Congiuntivo') {
-        if (/^eri/.test(rest)) { tense = 'eri'; rest = rest.slice(3); }
-        else if (/^er/.test(rest)) { tense = 'er'; rest = rest.slice(2); }
+      // Infinito presente passivo: -rī (I/II/IV), -ī (III)
+      else if (voice === 'passive' && presStem && workLower.startsWith(presStem.toLowerCase())) {
+        stem = presStem;
+        const rest = work.slice(presStem.length);
+        if (/^(ārī|ērī|īrī|arī|erī|irī|ari|eri|iri)$/i.test(rest)) {
+          // tema in vocale + -rī: la vocale finale appartiene al tema (è la vocale tematica)
+          theme = rest.charAt(0);
+          nominal = rest.slice(1);
+        } else if (/^(ī|i)$/i.test(rest)) {
+          nominal = rest;
+        } else {
+          ending = rest;
+        }
       }
-      ending = rest;
+      // Infinito presente attivo: -re/-se/-le + tema in vocale
+      else if (presStem && workLower.startsWith(presStem.toLowerCase())) {
+        stem = presStem;
+        const rest = work.slice(presStem.length);
+        const m = rest.match(/^(ā|ē|ī|i|e|a)?(re|se|le)$/i);
+        if (m) {
+          if (m[1]) theme = m[1];
+          nominal = m[2];
+        } else {
+          ending = rest;
+        }
+      }
     }
-  } else if (presStem && workLower.startsWith(presStem.toLowerCase())) {
-    // Tempi del sistema del presente: usa il tema del presente
+    else if (forma === 'Participio') {
+      if (time === 'Presente') {
+        // Participio presente: tema + (vocale d'appoggio) + -nt-/-ns + flessione I cl. (oblqi)
+        if (presStem && workLower.startsWith(presStem.toLowerCase())) {
+          stem = presStem;
+          const rest = work.slice(presStem.length);
+          // Pattern: [theme] + (nt | ns) + [ending]
+          const m = rest.match(/^(iē|ē|ie|e|ā|a)?(nt|ns)(.*)$/i);
+          if (m) {
+            if (m[1]) theme = m[1];
+            nominal = m[2];
+            ending = m[3];
+          } else {
+            ending = rest;
+          }
+        }
+      } else if (time === 'Perfetto' && supStem && workLower.startsWith(supStem.toLowerCase())) {
+        // Participio perfetto: tema-supino + -t-/-s- + flessione I cl.
+        stem = supStem;
+        const rest = work.slice(supStem.length);
+        // -us / -a / -um (e flessione)
+        ending = rest;
+      } else if (time === 'Futuro' && supStem && workLower.startsWith(supStem.toLowerCase())) {
+        // Participio futuro: tema-supino + -tūr-/-sūr- + flessione I cl.
+        stem = supStem;
+        let rest = work.slice(supStem.length);
+        const m = rest.match(/^(tūr|sūr|tur|sur)(.*)$/i);
+        if (m) {
+          nominal = m[1];
+          ending = m[2];
+        } else {
+          ending = rest;
+        }
+      }
+    }
+    else if (forma === 'Gerundio' || forma === 'Gerundivo') {
+      // Tema + (vocale d'appoggio) + -nd- + flessione
+      if (presStem && workLower.startsWith(presStem.toLowerCase())) {
+        stem = presStem;
+        const rest = work.slice(presStem.length);
+        const m = rest.match(/^(iē|ē|ie|e|ā|a)?(nd)(.*)$/i);
+        if (m) {
+          if (m[1]) theme = m[1];
+          nominal = m[2];
+          ending = m[3];
+        } else {
+          ending = rest;
+        }
+      }
+    }
+    else if (forma === 'Supino') {
+      if (supStem && workLower.startsWith(supStem.toLowerCase())) {
+        stem = supStem;
+        const rest = work.slice(supStem.length);
+        const m = rest.match(/^(tu|su)(m|ū|u)$/i);
+        if (m) {
+          nominal = m[1];
+          ending = m[2];
+        } else {
+          ending = rest;
+        }
+      }
+    }
+  }
+  /* ── SISTEMA DEL PERFETTO (perfectum) ─────────────────────────────────── */
+  else if (isPerfectSystem && voice === 'active' && perfStem && workLower.startsWith(perfStem.toLowerCase())) {
+    // Raddoppiamento (es. tetigi, pepigi, peperi): consonante+vocale+stessa consonante
+    const ps = perfStem.toLowerCase();
+    const redupMatch = ps.match(/^([cbdfghjklmnpqrstvxyz])(e|i)([cbdfghjklmnpqrstvxyz])/);
+    if (redupMatch && redupMatch[1] === redupMatch[3]) {
+      redup = perfStem.slice(0, 2);
+      stem = perfStem.slice(2);
+    } else {
+      stem = perfStem;
+    }
+    let rest = work.slice(perfStem.length);
+
+    // Suffisso temporale per i tempi del perfetto
+    let patterns = [];
+    if (time === 'Piuccheperfetto' && mood === 'Indicativo')     patterns = M.perfectum.ppfInd.patterns;
+    else if (time === 'Piuccheperfetto' && mood === 'Congiuntivo') patterns = M.perfectum.congPpf.patterns;
+    else if (time === 'Futuro anteriore')                          patterns = M.perfectum.futAnt.patterns;
+    else if (time === 'Perfetto' && mood === 'Congiuntivo')        patterns = M.perfectum.congPerf.patterns;
+
+    for (const pat of patterns) {
+      const m = rest.match(pat.re);
+      if (m) {
+        tense = m[1];
+        rest = rest.slice(m[1].length);
+        break;
+      }
+    }
+    ending = rest;
+  }
+  /* ── SISTEMA DEL PRESENTE (infectum) ──────────────────────────────────── */
+  else if (isInfectum && presStem && workLower.startsWith(presStem.toLowerCase())) {
     stem = presStem;
     let rest = work.slice(presStem.length);
-    // Suffisso temporale
+
+    // Suffisso temporale / modale in base al tempo+modo
     if (time === 'Imperfetto' && mood === 'Indicativo') {
-      // -ba- / -eba- / -ieba-
-      if (/^(ieba|eba|aba|iba)/.test(rest)) {
-        const m = rest.match(/^(ieba|eba|aba|iba)/);
-        tense = m[1]; rest = rest.slice(m[1].length);
-      }
-    } else if (time === 'Futuro' || time === 'Futuro semplice') {
-      if (mood === 'Indicativo') {
-        // I/II: -b-, III/IV: -a-/-e-
-        if (/^(b)/.test(rest)) { tense = 'b'; rest = rest.slice(1); }
-      }
-    } else if (mood === 'Congiuntivo' && time === 'Presente') {
-      if (/^(e|a|ia)/.test(rest)) {
-        const m = rest.match(/^(ia|e|a)/);
-        moodSuf = m[1]; rest = rest.slice(m[1].length);
-      }
-    } else if (mood === 'Congiuntivo' && time === 'Imperfetto') {
-      // -re- (es. amarem = ama+re+m)
-      if (/^(re|ere|ire)/.test(rest)) {
-        const m = rest.match(/^(ere|ire|re)/);
-        moodSuf = m[1]; rest = rest.slice(m[1].length);
+      // -bā- / -ēbā- / -iēbā-
+      for (const pat of M.infectum.impfInd.patterns) {
+        const m = rest.match(pat.re);
+        if (m) { tense = m[1]; rest = rest.slice(m[1].length); break; }
       }
     }
-    // Vocale tematica + desinenza
+    else if ((time === 'Futuro' || time === 'Futuro semplice') && mood === 'Indicativo') {
+      // Futuro: I/II con -bō/-bi/-bu- ; III/IV con vocale modale -ā- (1ª sing.) o -ē- (altre)
+      if (conj === 'I' || conj === 'II') {
+        for (const pat of M.infectum.futInd.patterns) {
+          const m = rest.match(pat.re);
+          if (m) {
+            // Estrai solo la parte iniziale (es. "bi" da "bis")
+            const lab = pat.label;
+            tense = rest.slice(0, lab.length === 1 ? 1 : 2);
+            rest = rest.slice(tense.length);
+            break;
+          }
+        }
+      } else {
+        // III/IV: vocale modale (-ā-/-ē-)
+        const m = rest.match(/^(ā|a|ē|e|ie|iē)/i);
+        if (m) {
+          moodSuf = m[1];
+          rest = rest.slice(m[1].length);
+        }
+      }
+    }
+    else if (mood === 'Congiuntivo' && time === 'Presente') {
+      // -ē- (I), -ā- (II/III/IV via "eā"/"ā"/"iā"), -ī- (anomali)
+      for (const pat of M.infectum.congPres.patterns) {
+        const m = rest.match(pat.re);
+        if (m) { moodSuf = m[1]; rest = rest.slice(m[1].length); break; }
+      }
+    }
+    else if (mood === 'Congiuntivo' && time === 'Imperfetto') {
+      // -rē- (con vocale tematica della coniug.: ārē, ērē, erē, īrē)
+      for (const pat of M.infectum.congImpf.patterns) {
+        const m = rest.match(pat.re);
+        if (m) {
+          // Distinguiamo la vocale tematica davanti dal vero suffisso modale -rē-
+          const matched = m[1];
+          const reSplit = matched.match(/^([āēīeai]?)(rē|re|sē|se)$/i);
+          if (reSplit && reSplit[1]) {
+            theme = reSplit[1];
+            moodSuf = reSplit[2];
+          } else {
+            moodSuf = matched;
+          }
+          rest = rest.slice(matched.length);
+          break;
+        }
+      }
+    }
+    else if (mood === 'Indicativo' && time === 'Presente') {
+      // Tempi del presente indicativo: vocale tematica + desinenza
+      const m = rest.match(/^(ā|ē|ī|a|e|i|u)/i);
+      if (m) {
+        theme = m[1];
+        rest = rest.slice(m[1].length);
+      }
+    }
     ending = rest;
-  } else {
-    // Fallback: tutto come tema
-    stem = work;
   }
 
-  if (augment) segs.push({ type: 'augment', text: augment });
-  if (redup) segs.push({ type: 'redup', text: redup });
-  if (stem) segs.push({ type: 'stem', text: stem });
-  if (tense) segs.push({ type: 'tense', text: tense });
-  if (moodSuf) segs.push({ type: 'mood', text: moodSuf });
-  if (ending) segs.push({ type: 'ending', text: ending });
+  /* ── COMPOSIZIONE FINALE ──────────────────────────────────────────────── */
+  if (redup)   segs.push({ type: 'redup',   text: redup   });
+  if (stem)    segs.push({ type: 'stem',    text: stem    });
+  if (theme)   segs.push({ type: 'theme',   text: theme   });
+  if (tense)   segs.push({ type: 'tense',   text: tense   });
+  if (moodSuf) segs.push({ type: 'mood',    text: moodSuf });
+  if (nominal) segs.push({ type: 'nominal', text: nominal });
+  if (ending)  segs.push({ type: 'ending',  text: ending  });
   return segs;
 }
 
@@ -19604,12 +20220,14 @@ function openParadigm(key) {
   if (body) {
     // Legenda colori morfologici (visibile solo quando morph è attivo)
     const legendHtml = `<div class="paradigm-morph-legend">
-      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-aug">A</span> aumento</span>
-      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-redup">R</span> raddoppiamento</span>
-      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-stem">T</span> tema</span>
-      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-tense">σ/κ/θ/ba</span> suff. temporale</span>
-      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-mood">οι/αι/re</span> suff. modale</span>
-      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-ending">-ω/-μι</span> desinenza</span>
+      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-aug">ἐ-</span> aumento</span>
+      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-redup">λε-/τε-</span> raddoppiamento</span>
+      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-stem">λυ-/amā-</span> tema</span>
+      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-theme">ο/ε · a/e/i</span> vocale tematica</span>
+      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-tense">σα/κα/θη · bā/er</span> suff. temporale</span>
+      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-mood">οι/αι · ē/ā/rē</span> suff. modale</span>
+      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-nominal">μενο/ντ · nt/nd/tūr</span> suff. nominale</span>
+      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-ending">-ω/-μι · -m/-s/-t</span> desinenza</span>
     </div>`;
     body.innerHTML = legendHtml + bodyHtml;
   }
@@ -19841,12 +20459,34 @@ function renderDictionaryCard(entry, lang, preset) {
     </div>`;
   }
 
-  // META (genere/declinazione/tipo) — solo intermedio/avanzato
+  // META (genere/declinazione/tipo) — solo intermedio/avanzato, chip colorati per riconoscibilità
   const meta = [];
   if (preset.showMeta) {
-    if (entry.gen) meta.push(`<span class="dict-meta-bit">genere ${entry.gen}</span>`);
-    if (entry.dec) meta.push(`<span class="dict-meta-bit">${entry.dec} dec.</span>`);
-    if (entry.tipo) meta.push(`<span class="dict-meta-bit">${entry.tipo}</span>`);
+    if (entry.gen) {
+      const g = entry.gen.toUpperCase();
+      const genCls = g === 'M' ? 'gen-m' : g === 'F' ? 'gen-f' : g === 'N' ? 'gen-n' : '';
+      const genLbl = g === 'M' ? 'maschile' : g === 'F' ? 'femminile' : g === 'N' ? 'neutro' : g.toLowerCase();
+      meta.push(`<span class="dict-meta-bit ${genCls}">genere ${genLbl}</span>`);
+    }
+    if (entry.dec) {
+      // entry.dec può essere "I", "II", "II-er", "III", "IV", "V", o forme greche tipo "I-eta"
+      const decRoman = String(entry.dec).match(/^(I{1,3}|IV|V)/);
+      const decCls = decRoman ? 'dec-' + decRoman[1].toLowerCase() : '';
+      meta.push(`<span class="dict-meta-bit ${decCls}">${entry.dec} dec.</span>`);
+    }
+    if (entry.tipo) {
+      // Per aggettivi: "I classe", "II classe" → chip cls-*; per pronomi: tipo-pron
+      let tipoCls = '';
+      const tipoStr = String(entry.tipo).toLowerCase();
+      if (entry.pos === 'Aggettivo') {
+        if (/^i\s*classe|^i\b/.test(tipoStr) && !/ii/i.test(tipoStr)) tipoCls = 'cls-i';
+        else if (/^ii\s*classe|^ii\b/.test(tipoStr) && !/iii/i.test(tipoStr)) tipoCls = 'cls-ii';
+        else if (/^iii\s*classe|^iii\b/.test(tipoStr)) tipoCls = 'cls-iii';
+      } else if (entry.pos === 'Pronome') {
+        tipoCls = 'tipo-pron';
+      }
+      meta.push(`<span class="dict-meta-bit ${tipoCls}">${entry.tipo}</span>`);
+    }
   }
   const metaHtml = meta.length ? `<div class="dict-card-meta">${meta.join('')}</div>` : '';
 
@@ -19899,7 +20539,8 @@ function renderDictionaryCard(entry, lang, preset) {
   const posBadge = preset.showPosBadge ? `<span class="dict-card-pos">${escapeHtml(posLabel)}</span>` : '';
   const tierBadge = preset.showTierBadge ? `<span class="dict-tier-badge tier-${entry.tier}" title="Tier ${tierLabel}">${tierIcon} ${tierLabel}</span>` : '';
 
-  return `<article class="dict-card dict-card-${preset.level} tier-${entry.tier}">
+  const posCls = posClass(entry.pos);
+  return `<article class="dict-card dict-card-${preset.level} tier-${entry.tier} ${posCls}">
     ${(posBadge || tierBadge) ? `<header class="dict-card-header">${posBadge}${tierBadge}</header>` : ''}
     <div class="dict-card-lemma">${escapeHtml(entry.lemma)}</div>
     ${translationHtml}
