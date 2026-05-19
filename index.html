@@ -652,6 +652,20 @@ body[data-lang="greco"] .token-grid { font-family: var(--font-classical); }
   color: var(--poetrify-ink-soft);
 }
 .token.token-untagged:hover { border-style: solid; color: var(--poetrify-primary); }
+/* Token con PoS senza inquadramento logico (congiunzioni, particelle, articoli, preposizioni)
+   esclusi dal preview flaggabile dell'analisi logica. */
+.token.logic-excluded {
+  cursor: not-allowed;
+  opacity: 0.45;
+  border-color: transparent;
+  background: rgba(120, 113, 108, 0.06);
+  color: var(--poetrify-ink-soft);
+  font-style: italic;
+}
+.token.logic-excluded:hover {
+  border-color: transparent;
+  background: rgba(120, 113, 108, 0.10);
+}
 .token.token-punct {
   cursor: default;
   padding: 3px 2px;
@@ -1968,6 +1982,71 @@ body[data-profile="medie"] .wizard-step-label { font-size: 12px; }
 .dict-grid-avanzato { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 10px; }
 
 /* ============================================
+   BADGE PRESET CONGIUNZIONI/PARTICELLE
+   Mostrato nella card grammaticale quando il sistema ha auto-precompilato
+   la categoria della congiunzione dal dizionario di alta frequenza.
+   ============================================ */
+.conj-preset-badge {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(24, 0, 172, 0.08);
+  border: 1px solid rgba(24, 0, 172, 0.20);
+  border-left: 3px solid var(--poetrify-primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  font-family: var(--font-body);
+  font-size: 12px;
+  color: var(--poetrify-ink);
+  line-height: 1.4;
+  flex-wrap: wrap;
+  margin-top: -2px;
+}
+.conj-preset-badge.conj-preset-suggest {
+  background: rgba(214, 158, 46, 0.10);
+  border-color: rgba(214, 158, 46, 0.25);
+  border-left-color: var(--poetrify-warning);
+}
+.conj-preset-icon { font-size: 14px; line-height: 1; flex-shrink: 0; }
+.conj-preset-text { flex: 1; min-width: 0; }
+.conj-preset-text em { color: var(--poetrify-primary); font-weight: 600; font-style: normal; }
+.conj-preset-suggest .conj-preset-text em { color: var(--poetrify-warning); }
+.conj-preset-clear, .conj-preset-apply {
+  background: transparent;
+  border: 1px solid var(--poetrify-rule);
+  color: var(--poetrify-sepia);
+  font-family: var(--font-ui);
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: all var(--transition-base);
+  flex-shrink: 0;
+  touch-action: manipulation;
+}
+.conj-preset-clear:hover {
+  border-color: var(--poetrify-danger);
+  color: var(--poetrify-danger);
+}
+.conj-preset-apply {
+  background: var(--poetrify-warning);
+  color: white;
+  border-color: var(--poetrify-warning);
+}
+.conj-preset-apply:hover {
+  background: #b58200;
+  border-color: #b58200;
+}
+@media (max-width: 720px) {
+  .conj-preset-badge { font-size: 11.5px; padding: 8px 10px; }
+  .conj-preset-clear, .conj-preset-apply { width: 100%; padding: 8px; min-height: 36px; font-size: 11px; }
+}
+
+/* ============================================
    PARADIGMA — pulsante card + modale + tabelle
    ============================================ */
 .dict-card-paradigm-row {
@@ -2295,9 +2374,155 @@ body.paradigm-highlight-on .paradigm-ending {
   color: var(--poetrify-danger);
   font-weight: 700;
 }
+
+/* ============================================
+   COLORAZIONE MORFOLOGICA — componenti del verbo
+   Aumento (verde), raddoppiamento (viola), tema (default),
+   suffisso temporale (arancio), suffisso modale (giallo/ambra),
+   desinenza personale (rosso).
+   Si attivano quando body ha la classe .paradigm-morph-on
+   ============================================ */
+.morph-augment, .morph-redup, .morph-tense, .morph-mood, .morph-ending {
+  color: inherit;
+  font-weight: inherit;
+  transition: color 0.15s ease, font-weight 0.15s ease, background-color 0.15s ease;
+}
+body.paradigm-morph-on .morph-augment {
+  color: #1f8033;       /* verde scuro - aumento */
+  font-weight: 600;
+}
+body.paradigm-morph-on .morph-redup {
+  color: #7c3aed;       /* viola - raddoppiamento */
+  font-weight: 600;
+}
+body.paradigm-morph-on .morph-tense {
+  color: #d97706;       /* arancio - suffisso temporale */
+  font-weight: 600;
+}
+body.paradigm-morph-on .morph-mood {
+  color: #b45309;       /* ambra scuro - suffisso modale */
+  font-weight: 600;
+}
+body.paradigm-morph-on .morph-ending {
+  color: var(--poetrify-danger);  /* rosso - desinenza */
+  font-weight: 700;
+}
+/* Quando morph è ON, disattiva la marcatura di sola desinenza per non sovrapporsi */
+body.paradigm-morph-on .paradigm-ending {
+  color: inherit;
+  font-weight: inherit;
+}
+
+/* Legenda colori in cima al body della modale (visibile solo se morph attivo) */
+.paradigm-morph-legend {
+  display: none;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  background: rgba(0,0,0,0.025);
+  border: 1px solid var(--poetrify-rule-soft);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  align-items: center;
+}
+body.paradigm-morph-on .paradigm-morph-legend { display: flex; }
+.paradigm-morph-legend-item { display: inline-flex; gap: 4px; align-items: baseline; }
+.paradigm-morph-legend-color {
+  font-family: 'Times New Roman', serif;
+  font-weight: 700;
+  font-size: 14px;
+}
+.paradigm-morph-legend-color.lg-aug   { color: #1f8033; }
+.paradigm-morph-legend-color.lg-redup { color: #7c3aed; }
+.paradigm-morph-legend-color.lg-stem  { color: var(--poetrify-ink); }
+.paradigm-morph-legend-color.lg-tense { color: #d97706; }
+.paradigm-morph-legend-color.lg-mood  { color: #b45309; }
+.paradigm-morph-legend-color.lg-ending { color: var(--poetrify-danger); }
+
+/* Toggle morfologico */
+.paradigm-morph-toggle {
+  padding: 7px 14px;
+  border: 1.5px solid var(--poetrify-rule);
+  background: var(--poetrify-paper);
+  color: var(--poetrify-sepia);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all var(--transition-base);
+  white-space: nowrap;
+  touch-action: manipulation;
+}
+.paradigm-morph-toggle:hover {
+  border-color: var(--poetrify-primary);
+  color: var(--poetrify-primary);
+}
+.paradigm-morph-toggle.active {
+  background: rgba(24, 0, 172, 0.10);
+  border-color: var(--poetrify-primary);
+  color: var(--poetrify-primary);
+}
+
+/* Sezione espandibile del participio dichiarato */
+.paradigm-participle-expand {
+  margin: 10px 0 6px;
+  padding: 0;
+  border: 1px solid var(--poetrify-rule-soft);
+  background: rgba(0,0,0,0.015);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.paradigm-participle-summary {
+  padding: 8px 12px;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  color: var(--poetrify-primary);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--poetrify-paper);
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.15s ease;
+}
+.paradigm-participle-summary::-webkit-details-marker { display: none; }
+.paradigm-participle-summary:hover { background: var(--poetrify-ivory); }
+.paradigm-participle-expand[open] .paradigm-participle-summary {
+  border-bottom-color: var(--poetrify-rule-soft);
+}
+.paradigm-participle-icon {
+  display: inline-block;
+  transition: transform 0.18s ease;
+  font-size: 14px;
+  color: var(--poetrify-primary);
+}
+.paradigm-participle-expand[open] .paradigm-participle-icon {
+  transform: rotate(90deg);
+}
+.paradigm-participle-content {
+  padding: 10px 12px 4px;
+}
+.paradigm-participle-genere { margin-bottom: 12px; }
+.paradigm-participle-genere .paradigm-genere-title {
+  font-size: 12px;
+  font-family: var(--font-ui);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--poetrify-sepia);
+  margin: 0 0 4px;
+}
+
 @media (max-width: 720px) {
   .paradigm-header-actions { flex-wrap: wrap; gap: 6px; }
-  .paradigm-highlight-toggle { font-size: 10px; padding: 6px 10px; }
+  .paradigm-highlight-toggle, .paradigm-morph-toggle { font-size: 10px; padding: 6px 10px; }
+  .paradigm-morph-legend { font-size: 10px; gap: 8px; padding: 8px 10px; }
 }
 
 /* ============================================
@@ -3598,6 +3823,29 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
   font-style: italic;
   color: var(--poetrify-ink);
 }
+/* Pillola "⇆" — indica suggerimento incrociato fra analisi grammaticale e logica */
+.cross-suggest-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  background: rgba(99, 102, 241, 0.10);
+  border: 1px solid rgba(99, 102, 241, 0.40);
+  color: rgb(67, 56, 202);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-ui);
+  font-size: 11px;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cross-suggest-pill.cross-suggest-soft {
+  background: rgba(214, 158, 46, 0.10);
+  border-color: rgba(214, 158, 46, 0.40);
+  color: rgb(146, 64, 14);
+}
+.cross-suggest-pill strong { font-weight: 700; }
 .lemma-hint {
   font-family: var(--font-body);
   font-style: italic;
@@ -4582,6 +4830,77 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--poetrify-sepia);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+/* Posizione attributiva: blocco di flag + dropdown del sintagma capo */
+.attributivo-block {
+  background: rgba(214, 158, 46, 0.06);
+  border: 1px dashed rgba(214, 158, 46, 0.45);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+  margin-top: 4px;
+}
+.attributivo-block.is-active {
+  background: rgba(214, 158, 46, 0.12);
+  border-style: solid;
+  border-color: rgba(214, 158, 46, 0.65);
+}
+.attributivo-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--poetrify-ink);
+}
+.attributivo-label strong { color: rgb(146, 64, 14); }
+.attributivo-dropdown { margin-top: 6px; display: flex; flex-direction: column; gap: 4px; }
+.attributivo-hint {
+  font-size: 11px;
+  color: var(--poetrify-sepia);
+  font-style: italic;
+  margin-top: 2px;
+}
+.entry-summary-attributivo {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 600;
+  border-radius: 999px;
+  background: rgba(214, 158, 46, 0.18);
+  color: rgb(146, 64, 14);
+  border: 1px solid rgba(214, 158, 46, 0.45);
+}
+
+/* Badge "↻ auto" sui campi auto-completati dalla propagazione incrociata */
+.auto-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 1px 6px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(120, 113, 108, 0.12), rgba(99, 102, 241, 0.16));
+  border: 1px solid rgba(99, 102, 241, 0.35);
+  color: rgb(67, 56, 202);
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.15s ease;
+}
+.auto-badge:hover {
+  background: rgba(99, 102, 241, 0.25);
+}
+.field-block.is-auto-filled .field-select,
+.field-block.is-auto-filled .field-input {
+  background: linear-gradient(180deg, rgba(99, 102, 241, 0.05), rgba(99, 102, 241, 0.10));
+  border-color: rgba(99, 102, 241, 0.45);
 }
 .field-input-wrap { position: relative; display: flex; gap: 4px; }
 .field-input,
@@ -5645,6 +5964,9 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
         <p class="modal-subtitle paradigm-modal-subtitle" id="paradigm-modal-subtitle"></p>
       </div>
       <div class="paradigm-header-actions">
+        <button class="paradigm-morph-toggle" id="paradigm-morph-toggle" onclick="toggleParadigmMorphAnalysis()" title="Colora aumento, raddoppiamento, tema, suffissi e desinenza">
+          Mostra componenti morfologiche
+        </button>
         <button class="paradigm-highlight-toggle" id="paradigm-highlight-toggle" onclick="toggleParadigmEndingHighlight()" title="Mostra le desinenze in rosso/grassetto">
           Evidenzia desinenze
         </button>
@@ -5723,7 +6045,7 @@ const TAXONOMIES = {
     verboPersona: ['1ª', '2ª', '3ª'],
     avverbioTipo: ['Di modo', 'Di luogo', 'Di tempo', 'Di quantità', 'Di affermazione', 'Di negazione', 'Di dubbio', 'Interrogativo'],
     preposizioneRetta: ['Accusativo', 'Ablativo', 'Accusativo o ablativo', 'Genitivo'],
-    congiunzioneTipo: ['Coordinante copulativa', 'Coordinante disgiuntiva', 'Coordinante avversativa', 'Coordinante dichiarativa', 'Coordinante conclusiva', 'Subordinante causale', 'Subordinante finale', 'Subordinante consecutiva', 'Subordinante temporale', 'Subordinante condizionale', 'Subordinante concessiva', 'Subordinante comparativa', 'Subordinante completiva'],
+    congiunzioneTipo: ['Coordinante copulativa', 'Coordinante disgiuntiva', 'Coordinante avversativa', 'Coordinante dichiarativa', 'Coordinante conclusiva', 'Coordinante correlativa', 'Subordinante causale', 'Subordinante finale', 'Subordinante consecutiva', 'Subordinante temporale', 'Subordinante condizionale', 'Subordinante concessiva', 'Subordinante comparativa', 'Subordinante completiva'],
     casoGerundio: ['Genitivo', 'Dativo', 'Accusativo (con preposizione)', 'Ablativo'],
     casoSupino: ['Accusativo (-um)', 'Ablativo (-u)'],
   },
@@ -5809,6 +6131,40 @@ const FUNZIONI_LOGICHE = FUNZIONI_LOGICHE_GROUPED.reduce((acc, g) => acc.concat(
 function renderFunzioneOptions(currentValue, suggestedSet) {
   const sugg = suggestedSet || new Set();
   return FUNZIONI_LOGICHE_GROUPED.map(g => {
+    const opts = g.items.map(opt => {
+      const isSugg = sugg.has(opt);
+      const cls = isSugg ? 'suggested' : (sugg.size > 0 ? 'not-suggested' : '');
+      const marker = isSugg ? '★ ' : '';
+      return `<option value="${escapeHtml(opt)}" ${currentValue === opt ? 'selected' : ''} class="${cls}">${marker}${escapeHtml(opt)}</option>`;
+    }).join('');
+    return `<optgroup label="${escapeHtml(g.group)}">${opts}</optgroup>`;
+  }).join('');
+}
+
+/* Tipologie di congiunzione raggruppate per macro-categoria.
+   Coordinanti: collegano elementi/proposizioni sullo stesso piano logico.
+   Subordinanti: introducono proposizioni dipendenti.
+   Copulative (asindeto positivo): puramente additive (et, atque, καί, τε).
+   Particelle (greco): enfatiche e interrogative, non rientrano nel binomio coord/subord. */
+const CONGIUNZIONE_TIPO_GROUPED = {
+  latino: [
+    { group: 'Copulative',   items: ['Coordinante copulativa'] },
+    { group: 'Coordinanti',  items: ['Coordinante disgiuntiva', 'Coordinante avversativa', 'Coordinante dichiarativa', 'Coordinante conclusiva', 'Coordinante correlativa'] },
+    { group: 'Subordinanti', items: ['Subordinante causale', 'Subordinante finale', 'Subordinante consecutiva', 'Subordinante temporale', 'Subordinante condizionale', 'Subordinante concessiva', 'Subordinante comparativa', 'Subordinante completiva'] },
+  ],
+  greco: [
+    { group: 'Copulative',   items: ['Coordinante (καί, τε)'] },
+    { group: 'Coordinanti',  items: ['Coordinante avversativa (ἀλλά, δέ)', 'Coordinante dichiarativa (γάρ)', 'Coordinante conclusiva (οὖν, ἄρα)'] },
+    { group: 'Subordinanti', items: ['Subordinante causale (ὅτι, ἐπεί)', 'Subordinante finale (ἵνα, ὅπως)', 'Subordinante consecutiva (ὥστε)', 'Subordinante temporale (ὅτε, ἐπεί)', 'Subordinante condizionale (εἰ, ἐάν)', 'Subordinante concessiva (καίπερ)', 'Subordinante completiva (ὅτι, ὡς)'] },
+    { group: 'Particelle',   items: ['Particella enfatica (μέν, δή)', 'Particella interrogativa (ἆρα, μῶν)'] },
+  ],
+};
+
+/* Helper · genera <option> di congiunzioneTipo con optgroup per categoria */
+function renderCongiunzioneTipoOptions(currentValue, lang, suggestedSet) {
+  const groups = CONGIUNZIONE_TIPO_GROUPED[lang] || CONGIUNZIONE_TIPO_GROUPED.latino;
+  const sugg = suggestedSet || new Set();
+  return groups.map(g => {
     const opts = g.items.map(opt => {
       const isSugg = sugg.has(opt);
       const cls = isSugg ? 'suggested' : (sugg.size > 0 ? 'not-suggested' : '');
@@ -6809,6 +7165,7 @@ function buildVerbParadigm(parsed) {
   return {
     isDeponent: isDep,
     conj,
+    parsedRef: parsed,
     active: {
       indicativo: { Presente: indPres, Imperfetto: indImpf, Futuro: indFut, Perfetto: indPerf, Piuccheperfetto: indPpf, 'Futuro anteriore': indFutP },
       congiuntivo: { Presente: conPres, Imperfetto: conImpf, Perfetto: conPerf, Piuccheperfetto: conPpf },
@@ -7059,6 +7416,282 @@ function _renderFormHighlighted(form, endingsForCase, markEndings) {
   return escapeHtml(split.stem) + '<span class="paradigm-ending">' + escapeHtml(split.ending) + '</span>';
 }
 
+/* ──────────────────────────────────────────────────────────────────────────────
+   ANALIZZATORE MORFOLOGICO VERBALE — identifica le componenti di una forma
+   verbale: aumento, raddoppiamento, tema, suffisso temporale, suffisso modale,
+   desinenza personale. Restituisce un array di segmenti annotati per il rendering
+   colorato.
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* Analizza una forma verbale GRECA.
+   `info` contiene: { time, mood, voice, parsed } dove parsed è il risultato di
+   parseGreekLemma per il verbo (con stem, futStem, aorStem, perfStem, ecc.). */
+function _morphAnalyzeGreek(form, info) {
+  if (!form || form === '—') return [{ type: 'empty', text: form || '' }];
+  const fNFD = form.normalize('NFD');
+  const fNorm = _grStrip(form);
+  if (!info || !info.parsed) return [{ type: 'stem', text: form }];
+  const p = info.parsed;
+  const time = info.time || '';
+  const mood = info.mood || '';
+  const voice = info.voice || '';
+  const segs = [];
+
+  // ── AUMENTO (per tempi storici: imperfetto, aoristo, piuccheperfetto)
+  let work = form;
+  let workNorm = fNorm;
+  const isHist = (time === 'Imperfetto' || time === 'Aoristo' || time === 'Piuccheperfetto') && mood === 'Indicativo';
+  if (isHist) {
+    // Aumento sillabico: ε con vari spiriti davanti a consonante
+    const augMatch = work.match(/^(ἐ|ἔ|ἕ|ἢ|ἠ|ἤ|ἥ|ᾐ|ᾗ|ᾔ|ηὐ|ηὑ|ἠ)/);
+    if (augMatch) {
+      segs.push({ type: 'augment', text: augMatch[1] });
+      work = work.slice(augMatch[1].length);
+      workNorm = _grStrip(work);
+    }
+  }
+
+  // ── RADDOPPIAMENTO (per perfetto e piuccheperfetto, sia attivo sia mid./pass.)
+  const isPerf = (time === 'Perfetto' || time === 'Piuccheperfetto' || (time === 'Futuro perfetto'));
+  if (isPerf && work.length > 1) {
+    // Raddoppiamento consonantico: la consonante iniziale + ε (es. λέλυκα → λε + λυ + κα)
+    // Pattern: consonante + ε/η con spirito, seguita dal tema
+    const redupMatch = work.match(/^([^αεηιουω]ε|[^αεηιουω]ε[ἱ̓])/);
+    if (redupMatch) {
+      segs.push({ type: 'redup', text: redupMatch[1] });
+      work = work.slice(redupMatch[1].length);
+      workNorm = _grStrip(work);
+    } else {
+      // Raddoppiamento del raddoppio (ε- davanti a consonante iniziale che non si raddoppia)
+      const eRedupMatch = work.match(/^(ἐ|ἕ|ἔ)/);
+      if (eRedupMatch && isPerf) {
+        segs.push({ type: 'redup', text: eRedupMatch[1] });
+        work = work.slice(eRedupMatch[1].length);
+        workNorm = _grStrip(work);
+      }
+    }
+  }
+
+  // ── DESINENZA (cerca la più lunga tra le candidate)
+  // Set di candidate desinenze più comuni (in NFD-normalizzato per match)
+  const endingCandidates = [
+    // primarie attive
+    'ω','εις','ει','ομεν','ετε','ουσι','ουσιν',
+    // secondarie attive (impf./aor.)
+    'ον','ες','ε','ομεν','ετε','ον','εν',
+    // attive perfetto
+    'α','ας','αμεν','ατε','ασι','ασιν',
+    // piuccheperfetto
+    'η','ης','ει','εμεν','ετε','εσαν',
+    // medio-passive primarie
+    'ομαι','ει','εται','όμεθα','εσθε','ονται','ομεθα',
+    // medio-passive secondarie
+    'ομην','ου','ετο','όμεθα','εσθε','οντο',
+    // perfetto medio-passivo
+    'μαι','σαι','ται','μεθα','σθε','νται',
+    // aoristo passivo
+    'ην','ης','η','ημεν','ητε','ησαν',
+    // congiuntivo
+    'ω','ῃς','ῃ','ωμεν','ητε','ωσι','ωσιν',
+    // ottativo
+    'οιμι','οις','οι','οιμεν','οιτε','οιεν',
+    'οιμην','οιο','οιτο','οίμεθα','οισθε','οιντο',
+    // imperativo
+    'ε','ετω','ετε','όντων','ου','έσθω','έσθε','έσθων',
+    'σον','σάτω','σατε','σάντων','σαι','σάσθω','σασθε','σάσθων',
+    // inf./part. desinenze
+    'ειν','ναι','σθαι','έναι','ων','ουσα','ον','μενος','μενη','μενον'
+  ];
+  // Tipiche per tempo
+  let bestEndingLen = 0;
+  let bestEnding = '';
+  for (const e of endingCandidates) {
+    const eNorm = _grStrip(e);
+    if (!eNorm) continue;
+    if (workNorm.endsWith(eNorm) && eNorm.length > bestEndingLen && eNorm.length <= workNorm.length - 1) {
+      bestEnding = e;
+      bestEndingLen = eNorm.length;
+    }
+  }
+
+  // Calcola la posizione di taglio della desinenza nel "work" (NFC)
+  let stem = work;
+  let ending = '';
+  if (bestEnding) {
+    const split = _splitStemEnding(work, [bestEnding]);
+    if (split.ending) {
+      stem = split.stem;
+      ending = split.ending;
+    }
+  }
+
+  // ── SUFFISSO TEMPORALE (su `stem`)
+  // Per il greco: σ (futuro/aoristo sigm), κ (perfetto att.), θ/η/εν (aor./fut. pass.), σα (aor. I)
+  let tense = '';
+  if (time === 'Futuro' || time === 'Futuro perfetto') {
+    // Tema fut. = stem + σ (oppure σθ per fut. pass.)
+    const sNorm = _grStrip(stem);
+    if (sNorm.endsWith('σ')) { tense = 'σ'; stem = stem.slice(0, -1); }
+    else if (sNorm.endsWith('θησ') || sNorm.endsWith('θ')) { tense = stem.slice(-2); stem = stem.slice(0, -2); }
+  } else if (time === 'Aoristo') {
+    if (voice === 'passOnly') {
+      // Aor. pass.: tema + θ (es. ἐ-λύ-θη-ν → stem 'λυ', tense 'θ', mood/ending '-ην')
+      const sNorm = _grStrip(stem);
+      if (sNorm.endsWith('θ')) { tense = 'θ'; stem = stem.slice(0, -1); }
+      else if (sNorm.endsWith('η')) { tense = 'η'; stem = stem.slice(0, -1); }
+    } else {
+      // Aor. sigm.: stem + σ; aor. II tem.: nessun suffisso (cambia il tema vocalico)
+      const sNorm = _grStrip(stem);
+      if (sNorm.endsWith('σ')) { tense = 'σ'; stem = stem.slice(0, -1); }
+    }
+  } else if (time === 'Perfetto' || time === 'Piuccheperfetto') {
+    if (voice === 'active') {
+      const sNorm = _grStrip(stem);
+      if (sNorm.endsWith('κ')) { tense = 'κ'; stem = stem.slice(0, -1); }
+    }
+  }
+
+  // ── SUFFISSO MODALE (su `stem`)
+  let moodSuf = '';
+  if (mood === 'Ottativo') {
+    // -οι- (tematici), -αιη-/-αιμι (aor. sigm.), -ει- (atematici)
+    const sNorm = _grStrip(stem);
+    if (sNorm.endsWith('οι')) { moodSuf = 'οι'; stem = stem.slice(0, -2); }
+    else if (sNorm.endsWith('αι')) { moodSuf = 'αι'; stem = stem.slice(0, -2); }
+    else if (sNorm.endsWith('ει')) { moodSuf = 'ει'; stem = stem.slice(0, -2); }
+  } else if (mood === 'Congiuntivo') {
+    // -ω-/-η- (vocale lunga); difficile da estrarre senza ulteriori dati
+    // Skipping per semplicità: la vocale modale sarà inclusa nel tema
+  }
+
+  // Compose segments
+  if (stem) segs.push({ type: 'stem', text: stem });
+  if (tense) segs.push({ type: 'tense', text: tense });
+  if (moodSuf) segs.push({ type: 'mood', text: moodSuf });
+  if (ending) segs.push({ type: 'ending', text: ending });
+  return segs;
+}
+
+/* Analizza una forma verbale LATINA. */
+function _morphAnalyzeLatin(form, info) {
+  if (!form || form === '—') return [{ type: 'empty', text: form || '' }];
+  if (!info || !info.parsed) return [{ type: 'stem', text: form }];
+  const p = info.parsed;
+  const time = info.time || '';
+  const mood = info.mood || '';
+  const voice = info.voice || '';
+  const segs = [];
+
+  // Determina lo stem base e i suffissi attesi in base a tempo/modo/diatesi
+  const presStem = p.presStem || '';
+  const perfStem = p.perfStem || '';
+  const supStem = p.supStem || '';
+  const conj = p.conj || 'III';
+
+  const work = form;
+  const workLower = form.toLowerCase();
+
+  // Raddoppiamento del perfetto latino (alcuni verbi): es. tetigi, pepigi, peperi
+  // Pattern: consonante + e/i + consonante uguale (=raddoppiamento)
+  // Lo applichiamo solo nei tempi del sistema del perfetto
+  let stem = work;
+  let augment = ''; // latino non ha aumento vero
+  let redup = '';
+  let tense = '';
+  let moodSuf = '';
+  let ending = '';
+
+  const isPerfectSystem = (time === 'Perfetto' || time === 'Piuccheperfetto' || time === 'Futuro anteriore');
+
+  if (isPerfectSystem && voice === 'active') {
+    // Usa perfStem come tema
+    if (perfStem && workLower.startsWith(perfStem.toLowerCase())) {
+      // Cerca un raddoppiamento all'inizio del perfStem (es. "tetig" → "te" è raddoppiamento di "tig")
+      const ps = perfStem.toLowerCase();
+      const redupMatch = ps.match(/^([cbdfghjklmnpqrstvxyz])(e|i)([cbdfghjklmnpqrstvxyz])/);
+      if (redupMatch && redupMatch[1] === redupMatch[3]) {
+        redup = perfStem.slice(0, 2);
+        stem = perfStem.slice(2);
+      } else {
+        stem = perfStem;
+      }
+      let rest = work.slice(perfStem.length);
+      // Suffisso temporale
+      if (time === 'Piuccheperfetto') {
+        // -era-: pluper. ind.
+        if (mood === 'Indicativo' && /^era/.test(rest)) { tense = 'era'; rest = rest.slice(3); }
+        // -isse-: pluper. cong.
+        else if (mood === 'Congiuntivo' && /^isse/.test(rest)) { tense = 'isse'; rest = rest.slice(4); }
+      } else if (time === 'Futuro anteriore') {
+        // -eri-/-er-
+        if (/^eri/.test(rest)) { tense = 'eri'; rest = rest.slice(3); }
+        else if (/^er/.test(rest)) { tense = 'er'; rest = rest.slice(2); }
+      } else if (time === 'Perfetto' && mood === 'Congiuntivo') {
+        if (/^eri/.test(rest)) { tense = 'eri'; rest = rest.slice(3); }
+        else if (/^er/.test(rest)) { tense = 'er'; rest = rest.slice(2); }
+      }
+      ending = rest;
+    }
+  } else if (presStem && workLower.startsWith(presStem.toLowerCase())) {
+    // Tempi del sistema del presente: usa il tema del presente
+    stem = presStem;
+    let rest = work.slice(presStem.length);
+    // Suffisso temporale
+    if (time === 'Imperfetto' && mood === 'Indicativo') {
+      // -ba- / -eba- / -ieba-
+      if (/^(ieba|eba|aba|iba)/.test(rest)) {
+        const m = rest.match(/^(ieba|eba|aba|iba)/);
+        tense = m[1]; rest = rest.slice(m[1].length);
+      }
+    } else if (time === 'Futuro' || time === 'Futuro semplice') {
+      if (mood === 'Indicativo') {
+        // I/II: -b-, III/IV: -a-/-e-
+        if (/^(b)/.test(rest)) { tense = 'b'; rest = rest.slice(1); }
+      }
+    } else if (mood === 'Congiuntivo' && time === 'Presente') {
+      if (/^(e|a|ia)/.test(rest)) {
+        const m = rest.match(/^(ia|e|a)/);
+        moodSuf = m[1]; rest = rest.slice(m[1].length);
+      }
+    } else if (mood === 'Congiuntivo' && time === 'Imperfetto') {
+      // -re- (es. amarem = ama+re+m)
+      if (/^(re|ere|ire)/.test(rest)) {
+        const m = rest.match(/^(ere|ire|re)/);
+        moodSuf = m[1]; rest = rest.slice(m[1].length);
+      }
+    }
+    // Vocale tematica + desinenza
+    ending = rest;
+  } else {
+    // Fallback: tutto come tema
+    stem = work;
+  }
+
+  if (augment) segs.push({ type: 'augment', text: augment });
+  if (redup) segs.push({ type: 'redup', text: redup });
+  if (stem) segs.push({ type: 'stem', text: stem });
+  if (tense) segs.push({ type: 'tense', text: tense });
+  if (moodSuf) segs.push({ type: 'mood', text: moodSuf });
+  if (ending) segs.push({ type: 'ending', text: ending });
+  return segs;
+}
+
+/* Renderizza una forma verbale con colorazione delle componenti morfologiche.
+   Se markMorph=false, ritorna semplicemente la forma con la sola desinenza marcata. */
+function _renderFormMorphAnalyzed(form, info, markMorph, fallbackEndings) {
+  if (!markMorph) {
+    return _renderFormHighlighted(form, fallbackEndings || [], true);
+  }
+  const isGreek = info && info.lang === 'greco';
+  const segs = isGreek ? _morphAnalyzeGreek(form, info) : _morphAnalyzeLatin(form, info);
+  if (!segs || !segs.length) return escapeHtml(form);
+  return segs.map(s => {
+    if (s.type === 'empty') return escapeHtml(s.text);
+    if (s.type === 'stem') return escapeHtml(s.text);
+    return `<span class="morph-${s.type}">${escapeHtml(s.text)}</span>`;
+  }).join('');
+}
+
 /* Stato globale del toggle "evidenzia desinenze" per la modale paradigma corrente.
    Persistito in localStorage per ricordare la preferenza dell'utente. */
 function getParadigmHighlightEndings() {
@@ -7070,16 +7703,39 @@ function setParadigmHighlightEndings(on) {
 function toggleParadigmEndingHighlight() {
   const newState = !getParadigmHighlightEndings();
   setParadigmHighlightEndings(newState);
-  // Rigenera la modale
-  const body = document.getElementById('paradigm-modal-body');
-  if (body) {
-    document.body.classList.toggle('paradigm-highlight-on', newState);
-  }
+  document.body.classList.toggle('paradigm-highlight-on', newState);
   const btn = document.getElementById('paradigm-highlight-toggle');
   if (btn) {
     btn.classList.toggle('active', newState);
     btn.textContent = newState ? '✓ Desinenze evidenziate' : 'Evidenzia desinenze';
   }
+}
+
+/* Toggle "Mostra componenti morfologiche" — colora aumento/raddoppiamento/tema/suffissi/desinenza */
+function getParadigmMorphAnalysis() {
+  try { return localStorage.getItem('poetrify-paradigm-morph') === '1'; } catch (e) { return false; }
+}
+function setParadigmMorphAnalysis(on) {
+  try { localStorage.setItem('poetrify-paradigm-morph', on ? '1' : '0'); } catch (e) {}
+}
+function toggleParadigmMorphAnalysis() {
+  const newState = !getParadigmMorphAnalysis();
+  setParadigmMorphAnalysis(newState);
+  document.body.classList.toggle('paradigm-morph-on', newState);
+  const btn = document.getElementById('paradigm-morph-toggle');
+  if (btn) {
+    btn.classList.toggle('active', newState);
+    btn.textContent = newState ? '✓ Componenti morfologiche' : 'Mostra componenti morfologiche';
+  }
+  // Riapre la modale per ricostruire le tabelle con le componenti analizzate
+  // (richiede rebuild perché il rendering dipende dallo stato del toggle)
+  if (typeof _refreshOpenParadigm === 'function') _refreshOpenParadigm();
+}
+
+/* Riferimento globale per riaprire l'ultimo paradigma con il nuovo stato */
+let _lastParadigmKey = null;
+function _refreshOpenParadigm() {
+  if (_lastParadigmKey) openParadigm(_lastParadigmKey);
 }
 
 /* Desinenze standard per ciascuna declinazione/coniugazione (con accenti tipici).
@@ -7204,6 +7860,17 @@ function renderVerbConjugationHtml(verbPar) {
   if (verbPar.active) tabs.push({ key: 'active', label: verbPar.isDeponent ? 'Forme (deponente)' : 'Attivo' });
   if (verbPar.passive) tabs.push({ key: 'passive', label: 'Passivo' });
   const tabsHtml = tabs.map((t, i) => `<button class="paradigm-voice-tab ${i === 0 ? 'active' : ''}" onclick="switchParadigmVoice(this, '${t.key}')">${t.label}</button>`).join('');
+  const allEndings = _LAT_VERB_ENDINGS.pres_ind_act.concat(_LAT_VERB_ENDINGS.impf_ind_act, _LAT_VERB_ENDINGS.fut_ind_act, _LAT_VERB_ENDINGS.perf_ind_act, _LAT_VERB_ENDINGS.pluper_ind_act, _LAT_VERB_ENDINGS.futp_ind_act, _LAT_VERB_ENDINGS.pass);
+  const morphOn = getParadigmMorphAnalysis();
+  // info di base per l'analizzatore morfologico
+  const baseInfo = { lang: 'latino', parsed: verbPar.parsedRef || null };
+  const renderCell = (form, persIdx, t, mood, voice) => {
+    if (!form || form === '—') return escapeHtml(form || '—');
+    if (morphOn && baseInfo.parsed) {
+      return _renderFormMorphAnalyzed(form, Object.assign({}, baseInfo, { time: t, mood, voice }), true, allEndings);
+    }
+    return _renderFormHighlighted(form, allEndings, true);
+  };
   const renderVoice = (voice, vp) => {
     if (!vp) return '';
     let html = '';
@@ -7212,7 +7879,7 @@ function renderVerbConjugationHtml(verbPar) {
       const tempi = ['Presente','Imperfetto','Futuro','Perfetto','Piuccheperfetto','Futuro anteriore'];
       const rows = tempi.filter(t => vp.indicativo[t]).map(t => {
         const arr = vp.indicativo[t] || [];
-        return `<tr><th>${t}</th>${LAT_PERSONS.map((pers, i) => `<td data-person="${pers}">${_renderFormHighlighted(arr[i] || '—', _LAT_VERB_ENDINGS.pres_ind_act.concat(_LAT_VERB_ENDINGS.impf_ind_act, _LAT_VERB_ENDINGS.fut_ind_act, _LAT_VERB_ENDINGS.perf_ind_act, _LAT_VERB_ENDINGS.pluper_ind_act, _LAT_VERB_ENDINGS.futp_ind_act, _LAT_VERB_ENDINGS.pass), true)}</td>`).join('')}</tr>`;
+        return `<tr><th>${t}</th>${LAT_PERSONS.map((pers, i) => `<td data-person="${pers}">${renderCell(arr[i], i, t, 'Indicativo', voice)}</td>`).join('')}</tr>`;
       }).join('');
       html += `<h4 class="paradigm-mode-title">Indicativo</h4>
         <table class="paradigm-conjugation">
@@ -7225,7 +7892,7 @@ function renderVerbConjugationHtml(verbPar) {
       const tempi = ['Presente','Imperfetto','Perfetto','Piuccheperfetto'];
       const rows = tempi.filter(t => vp.congiuntivo[t]).map(t => {
         const arr = vp.congiuntivo[t] || [];
-        return `<tr><th>${t}</th>${LAT_PERSONS.map((pers, i) => `<td data-person="${pers}">${_renderFormHighlighted(arr[i] || '—', _LAT_VERB_ENDINGS.pres_ind_act.concat(_LAT_VERB_ENDINGS.impf_ind_act, _LAT_VERB_ENDINGS.fut_ind_act, _LAT_VERB_ENDINGS.perf_ind_act, _LAT_VERB_ENDINGS.pluper_ind_act, _LAT_VERB_ENDINGS.futp_ind_act, _LAT_VERB_ENDINGS.pass), true)}</td>`).join('')}</tr>`;
+        return `<tr><th>${t}</th>${LAT_PERSONS.map((pers, i) => `<td data-person="${pers}">${renderCell(arr[i], i, t, 'Congiuntivo', voice)}</td>`).join('')}</tr>`;
       }).join('');
       html += `<h4 class="paradigm-mode-title">Congiuntivo</h4>
         <table class="paradigm-conjugation">
@@ -7237,7 +7904,7 @@ function renderVerbConjugationHtml(verbPar) {
     if (vp.imperativo) {
       const rows = Object.keys(vp.imperativo).map(t => {
         const arr = vp.imperativo[t] || [];
-        return `<tr><th>${t}</th>${LAT_PERSONS.map((pers, i) => `<td data-person="${pers}">${_renderFormHighlighted(arr[i] || '—', _LAT_VERB_ENDINGS.pres_ind_act.concat(_LAT_VERB_ENDINGS.impf_ind_act, _LAT_VERB_ENDINGS.fut_ind_act, _LAT_VERB_ENDINGS.perf_ind_act, _LAT_VERB_ENDINGS.pluper_ind_act, _LAT_VERB_ENDINGS.futp_ind_act, _LAT_VERB_ENDINGS.pass), true)}</td>`).join('')}</tr>`;
+        return `<tr><th>${t}</th>${LAT_PERSONS.map((pers, i) => `<td data-person="${pers}">${renderCell(arr[i], i, t, 'Imperativo', voice)}</td>`).join('')}</tr>`;
       }).join('');
       html += `<h4 class="paradigm-mode-title">Imperativo</h4>
         <table class="paradigm-conjugation">
@@ -8850,6 +9517,206 @@ function renderGreekAdjParadigmHtml(par, lemma) {
   return '';
 }
 
+/* ──────────────────────────────────────────────────────────────────────────────
+   PARTICIPI GRECI — costruzione della declinazione completa (M/F/N × casi × num.)
+   Tipi gestiti:
+     · pres-att        (es. λύων, λύουσα, λῦον)      — tema att. + -ων/-ουσα/-ον
+     · fut-att         (es. λύσων, λύσουσα, λῦσον)   — tema fut. + -ων/-ουσα/-ον
+     · aor-sigm-att    (es. λύσας, λύσασα, λῦσαν)    — tema aor. + -σας/-σασα/-σαν
+     · aor-tem-att     (es. λιπών, λιποῦσα, λιπόν)   — tema aor.II + -ών/-οῦσα/-όν
+     · perf-att        (es. λελυκώς, λελυκυῖα, λελυκός) — tema perf. + -κώς/-κυῖα/-κός
+     · aor-pass        (es. λυθείς, λυθεῖσα, λυθέν) — tema aor.pass. + -είς/-εῖσα/-έν
+     · pres-mp / fut-mid / aor-mid / fut-pass / perf-mp (decl. I-II in -μενος/-μένη/-μενον)
+   ─────────────────────────────────────────────────────────────────────────── */
+function _buildGreekParticipleDecl(type, stem) {
+  if (!stem) return null;
+  const stemBare = _stripGreekTone(stem);
+
+  // Helpers per declinazione I-II (medio-passivi tipo λυόμενος, λυσάμενος): identica a aggettivo aos-e-on
+  const declI2 = (s) => ({
+    M: {
+      sing: { Nominativo: s+'ος', Genitivo: s+'ου', Dativo: s+'ῳ', Accusativo: s+'ον', Vocativo: s+'ε' },
+      plur: { Nominativo: s+'οι', Genitivo: s+'ων', Dativo: s+'οις', Accusativo: s+'ους', Vocativo: s+'οι' }
+    },
+    F: {
+      sing: { Nominativo: s+'η', Genitivo: s+'ης', Dativo: s+'ῃ', Accusativo: s+'ην', Vocativo: s+'η' },
+      plur: { Nominativo: s+'αι', Genitivo: s+'ων', Dativo: s+'αις', Accusativo: s+'ας', Vocativo: s+'αι' }
+    },
+    N: {
+      sing: { Nominativo: s+'ον', Genitivo: s+'ου', Dativo: s+'ῳ', Accusativo: s+'ον', Vocativo: s+'ον' },
+      plur: { Nominativo: s+'α', Genitivo: s+'ων', Dativo: s+'οις', Accusativo: s+'α', Vocativo: s+'α' }
+    }
+  });
+
+  if (type === 'pres-att' || type === 'fut-att') {
+    // Tema in -οντ-, M decl. III, F decl. I in -ουσα/-ουσης, N = M ma con nom/acc/voc neutro
+    const M = {
+      sing: { Nominativo: stem+'ων', Genitivo: stem+'οντος', Dativo: stem+'οντι', Accusativo: stem+'οντα', Vocativo: stem+'ων' },
+      plur: { Nominativo: stem+'οντες', Genitivo: stem+'όντων', Dativo: stem+'ουσι(ν)', Accusativo: stem+'οντας', Vocativo: stem+'οντες' }
+    };
+    const F = {
+      sing: { Nominativo: stem+'ουσα', Genitivo: stem+'ούσης', Dativo: stem+'ούσῃ', Accusativo: stem+'ουσαν', Vocativo: stem+'ουσα' },
+      plur: { Nominativo: stem+'ουσαι', Genitivo: stem+'ουσῶν', Dativo: stem+'ούσαις', Accusativo: stem+'ούσας', Vocativo: stem+'ουσαι' }
+    };
+    const N = {
+      sing: { Nominativo: stem+'ον', Genitivo: stem+'οντος', Dativo: stem+'οντι', Accusativo: stem+'ον', Vocativo: stem+'ον' },
+      plur: { Nominativo: stem+'οντα', Genitivo: stem+'όντων', Dativo: stem+'ουσι(ν)', Accusativo: stem+'οντα', Vocativo: stem+'οντα' }
+    };
+    return { kind: 'three-genders', M, F, N };
+  }
+  if (type === 'aor-sigm-att') {
+    // λύσας, -σαντος / λύσασα, -σάσης / λῦσαν, -σαντος
+    const M = {
+      sing: { Nominativo: stem+'σας', Genitivo: stem+'σαντος', Dativo: stem+'σαντι', Accusativo: stem+'σαντα', Vocativo: stem+'σας' },
+      plur: { Nominativo: stem+'σαντες', Genitivo: stem+'σάντων', Dativo: stem+'σασι(ν)', Accusativo: stem+'σαντας', Vocativo: stem+'σαντες' }
+    };
+    const F = {
+      sing: { Nominativo: stem+'σασα', Genitivo: stem+'σάσης', Dativo: stem+'σάσῃ', Accusativo: stem+'σασαν', Vocativo: stem+'σασα' },
+      plur: { Nominativo: stem+'σασαι', Genitivo: stem+'σασῶν', Dativo: stem+'σάσαις', Accusativo: stem+'σάσας', Vocativo: stem+'σασαι' }
+    };
+    const N = {
+      sing: { Nominativo: stem+'σαν', Genitivo: stem+'σαντος', Dativo: stem+'σαντι', Accusativo: stem+'σαν', Vocativo: stem+'σαν' },
+      plur: { Nominativo: stem+'σαντα', Genitivo: stem+'σάντων', Dativo: stem+'σασι(ν)', Accusativo: stem+'σαντα', Vocativo: stem+'σαντα' }
+    };
+    return { kind: 'three-genders', M, F, N };
+  }
+  if (type === 'aor-tem-att') {
+    // λιπών, λιπόντος / λιποῦσα, λιπούσης / λιπόν, λιπόντος (aor. II tematico)
+    const M = {
+      sing: { Nominativo: stem+'ών', Genitivo: stem+'όντος', Dativo: stem+'όντι', Accusativo: stem+'όντα', Vocativo: stem+'ών' },
+      plur: { Nominativo: stem+'όντες', Genitivo: stem+'όντων', Dativo: stem+'οῦσι(ν)', Accusativo: stem+'όντας', Vocativo: stem+'όντες' }
+    };
+    const F = {
+      sing: { Nominativo: stem+'οῦσα', Genitivo: stem+'ούσης', Dativo: stem+'ούσῃ', Accusativo: stem+'οῦσαν', Vocativo: stem+'οῦσα' },
+      plur: { Nominativo: stem+'οῦσαι', Genitivo: stem+'ουσῶν', Dativo: stem+'ούσαις', Accusativo: stem+'ούσας', Vocativo: stem+'οῦσαι' }
+    };
+    const N = {
+      sing: { Nominativo: stem+'όν', Genitivo: stem+'όντος', Dativo: stem+'όντι', Accusativo: stem+'όν', Vocativo: stem+'όν' },
+      plur: { Nominativo: stem+'όντα', Genitivo: stem+'όντων', Dativo: stem+'οῦσι(ν)', Accusativo: stem+'όντα', Vocativo: stem+'όντα' }
+    };
+    return { kind: 'three-genders', M, F, N };
+  }
+  if (type === 'perf-att') {
+    // λελυκώς, λελυκότος / λελυκυῖα, λελυκυίας / λελυκός, λελυκότος
+    // Lo stem qui include già κ del perfetto (es. "λελυκ")
+    const M = {
+      sing: { Nominativo: stem+'ώς', Genitivo: stem+'ότος', Dativo: stem+'ότι', Accusativo: stem+'ότα', Vocativo: stem+'ώς' },
+      plur: { Nominativo: stem+'ότες', Genitivo: stem+'ότων', Dativo: stem+'όσι(ν)', Accusativo: stem+'ότας', Vocativo: stem+'ότες' }
+    };
+    const F = {
+      sing: { Nominativo: stem+'υῖα', Genitivo: stem+'υίας', Dativo: stem+'υίᾳ', Accusativo: stem+'υῖαν', Vocativo: stem+'υῖα' },
+      plur: { Nominativo: stem+'υῖαι', Genitivo: stem+'υιῶν', Dativo: stem+'υίαις', Accusativo: stem+'υίας', Vocativo: stem+'υῖαι' }
+    };
+    const N = {
+      sing: { Nominativo: stem+'ός', Genitivo: stem+'ότος', Dativo: stem+'ότι', Accusativo: stem+'ός', Vocativo: stem+'ός' },
+      plur: { Nominativo: stem+'ότα', Genitivo: stem+'ότων', Dativo: stem+'όσι(ν)', Accusativo: stem+'ότα', Vocativo: stem+'ότα' }
+    };
+    return { kind: 'three-genders', M, F, N };
+  }
+  if (type === 'aor-pass') {
+    // λυθείς, λυθέντος / λυθεῖσα, λυθείσης / λυθέν, λυθέντος
+    const M = {
+      sing: { Nominativo: stem+'είς', Genitivo: stem+'έντος', Dativo: stem+'έντι', Accusativo: stem+'έντα', Vocativo: stem+'είς' },
+      plur: { Nominativo: stem+'έντες', Genitivo: stem+'έντων', Dativo: stem+'εῖσι(ν)', Accusativo: stem+'έντας', Vocativo: stem+'έντες' }
+    };
+    const F = {
+      sing: { Nominativo: stem+'εῖσα', Genitivo: stem+'είσης', Dativo: stem+'είσῃ', Accusativo: stem+'εῖσαν', Vocativo: stem+'εῖσα' },
+      plur: { Nominativo: stem+'εῖσαι', Genitivo: stem+'εισῶν', Dativo: stem+'είσαις', Accusativo: stem+'είσας', Vocativo: stem+'εῖσαι' }
+    };
+    const N = {
+      sing: { Nominativo: stem+'έν', Genitivo: stem+'έντος', Dativo: stem+'έντι', Accusativo: stem+'έν', Vocativo: stem+'έν' },
+      plur: { Nominativo: stem+'έντα', Genitivo: stem+'έντων', Dativo: stem+'εῖσι(ν)', Accusativo: stem+'έντα', Vocativo: stem+'έντα' }
+    };
+    return { kind: 'three-genders', M, F, N };
+  }
+  // Tipi medio-passivi (decl. I-II uniforme con suffisso -μεν-)
+  if (type === 'pres-mp') {
+    return Object.assign({ kind: 'three-genders' }, declI2(stem+'ομεν'));
+  }
+  if (type === 'fut-mid') {
+    return Object.assign({ kind: 'three-genders' }, declI2(stem+'σομεν'));
+  }
+  if (type === 'aor-mid') {
+    return Object.assign({ kind: 'three-genders' }, declI2(stem+'σαμεν'));
+  }
+  if (type === 'aor-mid-tem') {
+    // Aor. II medio: λιπόμενος
+    return Object.assign({ kind: 'three-genders' }, declI2(stem+'ομεν'));
+  }
+  if (type === 'fut-pass') {
+    return Object.assign({ kind: 'three-genders' }, declI2(stem+'ησομεν'));
+  }
+  if (type === 'perf-mp') {
+    // λελυμένος, -μένη, -μένον — il tema include il suffisso κ del perfetto del medio-pass.
+    return Object.assign({ kind: 'three-genders' }, declI2(stem+'μεν'));
+  }
+  return null;
+}
+
+/* Restituisce un identificativo del tipo di participio per il rendering del titolo */
+function _participleLabel(type) {
+  return {
+    'pres-att': 'Participio presente attivo',
+    'fut-att': 'Participio futuro attivo',
+    'aor-sigm-att': 'Participio aoristo I attivo',
+    'aor-tem-att': 'Participio aoristo II attivo',
+    'perf-att': 'Participio perfetto attivo',
+    'aor-pass': 'Participio aoristo passivo',
+    'pres-mp': 'Participio presente medio-passivo',
+    'fut-mid': 'Participio futuro medio',
+    'aor-mid': 'Participio aoristo I medio',
+    'aor-mid-tem': 'Participio aoristo II medio',
+    'fut-pass': 'Participio futuro passivo',
+    'perf-mp': 'Participio perfetto medio-passivo'
+  }[type] || 'Participio';
+}
+
+/* Determina il tipo di participio dal tempo, modo e diatesi disponibili. */
+function _participleType(voiceKey, time, kind, parsed) {
+  if (voiceKey === 'active') {
+    if (time === 'Presente') return 'pres-att';
+    if (time === 'Futuro') return 'fut-att';
+    if (time === 'Aoristo') {
+      // distingui aor.I sigmatico vs aor.II tematico
+      if (parsed && parsed.aorKind === 'tem') return 'aor-tem-att';
+      return 'aor-sigm-att';
+    }
+    if (time === 'Perfetto') return 'perf-att';
+  } else if (voiceKey === 'midpass') {
+    if (time === 'Presente') return 'pres-mp';
+    if (time === 'Futuro') return 'fut-mid';
+    if (time === 'Aoristo') {
+      if (parsed && parsed.aorKind === 'tem') return 'aor-mid-tem';
+      return 'aor-mid';
+    }
+    if (time === 'Perfetto') return 'perf-mp';
+  } else if (voiceKey === 'passOnly') {
+    if (time === 'Aoristo') return 'aor-pass';
+    if (time === 'Futuro') return 'fut-pass';
+  }
+  return null;
+}
+
+/* Renderer della declinazione del participio (3 generi M/F/N) */
+function _renderParticipleDeclension(decl) {
+  if (!decl) return '';
+  const renderG = (rows, label) => {
+    const tr = GR_CASES.map(c => `<tr>
+      <th>${c}</th>
+      <td>${_renderFormHighlighted((rows.sing && rows.sing[c]) || '—', _GR_NOUN_ENDINGS_FLAT, true)}</td>
+      <td>${_renderFormHighlighted((rows.plur && rows.plur[c]) || '—', _GR_NOUN_ENDINGS_FLAT, true)}</td>
+    </tr>`).join('');
+    return `<div class="paradigm-genere-block paradigm-participle-genere">
+      <h5 class="paradigm-genere-title">${label}</h5>
+      <table class="paradigm-table greek-paradigm"><thead><tr><th></th><th>Singolare</th><th>Plurale</th></tr></thead><tbody>${tr}</tbody></table>
+    </div>`;
+  };
+  if (decl.M && decl.F && decl.N) {
+    return renderG(decl.M, 'Maschile') + renderG(decl.F, 'Femminile') + renderG(decl.N, 'Neutro');
+  }
+  return '';
+}
+
 function renderGreekVerbConjugationHtml(verbPar) {
   if (!verbPar) return '<p class="muted-text">Paradigma non disponibile.</p>';
   const tabs = [];
@@ -8870,10 +9737,19 @@ function renderGreekVerbConjugationHtml(verbPar) {
       html += `<section class="gr-time-block"><h4 class="paradigm-mode-title gr-time-title">${time}</h4>`;
       // Modi finiti (Indicativo, Congiuntivo, Ottativo, Imperativo): tabella per persone
       const finiteMoods = GR_MOOD_ORDER.filter(m => ['Indicativo','Congiuntivo','Ottativo','Imperativo'].includes(m) && Array.isArray(td[m]));
+      const morphOn = getParadigmMorphAnalysis();
+      const grBaseInfo = { lang: 'greco', parsed: verbPar.info || null };
       if (finiteMoods.length) {
         const tbodyRows = finiteMoods.map(m => {
           const arr = td[m];
-          return `<tr><th>${m}</th>${GR_PERSONS.map((p, i) => `<td data-person="${p}">${_renderFormHighlighted(arr[i] || '—', _GR_VERB_ENDINGS_FLAT, true)}</td>`).join('')}</tr>`;
+          return `<tr><th>${m}</th>${GR_PERSONS.map((p, i) => {
+            const form = arr[i] || '—';
+            if (!form || form === '—') return `<td data-person="${p}">${escapeHtml(form)}</td>`;
+            if (morphOn && grBaseInfo.parsed) {
+              return `<td data-person="${p}">${_renderFormMorphAnalyzed(form, Object.assign({}, grBaseInfo, { time, mood: m, voice: voiceKey }), true, _GR_VERB_ENDINGS_FLAT)}</td>`;
+            }
+            return `<td data-person="${p}">${_renderFormHighlighted(form, _GR_VERB_ENDINGS_FLAT, true)}</td>`;
+          }).join('')}</tr>`;
         }).join('');
         html += `<table class="paradigm-conjugation greek-paradigm">
           <thead><tr><th></th>${GR_PERSONS.map(p => `<th>${p}</th>`).join('')}</tr></thead>
@@ -8888,6 +9764,45 @@ function renderGreekVerbConjugationHtml(verbPar) {
         html += `<table class="paradigm-table greek-paradigm gr-nominal"><tbody>${
           nominal.map(([k, v]) => `<tr><th>${k}</th><td>${escapeHtml(v)}</td></tr>`).join('')
         }</tbody></table>`;
+      }
+      // Declinazione completa del participio (se disponibile per questo voice+time)
+      if (td.Participio) {
+        const partType = _participleType(voiceKey, time, verbPar.kind, (verbPar.info || {}));
+        if (partType) {
+          // Calcola il tema corretto per la costruzione della declinazione del participio
+          const info = verbPar.info || {};
+          let pStem = '';
+          if (partType === 'pres-att' || partType === 'pres-mp') pStem = info.stem || '';
+          else if (partType === 'fut-att' || partType === 'fut-mid') pStem = (info.futStem || (info.stem ? info.stem + 'σ' : '')).replace(/σ$/,'');
+          else if (partType === 'aor-sigm-att' || partType === 'aor-mid') pStem = (info.aorStem || info.stem || '').replace(/σ$/,'');
+          else if (partType === 'aor-tem-att' || partType === 'aor-mid-tem') pStem = info.aorStem || '';
+          else if (partType === 'perf-att') pStem = info.perfStem || '';
+          else if (partType === 'perf-mp') pStem = info.perfMPStem || '';
+          else if (partType === 'aor-pass') {
+            // Lo stem dell'aor. pass. è memorizzato CON il θ finale (es. 'λυθ').
+            // Per il participio, le desinenze includono già la vocale (-είς, -εῖσα, -έν),
+            // quindi il tema deve essere il puro radicale (senza θ): es. 'λυ' → 'λυ-θείς'.
+            // Manteniamo invece il θ se è parte morfologica del tema verbale (es. ἐτέθ-).
+            pStem = (info.aorPassStem || '');
+          }
+          else if (partType === 'fut-pass') pStem = (info.aorPassStem || '').replace(/θ?$/, 'θ');
+          if (pStem) {
+            const decl = _buildGreekParticipleDecl(partType, pStem);
+            if (decl) {
+              const decl2 = _fixGreekParadigmAccents(decl);
+              const ptid = 'pt-' + Math.random().toString(36).slice(2,8);
+              html += `<details class="paradigm-participle-expand" id="${ptid}">
+                <summary class="paradigm-participle-summary">
+                  <span class="paradigm-participle-icon">▸</span>
+                  <span>${_participleLabel(partType)} · declinazione completa (M/F/N × casi)</span>
+                </summary>
+                <div class="paradigm-participle-content">
+                  ${_renderParticipleDeclension(decl2)}
+                </div>
+              </details>`;
+            }
+          }
+        }
       }
       html += '</section>';
     }
@@ -10653,9 +11568,13 @@ const GREEK_FREQ_DICT = (() => {
     });
   };
 
-  // ARTICOLO ὁ ἡ τό
+  // ARTICOLO ὁ ἡ τό (incluse le forme maiuscole di inizio frase: Ὁ, Ἡ, Τό, Οἱ, Αἱ, Τά, ecc.
+  // normalizeText converte uppercase→lowercase via toLowerCase, ma le includiamo esplicitamente
+  // come safety-net per gestire edge case Unicode di scuola)
   add(['ὁ','ἡ','τό','τοῦ','τῆς','τοῦ','τῷ','τῇ','τῷ','τόν','τήν','τό',
-       'οἱ','αἱ','τά','τῶν','τοῖς','ταῖς','τοῖς','τούς','τάς','τά','τώ','τοῖν','ταῖν'],
+       'οἱ','αἱ','τά','τῶν','τοῖς','ταῖς','τοῖς','τούς','τάς','τά','τώ','τοῖν','ταῖν',
+       'Ὁ','Ἡ','Τό','Τοῦ','Τῆς','Τῷ','Τῇ','Τόν','Τήν',
+       'Οἱ','Αἱ','Τά','Τῶν','Τοῖς','Ταῖς','Τούς','Τάς','Τώ','Τοῖν','Ταῖν'],
       'ὁ, ἡ, τό', 'Articolo', 'altissima');
 
   // εἰμί
@@ -12232,6 +13151,189 @@ function suggestPosFromDict(word, lang) {
 }
 
 /* ──────────────────────────────────────────────────────────────────────────────
+   PRESET CONGIUNZIONI/PARTICELLE — categoria già precompilata.
+   Quando l'utente tagga una parola come Congiunzione o Particella, il sistema
+   applica automaticamente la tipologia (es. "Coordinante copulativa") senza
+   richiedere all'utente di selezionarla dal menu, dato che le congiunzioni più
+   frequenti hanno una funzione standard ben nota.
+   Le chiavi sono normalizzate (lowercase per latino, NFD-strip per greco).
+   ────────────────────────────────────────────────────────────────────────── */
+const CONJ_PRESETS = {
+  latino: {
+    // COORDINANTI COPULATIVE
+    'et': { tipo: 'Coordinante copulativa', pos: 'Congiunzione' },
+    'atque': { tipo: 'Coordinante copulativa', pos: 'Congiunzione' },
+    'ac': { tipo: 'Coordinante copulativa', pos: 'Congiunzione' },
+    'que': { tipo: 'Coordinante copulativa', pos: 'Congiunzione', note: 'enclitica (-que)' },
+    '-que': { tipo: 'Coordinante copulativa', pos: 'Congiunzione', note: 'enclitica' },
+    'neque': { tipo: 'Coordinante copulativa', pos: 'Congiunzione', note: 'negativa (= e non)' },
+    'nec': { tipo: 'Coordinante copulativa', pos: 'Congiunzione', note: 'negativa (= e non)' },
+    'etiam': { tipo: 'Coordinante copulativa', pos: 'Avverbio', note: 'avv.: anche, perfino' },
+    'quoque': { tipo: 'Coordinante copulativa', pos: 'Avverbio', note: 'avv. postpos.: anche' },
+    // COORDINANTI DISGIUNTIVE
+    'aut': { tipo: 'Coordinante disgiuntiva', pos: 'Congiunzione' },
+    'vel': { tipo: 'Coordinante disgiuntiva', pos: 'Congiunzione' },
+    'sive': { tipo: 'Coordinante disgiuntiva', pos: 'Congiunzione' },
+    'seu': { tipo: 'Coordinante disgiuntiva', pos: 'Congiunzione' },
+    've': { tipo: 'Coordinante disgiuntiva', pos: 'Congiunzione', note: 'enclitica (-ve)' },
+    '-ve': { tipo: 'Coordinante disgiuntiva', pos: 'Congiunzione', note: 'enclitica' },
+    // COORDINANTI AVVERSATIVE
+    'sed': { tipo: 'Coordinante avversativa', pos: 'Congiunzione' },
+    'at': { tipo: 'Coordinante avversativa', pos: 'Congiunzione' },
+    'autem': { tipo: 'Coordinante avversativa', pos: 'Congiunzione', note: 'postpositiva' },
+    'verum': { tipo: 'Coordinante avversativa', pos: 'Congiunzione' },
+    'vero': { tipo: 'Coordinante avversativa', pos: 'Congiunzione', note: 'postpositiva' },
+    'tamen': { tipo: 'Coordinante avversativa', pos: 'Congiunzione', note: 'tuttavia' },
+    'ceterum': { tipo: 'Coordinante avversativa', pos: 'Congiunzione', note: 'del resto' },
+    // COORDINANTI DICHIARATIVE/ESPLICATIVE
+    'nam': { tipo: 'Coordinante dichiarativa', pos: 'Congiunzione' },
+    'enim': { tipo: 'Coordinante dichiarativa', pos: 'Congiunzione', note: 'postpositiva' },
+    'namque': { tipo: 'Coordinante dichiarativa', pos: 'Congiunzione' },
+    'etenim': { tipo: 'Coordinante dichiarativa', pos: 'Congiunzione' },
+    'quippe': { tipo: 'Coordinante dichiarativa', pos: 'Congiunzione' },
+    // COORDINANTI CONCLUSIVE
+    'ergo': { tipo: 'Coordinante conclusiva', pos: 'Congiunzione' },
+    'igitur': { tipo: 'Coordinante conclusiva', pos: 'Congiunzione', note: 'postpositiva' },
+    'itaque': { tipo: 'Coordinante conclusiva', pos: 'Congiunzione' },
+    'proinde': { tipo: 'Coordinante conclusiva', pos: 'Congiunzione' },
+    // SUBORDINANTI CAUSALI
+    'quia': { tipo: 'Subordinante causale', pos: 'Congiunzione' },
+    'quoniam': { tipo: 'Subordinante causale', pos: 'Congiunzione' },
+    'quandoquidem': { tipo: 'Subordinante causale', pos: 'Congiunzione' },
+    'quod': { tipo: 'Subordinante causale', pos: 'Congiunzione', note: 'anche dichiarativa "il fatto che"' },
+    // SUBORDINANTI FINALI
+    'ut': { tipo: 'Subordinante finale', pos: 'Congiunzione', note: 'anche consec./completiva' },
+    'ne': { tipo: 'Subordinante finale', pos: 'Congiunzione', note: 'finale negativa' },
+    'quominus': { tipo: 'Subordinante finale', pos: 'Congiunzione', note: 'dopo verba impediendi' },
+    'quin': { tipo: 'Subordinante finale', pos: 'Congiunzione', note: 'dopo neg. impediendi/dubitandi' },
+    // SUBORDINANTI TEMPORALI
+    'cum': { tipo: 'Subordinante temporale', pos: 'Congiunzione', note: 'cum + cong.: anche causale/concessivo' },
+    'postquam': { tipo: 'Subordinante temporale', pos: 'Congiunzione' },
+    'antequam': { tipo: 'Subordinante temporale', pos: 'Congiunzione' },
+    'priusquam': { tipo: 'Subordinante temporale', pos: 'Congiunzione' },
+    'dum': { tipo: 'Subordinante temporale', pos: 'Congiunzione', note: 'anche causale o finale' },
+    'donec': { tipo: 'Subordinante temporale', pos: 'Congiunzione' },
+    'quoad': { tipo: 'Subordinante temporale', pos: 'Congiunzione' },
+    'simulac': { tipo: 'Subordinante temporale', pos: 'Congiunzione' },
+    'simulatque': { tipo: 'Subordinante temporale', pos: 'Congiunzione' },
+    'simul': { tipo: 'Subordinante temporale', pos: 'Congiunzione' },
+    'ubi': { tipo: 'Subordinante temporale', pos: 'Congiunzione', note: 'anche locale (ubi = "dove")' },
+    // SUBORDINANTI CONDIZIONALI
+    'si': { tipo: 'Subordinante condizionale', pos: 'Congiunzione' },
+    'nisi': { tipo: 'Subordinante condizionale', pos: 'Congiunzione', note: 'negativa (se non)' },
+    'sin': { tipo: 'Subordinante condizionale', pos: 'Congiunzione', note: 'avversativa nel cond.' },
+    // SUBORDINANTI CONCESSIVE
+    'etsi': { tipo: 'Subordinante concessiva', pos: 'Congiunzione' },
+    'tametsi': { tipo: 'Subordinante concessiva', pos: 'Congiunzione' },
+    'etiamsi': { tipo: 'Subordinante concessiva', pos: 'Congiunzione' },
+    'quamquam': { tipo: 'Subordinante concessiva', pos: 'Congiunzione' },
+    'quamvis': { tipo: 'Subordinante concessiva', pos: 'Congiunzione' },
+    'licet': { tipo: 'Subordinante concessiva', pos: 'Congiunzione' },
+    // SUBORDINANTI COMPARATIVE
+    'quasi': { tipo: 'Subordinante comparativa', pos: 'Congiunzione' },
+    'velut': { tipo: 'Subordinante comparativa', pos: 'Congiunzione' },
+    'tamquam': { tipo: 'Subordinante comparativa', pos: 'Congiunzione' },
+    'sicut': { tipo: 'Subordinante comparativa', pos: 'Congiunzione' },
+    // INTERROGATIVE
+    'an': { tipo: 'Subordinante completiva', pos: 'Congiunzione', note: 'interrog. doppia' },
+    'utrum': { tipo: 'Subordinante completiva', pos: 'Congiunzione', note: 'interrog. doppia' }
+  },
+  greco: {
+    // Le chiavi sono NFD-normalizzate (lowercase, no diacritici)
+    // COORDINANTI
+    'και': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'e, anche' },
+    'τε': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'enclitica' },
+    'δε': { tipo: 'Coordinante avversativa (ἀλλά, δέ)', pos: 'Congiunzione', note: 'postpositiva' },
+    'αλλα': { tipo: 'Coordinante avversativa (ἀλλά, δέ)', pos: 'Congiunzione', note: 'avversativa forte' },
+    'γαρ': { tipo: 'Coordinante dichiarativa (γάρ)', pos: 'Congiunzione', note: 'postpositiva, causale-esplicativa' },
+    'ουν': { tipo: 'Coordinante conclusiva (οὖν, ἄρα)', pos: 'Congiunzione', note: 'postpositiva' },
+    'τοινυν': { tipo: 'Coordinante conclusiva (οὖν, ἄρα)', pos: 'Congiunzione' },
+    'η': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'disgiuntiva o comparativa' },
+    'ουδε': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'neppure, e non' },
+    'μηδε': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'neppure (soggettiva)' },
+    'ουτε': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'né' },
+    'μητε': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'né (soggettiva)' },
+    // SUBORDINANTI
+    'οτι': { tipo: 'Subordinante completiva (ὅτι, ὡς)', pos: 'Congiunzione', note: 'dichiarativa/causale' },
+    'διοτι': { tipo: 'Subordinante causale (ὅτι, ἐπεί)', pos: 'Congiunzione' },
+    'ινα': { tipo: 'Subordinante finale (ἵνα, ὅπως)', pos: 'Congiunzione', note: '+ cong.' },
+    'οπως': { tipo: 'Subordinante finale (ἵνα, ὅπως)', pos: 'Congiunzione', note: '+ cong. (anche modale)' },
+    'ωστε': { tipo: 'Subordinante consecutiva (ὥστε)', pos: 'Congiunzione', note: '+ ind./inf.' },
+    'οτε': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione' },
+    'οταν': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione', note: 'ὅτε + ἄν: + cong.' },
+    'επει': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione', note: 'anche causale' },
+    'επειδη': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione' },
+    'εως': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione', note: 'finché' },
+    'πριν': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione', note: 'prima che' },
+    'μεχρι': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione' },
+    'αχρι': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione' },
+    'ει': { tipo: 'Subordinante condizionale (εἰ, ἐάν)', pos: 'Congiunzione', note: '+ ind./ott.' },
+    'εαν': { tipo: 'Subordinante condizionale (εἰ, ἐάν)', pos: 'Congiunzione', note: 'εἰ + ἄν: + cong.' },
+    'ην': { tipo: 'Subordinante condizionale (εἰ, ἐάν)', pos: 'Congiunzione', note: 'variante di ἐάν' },
+    'καιπερ': { tipo: 'Subordinante concessiva (καίπερ)', pos: 'Congiunzione', note: '+ part.' },
+    'καιτοι': { tipo: 'Subordinante concessiva (καίπερ)', pos: 'Congiunzione', note: 'e tuttavia' },
+    'ως': { tipo: 'Subordinante completiva (ὅτι, ὡς)', pos: 'Congiunzione', note: 'come/che/poiché' },
+    'ωσπερ': { tipo: 'Subordinante completiva (ὅτι, ὡς)', pos: 'Congiunzione', note: 'come, proprio come' },
+    'οπου': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione', note: 'locativo: dove' },
+    'εϊτε': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'εἴτε ... εἴτε: sia ... sia' },
+    'εἴτε': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione' },
+    // PARTICELLE ENFATICHE/CORRELATIVE
+    'μεν': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'postpositiva, correlativa con δέ' },
+    'δη': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'enfatica' },
+    'γε': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'enclitica, limitativa' },
+    'τοι': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'enclitica, enfatica' },
+    'μην': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'enfatica' },
+    'περ': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'enclitica' },
+    'αν': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'modale, eventualità' },
+    'κεν': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'arc./ep. = ἄν' },
+    'γε_': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella' },
+    // PARTICELLE INTERROGATIVE
+    'αρα_q': { tipo: 'Particella interrogativa (ἆρα, μῶν)', pos: 'Particella', note: 'ἆρα: forse?' },
+    'αρα': { tipo: 'Coordinante conclusiva (οὖν, ἄρα)', pos: 'Particella', note: 'inferenziale' },
+    'μων': { tipo: 'Particella interrogativa (ἆρα, μῶν)', pos: 'Particella', note: 'forse? (att. neg.)' }
+  }
+};
+
+/* Cerca un preset di congiunzione per la parola, restituendo { tipo, pos, note } o null. */
+function lookupConjunctionPreset(word, lang) {
+  if (!word) return null;
+  const dict = CONJ_PRESETS[lang];
+  if (!dict) return null;
+  let key;
+  if (lang === 'greco') {
+    key = normalizeText(word);
+  } else {
+    key = word.toLowerCase().trim().replace(/[.,;?!:·]/g, '');
+  }
+  return dict[key] || null;
+}
+
+/* Applica i preset di una congiunzione/particella su una entry grammaticale.
+   Restituisce true se ha applicato almeno una modifica. */
+function applyConjunctionPreset(entry, lang) {
+  if (!entry || !entry.word) return false;
+  const preset = lookupConjunctionPreset(entry.word, lang);
+  if (!preset) return false;
+  let applied = false;
+  // Adatta il PoS se è coerente: Congiunzione/Particella possono essere swap
+  if (preset.pos && (entry.partOfSpeech === 'Congiunzione' || entry.partOfSpeech === 'Particella' || !entry.partOfSpeech)) {
+    if (entry.partOfSpeech !== preset.pos) { entry.partOfSpeech = preset.pos; applied = true; }
+  }
+  // Tipo della congiunzione: solo se non già impostato dall'utente
+  if (preset.tipo && !entry.congiunzioneTipo) {
+    entry.congiunzioneTipo = preset.tipo;
+    applied = true;
+  }
+  // Nota (suggerimento): non sovrascrive note esistente
+  if (preset.note && !entry.note) {
+    entry.note = '[preset] ' + preset.note;
+    applied = true;
+  }
+  if (applied) entry._presetApplied = true;
+  return applied;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────────
    TRADUZIONI E SFUMATURE — mappe parallele indicizzate per lemma canonico.
    Struttura: { it: 'gloss principale', n: ['sfumatura 1', 'sfumatura 2', ...] }
    Le sfumature catturano accezioni multiple, costrutti sintattici, registri
@@ -12243,9 +13345,11 @@ function dictLemmaKey(lemma, lang) {
   if (!lemma || lemma === '—') return '';
   let s = lemma.trim();
   if (lang === 'greco') {
-    // Rimuovi l'articolo iniziale (ὁ, ἡ, τό, οἱ, αἱ, τά) e normalizza accenti
-    s = s.replace(/^(ὁ|ἡ|τό|οἱ|αἱ|τά)\s+/, '');
+    // Normalizza PRIMA (rimuove diacritici e minuscolizza) — così Ὁ→ο, Ἡ→η, Τό→το, ecc.
+    // Poi rimuove l'articolo iniziale nella forma normalizzata (ο, η, το, οι, αι, τα).
+    // In questo modo gestiamo anche le forme maiuscole di inizio frase senza duplicare pattern.
     s = normalizeText(s);
+    s = s.replace(/^(ο|η|το|οι|αι|τα)\s+/, '');
   } else {
     s = s.toLowerCase();
   }
@@ -15450,10 +16554,10 @@ function lookupTranslation(lemma, lang) {
   const dict = lang === 'greco' ? GREEK_TRANSLATIONS : LATIN_TRANSLATIONS;
   const k = dictLemmaKey(lemma, lang);
   if (dict[k]) return dict[k];
-  // Per greco prova anche chiave senza articolo
+  // Per greco prova anche chiave senza articolo (inclusi articoli maiuscoli di inizio frase)
   if (lang === 'greco') {
-    const noArt = lemma.replace(/^(ὁ|ἡ|τό|οἱ|αἱ|τά)\s+/, '');
-    const k2 = normalizeText(noArt).match(/^([^\s,;·]+)/);
+    const normalized = normalizeText(lemma).replace(/^(ο|η|το|οι|αι|τα)\s+/, '');
+    const k2 = normalized.match(/^([^\s,;·]+)/);
     if (k2 && dict[k2[1]]) return dict[k2[1]];
   }
   return null;
@@ -15859,6 +16963,268 @@ function getCrossSuggestions(sentence, entry, fieldKey, entryType, lang) {
 }
 
 /* ============================================
+   AUTO-COMPLETAMENTO BIDIREZIONALE FRA SEZIONI
+   --------------------------------------------
+   Mappa delle implicazioni *inequivocabili* tra grammatica, logica
+   e sintassi-periodale. Quando l'utente compila un campo in una sezione
+   la cui interpretazione è univoca anche in un'altra (es. «Soggetto» ⇒
+   caso=Nominativo), il sistema autocompleta i campi corrispondenti.
+
+   Regole solo per associazioni *certe* (un solo caso/parte del discorso
+   possibile). Le ambiguità rimangono manuali e vengono mostrate come
+   suggerimenti tramite getCrossSuggestions (vedi sopra).
+   ============================================ */
+const CROSS_RULES = {
+  latino: {
+    /* funzione logica → vincolo univoco sulla parola grammaticale */
+    logicToGrammar: {
+      'Soggetto':                                  { caso: 'Nominativo' },
+      'Parte nominale':                            { caso: 'Nominativo' },
+      'Predicato nominale':                        { caso: 'Nominativo' },
+      'Predicato verbale':                         { partOfSpeech: 'Verbo' },
+      'Complemento oggetto':                       { caso: 'Accusativo' },
+      "Complemento predicativo dell'oggetto":      { caso: 'Accusativo' },
+      'Complemento di termine':                    { caso: 'Dativo' },
+      'Complemento di vantaggio':                  { caso: 'Dativo' },
+      'Complemento di svantaggio':                 { caso: 'Dativo' },
+      'Dativo etico':                              { caso: 'Dativo' },
+      'Dativo di possesso':                        { caso: 'Dativo' },
+      'Complemento di specificazione':             { caso: 'Genitivo' },
+      'Genitivo soggettivo':                       { caso: 'Genitivo' },
+      'Genitivo oggettivo':                        { caso: 'Genitivo' },
+      'Complemento partitivo':                     { caso: 'Genitivo' },
+      'Complemento di vocazione':                  { caso: 'Vocativo' },
+      'Apostrofe':                                 { caso: 'Vocativo' },
+      'Complemento di tempo continuato':           { caso: 'Accusativo' },
+      'Complemento di causa efficiente':           { caso: 'Ablativo' },
+      'Complemento di agente':                     { caso: 'Ablativo' },
+      'Complemento di mezzo o strumento':          { caso: 'Ablativo' },
+      'Complemento di modo':                       { caso: 'Ablativo' },
+      'Complemento di compagnia':                  { caso: 'Ablativo' },
+      'Complemento di unione':                     { caso: 'Ablativo' },
+      'Complemento di tempo determinato':          { caso: 'Ablativo' },
+      'Complemento di materia':                    { caso: 'Ablativo' },
+      'Complemento di argomento':                  { caso: 'Ablativo' },
+      'Complemento di paragone':                   { caso: 'Ablativo' },
+      'Complemento di allontanamento o separazione': { caso: 'Ablativo' },
+      'Complemento di origine':                    { caso: 'Ablativo' },
+    },
+  },
+  greco: {
+    logicToGrammar: {
+      'Soggetto':                                  { caso: 'Nominativo' },
+      'Parte nominale':                            { caso: 'Nominativo' },
+      'Predicato nominale':                        { caso: 'Nominativo' },
+      'Predicato verbale':                         { partOfSpeech: 'Verbo' },
+      'Complemento oggetto':                       { caso: 'Accusativo' },
+      "Complemento predicativo dell'oggetto":      { caso: 'Accusativo' },
+      'Complemento di termine':                    { caso: 'Dativo' },
+      'Complemento di vantaggio':                  { caso: 'Dativo' },
+      'Complemento di svantaggio':                 { caso: 'Dativo' },
+      'Dativo etico':                              { caso: 'Dativo' },
+      'Dativo di possesso':                        { caso: 'Dativo' },
+      'Complemento di causa efficiente':           { caso: 'Dativo' },
+      'Complemento di mezzo o strumento':          { caso: 'Dativo' },
+      'Complemento di modo':                       { caso: 'Dativo' },
+      'Complemento di compagnia':                  { caso: 'Dativo' },
+      'Complemento di unione':                     { caso: 'Dativo' },
+      'Complemento di tempo determinato':          { caso: 'Dativo' },
+      'Complemento di luogo (stato in)':           { caso: 'Dativo' },
+      'Complemento di specificazione':             { caso: 'Genitivo' },
+      'Genitivo soggettivo':                       { caso: 'Genitivo' },
+      'Genitivo oggettivo':                        { caso: 'Genitivo' },
+      'Complemento partitivo':                     { caso: 'Genitivo' },
+      'Complemento di agente':                     { caso: 'Genitivo' },
+      'Complemento di origine':                    { caso: 'Genitivo' },
+      'Complemento di allontanamento o separazione': { caso: 'Genitivo' },
+      'Complemento di paragone':                   { caso: 'Genitivo' },
+      'Complemento di luogo (moto da)':            { caso: 'Genitivo' },
+      'Complemento di tempo continuato':           { caso: 'Accusativo' },
+      'Complemento di luogo (moto a)':             { caso: 'Accusativo' },
+      'Complemento di vocazione':                  { caso: 'Vocativo' },
+      'Apostrofe':                                 { caso: 'Vocativo' },
+    },
+  },
+};
+
+/* Mappa tipologie particolari di proposizioni periodali → vincoli sul verbo */
+const PERIODALE_TIPO_TO_VERBO = {
+  'Infinitiva oggettiva (latino)':    { verboForma: 'Infinito' },
+  'Infinitiva soggettiva (latino)':   { verboForma: 'Infinito' },
+  'Ablativo assoluto (latino)':       { verboForma: 'Participio', caso: 'Ablativo' },
+  'Genitivo assoluto (greco)':        { verboForma: 'Participio', caso: 'Genitivo' },
+  'Accusativo assoluto (greco)':      { verboForma: 'Participio', caso: 'Accusativo' },
+  'Participiale congiunta (greco)':   { verboForma: 'Participio' },
+  'Participiale sostantivata (greco)': { verboForma: 'Participio' },
+  'Participiale predicativa (greco)': { verboForma: 'Participio' },
+  'Perifrastica attiva (latino)':     { verboForma: 'Participio' },
+  'Perifrastica passiva (latino)':    { verboForma: 'Gerundivo' },
+};
+
+/* Marca una modifica come "auto-completata" sull'entry */
+function markAutoFilled(entry, key, source) {
+  if (!entry._autoFilled) entry._autoFilled = {};
+  entry._autoFilled[key] = source;
+}
+
+/* Propaga gli effetti deterministici di una modifica nelle altre sezioni.
+   Compila SOLO campi vuoti (non sovrascrive mai input dell'utente).
+   Restituisce { changes, log } per eventuale feedback toast. */
+function propagateCrossAnalysis(sentence, sourceType, sourceEntry) {
+  if (!sentence || !sourceEntry) return { changes: 0, log: [] };
+  const lang = (state && state.meta && state.meta.lingua) || 'latino';
+  const rules = CROSS_RULES[lang] || CROSS_RULES.latino;
+  let changes = 0;
+  const log = [];
+
+  // Imposta un campo SOLO se è vuoto. Mai sovrascrivere input utente.
+  function setField(entry, key, value, sourceDesc) {
+    if (value == null || value === '') return false;
+    if (entry[key] && entry[key] !== '' && entry[key] !== value) return false;
+    if (entry[key] === value) return false;
+    entry[key] = value;
+    markAutoFilled(entry, key, sourceDesc);
+    changes++;
+    log.push(`${sourceDesc}: ${key}=${value}`);
+    return true;
+  }
+
+  // Raccogli i token interessati dall'entry sorgente
+  let tokenIds = [];
+  if (sourceType === 'grammar') {
+    if (sourceEntry.tokenIndex != null && sourceEntry.tokenIndex >= 0) {
+      tokenIds = [sourceEntry.tokenIndex];
+    }
+  } else {
+    tokenIds = (sourceEntry.tokenIndices || []).filter(i => i >= 0);
+  }
+
+  /* ── Sorgente GRAMMATICA ────────────────────────────────────── */
+  if (sourceType === 'grammar') {
+    const ge = sourceEntry;
+    // Verbo a forma finita ⇒ predicato verbale nella logica
+    if (ge.partOfSpeech === 'Verbo' && ge.verboForma === 'Forma finita' && ge.tokenIndex != null) {
+      const le = (sentence.logic || []).find(x => (x.tokenIndices || []).includes(ge.tokenIndex));
+      if (le) setField(le, 'funzione', 'Predicato verbale', 'auto da grammatica');
+    }
+    // Caso Vocativo ⇒ funzione = Complemento di vocazione
+    if (ge.caso === 'Vocativo' && ge.tokenIndex != null) {
+      const le = (sentence.logic || []).find(x => (x.tokenIndices || []).includes(ge.tokenIndex));
+      if (le) setField(le, 'funzione', 'Complemento di vocazione', 'auto da grammatica (vocativo)');
+    }
+    // Infinito/Participio/Gerundio/Gerundivo/Supino → non sono predicati verbali (per ora niente propagazione automatica)
+  }
+
+  /* ── Sorgente LOGICA ────────────────────────────────────────── */
+  if (sourceType === 'logic') {
+    const le = sourceEntry;
+    const mapping = (rules.logicToGrammar || {})[le.funzione];
+    if (mapping && tokenIds.length > 0) {
+      // Caso speciale: «Predicato verbale» → applica al verbo finito del sintagma
+      if (le.funzione === 'Predicato verbale') {
+        tokenIds.forEach(tIdx => {
+          const ge = (sentence.grammar || []).find(g => g.tokenIndex === tIdx);
+          if (!ge) return;
+          // Imposta PoS solo se vuoto; non sovrascrivere mai Sostantivo/Aggettivo etc.
+          if (!ge.partOfSpeech) {
+            setField(ge, 'partOfSpeech', 'Verbo', `auto da logica «${le.funzione}»`);
+            setField(ge, 'verboForma', 'Forma finita', `auto da logica «${le.funzione}»`);
+          } else if (ge.partOfSpeech === 'Verbo' && !ge.verboForma) {
+            setField(ge, 'verboForma', 'Forma finita', `auto da logica «${le.funzione}»`);
+          }
+        });
+      } else {
+        // Per i complementi e altre funzioni → applica il caso ai token nominali
+        tokenIds.forEach(tIdx => {
+          const ge = (sentence.grammar || []).find(g => g.tokenIndex === tIdx);
+          if (!ge) return;
+          // Non toccare verbi (modo finito) e congiunzioni/avverbi/preposizioni
+          const skipPos = ['Congiunzione', 'Particella', 'Avverbio', 'Preposizione', 'Interiezione'];
+          if (skipPos.includes(ge.partOfSpeech)) return;
+          // Per i verbi al modo finito non applicare caso
+          if (ge.partOfSpeech === 'Verbo' && ge.verboForma === 'Forma finita') return;
+          if (mapping.caso) setField(ge, 'caso', mapping.caso, `auto da logica «${le.funzione}»`);
+          if (mapping.partOfSpeech && !ge.partOfSpeech) {
+            setField(ge, 'partOfSpeech', mapping.partOfSpeech, `auto da logica «${le.funzione}»`);
+          }
+        });
+      }
+    }
+  }
+
+  /* ── Sorgente PERIODALE ─────────────────────────────────────── */
+  if (sourceType === 'periodale') {
+    const pe = sourceEntry;
+    // Modo esplicito della proposizione → modo del verbo finito al suo interno
+    if (pe.modo && tokenIds.length > 0) {
+      tokenIds.forEach(tIdx => {
+        const ge = (sentence.grammar || []).find(g => g.tokenIndex === tIdx);
+        if (!ge) return;
+        if (ge.partOfSpeech === 'Verbo' && ge.verboForma === 'Forma finita') {
+          setField(ge, 'modo', pe.modo, `auto da sintassi (proposizione)`);
+        }
+      });
+    }
+    // Tipologia particolare (Ablativo assoluto, Infinitiva, Participiali...)
+    // Ablativo/Genitivo/Accusativo assoluto: contengono nome + participio nello stesso caso.
+    // Applichiamo solo i vincoli SICURI: caso a tutti i token nominali; verboForma solo
+    // a entry già marcate come Verbo (non auto-creiamo Verbo dai token vuoti per evitare di
+    // attribuire la parte del discorso sbagliata al nome del costrutto).
+    const spec = PERIODALE_TIPO_TO_VERBO[pe.tipo];
+    if (spec && tokenIds.length > 0) {
+      tokenIds.forEach(tIdx => {
+        const ge = (sentence.grammar || []).find(g => g.tokenIndex === tIdx);
+        if (!ge) return;
+        // Caso: applicabile a tutti i token nominali della proposizione (nome + participio
+        // concordano nei costrutti assoluti)
+        if (spec.caso) {
+          const skipPos = ['Congiunzione','Particella','Avverbio','Preposizione','Interiezione'];
+          if (!skipPos.includes(ge.partOfSpeech) && !(ge.partOfSpeech === 'Verbo' && ge.verboForma === 'Forma finita')) {
+            setField(ge, 'caso', spec.caso, `auto da «${pe.tipo}»`);
+          }
+        }
+        // verboForma: solo se l'utente ha già marcato il token come Verbo
+        if (spec.verboForma && ge.partOfSpeech === 'Verbo') {
+          setField(ge, 'verboForma', spec.verboForma, `auto da «${pe.tipo}»`);
+        }
+      });
+    }
+  }
+
+  return { changes, log };
+}
+
+/* Inferisce la funzione logica univoca a partire da una entry grammaticale.
+   Restituisce { funzione, reason } se è inequivocabile, altrimenti null. */
+function inferLogicFunctionFromGrammar(ge) {
+  if (!ge) return null;
+  if (ge.partOfSpeech === 'Verbo' && ge.verboForma === 'Forma finita') {
+    return { funzione: 'Predicato verbale', reason: 'verbo a forma finita' };
+  }
+  if (ge.caso === 'Vocativo') {
+    return { funzione: 'Complemento di vocazione', reason: 'caso vocativo' };
+  }
+  return null;
+}
+
+/* Inferisce le caratteristiche grammaticali univoche a partire dalla funzione logica.
+   Restituisce { caso, partOfSpeech, verboForma } (campi opzionali) o null. */
+function inferGrammarHintFromLogic(funzione, lang) {
+  if (!funzione) return null;
+  const rules = CROSS_RULES[lang] || CROSS_RULES.latino;
+  return (rules.logicToGrammar || {})[funzione] || null;
+}
+
+/* Rimuove i marker _autoFilled di un campo specifico (es. quando l'utente
+   modifica esplicitamente quel campo: smette di essere "auto"). */
+function clearAutoFilledMarker(entry, key) {
+  if (entry && entry._autoFilled && entry._autoFilled[key]) {
+    delete entry._autoFilled[key];
+    if (Object.keys(entry._autoFilled).length === 0) delete entry._autoFilled;
+  }
+}
+
+/* ============================================
    ORDINAMENTO ENTRY PER POSIZIONE NEL TESTO
    Le voci nuove vengono inserite in posizione corretta;
    l'utente può poi trascinarle a piacere.
@@ -16028,6 +17394,16 @@ function makeLogicSummary(entry) {
   const parts = [];
   if (entry.funzione) parts.push(`<span class="entry-summary-pos">${escapeHtml(entry.funzione)}</span>`);
   else parts.push(`<span class="entry-summary-pos muted">funzione ?</span>`);
+  if (entry.isAttributivo) {
+    // Risolvi il sintagma capo: cerca la frase corrente
+    let headLabel = '';
+    if (entry.attribuitoA) {
+      const sentence = state.sentences.find(s => (s.logic || []).some(e => e.id === entry.id));
+      const head = sentence ? (sentence.logic || []).find(e => e.id === entry.attribuitoA) : null;
+      if (head) headLabel = head.phrase || head.funzione || '';
+    }
+    parts.push(`<span class="entry-summary-attributivo" title="In posizione attributiva${headLabel ? ' di: ' + headLabel : ''}">⌖ attr.${headLabel ? ` → ${escapeHtml(headLabel.substring(0,24))}${headLabel.length>24?'…':''}` : ''}</span>`);
+  }
   if (entry.note) parts.push(`<span class="entry-summary-meta">${escapeHtml(entry.note.substring(0, 50))}${entry.note.length > 50 ? '…' : ''}</span>`);
   return parts.join(' ');
 }
@@ -17110,22 +18486,52 @@ function clearBatchBlockSelection() {
 }
 
 function getBatchDimensions(lang) {
-  // Lista delle dimensioni disponibili per la modalità grammatica
+  // Lista piatta (compatibilità) — le dimensioni sono usate per look-up label e iterazioni semplici
+  return getBatchDimensionsGrouped(lang).reduce((acc, g) => acc.concat(g.items), []);
+}
+
+/* Dimensioni della batch grammaticale raggruppate per parte del discorso.
+   L'ordine all'interno di ogni gruppo segue la sequenza naturale di analisi
+   dell'aspetto morfologico (declinazione → genere → numero → caso per i sostantivi,
+   coniugazione → forma → tempo → modo → diatesi → persona → numero per i verbi). */
+function getBatchDimensionsGrouped(lang) {
   return [
-    { key: 'partOfSpeech', label: 'Parte del discorso' },
-    { key: 'caso',         label: 'Caso (sost./agg./pron./art.)' },
-    { key: 'numero',       label: 'Numero (sing./plur./duale)' },
-    { key: 'genere',       label: 'Genere (m./f./n.)' },
-    { key: 'declinazione', label: 'Declinazione (sostantivi)' },
-    { key: 'classe',       label: 'Classe (aggettivi)' },
-    { key: 'grado',        label: 'Grado (positivo/comp./sup.)' },
-    { key: 'coniugazione', label: 'Coniugazione (verbi)' },
-    { key: 'verboForma',   label: 'Forma del verbo' },
-    { key: 'tempo',        label: 'Tempo (verbi)' },
-    { key: 'modo',         label: 'Modo (verbi)' },
-    { key: 'persona',      label: 'Persona (verbi)' },
-    { key: 'diatesi',      label: 'Diatesi (verbi)' },
-    { key: 'pronomeTipo',  label: 'Tipo di pronome' },
+    { group: 'Generale', items: [
+      { key: 'partOfSpeech', label: 'Parte del discorso' },
+    ]},
+    { group: 'Sostantivi', items: [
+      { key: 'declinazione', label: 'Declinazione' },
+      { key: 'genere',       label: 'Genere' },
+      { key: 'numero',       label: 'Numero' },
+      { key: 'caso',         label: 'Caso' },
+    ]},
+    { group: 'Aggettivi', items: [
+      { key: 'classe',       label: 'Classe' },
+      { key: 'grado',        label: 'Grado' },
+      { key: 'genere',       label: 'Genere' },
+      { key: 'numero',       label: 'Numero' },
+      { key: 'caso',         label: 'Caso' },
+    ]},
+    { group: 'Verbi', items: [
+      { key: 'coniugazione', label: 'Coniugazione' },
+      { key: 'verboForma',   label: 'Forma' },
+      { key: 'tempo',        label: 'Tempo' },
+      { key: 'modo',         label: 'Modo' },
+      { key: 'diatesi',      label: 'Diatesi' },
+      { key: 'persona',      label: 'Persona' },
+      { key: 'numero',       label: 'Numero' },
+    ]},
+    { group: 'Pronomi', items: [
+      { key: 'pronomeTipo',  label: 'Tipo di pronome' },
+      { key: 'genere',       label: 'Genere' },
+      { key: 'numero',       label: 'Numero' },
+      { key: 'caso',         label: 'Caso' },
+    ]},
+    { group: 'Articoli (greco)', items: [
+      { key: 'genere',       label: 'Genere' },
+      { key: 'numero',       label: 'Numero' },
+      { key: 'caso',         label: 'Caso' },
+    ]},
   ];
 }
 
@@ -17155,9 +18561,25 @@ function renderBatchBar(mode, sentence) {
   const lang = state.meta.lingua;
 
   if (mode === 'grammar') {
-    const dimensions = getBatchDimensions(lang);
+    const dimensionsGrouped = getBatchDimensionsGrouped(lang);
+    const dimensionsFlat = getBatchDimensions(lang);
     const valueOpts = getBatchValueOptions(batchMode.dimension, lang);
-    const dimLabel = (dimensions.find(d => d.key === batchMode.dimension) || {}).label || batchMode.dimension;
+    const dimLabel = (dimensionsFlat.find(d => d.key === batchMode.dimension) || {}).label || batchMode.dimension;
+    // Optgroup per parte del discorso (Sostantivi · Aggettivi · Verbi · Pronomi …).
+    // Encodiamo nella value sia il gruppo (per UI) sia la chiave (per la logica).
+    // Soluzione: ogni voce ha value=key, ma le ripetizioni di stessa key in gruppi diversi
+    // (es. 'caso' in Sostantivi/Aggettivi/Pronomi) sono volute — il selectedness si basa
+    // su key + group corrente. Per garantire la stabilità dell'opzione selezionata mostriamo
+    // la prima occorrenza come selected se nessun gruppo è già impostato.
+    let selectedSeen = false;
+    const dimOpts = dimensionsGrouped.map(g => {
+      const items = g.items.map(d => {
+        const isSel = !selectedSeen && batchMode.dimension === d.key;
+        if (isSel) selectedSeen = true;
+        return `<option value="${d.key}" data-group="${escapeHtml(g.group)}" ${isSel ? 'selected' : ''}>${escapeHtml(d.label)}</option>`;
+      }).join('');
+      return `<optgroup label="${escapeHtml(g.group)}">${items}</optgroup>`;
+    }).join('');
     return `
       <div class="batch-bar">
         <div class="batch-bar-header">
@@ -17166,9 +18588,9 @@ function renderBatchBar(mode, sentence) {
         </div>
         <div class="batch-bar-controls">
           <div>
-            <label class="field-block-label">Dimensione</label>
+            <label class="field-block-label">Dimensione · per parte del discorso</label>
             <select onchange="setBatchDimension(this.value)">
-              ${dimensions.map(d => `<option value="${d.key}" ${batchMode.dimension === d.key ? 'selected' : ''}>${escapeHtml(d.label)}</option>`).join('')}
+              ${dimOpts}
             </select>
           </div>
           <div>
@@ -17268,6 +18690,10 @@ function applyBatchTag(sentenceId, tokenIdx) {
       entry[batchMode.dimension] = batchMode.value;
       // Se viene assegnata una dimensione specifica per non-Verbo, popola partOfSpeech in modo coerente
       // (es. assegnando caso, suggerisce che è un nome/aggettivo/pronome — non lo settiamo automaticamente per non sovrascrivere)
+      // PROPAGAZIONE: i tag batch su partOfSpeech/verboForma/caso possono attivare implicazioni univoche
+      if (['partOfSpeech','verboForma','caso'].includes(batchMode.dimension)) {
+        propagateCrossAnalysis(sentence, 'grammar', entry);
+      }
     }
   } else if (batchMode.mode === 'logic') {
     // Accumula i token nel blocco corrente (selezione temporanea)
@@ -17339,6 +18765,9 @@ function confirmBatchLogicBlock(sentenceId) {
   entry.funzione = batchMode.value;
   insertEntrySorted(sentence.logic, entry, 'logic');
 
+  // PROPAGAZIONE incrociata sul nuovo sintagma logico
+  const propagated = propagateCrossAnalysis(sentence, 'logic', entry);
+
   // Resetta la selezione temporanea per poter creare il PROSSIMO blocco con la stessa funzione
   batchMode.tempSelection = [];
   batchMode.tempSentenceId = null;
@@ -17346,7 +18775,8 @@ function confirmBatchLogicBlock(sentenceId) {
   persistCurrent();
   renderEditor();
   renderSidebarTabs();
-  showToast(`Sintagma «${phrase}» creato (${batchMode.value})`);
+  const suffix = propagated.changes > 0 ? ` · ${propagated.changes} auto-completamenti` : '';
+  showToast(`Sintagma «${phrase}» creato (${batchMode.value})${suffix}`);
 }
 
 function countBatchApplied(sentence, mode) {
@@ -17422,33 +18852,41 @@ function getTokenBatchState(tok) {
    ============================================ */
 const ELLIPSIS_PRESETS = {
   // — Verbi esse latino —
-  'lat-est':    { type:'grammar', label:'est (3ª sing. pres. ind. att.)',     word:'est',    partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Singolare', lemma:'sum, es, fui, esse', lemmaCustom:true },
-  'lat-sunt':   { type:'grammar', label:'sunt (3ª plur. pres. ind. att.)',    word:'sunt',   partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Plurale',   lemma:'sum, es, fui, esse', lemmaCustom:true },
-  'lat-sum':    { type:'grammar', label:'sum (1ª sing. pres. ind. att.)',     word:'sum',    partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'1ª', numero:'Singolare', lemma:'sum, es, fui, esse', lemmaCustom:true },
-  'lat-es':     { type:'grammar', label:'es (2ª sing. pres. ind. att.)',      word:'es',     partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'2ª', numero:'Singolare', lemma:'sum, es, fui, esse', lemmaCustom:true },
-  'lat-sumus':  { type:'grammar', label:'sumus (1ª plur. pres. ind. att.)',   word:'sumus',  partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'1ª', numero:'Plurale',   lemma:'sum, es, fui, esse', lemmaCustom:true },
-  'lat-estis':  { type:'grammar', label:'estis (2ª plur. pres. ind. att.)',   word:'estis',  partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'2ª', numero:'Plurale',   lemma:'sum, es, fui, esse', lemmaCustom:true },
-  'lat-erat':   { type:'grammar', label:'erat (3ª sing. imperf. ind. att.)',  word:'erat',   partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Imperfetto',   modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Singolare', lemma:'sum, es, fui, esse', lemmaCustom:true },
-  'lat-erant':  { type:'grammar', label:'erant (3ª plur. imperf. ind. att.)', word:'erant',  partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Imperfetto',   modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Plurale',   lemma:'sum, es, fui, esse', lemmaCustom:true },
-  'lat-sit':    { type:'grammar', label:'sit (3ª sing. pres. cong. att.)',    word:'sit',    partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Congiuntivo',diatesi:'Attiva', persona:'3ª', numero:'Singolare', lemma:'sum, es, fui, esse', lemmaCustom:true },
-  'lat-sint':   { type:'grammar', label:'sint (3ª plur. pres. cong. att.)',   word:'sint',   partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Congiuntivo',diatesi:'Attiva', persona:'3ª', numero:'Plurale',   lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-est':    { type:'grammar', lang:'latino', label:'est (3ª sing. pres. ind. att.)',     word:'est',    partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Singolare', lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-sunt':   { type:'grammar', lang:'latino', label:'sunt (3ª plur. pres. ind. att.)',    word:'sunt',   partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Plurale',   lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-sum':    { type:'grammar', lang:'latino', label:'sum (1ª sing. pres. ind. att.)',     word:'sum',    partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'1ª', numero:'Singolare', lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-es':     { type:'grammar', lang:'latino', label:'es (2ª sing. pres. ind. att.)',      word:'es',     partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'2ª', numero:'Singolare', lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-sumus':  { type:'grammar', lang:'latino', label:'sumus (1ª plur. pres. ind. att.)',   word:'sumus',  partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'1ª', numero:'Plurale',   lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-estis':  { type:'grammar', lang:'latino', label:'estis (2ª plur. pres. ind. att.)',   word:'estis',  partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Indicativo', diatesi:'Attiva', persona:'2ª', numero:'Plurale',   lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-erat':   { type:'grammar', lang:'latino', label:'erat (3ª sing. imperf. ind. att.)',  word:'erat',   partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Imperfetto',   modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Singolare', lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-erant':  { type:'grammar', lang:'latino', label:'erant (3ª plur. imperf. ind. att.)', word:'erant',  partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Imperfetto',   modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Plurale',   lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-sit':    { type:'grammar', lang:'latino', label:'sit (3ª sing. pres. cong. att.)',    word:'sit',    partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Congiuntivo',diatesi:'Attiva', persona:'3ª', numero:'Singolare', lemma:'sum, es, fui, esse', lemmaCustom:true },
+  'lat-sint':   { type:'grammar', lang:'latino', label:'sint (3ª plur. pres. cong. att.)',   word:'sint',   partOfSpeech:'Verbo', coniugazione:'Anomalo', verboForma:'Forma finita', tempo:'Presente',     modo:'Congiuntivo',diatesi:'Attiva', persona:'3ª', numero:'Plurale',   lemma:'sum, es, fui, esse', lemmaCustom:true },
   // — Verbi εἰμί greco —
-  'gr-esti':    { type:'grammar', label:'ἐστί(ν) (3ª sing. pres. ind. att.)',  word:'ἐστί',   partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Presente', modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Singolare', lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
-  'gr-eisi':    { type:'grammar', label:'εἰσί(ν) (3ª plur. pres. ind. att.)',  word:'εἰσί',   partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Presente', modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Plurale',   lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
-  'gr-eimi':    { type:'grammar', label:'εἰμί (1ª sing. pres. ind. att.)',     word:'εἰμί',   partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Presente', modo:'Indicativo', diatesi:'Attiva', persona:'1ª', numero:'Singolare', lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
-  'gr-en':      { type:'grammar', label:'ἦν (3ª sing. imperf. ind. att.)',     word:'ἦν',     partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Imperfetto', modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Singolare', lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
-  'gr-esan':    { type:'grammar', label:'ἦσαν (3ª plur. imperf. ind. att.)',   word:'ἦσαν',   partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Imperfetto', modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Plurale',   lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
+  'gr-esti':    { type:'grammar', lang:'greco', label:'ἐστί(ν) (3ª sing. pres. ind. att.)',  word:'ἐστί',   partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Presente', modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Singolare', lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
+  'gr-eisi':    { type:'grammar', lang:'greco', label:'εἰσί(ν) (3ª plur. pres. ind. att.)',  word:'εἰσί',   partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Presente', modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Plurale',   lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
+  'gr-eimi':    { type:'grammar', lang:'greco', label:'εἰμί (1ª sing. pres. ind. att.)',     word:'εἰμί',   partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Presente', modo:'Indicativo', diatesi:'Attiva', persona:'1ª', numero:'Singolare', lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
+  'gr-ei':      { type:'grammar', lang:'greco', label:'εἶ (2ª sing. pres. ind. att.)',       word:'εἶ',     partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Presente', modo:'Indicativo', diatesi:'Attiva', persona:'2ª', numero:'Singolare', lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
+  'gr-esmen':   { type:'grammar', lang:'greco', label:'ἐσμέν (1ª plur. pres. ind. att.)',    word:'ἐσμέν',  partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Presente', modo:'Indicativo', diatesi:'Attiva', persona:'1ª', numero:'Plurale',   lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
+  'gr-este':    { type:'grammar', lang:'greco', label:'ἐστέ (2ª plur. pres. ind. att.)',     word:'ἐστέ',   partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Presente', modo:'Indicativo', diatesi:'Attiva', persona:'2ª', numero:'Plurale',   lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
+  'gr-en':      { type:'grammar', lang:'greco', label:'ἦν (3ª sing. imperf. ind. att.)',     word:'ἦν',     partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Imperfetto', modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Singolare', lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
+  'gr-esan':    { type:'grammar', lang:'greco', label:'ἦσαν (3ª plur. imperf. ind. att.)',   word:'ἦσαν',   partOfSpeech:'Verbo', coniugazione:'Atematica (-μι)', verboForma:'Forma finita', tempo:'Imperfetto', modo:'Indicativo', diatesi:'Attiva', persona:'3ª', numero:'Plurale',   lemma:'εἰμί, ἔσομαι, —, —, —, —', lemmaCustom:true },
   // — Pronomi soggetto sottinteso (latino) —
-  'lat-is':     { type:'grammar', label:'is (egli — pron. sogg. sottinteso)', word:'is',     partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Maschile', numero:'Singolare', caso:'Nominativo', persona:'3ª', lemma:'is, ea, id', lemmaCustom:true },
-  'lat-ea':     { type:'grammar', label:'ea (ella)',                          word:'ea',     partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Femminile',numero:'Singolare', caso:'Nominativo', persona:'3ª', lemma:'is, ea, id', lemmaCustom:true },
-  'lat-ille':   { type:'grammar', label:'ille (quello)',                      word:'ille',   partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Maschile', numero:'Singolare', caso:'Nominativo', persona:'3ª', lemma:'ille, illa, illud', lemmaCustom:true },
-  'lat-ei':     { type:'grammar', label:'ei / ii (essi)',                     word:'ei',     partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Maschile', numero:'Plurale',   caso:'Nominativo', persona:'3ª', lemma:'is, ea, id', lemmaCustom:true },
-  // — Logici generici —
-  'gen-sogg':   { type:'logic',   label:'[soggetto sottinteso]',              phrase:'[soggetto sottinteso]',                       funzione:'Soggetto' },
-  'gen-od':     { type:'logic',   label:'[oggetto sottinteso]',               phrase:'[oggetto sottinteso]',                        funzione:'Complemento oggetto' },
-  'gen-term':   { type:'logic',   label:'[compl. di termine sottinteso]',    phrase:'[compl. di termine sottinteso]',              funzione:'Complemento di termine' },
-  'gen-spec':   { type:'logic',   label:'[compl. di specificazione sottinteso]', phrase:'[compl. di specificazione sottinteso]', funzione:'Complemento di specificazione' },
-  'gen-luogo':  { type:'logic',   label:'[compl. di luogo sottinteso]',       phrase:'[compl. di luogo sottinteso]',                funzione:'Complemento di luogo (stato in)' },
+  'lat-is':     { type:'grammar', lang:'latino', kind:'pronome', label:'is (egli — pron. sogg. sottinteso)', word:'is',     partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Maschile', numero:'Singolare', caso:'Nominativo', persona:'3ª', lemma:'is, ea, id', lemmaCustom:true },
+  'lat-ea':     { type:'grammar', lang:'latino', kind:'pronome', label:'ea (ella)',                          word:'ea',     partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Femminile',numero:'Singolare', caso:'Nominativo', persona:'3ª', lemma:'is, ea, id', lemmaCustom:true },
+  'lat-ille':   { type:'grammar', lang:'latino', kind:'pronome', label:'ille (quello)',                      word:'ille',   partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Maschile', numero:'Singolare', caso:'Nominativo', persona:'3ª', lemma:'ille, illa, illud', lemmaCustom:true },
+  'lat-ei':     { type:'grammar', lang:'latino', kind:'pronome', label:'ei / ii (essi)',                     word:'ei',     partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Maschile', numero:'Plurale',   caso:'Nominativo', persona:'3ª', lemma:'is, ea, id', lemmaCustom:true },
+  // — Pronomi soggetto sottinteso (greco) —
+  'gr-autos':   { type:'grammar', lang:'greco', kind:'pronome', label:'αὐτός (egli)',                       word:'αὐτός',  partOfSpeech:'Pronome', pronomeTipo:'Personale', genere:'Maschile', numero:'Singolare', caso:'Nominativo', persona:'3ª', lemma:'αὐτός, αὐτή, αὐτό', lemmaCustom:true },
+  'gr-aute':    { type:'grammar', lang:'greco', kind:'pronome', label:'αὐτή (ella)',                        word:'αὐτή',   partOfSpeech:'Pronome', pronomeTipo:'Personale', genere:'Femminile',numero:'Singolare', caso:'Nominativo', persona:'3ª', lemma:'αὐτός, αὐτή, αὐτό', lemmaCustom:true },
+  'gr-houtos':  { type:'grammar', lang:'greco', kind:'pronome', label:'οὗτος (questi/costui)',              word:'οὗτος',  partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Maschile', numero:'Singolare', caso:'Nominativo', persona:'3ª', lemma:'οὗτος, αὕτη, τοῦτο', lemmaCustom:true },
+  'gr-ekeinos': { type:'grammar', lang:'greco', kind:'pronome', label:'ἐκεῖνος (quello/colui)',             word:'ἐκεῖνος',partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Maschile', numero:'Singolare', caso:'Nominativo', persona:'3ª', lemma:'ἐκεῖνος, ἐκείνη, ἐκεῖνο', lemmaCustom:true },
+  // — Logici generici (indipendenti dalla lingua) —
+  'gen-sogg':   { type:'logic',   lang:'any', label:'[soggetto sottinteso]',              phrase:'[soggetto sottinteso]',                       funzione:'Soggetto' },
+  'gen-od':     { type:'logic',   lang:'any', label:'[oggetto sottinteso]',               phrase:'[oggetto sottinteso]',                        funzione:'Complemento oggetto' },
+  'gen-term':   { type:'logic',   lang:'any', label:'[compl. di termine sottinteso]',    phrase:'[compl. di termine sottinteso]',              funzione:'Complemento di termine' },
+  'gen-spec':   { type:'logic',   lang:'any', label:'[compl. di specificazione sottinteso]', phrase:'[compl. di specificazione sottinteso]', funzione:'Complemento di specificazione' },
+  'gen-luogo':  { type:'logic',   lang:'any', label:'[compl. di luogo sottinteso]',       phrase:'[compl. di luogo sottinteso]',                funzione:'Complemento di luogo (stato in)' },
 };
 
 function addEllipticalEntry(sentenceId) {
@@ -17459,10 +18897,11 @@ function addEllipticalEntry(sentenceId) {
   const preset = ELLIPSIS_PRESETS[sel.value];
   if (!preset) return;
 
+  const skipMeta = new Set(['type', 'label', 'lang', 'kind']);
   if (preset.type === 'grammar') {
     const entry = makeEntry('grammar');
     Object.keys(preset).forEach(k => {
-      if (k === 'type' || k === 'label') return;
+      if (skipMeta.has(k)) return;
       entry[k] = preset[k];
     });
     entry.isElliptical = true;
@@ -17472,7 +18911,7 @@ function addEllipticalEntry(sentenceId) {
   } else if (preset.type === 'logic') {
     const entry = makeEntry('logic');
     Object.keys(preset).forEach(k => {
-      if (k === 'type' || k === 'label') return;
+      if (skipMeta.has(k)) return;
       entry[k] = preset[k];
     });
     entry.isElliptical = true;
@@ -17488,37 +18927,40 @@ function addEllipticalEntry(sentenceId) {
 
 function renderEllipsisRow(sentenceId, scope) {
   // scope: 'grammar' | 'logic'
-  const grammarPresets = Object.entries(ELLIPSIS_PRESETS).filter(([_, p]) => p.type === 'grammar');
-  const logicPresets   = Object.entries(ELLIPSIS_PRESETS).filter(([_, p]) => p.type === 'logic');
+  const currentLang = state.meta.lingua;
+  const entries = Object.entries(ELLIPSIS_PRESETS);
+  const opt = ([k, p]) => `<option value="${k}">${escapeHtml(p.label)}</option>`;
 
-  const verbiOpts = grammarPresets
-    .filter(([k]) => k.startsWith('lat-') && !['lat-is','lat-ea','lat-ille','lat-ei'].includes(k))
-    .map(([k, p]) => `<option value="${k}">${escapeHtml(p.label)}</option>`).join('');
-  const verbiGrOpts = grammarPresets
-    .filter(([k]) => k.startsWith('gr-'))
-    .map(([k, p]) => `<option value="${k}">${escapeHtml(p.label)}</option>`).join('');
-  const pronOpts = grammarPresets
-    .filter(([k]) => ['lat-is','lat-ea','lat-ille','lat-ei'].includes(k))
-    .map(([k, p]) => `<option value="${k}">${escapeHtml(p.label)}</option>`).join('');
-  const logicOpts = logicPresets
-    .map(([k, p]) => `<option value="${k}">${escapeHtml(p.label)}</option>`).join('');
+  // Filtra per lingua corrente: mostra solo i preset coerenti
+  const grammarPresets = entries.filter(([_, p]) => p.type === 'grammar' && p.lang === currentLang);
+  const logicPresets   = entries.filter(([_, p]) => p.type === 'logic' && (p.lang === 'any' || p.lang === currentLang));
+
+  const verbiOpts = grammarPresets.filter(([_, p]) => p.kind !== 'pronome').map(opt).join('');
+  const pronOpts  = grammarPresets.filter(([_, p]) => p.kind === 'pronome').map(opt).join('');
+  const logicOpts = logicPresets.map(opt).join('');
+
+  const verbiLabel = currentLang === 'greco'
+    ? 'Verbi εἰμί (greco) sottintesi'
+    : 'Verbi esse (latino) sottintesi';
+  const pronLabel = currentLang === 'greco'
+    ? 'Pronomi soggetto sottintesi (greco)'
+    : 'Pronomi soggetto sottintesi (latino)';
 
   return `
     <div class="subsection ellipsis-row">
       <div class="subsection-header">
         <span class="subsection-number">⊕</span>
         <span class="subsection-title">Elemento sottinteso (ellisi)</span>
-        <span class="subsection-hint">verbi, soggetti, complementi non presenti nel testo ma impliciti</span>
+        <span class="subsection-hint">verbi, soggetti, complementi non presenti nel testo ma impliciti — filtrati per ${currentLang}</span>
       </div>
       <div class="add-entry-row">
         <div class="field-block" style="flex: 2;">
           <label class="field-block-label">Scegli un preset</label>
           <select class="field-select" id="new-ellipsis-preset-${sentenceId}">
             <option value="">— scegli un'ellisi —</option>
-            <optgroup label="Verbi esse (latino) sottintesi">${verbiOpts}</optgroup>
-            <optgroup label="Verbi εἰμί (greco) sottintesi">${verbiGrOpts}</optgroup>
-            <optgroup label="Pronomi soggetto sottintesi (latino)">${pronOpts}</optgroup>
-            <optgroup label="Funzioni sintattiche generiche">${logicOpts}</optgroup>
+            ${verbiOpts ? `<optgroup label="${escapeHtml(verbiLabel)}">${verbiOpts}</optgroup>` : ''}
+            ${pronOpts ? `<optgroup label="${escapeHtml(pronLabel)}">${pronOpts}</optgroup>` : ''}
+            ${logicOpts ? `<optgroup label="Funzioni sintattiche generiche">${logicOpts}</optgroup>` : ''}
           </select>
         </div>
         <button class="btn btn-brand-soft" onclick="addEllipticalEntry('${sentenceId}')">+ Aggiungi sottinteso</button>
@@ -17669,8 +19111,8 @@ function renderConnettiviActionBar(sentence) {
   const currentSub = gEntry ? (gEntry.congiunzioneTipo || '') : '';
   const isCurrentlyConn = gEntry && isConnettivoEntry(gEntry);
   const lang = state.meta.lingua;
-  const subOptions = (TAXONOMIES[lang].congiunzioneTipo || []).map(o =>
-    `<option value="${escapeHtml(o)}" ${o === currentSub ? 'selected' : ''}>${escapeHtml(o)}</option>`).join('');
+  // Raggruppa per macro-categoria (Copulative · Coordinanti · Subordinanti · Particelle)
+  const subOptions = renderCongiunzioneTipoOptions(currentSub, lang, new Set());
 
   // Determine current category value
   let currentCat = '';
@@ -18050,6 +19492,7 @@ function registerParadigmRef(lemma, pos, lang, hints) {
 function openParadigm(key) {
   const ref = _PARADIGM_REGISTRY[key];
   if (!ref) return;
+  _lastParadigmKey = key;
   const modal = document.getElementById('modal-paradigm');
   if (!modal) return;
   const { lemma, pos, lang, hints } = ref;
@@ -18158,7 +19601,18 @@ function openParadigm(key) {
   const subtitle = document.getElementById('paradigm-modal-subtitle');
   if (subtitle) subtitle.textContent = pos + subtitleSuffix + (lang === 'greco' ? ' · greco' : ' · latino');
   const body = document.getElementById('paradigm-modal-body');
-  if (body) body.innerHTML = bodyHtml;
+  if (body) {
+    // Legenda colori morfologici (visibile solo quando morph è attivo)
+    const legendHtml = `<div class="paradigm-morph-legend">
+      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-aug">A</span> aumento</span>
+      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-redup">R</span> raddoppiamento</span>
+      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-stem">T</span> tema</span>
+      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-tense">σ/κ/θ/ba</span> suff. temporale</span>
+      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-mood">οι/αι/re</span> suff. modale</span>
+      <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-ending">-ω/-μι</span> desinenza</span>
+    </div>`;
+    body.innerHTML = legendHtml + bodyHtml;
+  }
   // Ripristina lo stato salvato del toggle "evidenzia desinenze"
   const highlightOn = getParadigmHighlightEndings();
   document.body.classList.toggle('paradigm-highlight-on', highlightOn);
@@ -18166,6 +19620,14 @@ function openParadigm(key) {
   if (hbtn) {
     hbtn.classList.toggle('active', highlightOn);
     hbtn.textContent = highlightOn ? '✓ Desinenze evidenziate' : 'Evidenzia desinenze';
+  }
+  // Toggle morfologico
+  const morphOn = getParadigmMorphAnalysis();
+  document.body.classList.toggle('paradigm-morph-on', morphOn);
+  const mbtn = document.getElementById('paradigm-morph-toggle');
+  if (mbtn) {
+    mbtn.classList.toggle('active', morphOn);
+    mbtn.textContent = morphOn ? '✓ Componenti morfologiche' : 'Mostra componenti morfologiche';
   }
   modal.classList.add('open');
 }
@@ -18295,9 +19757,8 @@ function renderDictionaryHtml() {
   } else if (effPos === 'tutti') {
     // Modalità "Tutte le categorie": un'unica lista in ordine ALFABETICO
     // (niente raggruppamenti). Le voci sono ordinate per lemma ignorando articoli/diacritici.
-    const sortKey = (e) => (e.lemma || '').toLowerCase()
-      .replace(/^(ὁ|ἡ|τό|οἱ|αἱ|τά)\s+/, '')
-      .normalize('NFD').replace(/[̀-ͯ]/g, '')
+    const sortKey = (e) => normalizeText(e.lemma || '')
+      .replace(/^(ο|η|το|οι|αι|τα)\s+/, '')
       .replace(/^[^a-zα-ω]+/, '');
     const sortedAlpha = filtered.slice().sort((a, b) => sortKey(a).localeCompare(sortKey(b), 'it'));
     const cards = sortedAlpha.map(e => renderDictionaryCard(e, lang, preset)).join('');
@@ -18927,7 +20388,18 @@ function renderTokenChip(sentence, tok, mode) {
     }
     if (!onClick) onClick = `onclick="onGrammarTokenClick('${sentence.id}', ${tok.idx})"`;
   } else if (mode === 'logic') {
-    if (tok.logicEntry && tok.logicEntry.funzione) {
+    // PoS senza rilevanza per l'analisi logica: se l'analisi grammaticale è già fatta
+    // e il token è una congiunzione/particella/articolo/preposizione/interiezione,
+    // lo escludiamo dal preview flaggabile (non cliccabile, visivamente muted).
+    const LOGIC_EXCLUDED_POS = new Set(['Congiunzione', 'Particella', 'Articolo', 'Preposizione', 'Interiezione']);
+    const isLogicExcluded = tok.grammarEntry && tok.grammarEntry.partOfSpeech
+      && LOGIC_EXCLUDED_POS.has(tok.grammarEntry.partOfSpeech)
+      && !tok.logicEntry;
+    if (isLogicExcluded) {
+      classes.push('logic-excluded');
+      title = `${tok.grammarEntry.partOfSpeech} — parte del discorso senza inquadramento logico`;
+      onClick = ''; // non cliccabile per analisi logica
+    } else if (tok.logicEntry && tok.logicEntry.funzione) {
       const group = funzioneToCaseGroup(tok.logicEntry.funzione);
       classes.push('case-' + group);
       classes.push('logic-line');
@@ -18948,7 +20420,7 @@ function renderTokenChip(sentence, tok, mode) {
     if (logicSel.sentenceId === sentence.id && logicSel.indices.includes(tok.idx)) {
       classes.push('token-selected');
     }
-    onClick = `onclick="onLogicTokenClick(event, '${sentence.id}', ${tok.idx})"`;
+    if (!onClick && !isLogicExcluded) onClick = `onclick="onLogicTokenClick(event, '${sentence.id}', ${tok.idx})"`;
   } else { // periodale
     if (tok.periodaleEntry) {
       classes.push('periodale-lvl');
@@ -19065,9 +20537,19 @@ function renderGrammarActionBar(sentence) {
   // Suggerimento PoS dal dizionario di alta frequenza — pre-seleziona se l'utente non
   // ha ancora confermato una categoria.
   const dictHit = lookupHighFreqDict(tok.text, lang);
-  const suggestedPart = (!currentPart && dictHit) ? dictHit.pos : '';
+  // CROSS-SECTION PREVIEW: se il token è già in un sintagma logico con funzione,
+  // ricava il PoS/caso atteso (utile per confermare al volo l'analisi grammaticale).
+  const linkedLogic = (sentence.logic || []).find(le => (le.tokenIndices || []).includes(pending.tokenIdx));
+  const crossHint = linkedLogic ? inferGrammarHintFromLogic(linkedLogic.funzione, lang) : null;
+  const crossSuggestedPart = crossHint && crossHint.partOfSpeech ? crossHint.partOfSpeech : '';
+  // Suggerimento PoS: priorità a cross-hint (univoca), poi dizionario
+  const suggestedPart = (!currentPart) ? (crossSuggestedPart || (dictHit ? dictHit.pos : '')) : '';
   const dictBadge = dictHit
     ? `<span class="dict-suggest-pill" title="${escapeHtml(dictHit.lemma)}${dictHit.note ? ' · ' + escapeHtml(dictHit.note) : ''}">📖 dal dizionario · <strong>${escapeHtml(dictHit.pos)}</strong> · <em>${escapeHtml(dictHit.lemma)}</em></span>`
+    : '';
+  // Badge cross-section: mostra quale funzione logica costringe il PoS/caso
+  const crossBadge = (linkedLogic && linkedLogic.funzione && crossHint)
+    ? `<span class="cross-suggest-pill" title="Funzione logica «${escapeHtml(linkedLogic.funzione)}»">⇆ da logica · <strong>${escapeHtml(crossHint.partOfSpeech || '')}${crossHint.caso ? ' · ' + escapeHtml(crossHint.caso) : ''}</strong></span>`
     : '';
   return `
     <div class="token-action-bar">
@@ -19077,12 +20559,16 @@ function renderGrammarActionBar(sentence) {
         <option value="">— scegli parte del discorso —</option>
         ${TAXONOMIES[lang].parts.map(p => {
           const selected = (p === currentPart) || (!currentPart && p === suggestedPart);
-          return `<option value="${p}" ${selected ? 'selected' : ''}>${p}${(!currentPart && p === suggestedPart) ? ' · suggerito' : ''}</option>`;
+          const suggSrc = (!currentPart && p === crossSuggestedPart) ? ' · da logica'
+                        : (!currentPart && dictHit && p === dictHit.pos) ? ' · suggerito'
+                        : '';
+          return `<option value="${p}" ${selected ? 'selected' : ''}>${p}${suggSrc}</option>`;
         }).join('')}
       </select>
       <button class="btn btn-primary btn-sm" onclick="confirmPendingGrammar('${sentence.id}')">${grammarEntry ? 'Aggiorna' : 'Assegna'}</button>
       ${grammarEntry ? `<button class="btn btn-danger-soft btn-sm" onclick="removeTokenAssignment('${sentence.id}', 'grammar', ${pending.tokenIdx})">Rimuovi</button>` : ''}
       <button class="btn btn-ghost btn-sm" onclick="cancelPending()">Annulla</button>
+      ${crossBadge}
       ${dictBadge}
     </div>`;
 }
@@ -19092,6 +20578,7 @@ function renderLogicActionBar(sentence) {
   const tokens = tokenizeSentence(sentence.original);
   const sortedIdx = [...logicSel.indices].sort((a, b) => a - b);
   const phrase = sortedIdx.map(i => (tokens.find(t => t.idx === i) || {}).text).filter(Boolean).join(' ');
+  const lang = state.meta.lingua;
   // Se la selezione coincide con una entry esistente, recupero la funzione corrente
   let existingEntry = null;
   for (const e of (sentence.logic || [])) {
@@ -19101,17 +20588,48 @@ function renderLogicActionBar(sentence) {
     }
   }
   const currentFn = existingEntry ? existingEntry.funzione : '';
+
+  // CROSS-SECTION PREVIEW: analizza i token grammaticali della selezione per derivare:
+  // 1. una funzione univoca (es. Verbo finito → Predicato verbale)
+  // 2. un set di funzioni suggerite in base ai casi presenti
+  const grammarEntries = sortedIdx
+    .map(idx => (sentence.grammar || []).find(g => g.tokenIndex === idx))
+    .filter(Boolean);
+  let inferredFn = null;
+  let inferReason = '';
+  const casiSet = new Set();
+  const suggestedFnSet = new Set();
+  grammarEntries.forEach(ge => {
+    const inf = inferLogicFunctionFromGrammar(ge);
+    if (inf && !inferredFn) { inferredFn = inf.funzione; inferReason = inf.reason; }
+    if (ge.caso) {
+      casiSet.add(ge.caso);
+      casesToFunctions(ge.caso, lang).forEach(f => suggestedFnSet.add(f));
+    }
+  });
+  // Se c'è una inferenza univoca, pre-seleziona; altrimenti tieni currentFn
+  const effectiveFn = currentFn || inferredFn || '';
+  // Badge della funzione inferita
+  const inferBadge = (!currentFn && inferredFn)
+    ? `<span class="cross-suggest-pill" title="Da analisi grammaticale: ${escapeHtml(inferReason)}">⇆ da grammatica · <strong>${escapeHtml(inferredFn)}</strong></span>`
+    : '';
+  // Badge informativo dei casi presenti nella selezione
+  const casiBadge = (!currentFn && !inferredFn && casiSet.size > 0)
+    ? `<span class="cross-suggest-pill cross-suggest-soft" title="Casi presenti nella selezione">⇆ casi: <strong>${[...casiSet].join(', ')}</strong></span>`
+    : '';
   return `
     <div class="token-action-bar">
       <span class="label">Sintagma (${sortedIdx.length})</span>
       <span class="target-word">${escapeHtml(phrase)}</span>
       <select id="pending-logic-select">
         <option value="">— scegli funzione sintattica —</option>
-        ${renderFunzioneOptions(currentFn, new Set())}
+        ${renderFunzioneOptions(effectiveFn, suggestedFnSet)}
       </select>
       <button class="btn btn-primary btn-sm" onclick="confirmPendingLogic('${sentence.id}')">${existingEntry ? 'Aggiorna' : 'Crea sintagma'}</button>
       ${existingEntry ? `<button class="btn btn-danger-soft btn-sm" onclick="removeLogicEntryById('${sentence.id}', '${existingEntry.id}')">Rimuovi</button>` : ''}
       <button class="btn btn-ghost btn-sm" onclick="cancelLogicSelection()">Annulla</button>
+      ${inferBadge}
+      ${casiBadge}
     </div>`;
 }
 
@@ -19306,6 +20824,12 @@ function confirmPendingPeriodale(sentenceId) {
   entry.dipendeDa = (dipSel && ruolo !== 'Principale') ? dipSel.value : '';
   if (isNew) insertEntrySorted(sentence.periodale, entry, 'periodale');
 
+  // PROPAGAZIONE incrociata: modo della proposizione e tipologie particolari
+  const propagated = propagateCrossAnalysis(sentence, 'periodale', entry);
+  if (propagated.changes > 0) {
+    showToast(`Auto-completate ${propagated.changes} voci nell'analisi grammaticale`);
+  }
+
   periodaleSel = { sentenceId: null, indices: [] };
   persistCurrent();
   renderEditor();
@@ -19463,6 +20987,26 @@ function renderGrammarEntry(sentenceId, entry, lang) {
   const schema = getMorphSchema(lang, entry);
   const fieldsHtml = schema.map(field => renderConditionalField(sentenceId, entry, field, 'grammar')).join('');
 
+  // Per Congiunzioni/Particelle: badge se preset applicato + pulsante manuale per chi vuole compilare a mano
+  let conjPresetBadge = '';
+  if ((entry.partOfSpeech === 'Congiunzione' || entry.partOfSpeech === 'Particella') && entry._presetApplied) {
+    conjPresetBadge = `<div class="conj-preset-badge">
+      <span class="conj-preset-icon">📖</span>
+      <span class="conj-preset-text">Categoria precompilata dal dizionario di alta frequenza · <em>${escapeHtml(entry.congiunzioneTipo || '')}</em></span>
+      <button class="conj-preset-clear" onclick="clearConjPreset('${sentenceId}', '${entry.id}')" title="Pulisci per modificare manualmente">cambia</button>
+    </div>`;
+  } else if ((entry.partOfSpeech === 'Congiunzione' || entry.partOfSpeech === 'Particella') && entry.word && !entry.congiunzioneTipo) {
+    // Mostra "Applica preset" se il preset è disponibile ma non ancora applicato
+    const preset = lookupConjunctionPreset(entry.word, lang);
+    if (preset) {
+      conjPresetBadge = `<div class="conj-preset-badge conj-preset-suggest">
+        <span class="conj-preset-icon">💡</span>
+        <span class="conj-preset-text">Preset disponibile: <em>${escapeHtml(preset.tipo)}</em></span>
+        <button class="conj-preset-apply" onclick="applyConjPresetUI('${sentenceId}', '${entry.id}')">applica</button>
+      </div>`;
+    }
+  }
+
   const partSelector = `
     <div class="field-block">
       <label class="field-block-label">Parte del discorso</label>
@@ -19470,7 +21014,8 @@ function renderGrammarEntry(sentenceId, entry, lang) {
         <option value="">— scegli —</option>
         ${TAXONOMIES[lang].parts.map(p => `<option value="${p}" ${entry.partOfSpeech === p ? 'selected' : ''}>${p}</option>`).join('')}
       </select>
-    </div>`;
+    </div>
+    ${conjPresetBadge}`;
 
   const noteField = `
     <div class="field-block" style="grid-column: 1/-1;">
@@ -19683,6 +21228,7 @@ function renderLogicEntry(sentenceId, entry, lang) {
       ${collapsed ? '' : `<div class="entry-body">
         <div class="entry-fields">
           ${renderConditionalField(sentenceId, entry, { key: 'funzione', label: 'Funzione sintattica', options: FUNZIONI_LOGICHE }, 'logic')}
+          ${renderAttributivoBlock(sentenceId, entry)}
           <div class="field-block" style="grid-column: 1/-1;">
             <label class="field-block-label">Note (libere)</label>
             <input class="field-input" type="text" value="${escapeHtml(entry.note || '')}"
@@ -19691,6 +21237,46 @@ function renderLogicEntry(sentenceId, entry, lang) {
           </div>
         </div>
       </div>`}
+    </div>`;
+}
+
+/* Sezione: posizione attributiva.
+   Un complemento in posizione attributiva si riferisce a un altro sintagma della stessa
+   frase (es. genitivo di specificazione che attribuisce al nome reggente).
+   Utile per lo scioglimento dell'ordo verborum quando si traduce in italiano. */
+function renderAttributivoBlock(sentenceId, entry) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return '';
+  const isAttr = !!entry.isAttributivo;
+  // Possibili "capi": tutte le altre voci logiche della stessa frase, ordinate per posizione
+  const candidates = (sentence.logic || [])
+    .filter(e => e.id !== entry.id)
+    .map(e => ({
+      id: e.id,
+      label: `${e.phrase || '(sintagma)'}${e.funzione ? ' · ' + e.funzione : ''}`,
+      sortKey: entrySortKey(e, 'logic'),
+    }))
+    .sort((a, b) => a.sortKey - b.sortKey);
+  const opts = candidates.map(c =>
+    `<option value="${c.id}" ${entry.attribuitoA === c.id ? 'selected' : ''}>${escapeHtml(c.label)}</option>`
+  ).join('');
+  return `
+    <div class="field-block attributivo-block ${isAttr ? 'is-active' : ''}" style="grid-column: 1/-1;">
+      <label class="attributivo-toggle">
+        <input type="checkbox" ${isAttr ? 'checked' : ''}
+               onchange="updateLogicField('${sentenceId}','${entry.id}','isAttributivo', this.checked)">
+        <span class="attributivo-label">⌖ <strong>Posizione attributiva</strong> · riferito a un altro sintagma</span>
+      </label>
+      ${isAttr ? `
+        <div class="attributivo-dropdown">
+          <label class="field-block-label" style="font-size: 10px;">Sintagma a cui si riferisce</label>
+          <select class="field-select" onchange="updateLogicField('${sentenceId}','${entry.id}','attribuitoA', this.value)">
+            <option value="">— scegli il sintagma capo —</option>
+            ${opts || '<option disabled>nessun altro sintagma in questa frase</option>'}
+          </select>
+          <div class="attributivo-hint">Indica il blocco di complemento a cui questo si lega (utile per ricostruire l'ordo verborum in italiano).</div>
+        </div>
+      ` : ''}
     </div>`;
 }
 
@@ -19935,6 +21521,9 @@ function renderConditionalField(sentenceId, entry, field, entryType) {
     if (entryType === 'logic' && field.key === 'funzione') {
       // Dropdown raggruppato per caso (Nominativo/Accusativo/Genitivo/Dativo/Ablativo/...)
       optsHtml = renderFunzioneOptions(value, suggSet);
+    } else if (entryType === 'grammar' && field.key === 'congiunzioneTipo') {
+      // Raggruppato per macro-categoria: Copulative · Coordinanti · Subordinanti · Particelle
+      optsHtml = renderCongiunzioneTipoOptions(value, lang, suggSet);
     } else {
       optsHtml = field.options.map(opt => {
         const isSugg = suggSet.has(opt);
@@ -19960,15 +21549,35 @@ function renderConditionalField(sentenceId, entry, field, entryType) {
       ${mode === 'select' ? '✎' : '⇣'}
     </button>` : '';
 
+  // Badge auto-fill: il valore è stato propagato automaticamente da un'altra sezione
+  const autoSource = (entry._autoFilled && entry._autoFilled[field.key]) || '';
+  const autoBadge = autoSource
+    ? `<span class="auto-badge" title="${escapeHtml(autoSource)} — clicca per disattivare" onclick="clearAutoMarkerOnEntry('${sentenceId}','${entry.id}','${entryType}','${field.key}')">↻ auto</span>`
+    : '';
+
   return `
-    <div class="field-block">
-      <label class="field-block-label">${escapeHtml(field.label)}</label>
+    <div class="field-block${autoSource ? ' is-auto-filled' : ''}">
+      <label class="field-block-label">${escapeHtml(field.label)}${autoBadge}</label>
       ${hintHtml}
       <div class="field-input-wrap">
         ${controlHtml}
         ${toggleHtml}
       </div>
     </div>`;
+}
+
+/* Helper invocato dal click sul badge "↻ auto" — toglie il marker auto-fill */
+function clearAutoMarkerOnEntry(sentenceId, entryId, entryType, fieldKey) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const arr = entryType === 'grammar' ? sentence.grammar
+            : entryType === 'logic' ? sentence.logic
+            : sentence.periodale;
+  const entry = (arr || []).find(e => e.id === entryId);
+  if (!entry) return;
+  clearAutoFilledMarker(entry, fieldKey);
+  persistCurrent();
+  renderEditor();
 }
 
 /* PREVIEW PANE — replaces sticky aside */
@@ -20216,6 +21825,32 @@ function addGrammarEntry(sentenceId) {
   renderSidebarTabs();
 }
 
+/* Helper UI per congiunzioni/particelle: applica e pulisce il preset */
+function applyConjPresetUI(sentenceId, entryId) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const entry = sentence.grammar.find(e => e.id === entryId);
+  if (!entry) return;
+  const applied = applyConjunctionPreset(entry, state.meta.lingua);
+  if (applied) {
+    persistCurrent();
+    renderEditor();
+    showToast(`Preset applicato: ${entry.word} → ${entry.congiunzioneTipo}`);
+  }
+}
+
+function clearConjPreset(sentenceId, entryId) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const entry = sentence.grammar.find(e => e.id === entryId);
+  if (!entry) return;
+  delete entry.congiunzioneTipo;
+  if (entry.note && entry.note.startsWith('[preset]')) delete entry.note;
+  delete entry._presetApplied;
+  persistCurrent();
+  renderEditor();
+}
+
 function updateGrammarField(sentenceId, entryId, key, value) {
   const sentence = state.sentences.find(s => s.id === sentenceId);
   if (!sentence) return;
@@ -20230,6 +21865,8 @@ function updateGrammarField(sentenceId, entryId, key, value) {
   } else {
     entry[key] = value;
   }
+  // L'utente sta modificando il campo: rimuovi il marker auto-fill su quel campo
+  clearAutoFilledMarker(entry, key);
 
   if (key === 'partOfSpeech' || key === 'verboForma') {
     const schema = getMorphSchema(state.meta.lingua, entry);
@@ -20237,17 +21874,26 @@ function updateGrammarField(sentenceId, entryId, key, value) {
     const validKeys = new Set([
       'word','partOfSpeech','note','id','tokenIndex',
       'lemma','lemmaCustom','tema','desinenza',
-      'tantum','reggenza','isElliptical','_expanded'
+      'tantum','reggenza','isElliptical','_expanded','_autoFilled'
     ].concat(schema.map(f => f.key)).concat(schema.map(f => f.key + '__mode')));
     Object.keys(entry).forEach(k => {
       if (!validKeys.has(k)) delete entry[k];
     });
   }
+  // PROPAGAZIONE incrociata: campi che attivano implicazioni univoche
+  const propagateKeys = ['partOfSpeech', 'verboForma', 'caso'];
+  let propagated = { changes: 0, log: [] };
+  if (propagateKeys.includes(key)) {
+    propagated = propagateCrossAnalysis(sentence, 'grammar', entry);
+  }
   persistCurrent();
   // Re-renderizza per aggiornare schema (partOfSpeech / forma verbale) e/o predizione lemma e concordanze
   const reloadKeys = ['partOfSpeech','verboForma','pronomeTipo','declinazione','classe','coniugazione',
                       'genere','numero','caso','tempo','modo','diatesi','persona','tantum','reggenza'];
-  if (reloadKeys.includes(key)) renderEditor();
+  if (reloadKeys.includes(key) || propagated.changes > 0) renderEditor();
+  if (propagated.changes > 0) {
+    showToast(`Auto-completate ${propagated.changes} voci nelle altre sezioni`);
+  }
 }
 
 function deleteGrammarEntry(sentenceId, entryId) {
@@ -20278,15 +21924,31 @@ function updateLogicField(sentenceId, entryId, key, value) {
   const entry = sentence.logic.find(e => e.id === entryId);
   if (!entry) return;
   entry[key] = value;
+  clearAutoFilledMarker(entry, key);
+  // PROPAGAZIONE incrociata: la funzione logica determina il caso/PoS grammaticale
+  let propagated = { changes: 0, log: [] };
+  if (key === 'funzione') {
+    propagated = propagateCrossAnalysis(sentence, 'logic', entry);
+  }
   persistCurrent();
   // Aggiornare colore: bordino sinistro e tinta del token dipendono da `funzione`
-  if (key === 'funzione') renderEditor();
+  if (key === 'funzione' || propagated.changes > 0) renderEditor();
+  if (propagated.changes > 0) {
+    showToast(`Auto-completate ${propagated.changes} voci nelle altre sezioni`);
+  }
 }
 
 function deleteLogicEntry(sentenceId, entryId) {
   const sentence = state.sentences.find(s => s.id === sentenceId);
   if (!sentence) return;
   sentence.logic = sentence.logic.filter(e => e.id !== entryId);
+  // Pulisci riferimenti attributivi orfani
+  (sentence.logic || []).forEach(e => {
+    if (e.attribuitoA === entryId) {
+      delete e.attribuitoA;
+      delete e.isAttributivo;
+    }
+  });
   persistCurrent();
   renderEditor();
   renderSidebarTabs();
@@ -20311,10 +21973,19 @@ function updatePeriodaleField(sentenceId, entryId, key, value) {
   const entry = sentence.periodale.find(e => e.id === entryId);
   if (!entry) return;
   entry[key] = value;
+  clearAutoFilledMarker(entry, key);
+  // PROPAGAZIONE incrociata: modo della proposizione o tipologia particolare → verbo
+  let propagated = { changes: 0, log: [] };
+  if (key === 'modo' || key === 'tipo') {
+    propagated = propagateCrossAnalysis(sentence, 'periodale', entry);
+  }
   persistCurrent();
   // Le sigle/albero dipendono da ruolo e dipendeDa → re-render dell'editor
   if (key === 'ruolo') { entry.tipo = ''; renderEditor(); }
-  else if (key === 'dipendeDa') { renderEditor(); }
+  else if (key === 'dipendeDa' || propagated.changes > 0) { renderEditor(); }
+  if (propagated.changes > 0) {
+    showToast(`Auto-completate ${propagated.changes} voci nelle altre sezioni`);
+  }
 }
 
 function deletePeriodaleEntry(sentenceId, entryId) {
@@ -20398,6 +22069,20 @@ function confirmPendingGrammar(sentenceId) {
     entry.partOfSpeech = part;
     entry.tokenIndex = pending.tokenIdx;
     insertEntrySorted(sentence.grammar, entry, 'grammar');
+  }
+  // AUTO-COMPLETAMENTO PRESET per Congiunzioni e Particelle dal dizionario di alta frequenza.
+  // Le congiunzioni hanno funzione standard ben nota: applichiamo subito il tipo
+  // per evitare compilazione manuale ripetitiva.
+  if (entry.partOfSpeech === 'Congiunzione' || entry.partOfSpeech === 'Particella') {
+    const applied = applyConjunctionPreset(entry, state.meta.lingua);
+    if (applied) {
+      showToast(`Preset applicato: ${entry.word} → ${entry.congiunzioneTipo || entry.partOfSpeech}`);
+    }
+  }
+  // PROPAGAZIONE incrociata: la scelta della parte del discorso può determinare la funzione logica
+  const propagated = propagateCrossAnalysis(sentence, 'grammar', entry);
+  if (propagated.changes > 0) {
+    showToast(`Auto-completate ${propagated.changes} voci nelle altre sezioni`);
   }
   pending = { mode: null, sentenceId: null, tokenIdx: null };
   persistCurrent();
@@ -20512,6 +22197,12 @@ function confirmPendingLogic(sentenceId) {
   } else {
     entry.funzione = funzione;
     entry.phrase = phrase;
+  }
+
+  // PROPAGAZIONE incrociata: la funzione logica determina caso/PoS sui token
+  const propagated = propagateCrossAnalysis(sentence, 'logic', entry);
+  if (propagated.changes > 0) {
+    showToast(`Auto-completate ${propagated.changes} voci nell'analisi grammaticale`);
   }
 
   logicSel = { sentenceId: null, indices: [] };
