@@ -16030,58 +16030,91 @@ const CONJ_PRESETS = {
     'utrum': { tipo: 'Subordinante completiva', pos: 'Congiunzione', note: 'interrog. doppia' }
   },
   greco: {
-    // Le chiavi sono NFD-normalizzate (lowercase, no diacritici)
-    // COORDINANTI
-    'και': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'e, anche' },
-    'τε': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'enclitica' },
-    'δε': { tipo: 'Coordinante avversativa (ἀλλά, δέ)', pos: 'Congiunzione', note: 'postpositiva' },
-    'αλλα': { tipo: 'Coordinante avversativa (ἀλλά, δέ)', pos: 'Congiunzione', note: 'avversativa forte' },
-    'γαρ': { tipo: 'Coordinante dichiarativa (γάρ)', pos: 'Congiunzione', note: 'postpositiva, causale-esplicativa' },
-    'ουν': { tipo: 'Coordinante conclusiva (οὖν, ἄρα)', pos: 'Congiunzione', note: 'postpositiva' },
-    'τοινυν': { tipo: 'Coordinante conclusiva (οὖν, ἄρα)', pos: 'Congiunzione' },
-    'η': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'disgiuntiva o comparativa' },
-    'ουδε': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'neppure, e non' },
-    'μηδε': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'neppure (soggettiva)' },
-    'ουτε': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'né' },
-    'μητε': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'né (soggettiva)' },
-    // SUBORDINANTI
-    'οτι': { tipo: 'Subordinante completiva (ὅτι, ὡς)', pos: 'Congiunzione', note: 'dichiarativa/causale' },
-    'διοτι': { tipo: 'Subordinante causale (ὅτι, ἐπεί)', pos: 'Congiunzione' },
-    'ινα': { tipo: 'Subordinante finale (ἵνα, ὅπως)', pos: 'Congiunzione', note: '+ cong.' },
-    'οπως': { tipo: 'Subordinante finale (ἵνα, ὅπως)', pos: 'Congiunzione', note: '+ cong. (anche modale)' },
-    'ωστε': { tipo: 'Subordinante consecutiva (ὥστε)', pos: 'Congiunzione', note: '+ ind./inf.' },
-    'οτε': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione' },
-    'οταν': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione', note: 'ὅτε + ἄν: + cong.' },
-    'επει': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione', note: 'anche causale' },
-    'επειδη': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione' },
-    'εως': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione', note: 'finché' },
-    'πριν': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione', note: 'prima che' },
-    'μεχρι': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione' },
-    'αχρι': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione' },
-    'ει': { tipo: 'Subordinante condizionale (εἰ, ἐάν)', pos: 'Congiunzione', note: '+ ind./ott.' },
-    'εαν': { tipo: 'Subordinante condizionale (εἰ, ἐάν)', pos: 'Congiunzione', note: 'εἰ + ἄν: + cong.' },
-    'ην': { tipo: 'Subordinante condizionale (εἰ, ἐάν)', pos: 'Congiunzione', note: 'variante di ἐάν' },
-    'καιπερ': { tipo: 'Subordinante concessiva (καίπερ)', pos: 'Congiunzione', note: '+ part.' },
-    'καιτοι': { tipo: 'Subordinante concessiva (καίπερ)', pos: 'Congiunzione', note: 'e tuttavia' },
-    'ως': { tipo: 'Subordinante completiva (ὅτι, ὡς)', pos: 'Congiunzione', note: 'come/che/poiché' },
-    'ωσπερ': { tipo: 'Subordinante completiva (ὅτι, ὡς)', pos: 'Congiunzione', note: 'come, proprio come' },
-    'οπου': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)', pos: 'Congiunzione', note: 'locativo: dove' },
-    'εϊτε': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione', note: 'εἴτε ... εἴτε: sia ... sia' },
-    'εἴτε': { tipo: 'Coordinante (καί, τε)', pos: 'Congiunzione' },
-    // PARTICELLE ENFATICHE/CORRELATIVE
-    'μεν': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'postpositiva, correlativa con δέ' },
-    'δη': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'enfatica' },
-    'γε': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'enclitica, limitativa' },
-    'τοι': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'enclitica, enfatica' },
-    'μην': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'enfatica' },
-    'περ': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'enclitica' },
-    'αν': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'modale, eventualità' },
-    'κεν': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella', note: 'arc./ep. = ἄν' },
-    'γε_': { tipo: 'Particella enfatica (μέν, δή)', pos: 'Particella' },
-    // PARTICELLE INTERROGATIVE
-    'αρα_q': { tipo: 'Particella interrogativa (ἆρα, μῶν)', pos: 'Particella', note: 'ἆρα: forse?' },
-    'αρα': { tipo: 'Coordinante conclusiva (οὖν, ἄρα)', pos: 'Particella', note: 'inferenziale' },
-    'μων': { tipo: 'Particella interrogativa (ἆρα, μῶν)', pos: 'Particella', note: 'forse? (att. neg.)' }
+    /* Le chiavi sono NFD-normalizzate (lowercase, senza diacritici).
+       Schema esteso: oltre a {tipo, pos, note} ogni entry può avere:
+         · propTipo: [tipi di proposizione che la congiunzione introduce]
+         · mood: [modi verbali richiesti dalla subord.]
+       Questi campi vengono propagati alla periodale via gradeFromGrammarToPeriodale. */
+
+    /* ── COORDINANTI · TABELLA I ────────────────────────────────────── */
+    'αλλα':    { tipo: 'Coordinante avversativa (ἀλλά, δέ)',   pos: 'Congiunzione', note: 'ma, però, tuttavia (avversativa forte)', mood: ['Indicativo'], propTipo: ['Avversativa'] },
+    'αρα':     { tipo: 'Coordinante conclusiva (οὖν, ἄρα)',    pos: 'Particella',   note: 'dunque, pertanto (inferenziale)', mood: ['Indicativo'], propTipo: ['Conclusiva'] },
+    'αταρ':    { tipo: 'Coordinante avversativa (ἀλλά, δέ)',   pos: 'Congiunzione', note: 'ma, tuttavia, però (poetica)', mood: ['Indicativo'], propTipo: ['Avversativa'] },
+    'αυταρ':   { tipo: 'Coordinante avversativa (ἀλλά, δέ)',   pos: 'Congiunzione', note: 'ma, invece (epico)', mood: ['Indicativo'], propTipo: ['Avversativa'] },
+    'αυ':      { tipo: 'Coordinante (καί, τε)',                pos: 'Congiunzione', note: 'di nuovo, a sua volta, da parte sua', mood: ['Indicativo'], propTipo: ['Copulativa'] },
+    'αυτε':    { tipo: 'Coordinante (καί, τε)',                pos: 'Congiunzione', note: 'di nuovo, a sua volta (variante di αὖ)', mood: ['Indicativo'] },
+    'αυθις':   { tipo: 'Coordinante (καί, τε)',                pos: 'Avverbio',     note: 'di nuovo, ancora, nuovamente (temporale-aggiuntivo)', mood: ['Indicativo'], propTipo: ['Copulativa'] },
+    'γαρ':     { tipo: 'Coordinante dichiarativa (γάρ)',       pos: 'Congiunzione', note: 'infatti, poiché (postpositiva, mai prima posiz.)', mood: ['Indicativo'], propTipo: ['Dichiarativa'] },
+    'δε':      { tipo: 'Coordinante avversativa (ἀλλά, δέ)',   pos: 'Congiunzione', note: 'ma, e, invece (postpositiva, spesso correlativa con μέν)', mood: ['Indicativo'], propTipo: ['Avversativa', 'Copulativa'] },
+    'η':       { tipo: 'Coordinante (καί, τε)',                pos: 'Congiunzione', note: 'o, oppure (disgiuntiva); anche comparativa', mood: ['Indicativo'], propTipo: ['Disgiuntiva'] },
+    'ηδε':     { tipo: 'Coordinante (καί, τε)',                pos: 'Congiunzione', note: 'e, ed anche (copulativa, poetica)', mood: ['Indicativo'], propTipo: ['Copulativa'] },
+    'και':     { tipo: 'Coordinante (καί, τε)',                pos: 'Congiunzione', note: 'e, anche, pure (copulativa)', mood: ['Indicativo'], propTipo: ['Copulativa'] },
+    'μεν':     { tipo: 'Particella enfatica (μέν, δή)',        pos: 'Particella',   note: 'da una parte (in attesa di δέ; correlativa preparatoria)', mood: ['Indicativo'] },
+    'μενοι':   { tipo: 'Coordinante avversativa (ἀλλά, δέ)',   pos: 'Congiunzione', note: 'tuttavia, nondimeno (avversativa rafforzata)', mood: ['Indicativo'], propTipo: ['Avversativa'] },
+    'μεντοι':  { tipo: 'Coordinante avversativa (ἀλλά, δέ)',   pos: 'Congiunzione', note: 'tuttavia, però, eppure (avversativa-concessiva)', mood: ['Indicativo'], propTipo: ['Avversativa', 'Concessiva'] },
+    'μητε':    { tipo: 'Coordinante (καί, τε)',                pos: 'Congiunzione', note: 'né (copulativa negativa soggettiva; correl. con μηδέ)', mood: ['Indicativo'], propTipo: ['Copulativa'] },
+    'μηδε':    { tipo: 'Coordinante (καί, τε)',                pos: 'Congiunzione', note: 'neppure (negativa, sogg./obj. mistico)', mood: ['Indicativo'], propTipo: ['Copulativa'] },
+    'νυν':     { tipo: 'Coordinante (καί, τε)',                pos: 'Avverbio',     note: 'ora, adesso, ma ora (temporale-transitivo)', mood: ['Indicativo'] },
+    'ομωσ':    { tipo: 'Coordinante avversativa (ἀλλά, δέ)',   pos: 'Congiunzione', note: 'ugualmente, tuttavia, nondimeno (concessivo-avversativo)', mood: ['Indicativo'], propTipo: ['Avversativa', 'Concessiva'] },
+    'ουδε':    { tipo: 'Coordinante (καί, τε)',                pos: 'Congiunzione', note: 'e non, neppure, neanche (negativa aggiuntiva)', mood: ['Indicativo'], propTipo: ['Copulativa'] },
+    'ουκουν':  { tipo: 'Coordinante conclusiva (οὖν, ἄρα)',    pos: 'Congiunzione', note: 'non dunque?, non è vero che? (interrog. concl., retorica)', mood: ['Indicativo'], propTipo: ['Conclusiva'] },
+    'ουν':     { tipo: 'Coordinante conclusiva (οὖν, ἄρα)',    pos: 'Congiunzione', note: 'dunque, pertanto, quindi (postpositiva, inferenza logica)', mood: ['Indicativo'], propTipo: ['Conclusiva'] },
+    'ουτε':    { tipo: 'Coordinante (καί, τε)',                pos: 'Congiunzione', note: 'né, e non (correlativa negativa)', mood: ['Indicativo'], propTipo: ['Copulativa'] },
+    'τε':      { tipo: 'Coordinante (καί, τε)',                pos: 'Congiunzione', note: 'e, ed (enclitica, spesso correlativa τε ... καί)', mood: ['Indicativo'], propTipo: ['Copulativa'] },
+    'τοινυν':  { tipo: 'Coordinante conclusiva (οὖν, ἄρα)',    pos: 'Congiunzione', note: 'dunque, ebbene, perciò (transizione argomentativa)', mood: ['Indicativo'], propTipo: ['Conclusiva'] },
+    'ωσαυτως': { tipo: 'Coordinante (καί, τε)',                pos: 'Avverbio',     note: 'similmente, allo stesso modo (paragone coord.)', mood: ['Indicativo'], propTipo: ['Copulativa'] },
+
+    /* ── SUBORDINANTI · TABELLA II ─────────────────────────────────── */
+    'αμα':     { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'contemporaneamente, non appena (+ part. con art. o indicativo)', mood: ['Indicativo', 'Participio'], propTipo: ['Temporale'] },
+    'δια':     { tipo: 'Subordinante causale (ὅτι, ἐπεί)',     pos: 'Preposizione', note: 'a causa di, per (+ acc./gen.)', mood: ['Infinito'], propTipo: ['Causale'] },
+    'διοτι':   { tipo: 'Subordinante causale (ὅτι, ἐπεί)',     pos: 'Congiunzione', note: 'perché, poiché, dal momento che (composto διά + ὅτι)', mood: ['Indicativo'], propTipo: ['Causale'] },
+    'ει':      { tipo: 'Subordinante condizionale (εἰ, ἐάν)',  pos: 'Congiunzione', note: 'se (protasi: ind./cong./ott.)', mood: ['Indicativo', 'Congiuntivo', 'Ottativo'], propTipo: ['Condizionale (protasi)'] },
+    'ειπερ':   { tipo: 'Subordinante concessiva (καίπερ)',     pos: 'Congiunzione', note: 'anche se, pur se, benché (ind./cong./ott.)', mood: ['Indicativo', 'Congiuntivo', 'Ottativo'], propTipo: ['Concessiva'] },
+    'ειτε':    { tipo: 'Subordinante condizionale (εἰ, ἐάν)',  pos: 'Congiunzione', note: 'o se, sia che... sia che (correlativa)', mood: ['Indicativo', 'Congiuntivo', 'Ottativo'], propTipo: ['Disgiuntiva', 'Condizionale (protasi)'] },
+    'εαν':     { tipo: 'Subordinante condizionale (εἰ, ἐάν)',  pos: 'Congiunzione', note: 'se (eventualità futura: εἰ + ἄν + cong.)', mood: ['Congiuntivo'], propTipo: ['Condizionale (protasi)'] },
+    'ην':      { tipo: 'Subordinante condizionale (εἰ, ἐάν)',  pos: 'Congiunzione', note: 'variante poetica di ἐάν', mood: ['Congiuntivo'], propTipo: ['Condizionale (protasi)'] },
+    'επει':    { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'quando, dopo che / poiché, giacché (duplice valore)', mood: ['Indicativo'], propTipo: ['Temporale', 'Causale'] },
+    'επειδη':  { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'dopo che, poiché (rafforzato ἐπεί + δή)', mood: ['Indicativo'], propTipo: ['Temporale', 'Causale'] },
+    'επειδαν': { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'quando (futuro), ogni volta che (ἐπειδή + ἄν + cong.)', mood: ['Congiuntivo'], propTipo: ['Temporale'] },
+    'εστε':    { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'finché, fino a quando (limitativa)', mood: ['Indicativo', 'Congiuntivo'], propTipo: ['Temporale'] },
+    'εως':     { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'finché, fino a quando, mentre (ind./cong./ott.)', mood: ['Indicativo', 'Congiuntivo', 'Ottativo'], propTipo: ['Temporale'] },
+    'ημος':    { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'quando, nel momento in cui (poetica)', mood: ['Indicativo'], propTipo: ['Temporale'] },
+    'ινα':     { tipo: 'Subordinante finale (ἵνα, ὅπως)',      pos: 'Congiunzione', note: 'affinché, perché (finale + cong.)', mood: ['Congiuntivo', 'Ottativo'], propTipo: ['Finale'] },
+    'καιπερ':  { tipo: 'Subordinante concessiva (καίπερ)',     pos: 'Congiunzione', note: 'benché, pur, sebbene (+ participio)', mood: ['Participio'], propTipo: ['Concessiva'] },
+    'καιτοι':  { tipo: 'Subordinante concessiva (καίπερ)',     pos: 'Congiunzione', note: 'eppure, tuttavia, benché (+ part. o ind.)', mood: ['Indicativo', 'Participio'], propTipo: ['Concessiva'] },
+    'μη':      { tipo: 'Subordinante finale (ἵνα, ὅπως)',      pos: 'Congiunzione', note: 'perché non, che non (finale negativa / verba timendi + cong.)', mood: ['Congiuntivo'], propTipo: ['Finale', 'Oggettiva'] },
+    'μηπω':    { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'non ancora, finché non (negazione temporale)', mood: ['Indicativo'], propTipo: ['Temporale'] },
+    'οθεν':    { tipo: 'Subordinante causale (ὅτι, ἐπεί)',     pos: 'Congiunzione', note: 'da dove, donde, per cui (causale per conseguenza)', mood: ['Indicativo'], propTipo: ['Causale', 'Relativa propria'] },
+    'οπη':     { tipo: 'Subordinante finale (ἵνα, ὅπως)',      pos: 'Congiunzione', note: 'in che modo, come (modale / finale)', mood: ['Indicativo', 'Congiuntivo'], propTipo: ['Modale', 'Finale'] },
+    'οποι':    { tipo: 'Subordinante finale (ἵνα, ὅπως)',      pos: 'Congiunzione', note: 'dove, verso dove (con scopo)', mood: ['Indicativo', 'Congiuntivo'], propTipo: ['Finale', 'Relativa propria'] },
+    'οποτε':   { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'quando, ogni volta che (temporale indefinita/iterativa)', mood: ['Indicativo', 'Congiuntivo', 'Ottativo'], propTipo: ['Temporale'] },
+    'οποτερα': { tipo: 'Subordinante completiva (ὅτι, ὡς)',    pos: 'Congiunzione', note: 'se... o se, quale dei due (interrog. indir. disgiuntiva)', mood: ['Indicativo', 'Congiuntivo', 'Ottativo'], propTipo: ['Interrogativa indiretta'] },
+    'οπου':    { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'dove, quando, dovunque (relativa locale-temporale)', mood: ['Indicativo', 'Congiuntivo'], propTipo: ['Temporale', 'Relativa propria'] },
+    'οπως':    { tipo: 'Subordinante finale (ἵνα, ὅπως)',      pos: 'Congiunzione', note: 'perché, come (finale/consecutiva/interrog. indir.)', mood: ['Congiuntivo', 'Indicativo'], propTipo: ['Finale', 'Consecutiva', 'Interrogativa indiretta'] },
+    'οσον':    { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'per quanto (tempo), nella misura in cui', mood: ['Indicativo'], propTipo: ['Temporale', 'Causale'] },
+    'οστις':   { tipo: 'Subordinante completiva (ὅτι, ὡς)',    pos: 'Pronome',      note: 'chiunque, qualunque, chi (relativa indefinita)', mood: ['Indicativo', 'Congiuntivo', 'Ottativo'], propTipo: ['Relativa propria'] },
+    'οταν':    { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'quando (futuro), ogni volta che (ὅτε + ἄν + cong.)', mood: ['Congiuntivo'], propTipo: ['Temporale'] },
+    'οτε':     { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'quando, nel momento in cui (tempo determinato storico)', mood: ['Indicativo'], propTipo: ['Temporale'] },
+    'οτι':     { tipo: 'Subordinante completiva (ὅτι, ὡς)',    pos: 'Congiunzione', note: 'che, perché, poiché (dichiarativa/causale)', mood: ['Indicativo', 'Ottativo'], propTipo: ['Oggettiva', 'Dichiarativa', 'Causale'] },
+    'πλην':    { tipo: 'Subordinante completiva (ὅτι, ὡς)',    pos: 'Congiunzione', note: 'eccetto, salvo, tranne (+ gen./acc.)', mood: ['Indicativo'], propTipo: ['Eccettuativa'] },
+    'πριν':    { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'prima che, finché non (+ inf. o cong.)', mood: ['Infinito', 'Congiuntivo'], propTipo: ['Temporale'] },
+    'πως':     { tipo: 'Subordinante completiva (ὅτι, ὡς)',    pos: 'Congiunzione', note: 'come, in che modo (interrog./esclam. indiretta)', mood: ['Indicativo'], propTipo: ['Interrogativa indiretta'] },
+    'ως':      { tipo: 'Subordinante completiva (ὅτι, ὡς)',    pos: 'Congiunzione', note: 'come, perché, poiché, quando, che (multifunzionale)', mood: ['Indicativo', 'Congiuntivo', 'Ottativo', 'Participio'], propTipo: ['Finale', 'Causale', 'Temporale', 'Comparativa', 'Dichiarativa'] },
+    'ωσπερ':   { tipo: 'Subordinante completiva (ὅτι, ὡς)',    pos: 'Congiunzione', note: 'come, proprio come, al modo che (paragone reale)', mood: ['Indicativo', 'Participio'], propTipo: ['Comparativa'] },
+    'ωστε':    { tipo: 'Subordinante consecutiva (ὥστε)',      pos: 'Congiunzione', note: 'cosicché, così da, in modo che (conseg. effettiva o dich.)', mood: ['Indicativo', 'Infinito'], propTipo: ['Consecutiva'] },
+    'μεχρι':   { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'fino a (temporale-limitativa)', mood: ['Indicativo', 'Congiuntivo'], propTipo: ['Temporale'] },
+    'αχρι':    { tipo: 'Subordinante temporale (ὅτε, ἐπεί)',   pos: 'Congiunzione', note: 'fino a (variante di μέχρι)', mood: ['Indicativo', 'Congiuntivo'], propTipo: ['Temporale'] },
+
+    /* ── PARTICELLE ENFATICHE / MODALI / INTERROGATIVE ─────────────── */
+    'δη':      { tipo: 'Particella enfatica (μέν, δή)',        pos: 'Particella', note: 'enfatica: davvero, proprio' },
+    'γε':      { tipo: 'Particella enfatica (μέν, δή)',        pos: 'Particella', note: 'enclitica, limitativa: almeno, certo' },
+    'τοι':     { tipo: 'Particella enfatica (μέν, δή)',        pos: 'Particella', note: 'enclitica, enfatica: di sicuro' },
+    'μην':     { tipo: 'Particella enfatica (μέν, δή)',        pos: 'Particella', note: 'enfatica: invero, certo' },
+    'περ':     { tipo: 'Particella enfatica (μέν, δή)',        pos: 'Particella', note: 'enclitica: proprio, davvero' },
+    'αν':      { tipo: 'Particella enfatica (μέν, δή)',        pos: 'Particella', note: 'modale: eventualità, irrealtà' },
+    'κεν':     { tipo: 'Particella enfatica (μέν, δή)',        pos: 'Particella', note: 'arc./ep. = ἄν' },
+    'αρα_q':   { tipo: 'Particella interrogativa (ἆρα, μῶν)',  pos: 'Particella', note: 'ἆρα: forse? (interrogativa diretta)' },
+    'μων':     { tipo: 'Particella interrogativa (ἆρα, μῶν)',  pos: 'Particella', note: 'forse? (interr. att. negativa)' }
   }
 };
 
@@ -16097,6 +16130,272 @@ function lookupConjunctionPreset(word, lang) {
     key = word.toLowerCase().trim().replace(/[.,;?!:·]/g, '');
   }
   return dict[key] || null;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   PREP_PRESETS · TABELLA DELLE PREPOSIZIONI (latino e greco)
+   ──────────────────────────────────────────────────────────────────────────
+   Schema di ciascuna voce:
+     · pos               — sempre 'Preposizione'
+     · casiRetti[]       — array dei casi che la preposizione può reggere
+     · complementi[]     — array di { caso, funzioni[], note } che descrive
+                           quali complementi attiva ciascuna combinazione
+                           preposizione + caso
+     · note              — descrizione sintetica del lemma
+   Le funzioni nei complementi corrispondono ai nomi usati in FUNZIONI_LOGICHE
+   per il dialogo cross-layer (logica · sintassi).
+   Codifica completa della tabella didattica greca:
+   ἀμφί · ἀνά · ἀντί · ἀπό · διά · εἰς · ἐκ/ἐξ · ἐν · ἐπί · κατά · μετά ·
+   παρά · περί · πρό · πρός · σύν · ὑπέρ · ὑπό + χωρίς/ἄνευ/ἕνεκα/χάριν. */
+const PREP_PRESETS = {
+  latino: {
+    /* (Da espandere in modo simmetrico col latino — placeholders) */
+  },
+  greco: {
+    'αμφι': {
+      pos: 'Preposizione', note: 'intorno a, riguardo a (moto circolare / argomento)',
+      casiRetti: ['Accusativo', 'Genitivo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto a)', 'Complemento di argomento'], note: 'moto circolare, argomento' },
+        { caso: 'Genitivo', funzioni: ['Complemento di argomento'], note: 'riguardo a' },
+      ],
+    },
+    'ανα': {
+      pos: 'Preposizione', note: 'lungo, in alto, distributivo',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto per)'], note: 'moto per luogo, distributivo (ἀνὰ δέκα = "dieci ciascuno")' },
+      ],
+    },
+    'αντι': {
+      pos: 'Preposizione', note: 'al posto di, in cambio di',
+      casiRetti: ['Genitivo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di causa', 'Complemento di prezzo'], note: 'sostituzione, scambio, prezzo' },
+      ],
+    },
+    'απο': {
+      pos: 'Preposizione', note: 'da (moto da luogo, agente, allontanamento)',
+      casiRetti: ['Genitivo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di luogo (moto da)', 'Complemento di agente', 'Complemento di causa efficiente', 'Complemento di allontanamento o separazione'], note: 'moto da luogo, agente, separazione' },
+      ],
+    },
+    'δια': {
+      pos: 'Preposizione', note: 'attraverso, per mezzo di, a causa di',
+      casiRetti: ['Genitivo', 'Accusativo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di luogo (moto per)', 'Complemento di mezzo o strumento'], note: 'moto per luogo, mezzo tramite persona' },
+        { caso: 'Accusativo', funzioni: ['Complemento di causa', 'Complemento di tempo continuato'], note: 'causa, tempo continuato' },
+      ],
+    },
+    'εις': {
+      pos: 'Preposizione', note: 'verso, in, fino a (moto a luogo, fine, tempo)',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto a)', 'Complemento di fine o scopo', 'Complemento di tempo determinato'], note: 'moto a luogo, scopo, tempo fino a' },
+      ],
+    },
+    'ες': {
+      pos: 'Preposizione', note: 'variante ionica di εἰς',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto a)', 'Complemento di fine o scopo'], note: 'come εἰς' },
+      ],
+    },
+    'εκ': {
+      pos: 'Preposizione', note: 'da (interno), origine, causa',
+      casiRetti: ['Genitivo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di luogo (moto da)', 'Complemento di origine', 'Complemento di causa'], note: 'moto da dentro, origine, causa' },
+      ],
+    },
+    'εξ': {
+      pos: 'Preposizione', note: 'variante di ἐκ davanti a vocale',
+      casiRetti: ['Genitivo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di luogo (moto da)', 'Complemento di origine', 'Complemento di causa'], note: 'come ἐκ davanti a vocale' },
+      ],
+    },
+    'εν': {
+      pos: 'Preposizione', note: 'in, dentro, tra (stato in luogo)',
+      casiRetti: ['Dativo'],
+      complementi: [
+        { caso: 'Dativo', funzioni: ['Complemento di luogo (stato in)', 'Complemento di tempo determinato', 'Complemento di modo', 'Complemento di mezzo o strumento'], note: 'stato in luogo, tempo, modo, mezzo' },
+      ],
+    },
+    'επι': {
+      pos: 'Preposizione', note: 'su, sopra, contro (sui 3 casi)',
+      casiRetti: ['Genitivo', 'Dativo', 'Accusativo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di luogo (stato in)', 'Complemento di tempo determinato'], note: 'sopra (statico), tempo storico (al tempo di)' },
+        { caso: 'Dativo', funzioni: ['Complemento di luogo (stato in)', 'Complemento di causa', 'Complemento di fine o scopo'], note: 'sopra/presso, causa, condizione' },
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto a)', 'Complemento di fine o scopo', 'Complemento di tempo continuato'], note: 'moto contro, scopo, tempo continuato' },
+      ],
+    },
+    'κατα': {
+      pos: 'Preposizione', note: 'giù da, lungo, secondo',
+      casiRetti: ['Genitivo', 'Accusativo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di luogo (moto da)', 'Complemento di svantaggio'], note: 'moto da (alto verso basso), contro, a danno di' },
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto per)', 'Complemento di tempo determinato', 'Complemento di modo', 'Complemento di limitazione'], note: 'moto per/lungo, distributivo, conformità, limitazione' },
+      ],
+    },
+    'μετα': {
+      pos: 'Preposizione', note: 'con, dopo (compagnia o posteriorità)',
+      casiRetti: ['Genitivo', 'Accusativo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di compagnia', 'Complemento di unione', 'Complemento di modo'], note: 'compagnia, unione, modo' },
+        { caso: 'Accusativo', funzioni: ['Complemento di tempo determinato'], note: 'dopo (temporale), cambiamento di stato' },
+      ],
+    },
+    'παρα': {
+      pos: 'Preposizione', note: 'presso, da parte di, contro (3 casi)',
+      casiRetti: ['Genitivo', 'Dativo', 'Accusativo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di luogo (moto da)', 'Complemento di agente'], note: 'moto da presso, agente (da parte di)' },
+        { caso: 'Dativo', funzioni: ['Complemento di luogo (stato in)', 'Complemento di paragone'], note: 'stato presso, paragone' },
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto a)', 'Complemento di paragone', 'Complemento concessivo'], note: 'moto verso, oltre, contrarietà, estensione' },
+      ],
+    },
+    'περι': {
+      pos: 'Preposizione', note: 'intorno a, riguardo a',
+      casiRetti: ['Genitivo', 'Accusativo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di argomento', 'Complemento di vantaggio'], note: 'argomento, vantaggio' },
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto a)', 'Complemento di tempo determinato'], note: 'moto circolare, tempo determinato (verso)' },
+      ],
+    },
+    'προ': {
+      pos: 'Preposizione', note: 'davanti, prima (di luogo o tempo)',
+      casiRetti: ['Genitivo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di luogo (stato in)', 'Complemento di tempo determinato', 'Complemento di paragone'], note: 'davanti a, prima di, preferenza' },
+      ],
+    },
+    'προς': {
+      pos: 'Preposizione', note: 'verso, presso, da parte di (3 casi)',
+      casiRetti: ['Genitivo', 'Dativo', 'Accusativo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di luogo (moto da)', 'Complemento di agente'], note: 'provenienza, giuramento (πρὸς θεῶν)' },
+        { caso: 'Dativo', funzioni: ['Complemento di luogo (stato in)'], note: 'stato presso, aggiunta' },
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto a)', 'Complemento di fine o scopo'], note: 'moto verso, scopo, rapporto/relazione' },
+      ],
+    },
+    'συν': {
+      pos: 'Preposizione', note: 'insieme con (compagnia cooperativa)',
+      casiRetti: ['Dativo'],
+      complementi: [
+        { caso: 'Dativo', funzioni: ['Complemento di compagnia', 'Complemento di unione', 'Complemento di mezzo o strumento', 'Complemento di modo'], note: 'compagnia coop., mezzo, modo' },
+      ],
+    },
+    'υπερ': {
+      pos: 'Preposizione', note: 'sopra, oltre, a favore di',
+      casiRetti: ['Genitivo', 'Accusativo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di luogo (stato in)', 'Complemento di vantaggio', 'Complemento di argomento'], note: 'sopra (statico), a favore di, riguardo a' },
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto a)', 'Complemento di paragone'], note: 'moto oltre, misura/superlativo' },
+      ],
+    },
+    'υπο': {
+      pos: 'Preposizione', note: 'da (agente), sotto, verso (tempo)',
+      casiRetti: ['Genitivo', 'Accusativo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di agente', 'Complemento di causa efficiente'], note: 'agente (di norma) e causa efficiente nelle passive' },
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto a)', 'Complemento di tempo determinato'], note: 'moto sotto, tempo verso' },
+      ],
+    },
+    /* Preposizioni improprie ricorrenti */
+    'χωρις': {
+      pos: 'Preposizione', note: 'senza (separazione)',
+      casiRetti: ['Genitivo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di allontanamento o separazione', 'Complemento di privazione'], note: 'separazione/privazione' },
+      ],
+    },
+    'ανευ': {
+      pos: 'Preposizione', note: 'senza (mancanza)',
+      casiRetti: ['Genitivo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di privazione', 'Complemento di allontanamento o separazione'], note: 'mancanza, privazione' },
+      ],
+    },
+    'ενεκα': {
+      pos: 'Preposizione', note: 'a causa di, per (scopo motivante; postposta)',
+      casiRetti: ['Genitivo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di fine o scopo', 'Complemento di causa'], note: 'scopo, causa motivante' },
+      ],
+    },
+    'ενεκεν': {
+      pos: 'Preposizione', note: 'variante di ἕνεκα',
+      casiRetti: ['Genitivo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di fine o scopo', 'Complemento di causa'], note: 'come ἕνεκα' },
+      ],
+    },
+    'χαριν': {
+      pos: 'Preposizione', note: 'per amore di, in grazia di (postposta)',
+      casiRetti: ['Genitivo'],
+      complementi: [
+        { caso: 'Genitivo', funzioni: ['Complemento di fine o scopo'], note: 'scopo/grazia di' },
+      ],
+    },
+  },
+};
+
+/* Lookup di un preset di preposizione per parola + lingua. */
+function lookupPrepositionPreset(word, lang) {
+  if (!word) return null;
+  const dict = PREP_PRESETS[lang];
+  if (!dict) return null;
+  let key;
+  if (lang === 'greco') {
+    key = normalizeText(word);
+  } else {
+    key = word.toLowerCase().trim().replace(/[.,;?!:·]/g, '');
+  }
+  return dict[key] || null;
+}
+
+/* Applica il preset di preposizione a una entry grammaticale.
+   Pre-popola preposizioneRetta (col primo caso o "Più casi" se multipli) e
+   salva _prepHint con la lista dei complementi attivabili.
+   Restituisce true se ha applicato almeno una modifica. */
+function applyPrepositionPreset(entry, lang) {
+  if (!entry || !entry.word) return false;
+  const preset = lookupPrepositionPreset(entry.word, lang);
+  if (!preset) return false;
+  let applied = false;
+  if (preset.pos && !entry.partOfSpeech) {
+    entry.partOfSpeech = preset.pos;
+    applied = true;
+  }
+  // Reggenza: imposta solo se vuota
+  if (!entry.preposizioneRetta && Array.isArray(preset.casiRetti) && preset.casiRetti.length > 0) {
+    if (preset.casiRetti.length === 1) {
+      entry.preposizioneRetta = preset.casiRetti[0];
+    } else {
+      // Multi-caso: usiamo "Più casi" per il greco, lasciamo che l'utente specifichi se vuole
+      entry.preposizioneRetta = lang === 'greco' ? 'Più casi' : 'Accusativo o ablativo';
+    }
+    applied = true;
+  }
+  if (preset.note && !entry.note) {
+    entry.note = '[preset] ' + preset.note;
+    applied = true;
+  }
+  // Salva il preset completo per il cross-layer (logica)
+  if (!entry._prepHint && Array.isArray(preset.complementi)) {
+    entry._prepHint = preset.complementi.map(c => ({
+      caso: c.caso,
+      funzioni: c.funzioni.slice(),
+      note: c.note || '',
+    }));
+    applied = true;
+  }
+  if (applied) entry._presetApplied = true;
+  return applied;
 }
 
 /* Applica i preset di una congiunzione/particella su una entry grammaticale.
@@ -16118,6 +16417,18 @@ function applyConjunctionPreset(entry, lang) {
   // Nota (suggerimento): non sovrascrive note esistente
   if (preset.note && !entry.note) {
     entry.note = '[preset] ' + preset.note;
+    applied = true;
+  }
+  /* NUOVI campi: propTipo e mood non sono parte del PoS dell'entry, ma
+     vengono salvati come hint per la propagazione cross-layer verso la
+     periodale. Il sistema (gradeFromGrammarToPeriodale) li legge in via
+     prioritaria rispetto al match generico via stringa. */
+  if (preset.propTipo && !entry._propTipoHint) {
+    entry._propTipoHint = Array.isArray(preset.propTipo) ? preset.propTipo.slice() : [preset.propTipo];
+    applied = true;
+  }
+  if (preset.mood && !entry._moodHint) {
+    entry._moodHint = Array.isArray(preset.mood) ? preset.mood.slice() : [preset.mood];
     applied = true;
   }
   if (applied) entry._presetApplied = true;
@@ -19990,6 +20301,32 @@ function gradeFromGrammarToLogic(sentence, tokenIndices, lang) {
   if (grams.length === 0) return { suggested: new Set(), hint: '', sources: [] };
   const suggested = new Set();
   const sources = [];
+
+  /* PRIORITÀ MAGGIORE · sintagma preposizionale.
+     Se il sintagma include una preposizione con _prepHint e un nominale al caso
+     che la preposizione regge, le funzioni del complemento attivato sono quelle
+     specifiche di quel combinato (es. εἰς + Accusativo → moto a luogo, fine).
+     Questo dà suggerimenti molto più mirati rispetto al generico PoS→funzione. */
+  const prep = grams.find(g => g.partOfSpeech === 'Preposizione' && Array.isArray(g._prepHint));
+  if (prep) {
+    // Trova i casi presenti nel sintagma (escluso la preposizione)
+    const otherCases = grams.filter(g => g !== prep && g.caso).map(g => g.caso);
+    const prepCases = prep._prepHint.map(h => h.caso);
+    // Caso effettivo: intersezione tra casi del sintagma e casi del preset
+    const matched = otherCases.filter(c => prepCases.includes(c));
+    if (matched.length > 0) {
+      const hints = prep._prepHint.filter(h => matched.includes(h.caso));
+      hints.forEach(h => (h.funzioni || []).forEach(f => suggested.add(f)));
+      sources.push({ word: prep.word || '', pos: 'Preposizione', categoria: matched.join('/'), via: 'preset-preposizione' });
+    } else if (prepCases.length === 1) {
+      // Se preposizione monocaso e il sintagma non ha ancora un caso esplicito,
+      // anticipa comunque le funzioni del caso unico
+      const hints = prep._prepHint;
+      hints.forEach(h => (h.funzioni || []).forEach(f => suggested.add(f)));
+      sources.push({ word: prep.word || '', pos: 'Preposizione', categoria: prepCases[0], via: 'preset-preposizione' });
+    }
+  }
+
   grams.forEach(ge => {
     const conv = lookupConversion(ge);
     if (!conv) return;
@@ -20026,12 +20363,33 @@ function gradeFromGrammarToPeriodale(sentence, tokenIndices, lang) {
 
   // 1) Cerca un connettivo subordinante/coordinante → ruolo + tipo univoco
   const congRow = CONVERSION_TABLE.find(r => r.pos === 'Congiunzione');
-  const congs = grams.filter(g => g.partOfSpeech === 'Congiunzione');
+  const congs = grams.filter(g => g.partOfSpeech === 'Congiunzione' || g.partOfSpeech === 'Particella');
   congs.forEach(g => {
     const tipo = (g.congiunzioneTipo || '').toLowerCase();
+    /* PRIORITÀ 1 · preset hint dal dizionario delle congiunzioni greche/latine.
+       Se applyConjunctionPreset ha salvato _propTipoHint e _moodHint, li usiamo
+       come fonte primaria — sono mappati direttamente dalla tabella didattica. */
+    if (Array.isArray(g._propTipoHint) && g._propTipoHint.length > 0) {
+      // Il ruolo viene dedotto dalla famiglia (subor → Subordinata, coord → Coordinata)
+      if (tipo.includes('subor')) suggestedRuolo = suggestedRuolo || 'Subordinata';
+      else if (tipo.includes('coord') || tipo.includes('correl') || tipo.includes('particella')) {
+        suggestedRuolo = suggestedRuolo || (tipo.includes('subor') ? 'Subordinata' : 'Coordinata');
+      }
+      g._propTipoHint.forEach(t => {
+        suggestedTipo = suggestedTipo || t;
+        suggestedTipi.add(t);
+      });
+      reasons.push(`«${g.word}» (preset greco) → ${g._propTipoHint.join(' | ')}`);
+      // Se il preset esprime un mood preciso, lo annotiamo nelle ragioni come hint
+      if (Array.isArray(g._moodHint) && g._moodHint.length > 0) {
+        reasons.push(`modo richiesto dalla congiunzione: ${g._moodHint.join(' | ')}`);
+      }
+      return; // non duplicare con il matching generico
+    }
+    /* PRIORITÀ 2 · matching generico via stringa del congiunzioneTipo
+       (per congiunzioni latine senza hint preset esteso) */
     if (tipo.includes('subor')) {
       suggestedRuolo = suggestedRuolo || 'Subordinata';
-      // Cerca il tipo proposizionale univoco
       for (const k of Object.keys(congRow.propTipiFromCongiunzione)) {
         if (tipo.includes(k)) {
           const v = congRow.propTipiFromCongiunzione[k];
@@ -23088,6 +23446,8 @@ function confirmConnettivo(sentenceId) {
     entry.partOfSpeech = 'Preposizione';
     const prepSel = document.getElementById('pending-conn-prep-retta');
     if (prepSel && prepSel.value) entry.preposizioneRetta = prepSel.value;
+    // Auto-recognize preposition preset (dialoga col table didattico)
+    applyPrepositionPreset(entry, state.meta.lingua);
   }
   if (isNew) insertEntrySorted(sentence.grammar, entry, 'grammar');
 
@@ -27018,13 +27378,20 @@ function confirmPendingGrammar(sentenceId) {
     entry.tokenIndex = pending.tokenIdx;
     insertEntrySorted(sentence.grammar, entry, 'grammar');
   }
-  // AUTO-COMPLETAMENTO PRESET per Congiunzioni e Particelle dal dizionario di alta frequenza.
-  // Le congiunzioni hanno funzione standard ben nota: applichiamo subito il tipo
-  // per evitare compilazione manuale ripetitiva.
+  // AUTO-COMPLETAMENTO PRESET per Congiunzioni, Particelle e Preposizioni dal
+  // dizionario di alta frequenza. Le congiunzioni e preposizioni hanno valori
+  // sintattici ben definiti: applichiamo subito tipo/reggenza per evitare
+  // compilazione manuale ripetitiva.
   if (entry.partOfSpeech === 'Congiunzione' || entry.partOfSpeech === 'Particella') {
     const applied = applyConjunctionPreset(entry, state.meta.lingua);
     if (applied) {
       showToast(`Preset applicato: ${entry.word} → ${entry.congiunzioneTipo || entry.partOfSpeech}`);
+    }
+  } else if (entry.partOfSpeech === 'Preposizione') {
+    const applied = applyPrepositionPreset(entry, state.meta.lingua);
+    if (applied) {
+      const cases = entry._prepHint ? entry._prepHint.map(h => h.caso).join('/') : entry.preposizioneRetta || '';
+      showToast(`Preset preposizione applicato: ${entry.word} → ${cases}`);
     }
   }
   // PROPAGAZIONE incrociata: la scelta della parte del discorso può determinare la funzione logica
