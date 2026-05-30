@@ -1,0 +1,14 @@
+# Configurazione locale di Claude Code (non serve online)
+.claude/
+
+# Backup generati da _build/prune.py (recuperabili, 17 MB inutili nel repo).
+# Gli script di build restano invece versionati per riproducibilità.
+_build/backup/
+
+# Cartella di staging creata dal workflow di deploy (solo in CI)
+_site/
+
+# File di sistema
+Thumbs.db
+desktop.ini
+.DS_Store
