@@ -1,0 +1,64 @@
+name: Deploy Poetrify to GitHub Pages
+
+# Pubblica automaticamente il sito statico (app.html, translator.html,
+# dictionary.html + le cartelle modules/ e data/) su GitHub Pages a ogni push
+# sul branch principale. Così non devi più aggiornare nulla a mano: ti basta
+# fare `git push` e il sito online si aggiorna da solo.
+#
+# ⚙️  Requisito UNA-TANTUM (da fare una sola volta nella pagina del repo):
+#     Settings ▸ Pages ▸ "Build and deployment" ▸ Source = "GitHub Actions".
+
+on:
+  push:
+    branches: [main, master]   # parte ad ogni push sul branch principale
+  workflow_dispatch:           # ...oppure manualmente dalla tab "Actions"
+
+# Permessi minimi necessari alla pubblicazione su Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Una pubblicazione alla volta; le esecuzioni in coda obsolete vengono annullate
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout del repository
+        uses: actions/checkout@v4
+
+      - name: Prepara la cartella del sito (_site)
+        run: |
+          mkdir -p _site
+          # Copia il sito statico, ESCLUDENDO le cartelle di sviluppo/build/CI
+          # che non servono online (gli script di build, la config locale, .git…).
+          rsync -a \
+            --exclude='_site/' \
+            --exclude='_build/' \
+            --exclude='.git/' \
+            --exclude='.github/' \
+            --exclude='.claude/' \
+            ./ _site/
+          # Disattiva Jekyll: indispensabile perché i file che iniziano con "_"
+          # (es. data/latin/_index.json, data/greek/_index.json) vengano serviti.
+          touch _site/.nojekyll
+          echo "Contenuto pubblicato:" && ls -A _site
+
+      - name: Configura GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Carica l'artifact del sito
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - name: Pubblica su GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,23 @@
+═══════════════════════════════════════════════════════════════════════
+  POETRIFY · NOTA DI MIGRAZIONE
+═══════════════════════════════════════════════════════════════════════
+
+Da maggio 2026 lo sviluppo del sistema avviene esclusivamente
+nella cartella `poetrify/` (questa cartella).
+
+I file:
+  ../poetrify-translator.html
+  ../poetrify-dictionary.html
+sono considerati ARCHIVIO STORICO e NON vanno modificati.
+
+I file attivi sono:
+  poetrify/translator.html    ← translator di sviluppo
+  poetrify/dictionary.html    ← dizionario di sviluppo
+  poetrify/app.html           ← entry-point / dashboard SPA
+  poetrify/modules/engine/*   ← motore condiviso modulare
+
+Tutte le feature implementate fino a oggi sono presenti in
+poetrify/translator.html (è una copia 1:1 del monolite legacy
+con gli URL bridge aggiornati per puntare al fratello dictionary.html).
+
+Per future iterazioni: lavorare sempre dentro poetrify/.

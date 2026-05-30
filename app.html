@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poetrify · App (modular)</title>
+<style>
+:root {
+  --primary: #1800AC;
+  --primary-dark: #0f0070;
+  --accent-lat: #A22E37;
+  --accent-gr: #1800AC;
+  --paper: #ffffff;
+  --ivory: #fcfbf8;
+  --cream: #f5f4f0;
+  --ink: #2c3539;
+  --sepia: #6b6660;
+  --rule: #d5d2cb;
+  --rule-soft: #eae8e2;
+  --success: #2f855a;
+  --warning: #d69e2e;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  color: var(--ink);
+  background: var(--ivory);
+  min-height: 100vh;
+}
+header {
+  background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
+  color: var(--paper);
+  padding: 24px 32px;
+  box-shadow: 0 2px 12px rgba(24, 0, 172, 0.20);
+}
+header h1 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+header small {
+  display: block;
+  margin-top: 4px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  opacity: 0.85;
+}
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 18px 60px;
+}
+section {
+  background: var(--paper);
+  border: 1px solid var(--rule-soft);
+  border-radius: 8px;
+  padding: 22px 26px;
+  margin-bottom: 18px;
+}
+h2 {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+p { line-height: 1.55; margin: 8px 0; }
+code {
+  background: var(--cream);
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-family: 'JetBrains Mono', Consolas, monospace;
+  font-size: 12.5px;
+  color: var(--primary);
+}
+.engine-status {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+.status-card {
+  background: var(--ivory);
+  border: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--success);
+  padding: 12px 14px;
+  border-radius: 4px;
+  font-family: 'Source Sans 3', sans-serif;
+}
+.status-card.error { border-left-color: #c53030; }
+.status-card .label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--sepia);
+}
+.status-card .count {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: 4px;
+  font-family: 'Source Serif 4', Georgia, serif;
+}
+.status-card .desc {
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--ink);
+  font-family: 'Source Serif 4', Georgia, serif;
+  font-style: italic;
+}
+.nav-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.nav-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: var(--primary);
+  color: var(--paper);
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: all 0.15s ease;
+}
+.nav-links a:hover { background: var(--primary-dark); transform: translateY(-1px); }
+.nav-links a.secondary { background: var(--paper); color: var(--primary); border: 1px solid var(--primary); }
+.nav-links a.secondary:hover { background: var(--cream); }
+.lang-tag {
+  display: inline-block;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+.lang-tag.lat { background: var(--accent-lat); color: var(--paper); }
+.lang-tag.gr  { background: var(--accent-gr);  color: var(--paper); }
+footer {
+  text-align: center;
+  padding: 16px;
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 11px;
+  color: var(--sepia);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Poetrify · App</h1>
+  <small>SPA modulare · single-page architecture · v0.1.0</small>
+</header>
+
+<main>
+
+  <section>
+    <h2>🏗 Architettura modulare</h2>
+    <p>Questo è il <strong>nuovo entry point</strong> della <em>single-page app</em> Poetrify. La struttura organizza il codice in moduli ES indipendenti, per ridurre il monolite HTML del translator e abilitare l'iterazione separata fra translator e dizionario su un motore condiviso.</p>
+    <p>Struttura cartelle:</p>
+    <pre style="background:var(--cream);padding:12px;border-radius:4px;font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.6;">
+poetrify/
+├─ app.html                  ← questo file (loader)
+├─ translator.html           ← translator attivo (sviluppo qui)
+├─ dictionary.html           ← scheda dizionario (sviluppo qui)
+├─ modules/
+│  ├─ engine/                ← motore condiviso
+│  │  ├─ taxonomies.js
+│  │  ├─ conjunctions.js     <span class="lang-tag lat">LAT</span> <span class="lang-tag gr">GR</span>
+│  │  ├─ prepositions.js     <span class="lang-tag gr">GR</span>
+│  │  ├─ cross-rules.js
+│  │  ├─ conversion-table.js
+│  │  ├─ text-utils.js
+│  │  └─ index.js            ← facade
+│  ├─ translator/            ← Fase 2 in corso
+│  │  ├─ token-classifiers.js
+│  │  ├─ options-renderer.js
+│  │  ├─ summaries.js
+│  │  └─ index.js            ← facade
+│  ├─ dictionary/            (future)
+│  └─ ui/                    (future)
+└─ data/                     (future)
+   ├─ greek-dict.json
+   └─ latin-dict.json</pre>
+  </section>
+
+  <section>
+    <h2>📊 Stato del motore caricato</h2>
+    <p style="font-size: 13px; color: var(--sepia);">I numeri qui sotto sono calcolati al volo importando i moduli e contando le entry. Se vedi <strong>0</strong> ovunque, il caricamento dei moduli è fallito.</p>
+    <div class="engine-status" id="engine-status">
+      <div class="status-card">
+        <div class="label">Caricamento…</div>
+        <div class="desc">Importazione dei moduli engine in corso.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🚀 Navigazione</h2>
+    <p style="margin-bottom: 12px;">Il <strong>translator</strong> e il <strong>dizionario</strong> sono ora ospitati come fratelli di <code>app.html</code> dentro la cartella <code>poetrify/</code>. Da qui in avanti lo sviluppo avviene <em>esclusivamente</em> in questa cartella; il file <code>poetrify-translator.html</code> nella directory padre è considerato archivio storico.</p>
+    <div class="nav-links">
+      <a href="translator.html">📜 Apri il Translator</a>
+      <a href="dictionary.html" class="secondary">📖 Apri il Dizionario</a>
+    </div>
+  </section>
+
+  <section>
+    <h2>📘 Roadmap della migrazione</h2>
+    <p><strong>Fase 1 · estrazione dati</strong> (✅ completata): le costanti del motore — preset congiunzioni, preset preposizioni, tabelle di conversione, regole cross-layer, tassonomie linguistiche — sono ora moduli ES indipendenti.</p>
+    <p><strong>Fase 2 · UI translator</strong> (🛠 in corso): estrazione progressiva dei renderer in <code>modules/translator/</code>. Primo batch consegnato: <code>token-classifiers.js</code> · <code>options-renderer.js</code> · <code>summaries.js</code>. Il translator inline carica i moduli in modalità <em>shadow</em> (export modulari + smoke-test di parità rispetto alle definizioni inline). Prossimi batch: tokenizer/render-token-chip, action-bars, wizard, lemma engine.</p>
+    <p><strong>Fase 3 · UI dizionario</strong> (pending): completamento del dizionario standalone con la card library, paradigm modal, filtri profilo.</p>
+    <p><strong>Fase 4 · shared state</strong> (pending): introduzione di un piccolo store reattivo condiviso fra translator e dizionario; il bridge URL-query string si trasforma in <em>event bus</em>.</p>
+    <p><strong>Fase 5 · data files JSON</strong> (pending): migrazione del corpus lessicale (Greek/Latin dict) da JS inline a file JSON serviti su richiesta.</p>
+  </section>
+
+</main>
+
+<footer>
+  Poetrify · architettura SPA modulare · v0.1.0 · 2026
+</footer>
+
+<script type="module">
+/* Bootstrap: importa il motore e popola la dashboard di stato.
+   Se il caricamento fallisce (file mancanti, syntax error), mostra una
+   card di errore così l'utente capisce subito che la modularizzazione
+   non è ancora completa o ha un problema. */
+import {
+  CONJ_PRESETS,
+  PREP_PRESETS,
+  CONVERSION_TABLE,
+  CROSS_RULES,
+  FUNZIONI_LOGICHE,
+  FUNZIONI_LOGICHE_GROUPED,
+  FUNZIONI_LOGICHE_GROUPED_GR,
+  PROPOSIZIONI,
+  GUIDED_PHASES,
+  GUIDED_STEPS_META,
+  GUIDED_GENERI,
+  APPROACH_DESCRIPTORS,
+  ENGINE_META,
+} from './modules/engine/index.js';
+
+/* Fase 2 · translator UI modules (renderer puri) */
+import {
+  TRANSLATOR_UI_META,
+  posClass, posShort, logicFuncClass,
+  caseGroupForGrammarEntry, funzioneToCaseGroup,
+  renderFunzioneOptions, renderCongiunzioneTipoOptions,
+  makeGrammarSummary, makeLogicSummary, makePeriodaleSummary,
+} from './modules/translator/index.js';
+
+function countObj(o) { return o && typeof o === 'object' ? Object.keys(o).length : 0; }
+function n(num) { return new Intl.NumberFormat('it-IT').format(num); }
+
+const cards = [
+  {
+    label: 'Engine version',
+    count: ENGINE_META.version,
+    desc: ENGINE_META.description,
+  },
+  {
+    label: 'CONJ_PRESETS · greco',
+    count: n(countObj(CONJ_PRESETS.greco)),
+    desc: 'congiunzioni greche dalla tabella didattica master',
+  },
+  {
+    label: 'CONJ_PRESETS · latino',
+    count: n(countObj(CONJ_PRESETS.latino)),
+    desc: 'congiunzioni latine (coord/sub/correlative)',
+  },
+  {
+    label: 'PREP_PRESETS · greco',
+    count: n(countObj(PREP_PRESETS.greco)),
+    desc: 'preposizioni greche proprie + improprie',
+  },
+  {
+    label: 'CONVERSION_TABLE',
+    count: n(CONVERSION_TABLE.length),
+    desc: 'righe PoS → funzioni logiche e tipi periodali',
+  },
+  {
+    label: 'CROSS_RULES',
+    count: n(countObj(CROSS_RULES.latino.logicToGrammar) + countObj(CROSS_RULES.greco.logicToGrammar)),
+    desc: 'regole inequivocabili logica→grammatica (lat+gr)',
+  },
+  {
+    label: 'FUNZIONI_LOGICHE',
+    count: n(FUNZIONI_LOGICHE.length),
+    desc: 'funzioni totali · ' + FUNZIONI_LOGICHE_GROUPED.length + ' gruppi lat · ' + FUNZIONI_LOGICHE_GROUPED_GR.length + ' gruppi gr',
+  },
+  {
+    label: 'PROPOSIZIONI',
+    count: n(PROPOSIZIONI.subordinata.length),
+    desc: 'tipi di subordinata (lat+gr)',
+  },
+  {
+    label: 'GUIDED · tappe',
+    count: n(GUIDED_STEPS_META.length),
+    desc: countObj(GUIDED_PHASES) + ' macro-fasi (Lettura · Analisi · Traduzione · Versione)',
+  },
+  {
+    label: 'GUIDED · generi',
+    count: n(GUIDED_GENERI.length),
+    desc: 'racconto · militare · filosofica · lettera · discorso · storica',
+  },
+  {
+    label: 'APPROCCI',
+    count: n(countObj(APPROACH_DESCRIPTORS)),
+    desc: 'integrale · attuale · frase-per-frase',
+  },
+  {
+    label: 'Translator-UI version',
+    count: TRANSLATOR_UI_META.version,
+    desc: TRANSLATOR_UI_META.description,
+  },
+  {
+    label: 'Translator-UI · exports',
+    count: n(TRANSLATOR_UI_META.totalExports),
+    desc: TRANSLATOR_UI_META.modules.map(m => m.name).join(' · '),
+  },
+];
+
+const container = document.getElementById('engine-status');
+container.innerHTML = cards.map(c => `
+  <div class="status-card">
+    <div class="label">${c.label}</div>
+    <div class="count">${c.count}</div>
+    <div class="desc">${c.desc}</div>
+  </div>
+`).join('');
+
+// Test rapido: lookup di una congiunzione greca per verificare la facade
+import('./modules/engine/index.js').then(eng => {
+  const test = eng.lookupConjunctionPreset('ἵνα', 'greco');
+  if (test) {
+    console.log('✓ engine lookup test passed: ἵνα →', test.tipo, '·', test.propTipo);
+  } else {
+    console.warn('✗ engine lookup test failed: ἵνα non trovato');
+  }
+});
+
+// Test rapido: translator-UI · classifiers + renderer
+const uiTests = [
+  ['posClass(Verbo)',            posClass('Verbo'),                                     'pos-verbo'],
+  ['posShort(Aggettivo)',        posShort('Aggettivo'),                                 'agg.'],
+  ['logicFuncClass(Sogg.)',      logicFuncClass('Soggetto'),                            'lf-soggetto'],
+  ['funzToCase(Pred. verb.)',    funzioneToCaseGroup('Predicato verbale'),              'verbo'],
+  ['caseGroup(Sost.+Gen.)',      caseGroupForGrammarEntry({partOfSpeech:'Sostantivo', caso:'Genitivo'}), 'genitivo'],
+  ['renderFunzioneOptions(gr)',  renderFunzioneOptions('Soggetto', new Set(), 'greco').includes('Soggetto'), true],
+  ['renderCongiunzTipo(lat)',    renderCongiunzioneTipoOptions('Coordinante copulativa', 'latino', new Set()).includes('Coordinante copulativa'), true],
+  ['makePeriodaleSummary',       makePeriodaleSummary({ruolo:'Subordinata',tipo:'Finale'}).includes('Finale'), true],
+];
+const uiFail = uiTests.filter(([_, got, want]) => got !== want);
+if (uiFail.length === 0) {
+  console.log('✓ translator-UI smoke passed: ' + uiTests.length + ' assertions');
+} else {
+  console.warn('✗ translator-UI smoke failed: ' + uiFail.length + '/' + uiTests.length);
+  uiFail.forEach(([name, got, want]) => console.warn('  · ' + name + ' got=' + JSON.stringify(got) + ' want=' + JSON.stringify(want)));
+}
+
+window.PoetrifyEngine = { CONJ_PRESETS, PREP_PRESETS, CONVERSION_TABLE, CROSS_RULES };
+window.PoetrifyTranslatorUI = {
+  posClass, posShort, logicFuncClass,
+  caseGroupForGrammarEntry, funzioneToCaseGroup,
+  renderFunzioneOptions, renderCongiunzioneTipoOptions,
+  makeGrammarSummary, makeLogicSummary, makePeriodaleSummary,
+  TRANSLATOR_UI_META,
+};
+console.log('%c Poetrify engine caricato', 'background: #1800AC; color: white; padding: 4px 8px; border-radius: 3px;', ENGINE_META);
+console.log('%c Poetrify translator-UI caricato', 'background: #2f855a; color: white; padding: 4px 8px; border-radius: 3px;', TRANSLATOR_UI_META);
+</script>
+
+</body>
+</html>
