@@ -1141,13 +1141,22 @@ kbd {
   color: var(--primary);
   margin-bottom: 8px;
 }
-.clp-tables { display: flex; flex-direction: column; gap: 14px; }
-.clp-case-table, .clp-verb-table {
-  border-collapse: collapse;
-  width: 100%;
-  font-size: 13px;
+.clp-tables { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+/* Contenitore con scroll orizzontale: la tabella si "inquadra" nella pagina e,
+   se troppo larga (es. verbo a 7 colonne su mobile), scorre invece di sforare. */
+.clp-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
   margin-bottom: 4px;
 }
+.clp-case-table, .clp-verb-table {
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.clp-case-table { width: 100%; }
+.clp-verb-table { width: max-content; min-width: 100%; }
 .clp-case-table th, .clp-case-table td,
 .clp-verb-table th, .clp-verb-table td {
   border: 1px solid var(--rule-soft);
@@ -1219,6 +1228,18 @@ kbd {
 .clp-nf dd { margin: 0; }
 .clp-disclaimer { font-size: 11px; margin-top: 10px; font-style: italic; }
 .clp-note { font-size: 12px; margin: 0 0 6px; }
+/* Tablet/mobile: tabelle più compatte (meno scroll necessario) */
+@media (max-width: 700px) {
+  .clp-case-table, .clp-verb-table { font-size: 12px; }
+  .clp-case-table th, .clp-case-table td,
+  .clp-verb-table th, .clp-verb-table td { padding: 3px 6px; }
+  .clp-meta { font-size: 11.5px; }
+}
+@media (max-width: 420px) {
+  .clp-case-table th, .clp-case-table td,
+  .clp-verb-table th, .clp-verb-table td { padding: 3px 5px; }
+  .clp-nonfinite { gap: 5px 10px; }
+}
 
 /* [P8] etimologia · «deriva da» + composti correlati */
 .etym-derives, .etym-related { margin-top: 6px; }

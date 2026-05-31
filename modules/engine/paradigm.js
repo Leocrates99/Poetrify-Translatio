@@ -2403,7 +2403,7 @@ function _renderCaseTable(rows, cases, greek) {
     if (showP) r += `<td class="clp-cell${gc}">${_esc((rows.plur && rows.plur[c]) || '—')}</td>`;
     return r + '</tr>';
   }).join('');
-  return `<table class="clp-case-table"><thead>${head}</thead><tbody>${body}</tbody></table>`;
+  return `<div class="clp-table-wrap"><table class="clp-case-table"><thead>${head}</thead><tbody>${body}</tbody></table></div>`;
 }
 function _renderNounHtml(par, cases, greek) {
   let banner = '';
@@ -2429,7 +2429,7 @@ function _renderVerbVoice(voiceObj, greek) {
     if (finite.length) {
       const gc = greek ? ' greek' : '';
       const rows = finite.map(([b, arr]) => `<tr><th class="clp-rowh">${_esc(b)}</th>${PERSON_LABELS.map((_, i) => `<td class="clp-cell${gc}">${_esc(arr[i] || '—')}</td>`).join('')}</tr>`).join('');
-      inner += `<table class="clp-verb-table"><thead><tr><th></th>${PERSON_LABELS.map(p => `<th>${p}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table>`;
+      inner += `<div class="clp-table-wrap"><table class="clp-verb-table"><thead><tr><th></th>${PERSON_LABELS.map(p => `<th>${p}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
     }
     if (nonfin.length) {
       const gc = greek ? ' greek' : '';
