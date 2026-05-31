@@ -2391,51 +2391,105 @@ function _buildClassicalGreek(lemma, bpos, def) {
   return null;
 }
 
-/* ── RENDERER (tabelle scolastiche compatte, CSS dizionario) ── */
-function _renderCaseTable(rows, cases, greek) {
-  if (!rows) return '';
-  const showS = !!rows.sing, showP = !!rows.plur;
+/* ── RENDERER (tabelle scolastiche · CASI righe, GENERI colonne per numero;
+   VERBI modo-first: righe = tempi, colonne = persone) ── */
+
+/* Tabella nominale/aggettivale: CASI sulle righe, GENERI sulle colonne,
+   separati per NUMERO (Singolare | Plurale). I nomi hanno un solo genere
+   (intestazione a un livello); gli aggettivi più generi (intestazione a due
+   livelli: numero → genere). `genders` = [{label, rows:{sing,plur}}]. */
+function _renderNominalTable(genders, cases, greek, opts) {
+  opts = opts || {};
   const gc = greek ? ' greek' : '';
-  const head = `<tr><th></th>${showS ? '<th>Singolare</th>' : ''}${showP ? '<th>Plurale</th>' : ''}</tr>`;
+  const nums = [];
+  if (!opts.noSing) nums.push(['sing', 'Singolare']);
+  if (!opts.noPlur) nums.push(['plur', 'Plurale']);
+  if (!nums.length) nums.push(['sing', 'Singolare']);
+  const multi = genders.length > 1 || !!(genders[0] && genders[0].label);
+  let thead;
+  if (multi) {
+    let r1 = '<th rowspan="2" class="clp-corner"></th>';
+    nums.forEach(([, nlab]) => { r1 += `<th colspan="${genders.length}" class="clp-numhead">${nlab}</th>`; });
+    let r2 = '';
+    nums.forEach(() => genders.forEach(g => { r2 += `<th class="clp-genhead">${_esc(g.label)}</th>`; }));
+    thead = `<tr>${r1}</tr><tr>${r2}</tr>`;
+  } else {
+    let r1 = '<th class="clp-corner"></th>';
+    nums.forEach(([, nlab]) => { r1 += `<th class="clp-numhead">${nlab}</th>`; });
+    thead = `<tr>${r1}</tr>`;
+  }
   const body = cases.map(c => {
     let r = `<tr><th class="clp-rowh">${c}</th>`;
-    if (showS) r += `<td class="clp-cell${gc}">${_esc((rows.sing && rows.sing[c]) || '—')}</td>`;
-    if (showP) r += `<td class="clp-cell${gc}">${_esc((rows.plur && rows.plur[c]) || '—')}</td>`;
+    nums.forEach(([nk]) => genders.forEach(g => {
+      const cell = (g.rows && g.rows[nk] && g.rows[nk][c]) || '—';
+      r += `<td class="clp-cell${gc}">${_esc(cell)}</td>`;
+    }));
     return r + '</tr>';
   }).join('');
-  return `<div class="clp-table-wrap"><table class="clp-case-table"><thead>${head}</thead><tbody>${body}</tbody></table></div>`;
+  return `<div class="clp-table-wrap"><table class="clp-case-table"><thead>${thead}</thead><tbody>${body}</tbody></table></div>`;
 }
+
 function _renderNounHtml(par, cases, greek) {
   let banner = '';
   if (par.noSing) banner = '<p class="clp-note"><strong>Pluralia tantum:</strong> attestato solo al plurale.</p>';
   else if (par.noPlur) banner = '<p class="clp-note"><strong>Singularia tantum:</strong> attestato solo al singolare.</p>';
-  return banner + _renderCaseTable(par.rows, cases, greek);
+  return banner + _renderNominalTable([{ label: '', rows: par.rows }], cases, greek, { noSing: par.noSing, noPlur: par.noPlur });
 }
 function _renderAdjHtml(par, cases, greek) {
-  let genders = [];
-  if (par.kind === 'three-genders' || par.kind === 'three-endings') genders = [['Maschile', par.M], ['Femminile', par.F], ['Neutro', par.N]];
-  else if (par.kind === 'two-endings' || par.kind === 'one-ending') genders = [['Maschile e Femminile', par.MF], ['Neutro', par.N]];
+  let genders;
+  if (par.kind === 'three-genders' || par.kind === 'three-endings') genders = [{ label: 'M', rows: par.M }, { label: 'F', rows: par.F }, { label: 'N', rows: par.N }];
+  else if (par.kind === 'two-endings' || par.kind === 'one-ending') genders = [{ label: 'M/F', rows: par.MF }, { label: 'N', rows: par.N }];
   else return '';
-  return genders.map(([lab, rows]) => `<div class="clp-gender-block"><h6 class="clp-gender-title">${lab}</h6>${_renderCaseTable(rows, cases, greek)}</div>`).join('');
+  return _renderNominalTable(genders, cases, greek, {});
 }
-function _renderVerbVoice(voiceObj, greek) {
-  let html = '';
+
+/* Mappa chiave→modo canonico (latino minuscolo, greco maiuscolo). */
+const _MOOD_CANON = {
+  indicativo: 'Indicativo', congiuntivo: 'Congiuntivo', ottativo: 'Ottativo', imperativo: 'Imperativo',
+  infinito: 'Infinito', participio: 'Participio', gerundio: 'Gerundio', supino: 'Supino',
+};
+const _MOOD_ORDER = ['Indicativo', 'Congiuntivo', 'Ottativo', 'Imperativo', 'Infinito', 'Participio', 'Gerundio', 'Supino'];
+function _moodOf(k) { return _MOOD_CANON[String(k).toLowerCase()] || null; }
+
+/* Normalizza una diatesi a { Modo: { Tempo: valore } } indipendentemente dal
+   fatto che la struttura sia modo→tempo (latino) o tempo→modo (greco): così
+   sia in latino sia in greco le RIGHE sono i tempi e le COLONNE le persone. */
+function _voiceByMood(voiceObj) {
+  const byMood = {};
   for (const [aKey, aVal] of Object.entries(voiceObj)) {
     if (!aVal || typeof aVal !== 'object' || Array.isArray(aVal)) continue;
-    const entries = Object.entries(aVal).filter(([, v]) => v != null);
+    for (const [bKey, val] of Object.entries(aVal)) {
+      if (val == null) continue;
+      let mood = _moodOf(aKey), tense;
+      if (mood) tense = bKey;
+      else { const m2 = _moodOf(bKey); if (m2) { mood = m2; tense = aKey; } else { mood = aKey; tense = bKey; } }
+      (byMood[mood] || (byMood[mood] = {}))[tense] = val;
+    }
+  }
+  return byMood;
+}
+
+/* Diatesi: per ogni MODO una tabella con righe = TEMPI, colonne = PERSONE.
+   Le forme nominali del verbo (infinito, participio, gerundio, supino) sono
+   rese come elenco tempo/caso → forma. */
+function _renderVerbVoice(voiceObj, greek) {
+  const byMood = _voiceByMood(voiceObj);
+  const gc = greek ? ' greek' : '';
+  const moodKeys = _MOOD_ORDER.filter(m => byMood[m]).concat(Object.keys(byMood).filter(m => !_MOOD_ORDER.includes(m)));
+  let html = '';
+  for (const mood of moodKeys) {
+    const entries = Object.entries(byMood[mood]).filter(([, v]) => v != null);
     const finite = entries.filter(([, v]) => Array.isArray(v));
     const nonfin = entries.filter(([, v]) => typeof v === 'string');
     let inner = '';
     if (finite.length) {
-      const gc = greek ? ' greek' : '';
-      const rows = finite.map(([b, arr]) => `<tr><th class="clp-rowh">${_esc(b)}</th>${PERSON_LABELS.map((_, i) => `<td class="clp-cell${gc}">${_esc(arr[i] || '—')}</td>`).join('')}</tr>`).join('');
-      inner += `<div class="clp-table-wrap"><table class="clp-verb-table"><thead><tr><th></th>${PERSON_LABELS.map(p => `<th>${p}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
+      const rows = finite.map(([t, arr]) => `<tr><th class="clp-rowh">${_esc(t)}</th>${PERSON_LABELS.map((_, i) => `<td class="clp-cell${gc}">${_esc(arr[i] || '—')}</td>`).join('')}</tr>`).join('');
+      inner += `<div class="clp-table-wrap"><table class="clp-verb-table"><thead><tr><th class="clp-corner"></th>${PERSON_LABELS.map(p => `<th>${p}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
     }
     if (nonfin.length) {
-      const gc = greek ? ' greek' : '';
-      inner += `<dl class="clp-nonfinite">${nonfin.map(([b, s]) => `<div class="clp-nf"><dt>${_esc(b)}</dt><dd class="clp-cell${gc}">${_esc(s)}</dd></div>`).join('')}</dl>`;
+      inner += `<dl class="clp-nonfinite">${nonfin.map(([t, s]) => `<div class="clp-nf"><dt>${_esc(t)}</dt><dd class="clp-cell${gc}">${_esc(s)}</dd></div>`).join('')}</dl>`;
     }
-    html += `<div class="clp-group"><h6 class="clp-group-title">${_esc(aKey)}</h6>${inner}</div>`;
+    html += `<div class="clp-group"><h6 class="clp-group-title">${_esc(mood)}</h6>${inner}</div>`;
   }
   return html;
 }

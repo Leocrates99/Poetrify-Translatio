@@ -846,9 +846,9 @@ export class DictionaryApp {
     const isSaved = Vocab.hasEntry(hit.lemma, this.currentLang);
     const saveBtnLabel = isSaved ? '★ Salvato' : '⭐ Salva';
     /* [P6] paradigma scolastico completo (ricostruito) + forme attestate */
-    const classicalHtml = this._renderClassicalParadigm(hit);
-    const attestedHtml = await this._renderParadigm(hit, /*forceCollapsed*/ !!classicalHtml && this.paradigmMode === 'classico');
-    const paradigmHtml = this._composeParadigmBlock(classicalHtml, attestedHtml);
+    /* Solo il paradigma scolastico: le "forme attestate" restano nei dati
+       (servono al motore per riconoscere le forme flesse) ma non si mostrano. */
+    const paradigmHtml = this._renderClassicalParadigm(hit);
     /* [NEW 9] frequenza */
     const freq = getFrequency(hit.lemma, this.currentLang);
     const freqHtml = freq > 0
@@ -1133,8 +1133,7 @@ export class DictionaryApp {
     if (!built) return '';
     const inner = renderClassicalParadigm(built);
     if (!inner) return '';
-    const open = this.paradigmMode === 'classico' ? ' open' : '';
-    return `<details class="dict-paradigm dict-paradigm-classic"${open}>
+    return `<details class="dict-paradigm dict-paradigm-classic" open>
       <summary>📐 Paradigma scolastico completo</summary>
       <div class="clp-wrap">
         ${inner}

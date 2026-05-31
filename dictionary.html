@@ -1153,36 +1153,52 @@ kbd {
 }
 .clp-case-table, .clp-verb-table {
   border-collapse: collapse;
-  font-size: 13px;
+  width: max-content;          /* riempie se stretta, scorre nel wrapper se larga */
+  min-width: 100%;
+  font-size: 14px;             /* le FORME sono il contenuto primario → leggibili */
 }
-.clp-case-table { width: 100%; }
-.clp-verb-table { width: max-content; min-width: 100%; }
 .clp-case-table th, .clp-case-table td,
 .clp-verb-table th, .clp-verb-table td {
   border: 1px solid var(--rule-soft);
-  padding: 4px 8px;
-  text-align: center;
+  padding: 5px 11px;
+  text-align: left;            /* allineamento a sinistra */
+  vertical-align: baseline;
 }
+/* GERARCHIA · intestazioni di colonna (persone / generi): piccole e sobrie */
 .clp-case-table thead th, .clp-verb-table thead th {
-  background: rgba(99,102,241,0.08);
   font-family: var(--font-ui);
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
-  color: var(--primary);
+  letter-spacing: 0.05em;
+  color: var(--sepia);
+  background: var(--cream);
+  white-space: nowrap;
 }
+/* Numero (Singolare/Plurale): raggruppa le colonne dei generi, più marcato */
+.clp-numhead {
+  color: var(--primary) !important;
+  text-align: center !important;
+  background: rgba(99,102,241,0.10) !important;
+  border-bottom: 2px solid rgba(99,102,241,0.30) !important;
+}
+.clp-genhead { text-align: center !important; }
+.clp-corner { background: transparent !important; border-color: transparent !important; }
+/* Intestazioni di riga (casi / tempi): in evidenza, a sinistra */
 .clp-rowh {
   background: rgba(99,102,241,0.05);
   font-family: var(--font-ui);
   font-size: 11px;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
   text-align: left !important;
-  color: var(--sepia);
+  color: var(--primary);
   white-space: nowrap;
 }
+/* Le forme flesse: contenuto primario, leggibile */
 .clp-cell { color: var(--ink); font-weight: 600; white-space: nowrap; }
-.clp-cell.greek { font-family: var(--font-classical); }
+.clp-cell.greek { font-family: var(--font-classical); font-size: 15px; }
 .clp-gender-block, .clp-voice-block { margin-bottom: 12px; }
 .clp-gender-title {
   font-family: var(--font-ui);
