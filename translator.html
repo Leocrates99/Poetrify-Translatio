@@ -4883,6 +4883,22 @@ body.poetrify-dark .quick-bar {
 .gr-nominal tbody th { width: 110px; min-width: 110px; }
 .gr-nominal tbody td { font-style: normal; }
 
+/* Contenitore scroll-x per ogni singola tabella del paradigma */
+.paradigm-table-wrap {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  margin-bottom: 14px;
+}
+/* Dentro il wrapper la tabella si dimensiona al contenuto (riempie almeno il
+   100% se è stretta), così scorre quando è più larga della pagina */
+.paradigm-table-wrap > .paradigm-table {
+  width: max-content;
+  min-width: 100%;
+  margin-bottom: 0;
+}
+
 /* TABELLE — declinazione (cases × singolare/plurale) */
 .paradigm-table {
   width: 100%;
@@ -27433,6 +27449,16 @@ function openParadigm(key) {
       <span class="paradigm-morph-legend-item"><span class="paradigm-morph-legend-color lg-ending">-ω/-μι · -m/-s/-t</span> desinenza</span>
     </div>`;
     body.innerHTML = legendHtml + bodyHtml;
+    /* Avvolge OGNI tabella in un contenitore con scroll orizzontale proprio:
+       le declinazioni/coniugazioni larghe scorrono singolarmente invece di far
+       scorrere l'intero corpo del modale — inquadratura migliore su tablet/mobile. */
+    body.querySelectorAll('table.paradigm-table').forEach(t => {
+      if (t.parentElement && t.parentElement.classList.contains('paradigm-table-wrap')) return;
+      const w = document.createElement('div');
+      w.className = 'paradigm-table-wrap';
+      t.replaceWith(w);
+      w.appendChild(t);
+    });
   }
   // Ripristina lo stato salvato del toggle "evidenzia desinenze"
   const highlightOn = getParadigmHighlightEndings();
