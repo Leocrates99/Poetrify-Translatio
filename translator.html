@@ -450,11 +450,48 @@ input, textarea, select { font-family: inherit; color: inherit; }
   font-weight: 400;
 }
 .brano-meta {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr auto;
-  gap: 10px;
+  display: flex;
   align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
+.meta-field-titolo { flex: 1 1 200px; min-width: 150px; }
+.meta-field-titolo input { width: 100%; }
+/* "＋ dettagli": Autore + Opera/locus in un dropdown, fuori dalla vista di default */
+.brano-meta-extra { position: relative; }
+.brano-meta-extra > summary {
+  list-style: none;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--poetrify-sepia);
+  padding: 6px 10px;
+  border: 1px solid var(--poetrify-rule-soft);
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.brano-meta-extra > summary::-webkit-details-marker { display: none; }
+.brano-meta-extra > summary:hover,
+.brano-meta-extra[open] > summary { color: var(--poetrify-primary); border-color: var(--poetrify-primary); }
+.brano-meta-pop {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 240px;
+  padding: 12px;
+  background: var(--poetrify-paper);
+  border: 1px solid var(--poetrify-rule);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.10);
+}
+.brano-meta-pop .meta-field input { width: 100%; }
 .meta-field { display: flex; flex-direction: column; gap: 2px; }
 .meta-field label {
   font-size: 10px;
@@ -3677,6 +3714,51 @@ body[data-profile="medie"] .field-hint {
 body[data-profile="medie"] .section-title h1 { font-size: 24px; }
 body[data-profile="medie"] .wizard-step-label { font-size: 12px; }
 
+/* ============================================
+   LIVELLO (base / intermedio / avanzato) · asse primario di densità.
+   Progressive disclosure: meno STRUMENTI ai livelli bassi, meno SOTTO-SCRITTE
+   ai livelli alti. Riusa le classi di gating già esistenti del profilo.
+   La pulizia di base globale dei 162 helper-text arriva nella Fase 2; qui
+   differenziamo la densità per livello.
+   ============================================ */
+/* Strumenti avanzati: nascosti ai livelli inferiori */
+body[data-level="base"] .profile-triennio-only,
+body[data-level="intermedio"] .profile-triennio-only,
+body[data-level="base"] .profile-biennio-plus {
+  display: none !important;
+}
+/* Sotto-scritte/aiuti verbosi e RIPETITIVI: mostrati SOLO a Base (dove guidano
+   davvero il principiante). Da Intermedio in su l'interfaccia resta pulita: le
+   istruzioni essenziali restano nei tooltip/title. NON tocchiamo gli avvisi
+   utili (.case-warning-hint), le note tantum, né i sottotitoli dei modali. */
+body:not([data-level="base"]) .method-note,
+body:not([data-level="base"]) .subsection-hint,
+body:not([data-level="base"]) .wizard-instructions,
+body:not([data-level="base"]) .integrale-hint,
+body:not([data-level="base"]) .approach-banner-hint,
+body:not([data-level="base"]) .batch-bar-hint,
+body:not([data-level="base"]) .sintagmi-step-hint,
+body:not([data-level="base"]) .token-grammar-hint,
+body:not([data-level="base"]) .periodale-action-hint,
+body:not([data-level="base"]) .inline-translation-hint,
+body:not([data-level="base"]) .deduced-hint,
+body:not([data-level="base"]) .attributivo-hint,
+body:not([data-level="base"]) .periodale-bridge-hint,
+body:not([data-level="base"]) .prop-insight-hint,
+body:not([data-level="base"]) .suggestion-hint,
+body:not([data-level="base"]) .lemma-hint,
+body:not([data-level="base"]) .field-hint,
+body:not([data-level="base"]) .unified-layer-hints,
+body:not([data-level="base"]) .section-title p {
+  display: none !important;
+}
+/* Legende dei colori: ridondanti per l'esperto → via solo ad Avanzato */
+body[data-level="avanzato"] .pos-legend,
+body[data-level="avanzato"] .paradigm-morph-legend,
+body[data-level="avanzato"] .syntax-tree-legend {
+  display: none !important;
+}
+
 /* Profilo chip: clickabile per riaprire il modale del profilo */
 .profile-chip {
   display: inline-flex;
@@ -3802,6 +3884,39 @@ body[data-lang="greco"] .quick-seg-btn.active {
  * (l'approccio è quello "attuale" by default). Manteniamo gli stili coerenti
  * con la disable-by-attribute della classe profile-biennio-plus. */
 body[data-profile="medie"] .quick-seg-btn[data-mode="free"] { display: none; }
+
+/* ── Selettore LIVELLO (controllo primario) + expander "Personalizza" ── */
+.quick-bar-level .quick-bar-label { color: var(--poetrify-primary); }
+.quick-personalize {
+  appearance: none;
+  border: none;
+  background: transparent;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--poetrify-sepia);
+  cursor: pointer;
+  padding: 4px 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  border-radius: 4px;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+.quick-personalize:hover { color: var(--poetrify-primary); background: var(--poetrify-ivory); }
+.qp-caret { font-size: 9px; opacity: 0.7; }
+/* I controlli fini compaiono sotto, a tutta larghezza, separati da una hairline */
+.quick-bar-custom {
+  flex-basis: 100%;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+  padding: 10px 0 2px;
+  margin-top: 4px;
+  border-top: 1px dashed var(--poetrify-rule-soft);
+}
 
 /* In dark mode, la barra si scurisce con la palette generale */
 body.poetrify-dark .quick-bar {
@@ -9614,8 +9729,7 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   body { font-size: 13px; }
   .topbar { padding: 8px 10px; }
   .brand-mark { font-size: 19px; }
-  .brano-meta { grid-template-columns: 1fr auto; }
-  .brano-meta .meta-field:nth-child(2) { display: none; }
+  /* Autore/Opera ora vivono nel dropdown "＋ dettagli": nessun hide strutturale qui */
 
   .editor { padding: 14px 10px 90px; }
   .section-letter { font-size: 36px; margin-right: 8px; }
@@ -9759,18 +9873,23 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
       </div>
 
       <div class="brano-meta">
-        <div class="meta-field">
-          <label for="meta-autore">Autore</label>
-          <input type="text" id="meta-autore" placeholder="Cesare, Tacito, Sofocle…">
-        </div>
-        <div class="meta-field">
-          <label for="meta-opera">Opera e locus</label>
-          <input type="text" id="meta-opera" placeholder="De bello Gallico I, 1, 1–3">
-        </div>
-        <div class="meta-field">
-          <label for="meta-titolo">Titolo del lavoro</label>
+        <div class="meta-field meta-field-titolo">
+          <label for="meta-titolo">Titolo</label>
           <input type="text" id="meta-titolo" placeholder="Es. Cesare, BG I, incipit">
         </div>
+        <details class="brano-meta-extra">
+          <summary title="Autore, opera e locus del brano">＋ dettagli</summary>
+          <div class="brano-meta-pop">
+            <div class="meta-field">
+              <label for="meta-autore">Autore</label>
+              <input type="text" id="meta-autore" placeholder="Cesare, Tacito, Sofocle…">
+            </div>
+            <div class="meta-field">
+              <label for="meta-opera">Opera e locus</label>
+              <input type="text" id="meta-opera" placeholder="De bello Gallico I, 1, 1–3">
+            </div>
+          </div>
+        </details>
         <div class="lang-toggle" role="tablist" aria-label="Lingua">
           <button class="active" data-lang="latino" title="Latino">LAT</button>
           <button data-lang="greco" title="Greco">ΕΛ</button>
@@ -23797,6 +23916,46 @@ function syncTopbar() {
    profilo didattico (medie/biennio/triennio/Univ). Ogni click chiama il
    setter standard esistente, così la propagazione di stato è già corretta.
    ════════════════════════════════════════════════════════════════════════════ */
+/* ── LIVELLO · selettore unico (Base/Intermedio/Avanzato) ──────────────────
+   Sostituisce nella vista di default i tre controlli Modalità/Approccio/Profilo.
+   data-level guida la DENSITÀ dell'interfaccia (CSS progressive disclosure);
+   il click su un livello applica anche un PRESET di workflow sui setter esistenti.
+   I controlli fini restano disponibili sotto "Personalizza". */
+const LEVEL_STORAGE_KEY = 'poetrify-level';
+const LEVEL_PRESETS = {
+  base:       { mode: 'guided', approach: 'frase-per-frase', label: 'Base' },
+  intermedio: { mode: 'free',   approach: 'attuale',         label: 'Intermedio' },
+  avanzato:   { mode: 'free',   approach: 'integrale',       label: 'Avanzato' },
+};
+let quickBarCustomOpen = false;
+
+function getLevel() {
+  try { const v = localStorage.getItem(LEVEL_STORAGE_KEY); if (LEVEL_PRESETS[v]) return v; } catch (e) {}
+  return 'intermedio';
+}
+function applyLevelToBody() { document.body.dataset.level = getLevel(); }
+function toggleQuickBarCustom() { quickBarCustomOpen = !quickBarCustomOpen; renderQuickBar(); }
+
+function setLevel(level) {
+  if (!LEVEL_PRESETS[level]) return;
+  const prev = getLevel();
+  try { localStorage.setItem(LEVEL_STORAGE_KEY, level); } catch (e) {}
+  applyLevelToBody();
+  const p = LEVEL_PRESETS[level];
+  // Preset di workflow applicato direttamente sullo stato (niente toast dai singoli setter).
+  // Le medie restano vincolate alla modalità guidata.
+  if (getUserProfile() !== 'medie') {
+    state.mode = p.mode;
+    if (p.mode === 'guided' && !state.guidedStep) state.guidedStep = 1;
+  }
+  state.approach = p.approach;
+  state.approachShown = true;
+  if (p.approach === 'frase-per-frase') state.frasePerFraseStep = 1;
+  persistCurrent();
+  renderAll();
+  if (level !== prev) showToast('Livello: ' + p.label);
+}
+
 function renderQuickBar() {
   const bar = document.getElementById('quick-bar');
   if (!bar) return;
@@ -23805,6 +23964,13 @@ function renderQuickBar() {
   const approach = getApproach();
   const profile = getUserProfile() || 'triennio';
   const isMedie = profile === 'medie';
+  const level = getLevel();
+
+  const levelBtns = [
+    { value: 'base',       label: 'Base',       title: 'Percorso guidato, interfaccia essenziale · ideale per cominciare' },
+    { value: 'intermedio', label: 'Intermedio', title: 'Analisi per frase su tre livelli · equilibrio fra guida e libertà' },
+    { value: 'avanzato',   label: 'Avanzato',   title: 'Vista integrale e tutti gli strumenti · per chi traduce in autonomia' },
+  ];
 
   // Per le medie la modalità è bloccata su "guidata" (vincolo didattico):
   // il pulsante "Libera" appare disabilitato — il CSS lo nasconde del tutto
@@ -23842,16 +24008,28 @@ function renderQuickBar() {
             </div>`;
   };
 
-  bar.innerHTML = [
-    seg('Modalità', modeBtns, mode, 'quickSwitchMode', {
-      disabledFor: b => isMedie && b.value === 'free',
-    }),
-    seg('Approccio', approachBtns, approach, 'quickSwitchApproach', {
-      // In modalità guidata, "frase-per-frase" coincide con il wizard stesso:
-      // lo lasciamo selezionabile ma con tooltip esplicativo.
-    }),
-    seg('Profilo', profileBtns, profile, 'quickSwitchProfile', null),
-  ].join('');
+  // Controllo principale: UN solo selettore "Livello".
+  const levelSeg = `<div class="quick-bar-group quick-bar-level">
+      <span class="quick-bar-label">Livello</span>
+      <div class="quick-seg">${levelBtns.map(b =>
+        `<button class="quick-seg-btn ${b.value === level ? 'active' : ''}" data-mode="${b.value}"
+           onclick="setLevel('${b.value}')" title="${escapeHtml(b.title)}">${escapeHtml(b.label)}</button>`
+      ).join('')}</div>
+    </div>`;
+
+  // Expander "Personalizza": ri-espone i controlli fini (Modalità/Approccio/Profilo).
+  const personalizeBtn = `<button class="quick-personalize" type="button" aria-expanded="${quickBarCustomOpen}"
+      onclick="toggleQuickBarCustom()" title="Imposta a mano modalità, approccio e profilo didattico">
+      ${quickBarCustomOpen ? 'Nascondi opzioni' : 'Personalizza'}<span class="qp-caret">${quickBarCustomOpen ? '▴' : '▾'}</span>
+    </button>`;
+
+  const customSegs = quickBarCustomOpen ? `<div class="quick-bar-custom">
+      ${seg('Modalità', modeBtns, mode, 'quickSwitchMode', { disabledFor: b => isMedie && b.value === 'free' })}
+      ${seg('Approccio', approachBtns, approach, 'quickSwitchApproach', null)}
+      ${seg('Profilo', profileBtns, profile, 'quickSwitchProfile', null)}
+    </div>` : '';
+
+  bar.innerHTML = levelSeg + personalizeBtn + customSegs;
 }
 
 /* Wrapper sottili dei setter esistenti, con verifica e toast informativo.
@@ -34413,6 +34591,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Applica il profilo utente salvato (gating della UI prima del primo render)
   applyProfileToBody();
+  // Applica il LIVELLO salvato (densità/disclosure dell'interfaccia)
+  applyLevelToBody();
   // Se utente medie: forza latino + guidata anche su progetti caricati
   if (getUserProfile() === 'medie') {
     if (state.meta.lingua !== 'latino') state.meta.lingua = 'latino';

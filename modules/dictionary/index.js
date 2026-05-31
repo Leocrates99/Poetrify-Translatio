@@ -71,6 +71,11 @@ const POS_FILTER_KEY = 'poetrify-dict-pos-filter';
 /* [P6] preferenza di visualizzazione del paradigma: 'classico' (tabella scolastica
  * completa, default) | 'attestato' (forme attestate nel corpus) */
 const PARADIGM_MODE_KEY = 'poetrify-dict-paradigm-mode';
+/* [UI] Livello di difficoltà condiviso col translator (densità dell'interfaccia).
+ * A Base le sezioni avanzate dell'entry (etimologia, cognati) restano nascoste. */
+const LEVEL_STORAGE_KEY = 'poetrify-level';
+const LEVELS = ['base', 'intermedio', 'avanzato'];
+const LEVEL_LABELS = { base: 'Base', intermedio: 'Interm.', avanzato: 'Avanz.' };
 const AUTOCOMPLETE_LIMIT = 8;
 const BACK_STACK_LIMIT = 30;
 /* [C] profondità massima del drill-down alfabetico: 1ª → +2ª → +3ª → +4ª lettera */
@@ -167,6 +172,7 @@ export class DictionaryApp {
     this.$historyBar = document.getElementById('dict-history-bar');
     this.$backBtn = document.getElementById('dict-back-btn');
     this.$forwardBtn = document.getElementById('dict-forward-btn');
+    this.$levelToggle = document.getElementById('dict-level-toggle');
 
     if (!this.$results) {
       console.warn('[DictionaryApp] container #dict-results-area non trovato');
@@ -178,6 +184,7 @@ export class DictionaryApp {
     this.currentLang = (params.get('lang') === 'greco') ? 'greco' : 'latino';
     this.currentQuery = (params.get('lemma') || '').trim();
     this._applyDarkMode(this._isDark());
+    this._applyLevel();
     this._loadFontSize();
     this._loadPosFilter();
     try { this.paradigmMode = localStorage.getItem(PARADIGM_MODE_KEY) === 'attestato' ? 'attestato' : 'classico'; } catch (_) { this.paradigmMode = 'classico'; }
@@ -209,6 +216,7 @@ export class DictionaryApp {
     if (this.$searchBtn) this.$searchBtn.addEventListener('click', () => this.search());
     if (this.$clearBtn) this.$clearBtn.addEventListener('click', () => this._onClear());
     if (this.$darkToggle) this.$darkToggle.addEventListener('click', () => this._toggleDark());
+    if (this.$levelToggle) this.$levelToggle.addEventListener('click', () => this._cycleLevel());
     if (this.$fontToggle) this.$fontToggle.addEventListener('click', () => this._cycleFontSize());
     if (this.$kbdToggle) this.$kbdToggle.addEventListener('click', () => this._toggleGreekKbd());
     if (this.$translitToggle) this.$translitToggle.addEventListener('click', () => this._toggleTranslit());
@@ -1567,6 +1575,26 @@ export class DictionaryApp {
         : 'Mostra translitterazione greco↔latino';
     }
     /* Re-render solo l'entry corrente per riflettere il toggle */
+    if (this.viewMode === 'search' && this.currentQuery) this.render();
+  }
+
+  /* ════════════════════════════════════════════════════════════════════
+     [UI] LIVELLO · densità condivisa col translator (poetrify-level)
+     ════════════════════════════════════════════════════════════════════ */
+  _getLevel() {
+    try { const v = localStorage.getItem(LEVEL_STORAGE_KEY); if (LEVELS.includes(v)) return v; } catch (_) {}
+    return 'intermedio';
+  }
+  _applyLevel() {
+    const lv = this._getLevel();
+    document.body.dataset.level = lv;
+    if (this.$levelToggle) this.$levelToggle.textContent = 'Livello: ' + LEVEL_LABELS[lv];
+  }
+  _cycleLevel() {
+    const next = LEVELS[(LEVELS.indexOf(this._getLevel()) + 1) % LEVELS.length];
+    try { localStorage.setItem(LEVEL_STORAGE_KEY, next); } catch (_) {}
+    this._applyLevel();
+    /* ri-renderizza l'entry corrente per riflettere la nuova densità */
     if (this.viewMode === 'search' && this.currentQuery) this.render();
   }
 
