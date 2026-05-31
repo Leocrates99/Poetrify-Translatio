@@ -2390,15 +2390,36 @@ function _fillGreekRegularStems(parsed) {
   parsed.perfStem = _stripGreekTone(_greekReduplicate(s)) + 'κ';  // λέλυκα
   parsed.perfMPStem = _stripGreekTone(_greekReduplicate(s));      // λέλυμαι
   parsed.aorPassStem = s + 'θ';                     // ἐλύθην
+  return true;
+}
+
+/* I verbi finiti greci sono RICORSIVI: il builder però non accenta alcuni tempi
+   sintetizzati (futuro, aor. passivo indic.) perché di norma riceve il tema già
+   accentato. Qui aggiungiamo l'accento ricorsivo SOLO alle forme finite rimaste
+   senza accento tonale (le altre — congiuntivi/ottativi con accento speciale,
+   infiniti/participi — restano intatte). */
+function _accentUnaccentedFinite(par) {
+  const MOODS = ['Indicativo', 'Congiuntivo', 'Ottativo', 'Imperativo'];
+  const hasTone = f => /[̀́͂]/.test((f || '').normalize('NFD'));
+  const fix = f => (typeof f === 'string' && f !== '—' && f.trim() && !hasTone(f)) ? _placeRecessiveAccent(f) : f;
+  ['active', 'midpass', 'passOnly'].forEach(vk => {
+    const voice = par[vk];
+    if (!voice) return;
+    Object.values(voice).forEach(tense => {
+      if (!tense || typeof tense !== 'object') return;
+      MOODS.forEach(m => { if (Array.isArray(tense[m])) tense[m] = tense[m].map(fix); });
+    });
+  });
 }
 
 function _buildClassicalGreek(lemma, bpos, def) {
   if (bpos === 'Verbo') {
     const parsed = parseGreekLemma(lemma.split(/[\s,;·]/)[0], 'Verbo');
     if (!parsed) return null;
-    if (parsed.type === 'gr-verb') _fillGreekRegularStems(parsed);
+    const _gregFilled = (parsed.type === 'gr-verb') ? _fillGreekRegularStems(parsed) : false;
     const par = (parsed.type === 'gr-verb-irr') ? buildGreekIrregularParadigm(parsed) : buildGreekVerbParadigm(parsed);
     if (!par || (!par.active && !par.midpass && !par.passOnly)) return null;
+    if (_gregFilled) _accentUnaccentedFinite(par);
     return { ok: true, type: 'verb', lang: 'greco', label: _grLabel(parsed, 'verb'), par, parsed };
   }
   if (bpos === 'Sostantivo') {
