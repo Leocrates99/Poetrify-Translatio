@@ -2366,10 +2366,37 @@ function _buildClassicalLatin(lemma, bpos, def) {
   return null;
 }
 
+/* [G1] Per i verbi greci REGOLARI a tema vocalico (es. λύω, παιδεύω) il
+   dizionario LSJ non porta le parti principali → mancavano aoristo e perfetto.
+   Qui le sintetizziamo secondo la formazione regolare (fut. -σω, aor. ἔ-…-σα,
+   perf. redupl.-…-κα, perf. M/P redupl.-…, aor. pass. -θη-) riempiendo i temi
+   sull'oggetto già prodotto da parseGreekLemma; il builder costruisce così
+   l'intero sistema verbale nei vari modi. Conservativo: si applica SOLO ai
+   tematici a tema vocalico (gli altri — contratti, atematici, deponenti,
+   consonantici, irregolari — restano col solo presente per non dare forme errate). */
+function _fillGreekRegularStems(parsed) {
+  if (!parsed || parsed.type !== 'gr-verb' || parsed.kind !== 'tem' || parsed.medDep) return;
+  const stem = parsed.stem;
+  if (!stem) return;
+  const bare = _grStrip(stem);
+  if (!/[αεηιουω]$/.test(bare)) return;            // solo temi in vocale = affidabili
+  if (parsed.futStem || parsed.aorStem || parsed.perfStem) return;  // già forniti
+  // Tema SENZA accento tonale: il builder colloca poi l'accento (ricorsivo per i
+  // verbi) in modo pulito. Con l'accento già presente nascono artefatti.
+  const s = _stripGreekTone(stem);
+  parsed.futStem = s + 'σ';                         // λύσω
+  parsed.aorStem = s;                               // il builder aggiunge augmento + σα → ἔλυσα
+  parsed.aorKind = 'sigm';
+  parsed.perfStem = _stripGreekTone(_greekReduplicate(s)) + 'κ';  // λέλυκα
+  parsed.perfMPStem = _stripGreekTone(_greekReduplicate(s));      // λέλυμαι
+  parsed.aorPassStem = s + 'θ';                     // ἐλύθην
+}
+
 function _buildClassicalGreek(lemma, bpos, def) {
   if (bpos === 'Verbo') {
     const parsed = parseGreekLemma(lemma.split(/[\s,;·]/)[0], 'Verbo');
     if (!parsed) return null;
+    if (parsed.type === 'gr-verb') _fillGreekRegularStems(parsed);
     const par = (parsed.type === 'gr-verb-irr') ? buildGreekIrregularParadigm(parsed) : buildGreekVerbParadigm(parsed);
     if (!par || (!par.active && !par.midpass && !par.passOnly)) return null;
     return { ok: true, type: 'verb', lang: 'greco', label: _grLabel(parsed, 'verb'), par, parsed };
