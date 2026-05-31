@@ -2449,6 +2449,7 @@ const _MOOD_CANON = {
   infinito: 'Infinito', participio: 'Participio', gerundio: 'Gerundio', supino: 'Supino',
 };
 const _MOOD_ORDER = ['Indicativo', 'Congiuntivo', 'Ottativo', 'Imperativo', 'Infinito', 'Participio', 'Gerundio', 'Supino'];
+const _FINITE_MOODS = new Set(['Indicativo', 'Congiuntivo', 'Ottativo', 'Imperativo']);
 function _moodOf(k) { return _MOOD_CANON[String(k).toLowerCase()] || null; }
 
 /* Normalizza una diatesi a { Modo: { Tempo: valore } } indipendentemente dal
@@ -2469,28 +2470,41 @@ function _voiceByMood(voiceObj) {
   return byMood;
 }
 
-/* Diatesi: per ogni MODO una tabella con righe = TEMPI, colonne = PERSONE.
-   Le forme nominali del verbo (infinito, participio, gerundio, supino) sono
-   rese come elenco tempo/caso → forma. */
+/* Diatesi: due sezioni distinte.
+   · MODI FINITI  → per ogni modo una tabella con COLONNE = TEMPI e RIGHE = PERSONE.
+   · MODI INDEFINITI (infinito, participio, gerundio, supino) → per ogni modo una
+     tabellina (sotto-categoria · tempo/caso → forma).  */
 function _renderVerbVoice(voiceObj, greek) {
   const byMood = _voiceByMood(voiceObj);
   const gc = greek ? ' greek' : '';
-  const moodKeys = _MOOD_ORDER.filter(m => byMood[m]).concat(Object.keys(byMood).filter(m => !_MOOD_ORDER.includes(m)));
+  const ordered = _MOOD_ORDER.filter(m => byMood[m]).concat(Object.keys(byMood).filter(m => !_MOOD_ORDER.includes(m)));
+  const finiteMoods = ordered.filter(m => _FINITE_MOODS.has(m));
+  const nonfinMoods = ordered.filter(m => !_FINITE_MOODS.has(m));
+
+  // Modo finito: colonne = tempi, righe = persone
+  const renderFinite = (mood) => {
+    const tenses = Object.entries(byMood[mood]).filter(([, v]) => Array.isArray(v));
+    if (!tenses.length) return '';
+    const head = `<tr><th class="clp-corner"></th>${tenses.map(([t]) => `<th>${_esc(t)}</th>`).join('')}</tr>`;
+    const rows = PERSON_LABELS.map((pl, i) =>
+      `<tr><th class="clp-rowh">${pl}</th>${tenses.map(([, arr]) => `<td class="clp-cell${gc}">${_esc(arr[i] || '—')}</td>`).join('')}</tr>`
+    ).join('');
+    return `<div class="clp-group"><h6 class="clp-group-title">${_esc(mood)}</h6><div class="clp-table-wrap"><table class="clp-verb-table"><thead>${head}</thead><tbody>${rows}</tbody></table></div></div>`;
+  };
+
+  // Modo indefinito: tabellina sotto-categoria → forma
+  const renderNonfin = (mood) => {
+    const items = Object.entries(byMood[mood]).filter(([, v]) => typeof v === 'string');
+    if (!items.length) return '';
+    const rows = items.map(([k, s]) => `<tr><th class="clp-rowh">${_esc(k)}</th><td class="clp-cell${gc}">${_esc(s)}</td></tr>`).join('');
+    return `<div class="clp-group"><h6 class="clp-group-title">${_esc(mood)}</h6><div class="clp-table-wrap"><table class="clp-case-table clp-nonfin-table"><tbody>${rows}</tbody></table></div></div>`;
+  };
+
   let html = '';
-  for (const mood of moodKeys) {
-    const entries = Object.entries(byMood[mood]).filter(([, v]) => v != null);
-    const finite = entries.filter(([, v]) => Array.isArray(v));
-    const nonfin = entries.filter(([, v]) => typeof v === 'string');
-    let inner = '';
-    if (finite.length) {
-      const rows = finite.map(([t, arr]) => `<tr><th class="clp-rowh">${_esc(t)}</th>${PERSON_LABELS.map((_, i) => `<td class="clp-cell${gc}">${_esc(arr[i] || '—')}</td>`).join('')}</tr>`).join('');
-      inner += `<div class="clp-table-wrap"><table class="clp-verb-table"><thead><tr><th class="clp-corner"></th>${PERSON_LABELS.map(p => `<th>${p}</th>`).join('')}</tr></thead><tbody>${rows}</tbody></table></div>`;
-    }
-    if (nonfin.length) {
-      inner += `<dl class="clp-nonfinite">${nonfin.map(([t, s]) => `<div class="clp-nf"><dt>${_esc(t)}</dt><dd class="clp-cell${gc}">${_esc(s)}</dd></div>`).join('')}</dl>`;
-    }
-    html += `<div class="clp-group"><h6 class="clp-group-title">${_esc(mood)}</h6>${inner}</div>`;
-  }
+  const fin = finiteMoods.map(renderFinite).join('');
+  if (fin) html += `<div class="clp-section"><div class="clp-section-title">Modi finiti</div>${fin}</div>`;
+  const nonfin = nonfinMoods.map(renderNonfin).join('');
+  if (nonfin) html += `<div class="clp-section"><div class="clp-section-title">Modi indefiniti</div>${nonfin}</div>`;
   return html;
 }
 function _renderVerbHtml(par, greek) {

@@ -1134,59 +1134,71 @@ kbd {
 .dict-paradigm-classic { margin-top: 0; }
 .dict-paradigm-classic + .dict-paradigm { margin-top: 10px; }
 .clp-wrap { margin-top: 8px; }
+/* GERARCHIA TITOLAZIONI · livello 1: classe del paradigma */
 .clp-meta {
   font-family: var(--font-ui);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   color: var(--primary);
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 .clp-tables { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
-/* Contenitore con scroll orizzontale: la tabella si "inquadra" nella pagina e,
-   se troppo larga (es. verbo a 7 colonne su mobile), scorre invece di sforare. */
+/* Contenitore scroll: la tabella si "inquadra" nella pagina; se troppo larga/alta
+   scorre internamente e le intestazioni restano fisse (sticky). */
 .clp-table-wrap {
   max-width: 100%;
-  overflow-x: auto;
+  max-height: 70vh;
+  overflow: auto;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   margin-bottom: 4px;
 }
+/* border-collapse: separate → i bordi viaggiano con le celle sticky senza glitch */
 .clp-case-table, .clp-verb-table {
-  border-collapse: collapse;
-  width: max-content;          /* riempie se stretta, scorre nel wrapper se larga */
+  border-collapse: separate;
+  border-spacing: 0;
+  border-top: 1px solid var(--rule-soft);
+  border-left: 1px solid var(--rule-soft);
+  width: max-content;
   min-width: 100%;
   font-size: 14px;             /* le FORME sono il contenuto primario → leggibili */
 }
 .clp-case-table th, .clp-case-table td,
 .clp-verb-table th, .clp-verb-table td {
-  border: 1px solid var(--rule-soft);
+  border-right: 1px solid var(--rule-soft);
+  border-bottom: 1px solid var(--rule-soft);
   padding: 5px 11px;
   text-align: left;            /* allineamento a sinistra */
   vertical-align: baseline;
 }
-/* GERARCHIA · intestazioni di colonna (persone / generi): piccole e sobrie */
+/* STICKY · intestazioni di COLONNA (in alto): piccole e sobrie */
 .clp-case-table thead th, .clp-verb-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
   font-family: var(--font-ui);
   font-size: 10px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--sepia);
-  background: var(--cream);
+  background: var(--cream);     /* opaco: niente bleed sotto lo sticky */
   white-space: nowrap;
 }
-/* Numero (Singolare/Plurale): raggruppa le colonne dei generi, più marcato */
+/* Numero (Singolare/Plurale): raggruppa le colonne dei generi */
 .clp-numhead {
   color: var(--primary) !important;
   text-align: center !important;
-  background: rgba(99,102,241,0.10) !important;
-  border-bottom: 2px solid rgba(99,102,241,0.30) !important;
+  background: #e6e7fb !important;
+  border-bottom: 2px solid rgba(99,102,241,0.35) !important;
 }
-.clp-genhead { text-align: center !important; }
-.clp-corner { background: transparent !important; border-color: transparent !important; }
-/* Intestazioni di riga (casi / tempi): in evidenza, a sinistra */
+.clp-genhead { text-align: center !important; top: 25px; }   /* 2ª riga di header */
+/* STICKY · intestazioni di RIGA (a sinistra): in evidenza */
 .clp-rowh {
-  background: rgba(99,102,241,0.05);
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: #f1f1fc;          /* opaco */
   font-family: var(--font-ui);
   font-size: 11px;
   font-weight: 700;
@@ -1196,34 +1208,52 @@ kbd {
   color: var(--primary);
   white-space: nowrap;
 }
+/* Angolo in alto a sinistra: sticky su entrambi gli assi, sopra a tutto */
+.clp-corner {
+  position: sticky;
+  left: 0; top: 0;
+  z-index: 3;
+  background: var(--paper) !important;
+}
 /* Le forme flesse: contenuto primario, leggibile */
 .clp-cell { color: var(--ink); font-weight: 600; white-space: nowrap; }
 .clp-cell.greek { font-family: var(--font-classical); font-size: 15px; }
-.clp-gender-block, .clp-voice-block { margin-bottom: 12px; }
-.clp-gender-title {
-  font-family: var(--font-ui);
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--accent-lat);
-  margin: 0 0 5px;
-}
+/* Tabelle dei modi indefiniti: compatte (sotto-categoria → forma) */
+.clp-nonfin-table { width: auto; min-width: 0; }
+
+/* GERARCHIA TITOLAZIONI · livello 2: diatesi (Attivo/Passivo) */
+.clp-voice-block { margin-bottom: 16px; }
 .clp-voice-title {
   font-family: var(--font-ui);
   font-size: 12px;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   color: var(--primary);
-  margin: 0 0 6px;
-  border-bottom: 1px solid var(--rule-soft);
-  padding-bottom: 3px;
+  margin: 0 0 8px;
+  padding-left: 8px;
+  border-left: 3px solid var(--primary);
 }
-.clp-group { margin-bottom: 10px; }
+/* livello 3: sezione (Modi finiti / Modi indefiniti) */
+.clp-section { margin: 0 0 10px; }
+.clp-section-title {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--sepia);
+  margin: 12px 0 6px;
+  padding-bottom: 3px;
+  border-bottom: 1px dashed var(--rule-soft);
+}
+/* livello 4: modo (Indicativo, Congiuntivo…) / genere */
+.clp-group { margin-bottom: 12px; }
 .clp-group-title {
   font-family: var(--font-ui);
   font-size: 11px;
   font-weight: 700;
-  color: var(--sepia);
+  color: var(--accent-lat);
   margin: 0 0 4px;
 }
 .clp-nonfinite {
