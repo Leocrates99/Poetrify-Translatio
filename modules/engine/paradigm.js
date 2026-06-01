@@ -2245,10 +2245,31 @@ function _deriveLatinVerbCitation(lemma, def) {
   return parsed ? { citation: c, parsed } : null;
 }
 
+/* ── GRECO · estrae una citazione morfologica esplicita dalla definizione ──
+   Se la definizione inizia con "[articolo] nominativo, genitivo" (es.
+   "ἡ πόλις, πόλεως · città" · "τό σῶμα, σώματος · corpo"), la usa per costruire
+   il paradigma: è l'unico modo affidabile per la III declinazione, il cui tema
+   si ricava SOLO dal genitivo (proposta #3 · ricostruzione da forme attestate).
+   Verifica che il nominativo nella def coincida col lemma, così le semplici
+   glosse italiane ("città · stato") non producono falsi positivi. */
+function _greekCitationFromDef(nom, def, pos) {
+  if (!def) return null;
+  const m = String(def).match(/(?:^|\s)(ὁ|ἡ|τό|τὸ|οἱ|αἱ|τά|τὰ)?\s*([^\s,;·]+)\s*[,·]\s*(-?[^\s,;·)]+)/);
+  if (!m) return null;
+  if (_grStrip(m[2]) !== _grStrip(nom)) return null;   // il "nom" della def deve essere il lemma
+  const c = `${m[1] ? m[1] + ' ' : ''}${nom}, ${m[3]}`;
+  const parsed = parseGreekLemma(c, pos);
+  return parsed ? { citation: c, parsed } : null;
+}
+
 /* ── GRECO · sostantivo: sintetizza il genitivo dalla desinenza del nominativo ── */
-function _synthGreekNounCitation(lemma) {
+function _synthGreekNounCitation(lemma, def) {
   const w = (lemma || '').trim().split(/[\s,;·]/)[0];
   if (!w) return null;
+  // (A) citazione esplicita nella definizione (copre la III declinazione)
+  const fromDef = _greekCitationFromDef(w, def, 'Sostantivo');
+  if (fromDef) return fromDef;
+  // (B) sintesi euristica dalla desinenza (I/II regolari)
   const n = _grStrip(w);
   let art = '', gen = '';
   if (/ος$/.test(n)) { art = 'ὁ'; gen = '-ου'; }            // II M (default)
@@ -2267,10 +2288,19 @@ function _synthGreekNounCitation(lemma) {
   return parsed ? { citation: c, parsed } : null;
 }
 
+/* Aggettivi greci irregolari: declinazione mista (μέγας μεγάλη, πολύς πολλή,
+   πᾶς πᾶσα). Non riducibili a un modello regolare → si gatano (niente tabella
+   fuorviante; la voce resta cercabile con traduzione e categorie). */
+const _GR_IRREGULAR_ADJ = new Set(['πολυς', 'μεγας', 'πας']);
+
 /* ── GRECO · aggettivo: sintetizza femminile/neutro dalla desinenza ── */
-function _synthGreekAdjCitation(lemma) {
+function _synthGreekAdjCitation(lemma, def) {
   const w = (lemma || '').trim().split(/[\s,;·]/)[0];
   const n = _grStrip(w);
+  if (_GR_IRREGULAR_ADJ.has(n)) return null;            // irregolari → niente tabella
+  // citazione esplicita nella definizione (es. "ἀγαθός, ἀγαθή, ἀγαθόν · buono")
+  const fromDef = _greekCitationFromDef(w, def, 'Aggettivo');
+  if (fromDef) return fromDef;
   let c = null;
   if (/ος$/.test(n)) {
     const pre = n.charAt(n.length - 3);
@@ -2460,14 +2490,14 @@ function _buildClassicalGreek(lemma, bpos, def) {
     return { ok: true, type: 'verb', lang: 'greco', label: _grLabel(parsed, 'verb'), par, parsed };
   }
   if (bpos === 'Sostantivo') {
-    const s = _synthGreekNounCitation(lemma);
+    const s = _synthGreekNounCitation(lemma, def);
     if (!s) return null;
     const par = buildGreekNounParadigm(s.parsed);
     if (!par) return null;
     return { ok: true, type: 'noun', lang: 'greco', label: _grLabel(s.parsed, 'noun'), par, parsed: s.parsed };
   }
   if (bpos === 'Aggettivo') {
-    const s = _synthGreekAdjCitation(lemma);
+    const s = _synthGreekAdjCitation(lemma, def);
     if (!s) return null;
     const par = buildGreekAdjParadigm(s.parsed);
     if (!par) return null;
