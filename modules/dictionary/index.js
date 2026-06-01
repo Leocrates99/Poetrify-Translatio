@@ -253,9 +253,14 @@ export class DictionaryApp {
   _onLangChange() {
     this.currentLang = this.$langSelect.value;
     if (this.$searchInput) {
+      /* Cambio lingua: NON conservare la parola digitata (alfabeti diversi) */
+      this.$searchInput.value = '';
       this.$searchInput.classList.toggle('greek', this.currentLang === 'greco');
       this.$searchInput.placeholder = this._placeholderFor(this.currentLang);
     }
+    this.currentQuery = '';
+    this._updateClearButton();
+    this._hideAutocomplete();
     this.browsePrefix = null;
     this.browseFilter = '';
     this.viewMode = 'search';
@@ -346,8 +351,14 @@ export class DictionaryApp {
       seen.add(key);
       matches.push({ key, kind, lemma: lemmaHint || key, pos: posHint || '' });
     };
-    /* Prima i lemmi (più rilevanti), poi le forme */
-    for (const lemma of Object.keys(shard.dict || {})) {
+    /* Prima i lemmi (più rilevanti), ordinati per FREQUENZA decrescente, poi le forme */
+    const lemmaKeys = Object.keys(shard.dict || {})
+      .filter(l => normalizeText(l).startsWith(norm))
+      .sort((a, b) => {
+        const df = getFrequency(b, this.currentLang) - getFrequency(a, this.currentLang);
+        return df || normalizeText(a).localeCompare(normalizeText(b));
+      });
+    for (const lemma of lemmaKeys) {
       tryAdd(lemma, 'lemma', lemma, (shard.dict[lemma] && shard.dict[lemma].pos) || '');
     }
     if (matches.length < AUTOCOMPLETE_LIMIT) {
@@ -375,6 +386,21 @@ export class DictionaryApp {
     return (pos || '').toLowerCase().includes(filter.toLowerCase());
   }
 
+  /* [NEW] Classe-colore per parte del discorso: usata per il bordo colorato di
+     anteprima (autocomplete + lista browse) e voce aperta → ricerca a colpo
+     d'occhio per categoria. Ritorna '' se la PoS non è riconosciuta. */
+  _posClass(pos) {
+    const p = (pos || '').toLowerCase();
+    const map = [
+      ['sostantiv', 'sostantivo'], ['verb', 'verbo'], ['aggettiv', 'aggettivo'],
+      ['pronom', 'pronome'], ['avverbi', 'avverbio'], ['preposizion', 'preposizione'],
+      ['congiunzion', 'congiunzione'], ['numeral', 'numerale'],
+      ['interiezion', 'interiezione'], ['articol', 'articolo'], ['particell', 'particella'],
+    ];
+    for (const [needle, cls] of map) if (p.includes(needle)) return ' pos-' + cls;
+    return '';
+  }
+
   _renderAutocomplete() {
     if (!this.$autocomplete) return;
     const isGreek = this.currentLang === 'greco';
@@ -383,7 +409,7 @@ export class DictionaryApp {
       const lemmaHint = (it.kind === 'form' && it.lemma)
         ? ` <span class="ac-lemma-hint">→ ${escapeHtml(it.lemma)}</span>` : '';
       const posHint = it.pos ? ` <span class="ac-pos-hint">${escapeHtml(it.pos)}</span>` : '';
-      return `<li class="ac-item ${i === this.acIndex ? 'is-active' : ''}" data-idx="${i}" data-key="${escapeHtml(it.key)}" data-kind="${it.kind}">
+      return `<li class="ac-item ${i === this.acIndex ? 'is-active' : ''}${this._posClass(it.pos)}" data-idx="${i}" data-key="${escapeHtml(it.key)}" data-kind="${it.kind}">
         <span class="ac-key${isGreek ? ' greek' : ''}">${escapeHtml(it.key)}</span>${lemmaHint}${posHint}${kindBadge}
       </li>`;
     }).join('');
@@ -431,13 +457,30 @@ export class DictionaryApp {
     if (!this.$alphabet || !index) return;
     const letters = index.letters || [];
     const activeLetter = this.browsePrefix ? this.browsePrefix.charAt(0) : null;
+    /* Le lettere latine sui pulsanti sono in MAIUSCOLO (il greco resta invariato:
+       maiuscole e minuscole sono lettere distinte). data-letter resta originale. */
+    const isLatin = this.currentLang === 'latino';
     this.$alphabet.innerHTML = letters.map(l => {
       const active = (normalizeText(l).charAt(0) === activeLetter) ? ' is-active' : '';
-      return `<button class="alphabet-btn${active}" data-letter="${escapeHtml(l)}" title="Esplora i lemmi che cominciano per ${escapeHtml(l)}">${escapeHtml(l)}</button>`;
-    }).join('');
+      const display = isLatin ? l.toUpperCase() : l;
+      return `<button class="alphabet-btn${active}" data-letter="${escapeHtml(l)}" title="Esplora i lemmi che cominciano per ${escapeHtml(display)}">${escapeHtml(display)}</button>`;
+    }).join('') + this._posLegendHtml();
     this.$alphabet.querySelectorAll('.alphabet-btn').forEach(btn => {
       btn.addEventListener('click', () => this._enterBrowse(btn.dataset.letter));
     });
+  }
+
+  /** Legenda dei colori per parte del discorso (sotto l'alfabeto). */
+  _posLegendHtml() {
+    const items = [
+      ['sostantivo', 'sost.'], ['verbo', 'verbo'], ['aggettivo', 'agg.'],
+      ['pronome', 'pron.'], ['avverbio', 'avv.'], ['preposizione', 'prep.'],
+      ['congiunzione', 'cong.'], ['numerale', 'num.'],
+    ];
+    const chips = items.map(([cls, lab]) =>
+      `<span class="pos-${cls}"><i></i>${lab}</span>`
+    ).join('');
+    return `<div class="pos-legend" aria-label="Legenda colori per parte del discorso">${chips}</div>`;
   }
 
   /** Entra nel drill-down dalla lettera scelta nell'alphabet picker. */
@@ -480,9 +523,14 @@ export class DictionaryApp {
                   this.engine._shards[this.currentLang].get(shardLetter);
     if (!shard) return null;
     const keys = Object.keys(shard.dict || {});
-    /* tutti i lemmi sotto il prefisso (match su forma normalizzata) */
-    const all = keys.filter(l => normalizeText(l).startsWith(normPrefix)).sort((a, b) =>
-      normalizeText(a).localeCompare(normalizeText(b)));
+    /* tutti i lemmi sotto il prefisso (match su forma normalizzata), ordinati per
+       FREQUENZA decrescente (i termini più utili in cima) e poi alfabeticamente:
+       «in ordine di selezione migliore in base alla frequenza». */
+    const all = keys.filter(l => normalizeText(l).startsWith(normPrefix)).sort((a, b) => {
+      const df = getFrequency(b, this.currentLang) - getFrequency(a, this.currentLang);
+      if (df) return df;
+      return normalizeText(a).localeCompare(normalizeText(b));
+    });
     let filtered = all;
     /* [NEW 2] filtro PoS */
     if (this.posFilter) {
@@ -603,7 +651,7 @@ export class DictionaryApp {
       const en = entry.definition ? `<span class="browse-en muted-text">${escapeHtml((entry.definition || '').substring(0, 60))}${(entry.definition || '').length > 60 ? '…' : ''}</span>` : '';
       const freq = getFrequency(l, this.currentLang);
       const freqHtml = freq >= 2 ? `<span class="browse-freq" title="${describeFrequency(freq)}">${renderStars(freq)}</span>` : '';
-      return `<li class="browse-item" data-lemma="${escapeHtml(l)}">
+      return `<li class="browse-item${this._posClass(entry.pos)}" data-lemma="${escapeHtml(l)}">
         <span class="browse-lemma${isGreek ? ' greek' : ''}">${escapeHtml(l)}</span>
         ${pos}${freqHtml}
         ${itaHtml || en}
@@ -874,7 +922,7 @@ export class DictionaryApp {
       · <em>${escapeHtml(sourceLabel)}</em>
       ${hit.shards ? `· shard: ${hit.shards.map(s => escapeHtml(s)).join(', ')}` : ''}
     </div>
-    <article class="dict-entry-card">
+    <article class="dict-entry-card${this._posClass(hit.pos)}">
       <header class="dict-entry-header">
         <span class="dict-entry-lemma${lemmaCls}">${escapeHtml(hit.lemma)}</span>
         ${hit.pos ? `<span class="dict-entry-pos">${escapeHtml(hit.pos)}</span>` : ''}

@@ -420,6 +420,28 @@ kbd {
   color: var(--sepia);
   font-style: italic;
 }
+/* azione attiva (toggle forme accentate) */
+.greek-kbd-action.is-on { background: var(--primary); color: var(--paper); border-color: var(--primary); }
+/* sezione forme precomposte: scrollabile, tasti più compatti */
+.greek-kbd-variants {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--rule);
+  max-height: 210px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+.greek-kbd-varrow { gap: 3px; margin: 3px 0; }
+.greek-kbd-varrow .greek-kbd-row-label {
+  min-width: 16px;
+  text-align: center;
+  font-family: var(--font-classical);
+  font-size: 15px;
+  color: var(--primary);
+  margin-right: 4px;
+}
+.greek-kbd-key.greek-kbd-var { min-width: 30px; height: 30px; font-size: 16px; padding: 0 5px; }
+body.poetrify-dark .greek-kbd-key.greek-kbd-var { background: rgba(255,255,255,0.05); }
 
 /* ─── Alphabet picker · barra orizzontale di lettere ─────────────────────── */
 .dict-alphabet {
@@ -1370,6 +1392,39 @@ body.clp-flag-on .mc-ending { color: var(--accent-lat); font-weight: 800; }   /*
 body.clp-flag-on .mc-prefix { color: var(--primary); }                         /* prefisso  */
 body.clp-flag-on .mc-suffix { color: #2f855a; }                                /* suffisso  */
 body.poetrify-dark.clp-flag-on .mc-suffix { color: #6ee7a8; }
+
+/* ── BORDO PER PARTE DEL DISCORSO ────────────────────────────────────────
+   Bordo sinistro colorato su anteprima (autocomplete + lista browse) e voce
+   aperta → riconoscimento a colpo d'occhio della categoria. */
+/* palette categorie · ogni classe imposta --pos-c, ereditata dai figli */
+.pos-verbo        { --pos-c: #c0392b; }  /* verbo · rosso        */
+.pos-sostantivo   { --pos-c: #2563eb; }  /* sostantivo · blu     */
+.pos-aggettivo    { --pos-c: #15803d; }  /* aggettivo · verde    */
+.pos-pronome      { --pos-c: #7c3aed; }  /* pronome · viola      */
+.pos-avverbio     { --pos-c: #ea580c; }  /* avverbio · arancio   */
+.pos-preposizione { --pos-c: #0891b2; }  /* preposizione · ciano */
+.pos-congiunzione { --pos-c: #a16207; }  /* congiunzione · ambra */
+.pos-numerale     { --pos-c: #64748b; }  /* numerale · grigio    */
+.pos-interiezione { --pos-c: #db2777; }  /* interiezione · rosa  */
+.pos-articolo     { --pos-c: #4b5563; }  /* articolo · ardesia   */
+.pos-particella   { --pos-c: #9333ea; }  /* particella · porpora */
+/* applicazione del bordo colorato */
+.ac-item, .browse-item { border-left: 4px solid var(--pos-c, transparent); }
+.dict-entry-card { border-left: 5px solid var(--pos-c, transparent); }
+/* legenda colori PoS sotto l'alfabeto */
+.pos-legend { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 8px 0 2px; font-family: var(--font-ui); font-size: 10px; }
+.pos-legend span { display: inline-flex; align-items: center; gap: 5px; color: var(--sepia); border-left: none; }
+.pos-legend i { width: 14px; height: 5px; border-radius: 2px; display: inline-block; background: var(--pos-c, var(--sepia)); }
+
+/* ── #15 · separatore PIÙ SPESSO tra i numeri (Singolare | Plurale) ─────── */
+.clp-case-table th.clp-numsep, .clp-case-table td.clp-numsep,
+.clp-verb-table th.clp-numsep, .clp-verb-table td.clp-numsep {
+  border-left: 3px solid var(--primary) !important;
+}
+body.poetrify-dark .clp-case-table th.clp-numsep,
+body.poetrify-dark .clp-case-table td.clp-numsep {
+  border-left-color: rgba(99,102,241,0.65) !important;
+}
 
 /* [P8] etimologia · «deriva da» + composti correlati */
 .etym-derives, .etym-related { margin-top: 6px; }

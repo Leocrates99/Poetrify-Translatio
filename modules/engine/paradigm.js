@@ -687,7 +687,9 @@ function buildVerbParadigm(parsed) {
   // Infinito attivo
   const infActPres = presStem + t.infAct;
   const infActPerf = perfStem ? perfStem + 'isse' : '—';
-  const infActFut  = supStem ? supStem + 'urus esse' : '—';
+  // Infinito futuro attivo: participio futuro in ACCUSATIVO neutro (-ūrum esse),
+  // mai nominativo -urus (regge l'accusativo del soggetto nell'infinitiva).
+  const infActFut  = supStem ? supStem + 'urum esse' : '—';
 
   // Participio
   const partPres = presStem + ({'I':'ans','II':'ens','III':'ens','III-io':'iens','IV':'iens'}[conj]) + ', ' + presStem + ({'I':'antis','II':'entis','III':'entis','III-io':'ientis','IV':'ientis'}[conj]);
@@ -813,7 +815,7 @@ function buildIrregularVerbParadigm(parsed) {
           Piuccheperfetto: ['fuissem','fuisses','fuisset','fuissemus','fuissetis','fuissent']
         },
         imperativo: { Presente: ['—','es','—','—','este','—'], Futuro: ['—','esto','esto','—','estote','sunto'] },
-        infinito: { Presente: 'esse', Perfetto: 'fuisse', Futuro: 'futurus, -a, -um esse (o fore)' },
+        infinito: { Presente: 'esse', Perfetto: 'fuisse', Futuro: 'futurum esse (o fore)' },
         participio: { Futuro: 'futurus, -a, -um' }
       }
     },
@@ -914,7 +916,7 @@ function buildIrregularVerbParadigm(parsed) {
           Piuccheperfetto: ['tulissem','tulisses','tulisset','tulissemus','tulissetis','tulissent']
         },
         imperativo: { Presente: ['—','fer','—','—','ferte','—'], Futuro: ['—','ferto','ferto','—','fertote','ferunto'] },
-        infinito: { Presente: 'ferre', Perfetto: 'tulisse', Futuro: 'laturus esse' },
+        infinito: { Presente: 'ferre', Perfetto: 'tulisse', Futuro: 'laturum esse' },
         participio: { Presente: 'ferens, ferentis', Futuro: 'laturus, -a, -um' },
         gerundio: { Genitivo: 'ferendi', Dativo: 'ferendo', Accusativo: '(ad) ferendum', Ablativo: 'ferendo' },
         supino: { Accusativo: 'latum', Ablativo: 'latu' }
@@ -956,7 +958,7 @@ function buildIrregularVerbParadigm(parsed) {
           Piuccheperfetto: ['issem','isses','isset','issemus','issetis','issent']
         },
         imperativo: { Presente: ['—','i','—','—','ite','—'], Futuro: ['—','ito','ito','—','itote','eunto'] },
-        infinito: { Presente: 'ire', Perfetto: 'isse', Futuro: 'iturus esse' },
+        infinito: { Presente: 'ire', Perfetto: 'isse', Futuro: 'iturum esse' },
         participio: { Presente: 'iens, euntis', Futuro: 'iturus, -a, -um' },
         gerundio: { Genitivo: 'eundi', Dativo: 'eundo', Accusativo: '(ad) eundum', Ablativo: 'eundo' },
         supino: { Accusativo: 'itum', Ablativo: 'itu' }
@@ -2531,6 +2533,19 @@ function _grLabel(parsed, type) {
  * @param {string} [definition] definizione (per estrarre genitivo/paradigmi nel latino Lewis)
  * @returns {{ok:true,type:'noun'|'adj'|'verb',lang:string,label:string,par:object,parsed:object}|null}
  */
+/* Marca la quantità della vocale tematica dell'infinito presente attivo latino,
+   così la desinenza distingue chiaramente la coniugazione:
+   I -āre · II -ēre (e LUNGA) · III/III-io -ĕre (e BREVE) · IV -īre.
+   È la distinzione fondamentale tra II e III coniugazione. */
+function _markLatinInfinitive(inf, conj) {
+  if (!inf || inf === '—') return inf;
+  if (conj === 'I')  return inf.replace(/are$/, 'āre');
+  if (conj === 'II') return inf.replace(/ere$/, 'ēre');
+  if (conj === 'III' || conj === 'III-io') return inf.replace(/ere$/, 'ĕre');
+  if (conj === 'IV') return inf.replace(/ire$/, 'īre');
+  return inf;
+}
+
 /* Ricava una "riga paradigma" leggibile (parti principali) dal paradigma già
    costruito: nom+gen per i nomi, le tre uscite per gli aggettivi, le parti
    principali per i verbi (lat: pres·perf·supino·inf · gr: pres·fut·aor·perf). */
@@ -2555,11 +2570,16 @@ function _citationOf(built, lang) {
         const f = t => a[t] && a[t].Indicativo && a[t].Indicativo[0];
         return ['Presente', 'Futuro', 'Aoristo', 'Perfetto'].map(f).filter(x => x && x !== '—').join(', ');
       }
+      /* Struttura richiesta per i verbi latini:
+         1) pres. ind. 1ª sg · 2) pres. ind. 2ª sg · 3) perf. ind. 1ª sg ·
+         4) supino attivo (se esiste) · 5) infinito presente (desinenza ē/ĕ marcata) */
       const a = p.active || {}, ind = a.indicativo || {};
-      const parts = [ind.Presente && ind.Presente[0], ind.Perfetto && ind.Perfetto[0]];
-      const sup = (p.passive && p.passive.participio && p.passive.participio.Perfetto) || (a.supino && a.supino.Accusativo);
-      if (sup) parts.push(sup);
-      if (a.infinito && a.infinito.Presente) parts.push(a.infinito.Presente);
+      const pres = ind.Presente || [];
+      const parts = [pres[0], pres[1], ind.Perfetto && ind.Perfetto[0]];
+      const sup = a.supino && a.supino.Accusativo;          // supino attivo (-um), non il PPP
+      if (sup && sup !== '—') parts.push(sup);
+      const inf = a.infinito && a.infinito.Presente;
+      if (inf && inf !== '—') parts.push(_markLatinInfinitive(inf, p.conj));
       return parts.filter(x => x && x !== '—').join(', ');
     }
   } catch (_) {}
@@ -2697,23 +2717,25 @@ function _renderNominalTable(genders, cases, greek, opts) {
   if (!opts.noPlur) nums.push(['plur', 'Plurale']);
   if (!nums.length) nums.push(['sing', 'Singolare']);
   const multi = genders.length > 1 || !!(genders[0] && genders[0].label);
+  /* clp-numsep = bordo PIÙ SPESSO all'inizio di ogni gruppo-numero successivo al
+     primo (separa nettamente Singolare | Plurale, utile soprattutto negli agg.). */
   let thead;
   if (multi) {
     let r1 = '<th rowspan="2" class="clp-corner"></th>';
-    nums.forEach(([, nlab]) => { r1 += `<th colspan="${genders.length}" class="clp-numhead">${nlab}</th>`; });
+    nums.forEach(([, nlab], ni) => { r1 += `<th colspan="${genders.length}" class="clp-numhead${ni > 0 ? ' clp-numsep' : ''}">${nlab}</th>`; });
     let r2 = '';
-    nums.forEach(() => genders.forEach(g => { r2 += `<th class="clp-genhead">${_esc(g.label)}</th>`; }));
+    nums.forEach((_n, ni) => genders.forEach((g, gi) => { r2 += `<th class="clp-genhead${ni > 0 && gi === 0 ? ' clp-numsep' : ''}">${_esc(g.label)}</th>`; }));
     thead = `<tr>${r1}</tr><tr>${r2}</tr>`;
   } else {
     let r1 = '<th class="clp-corner"></th>';
-    nums.forEach(([, nlab]) => { r1 += `<th class="clp-numhead">${nlab}</th>`; });
+    nums.forEach(([, nlab], ni) => { r1 += `<th class="clp-numhead${ni > 0 ? ' clp-numsep' : ''}">${nlab}</th>`; });
     thead = `<tr>${r1}</tr>`;
   }
   const body = cases.map(c => {
     let r = `<tr><th class="clp-rowh">${c}</th>`;
-    nums.forEach(([nk]) => genders.forEach(g => {
+    nums.forEach(([nk], ni) => genders.forEach((g, gi) => {
       const cell = (g.rows && g.rows[nk] && g.rows[nk][c]) || '—';
-      r += `<td class="clp-cell${gc}">${_esc(cell)}</td>`;
+      r += `<td class="clp-cell${gc}${ni > 0 && gi === 0 ? ' clp-numsep' : ''}">${_esc(cell)}</td>`;
     }));
     return r + '</tr>';
   }).join('');
