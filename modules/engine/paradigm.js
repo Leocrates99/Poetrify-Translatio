@@ -2325,13 +2325,50 @@ function _grLabel(parsed, type) {
  * @param {string} [definition] definizione (per estrarre genitivo/paradigmi nel latino Lewis)
  * @returns {{ok:true,type:'noun'|'adj'|'verb',lang:string,label:string,par:object,parsed:object}|null}
  */
+/* Ricava una "riga paradigma" leggibile (parti principali) dal paradigma già
+   costruito: nom+gen per i nomi, le tre uscite per gli aggettivi, le parti
+   principali per i verbi (lat: pres·perf·supino·inf · gr: pres·fut·aor·perf). */
+function _citationOf(built, lang) {
+  try {
+    const p = built.par;
+    if (built.type === 'noun') {
+      const s = (p.rows && p.rows.sing) || {}, pl = (p.rows && p.rows.plur) || {};
+      const nom = s.Nominativo || pl.Nominativo || '';
+      const gen = s.Genitivo || pl.Genitivo || '';
+      return [nom, gen].filter(x => x && x !== '—').join(', ');
+    }
+    if (built.type === 'adj') {
+      const g = k => p[k] && p[k].sing && p[k].sing.Nominativo;
+      const vals = (p.kind === 'three-genders' || p.kind === 'three-endings')
+        ? [g('M'), g('F'), g('N')] : [p.MF && p.MF.sing && p.MF.sing.Nominativo, p.N && p.N.sing && p.N.sing.Nominativo];
+      return vals.filter(x => x && x !== '—').join(', ');
+    }
+    if (built.type === 'verb') {
+      if (lang === 'greco') {
+        const a = p.active || p.midpass || {};
+        const f = t => a[t] && a[t].Indicativo && a[t].Indicativo[0];
+        return ['Presente', 'Futuro', 'Aoristo', 'Perfetto'].map(f).filter(x => x && x !== '—').join(', ');
+      }
+      const a = p.active || {}, ind = a.indicativo || {};
+      const parts = [ind.Presente && ind.Presente[0], ind.Perfetto && ind.Perfetto[0]];
+      const sup = (p.passive && p.passive.participio && p.passive.participio.Perfetto) || (a.supino && a.supino.Accusativo);
+      if (sup) parts.push(sup);
+      if (a.infinito && a.infinito.Presente) parts.push(a.infinito.Presente);
+      return parts.filter(x => x && x !== '—').join(', ');
+    }
+  } catch (_) {}
+  return '';
+}
+
 export function buildClassicalParadigm(lemma, pos, lang, definition) {
   const bpos = POS_MAP[(pos || '').toLowerCase()];
   if (!bpos || !lemma) return null;
   try {
-    return lang === 'greco'
+    const built = lang === 'greco'
       ? _buildClassicalGreek(lemma, bpos, definition)
       : _buildClassicalLatin(lemma, bpos, definition);
+    if (built && built.ok) built.citation = _citationOf(built, lang);
+    return built;
   } catch (_) { return null; }
 }
 

@@ -845,10 +845,14 @@ export class DictionaryApp {
     const italianGloss = getItalianGloss(hit.lemma, this.currentLang);
     const isSaved = Vocab.hasEntry(hit.lemma, this.currentLang);
     const saveBtnLabel = isSaved ? '★ Salvato' : '⭐ Salva';
-    /* [P6] paradigma scolastico completo (ricostruito) + forme attestate */
-    /* Solo il paradigma scolastico: le "forme attestate" restano nei dati
-       (servono al motore per riconoscere le forme flesse) ma non si mostrano. */
-    const paradigmHtml = this._renderClassicalParadigm(hit);
+    /* Paradigma costruito UNA volta: condiviso da categorie, riga «Paradigma» e tabella. */
+    const built = this._buildEntryParadigm(hit);
+    const paradigmHtml = this._renderClassicalParadigm(built);
+    const grammarHtml = this._renderGrammarCategories(hit, built);
+    const translationHtml = this._renderTranslationHero(hit);
+    const paradigmaLine = (built && built.citation)
+      ? `<div class="dict-paradigma"><span class="dict-paradigma-label">Paradigma</span> <span class="dict-paradigma-text${lemmaCls}">${escapeHtml(built.citation)}</span></div>`
+      : '';
     /* [NEW 9] frequenza */
     const freq = getFrequency(hit.lemma, this.currentLang);
     const freqHtml = freq > 0
@@ -879,14 +883,20 @@ export class DictionaryApp {
       </header>
       ${translitHtml}
       ${parsingHtml}
-      ${italianGloss
-        ? `<div class="dict-entry-italian"><span class="dict-entry-italian-label">IT</span> ${escapeHtml(italianGloss)}</div>`
-        : ''}
+      <!-- 1 · TRADUZIONE (risalto) -->
+      ${translationHtml}
+      <!-- definizione di riferimento (secondaria) -->
       ${hit.definition
         ? `<p class="dict-entry-definition">${escapeHtml(hit.definition)}</p>`
-        : '<p class="dict-entry-definition muted-text"><em>Definizione non disponibile.</em></p>'}
+        : (translationHtml ? '' : '<p class="dict-entry-definition muted-text"><em>Definizione non disponibile.</em></p>')}
+      <!-- 2 · CATEGORIE GRAMMATICALI -->
+      ${grammarHtml}
+      <!-- 3 · PARADIGMA (parti principali) -->
+      ${paradigmaLine}
+      <!-- 4 · ETIMOLOGIA (aperta) -->
       ${etymHtml}
       ${cognateHtml}
+      <!-- 5 · TABELLA MORFOLOGICA -->
       ${paradigmHtml}
       <footer class="dict-entry-actions">
         <button class="dict-entry-save ${isSaved ? 'is-saved' : ''}" type="button">${saveBtnLabel}</button>
@@ -960,7 +970,7 @@ export class DictionaryApp {
     }
     if (!prefixBlock && !relatedBlock && !familyBlock) return '';
     return `<div class="dict-etymology">
-      <details ${prefixBlock ? 'open' : ''}>
+      <details open>
         <summary>🧬 Etimologia · composizione e famiglia di parole</summary>
         <div class="etym-body">
           ${prefixBlock}
@@ -1116,25 +1126,46 @@ export class DictionaryApp {
    * dal lemma con i builder del translator). Restituisce '' se non ricostruibile
    * in modo affidabile (es. III decl. con genitivo abbreviato, forme irregolari
    * non gestite): in quel caso resta solo il paradigma "attestato". */
-  _renderClassicalParadigm(hit) {
-    if (!hit || !hit.lemma) return '';
-    /* Verbi composti: il perfetto/supino (latino) e l'augmento (greco) dei
-     * composti NON sono ricostruibili affidabilmente dal lemma + voce Lewis
-     * (che abbrevia i paradigmi del verbo semplice). Per non mostrare forme
-     * errate li saltiamo: la base resta raggiungibile dal link «deriva da». */
+  /* Costruisce il paradigma della voce UNA sola volta (con lo skip dei verbi
+     composti) per condividerlo fra categorie grammaticali, riga «Paradigma» e
+     tabella morfologica. Ritorna l'oggetto built oppure null. */
+  _buildEntryParadigm(hit) {
+    if (!hit || !hit.lemma) return null;
+    /* Verbi composti: perfetto/supino (lat.) e augmento (gr.) non ricostruibili
+       affidabilmente dal lemma → li saltiamo (la base resta nel link «deriva da»). */
     if ((hit.pos || '').toLowerCase() === 'verbo') {
       const pi = detectLemmaPrefix(hit.lemma, this.currentLang);
       if (pi && normalizeText(pi.prefix || '').length >= 2 &&
-          normalizeText((pi.root || '').split(/[\s,]/)[0]).length >= 3) return '';
+          normalizeText((pi.root || '').split(/[\s,]/)[0]).length >= 3) return null;
     }
-    let built;
-    try { built = buildClassicalParadigm(hit.lemma, hit.pos, this.currentLang, hit.definition); }
-    catch (_) { return ''; }
+    try { return buildClassicalParadigm(hit.lemma, hit.pos, this.currentLang, hit.definition) || null; }
+    catch (_) { return null; }
+  }
+
+  /* Traduzione italiana in risalto (gerarchia top). Per ora usa le glosse IT
+     curate; predisposto per accogliere le traduzioni complete in italiano. */
+  _renderTranslationHero(hit) {
+    const it = getItalianGloss(hit.lemma, this.currentLang);
+    if (!it) return '';
+    return `<div class="dict-translation">${escapeHtml(it)}</div>`;
+  }
+
+  /* Categorie grammaticali di classificazione (PoS + declinazione/coniugazione + genere). */
+  _renderGrammarCategories(hit, built) {
+    const cats = [];
+    if (hit.pos) cats.push(hit.pos);
+    if (built && built.label) built.label.split('·').forEach(s => { s = s.trim(); if (s) cats.push(s); });
+    if (!cats.length) return '';
+    return `<div class="dict-grammar">${cats.map(c => `<span class="dict-gram-chip">${escapeHtml(c)}</span>`).join('')}</div>`;
+  }
+
+  /* Tabella morfologica (declinazione/coniugazione completa). */
+  _renderClassicalParadigm(built) {
     if (!built) return '';
     const inner = renderClassicalParadigm(built);
     if (!inner) return '';
     return `<details class="dict-paradigm dict-paradigm-classic" open>
-      <summary>📐 Paradigma scolastico completo</summary>
+      <summary>📐 Tabella morfologica completa</summary>
       <div class="clp-wrap">
         ${inner}
         <p class="clp-disclaimer muted-text">Modello <strong>regolare</strong> ricostruito dal lemma, utile per il ripasso. Le irregolarità (perfetti forti, temi alternanti, eccezioni) possono non essere rese: in caso di dubbio verifica sul vocabolario.</p>
