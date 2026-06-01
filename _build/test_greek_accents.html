@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="it">
+<meta charset="utf-8">
+<title>Test · accento nominale greco (paradigm.js)</title>
+<style>
+  body { font: 15px/1.5 system-ui, sans-serif; max-width: 70rem; margin: 2rem auto; padding: 0 1rem; }
+  h1 { font-size: 1.2rem; }
+  .ok { color: #1a7f37; } .bad { color: #cf222e; font-weight: 700; }
+  table { border-collapse: collapse; width: 100%; margin-top: 1rem; }
+  th, td { border: 1px solid #ddd; padding: .25rem .5rem; text-align: left; }
+  td.f { background: #ffeef0; } code { font-size: 1.05em; }
+  #summary { font-size: 1.1rem; font-weight: 700; margin: 1rem 0; }
+</style>
+<h1>Test accento nominale persistente · greco (<code>modules/engine/paradigm.js</code>)</h1>
+<p>Servire la cartella con <code>python -m http.server</code> e aprire
+   <code>http://localhost:8000/_build/test_greek_accents.html</code>.</p>
+<div id="summary">Esecuzione…</div>
+<table id="out"><thead><tr><th>lemma</th><th>caso</th><th>atteso</th><th>ottenuto</th><th>esito</th></tr></thead><tbody></tbody></table>
+
+<script type="module">
+import { buildClassicalParadigm } from '../modules/engine/paradigm.js';
+
+// Forma compatta "Nom Gen Dat Acc Voc | NomPl GenPl DatPl AccPl VocPl" per i nomi.
+function noun(lemma, def) {
+  const b = buildClassicalParadigm(lemma, 'sostantivo', 'greco', def);
+  if (!b) return 'NULL';
+  const s = b.par.rows.sing, p = b.par.rows.plur || {};
+  const sg = [s.Nominativo, s.Genitivo, s.Dativo, s.Accusativo, s.Vocativo].join(' ');
+  const pl = [p.Nominativo, p.Genitivo, p.Dativo, p.Accusativo, p.Vocativo].join(' ');
+  return sg + ' | ' + pl;
+}
+function adj(lemma, def, gender) {
+  const b = buildClassicalParadigm(lemma, 'aggettivo', 'greco', def);
+  if (!b) return 'NULL';
+  const p = b.par;
+  const g = gender === 'M' ? (p.M || p.MF) : gender === 'F' ? p.F : p.N;
+  if (!g) return 'NULL';
+  const sg = [g.sing.Nominativo, g.sing.Genitivo, g.sing.Dativo, g.sing.Accusativo, g.sing.Vocativo].join(' ');
+  const pl = [g.plur.Nominativo, g.plur.Genitivo, g.plur.Dativo, g.plur.Accusativo, g.plur.Vocativo].join(' ');
+  return sg + ' | ' + pl;
+}
+
+// Casi canonici (issue) + casi che NON devono regredire + bonus textbook.
+const CASES = [
+  // --- OSSITONI (perdevano l'accento) ---
+  ['ὁδός',  noun('ὁδός',  'ἡ ὁδός, -οῦ'),  'ὁδός ὁδοῦ ὁδῷ ὁδόν ὁδέ | ὁδοί ὁδῶν ὁδοῖς ὁδούς ὁδοί'],
+  ['θεός',  noun('θεός',  'ὁ θεός, -οῦ'),  'θεός θεοῦ θεῷ θεόν θεέ | θεοί θεῶν θεοῖς θεούς θεοί'],
+  ['τιμή',  noun('τιμή',  'ἡ τιμή, -ῆς'),  'τιμή τιμῆς τιμῇ τιμήν τιμή | τιμαί τιμῶν τιμαῖς τιμάς τιμαί'],
+  // --- PROPAROSSITONI / PROPERISPOMENI (non spostavano l'accento) ---
+  ['ἄνθρωπος', noun('ἄνθρωπος', 'ὁ ἄνθρωπος, -ου'),
+               'ἄνθρωπος ἀνθρώπου ἀνθρώπῳ ἄνθρωπον ἄνθρωπε | ἄνθρωποι ἀνθρώπων ἀνθρώποις ἀνθρώπους ἄνθρωποι'],
+  ['δοῦλος', noun('δοῦλος', 'ὁ δοῦλος, -ου'),
+             'δοῦλος δούλου δούλῳ δοῦλον δοῦλε | δοῦλοι δούλων δούλοις δούλους δοῦλοι'],
+  ['θάλασσα', noun('θάλασσα', 'ἡ θάλασσα, -ης'),
+              'θάλασσα θαλάσσης θαλάσσῃ θάλασσαν θάλασσα | θάλασσαι θαλασσῶν θαλάσσαις θαλάσσας θάλασσαι'],
+  ['μοῦσα', noun('μοῦσα', 'ἡ μοῦσα, -ης'),
+            'μοῦσα μούσης μούσῃ μοῦσαν μοῦσα | μοῦσαι μουσῶν μούσαις μούσας μοῦσαι'],
+  ['δῶρον', noun('δῶρον', 'τό δῶρον, -ου'),
+            'δῶρον δώρου δώρῳ δῶρον δῶρον | δῶρα δώρων δώροις δῶρα δῶρα'],
+  // --- NON DEVONO REGREDIRE (già corretti) ---
+  ['λόγος', noun('λόγος', 'ὁ λόγος, -ου'),
+            'λόγος λόγου λόγῳ λόγον λόγε | λόγοι λόγων λόγοις λόγους λόγοι'],
+  ['χώρα',  noun('χώρα',  'ἡ χώρα, -ας'),
+            'χώρα χώρας χώρᾳ χώραν χώρα | χῶραι χωρῶν χώραις χώρας χῶραι'],
+  ['μάχη',  noun('μάχη',  'ἡ μάχη, -ης'),
+            'μάχη μάχης μάχῃ μάχην μάχη | μάχαι μαχῶν μάχαις μάχας μάχαι'],
+  // --- AGGETTIVI ---
+  ['μικρός·M', adj('μικρός', 'μικρός, -ά, -όν', 'M'), 'μικρός μικροῦ μικρῷ μικρόν μικρέ | μικροί μικρῶν μικροῖς μικρούς μικροί'],
+  ['μικρός·F', adj('μικρός', 'μικρός, -ά, -όν', 'F'), 'μικρά μικρᾶς μικρᾷ μικράν μικρά | μικραί μικρῶν μικραῖς μικράς μικραί'],
+  ['δίκαιος·M', adj('δίκαιος', 'δίκαιος, -α, -ον', 'M'), 'δίκαιος δικαίου δικαίῳ δίκαιον δίκαιε | δίκαιοι δικαίων δικαίοις δικαίους δίκαιοι'],
+  ['δίκαιος·F', adj('δίκαιος', 'δίκαιος, -α, -ον', 'F'), 'δικαία δικαίας δικαίᾳ δικαίαν δικαία | δίκαιαι δικαίων δικαίαις δικαίας δίκαιαι'],
+  ['ἐλεύθερος·F', adj('ἐλεύθερος', 'ἐλεύθερος, -α, -ον', 'F'), 'ἐλευθέρα ἐλευθέρας ἐλευθέρᾳ ἐλευθέραν ἐλευθέρα | ἐλεύθεραι ἐλευθέρων ἐλευθέραις ἐλευθέρας ἐλεύθεραι'],
+  ['ἀγαθός·M', adj('ἀγαθός', 'ἀγαθός, -ή, -όν', 'M'), 'ἀγαθός ἀγαθοῦ ἀγαθῷ ἀγαθόν ἀγαθέ | ἀγαθοί ἀγαθῶν ἀγαθοῖς ἀγαθούς ἀγαθοί'],
+];
+
+const tbody = document.querySelector('#out tbody');
+let pass = 0, fail = 0;
+const norm = s => (s || '').normalize('NFC');
+for (const [lemma, got, exp] of CASES) {
+  const ok = norm(got) === norm(exp);
+  ok ? pass++ : fail++;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `<td><code>${lemma}</code></td><td>nom→voc | pl</td>`
+    + `<td><code>${exp}</code></td>`
+    + `<td class="${ok ? '' : 'f'}"><code>${got}</code></td>`
+    + `<td class="${ok ? 'ok' : 'bad'}">${ok ? '✓ PASS' : '✗ FAIL'}</td>`;
+  tbody.appendChild(tr);
+}
+const sum = document.querySelector('#summary');
+sum.textContent = `${pass}/${pass + fail} PASS` + (fail ? ` · ${fail} FAIL` : ' · tutto verde');
+sum.className = fail ? 'bad' : 'ok';
+console.log(`[test_greek_accents] ${pass}/${pass + fail} pass, ${fail} fail`);
+</script>
+</html>

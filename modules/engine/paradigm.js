@@ -1276,17 +1276,17 @@ function parseGreekLemma(lemma, pos) {
 
     if (/ος$/.test(mascN) && (femN === 'η' || /η$/.test(femN)) && /ον$/.test(neutN)) {
       const stem = masc.slice(0, -2);
-      return { type: 'gr-adj', kind: 'aos-e-on', stem, lemma };
+      return { type: 'gr-adj', kind: 'aos-e-on', stem, nom: masc, lemma };
     }
     if (/ος$/.test(mascN) && (femN === 'α' || /α$/.test(femN)) && /ον$/.test(neutN)) {
       // -α pura dopo ε/ι/ρ: δίκαιος, δικαία, δίκαιον
       const stem = masc.slice(0, -2);
-      return { type: 'gr-adj', kind: 'aos-a-on', stem, lemma };
+      return { type: 'gr-adj', kind: 'aos-a-on', stem, nom: masc, lemma };
     }
     if (/ος$/.test(mascN) && /ον$/.test(femN)) {
       // agg. 2 uscite: -ος, -ον (es. ἄδικος, ἄδικον)
       const stem = masc.slice(0, -2);
-      return { type: 'gr-adj', kind: 'aos-on', stem, lemma };
+      return { type: 'gr-adj', kind: 'aos-on', stem, nom: masc, lemma };
     }
     if (/υς$/.test(mascN) && /εια$/.test(femN) && /υ$/.test(neutN)) {
       // ἡδύς, ἡδεῖα, ἡδύ
@@ -1308,38 +1308,233 @@ function parseGreekLemma(lemma, pos) {
   return null;
 }
 
+/* ════════════════════════════════════════════════════════════════════════════
+   ACCENTO NOMINALE PERSISTENTE (greco) — nomi/aggettivi I e II declinazione.
+
+   A differenza dell'accento VERBALE (ricorsivo, gestito da _placeRecessiveAccent),
+   l'accento dei NOMI e degli AGGETTIVI è PERSISTENTE: resta sulla stessa sillaba
+   del NOMINATIVO finché la legge di limitazione lo consente, e si limita a:
+     1. arretrare/avanzare per la legge di limitazione (ultima lunga ⇒ l'accento non
+        può stare oltre la penultima: ἄνθρωπος → gen. ἀνθρώπου);
+     2. mutare acuto→circonflesso sugli OSSITONI al genitivo e dativo di ogni numero
+        (ὁδός → ὁδοῦ, ὁδῷ, ὁδῶν, ὁδοῖς);
+     3. mutare circonflesso→acuto sui PROPERISPOMENI quando l'ultima diventa lunga
+        (δοῦλος → gen. δούλου).
+   Per la I e la II declinazione tutte le desinenze sono monosillabiche, quindi la
+   DISTANZA DALLA FINE della sillaba accentata è invariante e si legge direttamente
+   dal nominativo. (La III declinazione, con nominativi ridotti/contratti, conserva
+   l'approccio "tema accentato" preesistente.) */
+
+const _GR_SYL_RE = /(αι|αυ|ει|ευ|οι|ου|υι|ηυ|ωυ|[αεηιουω])/i;
+
+/* Sillaba-nuclei di una forma greca (ignorando i combining marks).
+   Ritorna { total, groups } dove groups = [{ startNoMark, endNoMark, syl }] e
+   `nfdIdx[i]` mappa l'i-esimo carattere base di noMark al suo indice in NFD. */
+function _grSyllAnalyze(form) {
+  const nfd = (form || '').normalize('NFD');
+  let noMark = '';
+  const nfdIdx = [];
+  for (let i = 0; i < nfd.length; i++) {
+    const c = nfd.charCodeAt(i);
+    if (c >= 0x0300 && c <= 0x036f) continue;  // salta i combining marks
+    noMark += nfd[i];
+    nfdIdx.push(i);
+  }
+  const groups = [];
+  const re = new RegExp(_GR_SYL_RE.source, 'gi');
+  let mm;
+  while ((mm = re.exec(noMark)) !== null) {
+    groups.push({ startNoMark: mm.index, endNoMark: mm.index + mm[0].length - 1, syl: mm[0].toLowerCase() });
+  }
+  return { nfd, noMark, nfdIdx, groups, total: groups.length };
+}
+
+/* Legge l'accento di una forma ACCENTATA: distanza della sillaba accentata dalla
+   FINE (1 = ultima, 2 = penultima, 3 = terzultima), il tipo di marca e il totale
+   di sillabe. d = 0 se non c'è accento tonale leggibile. */
+function _grAccentRead(form) {
+  const a = _grSyllAnalyze(form);
+  const nfd = a.nfd;
+  // Trova la marca tonale e l'indice (in noMark) del carattere base che la porta.
+  let toneNoMarkIdx = -1, mark = null;
+  let baseCount = -1;
+  for (let i = 0; i < nfd.length; i++) {
+    const c = nfd.charCodeAt(i);
+    if (c >= 0x0300 && c <= 0x036f) {
+      if (c === 0x0301 || c === 0x0300) { toneNoMarkIdx = baseCount; mark = 'acute'; }
+      else if (c === 0x0342) { toneNoMarkIdx = baseCount; mark = 'circ'; }
+      continue;
+    }
+    baseCount++;
+  }
+  if (toneNoMarkIdx < 0) return { d: 0, mark: null, total: a.total };
+  let gi = -1;
+  for (let k = 0; k < a.groups.length; k++) {
+    if (toneNoMarkIdx >= a.groups[k].startNoMark && toneNoMarkIdx <= a.groups[k].endNoMark) { gi = k; break; }
+  }
+  if (gi < 0) return { d: 0, mark: null, total: a.total };
+  return { d: a.total - gi, mark, total: a.total };
+}
+
+/* Colloca UNA marca tonale (acuto/circonflesso) sulla sillaba a distanza `d` dalla
+   fine di una forma NUDA (toglie eventuali toni preesistenti). La marca cade sul
+   secondo elemento dei dittonghi (οῦ, εῖ, αί) e dopo lo spirito, prima dello iota
+   sottoscritto, secondo l'ordine canonico greco. */
+function _grPlaceMark(bareForm, d, mark) {
+  const nfc = _stripGreekTone(bareForm);
+  const a = _grSyllAnalyze(nfc);
+  const total = a.total;
+  const gi = total - d;                      // indice dall'inizio
+  if (gi < 0 || gi >= total) return nfc;
+  const targetNoMarkIdx = a.groups[gi].endNoMark;   // ultimo char del nucleo
+  const targetNfdIdx = a.nfdIdx[targetNoMarkIdx];
+  const markChar = mark === 'circ' ? '͂' : '́';
+  const nfd = a.nfd;
+  let insertAt = targetNfdIdx + 1;
+  while (insertAt < nfd.length) {
+    const cc = nfd.charCodeAt(insertAt);
+    // l'accento segue spirito (0313/0314), dieresi (0308), macron/breve (0304/0306)
+    // ma PRECEDE lo iota sottoscritto (0345)
+    if (cc === 0x0313 || cc === 0x0314 || cc === 0x0308 || cc === 0x0304 || cc === 0x0306) { insertAt++; continue; }
+    break;
+  }
+  return (nfd.slice(0, insertAt) + markChar + nfd.slice(insertAt)).normalize('NFC');
+}
+
+/* La penultima della forma `bare` è lunga (per accento)?  η/ω, dittonghi e iota
+   sottoscritto ⇒ lunga; ε/ο ⇒ breve; α/ι/υ (dicroni) ⇒ ambigui: se nel NOMINATIVO
+   la penultima era circonflessa è lunga, altrimenti si assume breve (default
+   scolastico, che dà l'acuto). */
+function _grPenultLong(bareInfo, nomInfo) {
+  const total = bareInfo.total;
+  if (total < 2) return false;
+  const g = bareInfo.groups[total - 2];
+  const syl = g.syl;
+  if (syl.length === 2) return true;                 // dittongo
+  if (/[ηω]/.test(syl)) return true;
+  if (/[εο]/.test(syl)) return false;
+  // iota sottoscritto sul nucleo ⇒ lungo
+  const nfdAt = bareInfo.nfdIdx[g.endNoMark];
+  if (bareInfo.nfd.charCodeAt(nfdAt + 1) === 0x0345) return true;
+  if (nomInfo && nomInfo.mark === 'circ' && nomInfo.d === 2) return true;
+  return false;
+}
+
+/* Accenta UNA forma nominale `bare` secondo l'accento persistente del nominativo
+   (`nomInfo` = output di _grAccentRead sul nominativo). `ultimaLong` = l'ultima
+   della forma è lunga (per la legge di limitazione); `gd` = caso genitivo o dativo
+   (per il mutamento ossitono→perispomeno). */
+function _grAccentNominalForm(bare, nomInfo, ultimaLong, gd) {
+  const info = _grSyllAnalyze(bare);
+  const total = info.total;
+  if (total < 1) return bare;
+  if (total < 2) {                                   // monosillabo: acuto/circonflesso semplice
+    const m = (nomInfo && nomInfo.mark === 'circ') || (gd && nomInfo && nomInfo.d === 1) ? 'circ' : 'acute';
+    return _grPlaceMark(bare, 1, m);
+  }
+  let d = (nomInfo && nomInfo.d) ? nomInfo.d : Math.min(total, ultimaLong ? 2 : 3);
+  const maxBack = ultimaLong ? 2 : 3;                // legge di limitazione
+  if (d > maxBack) d = maxBack;
+  if (d > total) d = total;
+  let mark;
+  if (d === 1) {
+    if (nomInfo && nomInfo.mark === 'circ' && nomInfo.d === 1) mark = 'circ';   // perispomeno persistente
+    else if (nomInfo && nomInfo.d === 1 && gd) mark = 'circ';                   // ossitono → circonflesso
+    else mark = 'acute';
+  } else if (d === 2) {
+    mark = (_grPenultLong(info, nomInfo) && !ultimaLong) ? 'circ' : 'acute';
+  } else {
+    mark = 'acute';                                  // terzultima: sempre acuto
+  }
+  return _grPlaceMark(bare, d, mark);
+}
+
+/* Tabelle delle desinenze I/II declinazione: [desinenza, ultimaLunga?]. */
+const _GR_PLUR_I = {                                  // plurale comune della I declinazione
+  Nominativo: ['αι', 0], Genitivo: ['ων', 1], Dativo: ['αις', 1], Accusativo: ['ας', 1], Vocativo: ['αι', 0]
+};
+const _GR_ENDINGS = {
+  'II-m': {
+    sing: { Nominativo: ['ος', 0], Genitivo: ['ου', 1], Dativo: ['ῳ', 1], Accusativo: ['ον', 0], Vocativo: ['ε', 0] },
+    plur: { Nominativo: ['οι', 0], Genitivo: ['ων', 1], Dativo: ['οις', 1], Accusativo: ['ους', 1], Vocativo: ['οι', 0] }
+  },
+  'II-n': {
+    sing: { Nominativo: ['ον', 0], Genitivo: ['ου', 1], Dativo: ['ῳ', 1], Accusativo: ['ον', 0], Vocativo: ['ον', 0] },
+    plur: { Nominativo: ['α', 0], Genitivo: ['ων', 1], Dativo: ['οις', 1], Accusativo: ['α', 0], Vocativo: ['α', 0] }
+  },
+  'I-eta': {
+    sing: { Nominativo: ['η', 1], Genitivo: ['ης', 1], Dativo: ['ῃ', 1], Accusativo: ['ην', 1], Vocativo: ['η', 1] },
+    plur: _GR_PLUR_I
+  },
+  'I-a-pura': {
+    sing: { Nominativo: ['α', 1], Genitivo: ['ας', 1], Dativo: ['ᾳ', 1], Accusativo: ['αν', 1], Vocativo: ['α', 1] },
+    plur: _GR_PLUR_I
+  },
+  'I-a-impura': {
+    sing: { Nominativo: ['α', 0], Genitivo: ['ης', 1], Dativo: ['ῃ', 1], Accusativo: ['αν', 0], Vocativo: ['α', 0] },
+    plur: _GR_PLUR_I
+  },
+  'I-masc-es': {
+    sing: { Nominativo: ['ης', 1], Genitivo: ['ου', 1], Dativo: ['ῃ', 1], Accusativo: ['ην', 1], Vocativo: ['α', 0] },
+    plur: _GR_PLUR_I
+  },
+  'I-masc-as': {
+    sing: { Nominativo: ['ας', 1], Genitivo: ['ου', 1], Dativo: ['ᾳ', 1], Accusativo: ['αν', 1], Vocativo: ['α', 0] },
+    plur: _GR_PLUR_I
+  }
+};
+
+/* Declina un tema NUDO (`stemBare`) su una tabella di desinenze applicando
+   l'accento persistente. `opts.firstDeclGenPlCirc` forza il genitivo plurale
+   perispomeno (-ῶν), proprio dei SOSTANTIVI della I declinazione (gli aggettivi
+   seguono invece l'accento del maschile). */
+function _declineGreekNominal(stemBare, nomInfo, endingKey, opts) {
+  opts = opts || {};
+  const T = _GR_ENDINGS[endingKey];
+  if (!T) return null;
+  const out = {};
+  ['sing', 'plur'].forEach(num => {
+    if (!T[num]) return;
+    out[num] = {};
+    for (const cas in T[num]) {
+      const [end, lng] = T[num][cas];
+      const bare = stemBare + end;
+      if (opts.firstDeclGenPlCirc && num === 'plur' && cas === 'Genitivo') {
+        out[num][cas] = _grPlaceMark(bare, 1, 'circ');     // I decl.: gen. pl. sempre -ῶν
+        continue;
+      }
+      const gd = (cas === 'Genitivo' || cas === 'Dativo');
+      out[num][cas] = _grAccentNominalForm(bare, nomInfo, !!lng, gd);
+    }
+  });
+  return out;
+}
+
 function buildGreekNounParadigm(parsed) {
   if (!parsed || parsed.type !== 'gr-noun') return null;
   const { decl, gender, stem, nom, noSing, noPlur, fullGen } = parsed;
   const rows = { sing: {}, plur: {} };
   // Tema "nudo" senza accento per la composizione delle forme accentate
   const stemBare = _stripGreekTone(stem || '');
+  // Accento del nominativo (per l'accento persistente di I/II declinazione)
+  const nomInfo = _grAccentRead(nom || '');
 
-  // === I DECLINAZIONE ===
-  if (decl === 'I-eta') {
-    rows.sing = { Nominativo: stem+'η', Genitivo: stem+'ης', Dativo: stem+'ῃ', Accusativo: stem+'ην', Vocativo: stem+'η' };
-    rows.plur = { Nominativo: stem+'αι', Genitivo: stemBare+'ῶν', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' };
-  } else if (decl === 'I-alpha-pura') {
-    rows.sing = { Nominativo: stem+'α', Genitivo: stem+'ας', Dativo: stem+'ᾳ', Accusativo: stem+'αν', Vocativo: stem+'α' };
-    rows.plur = { Nominativo: stem+'αι', Genitivo: stemBare+'ῶν', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' };
-  } else if (decl === 'I-alpha-impura') {
-    rows.sing = { Nominativo: stem+'α', Genitivo: stem+'ης', Dativo: stem+'ῃ', Accusativo: stem+'αν', Vocativo: stem+'α' };
-    rows.plur = { Nominativo: stem+'αι', Genitivo: stemBare+'ῶν', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' };
-  } else if (decl === 'I-masc-es') {
-    rows.sing = { Nominativo: stem+'ης', Genitivo: stem+'ου', Dativo: stem+'ῃ', Accusativo: stem+'ην', Vocativo: stem+'α' };
-    rows.plur = { Nominativo: stem+'αι', Genitivo: stemBare+'ῶν', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' };
-  } else if (decl === 'I-masc-as') {
-    rows.sing = { Nominativo: stem+'ας', Genitivo: stem+'ου', Dativo: stem+'ᾳ', Accusativo: stem+'αν', Vocativo: stem+'α' };
-    rows.plur = { Nominativo: stem+'αι', Genitivo: stemBare+'ῶν', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' };
+  // === I e II DECLINAZIONE (accento persistente) ===
+  // I temi nudi + desinenze sono assemblati e accentati da _declineGreekNominal,
+  // che applica la legge di limitazione e i mutamenti ossitono/perispomeno.
+  const I_DECL_MAP = { 'I-eta': 'I-eta', 'I-alpha-pura': 'I-a-pura', 'I-alpha-impura': 'I-a-impura', 'I-masc-es': 'I-masc-es', 'I-masc-as': 'I-masc-as' };
+  if (I_DECL_MAP[decl]) {
+    const r = _declineGreekNominal(stemBare, nomInfo, I_DECL_MAP[decl], { firstDeclGenPlCirc: true });
+    rows.sing = r.sing; rows.plur = r.plur;
   }
 
   // === II DECLINAZIONE ===
   else if (decl === 'II' && gender !== 'N') {
-    rows.sing = { Nominativo: stem+'ος', Genitivo: stem+'ου', Dativo: stem+'ῳ', Accusativo: stem+'ον', Vocativo: stem+'ε' };
-    rows.plur = { Nominativo: stem+'οι', Genitivo: stem+'ων', Dativo: stem+'οις', Accusativo: stem+'ους', Vocativo: stem+'οι' };
+    const r = _declineGreekNominal(stemBare, nomInfo, 'II-m', {});
+    rows.sing = r.sing; rows.plur = r.plur;
   } else if (decl === 'II' && gender === 'N') {
-    rows.sing = { Nominativo: stem+'ον', Genitivo: stem+'ου', Dativo: stem+'ῳ', Accusativo: stem+'ον', Vocativo: stem+'ον' };
-    rows.plur = { Nominativo: stem+'α', Genitivo: stem+'ων', Dativo: stem+'οις', Accusativo: stem+'α', Vocativo: stem+'α' };
+    const r = _declineGreekNominal(stemBare, nomInfo, 'II-n', {});
+    rows.sing = r.sing; rows.plur = r.plur;
   } else if (decl === 'II-contr') {
     // II contratta (νοῦς, νοῦ): contrazione οο→ου, οε→ου, οι→οι
     rows.sing = { Nominativo: stem+'οῦς', Genitivo: stem+'οῦ', Dativo: stem+'ῷ', Accusativo: stem+'οῦν', Vocativo: stem+'οῦ' };
@@ -1451,51 +1646,32 @@ function buildGreekNounParadigm(parsed) {
 
 function buildGreekAdjParadigm(parsed) {
   if (!parsed || parsed.type !== 'gr-adj') return null;
-  const { kind, stem } = parsed;
+  const { kind, stem, nom } = parsed;
   const mk = (rows) => rows;
+  // Tema nudo + accento del maschile per l'accento persistente degli aggettivi in -ος.
+  // (M = II decl. masch.; F = I decl.; N = II decl. neutro. Il gen. pl. femminile
+  //  degli aggettivi SEGUE il maschile, quindi NIENTE forzatura perispomena -ῶν.)
+  const adjStemBare = _stripGreekTone(stem || '');
+  const adjNomInfo = _grAccentRead(nom || (stem ? stem + 'ος' : ''));
 
   if (kind === 'aos-e-on') {
     // ἀγαθός, -ή, -όν
-    const M = {
-      sing: { Nominativo: stem+'ός', Genitivo: stem+'οῦ', Dativo: stem+'ῷ', Accusativo: stem+'όν', Vocativo: stem+'έ' },
-      plur: { Nominativo: stem+'οί', Genitivo: stem+'ῶν', Dativo: stem+'οῖς', Accusativo: stem+'ούς', Vocativo: stem+'οί' }
-    };
-    const F = {
-      sing: { Nominativo: stem+'ή', Genitivo: stem+'ῆς', Dativo: stem+'ῇ', Accusativo: stem+'ήν', Vocativo: stem+'ή' },
-      plur: { Nominativo: stem+'αί', Genitivo: stem+'ῶν', Dativo: stem+'αῖς', Accusativo: stem+'άς', Vocativo: stem+'αί' }
-    };
-    const N = {
-      sing: { Nominativo: stem+'όν', Genitivo: stem+'οῦ', Dativo: stem+'ῷ', Accusativo: stem+'όν', Vocativo: stem+'όν' },
-      plur: { Nominativo: stem+'ά', Genitivo: stem+'ῶν', Dativo: stem+'οῖς', Accusativo: stem+'ά', Vocativo: stem+'ά' }
-    };
+    const M = _declineGreekNominal(adjStemBare, adjNomInfo, 'II-m', {});
+    const F = _declineGreekNominal(adjStemBare, adjNomInfo, 'I-eta', {});
+    const N = _declineGreekNominal(adjStemBare, adjNomInfo, 'II-n', {});
     return _fixGreekParadigmAccents({ kind: 'three-genders', M: mk(M), F: mk(F), N: mk(N) });
   }
   if (kind === 'aos-a-on') {
-    // δίκαιος, δικαία, δίκαιον
-    const M = {
-      sing: { Nominativo: stem+'ος', Genitivo: stem+'ου', Dativo: stem+'ῳ', Accusativo: stem+'ον', Vocativo: stem+'ε' },
-      plur: { Nominativo: stem+'οι', Genitivo: stem+'ων', Dativo: stem+'οις', Accusativo: stem+'ους', Vocativo: stem+'οι' }
-    };
-    const F = {
-      sing: { Nominativo: stem+'α', Genitivo: stem+'ας', Dativo: stem+'ᾳ', Accusativo: stem+'αν', Vocativo: stem+'α' },
-      plur: { Nominativo: stem+'αι', Genitivo: stem+'ων', Dativo: stem+'αις', Accusativo: stem+'ας', Vocativo: stem+'αι' }
-    };
-    const N = {
-      sing: { Nominativo: stem+'ον', Genitivo: stem+'ου', Dativo: stem+'ῳ', Accusativo: stem+'ον', Vocativo: stem+'ον' },
-      plur: { Nominativo: stem+'α', Genitivo: stem+'ων', Dativo: stem+'οις', Accusativo: stem+'α', Vocativo: stem+'α' }
-    };
+    // δίκαιος, δικαία, δίκαιον (femminile in -α pura)
+    const M = _declineGreekNominal(adjStemBare, adjNomInfo, 'II-m', {});
+    const F = _declineGreekNominal(adjStemBare, adjNomInfo, 'I-a-pura', {});
+    const N = _declineGreekNominal(adjStemBare, adjNomInfo, 'II-n', {});
     return _fixGreekParadigmAccents({ kind: 'three-genders', M: mk(M), F: mk(F), N: mk(N) });
   }
   if (kind === 'aos-on') {
     // ἄδικος, ἄδικον (2 uscite)
-    const MF = {
-      sing: { Nominativo: stem+'ος', Genitivo: stem+'ου', Dativo: stem+'ῳ', Accusativo: stem+'ον', Vocativo: stem+'ε' },
-      plur: { Nominativo: stem+'οι', Genitivo: stem+'ων', Dativo: stem+'οις', Accusativo: stem+'ους', Vocativo: stem+'οι' }
-    };
-    const N = {
-      sing: { Nominativo: stem+'ον', Genitivo: stem+'ου', Dativo: stem+'ῳ', Accusativo: stem+'ον', Vocativo: stem+'ον' },
-      plur: { Nominativo: stem+'α', Genitivo: stem+'ων', Dativo: stem+'οις', Accusativo: stem+'α', Vocativo: stem+'α' }
-    };
+    const MF = _declineGreekNominal(adjStemBare, adjNomInfo, 'II-m', {});
+    const N = _declineGreekNominal(adjStemBare, adjNomInfo, 'II-n', {});
     return _fixGreekParadigmAccents({ kind: 'two-endings', MF, N });
   }
   if (kind === 'us-eia-u') {
