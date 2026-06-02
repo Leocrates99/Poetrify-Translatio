@@ -2275,6 +2275,22 @@ body.poetrify-dark .auto-analyze-btn:hover {
   color: var(--poetrify-sepia); cursor: pointer; user-select: none;
 }
 .auto-cc-toggle input { cursor: pointer; }
+/* barra di selezione unificata · chip per scegliere il layer (sintagma/proposizione) */
+.unified-selection-bar { margin-top: 10px; }
+.usb-toggle { display: inline-flex; gap: 6px; margin: 8px 0; flex-wrap: wrap; }
+.usb-chip {
+  appearance: none; cursor: pointer;
+  font-family: var(--font-ui); font-size: 12px; font-weight: 600;
+  padding: 5px 12px; border-radius: 999px;
+  border: 1px solid var(--poetrify-rule); background: var(--poetrify-paper); color: var(--poetrify-ink);
+  transition: all 0.12s ease;
+}
+.usb-chip span { opacity: 0.6; font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em; margin-left: 3px; }
+.usb-chip:hover { border-color: var(--poetrify-primary); }
+.usb-chip.is-active { background: var(--poetrify-primary); color: #fff; border-color: var(--poetrify-primary); }
+.usb-chip.is-active span { opacity: 0.85; }
+.action-block-banner-periodale { border-left: 4px solid #c026d3; }
+body.poetrify-dark .usb-chip { background: rgba(255,255,255,0.06); color: var(--poetrify-ink); }
 /* ── BRANO STICKY ─────────────────────────────────────────────────────────
  * Il tokenizer (sinistra in desktop, in cima su mobile) si "incolla" al top
  * dell'editor mentre l'utente lavora nel focus card. Senza questo, lo
@@ -30994,7 +31010,115 @@ function setUnifiedFocus(sentenceId, tokenIdx) {
  * concentrando ora". */
 function onUnifiedTokenClick(sentenceId, tokenIdx) {
   if (dragSelect && dragSelect.justFinished) return;
+  // Click su UNA sola parola = sto definendo la sua GRAMMATICA → azzera ogni
+  // selezione multipla in corso e porta il focus su quel token (la focus-card
+  // mostra in cima l'editor grammaticale).
+  if (logicSel.indices && logicSel.indices.length) logicSel = { sentenceId: null, indices: [] };
+  state.unifiedSelLayer = null;
   setUnifiedFocus(sentenceId, tokenIdx);
+}
+
+/* True se fra i token selezionati c'è un VERBO (secondo l'analisi grammaticale). */
+function _unifiedSelectionHasVerb(sentence, indices) {
+  return (indices || []).some(i => {
+    const g = (sentence.grammar || []).find(e => e.tokenIndex === i);
+    return g && g.partOfSpeech === 'Verbo';
+  });
+}
+
+/* Override manuale del layer dedotto dalla selezione (sintagma ↔ proposizione). */
+function setUnifiedSelLayer(layer) {
+  state.unifiedSelLayer = layer;
+  renderEditor();
+}
+
+/* BARRA DI SELEZIONE UNIFICATA · l'intento è dichiarato dalla selezione:
+ *   • 1 parola  → grammatica (gestita dalla focus-card, nessuna barra)
+ *   • ≥2 parole → SINTAGMA (funzione logica)
+ *   • ≥2 parole CON un verbo → PROPOSIZIONE (funzione sintattica)
+ * L'euristica è sovrascrivibile con i due chip. */
+function renderUnifiedSelectionBar(sentence) {
+  // azzera l'override quando non c'è selezione (così la prossima parte pulita)
+  if (logicSel.sentenceId !== sentence.id || logicSel.indices.length === 0) {
+    if (state.unifiedSelLayer) state.unifiedSelLayer = null;
+    return '';
+  }
+  const lang = state.meta.lingua;
+  const idx = [...logicSel.indices].sort((a, b) => a - b);
+  const toks = tokenizeSentence(sentence.original);
+  const phrase = idx.map(i => (toks.find(t => t.idx === i) || {}).text).filter(Boolean).join(' ');
+
+  // 1 parola sola → grammatica: niente barra di creazione blocco
+  if (idx.length < 2) return '';
+
+  const hasVerb = _unifiedSelectionHasVerb(sentence, idx);
+  const layer = state.unifiedSelLayer || (hasVerb ? 'periodale' : 'logic');
+  const greekCls = lang === 'greco' ? ' greek' : '';
+
+  const reason = state.unifiedSelLayer
+    ? 'scelta manuale'
+    : (hasVerb ? 'verbo presente nel blocco → proposizione' : 'nessun verbo → sintagma');
+
+  const chips = `
+    <div class="usb-toggle" role="group" aria-label="Tipo di blocco">
+      <button type="button" class="usb-chip ${layer === 'logic' ? 'is-active' : ''}" onclick="setUnifiedSelLayer('logic')" title="Sintagma · funzione logica">🔗 Sintagma <span>logica</span></button>
+      <button type="button" class="usb-chip ${layer === 'periodale' ? 'is-active' : ''}" onclick="setUnifiedSelLayer('periodale')" title="Proposizione · funzione sintattica (richiede un verbo)">🌳 Proposizione <span>sintattica</span></button>
+    </div>`;
+
+  let editorRow;
+  if (layer === 'periodale') {
+    editorRow = `
+      <select id="pending-periodale-ruolo" class="field-select">
+        <option value="">— ruolo della proposizione —</option>
+        ${PROPOSIZIONI.ruolo.map(r => `<option value="${r}">${r}</option>`).join('')}
+      </select>
+      <button class="btn btn-primary btn-sm" onclick="unifiedConfirmPeriodale('${sentence.id}')">✓ Crea proposizione (${idx.length})</button>`;
+  } else {
+    editorRow = `
+      <select id="pending-logic-select" class="field-select">
+        <option value="">— funzione sintattica —</option>
+        ${renderFunzioneOptions('', new Set(), lang)}
+      </select>
+      <button class="btn btn-primary btn-sm" onclick="confirmPendingLogic('${sentence.id}')">✓ Crea sintagma (${idx.length})</button>`;
+  }
+
+  return `
+    <div class="token-action-bar token-action-bar-stacked has-block unified-selection-bar">
+      <div class="action-block-banner action-block-banner-${layer === 'periodale' ? 'periodale' : 'logic'}">
+        <span class="block-banner-icon">${layer === 'periodale' ? '🌳' : '🔗'}</span>
+        <div class="block-banner-text">
+          <strong>Blocco di ${idx.length} token${hasVerb ? ' · verbo incluso' : ''}</strong>
+          <span class="block-banner-sub">${escapeHtml(reason)} — scegli ${layer === 'periodale' ? 'il ruolo' : 'la funzione'} e conferma</span>
+        </div>
+        <div class="block-banner-preview${greekCls}">«${escapeHtml(phrase)}»</div>
+      </div>
+      ${chips}
+      <div class="token-action-bar-row">
+        ${editorRow}
+        <button class="btn btn-ghost btn-sm" onclick="cancelUnifiedSelection('${sentence.id}')">Annulla</button>
+      </div>
+    </div>`;
+}
+
+/* Conferma una PROPOSIZIONE periodale dalla selezione unificata (riusa la
+ * pipeline periodale: copia la selezione in periodaleSel e delega). */
+function unifiedConfirmPeriodale(sentenceId) {
+  const sel = document.getElementById('pending-periodale-ruolo');
+  if (!sel || !sel.value) { showToast('Scegli il ruolo della proposizione'); return; }
+  if (!logicSel.indices.length) return;
+  const firstIdx = [...logicSel.indices].sort((a, b) => a - b)[0];
+  periodaleSel = { sentenceId, indices: [...logicSel.indices] };
+  logicSel = { sentenceId: null, indices: [] };
+  state.unifiedSelLayer = null;
+  state.unifiedFocusToken = { sentenceId, tokenIdx: firstIdx };
+  confirmPendingPeriodale(sentenceId);   // legge #pending-periodale-ruolo, crea, ri-renderizza
+}
+
+/* Annulla la selezione unificata corrente. */
+function cancelUnifiedSelection(sentenceId) {
+  logicSel = { sentenceId: null, indices: [] };
+  state.unifiedSelLayer = null;
+  renderEditor();
 }
 
 /* Espansione del sintagma logico contenente il token focus: aggiunge o
@@ -31194,7 +31318,7 @@ function renderUnifiedAnalysis(sentence) {
           </div>
           <div class="token-grid">${tokensHtml}</div>
         </div>
-        ${renderLogicActionBar(sentence)}
+        ${renderUnifiedSelectionBar(sentence)}
       </div>
       <div class="unified-focus-wrap">${focusHtml}</div>
     </div>${renderInlineTranslationPanel(sentence)}`;
