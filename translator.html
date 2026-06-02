@@ -2291,6 +2291,33 @@ body.poetrify-dark .auto-analyze-btn:hover {
 .usb-chip.is-active span { opacity: 0.85; }
 .action-block-banner-periodale { border-left: 4px solid #c026d3; }
 body.poetrify-dark .usb-chip { background: rgba(255,255,255,0.06); color: var(--poetrify-ink); }
+/* VISTA A LAYER · tre bande (grammatica · sintagmi · sintassi) coi rispettivi colori */
+.unified-layer-view {
+  margin: 12px 0; padding: 10px 12px;
+  background: var(--poetrify-paper); border: 1px solid var(--poetrify-rule-soft);
+  border-radius: 10px; display: flex; flex-direction: column; gap: 6px;
+}
+.ulv-row { display: flex; align-items: stretch; gap: 8px; }
+.ulv-label {
+  flex: 0 0 96px; font-family: var(--font-ui); font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.04em; color: var(--poetrify-sepia);
+  display: flex; align-items: center;
+}
+.ulv-track { display: flex; flex-wrap: wrap; gap: 3px; flex: 1; }
+.ulv-cell {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 1px;
+  padding: 2px 7px; border-radius: 5px; line-height: 1.12;
+  border: 1px solid var(--case-border, var(--poetrify-rule-soft));
+  background: var(--case-bg, rgba(0,0,0,0.03));
+  color: var(--case-text, var(--poetrify-ink));
+}
+.ulv-cell.ulv-empty { background: transparent; border-style: dashed; opacity: 0.5; }
+.ulv-w { font-size: 12px; font-weight: 600; }
+.ulv-w.greek { font-family: var(--font-classical); font-size: 13px; }
+.ulv-tag { font-family: var(--font-ui); font-size: 8px; text-transform: uppercase; letter-spacing: 0.03em; opacity: 0.8; }
+.ulv-cell.is-sel { outline: 2px solid var(--poetrify-primary); outline-offset: 1px; }
+.ulv-cell.ulv-grouped { box-shadow: inset 0 -2px 0 currentColor; }
+body.poetrify-dark .unified-layer-view { background: rgba(255,255,255,0.03); }
 /* ── BRANO STICKY ─────────────────────────────────────────────────────────
  * Il tokenizer (sinistra in desktop, in cima su mobile) si "incolla" al top
  * dell'editor mentre l'utente lavora nel focus card. Senza questo, lo
@@ -11000,7 +11027,7 @@ function annotatePeriodaleSiglas(periodale) {
   return withLevel.map(p => {
     countByLevel[p._level] = (countByLevel[p._level] || 0) + 1;
     const letter = (PERIODALE_LEVEL[Math.min(p._level, 7)] || PERIODALE_LEVEL[7]).letter;
-    return { ...p, _sigla: letter + toSubscript(countByLevel[p._level]) };
+    return { ...p, _levelOrd: countByLevel[p._level], _sigla: letter + toSubscript(countByLevel[p._level]) };
   });
 }
 
@@ -11008,6 +11035,29 @@ function annotatePeriodaleSiglas(periodale) {
 function periodaleLevelStyle(level) {
   const c = PERIODALE_LEVEL[Math.min(level, 7)] || PERIODALE_LEVEL[7];
   return `background:${c.bg};border-color:${c.border};color:${c.color};--case-strong:${c.border};`;
+}
+
+/* Tonalità-base per livello (famiglia di colore). Stessa famiglia → stesso livello. */
+const PERIODALE_HUE = [246, 146, 40, 176, 239, 292, 28, 210];
+/* COLORE UNICO per proposizione: ancorato alla famiglia del livello ma MAI identico
+   tra proposizioni dello stesso livello — si applica uno scostamento di tonalità e
+   di luminosità in base all'ordinale entro il livello (_levelOrd). Così A₁ e A₂ sono
+   "parenti" ma distinguibili; livelli diversi hanno famiglie diverse. */
+function periodaleColorFor(entry) {
+  const lvl = Math.min((entry && entry._level) || 0, 7);
+  const ord = (((entry && entry._levelOrd) || 1) - 1);            // 0-based entro il livello
+  const baseHue = PERIODALE_HUE[lvl];
+  const shift = (ord % 2 === 0 ? 1 : -1) * Math.ceil(ord / 2) * 13; // 0,+13,-13,+26,-26…
+  const hue = ((baseHue + shift) % 360 + 360) % 360;
+  const isGray = lvl === 7;
+  const sat = isGray ? 10 : 60;
+  const lShift = (ord % 3) * 4;                                    // micro-variazione di luminosità
+  return {
+    hue, sat,
+    bg:     `hsla(${hue}, ${sat}%, 50%, ${(0.12 + Math.min(lvl, 6) * 0.012).toFixed(3)})`,
+    border: `hsla(${hue}, ${sat}%, ${44 + lShift}%, 0.62)`,
+    color:  `hsl(${hue}, ${Math.min(sat + 10, 72)}%, ${isGray ? 38 : 30 + (ord % 2) * 4}%)`,
+  };
 }
 
 /* ============================================
@@ -31242,6 +31292,53 @@ function shrinkPeriodaleBlockFromFocus(sentenceId, removeIdx) {
   renderEditor();
 }
 
+/* VISTA A LAYER · mostra la frase su tre bande sovrapposte con i rispettivi
+   colori — Grammatica (parti del discorso), Sintagmi (funzioni logiche),
+   Sintassi (proposizioni, colore UNICO per ciascuna) — così si distinguono a
+   colpo d'occhio gli elementi tra loro. La selezione/focus è evidenziata. */
+function renderUnifiedLayerView(sentence) {
+  const lang = state.meta.lingua;
+  const gk = lang === 'greco' ? ' greek' : '';
+  const words = tokenizeSentence(sentence.original).filter(t => t.kind === 'word');
+  if (!words.length) return '';
+  const focus = unifiedFocusFor(sentence);
+  const annotated = annotatePeriodaleSiglas(sentence.periodale || []);
+  const selSet = new Set((logicSel.sentenceId === sentence.id) ? logicSel.indices : []);
+  const isSel = i => selSet.size ? selSet.has(i) : (focus && focus.tokenIdx === i);
+
+  const cell = (t, extraCls, style, label, title) =>
+    `<span class="ulv-cell ${extraCls}${isSel(t.idx) ? ' is-sel' : ''}" style="${style || ''}" title="${escapeHtml(title || t.text)}">` +
+    `<span class="ulv-w${gk}">${escapeHtml(t.text)}</span><span class="ulv-tag">${escapeHtml(label || '·')}</span></span>`;
+
+  const gram = words.map(t => {
+    const ge = (sentence.grammar || []).find(g => g.tokenIndex === t.idx);
+    const cls = ge && ge.partOfSpeech ? 'case-' + caseGroupForGrammarEntry(ge) : 'ulv-empty';
+    const lab = ge && ge.partOfSpeech ? posShort(ge.partOfSpeech) : '·';
+    return cell(t, cls, '', lab, t.text + (ge && ge.partOfSpeech ? ' · ' + ge.partOfSpeech : ''));
+  }).join('');
+
+  const synt = words.map(t => {
+    const e = (sentence.logic || []).find(x => (x.tokenIndices || []).includes(t.idx));
+    const cls = (e && e.funzione ? 'case-' + funzioneToCaseGroup(e.funzione) : 'ulv-empty') + (e ? ' ulv-grouped' : '');
+    const lab = e && e.funzione ? e.funzione.split(' ')[0] : (e ? '—' : '·');
+    return cell(t, cls, '', lab, e ? (e.funzione || 'sintagma') : 'non in un sintagma');
+  }).join('');
+
+  const prop = words.map(t => {
+    const e = annotated.find(x => (x.tokenIndices || []).includes(t.idx));
+    const col = e ? periodaleColorFor(e) : null;
+    const style = col ? `background:${col.bg};border-color:${col.border};color:${col.color};` : '';
+    const lab = e ? (e._sigla || (e.ruolo || '·').slice(0, 3)) : '·';
+    return cell(t, 'ulv-prop' + (e ? ' ulv-grouped' : ' ulv-empty'), style, lab, e ? (e._sigla + ' · ' + (e.ruolo || '')) : 'non in una proposizione');
+  }).join('');
+
+  return `<div class="unified-layer-view" aria-label="Vista a layer della frase">
+    <div class="ulv-row"><span class="ulv-label" title="Parti del discorso">📖 Grammatica</span><div class="ulv-track">${gram}</div></div>
+    <div class="ulv-row"><span class="ulv-label" title="Sintagmi · funzioni logiche">🔗 Sintagmi</span><div class="ulv-track">${synt}</div></div>
+    <div class="ulv-row"><span class="ulv-label" title="Proposizioni · colore unico per ciascuna">🌳 Sintassi</span><div class="ulv-track">${prop}</div></div>
+  </div>`;
+}
+
 /* RENDERER PRINCIPALE · pannello unificato */
 function renderUnifiedAnalysis(sentence) {
   const lang = state.meta.lingua;
@@ -31320,6 +31417,7 @@ function renderUnifiedAnalysis(sentence) {
         </div>
         ${renderUnifiedSelectionBar(sentence)}
       </div>
+      ${renderUnifiedLayerView(sentence)}
       <div class="unified-focus-wrap">${focusHtml}</div>
     </div>${renderInlineTranslationPanel(sentence)}`;
 }
@@ -31528,10 +31626,11 @@ function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
   const annotated = annotatedList || annotatePeriodaleSiglas(state.sentences.find(s => s.id === sentenceId).periodale || []);
   const altreProposizioni = annotated.filter(p => p.id !== entry.id);
 
-  const c = PERIODALE_LEVEL[Math.min(entry._level || 0, 7)];
+  // COLORE UNICO per proposizione (mai identico tra pari livello): ancorato alla
+  // famiglia del livello ma sfumato per ordinale entro il livello.
+  const c = periodaleColorFor(entry);
   const sigStyle = `background:${c.bg};border-color:${c.border};color:${c.color};`;
-  // HEATMAP di profondità: stripe colorata a sinistra + opacità di sfondo crescente.
-  // La principale (level 0) è chiarissima; ogni livello scende di saturazione.
+  // HEATMAP di profondità: stripe colorata a sinistra + sfondo unico per proposizione.
   const heatLevel = Math.min(entry._level || 0, 7);
   const heatStripe = c.border;
 
@@ -31554,7 +31653,7 @@ function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
        </div>`;
 
   return `
-    <div class="proposition-card heatmap-level-${heatLevel}${collapsed ? ' is-collapsed' : ''}" id="periodale-entry-${entry.id}" data-role="${ruoloLower}" data-level="${heatLevel}" style="--heat-stripe:${heatStripe};" ${entryDragAttrs(sentenceId, entry.id, 'periodale')}>
+    <div class="proposition-card heatmap-level-${heatLevel}${collapsed ? ' is-collapsed' : ''}" id="periodale-entry-${entry.id}" data-role="${ruoloLower}" data-level="${heatLevel}" style="--heat-stripe:${heatStripe};background:${c.bg};" ${entryDragAttrs(sentenceId, entry.id, 'periodale')}>
       <div class="entry-card-header">
         ${entryDragHandle()}
         ${headerInner}
