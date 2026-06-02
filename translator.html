@@ -2685,6 +2685,18 @@ body.poetrify-dark .unified-layer-view { background: rgba(255,255,255,0.03); }
 }
 .scheletro-verb-tag::before { content: 'vb'; color: var(--poetrify-paper); }
 .scheletro-verb-tag { color: transparent; }
+.scheletro-verb-tag.nf { width: auto; padding: 0 4px; }
+.scheletro-verb-tag.nf::before { content: 'vb°'; }
+/* verbo NON finito · variante tenue/tratteggiata per distinguerlo dal finito */
+.scheletro-verb-nonfin {
+  background: rgba(197,48,48,0.08) !important;
+  border-color: rgba(197,48,48,0.45) !important;
+  border-style: dashed !important;
+  color: #a13b3b !important;
+  font-weight: 600;
+}
+/* elenco proposizioni / voci logiche dentro un blocco-frase dello scheletro */
+.scheletro-prop-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
 
 .scheletro-finish-text {
   padding: 8px 10px;
@@ -24396,7 +24408,7 @@ function getScheletroStep() {
 }
 
 function setScheletroStep(step) {
-  state.scheletroStep = Math.max(1, Math.min(3, step));
+  state.scheletroStep = Math.max(1, Math.min(5, step));
   persistCurrent();
   renderEditor();
 }
@@ -24406,9 +24418,11 @@ function renderStep3HtmlScheletro() {
   const lang = state.meta.lingua;
   const step = getScheletroStep();
   const STEPS = [
-    { num: 1, icon: '🎯', label: 'Verbo-caccia',     hint: 'Marca tutti i verbi finiti del brano. Sono le àncore di ogni proposizione.' },
-    { num: 2, icon: '🧭', label: 'Soggetti & oggetti', hint: 'Per ciascun verbo: chi compie l\'azione (sogg.) e chi la subisce (ogg.).' },
-    { num: 3, icon: '🌿', label: 'Periferia',         hint: 'Auto-fill via dizionario + rifinitura dei rimanenti complementi e attributi.' },
+    { num: 1, icon: '🎯', label: 'Verbi',        hint: 'Individua TUTTE le forme verbali del brano e distingui modo finito / non finito. I verbi finiti sono le àncore di ogni proposizione.' },
+    { num: 2, icon: '✂️', label: 'Proposizioni', hint: 'Spezza il periodo nelle proposizioni interne (per congiunzione o asindeto) e completa le corrispondenze sintattiche (ruolo · tipo · connettivo · dipendenza).' },
+    { num: 3, icon: '🟦', label: 'Soggetto',     hint: 'Individua il soggetto e il suo gruppo (attributi, apposizioni, specificazioni). Il menù è isolato a questa fase.' },
+    { num: 4, icon: '🟧', label: 'Oggetto',      hint: 'Individua il complemento oggetto e il suo gruppo. Il menù è isolato a questa fase.' },
+    { num: 5, icon: '🟫', label: 'Altri compl.', hint: 'Individua gli altri complementi (indiretti). Il menù elenca solo questi.' },
   ];
 
   /* Mini-stepper */
@@ -24421,27 +24435,28 @@ function renderStep3HtmlScheletro() {
   }).join('<span class="scheletro-step-sep">→</span>')}</div>`;
 
   /* Statistiche */
-  const totalVerbsFinite = sentences.reduce((acc, s) =>
-    acc + (s.grammar || []).filter(g => g.partOfSpeech === 'Verbo' && g.verboForma === 'Forma finita').length, 0);
-  const totalSubjs = sentences.reduce((acc, s) =>
-    acc + (s.logic || []).filter(e => e.funzione === 'Soggetto').length, 0);
-  const totalObjs = sentences.reduce((acc, s) =>
-    acc + (s.logic || []).filter(e => e.funzione === 'Complemento oggetto').length, 0);
+  const totalVerbs = sentences.reduce((a, s) => a + (s.grammar || []).filter(g => g.partOfSpeech === 'Verbo').length, 0);
+  const totalProp  = sentences.reduce((a, s) => a + (s.periodale || []).length, 0);
+  const totalSubjs = sentences.reduce((a, s) => a + (s.logic || []).filter(e => e.funzione === 'Soggetto').length, 0);
+  const totalObjs  = sentences.reduce((a, s) => a + (s.logic || []).filter(e => e.funzione === 'Complemento oggetto').length, 0);
 
   let bodyHtml;
-  if (step === 1) bodyHtml = renderScheletroStep1(sentences, lang, totalVerbsFinite);
-  else if (step === 2) bodyHtml = renderScheletroStep2(sentences, lang, totalVerbsFinite);
-  else bodyHtml = renderScheletroStep3(sentences, lang);
+  if (step === 1) bodyHtml = renderScheletroVerbi(sentences, lang);
+  else if (step === 2) bodyHtml = renderScheletroProposizioni(sentences, lang);
+  else if (step === 3) bodyHtml = renderScheletroLogic(sentences, lang, 'soggetto');
+  else if (step === 4) bodyHtml = renderScheletroLogic(sentences, lang, 'oggetto');
+  else bodyHtml = renderScheletroLogic(sentences, lang, 'altri');
 
   const stats = `<div class="scheletro-stats">
-    <span class="scheletro-stat"><strong>${totalVerbsFinite}</strong> verbi finiti</span>
+    <span class="scheletro-stat"><strong>${totalVerbs}</strong> verbi</span>
+    <span class="scheletro-stat"><strong>${totalProp}</strong> proposizioni</span>
     <span class="scheletro-stat"><strong>${totalSubjs}</strong> soggetti</span>
     <span class="scheletro-stat"><strong>${totalObjs}</strong> oggetti</span>
   </div>`;
 
   const navButtons = `<div class="scheletro-nav">
     ${step > 1 ? `<button class="btn btn-ghost btn-sm" onclick="setScheletroStep(${step - 1})">← Fase precedente</button>` : '<span></span>'}
-    ${step < 3 ? `<button class="btn btn-primary btn-sm" onclick="setScheletroStep(${step + 1})">Fase successiva (${escapeHtml(STEPS[step].label)}) →</button>` : '<button class="btn btn-primary btn-sm" onclick="goToStep(5)">✓ Vai alla traduzione</button>'}
+    ${step < 5 ? `<button class="btn btn-primary btn-sm" onclick="setScheletroStep(${step + 1})">Fase successiva (${escapeHtml(STEPS[step].label)}) →</button>` : '<button class="btn btn-primary btn-sm" onclick="goToStep(5)">✓ Vai alla traduzione</button>'}
   </div>`;
 
   return sectionHeader('C', 'Analisi · approccio Scheletro', STEPS[step - 1].hint)
@@ -24450,6 +24465,208 @@ function renderStep3HtmlScheletro() {
     + stats
     + bodyHtml
     + navButtons;
+}
+
+/* ── elenco funzioni ISOLATO per fase logica (soggetto / oggetto / altri) ── */
+function scheletroPhaseFuncs(phase, lang) {
+  if (phase === 'soggetto') return ['Soggetto', 'Parte nominale', 'Predicato nominale', 'Complemento predicativo del soggetto', 'Apposizione', 'Attributo', 'Complemento di specificazione'];
+  if (phase === 'oggetto')  return ['Complemento oggetto', "Complemento predicativo dell'oggetto", 'Apposizione', 'Attributo', 'Complemento di specificazione'];
+  // 'altri' = tutti gli altri complementi (indiretti): esclude nucleo soggetto/oggetto e modificatori di gruppo
+  const exclude = new Set(['Predicato verbale', 'Soggetto', 'Parte nominale', 'Predicato nominale', 'Copula',
+    'Complemento predicativo del soggetto', 'Complemento oggetto', "Complemento predicativo dell'oggetto",
+    'Apposizione', 'Attributo']);
+  const out = [];
+  funzioniLogicheGroupedFor(lang).forEach(g => g.items.forEach(it => { if (!exclude.has(it) && !out.includes(it)) out.push(it); }));
+  return out;
+}
+
+/* FASE 1 · Verbi · click ciclico ∅ → finito → non finito → ∅ */
+function renderScheletroVerbi(sentences, lang) {
+  const isGreek = lang === 'greco';
+  const blocks = sentences.map((sentence, sIdx) => {
+    const toks = tokenizeSentence(sentence.original);
+    const tokensHtml = toks.map(tok => {
+      if (tok.kind === 'space') return ' ';
+      if (tok.kind === 'punct') return `<span class="token token-punct">${escapeHtml(tok.text)}</span>`;
+      const ge = (sentence.grammar || []).find(g => g.tokenIndex === tok.idx);
+      const isV = ge && ge.partOfSpeech === 'Verbo';
+      const isFin = isV && ge.verboForma === 'Forma finita';
+      const isNonFin = isV && ge._scheletroForma === 'non-finita';
+      const cls = ['token', 'scheletro-token'];
+      if (isFin) cls.push('scheletro-verb-marked', 'case-verbo');
+      else if (isNonFin) cls.push('scheletro-verb-nonfin', 'case-verbo');
+      else cls.push('token-untagged');
+      const marker = isFin ? '<span class="scheletro-verb-tag">vb</span>'
+                   : isNonFin ? '<span class="scheletro-verb-tag nf">vb°</span>' : '';
+      return `<span class="${cls.join(' ')}" onclick="scheletroCycleVerb('${sentence.id}', ${tok.idx})" title="Click: ∅ → verbo finito → verbo non finito → ∅">${escapeHtml(tok.text)}${marker}</span>`;
+    }).join('');
+    const fin = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo' && g.verboForma === 'Forma finita').length;
+    const nf = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo' && g._scheletroForma === 'non-finita').length;
+    return `<div class="scheletro-sentence-block">
+      <div class="scheletro-sentence-header">
+        <span class="scheletro-sentence-num">Frase ${sIdx + 1}</span>
+        <span class="scheletro-sentence-count">${fin} finiti · ${nf} non finiti</span>
+      </div>
+      <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
+    </div>`;
+  }).join('');
+  return `<div class="subsection">
+    <div class="method-note" style="background:rgba(197,48,48,0.06);border-left-color:rgba(197,48,48,0.55);">
+      <strong>🎯 Fase 1 · Verbi.</strong> Clicca ogni forma verbale: 1° click = <strong>verbo finito</strong> (àncora di proposizione), 2° click = <strong>verbo non finito</strong> (participio, infinito, gerundio, supino…), 3° click = annulla.
+      <em>Indizi:</em> -t/-nt, -bat, -vit / desinenze personali e augmento (gr.) per i <em>finiti</em>; -ns/-ntis, -re, -ndo / -ων, -ειν (gr.) per i <em>non finiti</em>.
+    </div>
+    ${blocks}
+  </div>`;
+}
+
+/* FASE 2 · Proposizioni interne · selezione (congiunzioni/asindeto) + corrispondenze
+   sintattiche complete (riusa la pipeline periodale: action bar + editor). */
+function renderScheletroProposizioni(sentences, lang) {
+  const isGreek = lang === 'greco';
+  const blocks = sentences.map((sentence, sIdx) => {
+    const toks = tokenizeSentence(sentence.original);
+    const annotated = annotatePeriodaleSiglas(sentence.periodale || []);
+    const tokensHtml = toks.map(tok => {
+      if (tok.kind === 'space') return ' ';
+      if (tok.kind === 'punct') return `<span class="token token-punct">${escapeHtml(tok.text)}</span>`;
+      const pe = annotated.find(e => (e.tokenIndices || []).includes(tok.idx));
+      const ge = (sentence.grammar || []).find(g => g.tokenIndex === tok.idx);
+      const inSel = periodaleSel.sentenceId === sentence.id && periodaleSel.indices.includes(tok.idx);
+      const cls = ['token', 'scheletro-token'];
+      let style = '';
+      if (pe) { cls.push('periodale-lvl'); style = ` style="${periodaleEntryStyle(pe)}"`; }
+      else cls.push('token-untagged');
+      if (inSel) cls.push('token-selected');
+      let mark = (pe && Math.min.apply(null, (pe.tokenIndices || [tok.idx])) === tok.idx) ? `<span class="token-periodale-sigla">${pe._sigla}</span>` : '';
+      if (ge && ge.partOfSpeech === 'Congiunzione') mark = `<span class="periodale-token-hint conn">cong.</span>` + mark;
+      return `<span class="${cls.join(' ')}"${style} data-token-mode="periodale" data-token-idx="${tok.idx}" data-sentence-id="${sentence.id}" onclick="onPeriodaleTokenClick(event,'${sentence.id}',${tok.idx})" title="Click/trascina per selezionare i token di una proposizione">${escapeHtml(tok.text)}${mark}</span>`;
+    }).join('');
+    const entriesHtml = annotated.length
+      ? annotated.map(e => renderPeriodaleEntry(sentence.id, e, lang, annotated)).join('')
+      : '<div class="muted-text" style="font-size:12px;padding:6px 2px;">Nessuna proposizione: seleziona i token di una proposizione (i confini sono le <em>congiunzioni</em> «cong.» o l\'asindeto/punteggiatura) e assegnale ruolo/tipo qui sotto.</div>';
+    return `<div class="scheletro-sentence-block">
+      <div class="scheletro-sentence-header">
+        <span class="scheletro-sentence-num">Frase ${sIdx + 1}</span>
+        <span class="scheletro-sentence-count">${annotated.length} proposizione/i</span>
+      </div>
+      <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
+      ${renderPeriodaleActionBar(sentence)}
+      <div class="scheletro-prop-list">${entriesHtml}</div>
+    </div>`;
+  }).join('');
+  return `<div class="subsection">
+    <div class="method-note" style="background:rgba(192,38,211,0.06);border-left-color:rgba(192,38,211,0.55);">
+      <strong>✂️ Fase 2 · Proposizioni interne.</strong> Spezza il periodo: seleziona i token di ciascuna proposizione (i confini sono spesso le <em>congiunzioni</em> segnate «cong.» oppure l'asindeto/la punteggiatura) e completa subito le <strong>corrispondenze sintattiche</strong> — ruolo (principale / coordinata / subordinata), tipo, connettivo, da chi dipende — per intuire struttura e natura della frase.
+    </div>
+    ${blocks}
+  </div>`;
+}
+
+/* FASI 3-4-5 · analisi logica con menù ISOLATO alla fase (soggetto / oggetto / altri). */
+function renderScheletroLogic(sentences, lang, phase) {
+  const isGreek = lang === 'greco';
+  const info = {
+    soggetto: { icon: '🟦', title: 'Soggetto', note: 'Individua il SOGGETTO e il suo gruppo (attributi, apposizioni, specificazioni). Il menù mostra solo le funzioni di questa fase.' },
+    oggetto:  { icon: '🟧', title: 'Compl. oggetto', note: 'Individua il COMPLEMENTO OGGETTO e il suo gruppo. Il menù è isolato a questa fase.' },
+    altri:    { icon: '🟫', title: 'Altri complementi', note: 'Individua gli ALTRI complementi (indiretti). Il menù elenca solo questi.' },
+  }[phase];
+  const allowed = scheletroPhaseFuncs(phase, lang);
+  const allowedSet = new Set(allowed);
+  const blocks = sentences.map((sentence, sIdx) => {
+    const toks = tokenizeSentence(sentence.original);
+    const tokensHtml = toks.map(tok => {
+      if (tok.kind === 'space') return ' ';
+      if (tok.kind === 'punct') return `<span class="token token-punct">${escapeHtml(tok.text)}</span>`;
+      const le = (sentence.logic || []).find(e => allowedSet.has(e.funzione) && (e.tokenIndices || []).includes(tok.idx));
+      const ge = (sentence.grammar || []).find(g => g.tokenIndex === tok.idx);
+      const inSel = logicSel.sentenceId === sentence.id && logicSel.indices.includes(tok.idx);
+      const cls = ['token', 'scheletro-token'];
+      if (le) cls.push('case-' + funzioneToCaseGroup(le.funzione));
+      else if (ge && ge.partOfSpeech === 'Verbo' && ge.verboForma === 'Forma finita') cls.push('case-verbo', 'scheletro-verb-marked');
+      else cls.push('token-untagged');
+      if (inSel) cls.push('token-selected');
+      const mark = le ? `<span class="scheletro-role-tag">${escapeHtml((le.funzione || '').split(' ')[0].slice(0, 4))}</span>`
+                 : (ge && ge.partOfSpeech === 'Verbo' && ge.verboForma === 'Forma finita') ? '<span class="scheletro-verb-tag">vb</span>' : '';
+      return `<span class="${cls.join(' ')}" data-token-mode="logic" data-token-idx="${tok.idx}" data-sentence-id="${sentence.id}" onclick="scheletroLogicClick(event,'${sentence.id}',${tok.idx})" title="Click/trascina per selezionare il gruppo">${escapeHtml(tok.text)}${mark}</span>`;
+    }).join('');
+    let bar = '';
+    if (logicSel.sentenceId === sentence.id && logicSel.indices.length) {
+      const idx = [...logicSel.indices].sort((a, b) => a - b);
+      const phrase = idx.map(i => (toks.find(t => t.idx === i) || {}).text).filter(Boolean).join(' ');
+      bar = `<div class="token-action-bar token-action-bar-stacked has-block">
+        <div class="action-block-banner action-block-banner-logic">
+          <span class="block-banner-icon">${info.icon}</span>
+          <div class="block-banner-text"><strong>Gruppo di ${idx.length} token</strong><span class="block-banner-sub">assegna la funzione (${escapeHtml(info.title)}) e conferma</span></div>
+          <div class="block-banner-preview ${isGreek ? 'greek' : ''}">«${escapeHtml(phrase)}»</div>
+        </div>
+        <div class="token-action-bar-row">
+          <select id="pending-logic-select" class="field-select">
+            <option value="">— funzione · ${escapeHtml(info.title)} —</option>
+            ${allowed.map(f => `<option value="${escapeHtml(f)}">${escapeHtml(f)}</option>`).join('')}
+          </select>
+          <button class="btn btn-primary btn-sm" onclick="confirmPendingLogic('${sentence.id}')">✓ Assegna (${idx.length})</button>
+          <button class="btn btn-ghost btn-sm" onclick="cancelLogicSelection()">Annulla</button>
+        </div>
+      </div>`;
+    }
+    const phaseEntries = (sentence.logic || []).filter(e => allowedSet.has(e.funzione));
+    const list = phaseEntries.length ? `<div class="scheletro-prop-list">${phaseEntries.map(e => renderLogicEntry(sentence.id, e, lang)).join('')}</div>` : '';
+    return `<div class="scheletro-sentence-block">
+      <div class="scheletro-sentence-header">
+        <span class="scheletro-sentence-num">Frase ${sIdx + 1}</span>
+        <span class="scheletro-sentence-count">${phaseEntries.length} ${escapeHtml(info.title.toLowerCase())}</span>
+      </div>
+      <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
+      ${bar}
+      ${list}
+    </div>`;
+  }).join('');
+  return `<div class="subsection">
+    <div class="method-note">
+      <strong>${info.icon} Fase · ${escapeHtml(info.title)}.</strong> ${escapeHtml(info.note)} Seleziona i token (click o trascinamento), scegli dal menù — che in questa fase mostra <em>solo</em> le funzioni pertinenti — e conferma.
+    </div>
+    ${blocks}
+  </div>`;
+}
+
+/* Handler · Fase 1 · ciclo ∅ → verbo finito → verbo non finito → ∅ */
+function scheletroCycleVerb(sentenceId, tokenIdx) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const tok = tokenizeSentence(sentence.original).find(t => t.idx === tokenIdx);
+  if (!tok || tok.kind !== 'word') return;
+  let entry = (sentence.grammar || []).find(e => e.tokenIndex === tokenIdx);
+  const isV = entry && entry.partOfSpeech === 'Verbo';
+  const isFin = isV && entry.verboForma === 'Forma finita';
+  if (!isV) {
+    if (!entry) { entry = makeEntry('grammar'); entry.word = tok.text; entry.tokenIndex = tokenIdx; insertEntrySorted(sentence.grammar, entry, 'grammar'); }
+    entry.partOfSpeech = 'Verbo'; entry.verboForma = 'Forma finita'; delete entry._scheletroForma;
+    propagateCrossAnalysis(sentence, 'grammar', entry);
+  } else if (isFin) {
+    entry.verboForma = ''; entry._scheletroForma = 'non-finita';
+  } else {
+    delete entry._scheletroForma; delete entry.verboForma;
+    if (entry.partOfSpeech === 'Verbo') delete entry.partOfSpeech;
+    if (!entry.lemma && !entry.note && !entry.caso && !entry.tempo && !entry.modo && !entry.persona) {
+      sentence.grammar = sentence.grammar.filter(e => e.id !== entry.id);
+    }
+  }
+  persistCurrent(); renderEditor(); renderSidebarTabs();
+}
+
+/* Handler · Fasi 3-5 · toggle di un token nella selezione logica (click). Il
+   drag-select (mode logic) resta attivo per selezionare interi gruppi. */
+function scheletroLogicClick(event, sentenceId, tokenIdx) {
+  if (dragSelect && dragSelect.justFinished) return;
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const tok = tokenizeSentence(sentence.original).find(t => t.idx === tokenIdx);
+  if (!tok || tok.kind !== 'word') return;
+  if (logicSel.sentenceId !== sentenceId) logicSel = { sentenceId, indices: [] };
+  const i = logicSel.indices.indexOf(tokenIdx);
+  if (i >= 0) logicSel.indices.splice(i, 1); else logicSel.indices.push(tokenIdx);
+  logicSel.indices.sort((a, b) => a - b);
+  renderEditor();
 }
 
 /* FASE 1 · Verbo-caccia · tokenizer compatto multi-sentence con click per
