@@ -2672,21 +2672,22 @@ body.poetrify-dark .unified-layer-view { background: rgba(255,255,255,0.03); }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 16px;
-  height: 16px;
+  min-width: 16px;
+  height: 15px;
+  padding: 0 4px;
   border-radius: 4px;
-  background: currentColor;
-  color: var(--poetrify-paper) !important;
+  /* chip scuro semi-trasparente leggibile su QUALSIASI token (niente più
+     background:currentColor che, con testo bianco, produceva box bianchi vuoti) */
+  background: rgba(0,0,0,0.52);
+  color: #fff;
   font-family: var(--font-ui);
   font-size: 9px;
   font-weight: 700;
   margin-left: 4px;
   line-height: 1;
 }
-.scheletro-verb-tag::before { content: 'vb'; color: var(--poetrify-paper); }
-.scheletro-verb-tag { color: transparent; }
-.scheletro-verb-tag.nf { width: auto; padding: 0 4px; }
-.scheletro-verb-tag.nf::before { content: 'vb°'; }
+body.poetrify-dark .scheletro-verb-tag,
+body.poetrify-dark .scheletro-role-tag { background: rgba(255,255,255,0.22); }
 /* verbo NON finito · variante tenue/tratteggiata per distinguerlo dal finito */
 .scheletro-verb-nonfin {
   background: rgba(197,48,48,0.08) !important;
@@ -2697,6 +2698,24 @@ body.poetrify-dark .unified-layer-view { background: rgba(255,255,255,0.03); }
 }
 /* elenco proposizioni / voci logiche dentro un blocco-frase dello scheletro */
 .scheletro-prop-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+/* verbo evidenziato nell'anteprima della segmentazione (fase Proposizioni) */
+.scheletro-verb-outline { outline: 2px dashed rgba(197,48,48,0.65); outline-offset: 1px; }
+/* sotto-sezione · completa l'analisi grammaticale dei verbi (fase Verbi) */
+.scheletro-verb-analysis { margin: 8px 0; }
+.scheletro-verb-analysis-head { font-family: var(--font-ui); font-size: 11px; font-weight: 700; color: var(--poetrify-sepia); margin: 6px 0 2px; }
+.scheletro-autofill-row { margin: 8px 0 4px; }
+/* sotto-fase «connettivi e confini» */
+.schel-connettivi { display: flex; flex-direction: column; gap: 6px; margin: 6px 0 8px; padding: 8px 10px; background: var(--poetrify-ivory); border: 1px dashed var(--poetrify-rule); border-radius: 8px; }
+.schel-connettivi-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.schel-connettivi-label { flex: 0 0 132px; font-family: var(--font-ui); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--poetrify-primary); }
+.schel-conn-list, .schel-bound-list { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.schel-conn-item { display: inline-flex; align-items: center; gap: 4px; background: var(--poetrify-paper); border: 1px solid var(--poetrify-rule); border-radius: 6px; padding: 2px 6px; }
+.schel-conn-word { font-weight: 700; color: var(--poetrify-primary); font-size: 13px; }
+.schel-conn-word.greek { font-family: var(--font-classical); }
+.schel-conn-sel { font-size: 11px; padding: 2px 4px; max-width: 210px; }
+.schel-bound { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; background: rgba(214,158,46,0.18); border: 1px solid rgba(214,158,46,0.5); border-radius: 4px; color: #7a4f0a; font-weight: 700; }
+body.poetrify-dark .schel-connettivi { background: rgba(255,255,255,0.04); }
+body.poetrify-dark .schel-conn-item { background: rgba(255,255,255,0.06); }
 
 .scheletro-finish-text {
   padding: 8px 10px;
@@ -24510,13 +24529,32 @@ function renderScheletroVerbi(sentences, lang) {
       <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
     </div>`;
   }).join('');
+  // SOTTOSEZIONE · completa l'analisi grammaticale di ogni verbo marcato
+  const verbEntries = [];
+  sentences.forEach((sentence, sIdx) => {
+    (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo')
+      .sort((a, b) => (a.tokenIndex || 0) - (b.tokenIndex || 0))
+      .forEach(v => verbEntries.push({ sentence, sIdx, v }));
+  });
+  const analysisHtml = verbEntries.length ? `
+    <div class="subsection scheletro-verb-analysis-wrap" style="margin-top:14px;">
+      <div class="method-note" style="background:rgba(56,178,172,0.06);border-left-color:rgba(56,178,172,0.55);">
+        <strong>🔬 Completa l'analisi dei verbi (${verbEntries.length}).</strong> Per ogni verbo individuato definisci forma, tempo, modo, persona, numero, diatesi e lemma: questi dati alimentano l'auto-completamento delle proposizioni nella fase successiva.
+      </div>
+      ${verbEntries.map(({ sentence, sIdx, v }) => `
+        <div class="scheletro-verb-analysis">
+          <div class="scheletro-verb-analysis-head">Frase ${sIdx + 1} · <strong class="${isGreek ? 'greek' : ''}">${escapeHtml(v.word || '?')}</strong></div>
+          ${renderGrammarEntry(sentence.id, v, lang)}
+        </div>`).join('')}
+    </div>` : '';
+
   return `<div class="subsection">
     <div class="method-note" style="background:rgba(197,48,48,0.06);border-left-color:rgba(197,48,48,0.55);">
       <strong>🎯 Fase 1 · Verbi.</strong> Clicca ogni forma verbale: 1° click = <strong>verbo finito</strong> (àncora di proposizione), 2° click = <strong>verbo non finito</strong> (participio, infinito, gerundio, supino…), 3° click = annulla.
       <em>Indizi:</em> -t/-nt, -bat, -vit / desinenze personali e augmento (gr.) per i <em>finiti</em>; -ns/-ntis, -re, -ndo / -ων, -ειν (gr.) per i <em>non finiti</em>.
     </div>
     ${blocks}
-  </div>`;
+  </div>${analysisHtml}`;
 }
 
 /* FASE 2 · Proposizioni interne · selezione (congiunzioni/asindeto) + corrispondenze
@@ -24537,8 +24575,17 @@ function renderScheletroProposizioni(sentences, lang) {
       if (pe) { cls.push('periodale-lvl'); style = ` style="${periodaleEntryStyle(pe)}"`; }
       else cls.push('token-untagged');
       if (inSel) cls.push('token-selected');
+      // VISIBILITÀ DELLE FORME VERBALI nell'anteprima della segmentazione
+      const isVerb = ge && ge.partOfSpeech === 'Verbo';
+      const isNonFin = isVerb && ge._scheletroForma === 'non-finita';
+      if (isVerb) cls.push('scheletro-verb-outline');
       let mark = (pe && Math.min.apply(null, (pe.tokenIndices || [tok.idx])) === tok.idx) ? `<span class="token-periodale-sigla">${pe._sigla}</span>` : '';
-      if (ge && ge.partOfSpeech === 'Congiunzione') mark = `<span class="periodale-token-hint conn">cong.</span>` + mark;
+      if (isVerb) mark = `<span class="scheletro-verb-tag${isNonFin ? ' nf' : ''}">${isNonFin ? 'vb°' : 'vb'}</span>` + mark;
+      if (ge && ge.partOfSpeech === 'Congiunzione') {
+        const ct = (ge.congiunzioneTipo || '').toLowerCase();
+        const lab = ct.startsWith('subord') ? 'subord.' : ct.startsWith('coord') ? 'coord.' : 'cong.';
+        mark = `<span class="periodale-token-hint conn">${lab}</span>` + mark;
+      }
       return `<span class="${cls.join(' ')}"${style} data-token-mode="periodale" data-token-idx="${tok.idx}" data-sentence-id="${sentence.id}" onclick="onPeriodaleTokenClick(event,'${sentence.id}',${tok.idx})" title="Click/trascina per selezionare i token di una proposizione">${escapeHtml(tok.text)}${mark}</span>`;
     }).join('');
     const entriesHtml = annotated.length
@@ -24549,8 +24596,10 @@ function renderScheletroProposizioni(sentences, lang) {
         <span class="scheletro-sentence-num">Frase ${sIdx + 1}</span>
         <span class="scheletro-sentence-count">${annotated.length} proposizione/i</span>
       </div>
+      ${renderScheletroConnettivi(sentence, lang)}
       <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
       ${renderPeriodaleActionBar(sentence)}
+      ${annotated.length ? `<div class="scheletro-autofill-row"><button class="btn btn-ghost btn-sm" onclick="scheletroAutofillProps('${sentence.id}')" title="Completa ruolo · tipo · modo · connettivo delle proposizioni in base al verbo e alla congiunzione">⚡ Completa proposizioni dai verbi</button></div>` : ''}
       <div class="scheletro-prop-list">${entriesHtml}</div>
     </div>`;
   }).join('');
@@ -24667,6 +24716,72 @@ function scheletroLogicClick(event, sentenceId, tokenIdx) {
   if (i >= 0) logicSel.indices.splice(i, 1); else logicSel.indices.push(tokenIdx);
   logicSel.indices.sort((a, b) => a - b);
   renderEditor();
+}
+
+/* FASE 2 · sotto-fase «connettivi e confini»: classifica le congiunzioni come
+   subordinanti/coordinanti e mostra i confini di punteggiatura (asindeto),
+   ESCLUDENDO i punti di abbreviazione (punto dopo UNA sola lettera maiuscola:
+   «C.», «M.», «Q.» fanno parte dello stesso token e non sono confini). */
+function renderScheletroConnettivi(sentence, lang) {
+  const isGreek = lang === 'greco';
+  const toks = tokenizeSentence(sentence.original);
+  const tipoOpts = (typeof TAXONOMIES !== 'undefined' && TAXONOMIES[lang] && TAXONOMIES[lang].congiunzioneTipo) || [];
+  const conjs = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Congiunzione')
+    .sort((a, b) => (a.tokenIndex || 0) - (b.tokenIndex || 0));
+  const conjHtml = conjs.length ? conjs.map(g => {
+    const cur = g.congiunzioneTipo || '';
+    return `<span class="schel-conn-item">
+      <span class="schel-conn-word ${isGreek ? 'greek' : ''}">${escapeHtml(g.word || '')}</span>
+      <select class="field-select schel-conn-sel" onchange="scheletroSetConnTipo('${sentence.id}', ${g.tokenIndex}, this.value)">
+        <option value="">— subord./coord. —</option>
+        ${tipoOpts.map(o => `<option value="${escapeHtml(o)}" ${cur === o ? 'selected' : ''}>${escapeHtml(o)}</option>`).join('')}
+      </select>
+    </span>`;
+  }).join('') : '<span class="muted-text" style="font-size:11px;">Nessuna congiunzione (auto-rilevate all\'import). In asindeto i confini sono solo la punteggiatura →</span>';
+
+  // confini di punteggiatura (asindeto), saltando le abbreviazioni
+  const bounds = [];
+  toks.forEach((t, i) => {
+    if (t.kind !== 'punct') return;
+    if (!/^[,;:·.]$/.test(t.text)) return;
+    if (t.text === '.') {
+      let prevWord = null;
+      for (let j = i - 1; j >= 0; j--) { if (toks[j].kind === 'word') { prevWord = toks[j]; break; } if (toks[j].kind === 'punct') break; }
+      if (prevWord && prevWord.text.length === 1 && /\p{Lu}/u.test(prevWord.text)) return; // abbreviazione → non è confine
+    }
+    bounds.push(t.text);
+  });
+  const boundHtml = bounds.length ? bounds.map(b => `<span class="schel-bound" title="confine di proposizione (asindeto/punteggiatura)">${escapeHtml(b)}</span>`).join('') : '<span class="muted-text" style="font-size:11px;">nessun confine</span>';
+
+  return `<div class="schel-connettivi">
+    <div class="schel-connettivi-row"><span class="schel-connettivi-label">① Congiunzioni</span><span class="schel-conn-list">${conjHtml}</span></div>
+    <div class="schel-connettivi-row"><span class="schel-connettivi-label">② Confini · asindeto</span><span class="schel-bound-list">${boundHtml}</span></div>
+  </div>`;
+}
+
+/* Handler · classifica una congiunzione (subordinante/coordinante). */
+function scheletroSetConnTipo(sentenceId, tokenIdx, tipo) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const tok = tokenizeSentence(sentence.original).find(t => t.idx === tokenIdx);
+  let entry = (sentence.grammar || []).find(e => e.tokenIndex === tokenIdx);
+  if (!entry) { entry = makeEntry('grammar'); entry.word = tok ? tok.text : ''; entry.tokenIndex = tokenIdx; insertEntrySorted(sentence.grammar, entry, 'grammar'); }
+  entry.partOfSpeech = 'Congiunzione';
+  entry.congiunzioneTipo = tipo;
+  propagateCrossAnalysis(sentence, 'grammar', entry);
+  persistCurrent(); renderEditor(); renderSidebarTabs();
+}
+
+/* Handler · item 3 · auto-completa le corrispondenze delle proposizioni dal
+   verbo/congiunzione (riusa autoFillPeriodaleFromGrammar: modo dal verbo finito,
+   ruolo/tipo dalla tabella di conversione, connettivo dalla congiunzione). */
+function scheletroAutofillProps(sentenceId) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  let total = 0;
+  (sentence.periodale || []).forEach(e => { total += (autoFillPeriodaleFromGrammar(sentence, e).changes || 0); });
+  persistCurrent(); renderEditor(); renderSidebarTabs();
+  showToast(total > 0 ? `⚡ ${total} corrispondenze completate dai verbi/congiunzioni` : 'Proposizioni già complete (o manca l\'analisi del verbo)');
 }
 
 /* FASE 1 · Verbo-caccia · tokenizer compatto multi-sentence con click per
