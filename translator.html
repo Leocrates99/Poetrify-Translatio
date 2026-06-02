@@ -11054,10 +11054,19 @@ function periodaleColorFor(entry) {
   const lShift = (ord % 3) * 4;                                    // micro-variazione di luminosità
   return {
     hue, sat,
+    letter: (PERIODALE_LEVEL[lvl] || PERIODALE_LEVEL[7]).letter,
     bg:     `hsla(${hue}, ${sat}%, 50%, ${(0.12 + Math.min(lvl, 6) * 0.012).toFixed(3)})`,
     border: `hsla(${hue}, ${sat}%, ${44 + lShift}%, 0.62)`,
     color:  `hsl(${hue}, ${Math.min(sat + 10, 72)}%, ${isGray ? 38 : 30 + (ord % 2) * 4}%)`,
   };
+}
+
+/* Stile inline UNICO per proposizione (drop-in di periodaleLevelStyle, ma per
+   entry: usa il colore unico anziché quello di livello). Serve all'anteprima
+   (token del brano colorati per proposizione) e ai nodi/card dell'albero. */
+function periodaleEntryStyle(entry) {
+  const c = periodaleColorFor(entry);
+  return `background:${c.bg};border-color:${c.border};color:${c.color};--case-strong:${c.border};`;
 }
 
 /* ============================================
@@ -28809,7 +28818,7 @@ function renderTokenChip(sentence, tok, mode) {
 
     if (tok.periodaleEntry) {
       classes.push('periodale-lvl');
-      inlineStyle = ` style="${periodaleLevelStyle(tok.periodaleEntry._level)}"`;
+      inlineStyle = ` style="${periodaleEntryStyle(tok.periodaleEntry)}"`;
       const indices = (tok.periodaleEntry.tokenIndices || []).filter(i => i >= 0);
       const minIdx = indices.length > 0 ? Math.min.apply(null, indices) : null;
       if (minIdx === tok.idx) {
@@ -29937,7 +29946,7 @@ function _renderSyntaxTreeV2(sentence, annotated) {
 }
 
 function _renderTreeNodeV2(p, edges) {
-  const c = PERIODALE_LEVEL[Math.min(p._level, 7)];
+  const c = periodaleColorFor(p);
   const ruoloLower = (p.ruolo || '').toLowerCase();
   const sigStyle = `background:${c.bg};border-color:${c.border};color:${c.color};`;
   // Connettivo + freccia (se ha un dipendeDa)
@@ -30140,7 +30149,7 @@ function renderTreeMemberColumn(prop, allProps, visited) {
 
 /* Card visiva di una proposizione */
 function renderTreePropCard(p) {
-  const c = PERIODALE_LEVEL[Math.min(p._level, 7)];
+  const c = periodaleColorFor(p);
   const ruoloLabel = (p.ruolo || '').toLowerCase();
   const sigStyle = `background:${c.bg};border-color:${c.border};color:${c.color};`;
   const conn = p.connettivo
@@ -33448,7 +33457,7 @@ function buildPrintHtml(includeTokenGrid) {
       annotated.forEach(e => {
         const dipendeDa = e.dipendeDa ? annotated.find(p => p.id === e.dipendeDa) : null;
         const dipendeStr = dipendeDa ? `${dipendeDa._sigla} · ${dipendeDa.text.substring(0, 24)}` : '';
-        const c = PERIODALE_LEVEL[Math.min(e._level || 0, 7)];
+        const c = periodaleColorFor(e);
         const sigStyle = `background:${c.bg};border:1.5px solid ${c.border};color:${c.color};padding:2pt 8pt;border-radius:3px;display:inline-block;font-weight:700;font-size:10pt;letter-spacing:-0.02em;`;
         html += `<tr><td><span style="${sigStyle}">${e._sigla}</span></td><td style="font-style:italic;color:#1a1f24;font-weight:500;">${escapeHtml(e.text)}</td><td style="color:#08003f;font-weight:600;">${escapeHtml(e.ruolo || '')}</td><td style="color:#1a1f24;">${escapeHtml(e.tipo || '')}</td><td style="color:#1a1f24;">${escapeHtml(e.modo || '')}</td><td style="color:#1800AC;font-weight:600;font-family:'Source Sans 3',sans-serif;">${escapeHtml(e.connettivo || '')}</td><td style="color:#4a4540;font-size:9pt;">${escapeHtml(dipendeStr)}</td><td style="color:#4a4540;">${escapeHtml(e.note || '')}</td></tr>`;
       });
