@@ -1230,8 +1230,10 @@ function parseGreekLemma(lemma, pos) {
       if (stemLast2 === 'ντ') subType = 'III-nt';
       // Tema in -ρ (ῥήτωρ, ῥήτορος; sofeore με apofonia: πατήρ, πατρός)
       else if (stemLast === 'ρ') {
-        // Distinguo apofonici (πατήρ, μήτηρ, θυγάτηρ, ἀνήρ) dai regolari (ῥήτωρ)
-        if (/^(πατ|μητ|θυγατ|ανδ|γαστ)$/.test(stemStripped)) subType = 'III-r-apof';
+        // Distinguo apofonici (πατήρ, μήτηρ, θυγάτηρ, ἀνήρ, γαστήρ) dai regolari (ῥήτωρ).
+        // Lo `stem` è ricavato dal genitivo a grado-zero (μητρός → μητρ, ἀνδρός → ανδρ),
+        // perciò la regex include il ρ del grado ridotto.
+        if (/^(πατρ|μητρ|θυγατρ|ανδρ|γαστρ)$/.test(stemStripped)) subType = 'III-r-apof';
         else subType = 'III-r';
       }
       // Tema in -ν (αἰών/αἰῶνος, ἀγών/ἀγῶνος, ποιμήν, λιμήν, δαίμων)
@@ -1451,6 +1453,53 @@ function _grAccentNominalForm(bare, nomInfo, ultimaLong, gd) {
   return _grPlaceMark(bare, d, mark);
 }
 
+/* Accenta UNA forma di TERZA declinazione secondo l'accento persistente, contando
+   la sillaba accentata DALL'INIZIO della parola. A differenza di I/II, il nominativo
+   della III è spesso ridotto/contratto (σῶμα 2 sill. vs σώματος 3), perciò la
+   distanza-DALLA-FINE NON è invariante e non si può leggere dal nominativo. Il tema
+   invece è invariante in TESTA: si fissa la sillaba accentata contandola dall'inizio
+   (`kStart`, 1-based) e si applica la legge di limitazione (ultima lunga ⇒ l'accento
+   non oltre la penultima). I dicroni in penultima si assumono brevi (default
+   scolastico ⇒ acuto), perché in III la vocale di penultima cambia tra nom. e casi
+   obliqui e l'euristica del nominativo non è affidabile. */
+function _grAccentThirdForm(bare, kStart, nomInfo, ultimaLong) {
+  const info = _grSyllAnalyze(bare);
+  const total = info.total;
+  if (total < 1) return bare;
+  if (total < 2) {                                   // monosillabo: acuto/circonflesso semplice
+    const m = (nomInfo && nomInfo.mark === 'circ') ? 'circ' : 'acute';
+    return _grPlaceMark(bare, 1, m);
+  }
+  let dDesired = total - kStart + 1;                 // distanza-dalla-fine corrispondente
+  if (dDesired < 1) dDesired = 1;
+  const maxBack = ultimaLong ? 2 : 3;                // legge di limitazione
+  let d = Math.min(dDesired, maxBack);
+  if (d > total) d = total;
+  let mark;
+  if (d === 2) {
+    mark = (_grPenultLong(info, null) && !ultimaLong) ? 'circ' : 'acute';
+  } else {
+    mark = 'acute';                                  // ultima o terzultima: acuto
+  }
+  return _grPlaceMark(bare, d, mark);
+}
+
+/* Accento RECESSIVO nominale (vocativi apofonici μῆτερ/πάτερ/θύγατερ/ἄνερ e forme
+   recessive di ἀνήρ: ἄνδρα/ἄνδρες): arretra il più possibile entro la legge di
+   limitazione. Le forme qui trattate hanno sempre ultima breve. */
+function _grRecessiveNominal(bare) {
+  const info = _grSyllAnalyze(bare);
+  const total = info.total;
+  if (total < 1) return bare;
+  if (total < 2) {
+    const m = info.groups[0] && /[ηω]/.test(info.groups[0].syl) ? 'circ' : 'acute';
+    return _grPlaceMark(bare, 1, m);
+  }
+  const d = total >= 3 ? 3 : 2;
+  const mark = (d === 2 && _grPenultLong(info, null)) ? 'circ' : 'acute';
+  return _grPlaceMark(bare, d, mark);
+}
+
 /* Tabelle delle desinenze I/II declinazione: [desinenza, ultimaLunga?]. */
 const _GR_PLUR_I = {                                  // plurale comune della I declinazione
   Nominativo: ['αι', 0], Genitivo: ['ων', 1], Dativo: ['αις', 1], Accusativo: ['ας', 1], Vocativo: ['αι', 0]
@@ -1520,6 +1569,10 @@ function buildGreekNounParadigm(parsed) {
   const stemBare = _stripGreekTone(stem || '');
   // Accento del nominativo (per l'accento persistente di I/II declinazione)
   const nomInfo = _grAccentRead(nom || '');
+  // Per la III declinazione si conta la sillaba accentata DALL'INIZIO della parola
+  // (il tema è invariante in testa); `acc3(bare, ultimaLunga)` accenta una forma nuda.
+  const kStart3 = nomInfo.d ? (nomInfo.total - nomInfo.d + 1) : 1;
+  const acc3 = (bare, ultimaLong) => _grAccentThirdForm(_stripGreekTone(bare), kStart3, nomInfo, !!ultimaLong);
 
   // === I e II DECLINAZIONE (accento persistente) ===
   // I temi nudi + desinenze sono assemblati e accentati da _declineGreekNominal,
@@ -1575,58 +1628,94 @@ function buildGreekNounParadigm(parsed) {
     rows.plur = null;
   } else if (decl === 'III-gutt') {
     // Gutturali (φύλαξ/φύλακος): tema κ/γ/χ. Davanti a σ → ξ. Dat. plur. -σι → -ξι
-    const stemLast = _grStrip(stem).slice(-1);
-    const ksiForm = stem.slice(0, -1) + 'ξ'; // tema_senza_consonante + ξ
-    rows.sing = { Nominativo: ksiForm, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: ksiForm };
-    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: stem.slice(0,-1)+'ξι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+    const ksiForm = stem.slice(0, -1) + 'ξ'; // tema_senza_consonante + ξ (porta l'accento del tema)
+    rows.sing = { Nominativo: nom || ksiForm, Genitivo: acc3(stemBare+'ος',0), Dativo: acc3(stemBare+'ι',0), Accusativo: acc3(stemBare+'α',0), Vocativo: nom || ksiForm };
+    rows.plur = { Nominativo: acc3(stemBare+'ες',0), Genitivo: acc3(stemBare+'ων',1), Dativo: acc3(stemBare.slice(0,-1)+'ξι',0)+'(ν)', Accusativo: acc3(stemBare+'ας',0), Vocativo: acc3(stemBare+'ες',0) };
   } else if (decl === 'III-lab') {
     // Labiali (π/β/φ): davanti a σ → ψ
     const psiForm = stem.slice(0, -1) + 'ψ';
-    rows.sing = { Nominativo: psiForm, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: psiForm };
-    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: stem.slice(0,-1)+'ψι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+    rows.sing = { Nominativo: nom || psiForm, Genitivo: acc3(stemBare+'ος',0), Dativo: acc3(stemBare+'ι',0), Accusativo: acc3(stemBare+'α',0), Vocativo: nom || psiForm };
+    rows.plur = { Nominativo: acc3(stemBare+'ες',0), Genitivo: acc3(stemBare+'ων',1), Dativo: acc3(stemBare.slice(0,-1)+'ψι',0)+'(ν)', Accusativo: acc3(stemBare+'ας',0), Vocativo: acc3(stemBare+'ες',0) };
   } else if (decl === 'III-dent') {
     // Dentali (τ/δ/θ): cadono davanti a σ. Nom. sing. spesso = tema + σ (es. ἐλπίς)
     const nomForm = nom || (stem.slice(0, -1) + 'ς');
-    rows.sing = { Nominativo: nomForm, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: nomForm };
-    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: stem.slice(0,-1)+'σι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+    rows.sing = { Nominativo: nomForm, Genitivo: acc3(stemBare+'ος',0), Dativo: acc3(stemBare+'ι',0), Accusativo: acc3(stemBare+'α',0), Vocativo: nomForm };
+    rows.plur = { Nominativo: acc3(stemBare+'ες',0), Genitivo: acc3(stemBare+'ων',1), Dativo: acc3(stemBare.slice(0,-1)+'σι',0)+'(ν)', Accusativo: acc3(stemBare+'ας',0), Vocativo: acc3(stemBare+'ες',0) };
   } else if (decl === 'III-n') {
     // Tema in -ν (αἰών/αἰῶνος, λιμήν, ποιμήν): caduta del ν davanti a σ del dat. plur.
-    rows.sing = { Nominativo: nom, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: nom };
-    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: stem.slice(0,-1)+'σι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+    rows.sing = { Nominativo: nom, Genitivo: acc3(stemBare+'ος',0), Dativo: acc3(stemBare+'ι',0), Accusativo: acc3(stemBare+'α',0), Vocativo: nom };
+    rows.plur = { Nominativo: acc3(stemBare+'ες',0), Genitivo: acc3(stemBare+'ων',1), Dativo: acc3(stemBare.slice(0,-1)+'σι',0)+'(ν)', Accusativo: acc3(stemBare+'ας',0), Vocativo: acc3(stemBare+'ες',0) };
   } else if (decl === 'III-nt') {
     // Tema in -ντ (γέρων/γέροντος, λέων/λέοντος, ἄρχων/ἄρχοντος, participi).
     // ντ + σ del dat. plur. → σ con allungamento di compenso: ο → ου (γέρ-οντ → γέρ-ουσι),
     // ε → ει (λέ-οντ → λέ-ουσι ... ma λέ-ων → λέ-οντ-ος, dat. λέουσι).
     // Strategia: il "tema dat. plur." si ricava dal nominativo togliendo -ων → +ουσι.
-    const ntShortStem = nom ? nom.replace(/ων$/i, '') : stem.slice(0, -3);
-    rows.sing = { Nominativo: nom, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: nom };
-    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: ntShortStem+'ουσι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+    const ntShortStem = _stripGreekTone(nom ? nom.replace(/ων$/i, '') : stem.slice(0, -3));
+    rows.sing = { Nominativo: nom, Genitivo: acc3(stemBare+'ος',0), Dativo: acc3(stemBare+'ι',0), Accusativo: acc3(stemBare+'α',0), Vocativo: nom };
+    rows.plur = { Nominativo: acc3(stemBare+'ες',0), Genitivo: acc3(stemBare+'ων',1), Dativo: acc3(ntShortStem+'ουσι',0)+'(ν)', Accusativo: acc3(stemBare+'ας',0), Vocativo: acc3(stemBare+'ες',0) };
   } else if (decl === 'III-r') {
-    // Tema in -ρ regolare (ῥήτωρ, ῥήτορος): dat. plur. -ρσι
-    rows.sing = { Nominativo: nom, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: nom };
-    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: stem+'σι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+    // Tema in -ρ regolare (ῥήτωρ, ῥήτορος; χαρακτήρ, χαρακτῆρος): dat. plur. -ρσι
+    rows.sing = { Nominativo: nom, Genitivo: acc3(stemBare+'ος',0), Dativo: acc3(stemBare+'ι',0), Accusativo: acc3(stemBare+'α',0), Vocativo: nom };
+    rows.plur = { Nominativo: acc3(stemBare+'ες',0), Genitivo: acc3(stemBare+'ων',1), Dativo: acc3(stemBare+'σι',0)+'(ν)', Accusativo: acc3(stemBare+'ας',0), Vocativo: acc3(stemBare+'ες',0) };
   } else if (decl === 'III-r-apof') {
-    // Tema in -ρ apofonico (πατήρ/πατρός, μήτηρ/μητρός, ἀνήρ/ἀνδρός, θυγάτηρ)
-    // L'alternanza η/ε/zero comporta forme diverse a seconda della grammatica
-    // Approssimazione semplificata che usa i casi standard del lemma
-    rows.sing = { Nominativo: nom, Genitivo: stem+'ός', Dativo: stem+'ί', Accusativo: stem+'έρα', Vocativo: stem+'ερ' };
-    rows.plur = { Nominativo: stem+'έρες', Genitivo: stem+'έρων', Dativo: stem+'ράσι(ν)', Accusativo: stem+'έρας', Vocativo: stem+'έρες' };
+    // Tema in -ρ apofonico (πατήρ/πατρός, μήτηρ/μητρός, θυγάτηρ, γαστήρ; ἀνήρ/ἀνδρός).
+    // Tre gradi apofonici: grado ridotto (zero) πατρ-/μητρ- nel gen./dat. sing. (ossitoni:
+    // πατρός, πατρί) e nel dat. plur. con vocale d'appoggio -α- (πατράσι); grado normale
+    // (e) πατερ-/μητερ- nell'acc./voc. sing. e in tutto il plurale (μητέρα, μητέρες,
+    // μητέρων); grado allungato (η) nel nominativo (μήτηρ). Lo `stem` ricavato dal
+    // genitivo è il grado-zero (μητρ-). ἀνήρ è speciale: zero ἀνδρ- ovunque tranne il
+    // vocativo ἄνερ, accento recessivo, gen. plur. perispomeno ἀνδρῶν.
+    const zeroBare = stemBare;                          // πατρ- / μητρ- / ανδρ-
+    if (/^ανδρ$/.test(_grStrip(zeroBare))) {
+      const eBare = _stripGreekTone(zeroBare).replace(/δρ$/, '') + 'ερ';   // ανερ- (solo voc.)
+      rows.sing = {
+        Nominativo: nom,                                                   // ἀνήρ
+        Genitivo: _grPlaceMark(zeroBare+'ος', 1, 'acute'),                 // ἀνδρός
+        Dativo: _grPlaceMark(zeroBare+'ι', 1, 'acute'),                    // ἀνδρί
+        Accusativo: _grRecessiveNominal(zeroBare+'α'),                     // ἄνδρα
+        Vocativo: _grRecessiveNominal(eBare)                              // ἄνερ
+      };
+      rows.plur = {
+        Nominativo: _grRecessiveNominal(zeroBare+'ες'),                    // ἄνδρες
+        Genitivo: _grPlaceMark(zeroBare+'ων', 1, 'circ'),                 // ἀνδρῶν
+        Dativo: _grPlaceMark(zeroBare+'ασι', 2, 'acute')+'(ν)',           // ἀνδράσι(ν)
+        Accusativo: _grRecessiveNominal(zeroBare+'ας'),                   // ἄνδρας
+        Vocativo: _grRecessiveNominal(zeroBare+'ες')                      // ἄνδρες
+      };
+    } else {
+      const eBare = zeroBare.slice(0, -1) + 'ερ';       // πατερ- / μητερ- / θυγατερ-
+      rows.sing = {
+        Nominativo: nom,                                                   // πατήρ / μήτηρ
+        Genitivo: _grPlaceMark(zeroBare+'ος', 1, 'acute'),                // πατρός / μητρός (ossitono)
+        Dativo: _grPlaceMark(zeroBare+'ι', 1, 'acute'),                   // πατρί / μητρί (ossitono)
+        Accusativo: _grPlaceMark(eBare+'α', 2, 'acute'),                  // πατέρα / μητέρα
+        Vocativo: _grRecessiveNominal(eBare)                             // πάτερ / μῆτερ
+      };
+      rows.plur = {
+        Nominativo: _grPlaceMark(eBare+'ες', 2, 'acute'),                 // πατέρες / μητέρες
+        Genitivo: _grPlaceMark(eBare+'ων', 2, 'acute'),                  // πατέρων / μητέρων
+        Dativo: _grPlaceMark(zeroBare+'ασι', 2, 'acute')+'(ν)',          // πατράσι / μητράσι
+        Accusativo: _grPlaceMark(eBare+'ας', 2, 'acute'),                // πατέρας / μητέρας
+        Vocativo: _grPlaceMark(eBare+'ες', 2, 'acute')                  // πατέρες / μητέρες
+      };
+    }
   } else if (decl === 'III-ma-neut') {
     // Neutri in -μα/-ματος (σῶμα, ὄνομα, πρᾶγμα).
     // Il tema esteso è (σωματ-), il nominativo singolare è una forma ridotta (σῶμα).
     // Dat. plur. -μασι con caduta del τ davanti a σ.
     // Lo stem qui è il genitivo - 'ος' (es. σώματ).
-    const stemNoTau = stem.replace(/τ$/, ''); // σώμα
-    rows.sing = { Nominativo: nom || (stemNoTau), Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: nom || stemNoTau, Vocativo: nom || stemNoTau };
-    rows.plur = { Nominativo: stem+'α', Genitivo: stemBare+'ων', Dativo: stemNoTau+'σι(ν)', Accusativo: stem+'α', Vocativo: stem+'α' };
+    const stemNoTauBare = _stripGreekTone(stem.replace(/τ$/, '')); // σωμα-
+    const nomRed = nom || acc3(stemNoTauBare, 0);
+    rows.sing = { Nominativo: nomRed, Genitivo: acc3(stemBare+'ος',0), Dativo: acc3(stemBare+'ι',0), Accusativo: nomRed, Vocativo: nomRed };
+    rows.plur = { Nominativo: acc3(stemBare+'α',0), Genitivo: acc3(stemBare+'ων',1), Dativo: acc3(stemNoTauBare+'σι',0)+'(ν)', Accusativo: acc3(stemBare+'α',0), Vocativo: acc3(stemBare+'α',0) };
   } else if (decl === 'III-vow') {
     // Tema in vocale (raro): trattato genericamente
-    rows.sing = { Nominativo: nom, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: nom };
-    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: stem+'σι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+    rows.sing = { Nominativo: nom, Genitivo: acc3(stemBare+'ος',0), Dativo: acc3(stemBare+'ι',0), Accusativo: acc3(stemBare+'α',0), Vocativo: nom };
+    rows.plur = { Nominativo: acc3(stemBare+'ες',0), Genitivo: acc3(stemBare+'ων',1), Dativo: acc3(stemBare+'σι',0)+'(ν)', Accusativo: acc3(stemBare+'ας',0), Vocativo: acc3(stemBare+'ες',0) };
   } else if (decl === 'III-cons' || /^III-/.test(decl || '')) {
     // Fallback generico per III declinazione consonantica
-    rows.sing = { Nominativo: nom, Genitivo: stem+'ος', Dativo: stem+'ι', Accusativo: stem+'α', Vocativo: nom };
-    rows.plur = { Nominativo: stem+'ες', Genitivo: stem+'ων', Dativo: stem+'σι(ν)', Accusativo: stem+'ας', Vocativo: stem+'ες' };
+    rows.sing = { Nominativo: nom, Genitivo: acc3(stemBare+'ος',0), Dativo: acc3(stemBare+'ι',0), Accusativo: acc3(stemBare+'α',0), Vocativo: nom };
+    rows.plur = { Nominativo: acc3(stemBare+'ες',0), Genitivo: acc3(stemBare+'ων',1), Dativo: acc3(stemBare+'σι',0)+'(ν)', Accusativo: acc3(stemBare+'ας',0), Vocativo: acc3(stemBare+'ες',0) };
   } else {
     return null;
   }
