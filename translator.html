@@ -33850,12 +33850,48 @@ function _onDragPointerDown(e) {
     mode,
     sentenceId,
     path: [tokenIdx],
+    anchorIdx: tokenIdx,   // token di partenza: la selezione è SEMPRE un intervallo da qui
     initialSelection,
     startX: e.clientX,
     startY: e.clientY,
     pointerId: e.pointerId,
     justFinished: false,
   };
+}
+
+/* Token selezionabili del drag corrente (stessa frase + stesso layer), in
+   ORDINE DI LETTURA (ordine del DOM = ordine del testo), con i loro rettangoli. */
+function _dragSelectableTokens() {
+  let sel;
+  try { sel = `.token[data-sentence-id="${CSS.escape(dragSelect.sentenceId)}"][data-token-mode="${dragSelect.mode}"]`; }
+  catch (_) { sel = '.token[data-token-mode="' + dragSelect.mode + '"]'; }
+  const out = [];
+  document.querySelectorAll(sel).forEach(el => {
+    if (el.dataset.sentenceId !== dragSelect.sentenceId) return;
+    const idx = parseInt(el.dataset.tokenIdx, 10);
+    if (isNaN(idx) || idx < 0) return;
+    if (el.classList.contains('logic-excluded')) return;
+    if (dragSelect.mode === 'batch-grammar' &&
+        !(el.classList.contains('batch-candidate') || el.classList.contains('batch-applied'))) return;
+    out.push({ idx, rect: el.getBoundingClientRect() });
+  });
+  return out;
+}
+
+/* Token più vicino al puntatore dando PRIORITÀ alla riga (distanza verticale),
+   poi alla posizione orizzontale: così la selezione "aggancia" sempre la riga
+   giusta e, uscendo dalla riga, punta alla riga successiva/precedente invece di
+   prendere una parola a caso sotto il cursore. */
+function _dragNearestIdx(x, y, toks) {
+  let best = null, bestScore = Infinity;
+  for (const t of toks) {
+    const r = t.rect;
+    const dyd = y < r.top ? r.top - y : (y > r.bottom ? y - r.bottom : 0);
+    const dxd = x < r.left ? r.left - x : (x > r.right ? x - r.right : 0);
+    const score = dyd * 100000 + dxd;   // la riga (dy) domina sempre sull'orizzontale
+    if (score < bestScore) { bestScore = score; best = t.idx; }
+  }
+  return best;
 }
 
 function _onDragPointerMove(e) {
@@ -33870,37 +33906,32 @@ function _onDragPointerMove(e) {
     document.body.classList.add('dragging-tokens');
     _applyDragSelectionState();
   }
-  // Trova il token sotto al puntatore
-  const el = document.elementFromPoint(e.clientX, e.clientY);
-  if (!el || !el.closest) return;
-  const tokenEl = el.closest('.token');
-  if (!tokenEl) return;
-  // Stessa frase + stesso mode
-  if (tokenEl.dataset.sentenceId !== dragSelect.sentenceId) return;
-  if (tokenEl.dataset.tokenMode !== dragSelect.mode) return;
-  if (tokenEl.classList.contains('logic-excluded')) return; // escluso dalla selezione
-  // In batch-grammar: durante il move accettiamo solo token candidati/applied,
-  // saltando i neutral (PoS non pertinente) e occupied (categoria mutuamente
-  // esclusiva). In questo modo il path resta "pulito" e i tag applicati a fine
-  // drag sono prevedibili. Per gli altri mode il filtro è già la classe logic-excluded.
-  if (dragSelect.mode === 'batch-grammar') {
-    const allow = tokenEl.classList.contains('batch-candidate') ||
-                  tokenEl.classList.contains('batch-applied');
-    if (!allow) return;
-  }
-  const idx = parseInt(tokenEl.dataset.tokenIdx, 10);
-  if (isNaN(idx) || idx < 0) return;
-  // Aggiorna path: se è il last, niente da fare
-  const lastInPath = dragSelect.path[dragSelect.path.length - 1];
-  if (idx === lastInPath) return;
-  const existingIdx = dragSelect.path.indexOf(idx);
-  if (existingIdx >= 0) {
-    // Backward: tronca il path a quel punto (rimuove token aggiunti dopo)
-    dragSelect.path = dragSelect.path.slice(0, existingIdx + 1);
+  // Selezione che SEGUE L'ORDINE DI LETTURA: invece di prendere il token sotto al
+  // puntatore (che, uscendo dalla riga, becca parole a caso), individua il token
+  // più vicino dando priorità alla riga e seleziona TUTTO l'intervallo contiguo
+  // dall'ancora (token di partenza) fino a lì — incluse tutte le parole delle
+  // righe intermedie fino al cursore/touch.
+  const toks = _dragSelectableTokens();
+  if (!toks.length) return;
+  const order = toks.map(t => t.idx);              // ordine di lettura (DOM)
+  const targetIdx = _dragNearestIdx(e.clientX, e.clientY, toks);
+  if (targetIdx == null) return;
+  const ai = order.indexOf(dragSelect.anchorIdx);
+  const ti = order.indexOf(targetIdx);
+  if (ti === -1) return;
+  let range;
+  if (ai === -1) {
+    range = [targetIdx];
   } else {
-    // Forward: aggiungi
-    dragSelect.path.push(idx);
+    const lo = Math.min(ai, ti), hi = Math.max(ai, ti);
+    range = order.slice(lo, hi + 1);              // intervallo contiguo in ordine di lettura
   }
+  // Niente re-render se l'intervallo non è cambiato (estremi identici)
+  const prev = dragSelect.path || [];
+  if (prev.length === range.length && prev[0] === range[0] && prev[prev.length - 1] === range[range.length - 1]) {
+    e.preventDefault(); return;
+  }
+  dragSelect.path = range;
   _applyDragSelectionState();
   e.preventDefault();
 }
