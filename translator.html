@@ -2764,6 +2764,32 @@ body.poetrify-dark .schel-conn-item { background: rgba(255,255,255,0.06); }
 .schel-vq-suggest { background: rgba(214,158,46,0.16); border-color: rgba(214,158,46,0.5); color: #7a4f0a; }
 body.poetrify-dark .schel-vq-wrap { background: rgba(56,178,172,0.10); }
 body.poetrify-dark .schel-vq-row.is-active { background: rgba(197,48,48,0.12); }
+/* barra di conferma MINIMALE della selezione logica · colore = caso/funzione */
+.schel-confirm {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin: 8px 0; padding: 5px 6px;
+  background: var(--case-bg, var(--poetrify-paper));
+  border: 1px solid var(--case-border, var(--poetrify-rule));
+  border-left: 4px solid var(--case-strong, var(--poetrify-primary));
+  border-radius: 9px;
+}
+.schel-confirm-count {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px;
+  background: var(--case-strong, var(--poetrify-primary)); color: #fff;
+  font-family: var(--font-ui); font-size: 11px; font-weight: 700; flex: 0 0 auto;
+}
+.schel-confirm-phrase { flex: 1 1 80px; min-width: 60px; font-weight: 600; color: var(--case-text, var(--poetrify-ink)); font-size: 14px; }
+.schel-confirm-sel { flex: 0 1 240px; max-width: 260px; font-size: 12px; }
+.schel-confirm-ok, .schel-confirm-x {
+  appearance: none; cursor: pointer; border-radius: 7px; font-size: 14px; font-weight: 800;
+  min-width: 32px; height: 28px; line-height: 1; border: 1px solid transparent; flex: 0 0 auto;
+}
+.schel-confirm-ok { background: var(--case-strong, var(--poetrify-primary)); color: #fff; }
+.schel-confirm-ok:hover { filter: brightness(1.08); }
+.schel-confirm-x { background: transparent; color: var(--poetrify-sepia); border-color: var(--poetrify-rule); }
+.schel-confirm-x:hover { color: var(--poetrify-danger); border-color: var(--poetrify-danger); }
+body.poetrify-dark .schel-confirm { background: rgba(255,255,255,0.05); }
 
 .scheletro-finish-text {
   padding: 8px 10px;
@@ -24799,36 +24825,36 @@ function renderScheletroLogic(sentences, lang, phase) {
       // (identica in tutte e tre le fasi, per non avere divergenze di layout).
       const le = (sentence.logic || []).find(e => (e.tokenIndices || []).includes(tok.idx));
       const ge = (sentence.grammar || []).find(g => g.tokenIndex === tok.idx);
+      const isFinV = ge && ge.partOfSpeech === 'Verbo' && ge.verboForma === 'Forma finita';
+      const isNonFinV = ge && ge.partOfSpeech === 'Verbo' && ge._scheletroForma === 'non-finita';
       const inSel = logicSel.sentenceId === sentence.id && logicSel.indices.includes(tok.idx);
       const cls = ['token', 'scheletro-token'];
       if (le) cls.push('case-' + funzioneToCaseGroup(le.funzione));
-      else if (ge && ge.partOfSpeech === 'Verbo' && ge.verboForma === 'Forma finita') cls.push('case-verbo', 'scheletro-verb-marked');
+      else if (isFinV) cls.push('case-verbo', 'scheletro-verb-marked');     // rosso pieno
+      else if (isNonFinV) cls.push('case-verbo', 'scheletro-verb-nonfin');  // rosso tenue
       else cls.push('token-untagged');
       if (inSel) cls.push('token-selected');
       const mark = le ? `<span class="scheletro-role-tag">${escapeHtml((le.funzione || '').split(' ')[0].slice(0, 4))}</span>`
-                 : (ge && ge.partOfSpeech === 'Verbo' && ge.verboForma === 'Forma finita') ? '<span class="scheletro-verb-tag">vb</span>' : '';
+                 : isFinV ? '<span class="scheletro-verb-tag">vb</span>'
+                 : isNonFinV ? '<span class="scheletro-verb-tag nf">vb°</span>' : '';
       return `<span class="${cls.join(' ')}" data-token-mode="logic" data-token-idx="${tok.idx}" data-sentence-id="${sentence.id}" onclick="scheletroLogicClick(event,'${sentence.id}',${tok.idx})" title="Click/trascina per selezionare il gruppo">${escapeHtml(tok.text)}${mark}</span>`;
     }).join('');
     let bar = '';
     if (logicSel.sentenceId === sentence.id && logicSel.indices.length) {
       const idx = [...logicSel.indices].sort((a, b) => a - b);
       const phrase = idx.map(i => (toks.find(t => t.idx === i) || {}).text).filter(Boolean).join(' ');
-      const barCase = funzioneToCaseGroup(state.scheletroLastFunc) ||
-        (phase === 'soggetto' ? 'nominativo' : phase === 'oggetto' ? 'accusativo' : 'neutro');
-      bar = `<div class="token-action-bar token-action-bar-stacked has-block case-${barCase}">
-        <div class="action-block-banner action-block-banner-logic">
-          <span class="block-banner-icon">${info.icon}</span>
-          <div class="block-banner-text"><strong>Gruppo di ${idx.length} token</strong><span class="block-banner-sub">assegna la funzione (${escapeHtml(info.title)}) e conferma</span></div>
-          <div class="block-banner-preview ${isGreek ? 'greek' : ''}">«${escapeHtml(phrase)}»</div>
-        </div>
-        <div class="token-action-bar-row">
-          <select id="pending-logic-select" class="field-select" onchange="state.scheletroLastFunc=this.value">
-            <option value="">— funzione · ${escapeHtml(info.title)} —</option>
-            ${scheletroFuncOptionsHtml(phase, lang, state.scheletroLastFunc)}
-          </select>
-          <button class="btn btn-primary btn-sm" onclick="confirmPendingLogic('${sentence.id}')">✓ Assegna (${idx.length})</button>
-          <button class="btn btn-ghost btn-sm" onclick="cancelLogicSelection()">Annulla</button>
-        </div>
+      // default della fase (soggetto / compl. oggetto) + colore che SEGUE la funzione scelta
+      const selFunc = scheletroPhaseFunc(phase);
+      const barCase = funzioneToCaseGroup(selFunc) || (phase === 'soggetto' ? 'nominativo' : phase === 'oggetto' ? 'accusativo' : 'neutro');
+      bar = `<div class="schel-confirm case-${barCase}">
+        <span class="schel-confirm-count" title="${idx.length} token selezionati">${idx.length}</span>
+        <span class="schel-confirm-phrase ${isGreek ? 'greek' : ''}">«${escapeHtml(phrase)}»</span>
+        <select id="pending-logic-select" class="field-select schel-confirm-sel" onchange="scheletroPickFunc('${phase}', this.value)">
+          <option value="">— funzione —</option>
+          ${scheletroFuncOptionsHtml(phase, lang, selFunc)}
+        </select>
+        <button class="schel-confirm-ok" onclick="confirmPendingLogic('${sentence.id}')" title="Assegna la funzione al blocco">✓</button>
+        <button class="schel-confirm-x" onclick="cancelLogicSelection()" title="Annulla la selezione">✕</button>
       </div>`;
     }
     const phaseCount = (sentence.logic || []).filter(e => allowedSet.has(e.funzione)).length;
@@ -24846,7 +24872,7 @@ function renderScheletroLogic(sentences, lang, phase) {
   }).join('');
   return `<div class="subsection">
     <div class="method-note">
-      <strong>${info.icon} Fase · ${escapeHtml(info.title)}.</strong> ${escapeHtml(info.note)} Stessa <em>anteprima dell'analisi logica</em> in tutte le fasi. Seleziona i token (click o trascinamento), scegli dal menù — qui solo le funzioni pertinenti — e conferma. La <strong>funzione resta memorizzata</strong> (i complementi si ripetono); cliccando un <strong>nuovo token</strong> il blocco precedente viene <strong>confermato automaticamente</strong>.
+      <strong>${info.icon} Fase · ${escapeHtml(info.title)}.</strong> ${escapeHtml(info.note)} Il menù è già impostato su <strong>${phase === 'soggetto' ? 'Soggetto' : phase === 'oggetto' ? 'Complemento oggetto' : 'da scegliere'}</strong> (la scelta più probabile); se selezioni altro, il colore cambia di conseguenza. Stessa <em>anteprima dell'analisi logica</em> in tutte le fasi. La funzione resta memorizzata; cliccando un <strong>nuovo token</strong> il blocco precedente si <strong>conferma da solo</strong>.
     </div>
     ${blocks}
   </div>`;
@@ -24880,9 +24906,24 @@ function scheletroCycleVerb(sentenceId, tokenIdx) {
   persistCurrent(); renderEditor(); renderSidebarTabs();
 }
 
+/* Funzione di default/sticky PER FASE: soggetto→«Soggetto», oggetto→«Complemento
+   oggetto» (le più probabili da selezionare per prime), altri→nessuna. Una volta
+   scelta un'altra funzione nella fase, resta memorizzata per quella fase. */
+function scheletroPhaseFunc(phase) {
+  const m = state.scheletroFuncByPhase || {};
+  if (m[phase]) return m[phase];
+  return phase === 'soggetto' ? 'Soggetto' : phase === 'oggetto' ? 'Complemento oggetto' : '';
+}
+function scheletroPickFunc(phase, val) {
+  if (!state.scheletroFuncByPhase) state.scheletroFuncByPhase = {};
+  state.scheletroFuncByPhase[phase] = val;
+  state.scheletroLastFunc = val;   // compat con l'auto-conferma
+  renderEditor();                  // il colore della barra segue la funzione scelta
+}
+
 /* Opzioni del menù funzioni per la fase logica: piatte per soggetto/oggetto,
    RAGGRUPPATE PER CASO (optgroup) per gli «altri complementi». Pre-seleziona la
-   funzione memorizzata (sticky). */
+   funzione di default/memorizzata. */
 function scheletroFuncOptionsHtml(phase, lang, selected) {
   const allowed = scheletroPhaseFuncs(phase, lang);
   const sel = selected || '';
