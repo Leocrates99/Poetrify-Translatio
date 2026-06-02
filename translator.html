@@ -2546,9 +2546,19 @@ body.poetrify-dark .unified-layer-view { background: rgba(255,255,255,0.03); }
   align-items: center;
   justify-content: center;
   gap: 8px;
-  margin: 18px 0 14px;
+  margin: 0 0 14px;
   flex-wrap: wrap;
+  /* barra delle fasi SEMPRE visibile: resta in cima mentre scorri, così cambi
+     livello senza risalire la pagina */
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  padding: 12px 8px;
+  background: var(--poetrify-ivory);
+  border-bottom: 1px solid var(--poetrify-rule-soft);
+  box-shadow: 0 4px 10px var(--poetrify-shadow);
 }
+body.poetrify-dark .scheletro-stepper { background: var(--poetrify-paper); }
 .scheletro-step {
   appearance: none;
   display: inline-flex;
@@ -2742,8 +2752,8 @@ body.poetrify-dark .schel-conn-item { background: rgba(255,255,255,0.06); }
 .schel-conn-btn.schel-conn-del { color: var(--poetrify-danger); }
 .schel-conn-btn:hover { border-color: var(--poetrify-primary); }
 /* menù a tendina compatti per l'analisi dei verbi (fase 1) */
-.schel-vq-wrap { margin-top: 8px; padding: 8px 10px; background: rgba(56,178,172,0.05); border: 1px dashed rgba(56,178,172,0.4); border-radius: 8px; }
-.schel-vq-title { font-family: var(--font-ui); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: #1c6f6a; margin-bottom: 6px; }
+.schel-vq-wrap { margin-top: 8px; padding: 8px 10px; background: rgba(197,48,48,0.05); border: 1px solid rgba(197,48,48,0.30); border-left: 3px solid rgba(197,48,48,0.6); border-radius: 8px; }
+.schel-vq-title { font-family: var(--font-ui); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: #8b1f1f; margin-bottom: 6px; }
 .schel-vq-row { display: flex; align-items: flex-start; gap: 10px; padding: 4px 0; border-top: 1px solid var(--poetrify-rule-soft); }
 .schel-vq-row:first-of-type { border-top: none; }
 .schel-vq-word { flex: 0 0 auto; min-width: 70px; font-weight: 700; color: var(--poetrify-primary); font-size: 14px; padding-top: 4px; }
@@ -2762,7 +2772,7 @@ body.poetrify-dark .schel-conn-item { background: rgba(255,255,255,0.06); }
 .schel-vq-head { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .schel-vq-head .schel-vq-word { flex: 1; }
 .schel-vq-suggest { background: rgba(214,158,46,0.16); border-color: rgba(214,158,46,0.5); color: #7a4f0a; }
-body.poetrify-dark .schel-vq-wrap { background: rgba(56,178,172,0.10); }
+body.poetrify-dark .schel-vq-wrap { background: rgba(197,48,48,0.10); }
 body.poetrify-dark .schel-vq-row.is-active { background: rgba(197,48,48,0.12); }
 /* barra di conferma MINIMALE della selezione logica · colore = caso/funzione */
 .schel-confirm {
@@ -2780,6 +2790,12 @@ body.poetrify-dark .schel-vq-row.is-active { background: rgba(197,48,48,0.12); }
   font-family: var(--font-ui); font-size: 11px; font-weight: 700; flex: 0 0 auto;
 }
 .schel-confirm-phrase { flex: 1 1 80px; min-width: 60px; font-weight: 600; color: var(--case-text, var(--poetrify-ink)); font-size: 14px; }
+.schel-confirm-prep {
+  flex: 0 0 auto; display: inline-flex; align-items: center; gap: 2px;
+  padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 700;
+  background: var(--case-strong, var(--poetrify-primary)); color: #fff; opacity: 0.92;
+  font-family: var(--font-ui);
+}
 .schel-confirm-sel { flex: 0 1 240px; max-width: 260px; font-size: 12px; }
 .schel-confirm-ok, .schel-confirm-x {
   appearance: none; cursor: pointer; border-radius: 7px; font-size: 14px; font-weight: 800;
@@ -18807,7 +18823,219 @@ function lookupConjunctionPreset(word, lang) {
    παρά · περί · πρό · πρός · σύν · ὑπέρ · ὑπό + χωρίς/ἄνευ/ἕνεκα/χάριν. */
 const PREP_PRESETS = {
   latino: {
-    /* (Da espandere in modo simmetrico col latino — placeholders) */
+    'ad': {
+      pos: 'Preposizione', note: 'verso, presso, fino a (moto a luogo, scopo, tempo)',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto a)', 'Complemento di fine o scopo', 'Complemento di tempo determinato', 'Complemento di vantaggio'], note: 'moto a luogo, scopo, tempo (verso), in funzione di' },
+      ],
+    },
+    'in': {
+      pos: 'Preposizione', note: 'in (+acc moto a luogo; +abl stato in luogo)',
+      casiRetti: ['Accusativo', 'Ablativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto a)', 'Complemento di fine o scopo', 'Complemento di modo'], note: 'moto a luogo, scopo, modo (in + acc)' },
+        { caso: 'Ablativo', funzioni: ['Complemento di luogo (stato in)', 'Complemento di tempo determinato', 'Complemento di modo'], note: 'stato in luogo, tempo determinato, modo' },
+      ],
+    },
+    'ab': {
+      pos: 'Preposizione', note: 'da (agente, moto da luogo, origine, allontanamento)',
+      casiRetti: ['Ablativo'],
+      complementi: [
+        { caso: 'Ablativo', funzioni: ['Complemento di agente', 'Complemento di causa efficiente', 'Complemento di luogo (moto da)', 'Complemento di origine', 'Complemento di allontanamento o separazione'], note: 'agente/causa eff. nelle passive, moto da, origine, separazione' },
+      ],
+    },
+    'a': {
+      pos: 'Preposizione', note: 'variante di ab davanti a consonante',
+      casiRetti: ['Ablativo'],
+      complementi: [
+        { caso: 'Ablativo', funzioni: ['Complemento di agente', 'Complemento di causa efficiente', 'Complemento di luogo (moto da)', 'Complemento di origine', 'Complemento di allontanamento o separazione'], note: 'come ab' },
+      ],
+    },
+    'abs': {
+      pos: 'Preposizione', note: 'variante arcaica di ab',
+      casiRetti: ['Ablativo'],
+      complementi: [
+        { caso: 'Ablativo', funzioni: ['Complemento di agente', 'Complemento di luogo (moto da)', 'Complemento di allontanamento o separazione'], note: 'come ab' },
+      ],
+    },
+    'ex': {
+      pos: 'Preposizione', note: 'da (interno), origine, materia, causa, partitivo',
+      casiRetti: ['Ablativo'],
+      complementi: [
+        { caso: 'Ablativo', funzioni: ['Complemento di luogo (moto da)', 'Complemento di origine', 'Complemento di materia', 'Complemento partitivo', 'Complemento di causa', 'Complemento di allontanamento o separazione'], note: 'moto da dentro, origine, materia, partitivo, causa' },
+      ],
+    },
+    'e': {
+      pos: 'Preposizione', note: 'variante di ex davanti a consonante',
+      casiRetti: ['Ablativo'],
+      complementi: [
+        { caso: 'Ablativo', funzioni: ['Complemento di luogo (moto da)', 'Complemento di origine', 'Complemento di materia', 'Complemento partitivo', 'Complemento di causa'], note: 'come ex' },
+      ],
+    },
+    'de': {
+      pos: 'Preposizione', note: 'da (dall\'alto), riguardo a, materia, causa',
+      casiRetti: ['Ablativo'],
+      complementi: [
+        { caso: 'Ablativo', funzioni: ['Complemento di argomento', 'Complemento di luogo (moto da)', 'Complemento di origine', 'Complemento di materia', 'Complemento di causa', 'Complemento di allontanamento o separazione'], note: 'argomento, moto da (dall\'alto), materia, causa' },
+      ],
+    },
+    'cum': {
+      pos: 'Preposizione', note: 'con (compagnia, unione, modo)',
+      casiRetti: ['Ablativo'],
+      complementi: [
+        { caso: 'Ablativo', funzioni: ['Complemento di compagnia', 'Complemento di unione', 'Complemento di modo'], note: 'compagnia, unione, modo (cum + abl)' },
+      ],
+    },
+    'sine': {
+      pos: 'Preposizione', note: 'senza (privazione, esclusione)',
+      casiRetti: ['Ablativo'],
+      complementi: [
+        { caso: 'Ablativo', funzioni: ['Complemento di privazione', 'Complemento di esclusione', 'Complemento di compagnia'], note: 'privazione, mancanza, esclusione' },
+      ],
+    },
+    'pro': {
+      pos: 'Preposizione', note: 'davanti a, a favore di, al posto di, in cambio di',
+      casiRetti: ['Ablativo'],
+      complementi: [
+        { caso: 'Ablativo', funzioni: ['Complemento di vantaggio', 'Complemento di fine o scopo', 'Complemento di luogo (stato in)', 'Complemento di prezzo', 'Complemento di stima'], note: 'vantaggio, in luogo di, prezzo/scambio' },
+      ],
+    },
+    'per': {
+      pos: 'Preposizione', note: 'attraverso, per mezzo di, durante',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto per)', 'Complemento di mezzo o strumento', 'Complemento di tempo continuato', 'Complemento di causa'], note: 'moto per luogo, mezzo (tramite persona), tempo continuato, causa' },
+      ],
+    },
+    'propter': {
+      pos: 'Preposizione', note: 'a causa di, vicino a',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di causa', 'Complemento di fine o scopo'], note: 'causa, motivo' },
+      ],
+    },
+    'ob': {
+      pos: 'Preposizione', note: 'a causa di, davanti a',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di causa', 'Complemento di fine o scopo'], note: 'causa, motivo' },
+      ],
+    },
+    'ante': {
+      pos: 'Preposizione', note: 'davanti a, prima di',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di tempo determinato', 'Complemento di luogo (stato in)'], note: 'prima di (tempo), davanti a (luogo)' },
+      ],
+    },
+    'post': {
+      pos: 'Preposizione', note: 'dopo, dietro',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di tempo determinato', 'Complemento di luogo (stato in)'], note: 'dopo (tempo), dietro (luogo)' },
+      ],
+    },
+    'inter': {
+      pos: 'Preposizione', note: 'tra, fra (luogo, tempo, partitivo)',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (stato in)', 'Complemento di tempo continuato', 'Complemento partitivo'], note: 'tra (luogo), durante, partitivo' },
+      ],
+    },
+    'apud': {
+      pos: 'Preposizione', note: 'presso, vicino a, in casa di',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (stato in)'], note: 'presso (persona/luogo)' },
+      ],
+    },
+    'sub': {
+      pos: 'Preposizione', note: 'sotto (+abl stato; +acc moto)',
+      casiRetti: ['Accusativo', 'Ablativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto a)', 'Complemento di tempo determinato'], note: 'moto sotto, tempo (verso)' },
+        { caso: 'Ablativo', funzioni: ['Complemento di luogo (stato in)', 'Complemento di tempo determinato'], note: 'stato sotto, tempo' },
+      ],
+    },
+    'super': {
+      pos: 'Preposizione', note: 'sopra, riguardo a',
+      casiRetti: ['Accusativo', 'Ablativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (stato in)', 'Complemento di luogo (moto a)'], note: 'sopra (luogo)' },
+        { caso: 'Ablativo', funzioni: ['Complemento di argomento', 'Complemento di luogo (stato in)'], note: 'riguardo a, sopra' },
+      ],
+    },
+    'trans': {
+      pos: 'Preposizione', note: 'oltre, al di là di',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (moto per)', 'Complemento di luogo (moto a)'], note: 'attraverso, al di là di' },
+      ],
+    },
+    'contra': {
+      pos: 'Preposizione', note: 'contro, di fronte a',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di svantaggio', 'Complemento concessivo'], note: 'contro, a danno di, malgrado' },
+      ],
+    },
+    'adversus': {
+      pos: 'Preposizione', note: 'contro, verso, di fronte a',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di svantaggio', 'Complemento di luogo (moto a)'], note: 'contro, verso' },
+      ],
+    },
+    'praeter': {
+      pos: 'Preposizione', note: 'oltre, tranne, eccetto',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di esclusione', 'Complemento di luogo (moto per)'], note: 'tranne, eccetto, lungo' },
+      ],
+    },
+    'circa': {
+      pos: 'Preposizione', note: 'intorno a, presso, circa (tempo)',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (stato in)', 'Complemento di tempo determinato'], note: 'intorno a, verso (tempo)' },
+      ],
+    },
+    'circum': {
+      pos: 'Preposizione', note: 'attorno a',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (stato in)'], note: 'attorno a' },
+      ],
+    },
+    'erga': {
+      pos: 'Preposizione', note: 'verso, nei confronti di',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di vantaggio'], note: 'verso (sentimento), nei confronti di' },
+      ],
+    },
+    'prae': {
+      pos: 'Preposizione', note: 'davanti a, a causa di, a confronto di',
+      casiRetti: ['Ablativo'],
+      complementi: [
+        { caso: 'Ablativo', funzioni: ['Complemento di causa', 'Complemento di luogo (moto a)', 'Complemento di paragone'], note: 'a causa di, davanti a, in confronto a' },
+      ],
+    },
+    'coram': {
+      pos: 'Preposizione', note: 'alla presenza di, davanti a',
+      casiRetti: ['Ablativo'],
+      complementi: [
+        { caso: 'Ablativo', funzioni: ['Complemento di luogo (stato in)'], note: 'alla presenza di' },
+      ],
+    },
+    'prope': {
+      pos: 'Preposizione', note: 'vicino a, presso',
+      casiRetti: ['Accusativo'],
+      complementi: [
+        { caso: 'Accusativo', funzioni: ['Complemento di luogo (stato in)'], note: 'vicino a' },
+      ],
+    },
   },
   greco: {
     'αμφι': {
@@ -24520,7 +24748,7 @@ function getScheletroStep() {
 }
 
 function setScheletroStep(step) {
-  state.scheletroStep = Math.max(1, Math.min(5, step));
+  state.scheletroStep = Math.max(1, Math.min(6, step));
   persistCurrent();
   renderEditor();
 }
@@ -24534,7 +24762,8 @@ function renderStep3HtmlScheletro() {
     { num: 2, icon: '✂️', label: 'Proposizioni', hint: 'Spezza il periodo nelle proposizioni interne (per congiunzione o asindeto) e completa le corrispondenze sintattiche (ruolo · tipo · connettivo · dipendenza).' },
     { num: 3, icon: '🟦', label: 'Soggetto',     hint: 'Individua il soggetto e il suo gruppo (attributi, apposizioni, specificazioni). Il menù è isolato a questa fase.' },
     { num: 4, icon: '🟧', label: 'Oggetto',      hint: 'Individua il complemento oggetto e il suo gruppo. Il menù è isolato a questa fase.' },
-    { num: 5, icon: '🟫', label: 'Altri compl.', hint: 'Individua gli altri complementi (indiretti). Il menù elenca solo questi.' },
+    { num: 5, icon: '🔗', label: 'Prepos.',      hint: 'Individua i complementi RETTI DA PREPOSIZIONE (accusativo e ablativo). Il menù si organizza in base alla preposizione che regge il blocco selezionato.' },
+    { num: 6, icon: '🟫', label: 'Altri compl.', hint: 'Individua gli altri complementi a caso semplice (genitivo e dativo, senza preposizione). Il menù elenca solo questi.' },
   ];
 
   /* Mini-stepper */
@@ -24557,6 +24786,7 @@ function renderStep3HtmlScheletro() {
   else if (step === 2) bodyHtml = renderScheletroProposizioni(sentences, lang);
   else if (step === 3) bodyHtml = renderScheletroLogic(sentences, lang, 'soggetto');
   else if (step === 4) bodyHtml = renderScheletroLogic(sentences, lang, 'oggetto');
+  else if (step === 5) bodyHtml = renderScheletroLogic(sentences, lang, 'preposizionali');
   else bodyHtml = renderScheletroLogic(sentences, lang, 'altri');
 
   const stats = `<div class="scheletro-stats">
@@ -24568,7 +24798,7 @@ function renderStep3HtmlScheletro() {
 
   const navButtons = `<div class="scheletro-nav">
     ${step > 1 ? `<button class="btn btn-ghost btn-sm" onclick="setScheletroStep(${step - 1})">← Fase precedente</button>` : '<span></span>'}
-    ${step < 5 ? `<button class="btn btn-primary btn-sm" onclick="setScheletroStep(${step + 1})">Fase successiva (${escapeHtml(STEPS[step].label)}) →</button>` : '<button class="btn btn-primary btn-sm" onclick="goToStep(5)">✓ Vai alla traduzione</button>'}
+    ${step < 6 ? `<button class="btn btn-primary btn-sm" onclick="setScheletroStep(${step + 1})">Fase successiva (${escapeHtml(STEPS[step].label)}) →</button>` : '<button class="btn btn-primary btn-sm" onclick="goToStep(5)">✓ Vai alla traduzione</button>'}
   </div>`;
 
   return sectionHeader('C', 'Analisi · approccio Scheletro', STEPS[step - 1].hint)
@@ -24579,16 +24809,65 @@ function renderStep3HtmlScheletro() {
     + navButtons;
 }
 
-/* ── elenco funzioni ISOLATO per fase logica (soggetto / oggetto / altri) ── */
+/* Unione di tutte le funzioni che, per una lingua, una preposizione può reggere
+   (ricavata da PREP_PRESETS). Serve a popolare la fase «preposizionali» e a non
+   filtrare via i suggerimenti del menù organizzato per preposizione. */
+function scheletroPrepUnionFuncs(lang) {
+  const out = [];
+  const presets = (PREP_PRESETS && PREP_PRESETS[lang]) || {};
+  Object.values(presets).forEach(p => (p.complementi || []).forEach(c => (c.funzioni || []).forEach(f => { if (!out.includes(f)) out.push(f); })));
+  return out;
+}
+
+/* ── elenco funzioni ISOLATO per fase logica ──────────────────────────────
+   soggetto / oggetto · preposizionali (acc + abl retti da preposizione) ·
+   altri (genitivo e dativo semplici, senza preposizione). */
 function scheletroPhaseFuncs(phase, lang) {
   if (phase === 'soggetto') return ['Soggetto', 'Parte nominale', 'Predicato nominale', 'Complemento predicativo del soggetto', 'Apposizione', 'Attributo', 'Complemento di specificazione'];
   if (phase === 'oggetto')  return ['Complemento oggetto', "Complemento predicativo dell'oggetto", 'Apposizione', 'Attributo', 'Complemento di specificazione'];
-  // 'altri' = tutti gli altri complementi (indiretti): esclude nucleo soggetto/oggetto e modificatori di gruppo
+
+  const groups = funzioniLogicheGroupedFor(lang);
+  const groupItems = (re) => { const out = []; groups.forEach(g => { if (re.test(g.group)) g.items.forEach(it => { if (!out.includes(it)) out.push(it); }); }); return out; };
+  const prepUnion = scheletroPrepUnionFuncs(lang);
+
+  if (phase === 'preposizionali') {
+    const out = [];
+    const add = it => { if (!out.includes(it)) out.push(it); };
+    if (lang === 'greco') {
+      // greco: nessun caso ablativo → la fase è guidata dall'unione delle
+      // funzioni rette da preposizione, più i complementi di luogo accusativi.
+      prepUnion.forEach(add);
+      ['Complemento di luogo (moto a)', 'Complemento di luogo (stato in)', 'Complemento di luogo (moto da)', 'Complemento di luogo (moto per)', 'Complemento di fine o scopo'].forEach(add);
+    } else {
+      // latino: accusativo (tranne oggetto/predicativo) + ablativo + unione preposizioni.
+      groupItems(/accusativo/i).filter(it => it !== 'Complemento oggetto' && it !== "Complemento predicativo dell'oggetto").forEach(add);
+      groupItems(/ablativo/i).forEach(add);
+      prepUnion.forEach(add);
+      ['Complemento concessivo', 'Complemento di esclusione', 'Complemento di denominazione'].forEach(add);
+    }
+    // riordina secondo le optgroup di caso, poi eventuali residui
+    const ordered = [];
+    groups.forEach(g => g.items.forEach(it => { if (out.includes(it) && !ordered.includes(it)) ordered.push(it); }));
+    out.forEach(it => { if (!ordered.includes(it)) ordered.push(it); });
+    return ordered;
+  }
+
+  // 'altri' = complementi a caso semplice (genitivo e dativo, + vocativo) SENZA
+  // preposizione: esclude il nucleo soggetto/oggetto, i modificatori di gruppo
+  // e tutto ciò che è confluito nella fase «preposizionali».
   const exclude = new Set(['Predicato verbale', 'Soggetto', 'Parte nominale', 'Predicato nominale', 'Copula',
     'Complemento predicativo del soggetto', 'Complemento oggetto', "Complemento predicativo dell'oggetto",
     'Apposizione', 'Attributo']);
+  if (lang === 'greco') {
+    const prep = new Set(scheletroPhaseFuncs('preposizionali', lang));
+    const out = [];
+    groups.forEach(g => g.items.forEach(it => { if (!exclude.has(it) && !prep.has(it) && !out.includes(it)) out.push(it); }));
+    if (!out.includes('Altro / da specificare')) out.push('Altro / da specificare');
+    return out;
+  }
   const out = [];
-  funzioniLogicheGroupedFor(lang).forEach(g => g.items.forEach(it => { if (!exclude.has(it) && !out.includes(it)) out.push(it); }));
+  [...groupItems(/genitivo/i), ...groupItems(/dativo/i), ...groupItems(/vocativo/i), 'Altro / da specificare']
+    .forEach(it => { if (!exclude.has(it) && !out.includes(it)) out.push(it); });
   return out;
 }
 
@@ -24812,7 +25091,8 @@ function renderScheletroLogic(sentences, lang, phase) {
   const info = {
     soggetto: { icon: '🟦', title: 'Soggetto', note: 'Individua il SOGGETTO e il suo gruppo (attributi, apposizioni, specificazioni). Il menù mostra solo le funzioni di questa fase.' },
     oggetto:  { icon: '🟧', title: 'Compl. oggetto', note: 'Individua il COMPLEMENTO OGGETTO e il suo gruppo. Il menù è isolato a questa fase.' },
-    altri:    { icon: '🟫', title: 'Altri complementi', note: 'Individua gli ALTRI complementi (indiretti). Il menù elenca solo questi.' },
+    preposizionali: { icon: '🔗', title: 'Compl. con preposizione', note: 'Individua i complementi RETTI DA PREPOSIZIONE (accusativo e ablativo). Selezionato il blocco, il menù si organizza in base alla preposizione che lo regge: i complementi più probabili compaiono per primi.' },
+    altri:    { icon: '🟫', title: 'Altri complementi', note: 'Individua i complementi a CASO SEMPLICE (genitivo e dativo, senza preposizione). Il menù elenca solo questi.' },
   }[phase];
   const allowed = scheletroPhaseFuncs(phase, lang);
   const allowedSet = new Set(allowed);
@@ -24843,15 +25123,23 @@ function renderScheletroLogic(sentences, lang, phase) {
     if (logicSel.sentenceId === sentence.id && logicSel.indices.length) {
       const idx = [...logicSel.indices].sort((a, b) => a - b);
       const phrase = idx.map(i => (toks.find(t => t.idx === i) || {}).text).filter(Boolean).join(' ');
-      // default della fase (soggetto / compl. oggetto) + colore che SEGUE la funzione scelta
-      const selFunc = scheletroPhaseFunc(phase);
+      // fase «preposizionali»: individua la preposizione reggente per organizzare il menù
+      const prepInfo = (phase === 'preposizionali') ? scheletroDetectPrep(sentence, idx, lang) : null;
+      // default della fase (soggetto / compl. oggetto) + colore che SEGUE la funzione scelta.
+      // Per i preposizionali, se non c'è scelta memorizzata, propongo il 1° compl. retto dalla prep.
+      let selFunc = scheletroPhaseFunc(phase);
+      if (phase === 'preposizionali' && !((state.scheletroFuncByPhase || {})[phase]) && prepInfo && prepInfo.funcs.length) {
+        selFunc = prepInfo.funcs[0];
+      }
       const barCase = funzioneToCaseGroup(selFunc) || (phase === 'soggetto' ? 'nominativo' : phase === 'oggetto' ? 'accusativo' : 'neutro');
+      const prepHint = prepInfo ? `<span class="schel-confirm-prep" title="Preposizione reggente individuata">↳ «${escapeHtml(prepInfo.display)}»</span>` : '';
       bar = `<div class="schel-confirm case-${barCase}">
         <span class="schel-confirm-count" title="${idx.length} token selezionati">${idx.length}</span>
         <span class="schel-confirm-phrase ${isGreek ? 'greek' : ''}">«${escapeHtml(phrase)}»</span>
+        ${prepHint}
         <select id="pending-logic-select" class="field-select schel-confirm-sel" onchange="scheletroPickFunc('${phase}', this.value)">
           <option value="">— funzione —</option>
-          ${scheletroFuncOptionsHtml(phase, lang, selFunc)}
+          ${scheletroFuncOptionsHtml(phase, lang, selFunc, prepInfo)}
         </select>
         <button class="schel-confirm-ok" onclick="confirmPendingLogic('${sentence.id}')" title="Assegna la funzione al blocco">✓</button>
         <button class="schel-confirm-x" onclick="cancelLogicSelection()" title="Annulla la selezione">✕</button>
@@ -24872,7 +25160,7 @@ function renderScheletroLogic(sentences, lang, phase) {
   }).join('');
   return `<div class="subsection">
     <div class="method-note">
-      <strong>${info.icon} Fase · ${escapeHtml(info.title)}.</strong> ${escapeHtml(info.note)} Il menù è già impostato su <strong>${phase === 'soggetto' ? 'Soggetto' : phase === 'oggetto' ? 'Complemento oggetto' : 'da scegliere'}</strong> (la scelta più probabile); se selezioni altro, il colore cambia di conseguenza. Stessa <em>anteprima dell'analisi logica</em> in tutte le fasi. La funzione resta memorizzata; cliccando un <strong>nuovo token</strong> il blocco precedente si <strong>conferma da solo</strong>.
+      <strong>${info.icon} Fase · ${escapeHtml(info.title)}.</strong> ${escapeHtml(info.note)} Il menù è già impostato su <strong>${phase === 'soggetto' ? 'Soggetto' : phase === 'oggetto' ? 'Complemento oggetto' : phase === 'preposizionali' ? 'il complemento più probabile per la preposizione reggente' : 'da scegliere'}</strong> (la scelta più probabile); se selezioni altro, il colore cambia di conseguenza. Stessa <em>anteprima dell'analisi logica</em> in tutte le fasi. La funzione resta memorizzata; cliccando un <strong>nuovo token</strong> il blocco precedente si <strong>conferma da solo</strong>.
     </div>
     ${blocks}
   </div>`;
@@ -24922,20 +25210,85 @@ function scheletroPickFunc(phase, val) {
 }
 
 /* Opzioni del menù funzioni per la fase logica: piatte per soggetto/oggetto,
-   RAGGRUPPATE PER CASO (optgroup) per gli «altri complementi». Pre-seleziona la
-   funzione di default/memorizzata. */
-function scheletroFuncOptionsHtml(phase, lang, selected) {
+   RAGGRUPPATE PER CASO (optgroup) per gli «altri complementi», e ORGANIZZATE
+   PER PREPOSIZIONE REGGENTE per la fase «preposizionali» (i complementi che la
+   preposizione individuata regge compaiono per primi in un optgroup dedicato).
+   Pre-seleziona la funzione di default/memorizzata. */
+function scheletroFuncOptionsHtml(phase, lang, selected, prepInfo) {
   const allowed = scheletroPhaseFuncs(phase, lang);
+  const allowedSet = new Set(allowed);
   const sel = selected || '';
+  const opt = it => `<option value="${escapeHtml(it)}" ${sel === it ? 'selected' : ''}>${escapeHtml(it)}</option>`;
+
+  if (phase === 'preposizionali') {
+    let html = '';
+    const used = new Set();
+    if (prepInfo && Array.isArray(prepInfo.funcs) && prepInfo.funcs.length) {
+      const pf = prepInfo.funcs.filter(it => allowedSet.has(it));
+      if (pf.length) {
+        html += `<optgroup label="«${escapeHtml(prepInfo.display)}» regge:">${pf.map(it => { used.add(it); return opt(it); }).join('')}</optgroup>`;
+      }
+    }
+    funzioniLogicheGroupedFor(lang).forEach(g => {
+      const items = g.items.filter(it => allowedSet.has(it) && !used.has(it));
+      if (items.length) html += `<optgroup label="${escapeHtml(g.group)}">${items.map(opt).join('')}</optgroup>`;
+    });
+    return html;
+  }
+
   if (phase === 'altri') {
-    const allowedSet = new Set(allowed);
     return funzioniLogicheGroupedFor(lang).map(g => {
       const items = g.items.filter(it => allowedSet.has(it));
       if (!items.length) return '';
-      return `<optgroup label="${escapeHtml(g.group)}">${items.map(it => `<option value="${escapeHtml(it)}" ${sel === it ? 'selected' : ''}>${escapeHtml(it)}</option>`).join('')}</optgroup>`;
+      return `<optgroup label="${escapeHtml(g.group)}">${items.map(opt).join('')}</optgroup>`;
     }).join('');
   }
-  return allowed.map(f => `<option value="${escapeHtml(f)}" ${sel === f ? 'selected' : ''}>${escapeHtml(f)}</option>`).join('');
+  return allowed.map(opt).join('');
+}
+
+/* Funzioni rette da una specifica preposizione (parola), nell'ordine didattico
+   della tabella PREP_PRESETS. */
+function scheletroPrepFuncs(prepWord, lang) {
+  const preset = lookupPrepositionPreset(prepWord, lang);
+  if (!preset || !Array.isArray(preset.complementi)) return [];
+  const out = [];
+  preset.complementi.forEach(c => (c.funzioni || []).forEach(f => { if (!out.includes(f)) out.push(f); }));
+  return out;
+}
+
+/* Individua la PREPOSIZIONE che regge il blocco selezionato: prima cerca una
+   entry grammaticale «Preposizione» dentro la selezione, poi quella adiacente
+   appena prima del blocco; come ultima risorsa guarda il testo grezzo del token
+   immediatamente precedente. Restituisce { word, display, funcs } oppure null. */
+function scheletroDetectPrep(sentence, indices, lang) {
+  if (!sentence || !indices || !indices.length) return null;
+  const toks = tokenizeSentence(sentence.original);
+  const grams = sentence.grammar || [];
+  const minIdx = Math.min.apply(null, indices);
+  const wordToks = toks.filter(t => t.kind === 'word');
+
+  // 1) preposizione DENTRO la selezione
+  let g = grams.find(e => e.partOfSpeech === 'Preposizione' && indices.includes(e.tokenIndex));
+  // 2) preposizione subito PRIMA del blocco (adiacente: nessuna parola interposta
+  //    oltre la preposizione stessa)
+  if (!g) {
+    const before = grams.filter(e => e.partOfSpeech === 'Preposizione' && e.tokenIndex < minIdx)
+                        .sort((a, b) => b.tokenIndex - a.tokenIndex)[0];
+    if (before) {
+      const between = wordToks.filter(t => t.idx > before.tokenIndex && t.idx < minIdx);
+      if (between.length <= 0) g = before;
+    }
+  }
+  let word = g ? (g.word || '') : '';
+  // 3) fallback su testo grezzo: parola immediatamente precedente al blocco
+  if (!word) {
+    const prevWordTok = wordToks.filter(t => t.idx < minIdx).slice(-1)[0];
+    if (prevWordTok && lookupPrepositionPreset(prevWordTok.text, lang)) word = prevWordTok.text;
+  }
+  if (!word) return null;
+  const funcs = scheletroPrepFuncs(word, lang);
+  if (!funcs.length) return null;
+  return { word, display: word, funcs };
 }
 
 /* Crea/aggiorna l'entry logica dal blocco corrente con la funzione data (per
