@@ -2753,7 +2753,17 @@ body.poetrify-dark .schel-conn-item { background: rgba(255,255,255,0.06); }
 .schel-vq-field > span { font-family: var(--font-ui); font-size: 8px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--poetrify-sepia); }
 .schel-vq-field .field-select, .schel-vq-field .field-input { font-size: 11px; padding: 3px 5px; }
 .schel-vq-lemma { flex: 1 1 180px; }
+/* voce verbale chiusa (riepilogo cliccabile) vs attiva (aperta) */
+.schel-vq-row.collapsed { align-items: center; cursor: pointer; opacity: 0.85; }
+.schel-vq-row.collapsed:hover { opacity: 1; }
+.schel-vq-summary { flex: 1; font-size: 11px; color: var(--poetrify-sepia); font-style: italic; }
+.schel-vq-open { font-family: var(--font-ui); font-size: 10px; font-weight: 700; color: var(--poetrify-primary); }
+.schel-vq-row.is-active { flex-direction: column; align-items: stretch; gap: 6px; background: rgba(197,48,48,0.05); border-radius: 6px; padding: 6px 8px; border-left: 3px solid var(--case-strong); }
+.schel-vq-head { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+.schel-vq-head .schel-vq-word { flex: 1; }
+.schel-vq-suggest { background: rgba(214,158,46,0.16); border-color: rgba(214,158,46,0.5); color: #7a4f0a; }
 body.poetrify-dark .schel-vq-wrap { background: rgba(56,178,172,0.10); }
+body.poetrify-dark .schel-vq-row.is-active { background: rgba(197,48,48,0.12); }
 
 .scheletro-finish-text {
   padding: 8px 10px;
@@ -7788,11 +7798,13 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
    blu nominativo · rosso verbo · arancio accusativo
    viola dativo · grigio ablativo · fucsia genitivo · teal vocativo
    ============================================ */
-.case-nominativo { --case-strong: rgba(24, 0, 172, 0.85);   --case-bg: rgba(24, 0, 172, 0.12);   --case-border: rgba(24, 0, 172, 0.50);   --case-text: #0f0070; }
+/* PALETTE DISTINTIVA · soggetto=BLU/AZZURRO · verbo=ROSSO · oggetto=ARANCIO ·
+   genitivo=FUCSIA · dativo=VIOLA · ablativo=VERDE · vocativo=teal */
+.case-nominativo { --case-strong: rgba(37, 99, 235, 0.88);  --case-bg: rgba(37, 99, 235, 0.13);  --case-border: rgba(37, 99, 235, 0.55);  --case-text: #1d4ed8; }
 .case-verbo      { --case-strong: rgba(197, 48, 48, 0.85);  --case-bg: rgba(197, 48, 48, 0.14);  --case-border: rgba(197, 48, 48, 0.55);  --case-text: #8b1f1f; }
 .case-accusativo { --case-strong: rgba(245, 124, 0, 0.90);  --case-bg: rgba(245, 124, 0, 0.16);  --case-border: rgba(245, 124, 0, 0.58);  --case-text: #8a4500; }
 .case-dativo     { --case-strong: rgba(124, 58, 237, 0.85); --case-bg: rgba(124, 58, 237, 0.14); --case-border: rgba(124, 58, 237, 0.55); --case-text: #5b2bb8; }
-.case-ablativo   { --case-strong: rgba(107, 114, 128, 0.85);--case-bg: rgba(107, 114, 128, 0.16);--case-border: rgba(107, 114, 128, 0.55);--case-text: #374151; }
+.case-ablativo   { --case-strong: rgba(22, 128, 61, 0.85);  --case-bg: rgba(22, 128, 61, 0.15);  --case-border: rgba(22, 128, 61, 0.55);  --case-text: #15803d; }
 .case-genitivo   { --case-strong: rgba(217, 70, 161, 0.90); --case-bg: rgba(217, 70, 161, 0.14); --case-border: rgba(217, 70, 161, 0.55); --case-text: #9a1f78; }
 .case-vocativo   { --case-strong: rgba(56, 178, 172, 0.85); --case-bg: rgba(56, 178, 172, 0.16); --case-border: rgba(56, 178, 172, 0.50); --case-text: #1c6f6a; }
 .case-locativo   { --case-strong: rgba(107, 114, 128, 0.70);--case-bg: rgba(107, 114, 128, 0.10);--case-border: rgba(107, 114, 128, 0.40);--case-text: #374151; }
@@ -7862,6 +7874,23 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
   padding-left: 12px;
   opacity: 0.92;
 }
+/* I MENÙ/FINESTRE dell'analisi logica seguono il colore del caso/funzione:
+   i bordi delle tendine (select) e dei campi si tingono della palette del caso. */
+.entry-card[class*="case-"] .field-select,
+.entry-card[class*="case-"] .field-input,
+.token-action-bar[class*="case-"] .field-select {
+  border-color: var(--case-border);
+}
+.entry-card[class*="case-"] .field-select:focus,
+.entry-card[class*="case-"] .field-input:focus,
+.token-action-bar[class*="case-"] .field-select:focus {
+  border-color: var(--case-strong);
+  box-shadow: 0 0 0 2px var(--case-bg);
+  outline: none;
+}
+/* la barra di selezione/azione si tinge del caso della funzione scelta */
+.token-action-bar[class*="case-"] { border-color: var(--case-border); }
+.token-action-bar[class*="case-"] .action-block-banner { border-left-color: var(--case-strong); }
 /* Mantiene anche da collassato la stessa stondatura */
 .entry-card.case-nominativo.is-collapsed, .entry-card.case-verbo.is-collapsed,
 .entry-card.case-accusativo.is-collapsed, .entry-card.case-dativo.is-collapsed,
@@ -24561,8 +24590,9 @@ function renderScheletroVerbi(sentences, lang) {
     const nf = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo' && g._scheletroForma === 'non-finita').length;
     // menù a tendina COMPATTI sotto la frase per completare l'analisi di ogni verbo
     const verbs = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo').sort((a, b) => (a.tokenIndex || 0) - (b.tokenIndex || 0));
+    const av = state.scheletroActiveVerb || {};
     const quickHtml = verbs.length
-      ? `<div class="schel-vq-wrap"><div class="schel-vq-title">🔬 Completa l'analisi dei verbi</div>${verbs.map(v => renderScheletroVerbQuick(sentence.id, v, lang)).join('')}</div>`
+      ? `<div class="schel-vq-wrap"><div class="schel-vq-title">🔬 Completa l'analisi dei verbi · si apre la voce su cui lavori</div>${verbs.map(v => renderScheletroVerbQuick(sentence.id, v, lang, av.sentenceId === sentence.id && av.tokenIdx === v.tokenIndex)).join('')}</div>`
       : '';
     return `<div class="scheletro-sentence-block">
       <div class="scheletro-sentence-header">
@@ -24583,10 +24613,19 @@ function renderScheletroVerbi(sentences, lang) {
   </div>`;
 }
 
-/* Riga COMPATTA di menù a tendina per completare l'analisi di un verbo, posta
-   sotto la frase (fase 1). Usa lo schema morfologico dei verbi → solo <select>. */
-function renderScheletroVerbQuick(sentenceId, verb, lang) {
+/* Riga di menù a tendina per completare l'analisi di un verbo (fase 1). Si apre
+   SOLO sulla voce attiva (l'ultima cliccata/inserita): le altre restano chiuse
+   come riepilogo cliccabile. */
+function renderScheletroVerbQuick(sentenceId, verb, lang, isActive) {
   const isGreek = lang === 'greco';
+  if (!isActive) {
+    const bits = [verb.verboForma === 'Forma finita' ? 'finito' : (verb._scheletroForma === 'non-finita' ? 'non finito' : ''), verb.tempo, verb.modo, verb.persona, verb.numero].filter(Boolean).join(' · ');
+    return `<div class="schel-vq-row collapsed" onclick="scheletroSetActiveVerb('${sentenceId}', ${verb.tokenIndex})" title="Apri per completare l'analisi di questa voce">
+      <span class="schel-vq-word ${isGreek ? 'greek' : ''}">${escapeHtml(verb.word || '?')}</span>
+      <span class="schel-vq-summary">${escapeHtml(bits || 'da completare')}</span>
+      <span class="schel-vq-open">completa ▾</span>
+    </div>`;
+  }
   let schema = [];
   try { schema = getMorphSchema(lang, verb) || []; } catch (_) { schema = []; }
   const selects = schema.filter(f => Array.isArray(f.options) && f.options.length).map(f =>
@@ -24598,10 +24637,90 @@ function renderScheletroVerbQuick(sentenceId, verb, lang) {
   const lemmaInput = `<label class="schel-vq-field schel-vq-lemma"><span>Lemma / paradigma</span>
     <input class="field-input ${isGreek ? 'greek' : ''}" type="text" value="${escapeHtml(verb.lemma || '')}"
            oninput="updateGrammarField('${sentenceId}','${verb.id}','lemma', this.value)" placeholder="${isGreek ? 'λύω, λύσω…' : 'amo, -as, -avi…'}"></label>`;
-  return `<div class="schel-vq-row">
-    <span class="schel-vq-word ${isGreek ? 'greek' : ''}">${escapeHtml(verb.word || '?')}</span>
+  return `<div class="schel-vq-row is-active case-verbo">
+    <div class="schel-vq-head" onclick="scheletroSetActiveVerb('${sentenceId}', ${verb.tokenIndex})" title="Chiudi questa voce">
+      <span class="schel-vq-word ${isGreek ? 'greek' : ''}">${escapeHtml(verb.word || '?')}</span>
+      <button class="schel-conn-btn schel-vq-suggest" onclick="event.stopPropagation(); scheletroSuggestVerb('${sentenceId}','${verb.id}')" title="Suggerisci forma/tempo/modo/persona dalle desinenze, vocali tematiche e suffissi">✨ suggerisci</button>
+      <span class="schel-vq-open">▴ chiudi</span>
+    </div>
     <div class="schel-vq-fields">${selects}${lemmaInput}</div>
   </div>`;
+}
+
+/* Apre/chiude la voce verbale attiva (resta aperta solo l'ultima in lavorazione). */
+function scheletroSetActiveVerb(sentenceId, tokenIdx) {
+  const a = state.scheletroActiveVerb;
+  if (a && a.sentenceId === sentenceId && a.tokenIdx === tokenIdx) state.scheletroActiveVerb = null;
+  else state.scheletroActiveVerb = { sentenceId, tokenIdx };
+  renderEditor();
+}
+
+/* Suggerisce la morfologia verbale dalle desinenze e riempie SOLO i campi vuoti. */
+function scheletroSuggestVerb(sentenceId, verbId) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const v = (sentence.grammar || []).find(e => e.id === verbId);
+  if (!v) return;
+  const sug = suggestVerbMorph(v.word, state.meta.lingua);
+  let n = 0;
+  Object.entries(sug).forEach(([k, val]) => { if (val && (!v[k] || v[k] === '')) { v[k] = val; n++; } });
+  if (v.partOfSpeech !== 'Verbo') v.partOfSpeech = 'Verbo';
+  persistCurrent(); renderEditor(); renderSidebarTabs();
+  showToast(n > 0 ? `✨ ${n} campi suggeriti da «${v.word}» · controlla e correggi` : 'Nessun suggerimento sicuro per questa forma');
+}
+
+/* Euristica morfologica: dalle desinenze / vocali tematiche / suffissi modali-
+   temporali deduce forma, tempo, modo, persona, numero, diatesi. Conservativa:
+   è un SUGGERIMENTO da rivedere (riempie solo i campi vuoti). */
+function suggestVerbMorph(word, lang) {
+  const out = {};
+  if (!word) return out;
+  const w = (typeof normalizeText === 'function') ? normalizeText(word) : String(word).toLowerCase();
+  if (lang === 'greco') {
+    try {
+      const d = detectGreekAugmentReduplication(word, '');
+      if (d && d.kind === 'reduplication') { out.verboForma = 'Forma finita'; out.tempo = 'Perfetto'; out.modo = 'Indicativo'; }
+      else if (d && d.kind) { out.verboForma = 'Forma finita'; out.modo = 'Indicativo'; } // tempo storico (impf/aor)
+    } catch (_) {}
+    if (/σω$/.test(w)) { out.verboForma = 'Forma finita'; out.tempo = 'Futuro'; out.modo = 'Indicativo'; }
+    else if (/σα$/.test(w)) { out.verboForma = 'Forma finita'; out.tempo = 'Aoristo'; out.modo = 'Indicativo'; }
+    if (/ειν$|σαι$|ναι$|σθαι$/.test(w)) { out.verboForma = 'Infinito'; out.modo = 'Infinito'; }
+    const GP = [[/ομεν$|αμεν$/, { persona: '1ª', numero: 'Plurale' }], [/ετε$/, { persona: '2ª', numero: 'Plurale' }],
+      [/ουσι[νʹ]?$|ασι[νʹ]?$/, { persona: '3ª', numero: 'Plurale' }], [/εις$/, { persona: '2ª', numero: 'Singolare' }],
+      [/ει$/, { persona: '3ª', numero: 'Singolare' }], [/ω$/, { persona: '1ª', numero: 'Singolare' }]];
+    for (const [re, v] of GP) if (re.test(w) && !out.persona) { Object.assign(out, v); break; }
+    return out;
+  }
+  // ── LATINO ──
+  if (/ndus$|nda$|ndum$|ndi$/.test(w)) { out.verboForma = /ndus$|nda$/.test(w) ? 'Gerundivo' : 'Gerundio'; return out; }
+  if (/urus$|ura$|urum$|uri$|urae$|uros$|uras$/.test(w)) { out.verboForma = 'Participio'; out.tempo = 'Futuro'; out.modo = 'Participio'; return out; }
+  if (/ns$|ntis$|ntem$|ntes$|ntium$|ntibus$/.test(w)) { out.verboForma = 'Participio'; out.tempo = 'Presente'; out.modo = 'Participio'; return out; }
+  if (/isse$/.test(w)) { out.verboForma = 'Infinito'; out.tempo = 'Perfetto'; out.modo = 'Infinito'; return out; }
+  if (/are$|ere$|ire$/.test(w) && !/(v|u|s|x)er e$/.test(w)) { out.verboForma = 'Infinito'; out.tempo = 'Presente'; out.modo = 'Infinito'; return out; }
+  out.verboForma = 'Forma finita';
+  let passive = false, pn = null;
+  const PASS = [[/ntur$/, { persona: '3ª', numero: 'Plurale' }], [/mur$/, { persona: '1ª', numero: 'Plurale' }],
+    [/mini$/, { persona: '2ª', numero: 'Plurale' }], [/tur$/, { persona: '3ª', numero: 'Singolare' }],
+    [/ris$/, { persona: '2ª', numero: 'Singolare' }], [/or$/, { persona: '1ª', numero: 'Singolare' }]];
+  for (const [re, v] of PASS) if (re.test(w)) { passive = true; pn = v; break; }
+  if (!passive) {
+    const ACT = [[/mus$/, { persona: '1ª', numero: 'Plurale' }], [/tis$/, { persona: '2ª', numero: 'Plurale' }],
+      [/nt$/, { persona: '3ª', numero: 'Plurale' }], [/t$/, { persona: '3ª', numero: 'Singolare' }],
+      [/sti$/, { persona: '2ª', numero: 'Singolare' }], [/s$/, { persona: '2ª', numero: 'Singolare' }],
+      [/[om]$/, { persona: '1ª', numero: 'Singolare' }]];
+    for (const [re, v] of ACT) if (re.test(w)) { pn = v; break; }
+  }
+  if (pn) Object.assign(out, pn);
+  out.diatesi = passive ? 'Passiva' : 'Attiva';
+  // tempo/modo dai suffissi modali-temporali (vocali tematiche + infissi)
+  if (/(v|u|s|x)isse(m|s|t|mus|tis)?$|(v|u|s|x)issent$/.test(w)) { out.tempo = 'Piuccheperfetto'; out.modo = 'Congiuntivo'; }
+  else if (/(v|u|s|x)era(m|s|t|mus|tis)?$|(v|u|s|x)erant$/.test(w)) { out.tempo = 'Piuccheperfetto'; out.modo = 'Indicativo'; }
+  else if (/(v|u|s|x)(i|isti|it|imus|istis|erunt|ere)$/.test(w)) { out.tempo = 'Perfetto'; out.modo = 'Indicativo'; }
+  else if (/ba(m|s|t|mus|tis)?$|bant$/.test(w)) { out.tempo = 'Imperfetto'; out.modo = 'Indicativo'; }
+  else if (/bi(s|t|mus|tis)?$|bunt$|bo$/.test(w)) { out.tempo = 'Futuro semplice'; out.modo = 'Indicativo'; }
+  else if (/re(m|s|t|mus|tis)?$|rent$/.test(w)) { out.tempo = 'Imperfetto'; out.modo = 'Congiuntivo'; }
+  else { out.tempo = 'Presente'; out.modo = 'Indicativo'; }
+  return out;
 }
 
 /* FASE 2 · Proposizioni interne · selezione (congiunzioni/asindeto) + corrispondenze
@@ -24694,7 +24813,9 @@ function renderScheletroLogic(sentences, lang, phase) {
     if (logicSel.sentenceId === sentence.id && logicSel.indices.length) {
       const idx = [...logicSel.indices].sort((a, b) => a - b);
       const phrase = idx.map(i => (toks.find(t => t.idx === i) || {}).text).filter(Boolean).join(' ');
-      bar = `<div class="token-action-bar token-action-bar-stacked has-block">
+      const barCase = funzioneToCaseGroup(state.scheletroLastFunc) ||
+        (phase === 'soggetto' ? 'nominativo' : phase === 'oggetto' ? 'accusativo' : 'neutro');
+      bar = `<div class="token-action-bar token-action-bar-stacked has-block case-${barCase}">
         <div class="action-block-banner action-block-banner-logic">
           <span class="block-banner-icon">${info.icon}</span>
           <div class="block-banner-text"><strong>Gruppo di ${idx.length} token</strong><span class="block-banner-sub">assegna la funzione (${escapeHtml(info.title)}) e conferma</span></div>
@@ -24744,14 +24865,17 @@ function scheletroCycleVerb(sentenceId, tokenIdx) {
     if (!entry) { entry = makeEntry('grammar'); entry.word = tok.text; entry.tokenIndex = tokenIdx; insertEntrySorted(sentence.grammar, entry, 'grammar'); }
     entry.partOfSpeech = 'Verbo'; entry.verboForma = 'Forma finita'; delete entry._scheletroForma;
     propagateCrossAnalysis(sentence, 'grammar', entry);
+    state.scheletroActiveVerb = { sentenceId, tokenIdx };   // apre la voce appena inserita
   } else if (isFin) {
     entry.verboForma = ''; entry._scheletroForma = 'non-finita';
+    state.scheletroActiveVerb = { sentenceId, tokenIdx };
   } else {
     delete entry._scheletroForma; delete entry.verboForma;
     if (entry.partOfSpeech === 'Verbo') delete entry.partOfSpeech;
     if (!entry.lemma && !entry.note && !entry.caso && !entry.tempo && !entry.modo && !entry.persona) {
       sentence.grammar = sentence.grammar.filter(e => e.id !== entry.id);
     }
+    if (state.scheletroActiveVerb && state.scheletroActiveVerb.sentenceId === sentenceId && state.scheletroActiveVerb.tokenIdx === tokenIdx) state.scheletroActiveVerb = null;
   }
   persistCurrent(); renderEditor(); renderSidebarTabs();
 }
