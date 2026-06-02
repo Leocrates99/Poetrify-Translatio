@@ -2260,16 +2260,21 @@ body.poetrify-dark .auto-analyze-btn:hover {
    ANALISI UNIFICATA · pannello token-pivot
    ═══════════════════════════════════════════════════════════════════════════ */
 .unified-pane {
+  /* Layout VERTICALE a tutta larghezza: brano (sticky) in alto, focus-card
+   * sotto a piena larghezza così le tre sezioni si completano in TUTTE le
+   * categorie come nelle pagine dedicate (niente colonna stretta «micro»). */
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 420px);
+  grid-template-columns: 1fr;
   gap: 16px;
   align-items: start;
 }
-@media (max-width: 1100px) {
-  /* Su tablet/mobile la layout diventa verticale: il brano in cima, il
-   * focus card sotto. Sticky-top sul brano così resta sempre visibile. */
-  .unified-pane { grid-template-columns: 1fr; }
+/* interruttore «auto classi chiuse» nella toolbar del tokenizer */
+.auto-cc-toggle {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: var(--font-ui); font-size: 11px; font-weight: 600;
+  color: var(--poetrify-sepia); cursor: pointer; user-select: none;
 }
+.auto-cc-toggle input { cursor: pointer; }
 /* ── BRANO STICKY ─────────────────────────────────────────────────────────
  * Il tokenizer (sinistra in desktop, in cima su mobile) si "incolla" al top
  * dell'editor mentre l'utente lavora nel focus card. Senza questo, lo
@@ -24721,6 +24726,84 @@ const _HIGH_FREQ_PRONOUNS_GR = {
   'ὑμᾶς':   { partOfSpeech:'Pronome', pronomeTipo:'Personale', persona:'2ª', numero:'Plurale',   caso:'Accusativo', lemma:'ὑμεῖς, ὑμῶν', lemmaCustom:true },
 };
 
+/* ── Pronomi NON personali ad alta frequenza (classi chiuse "fisse") ──────
+ * Relativi · interrogativi · dimostrativi/determinativi. La PoS+tipo sono
+ * sempre sicure (parole fisse); caso/genere/numero sono indicati SOLO per le
+ * forme non ambigue (le obliqui), lasciando i nominativi sincretici al manuale.
+ * Lettura dominante: l'auto-analisi riempie solo voci vuote e si può correggere. */
+const _HIGH_FREQ_PRONOUNS_EXT_LAT = {
+  // relativo qui, quae, quod
+  'qui':    { partOfSpeech:'Pronome', pronomeTipo:'Relativo', lemma:'qui, quae, quod', lemmaCustom:true },
+  'quae':   { partOfSpeech:'Pronome', pronomeTipo:'Relativo', lemma:'qui, quae, quod', lemmaCustom:true },
+  'cuius':  { partOfSpeech:'Pronome', pronomeTipo:'Relativo', caso:'Genitivo', numero:'Singolare', lemma:'qui, quae, quod', lemmaCustom:true },
+  'cui':    { partOfSpeech:'Pronome', pronomeTipo:'Relativo', caso:'Dativo', numero:'Singolare', lemma:'qui, quae, quod', lemmaCustom:true },
+  'quem':   { partOfSpeech:'Pronome', pronomeTipo:'Relativo', caso:'Accusativo', genere:'Maschile', numero:'Singolare', lemma:'qui, quae, quod', lemmaCustom:true },
+  'quibus': { partOfSpeech:'Pronome', pronomeTipo:'Relativo', numero:'Plurale', lemma:'qui, quae, quod', lemmaCustom:true },
+  'quorum': { partOfSpeech:'Pronome', pronomeTipo:'Relativo', caso:'Genitivo', genere:'Maschile', numero:'Plurale', lemma:'qui, quae, quod', lemmaCustom:true },
+  'quarum': { partOfSpeech:'Pronome', pronomeTipo:'Relativo', caso:'Genitivo', genere:'Femminile', numero:'Plurale', lemma:'qui, quae, quod', lemmaCustom:true },
+  'quos':   { partOfSpeech:'Pronome', pronomeTipo:'Relativo', caso:'Accusativo', genere:'Maschile', numero:'Plurale', lemma:'qui, quae, quod', lemmaCustom:true },
+  'quas':   { partOfSpeech:'Pronome', pronomeTipo:'Relativo', caso:'Accusativo', genere:'Femminile', numero:'Plurale', lemma:'qui, quae, quod', lemmaCustom:true },
+  // interrogativo quis, quid
+  'quis':   { partOfSpeech:'Pronome', pronomeTipo:'Interrogativo', caso:'Nominativo', numero:'Singolare', lemma:'quis, quid', lemmaCustom:true },
+  'quid':   { partOfSpeech:'Pronome', pronomeTipo:'Interrogativo', genere:'Neutro', numero:'Singolare', lemma:'quis, quid', lemmaCustom:true },
+  // determinativo is, ea, id
+  'is':     { partOfSpeech:'Pronome', pronomeTipo:'Determinativo', caso:'Nominativo', genere:'Maschile', numero:'Singolare', lemma:'is, ea, id', lemmaCustom:true },
+  'id':     { partOfSpeech:'Pronome', pronomeTipo:'Determinativo', genere:'Neutro', numero:'Singolare', lemma:'is, ea, id', lemmaCustom:true },
+  'eius':   { partOfSpeech:'Pronome', pronomeTipo:'Determinativo', caso:'Genitivo', numero:'Singolare', lemma:'is, ea, id', lemmaCustom:true },
+  'eum':    { partOfSpeech:'Pronome', pronomeTipo:'Determinativo', caso:'Accusativo', genere:'Maschile', numero:'Singolare', lemma:'is, ea, id', lemmaCustom:true },
+  'eam':    { partOfSpeech:'Pronome', pronomeTipo:'Determinativo', caso:'Accusativo', genere:'Femminile', numero:'Singolare', lemma:'is, ea, id', lemmaCustom:true },
+  'eorum':  { partOfSpeech:'Pronome', pronomeTipo:'Determinativo', caso:'Genitivo', genere:'Maschile', numero:'Plurale', lemma:'is, ea, id', lemmaCustom:true },
+  'earum':  { partOfSpeech:'Pronome', pronomeTipo:'Determinativo', caso:'Genitivo', genere:'Femminile', numero:'Plurale', lemma:'is, ea, id', lemmaCustom:true },
+  // dimostrativi hic / ille (forme principali)
+  'hic':    { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', lemma:'hic, haec, hoc', lemmaCustom:true },
+  'haec':   { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', lemma:'hic, haec, hoc', lemmaCustom:true },
+  'huius':  { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Genitivo', numero:'Singolare', lemma:'hic, haec, hoc', lemmaCustom:true },
+  'huic':   { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Dativo', numero:'Singolare', lemma:'hic, haec, hoc', lemmaCustom:true },
+  'hunc':   { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Accusativo', genere:'Maschile', numero:'Singolare', lemma:'hic, haec, hoc', lemmaCustom:true },
+  'hanc':   { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Accusativo', genere:'Femminile', numero:'Singolare', lemma:'hic, haec, hoc', lemmaCustom:true },
+  'ille':   { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Nominativo', genere:'Maschile', numero:'Singolare', lemma:'ille, illa, illud', lemmaCustom:true },
+  'illa':   { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', lemma:'ille, illa, illud', lemmaCustom:true },
+  'illud':  { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Neutro', numero:'Singolare', lemma:'ille, illa, illud', lemmaCustom:true },
+  'illius': { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Genitivo', numero:'Singolare', lemma:'ille, illa, illud', lemmaCustom:true },
+  'illum':  { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Accusativo', genere:'Maschile', numero:'Singolare', lemma:'ille, illa, illud', lemmaCustom:true },
+  'illam':  { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Accusativo', genere:'Femminile', numero:'Singolare', lemma:'ille, illa, illud', lemmaCustom:true },
+};
+
+/* GRECO · forme che NON collidono con l'articolo dopo lo strip dei diacritici
+ * (escluse ἥ/ὅ/οἵ/αἵ ↔ ἡ/ὁ/οἱ/αἱ). Match diretto accentato sui testi reali. */
+const _HIGH_FREQ_PRONOUNS_EXT_GR = {
+  // relativo ὅς, ἥ, ὅ (solo forme non ambigue con l'articolo)
+  'ὅς':     { partOfSpeech:'Pronome', pronomeTipo:'Relativo', caso:'Nominativo', genere:'Maschile', numero:'Singolare', lemma:'ὅς, ἥ, ὅ', lemmaCustom:true },
+  'ὅν':     { partOfSpeech:'Pronome', pronomeTipo:'Relativo', caso:'Accusativo', genere:'Maschile', numero:'Singolare', lemma:'ὅς, ἥ, ὅ', lemmaCustom:true },
+  'ἥν':     { partOfSpeech:'Pronome', pronomeTipo:'Relativo', caso:'Accusativo', genere:'Femminile', numero:'Singolare', lemma:'ὅς, ἥ, ὅ', lemmaCustom:true },
+  'ἧς':     { partOfSpeech:'Pronome', pronomeTipo:'Relativo', caso:'Genitivo', genere:'Femminile', numero:'Singolare', lemma:'ὅς, ἥ, ὅ', lemmaCustom:true },
+  'ᾧ':      { partOfSpeech:'Pronome', pronomeTipo:'Relativo', caso:'Dativo', numero:'Singolare', lemma:'ὅς, ἥ, ὅ', lemmaCustom:true },
+  'ὧν':     { partOfSpeech:'Pronome', pronomeTipo:'Relativo', caso:'Genitivo', numero:'Plurale', lemma:'ὅς, ἥ, ὅ', lemmaCustom:true },
+  'οἷς':    { partOfSpeech:'Pronome', pronomeTipo:'Relativo', caso:'Dativo', genere:'Maschile', numero:'Plurale', lemma:'ὅς, ἥ, ὅ', lemmaCustom:true },
+  'αἷς':    { partOfSpeech:'Pronome', pronomeTipo:'Relativo', caso:'Dativo', genere:'Femminile', numero:'Plurale', lemma:'ὅς, ἥ, ὅ', lemmaCustom:true },
+  // interrogativo τίς, τί
+  'τίς':    { partOfSpeech:'Pronome', pronomeTipo:'Interrogativo', caso:'Nominativo', numero:'Singolare', lemma:'τίς, τί', lemmaCustom:true },
+  'τί':     { partOfSpeech:'Pronome', pronomeTipo:'Interrogativo', genere:'Neutro', numero:'Singolare', lemma:'τίς, τί', lemmaCustom:true },
+  'τίνος':  { partOfSpeech:'Pronome', pronomeTipo:'Interrogativo', caso:'Genitivo', numero:'Singolare', lemma:'τίς, τί', lemmaCustom:true },
+  'τίνι':   { partOfSpeech:'Pronome', pronomeTipo:'Interrogativo', caso:'Dativo', numero:'Singolare', lemma:'τίς, τί', lemmaCustom:true },
+  'τίνα':   { partOfSpeech:'Pronome', pronomeTipo:'Interrogativo', lemma:'τίς, τί', lemmaCustom:true },
+  'τίνες':  { partOfSpeech:'Pronome', pronomeTipo:'Interrogativo', caso:'Nominativo', numero:'Plurale', lemma:'τίς, τί', lemmaCustom:true },
+  // dimostrativi οὗτος / ἐκεῖνος / ὅδε
+  'οὗτος':  { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Nominativo', genere:'Maschile', numero:'Singolare', lemma:'οὗτος, αὕτη, τοῦτο', lemmaCustom:true },
+  'αὕτη':   { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Nominativo', genere:'Femminile', numero:'Singolare', lemma:'οὗτος, αὕτη, τοῦτο', lemmaCustom:true },
+  'τοῦτο':  { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Neutro', numero:'Singolare', lemma:'οὗτος, αὕτη, τοῦτο', lemmaCustom:true },
+  'τούτου': { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Genitivo', numero:'Singolare', lemma:'οὗτος, αὕτη, τοῦτο', lemmaCustom:true },
+  'τούτῳ':  { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Dativo', numero:'Singolare', lemma:'οὗτος, αὕτη, τοῦτο', lemmaCustom:true },
+  'τοῦτον': { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Accusativo', genere:'Maschile', numero:'Singolare', lemma:'οὗτος, αὕτη, τοῦτο', lemmaCustom:true },
+  'ταύτην': { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Accusativo', genere:'Femminile', numero:'Singolare', lemma:'οὗτος, αὕτη, τοῦτο', lemmaCustom:true },
+  'ταῦτα':  { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Neutro', numero:'Plurale', lemma:'οὗτος, αὕτη, τοῦτο', lemmaCustom:true },
+  'ἐκεῖνος':{ partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Nominativo', genere:'Maschile', numero:'Singolare', lemma:'ἐκεῖνος, ἐκείνη, ἐκεῖνο', lemmaCustom:true },
+  'ἐκείνη': { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Nominativo', genere:'Femminile', numero:'Singolare', lemma:'ἐκεῖνος, ἐκείνη, ἐκεῖνο', lemmaCustom:true },
+  'ἐκεῖνο': { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Neutro', numero:'Singolare', lemma:'ἐκεῖνος, ἐκείνη, ἐκεῖνο', lemmaCustom:true },
+  'ὅδε':    { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', caso:'Nominativo', genere:'Maschile', numero:'Singolare', lemma:'ὅδε, ἥδε, τόδε', lemmaCustom:true },
+  'τόδε':   { partOfSpeech:'Pronome', pronomeTipo:'Dimostrativo', genere:'Neutro', numero:'Singolare', lemma:'ὅδε, ἥδε, τόδε', lemmaCustom:true },
+};
+
 /* Lookup case-insensitive con normalizzazione greca (rimuove diacritici) */
 function _lookupHighFreqInline(word, dict, lang) {
   const norm = (lang === 'greco') ? normalizeText(word) : (word || '').toLowerCase();
@@ -24751,7 +24834,10 @@ function autoAnalyzeHighConfidence(sentenceId, opts = {}) {
   const lang = state.meta.lingua;
   const toks = tokenizeSentence(sentence.original);
   const beDict   = lang === 'greco' ? _HIGH_FREQ_BE_FORMS_GR : _HIGH_FREQ_BE_FORMS_LAT;
-  const pronDict = lang === 'greco' ? _HIGH_FREQ_PRONOUNS_GR : _HIGH_FREQ_PRONOUNS_LAT;
+  // Pronomi: personali/riflessivi (priorità) + relativi/interrogativi/dimostrativi.
+  const pronDict = lang === 'greco'
+    ? { ..._HIGH_FREQ_PRONOUNS_EXT_GR, ..._HIGH_FREQ_PRONOUNS_GR }
+    : { ..._HIGH_FREQ_PRONOUNS_EXT_LAT, ..._HIGH_FREQ_PRONOUNS_LAT };
   const stats = { added: 0, byKind: { conj:0, prep:0, be:0, pron:0, dict:0 } };
 
   toks.forEach(tok => {
@@ -24851,8 +24937,37 @@ function autoAnalyzeAllSentences(opts = {}) {
   renderSidebarTabs();
   if (totalAdded > 0) {
     showToast(`⚡ Brano intero · ${totalAdded} parole auto-classificate su ${sentences.length} frasi`);
-  } else {
+  } else if (!opts.silentSummary) {
     showToast('Nessuna nuova parola classificabile · l\'analisi è già stata fatta o tutto manuale');
+  }
+}
+
+/* ── Preferenza: completamento automatico delle classi chiuse all'import ──
+ * Particelle, preposizioni, congiunzioni e pronomi sono "fissi": all'import del
+ * testo li classifichiamo automaticamente (interruttore per disattivare). */
+let _autoClosedClass = (function () {
+  try { return localStorage.getItem('poetrify-auto-closed-class') !== 'off'; }
+  catch (_) { return true; }
+})();
+function toggleAutoClosedClass() {
+  _autoClosedClass = !_autoClosedClass;
+  try { localStorage.setItem('poetrify-auto-closed-class', _autoClosedClass ? 'on' : 'off'); } catch (_) {}
+  if (_autoClosedClass) autoAnalyzeAllSentences({ silentSummary: true });
+  else { renderEditor(); }
+  showToast(_autoClosedClass
+    ? '⚡ Auto-completamento classi chiuse: ATTIVO (all\'import)'
+    : 'Auto-completamento classi chiuse: disattivato');
+}
+function renderAutoClosedClassToggle() {
+  return `<label class="auto-cc-toggle" title="Completa automaticamente particelle, preposizioni, congiunzioni e pronomi (classi chiuse) all'import del testo">
+    <input type="checkbox" ${_autoClosedClass ? 'checked' : ''} onchange="toggleAutoClosedClass()">
+    <span>auto classi chiuse</span>
+  </label>`;
+}
+/* Esegue l'auto-analisi delle classi chiuse su tutte le frasi se la pref è attiva. */
+function maybeAutoClosedClass() {
+  if (_autoClosedClass && (state.sentences || []).length > 0) {
+    autoAnalyzeAllSentences({ silentSummary: true });
   }
 }
 
@@ -25580,6 +25695,7 @@ function renderGuidedFirstRun() {
 function startGuidedSegmentation() {
   const chunks = splitTextIntoSentences(state.meta.testoOriginale);
   state.sentences = chunks.map(makeSentence);
+  maybeAutoClosedClass();
   state.guidedStep = 1;
   state.guidedSentenceIdx = 0;
   persistCurrent();
@@ -30526,18 +30642,16 @@ function renderLogicAnalysis(sentence) {
   return tokenizerHtml + autoSuggestHtml + compactTools + inlineManualHtml + inlineEllipsisHtml + entriesHtml + renderInlineTranslationPanel(sentence);
 }
 
-function renderLogicEntry(sentenceId, entry, lang) {
-  const isGreek = lang === 'greco';
-  const collapsed = isEntryCollapsed(entry);
-  const summary = makeLogicSummary(entry);
-  const caseGroup = funzioneToCaseGroup(entry.funzione);
-  const ellipticalCls = entry.isElliptical ? ' is-elliptical' : '';
-
+/* Corpo CONDIVISO dell'editor logico (pagina dedicata + metodo unificato):
+   pairing genitivo, warning caso/funzione, pannello "dedotto da grammatica",
+   campo condizionale Funzione (FUNZIONI_LOGICHE), blocco attributivo, note.
+   Garantisce che l'Unificato sia IDENTICO alla pagina dedicata. */
+function renderLogicBody(sentenceId, entry, lang) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
   // ── Chip di auto-pairing genitivo → reggente ───────────────────────────
-  const sentenceForPairing = state.sentences.find(s => s.id === sentenceId);
   let pairingChipHtml = '';
-  if (sentenceForPairing && sentenceForPairing._pairingSuggestions && sentenceForPairing._pairingSuggestions[entry.id]) {
-    const sug = sentenceForPairing._pairingSuggestions[entry.id];
+  if (sentence && sentence._pairingSuggestions && sentence._pairingSuggestions[entry.id]) {
+    const sug = sentence._pairingSuggestions[entry.id];
     pairingChipHtml = `<div class="pairing-suggest">
       <span class="pairing-icon">🔗</span>
       <span class="pairing-text">
@@ -30548,11 +30662,10 @@ function renderLogicEntry(sentenceId, entry, lang) {
       <button class="btn btn-ghost btn-sm pairing-btn-no" onclick="dismissPairingSuggestion('${sentenceId}','${entry.id}')">✕ No</button>
     </div>`;
   }
-
   // ── Warning soft caso-funzione ─────────────────────────────────────────
   let caseWarningHtml = '';
-  if (sentenceForPairing && entry.funzione && !entry.isElliptical) {
-    const validation = validateLogicCaseFunction(sentenceForPairing, entry, lang);
+  if (sentence && entry.funzione && !entry.isElliptical) {
+    const validation = validateLogicCaseFunction(sentence, entry, lang);
     if (!validation.ok) {
       caseWarningHtml = `<div class="case-warning">
         <span class="case-warning-icon">⚠</span>
@@ -30564,6 +30677,28 @@ function renderLogicEntry(sentenceId, entry, lang) {
       </div>`;
     }
   }
+  return `
+        ${pairingChipHtml}
+        ${caseWarningHtml}
+        ${renderDeducedFromGrammar(sentenceId, entry, 'logic')}
+        <div class="entry-fields">
+          ${renderConditionalField(sentenceId, entry, { key: 'funzione', label: 'Funzione sintattica', options: FUNZIONI_LOGICHE }, 'logic')}
+          ${renderAttributivoBlock(sentenceId, entry)}
+          <div class="field-block" style="grid-column: 1/-1;">
+            <label class="field-block-label">Note (libere)</label>
+            <input class="field-input" type="text" value="${escapeHtml(entry.note || '')}"
+                   oninput="updateLogicField('${sentenceId}', '${entry.id}', 'note', this.value)"
+                   placeholder="Es. retto dal verbo, in apposizione a…, caso latino concreto…">
+          </div>
+        </div>`;
+}
+
+function renderLogicEntry(sentenceId, entry, lang) {
+  const isGreek = lang === 'greco';
+  const collapsed = isEntryCollapsed(entry);
+  const summary = makeLogicSummary(entry);
+  const caseGroup = funzioneToCaseGroup(entry.funzione);
+  const ellipticalCls = entry.isElliptical ? ' is-elliptical' : '';
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','logic', event)">
          ${entry.isElliptical ? '<span class="entry-summary-ellipsis">sottinteso</span>' : ''}
@@ -30588,21 +30723,7 @@ function renderLogicEntry(sentenceId, entry, lang) {
           <button class="btn btn-danger-soft btn-sm" onclick="deleteLogicEntry('${sentenceId}', '${entry.id}')">🗑</button>
         </div>
       </div>
-      ${collapsed ? '' : `<div class="entry-body">
-        ${pairingChipHtml}
-        ${caseWarningHtml}
-        ${renderDeducedFromGrammar(sentenceId, entry, 'logic')}
-        <div class="entry-fields">
-          ${renderConditionalField(sentenceId, entry, { key: 'funzione', label: 'Funzione sintattica', options: FUNZIONI_LOGICHE }, 'logic')}
-          ${renderAttributivoBlock(sentenceId, entry)}
-          <div class="field-block" style="grid-column: 1/-1;">
-            <label class="field-block-label">Note (libere)</label>
-            <input class="field-input" type="text" value="${escapeHtml(entry.note || '')}"
-                   oninput="updateLogicField('${sentenceId}', '${entry.id}', 'note', this.value)"
-                   placeholder="Es. retto dal verbo, in apposizione a…, caso latino concreto…">
-          </div>
-        </div>
-      </div>`}
+      ${collapsed ? '' : `<div class="entry-body">${renderLogicBody(sentenceId, entry, lang)}</div>`}
     </div>`;
 }
 
@@ -31022,13 +31143,15 @@ function renderUnifiedAnalysis(sentence) {
     if (ge && ge.partOfSpeech) cls.push('case-' + caseGroupForGrammarEntry(ge));
     else cls.push('token-untagged');
     if (isFocus) cls.push('unified-focus');
+    // selezione da drag in corso (sintagma in costruzione) → evidenziazione fluida
+    if (logicSel && logicSel.sentenceId === sentence.id && (logicSel.indices || []).includes(tok.idx)) cls.push('token-selected');
     if (logicEntry && (logicEntry.tokenIndices || []).includes(tok.idx)) cls.push('unified-in-logic');
     if (periodaleEntry && (periodaleEntry.tokenIndices || []).includes(tok.idx)) cls.push('unified-in-periodale');
     const marker = ge && ge.partOfSpeech
       ? `<span class="token-pos-marker">${posShort(ge.partOfSpeech)}</span>`
       : '';
     const layerHints = `<span class="unified-layer-hints">${inLogic ? '<span class="hint-dot dot-l" title="In un sintagma logico"></span>' : ''}${inPeriodale ? '<span class="hint-dot dot-p" title="In una proposizione"></span>' : ''}</span>`;
-    return `<span class="${cls.join(' ')}" onclick="onUnifiedTokenClick('${sentence.id}', ${tok.idx})" title="Click per spostare il focus">${escapeHtml(tok.text)}${marker}${layerHints}</span>`;
+    return `<span class="${cls.join(' ')}" data-token-mode="logic" data-token-idx="${tok.idx}" data-sentence-id="${sentence.id}" onclick="onUnifiedTokenClick('${sentence.id}', ${tok.idx})" title="Click = focus · trascina per selezionare un sintagma">${escapeHtml(tok.text)}${marker}${layerHints}</span>`;
   }).join('');
 
   // Sezione FOCUS — tre micro-pannelli verticali
@@ -31053,8 +31176,8 @@ function renderUnifiedAnalysis(sentence) {
   }
 
   const helper = `<div class="method-note" style="font-size:12px;margin-bottom:12px;">
-    <strong>⚡ Modalità Unificata.</strong> Click su un token: a destra (o sotto) vedi le sue analisi nei tre layer simultaneamente.
-    I sintagmi logici e le proposizioni restano <em>blocchi multi-token</em>: usali con i pulsanti <kbd>◀</kbd>/<kbd>▶</kbd> per estenderli/ridurli dal token-focus.
+    <strong>⚡ Modalità Unificata.</strong> <strong>Click</strong> su un token per focalizzarlo: sotto vedi i suoi tre layer (grammatica, sintagma, proposizione) <em>completi</em>, identici alle pagine dedicate.
+    <strong>Trascina</strong> sui token per creare al volo un <em>sintagma logico</em> (oppure estendi/riduci dal focus con <kbd>◀</kbd>/<kbd>▶</kbd>).
   </div>`;
 
   return `${helper}
@@ -31062,14 +31185,16 @@ function renderUnifiedAnalysis(sentence) {
       <div class="unified-tokenizer-wrap">
         <div class="tokenizer">
           <div class="tokenizer-header">
-            <span class="tokenizer-title">Brano · click su un token per focalizzarlo</span>
+            <span class="tokenizer-title">Brano · click = focus · trascina = sintagma</span>
             <div style="display:inline-flex;align-items:center;gap:10px;flex-wrap:wrap;">
               <span class="tokenizer-counter">${(sentence.grammar||[]).length} gram · ${(sentence.logic||[]).length} sint · ${(sentence.periodale||[]).length} prop</span>
-              <button class="auto-analyze-btn" onclick="autoAnalyzeHighConfidence('${sentence.id}')" title="Classifica preposizioni · congiunzioni · particelle · forme di sum/εἰμί · pronomi personali">⚡ Auto-analizza</button>
+              ${renderAutoClosedClassToggle()}
+              <button class="auto-analyze-btn" onclick="autoAnalyzeHighConfidence('${sentence.id}')" title="Classifica preposizioni · congiunzioni · particelle · forme di sum/εἰμί · pronomi (personali, dimostrativi, relativi, interrogativi)">⚡ Auto-analizza</button>
             </div>
           </div>
           <div class="token-grid">${tokensHtml}</div>
         </div>
+        ${renderLogicActionBar(sentence)}
       </div>
       <div class="unified-focus-wrap">${focusHtml}</div>
     </div>${renderInlineTranslationPanel(sentence)}`;
@@ -31136,15 +31261,7 @@ function renderUnifiedLogicSection(sentence, focus, entry, lang) {
         <span class="unified-block-tokens">${blockHtml}</span>
         <button class="unified-block-expand-btn" onclick="expandLogicBlockFromFocus('${sentence.id}', 'right')" title="Aggiungi token a destra">+ ▶</button>
       </div>
-      <div class="entry-fields unified-fields">
-        <div class="field-block" style="grid-column:1/-1;">
-          <label class="field-block-label">Funzione sintattica</label>
-          <select class="field-select" onchange="updateLogicField('${sentence.id}','${entry.id}','funzione', this.value)">
-            <option value="">— scegli —</option>
-            ${renderFunzioneOptions(entry.funzione, new Set(), lang)}
-          </select>
-        </div>
-      </div>`;
+      ${renderLogicBody(sentence.id, entry, lang)}`;
   }
   return `<div class="unified-section unified-section-logic">
     <div class="unified-section-header">
@@ -31178,21 +31295,7 @@ function renderUnifiedPeriodaleSection(sentence, focus, entry, lang) {
         <span class="unified-block-tokens">${blockHtml}</span>
         <button class="unified-block-expand-btn" onclick="expandPeriodaleBlockFromFocus('${sentence.id}', 'right')" title="Aggiungi token a destra">+ ▶</button>
       </div>
-      <div class="entry-fields unified-fields">
-        <div class="field-block">
-          <label class="field-block-label">Ruolo</label>
-          <select class="field-select" onchange="updatePeriodaleField('${sentence.id}','${entry.id}','ruolo', this.value)">
-            <option value="">— scegli —</option>
-            ${PROPOSIZIONI.ruolo.map(r => `<option value="${r}" ${entry.ruolo === r ? 'selected' : ''}>${r}</option>`).join('')}
-          </select>
-        </div>
-        <div class="field-block">
-          <label class="field-block-label">Tipo</label>
-          <input class="field-input" type="text" value="${escapeHtml(entry.tipo || '')}"
-                 oninput="updatePeriodaleField('${sentence.id}','${entry.id}','tipo', this.value)"
-                 placeholder="es. Causale, Finale, Relativa...">
-        </div>
-      </div>`;
+      ${renderPeriodaleBody(sentence.id, entry, lang)}`;
   }
   return `<div class="unified-section unified-section-periodale">
     <div class="unified-section-header">
@@ -31247,6 +31350,49 @@ function unifiedCreatePeriodaleEntry(sentenceId, tokenIdx) {
   renderEditor();
 }
 
+/* Corpo CONDIVISO dell'editor periodale (pagina dedicata + metodo unificato):
+   dedotto-da-grammatica, ruolo/tipo/modo condizionali, connettivo, grado,
+   dipende-da, note, e il pannello insight (composizione · ordo · costrutti). */
+function renderPeriodaleBody(sentenceId, entry, lang) {
+  const isGreek = lang === 'greco';
+  const ruoloLower = (entry.ruolo || '').toLowerCase();
+  let tipoOptions = [];
+  if (ruoloLower === 'principale') tipoOptions = PROPOSIZIONI.principale;
+  else if (ruoloLower === 'coordinata') tipoOptions = PROPOSIZIONI.coordinata;
+  else if (ruoloLower === 'subordinata') tipoOptions = PROPOSIZIONI.subordinata;
+  const annotated = annotatePeriodaleSiglas((state.sentences.find(s => s.id === sentenceId) || {}).periodale || []);
+  const altreProposizioni = annotated.filter(p => p.id !== entry.id);
+  return `
+        ${renderDeducedFromGrammar(sentenceId, entry, 'periodale')}
+        <div class="prop-meta">
+          ${renderConditionalField(sentenceId, entry, { key: 'ruolo', label: 'Ruolo', options: PROPOSIZIONI.ruolo }, 'periodale')}
+          ${tipoOptions.length > 0 ? renderConditionalField(sentenceId, entry, { key: 'tipo', label: 'Tipo', options: tipoOptions }, 'periodale') : ''}
+          ${renderConditionalField(sentenceId, entry, { key: 'modo', label: 'Modo del verbo', options: PROPOSIZIONI.modo }, 'periodale')}
+          <div class="field-block">
+            <label class="field-block-label">Connettivo</label>
+            <input class="field-input ${isGreek ? 'greek' : ''}" type="text" value="${escapeHtml(entry.connettivo || '')}"
+                   oninput="updatePeriodaleField('${sentenceId}', '${entry.id}', 'connettivo', this.value)"
+                   placeholder="${isGreek ? 'ἵνα, ὅτι, ὥστε…' : 'ut, quod, cum, qui…'}">
+          </div>
+          ${ruoloLower === 'subordinata' ? renderConditionalField(sentenceId, entry, { key: 'grado', label: 'Grado di subordinazione', options: PROPOSIZIONI.grado }, 'periodale') : ''}
+          ${ruoloLower !== 'principale' && ruoloLower !== '' ? `
+            <div class="field-block">
+              <label class="field-block-label">Dipende da / si coordina con</label>
+              <select class="field-select" onchange="updatePeriodaleField('${sentenceId}', '${entry.id}', 'dipendeDa', this.value)">
+                <option value="">— nessuna —</option>
+                ${altreProposizioni.map(p => `<option value="${p.id}" ${entry.dipendeDa === p.id ? 'selected' : ''}>${p._sigla || ''} · ${escapeHtml((p.text || '(senza testo)').substring(0, 40))}${p.text && p.text.length > 40 ? '…' : ''}</option>`).join('')}
+              </select>
+            </div>` : ''}
+          <div class="field-block" style="grid-column: 1/-1;">
+            <label class="field-block-label">Note (libere)</label>
+            <input class="field-input" type="text" value="${escapeHtml(entry.note || '')}"
+                   oninput="updatePeriodaleField('${sentenceId}', '${entry.id}', 'note', this.value)"
+                   placeholder="Es. introdotta da…, congiuntivo eventuale, costrutto…">
+          </div>
+        </div>
+        ${renderPropositionInsight(sentenceId, entry, lang)}`;
+}
+
 function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
   const isGreek = lang === 'greco';
   const ruoloLower = (entry.ruolo || '').toLowerCase();
@@ -31294,36 +31440,7 @@ function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
           <button class="btn btn-danger-soft btn-sm" onclick="deletePeriodaleEntry('${sentenceId}', '${entry.id}')">🗑</button>
         </div>
       </div>
-      ${collapsed ? '' : `<div class="entry-body">
-        ${renderDeducedFromGrammar(sentenceId, entry, 'periodale')}
-        <div class="prop-meta">
-          ${renderConditionalField(sentenceId, entry, { key: 'ruolo', label: 'Ruolo', options: PROPOSIZIONI.ruolo }, 'periodale')}
-          ${tipoOptions.length > 0 ? renderConditionalField(sentenceId, entry, { key: 'tipo', label: 'Tipo', options: tipoOptions }, 'periodale') : ''}
-          ${renderConditionalField(sentenceId, entry, { key: 'modo', label: 'Modo del verbo', options: PROPOSIZIONI.modo }, 'periodale')}
-          <div class="field-block">
-            <label class="field-block-label">Connettivo</label>
-            <input class="field-input ${isGreek ? 'greek' : ''}" type="text" value="${escapeHtml(entry.connettivo || '')}"
-                   oninput="updatePeriodaleField('${sentenceId}', '${entry.id}', 'connettivo', this.value)"
-                   placeholder="${isGreek ? 'ἵνα, ὅτι, ὥστε…' : 'ut, quod, cum, qui…'}">
-          </div>
-          ${ruoloLower === 'subordinata' ? renderConditionalField(sentenceId, entry, { key: 'grado', label: 'Grado di subordinazione', options: PROPOSIZIONI.grado }, 'periodale') : ''}
-          ${ruoloLower !== 'principale' && ruoloLower !== '' ? `
-            <div class="field-block">
-              <label class="field-block-label">Dipende da / si coordina con</label>
-              <select class="field-select" onchange="updatePeriodaleField('${sentenceId}', '${entry.id}', 'dipendeDa', this.value)">
-                <option value="">— nessuna —</option>
-                ${altreProposizioni.map(p => `<option value="${p.id}" ${entry.dipendeDa === p.id ? 'selected' : ''}>${p._sigla || ''} · ${escapeHtml((p.text || '(senza testo)').substring(0, 40))}${p.text && p.text.length > 40 ? '…' : ''}</option>`).join('')}
-              </select>
-            </div>` : ''}
-          <div class="field-block" style="grid-column: 1/-1;">
-            <label class="field-block-label">Note (libere)</label>
-            <input class="field-input" type="text" value="${escapeHtml(entry.note || '')}"
-                   oninput="updatePeriodaleField('${sentenceId}', '${entry.id}', 'note', this.value)"
-                   placeholder="Es. introdotta da…, congiuntivo eventuale, costrutto…">
-          </div>
-        </div>
-        ${renderPropositionInsight(sentenceId, entry, lang)}
-      </div>`}
+      ${collapsed ? '' : `<div class="entry-body">${renderPeriodaleBody(sentenceId, entry, lang)}</div>`}
     </div>`;
 }
 
@@ -31611,6 +31728,7 @@ function confirmSetup() {
   if (state.sentences.length === 0) {
     state.sentences = splitTextIntoSentences(state.meta.testoOriginale).map(makeSentence);
   }
+  maybeAutoClosedClass();   // classi chiuse (particelle/prep./cong./pronomi) auto all'import
   state.currentStep = 2;
   persistCurrent();
   renderAll();
@@ -31822,6 +31940,7 @@ function resplitSentences() {
     if (!confirm('La risegmentazione automatica eliminerà l\'analisi già fatta. Procedere?')) return;
   }
   state.sentences = splitTextIntoSentences(state.meta.testoOriginale).map(makeSentence);
+  maybeAutoClosedClass();
   persistCurrent();
   renderEditor();
   renderSidebarTabs();
@@ -31832,6 +31951,7 @@ function addSentence() {
   const text = prompt('Testo della frase:');
   if (!text || !text.trim()) return;
   state.sentences.push(makeSentence(text.trim()));
+  maybeAutoClosedClass();
   persistCurrent();
   renderEditor();
   renderSidebarTabs();
@@ -32682,6 +32802,10 @@ function confirmPendingLogic(sentenceId) {
       };
     }
   }
+
+  // Metodo unificato: porta il focus sul blocco appena creato, così la
+  // focus-card mostra subito il sintagma con l'editor completo.
+  state.unifiedFocusToken = { sentenceId, tokenIdx: sortedIdx[0] };
 
   logicSel = { sentenceId: null, indices: [] };
   persistCurrent();
