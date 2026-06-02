@@ -2698,12 +2698,20 @@ body.poetrify-dark .scheletro-stepper { background: var(--poetrify-paper); }
 }
 body.poetrify-dark .scheletro-verb-tag,
 body.poetrify-dark .scheletro-role-tag { background: rgba(255,255,255,0.22); }
-/* verbo NON finito · riempimento pieno più tenue (niente tratteggio) */
+/* verbo NON finito · marcato in modo INEQUIVOCABILE: stesso rosso della palette
+   verbi ma con SOTTOLINEATURA ONDULATA + corsivo, così non sembra mai "non
+   selezionato" e si distingue a colpo d'occhio dal verbo finito (riempito). */
 .scheletro-verb-nonfin {
-  background: rgba(197,48,48,0.13) !important;
-  border-color: rgba(197,48,48,0.5) !important;
-  color: #a13b3b !important;
-  font-weight: 600;
+  background: rgba(197,48,48,0.06) !important;
+  border-color: rgba(197,48,48,0.34) !important;
+  color: #b23030 !important;
+  font-weight: 700 !important;
+  font-style: italic !important;
+  text-decoration: underline !important;
+  text-decoration-style: wavy !important;
+  text-decoration-color: rgba(197,48,48,0.9) !important;
+  text-decoration-thickness: 2px !important;
+  text-underline-offset: 3px !important;
 }
 /* elenco proposizioni / voci logiche dentro un blocco-frase dello scheletro */
 .scheletro-prop-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
@@ -2756,7 +2764,8 @@ body.poetrify-dark .schel-conn-item { background: rgba(255,255,255,0.06); }
 .schel-vq-title { font-family: var(--font-ui); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: #8b1f1f; margin-bottom: 6px; }
 .schel-vq-row { display: flex; align-items: flex-start; gap: 10px; padding: 4px 0; border-top: 1px solid var(--poetrify-rule-soft); }
 .schel-vq-row:first-of-type { border-top: none; }
-.schel-vq-word { flex: 0 0 auto; min-width: 70px; font-weight: 700; color: var(--poetrify-primary); font-size: 14px; padding-top: 4px; }
+.schel-vq-word { flex: 0 0 auto; min-width: 70px; font-weight: 800; color: #8b1f1f; font-size: 14px; padding-top: 4px; }
+body.poetrify-dark .schel-vq-word { color: #f1a3a3; }
 .schel-vq-word.greek { font-family: var(--font-classical); }
 .schel-vq-fields { display: flex; flex-wrap: wrap; gap: 6px 10px; flex: 1; }
 .schel-vq-field { display: inline-flex; flex-direction: column; gap: 1px; }
@@ -7920,15 +7929,24 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
    i bordi delle tendine (select) e dei campi si tingono della palette del caso. */
 .entry-card[class*="case-"] .field-select,
 .entry-card[class*="case-"] .field-input,
-.token-action-bar[class*="case-"] .field-select {
+.token-action-bar[class*="case-"] .field-select,
+.schel-confirm[class*="case-"] .field-select {
   border-color: var(--case-border);
 }
 .entry-card[class*="case-"] .field-select:focus,
 .entry-card[class*="case-"] .field-input:focus,
-.token-action-bar[class*="case-"] .field-select:focus {
+.token-action-bar[class*="case-"] .field-select:focus,
+.schel-confirm[class*="case-"] .field-select:focus {
   border-color: var(--case-strong);
   box-shadow: 0 0 0 2px var(--case-bg);
   outline: none;
+}
+/* SCHELETRO · i riquadri (entry-card) sotto il menù riprendono per intero il
+   colore della funzione selezionata — stesso colore del bordo del menù a
+   tendina, per coerenza visiva (niente più riquadri grigi neutri). */
+.scheletro-prop-list .entry-card[class*="case-"] {
+  border: 1px solid var(--case-border, var(--poetrify-rule));
+  border-left: 4px solid var(--case-strong, var(--poetrify-primary));
 }
 /* la barra di selezione/azione si tinge del caso della funzione scelta */
 .token-action-bar[class*="case-"] { border-color: var(--case-border); }
@@ -24763,7 +24781,7 @@ function renderStep3HtmlScheletro() {
     { num: 3, icon: '🟦', label: 'Soggetto',     hint: 'Individua il soggetto e il suo gruppo (attributi, apposizioni, specificazioni). Il menù è isolato a questa fase.' },
     { num: 4, icon: '🟧', label: 'Oggetto',      hint: 'Individua il complemento oggetto e il suo gruppo. Il menù è isolato a questa fase.' },
     { num: 5, icon: '🔗', label: 'Prepos.',      hint: 'Individua i complementi RETTI DA PREPOSIZIONE (accusativo e ablativo). Il menù si organizza in base alla preposizione che regge il blocco selezionato.' },
-    { num: 6, icon: '🟫', label: 'Altri compl.', hint: 'Individua gli altri complementi a caso semplice (genitivo e dativo, senza preposizione). Il menù elenca solo questi.' },
+    { num: 6, icon: '🟫', label: 'Altri compl.', hint: 'Individua gli altri complementi a caso semplice, SENZA preposizione (genitivo, dativo e ablativo: mezzo, modo, causa, tempo, limitazione…). Il menù elenca solo questi.' },
   ];
 
   /* Mini-stepper */
@@ -24865,8 +24883,10 @@ function scheletroPhaseFuncs(phase, lang) {
     if (!out.includes('Altro / da specificare')) out.push('Altro / da specificare');
     return out;
   }
+  // latino: genitivo + dativo + ABLATIVO (anche i complementi a caso semplice
+  // ablativo: mezzo, modo, causa, tempo, materia, limitazione…) + vocativo.
   const out = [];
-  [...groupItems(/genitivo/i), ...groupItems(/dativo/i), ...groupItems(/vocativo/i), 'Altro / da specificare']
+  [...groupItems(/genitivo/i), ...groupItems(/dativo/i), ...groupItems(/ablativo/i), ...groupItems(/vocativo/i), 'Altro / da specificare']
     .forEach(it => { if (!exclude.has(it) && !out.includes(it)) out.push(it); });
   return out;
 }
@@ -24887,9 +24907,9 @@ function renderScheletroVerbi(sentences, lang) {
       if (isFin) cls.push('scheletro-verb-marked', 'case-verbo');
       else if (isNonFin) cls.push('scheletro-verb-nonfin', 'case-verbo');
       else cls.push('token-untagged');
-      const marker = isFin ? '<span class="scheletro-verb-tag">vb</span>'
-                   : isNonFin ? '<span class="scheletro-verb-tag nf">vb°</span>' : '';
-      return `<span class="${cls.join(' ')}" onclick="scheletroCycleVerb('${sentence.id}', ${tok.idx})" title="Click: ∅ → verbo finito → verbo non finito → ∅">${escapeHtml(tok.text)}${marker}</span>`;
+      // niente più chip grigio: il VERBO FINITO è in rosso pieno, il NON FINITO
+      // in rosso con sottolineatura ondulata e corsivo (vedi CSS) → distinguibili a vista.
+      return `<span class="${cls.join(' ')}" onclick="scheletroCycleVerb('${sentence.id}', ${tok.idx})" title="Click: ∅ → verbo finito (rosso pieno) → verbo non finito (rosso ondulato) → ∅">${escapeHtml(tok.text)}</span>`;
     }).join('');
     const fin = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo' && g.verboForma === 'Forma finita').length;
     const nf = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo' && g._scheletroForma === 'non-finita').length;
@@ -24982,18 +25002,62 @@ function suggestVerbMorph(word, lang) {
   if (!word) return out;
   const w = (typeof normalizeText === 'function') ? normalizeText(word) : String(word).toLowerCase();
   if (lang === 'greco') {
+    // ── 1) forme NON FINITE (riconosciute dai suffissi modali) ──
+    // participio medio-passivo -μενος/-μενη/-μενον (+ flessione)
+    if (/μεν(ος|η|ον|ου|ης|οι|αι|α|ων|οις|αις|ους|ας)$/.test(w)) {
+      out.verboForma = 'Participio'; out.diatesi = 'Medio-passiva';
+      out.tempo = /σαμεν/.test(w) ? 'Aoristo' : (/σομεν/.test(w) ? 'Futuro' : 'Presente');
+      return out;
+    }
+    // infinito: -σθαι (medio) · -σαι (aor. att.) · -(ε)ναι · -ειν
+    if (/σθαι$/.test(w)) { out.verboForma = 'Infinito'; out.diatesi = 'Medio-passiva'; out.tempo = /σασθαι$/.test(w) ? 'Aoristo' : 'Presente'; return out; }
+    if (/σαι$/.test(w)) { out.verboForma = 'Infinito'; out.tempo = 'Aoristo'; return out; }
+    if (/(εναι|ναι)$/.test(w)) { out.verboForma = 'Infinito'; out.tempo = /κεναι$/.test(w) ? 'Perfetto' : 'Presente'; return out; }
+    if (/ειν$/.test(w)) { out.verboForma = 'Infinito'; out.tempo = /σειν$/.test(w) ? 'Futuro' : 'Presente'; return out; }
+
+    out.verboForma = 'Forma finita';
+    // ── 2) augmento / raddoppiamento → tempo storico / perfetto ──
     try {
       const d = detectGreekAugmentReduplication(word, '');
-      if (d && d.kind === 'reduplication') { out.verboForma = 'Forma finita'; out.tempo = 'Perfetto'; out.modo = 'Indicativo'; }
-      else if (d && d.kind) { out.verboForma = 'Forma finita'; out.modo = 'Indicativo'; } // tempo storico (impf/aor)
+      if (d && d.kind === 'reduplication') { out.tempo = 'Perfetto'; out.modo = 'Indicativo'; }
+      else if (d && d.kind) { out.modo = 'Indicativo'; }   // imperfetto / aoristo: tempo storico
     } catch (_) {}
-    if (/σω$/.test(w)) { out.verboForma = 'Forma finita'; out.tempo = 'Futuro'; out.modo = 'Indicativo'; }
-    else if (/σα$/.test(w)) { out.verboForma = 'Forma finita'; out.tempo = 'Aoristo'; out.modo = 'Indicativo'; }
-    if (/ειν$|σαι$|ναι$|σθαι$/.test(w)) { out.verboForma = 'Infinito'; out.modo = 'Infinito'; }
-    const GP = [[/ομεν$|αμεν$/, { persona: '1ª', numero: 'Plurale' }], [/ετε$/, { persona: '2ª', numero: 'Plurale' }],
-      [/ουσι[νʹ]?$|ασι[νʹ]?$/, { persona: '3ª', numero: 'Plurale' }], [/εις$/, { persona: '2ª', numero: 'Singolare' }],
-      [/ει$/, { persona: '3ª', numero: 'Singolare' }], [/ω$/, { persona: '1ª', numero: 'Singolare' }]];
-    for (const [re, v] of GP) if (re.test(w) && !out.persona) { Object.assign(out, v); break; }
+
+    // ── 3) AORISTO PASSIVO -θη- (suffisso modale-temporale forte) ──
+    if (/θη(ν|ς|μεν|τε|σαν)?$|θητι$|θωσι[ν]?$|θειη/.test(w)) {
+      out.tempo = 'Aoristo'; out.diatesi = 'Passiva';
+      out.modo = /θητι$/.test(w) ? 'Imperativo' : (/θειη/.test(w) ? 'Ottativo' : 'Indicativo');
+      const TP = [[/θημεν$/, { persona: '1ª', numero: 'Plurale' }], [/θητε$/, { persona: '2ª', numero: 'Plurale' }],
+        [/θησαν$|θωσι[ν]?$/, { persona: '3ª', numero: 'Plurale' }], [/θην$/, { persona: '1ª', numero: 'Singolare' }],
+        [/θης$/, { persona: '2ª', numero: 'Singolare' }], [/θη$/, { persona: '3ª', numero: 'Singolare' }]];
+      for (const [re, v] of TP) if (re.test(w)) { Object.assign(out, v); break; }
+    }
+    // ── 4) tempo dal suffisso temporale -σ- (futuro) / -σα- (aoristo sigmatico) ──
+    else if (/σ(ω|εις|ει|ομεν|ετε|ουσι[ν]?|ομαι|ῃ|η|εται|ομεθα|εσθε|ονται)$/.test(w)) {
+      out.tempo = 'Futuro'; if (/σ(ομαι|ῃ|εται|ομεθα|εσθε|ονται)$/.test(w)) out.diatesi = 'Media';
+    }
+    else if (/σα(ς|μεν|τε|ν|μην|σθε|ντο|το)?$|σαντο$/.test(w)) {
+      out.tempo = 'Aoristo'; if (/σα(μην|σθε|ντο|το)$/.test(w)) out.diatesi = 'Media';
+    }
+
+    // ── 5) modo OTTATIVO -οι- / -αι- (congiuntivo lasciato al manuale: ambiguo) ──
+    if (!out.modo && /οι(μι|ς|μεν|τε|εν)?$|οιη$|αιμι$|αιο$/.test(w)) out.modo = 'Ottativo';
+
+    // ── 6) desinenze personali: prima medio-passive, poi attive ──
+    const MP = [[/μεθα$/, { persona: '1ª', numero: 'Plurale' }], [/σθε$/, { persona: '2ª', numero: 'Plurale' }],
+      [/νται$|ντο$/, { persona: '3ª', numero: 'Plurale' }], [/μαι$|μην$/, { persona: '1ª', numero: 'Singolare' }],
+      [/σαι$|σο$/, { persona: '2ª', numero: 'Singolare' }], [/ται$|το$/, { persona: '3ª', numero: 'Singolare' }]];
+    let done = false;
+    for (const [re, v] of MP) if (re.test(w) && !out.persona) { Object.assign(out, v); if (!out.diatesi) out.diatesi = 'Medio-passiva'; done = true; break; }
+    if (!done && !out.persona) {
+      const GP = [[/ομεν$|αμεν$|μεν$/, { persona: '1ª', numero: 'Plurale' }], [/ετε$|ατε$|τε$/, { persona: '2ª', numero: 'Plurale' }],
+        [/ουσι[ν]?$|ασι[ν]?$|ντι$/, { persona: '3ª', numero: 'Plurale' }], [/εις$|ας$/, { persona: '2ª', numero: 'Singolare' }],
+        [/ει$|εν$|κε$|ε$/, { persona: '3ª', numero: 'Singolare' }], [/ω$|ον$|α$/, { persona: '1ª', numero: 'Singolare' }]];
+      for (const [re, v] of GP) if (re.test(w) && !out.persona) { Object.assign(out, v); break; }
+    }
+    if (!out.modo) out.modo = 'Indicativo';
+    if (!out.tempo) out.tempo = 'Presente';
+    if (!out.diatesi) out.diatesi = 'Attiva';
     return out;
   }
   // ── LATINO ──
@@ -25017,9 +25081,12 @@ function suggestVerbMorph(word, lang) {
   }
   if (pn) Object.assign(out, pn);
   out.diatesi = passive ? 'Passiva' : 'Attiva';
-  // tempo/modo dai suffissi modali-temporali (vocali tematiche + infissi)
+  // tempo/modo dai suffissi modali-temporali (tema del perfetto v/u/s/x + infissi)
   if (/(v|u|s|x)isse(m|s|t|mus|tis)?$|(v|u|s|x)issent$/.test(w)) { out.tempo = 'Piuccheperfetto'; out.modo = 'Congiuntivo'; }
   else if (/(v|u|s|x)era(m|s|t|mus|tis)?$|(v|u|s|x)erant$/.test(w)) { out.tempo = 'Piuccheperfetto'; out.modo = 'Indicativo'; }
+  else if (/(v|u|s|x)ero$/.test(w)) { out.tempo = 'Futuro anteriore'; out.modo = 'Indicativo'; }                       // amavero
+  else if (/(v|u|s|x)erim$/.test(w)) { out.tempo = 'Perfetto'; out.modo = 'Congiuntivo'; }                            // amaverim (1ª sg, non ambigua)
+  else if (/(v|u|s|x)eri(s|t|mus|tis)$|(v|u|s|x)erint$/.test(w)) { out.tempo = 'Futuro anteriore'; out.modo = 'Indicativo'; } // amaveris… (≈ cong. perf., da rivedere)
   else if (/(v|u|s|x)(i|isti|it|imus|istis|erunt|ere)$/.test(w)) { out.tempo = 'Perfetto'; out.modo = 'Indicativo'; }
   else if (/ba(m|s|t|mus|tis)?$|bant$/.test(w)) { out.tempo = 'Imperfetto'; out.modo = 'Indicativo'; }
   else if (/bi(s|t|mus|tis)?$|bunt$|bo$/.test(w)) { out.tempo = 'Futuro semplice'; out.modo = 'Indicativo'; }
@@ -25046,12 +25113,12 @@ function renderScheletroProposizioni(sentences, lang) {
       if (pe) { cls.push('periodale-lvl'); style = ` style="${periodaleEntryStyle(pe)}"`; }
       else cls.push('token-untagged');
       if (inSel) cls.push('token-selected');
-      // VISIBILITÀ DELLE FORME VERBALI (colore PIENO, niente tratteggio)
+      // VISIBILITÀ DELLE FORME VERBALI: finito = rosso pieno · non finito = rosso
+      // ondulato/corsivo (CSS) — niente chip grigio.
       const isVerb = ge && ge.partOfSpeech === 'Verbo';
       const isNonFin = isVerb && ge._scheletroForma === 'non-finita';
       if (isVerb) { cls.push('scheletro-verb-outline'); if (isNonFin) cls.push('scheletro-verb-nonfin'); }
       let mark = (pe && Math.min.apply(null, (pe.tokenIndices || [tok.idx])) === tok.idx) ? `<span class="token-periodale-sigla">${pe._sigla}</span>` : '';
-      if (isVerb) mark = `<span class="scheletro-verb-tag${isNonFin ? ' nf' : ''}">${isNonFin ? 'vb°' : 'vb'}</span>` + mark;
       // CONGIUNZIONI: colorate direttamente; confermate = piene, candidate = tenui
       if (ge && ge.partOfSpeech === 'Congiunzione') {
         const confirmed = !!ge._connConfirmed;
@@ -25092,7 +25159,7 @@ function renderScheletroLogic(sentences, lang, phase) {
     soggetto: { icon: '🟦', title: 'Soggetto', note: 'Individua il SOGGETTO e il suo gruppo (attributi, apposizioni, specificazioni). Il menù mostra solo le funzioni di questa fase.' },
     oggetto:  { icon: '🟧', title: 'Compl. oggetto', note: 'Individua il COMPLEMENTO OGGETTO e il suo gruppo. Il menù è isolato a questa fase.' },
     preposizionali: { icon: '🔗', title: 'Compl. con preposizione', note: 'Individua i complementi RETTI DA PREPOSIZIONE (accusativo e ablativo). Selezionato il blocco, il menù si organizza in base alla preposizione che lo regge: i complementi più probabili compaiono per primi.' },
-    altri:    { icon: '🟫', title: 'Altri complementi', note: 'Individua i complementi a CASO SEMPLICE (genitivo e dativo, senza preposizione). Il menù elenca solo questi.' },
+    altri:    { icon: '🟫', title: 'Altri complementi', note: 'Individua i complementi a CASO SEMPLICE, senza preposizione (genitivo, dativo e ablativo: mezzo, modo, causa, tempo, limitazione…). Il menù elenca solo questi.' },
   }[phase];
   const allowed = scheletroPhaseFuncs(phase, lang);
   const allowedSet = new Set(allowed);
@@ -25109,15 +25176,20 @@ function renderScheletroLogic(sentences, lang, phase) {
       const isNonFinV = ge && ge.partOfSpeech === 'Verbo' && ge._scheletroForma === 'non-finita';
       const inSel = logicSel.sentenceId === sentence.id && logicSel.indices.includes(tok.idx);
       const cls = ['token', 'scheletro-token'];
-      if (le) cls.push('case-' + funzioneToCaseGroup(le.funzione));
-      else if (isFinV) cls.push('case-verbo', 'scheletro-verb-marked');     // rosso pieno
-      else if (isNonFinV) cls.push('case-verbo', 'scheletro-verb-nonfin');  // rosso tenue
+      if (le) {
+        // BLOCCO ISOLATO confermato → sistema "bordo + sottolineatura" per caso/funzione
+        // (come nell'analisi logica dedicata): sottolineatura colorata + accento
+        // laterale sul PRIMO token del sintagma. Niente più riquadro grigio: la
+        // funzione è già leggibile nel riquadro/menù a tendina sotto.
+        cls.push('case-' + funzioneToCaseGroup(le.funzione), 'logic-line');
+        const firstIdx = Math.min.apply(null, (le.tokenIndices && le.tokenIndices.length) ? le.tokenIndices : [tok.idx]);
+        if (tok.idx === firstIdx) cls.push('token-accent-start');
+      }
+      else if (isFinV) cls.push('case-verbo', 'scheletro-verb-marked');     // rosso pieno (verbo finito)
+      else if (isNonFinV) cls.push('case-verbo', 'scheletro-verb-nonfin');  // rosso ondulato (verbo non finito)
       else cls.push('token-untagged');
       if (inSel) cls.push('token-selected');
-      const mark = le ? `<span class="scheletro-role-tag">${escapeHtml((le.funzione || '').split(' ')[0].slice(0, 4))}</span>`
-                 : isFinV ? '<span class="scheletro-verb-tag">vb</span>'
-                 : isNonFinV ? '<span class="scheletro-verb-tag nf">vb°</span>' : '';
-      return `<span class="${cls.join(' ')}" data-token-mode="logic" data-token-idx="${tok.idx}" data-sentence-id="${sentence.id}" onclick="scheletroLogicClick(event,'${sentence.id}',${tok.idx})" title="Click/trascina per selezionare il gruppo">${escapeHtml(tok.text)}${mark}</span>`;
+      return `<span class="${cls.join(' ')}" data-token-mode="logic" data-token-idx="${tok.idx}" data-sentence-id="${sentence.id}" onclick="scheletroLogicClick(event,'${sentence.id}',${tok.idx})" title="Click/trascina per selezionare il gruppo">${escapeHtml(tok.text)}</span>`;
     }).join('');
     let bar = '';
     if (logicSel.sentenceId === sentence.id && logicSel.indices.length) {
