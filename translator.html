@@ -2783,6 +2783,12 @@ body.poetrify-dark .schel-vq-word { color: #f1a3a3; }
 .schel-vq-suggest { background: rgba(214,158,46,0.16); border-color: rgba(214,158,46,0.5); color: #7a4f0a; }
 body.poetrify-dark .schel-vq-wrap { background: rgba(197,48,48,0.10); }
 body.poetrify-dark .schel-vq-row.is-active { background: rgba(197,48,48,0.12); }
+/* FASE 7 · Traduzione (ordo SVO + brutta) */
+.schel-trad-original { margin: 4px 0 8px; font-size: 14px; color: var(--poetrify-ink); font-style: italic; }
+.schel-trad-original.greek { font-family: var(--font-classical); font-style: normal; }
+.schel-trad-tools { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 8px; }
+.schel-trad-brutta { margin-top: 10px; }
+.schel-trad-brutta .field-block-label { display: block; margin-bottom: 4px; font-family: var(--font-ui); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--poetrify-sepia); }
 /* barra di conferma MINIMALE della selezione logica · colore = caso/funzione */
 .schel-confirm {
   display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
@@ -24493,7 +24499,7 @@ function renderQuickBar() {
     { value: 'integrale',       icon: '🌐', label: 'Integrale',  title: 'Tutta la versione mostrata insieme · ottima per brani coesi e batch' },
     { value: 'attuale',         icon: '🎯', label: 'Attuale',    title: 'Per frase, con libertà di salto · approccio bilanciato' },
     { value: 'frase-per-frase', icon: '📍', label: 'Frase/frase',title: 'Wizard sequenziale per ogni frase · massima disciplina didattica' },
-    { value: 'scheletro',       icon: '🦴', label: 'Scheletro',  title: 'Verbi → soggetti/oggetti → periferia · come traducono i classicisti esperti' },
+    { value: 'scheletro',       icon: '🦴', label: 'Scheletro',  title: 'Verbi → proposizioni → soggetto/oggetto → complementi → traduzione SVO · come traducono i classicisti esperti' },
   ];
   const profileBtns = [
     { value: 'medie',    icon: '🌱', label: 'Medie',    title: 'Latino · solo guidata · interfaccia ridotta' },
@@ -24809,7 +24815,14 @@ function getScheletroStep() {
 }
 
 function setScheletroStep(step) {
-  state.scheletroStep = Math.max(1, Math.min(6, step));
+  state.scheletroStep = Math.max(1, Math.min(7, step));
+  // Entrando nella fase Traduzione, semina l'ordo verborum di ogni frase ancora
+  // vuota con i suoi sintagmi (logica) e verbi, già riordinati in SVO italiano.
+  if (state.scheletroStep === 7) {
+    (state.sentences || []).forEach(s => {
+      if (!Array.isArray(s.ordoVerborum) || s.ordoVerborum.length === 0) scheletroSeedOrdo(s);
+    });
+  }
   persistCurrent();
   renderEditor();
 }
@@ -24825,6 +24838,7 @@ function renderStep3HtmlScheletro() {
     { num: 4, icon: '🟧', label: 'Oggetto',      hint: 'Individua il complemento oggetto e il suo gruppo. Il menù è isolato a questa fase.' },
     { num: 5, icon: '🔗', label: 'Prepos.',      hint: 'Individua i complementi RETTI DA PREPOSIZIONE (accusativo e ablativo). Il menù si organizza in base alla preposizione che regge il blocco selezionato.' },
     { num: 6, icon: '🟫', label: 'Altri compl.', hint: 'Individua gli altri complementi a caso semplice, SENZA preposizione (genitivo, dativo e ablativo: mezzo, modo, causa, tempo, limitazione…). Il menù elenca solo questi.' },
+    { num: 7, icon: '✍️', label: 'Traduzione',   hint: 'Riprendi i sintagmi e i verbi individuati e riordinali nell\'ordo verborum SVO italiano (soggetto · verbo · oggetto · complementi); scrivi la resa letterale (brutta) di ciascuno e portala nella sezione Traduzione.' },
   ];
 
   /* Mini-stepper */
@@ -24848,7 +24862,8 @@ function renderStep3HtmlScheletro() {
   else if (step === 3) bodyHtml = renderScheletroLogic(sentences, lang, 'soggetto');
   else if (step === 4) bodyHtml = renderScheletroLogic(sentences, lang, 'oggetto');
   else if (step === 5) bodyHtml = renderScheletroLogic(sentences, lang, 'preposizionali');
-  else bodyHtml = renderScheletroLogic(sentences, lang, 'altri');
+  else if (step === 6) bodyHtml = renderScheletroLogic(sentences, lang, 'altri');
+  else bodyHtml = renderScheletroTraduzione(sentences, lang);
 
   const stats = `<div class="scheletro-stats">
     <span class="scheletro-stat"><strong>${totalVerbs}</strong> verbi</span>
@@ -24859,7 +24874,7 @@ function renderStep3HtmlScheletro() {
 
   const navButtons = `<div class="scheletro-nav">
     ${step > 1 ? `<button class="btn btn-ghost btn-sm" onclick="setScheletroStep(${step - 1})">← Fase precedente</button>` : '<span></span>'}
-    ${step < 6 ? `<button class="btn btn-primary btn-sm" onclick="setScheletroStep(${step + 1})">Fase successiva (${escapeHtml(STEPS[step].label)}) →</button>` : '<button class="btn btn-primary btn-sm" onclick="goToStep(5)">✓ Vai alla traduzione</button>'}
+    ${step < 7 ? `<button class="btn btn-primary btn-sm" onclick="setScheletroStep(${step + 1})">Fase successiva (${escapeHtml(STEPS[step].label)}) →</button>` : '<button class="btn btn-primary btn-sm" onclick="scheletroExportToTranslation()">✓ Esporta nella sezione Traduzione →</button>'}
   </div>`;
 
   return sectionHeader('C', 'Analisi · approccio Scheletro', STEPS[step - 1].hint)
@@ -24922,6 +24937,159 @@ function scheletroPhaseFuncs(phase, lang) {
   [...groupItems(/genitivo/i), ...groupItems(/dativo/i), ...groupItems(/ablativo/i), ...groupItems(/vocativo/i), 'Altro / da specificare']
     .forEach(it => { if (!exclude.has(it) && !out.includes(it)) out.push(it); });
   return out;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   FASE 7 · TRADUZIONE · riprende i sintagmi (logica) e i verbi individuati, li
+   riordina nell'ordo verborum SVO italiano e raccoglie la resa letterale (brutta)
+   per ciascuno; il tutto è esportabile nella scheda E · Traduzione.
+   Riusa l'infrastruttura ordoVerborum esistente (renderOrdoChip, drag, ecc.).
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/* Rango SVO italiano di un elemento ordo in base alla sua funzione logica. */
+function scheletroSVORank(funzione, isVerbo) {
+  const f = (funzione || '').toLowerCase();
+  if (f.includes('vocazione') || f === 'apostrofe') return 0;   // vocativo: in testa
+  if (isVerbo) return 30;                                        // V (predicato)
+  if (f === 'soggetto') return 10;                              // S
+  if (f.includes('soggetto')) return 12;                       // genitivo soggettivo… vicino al soggetto
+  if (f === 'predicato verbale' || f === 'copula') return 30;
+  if (f === 'parte nominale' || f === 'predicato nominale' || f.includes('predicativo del soggetto')) return 32;
+  if (f === 'complemento oggetto' || f.includes("predicativo dell'oggetto")) return 40;   // O
+  if (f.includes('termine')) return 50;                        // dativo (a/per qualcuno)
+  if (f.includes('specificazione')) return 55;
+  if (f === 'attributo' || f === 'apposizione') return 60;     // modificatori (drag per affinare)
+  return 70;                                                    // altri complementi
+}
+
+/* Posizione nel testo originale di un elemento ordo (per il tie-break SVO). */
+function scheletroOrdoPos(sentence, o) {
+  if (typeof o.sourceTokenIdx === 'number') return o.sourceTokenIdx;
+  if (o.sourceLogicId) {
+    const l = (sentence.logic || []).find(x => x.id === o.sourceLogicId);
+    if (l && Array.isArray(l.tokenIndices) && l.tokenIndices.length) return Math.min.apply(null, l.tokenIndices);
+  }
+  return 9999;
+}
+
+/* Riordina in-place l'ordo verborum di una frase secondo l'SVO italiano. */
+function scheletroOrdoSortInPlace(sentence) {
+  (sentence.ordoVerborum || []).sort((a, b) => {
+    const ra = scheletroSVORank(a.funzione, a.isVerbo), rb = scheletroSVORank(b.funzione, b.isVerbo);
+    if (ra !== rb) return ra - rb;
+    return scheletroOrdoPos(sentence, a) - scheletroOrdoPos(sentence, b);
+  });
+}
+
+/* Semina l'ordo di una frase con i suoi sintagmi (logica) + verbi (predicati)
+   non già presenti, poi riordina in SVO. Restituisce quanti elementi ha aggiunto. */
+function scheletroSeedOrdo(sentence) {
+  if (!sentence) return 0;
+  if (!Array.isArray(sentence.ordoVerborum)) sentence.ordoVerborum = [];
+  const tokens = tokenizeSentence(sentence.original);
+  const phraseFromIdx = (idxArr) => [...idxArr].sort((a, b) => a - b)
+    .map(i => (tokens.find(t => t.idx === i) || {}).text).filter(Boolean).join(' ');
+  const existing = new Set(sentence.ordoVerborum.map(o => o.sourceLogicId).filter(Boolean));
+  const logicCovered = new Set();
+  (sentence.logic || []).forEach(l => (l.tokenIndices || []).forEach(i => logicCovered.add(i)));
+  let added = 0;
+  // 1) sintagmi della logica
+  (sentence.logic || []).forEach(l => {
+    if (existing.has(l.id)) return;
+    let phrase = l.phrase || '';
+    if (Array.isArray(l.tokenIndices) && l.tokenIndices.length) { const r = phraseFromIdx(l.tokenIndices); if (r) phrase = r; }
+    const o = makeOrdoElement(phrase, '', l.id);
+    if (l.funzione) o.funzione = l.funzione;
+    if (Array.isArray(l.tokenIndices) && l.tokenIndices.length) o.sourceTokenIdx = Math.min.apply(null, l.tokenIndices);
+    sentence.ordoVerborum.push(o); added++;
+  });
+  // 2) verbi (predicati) non già inclusi in un sintagma logico
+  (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo' && g.tokenIndex != null)
+    .sort((a, b) => (a.tokenIndex || 0) - (b.tokenIndex || 0))
+    .forEach(v => {
+      if (logicCovered.has(v.tokenIndex)) return;
+      const srcId = 'V:' + v.tokenIndex;
+      if (existing.has(srcId)) return;
+      const o = makeOrdoElement(v.word || (tokens.find(t => t.idx === v.tokenIndex) || {}).text || '', '', srcId);
+      o.funzione = 'Predicato verbale'; o.isVerbo = true; o.sourceTokenIdx = v.tokenIndex;
+      sentence.ordoVerborum.push(o); added++;
+    });
+  scheletroOrdoSortInPlace(sentence);
+  return added;
+}
+
+/* Handler · importa/riprende sintagmi + verbi nell'ordo della frase. */
+function scheletroImportOrdo(sentenceId) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const n = scheletroSeedOrdo(sentence);
+  persistCurrent(); renderEditor(); renderSidebarTabs();
+  showToast(n > 0 ? `Ripresi ${n} element${n === 1 ? 'o' : 'i'} (sintagmi + verbi) · riordinati in SVO` : 'Tutti i sintagmi e i verbi sono già presenti nell\'ordo');
+}
+
+/* Handler · riordina l'ordo della frase in SVO italiano. */
+function scheletroOrdoSVO(sentenceId) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence || !(sentence.ordoVerborum || []).length) return;
+  scheletroOrdoSortInPlace(sentence);
+  persistCurrent(); renderEditor();
+  showToast('Riordinato in SVO italiano · soggetto → verbo → oggetto → complementi');
+}
+
+/* Esporta la brutta dello scheletro nella scheda E · Traduzione (dati condivisi:
+   compila la brutta di frase dalle rese ordo se mancante, assembla la complessiva
+   se vuota, poi apre la sezione Traduzione). */
+function scheletroExportToTranslation() {
+  let filled = 0;
+  (state.sentences || []).forEach(s => {
+    const text = (s.ordoVerborum || []).map(o => o.italian).filter(Boolean).join(' ');
+    if (text && !(s.translation && s.translation.trim())) { s.translation = text; filled++; }
+  });
+  const global = (state.sentences || []).map(s => s.translation || '').filter(Boolean).join(' ');
+  if (global && !(state.meta.traduzione && state.meta.traduzione.trim())) state.meta.traduzione = global;
+  persistCurrent();
+  goToStep(5);
+  showToast(filled > 0 ? `Brutta esportata (${filled} fras${filled === 1 ? 'e' : 'i'}) → scheda E · Traduzione` : 'Sezione Traduzione aperta · rifinisci le rese');
+}
+
+/* FASE 7 · render · ordo verborum SVO + brutta per frase (riusa i chip ordo). */
+function renderScheletroTraduzione(sentences, lang) {
+  const isGreek = lang === 'greco';
+  const blocks = sentences.map((sentence, sIdx) => {
+    const ordo = sentence.ordoVerborum || [];
+    const hasItalian = ordo.some(o => o.italian);
+    const chips = ordo.length === 0
+      ? `<div class="ordo-grid empty">Nessun elemento. Premi <strong>↻ Importa sintagmi e verbi</strong> per riprendere ciò che hai individuato nelle fasi precedenti.</div>`
+      : `<div class="ordo-grid">${ordo.map((o, i) => renderOrdoChip(sentence.id, o, i)).join('')}</div>`;
+    const proposed = hasItalian
+      ? `<div class="muted-text" style="margin-top:6px;font-size:11px;font-style:italic;">Ordo proposto: ${ordo.filter(o => o.italian).map(o => escapeHtml(o.italian)).join(' · ')}</div>`
+      : '';
+    return `<div class="scheletro-sentence-block">
+      <div class="scheletro-sentence-header">
+        <span class="scheletro-sentence-num">Frase ${sIdx + 1}</span>
+        <span class="scheletro-sentence-count">${ordo.length} element${ordo.length === 1 ? 'o' : 'i'} · ${sentence.translation && sentence.translation.trim() ? 'brutta ✓' : 'brutta —'}</span>
+      </div>
+      <div class="schel-trad-original ${isGreek ? 'greek' : ''}">${escapeHtml(sentence.original)}</div>
+      <div class="schel-trad-tools">
+        <button class="btn btn-brand-soft btn-sm" onclick="scheletroImportOrdo('${sentence.id}')" title="Riprendi i sintagmi della logica e i verbi come scaletta dell'ordo">↻ Importa sintagmi e verbi</button>
+        ${ordo.length > 1 ? `<button class="btn btn-ghost btn-sm" onclick="scheletroOrdoSVO('${sentence.id}')" title="Riordina in soggetto · verbo · oggetto · complementi (italiano)">↕ Riordina SVO</button>` : ''}
+        <button class="btn btn-ghost btn-sm" onclick="addOrdoElement('${sentence.id}')">+ Aggiungi</button>
+        ${hasItalian ? `<button class="btn btn-ghost btn-sm" onclick="generateBruttaFromOrdo('${sentence.id}')" title="Concatena le rese italiane dei blocchi nella brutta copia">↑ Aggiorna brutta</button>` : ''}
+      </div>
+      ${chips}
+      ${proposed}
+      <div class="schel-trad-brutta">
+        <label class="field-block-label">Brutta copia · resa letterale della frase</label>
+        <textarea class="translation-textarea brutta" placeholder="Resa di lavoro, vicina all'originale — concatena le rese dei sintagmi nell'ordine SVO…" oninput="updateSentenceTranslation('${sentence.id}', this.value)">${escapeHtml(sentence.translation || '')}</textarea>
+      </div>
+    </div>`;
+  }).join('');
+  return `<div class="subsection">
+    <div class="method-note" style="background:rgba(47,133,90,0.07);border-left-color:rgba(47,133,90,0.55);">
+      <strong>✍️ Fase · Traduzione.</strong> Riprendi i <strong>sintagmi</strong> individuati nelle fasi logiche e i <strong>verbi</strong>, riordinali nell'<em>ordo verborum SVO italiano</em> (soggetto · verbo · oggetto · complementi) trascinando i blocchi, e scrivi la <strong>resa letterale</strong> di ciascuno. Con «<strong>Esporta nella sezione Traduzione</strong>» la brutta passa alla scheda <strong>E · Traduzione</strong>, dove la rifinirai in bella copia.
+    </div>
+    ${blocks}
+  </div>`;
 }
 
 /* FASE 1 · Verbi · click ciclico ∅ → finito → non finito → ∅ */
