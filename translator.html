@@ -8136,10 +8136,13 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
 .entry-summary-word {
   font-family: var(--font-body);
   font-size: 16px;
-  font-weight: 500;            /* niente grassetto */
+  font-weight: 700;            /* titolatura del menù: in grassetto */
   color: var(--poetrify-ink);  /* nero, non più blu */
   padding: 2px 0;
 }
+/* l'ESTRATTO della proposizione (testo della subordinata/principale) NON è in
+   grassetto: è una citazione del testo, non un titolo. */
+.entry-summary-word.is-extract { font-weight: 500; }
 body[data-lang="greco"] .entry-summary-word { font-family: 'Times New Roman', serif; }
 .entry-summary-word.placeholder {
   color: var(--poetrify-sepia-soft);
@@ -32485,7 +32488,7 @@ function renderLogicEntry(sentenceId, entry, lang) {
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','logic', event)">
          ${entry.isElliptical ? '<span class="entry-summary-ellipsis">sottinteso</span>' : ''}
-         <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.phrase ? '' : ' placeholder'}">${escapeHtml(phraseCap || '(sintagma da inserire)')}</span>
+         <span class="entry-summary-word is-extract ${isGreek ? 'greek' : ''}${entry.phrase ? '' : ' placeholder'}">${escapeHtml(phraseCap || '(sintagma da inserire)')}</span>
          ${summary}
        </div>`
     : `${entry.isElliptical ? '<span class="entry-summary-ellipsis" style="margin-right:8px;">sottinteso</span>' : ''}
@@ -33361,7 +33364,7 @@ function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','periodale', event)">
          ${siglaBadge}
-         <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.text ? '' : ' placeholder'}" style="font-size:14px;">${escapeHtml(textPreview || '(testo da inserire)')}</span>
+         <span class="entry-summary-word is-extract ${isGreek ? 'greek' : ''}${entry.text ? '' : ' placeholder'}" style="font-size:14px;">${escapeHtml(textPreview || '(testo da inserire)')}</span>
          ${summary}
        </div>`
     : `${siglaBadge}
