@@ -2698,20 +2698,14 @@ body.poetrify-dark .scheletro-stepper { background: var(--poetrify-paper); }
 }
 body.poetrify-dark .scheletro-verb-tag,
 body.poetrify-dark .scheletro-role-tag { background: rgba(255,255,255,0.22); }
-/* verbo NON finito · marcato in modo INEQUIVOCABILE: stesso rosso della palette
-   verbi ma con SOTTOLINEATURA ONDULATA + corsivo, così non sembra mai "non
-   selezionato" e si distingue a colpo d'occhio dal verbo finito (riempito). */
+/* verbo NON finito · RISALTATO esattamente come il finito (riempimento pieno),
+   ma in un rosso DIVERSO (terracotta/corallo) per distinguerlo dal finito
+   (cremisi). Niente ondulazione, niente corsivo. */
 .scheletro-verb-nonfin {
-  background: rgba(197,48,48,0.06) !important;
-  border-color: rgba(197,48,48,0.34) !important;
-  color: #b23030 !important;
+  background: rgba(224,98,64,0.22) !important;
+  border-color: rgba(214,90,60,0.65) !important;
+  color: #b1481f !important;
   font-weight: 700 !important;
-  font-style: italic !important;
-  text-decoration: underline !important;
-  text-decoration-style: wavy !important;
-  text-decoration-color: rgba(197,48,48,0.9) !important;
-  text-decoration-thickness: 2px !important;
-  text-underline-offset: 3px !important;
 }
 /* elenco proposizioni / voci logiche dentro un blocco-frase dello scheletro */
 .scheletro-prop-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
@@ -2722,7 +2716,7 @@ body.poetrify-dark .scheletro-role-tag { background: rgba(255,255,255,0.22); }
   color: #8b1f1f !important;
   font-weight: 700;
 }
-.scheletro-verb-outline.scheletro-verb-nonfin { background: rgba(197,48,48,0.12) !important; }
+.scheletro-verb-outline.scheletro-verb-nonfin { background: rgba(224,98,64,0.22) !important; border-color: rgba(214,90,60,0.65) !important; color: #b1481f !important; }
 /* congiunzione (connettivo) confermata: colore PIENO ambra direttamente sul token */
 .scheletro-conn-token {
   background: rgba(214,158,46,0.22) !important;
@@ -2734,7 +2728,40 @@ body.poetrify-dark .scheletro-role-tag { background: rgba(255,255,255,0.22); }
 .scheletro-conn-candidate {
   background: rgba(214,158,46,0.08) !important;
   border-color: rgba(214,158,46,0.4) !important;
+  border-style: dashed !important;
 }
+.scheletro-conn-token.is-active-conn, .scheletro-conn-candidate.is-active-conn {
+  outline: 2px solid rgba(214,158,46,0.9); outline-offset: 1px;
+}
+/* SEGNI DI PUNTEGGIATURA interagibili (asindeto/confine) nella fase Proposizioni */
+.token.schel-asyndeton {
+  cursor: pointer;
+  border: 1px dashed var(--poetrify-rule);
+  border-radius: 5px;
+  padding: 2px 6px;
+  transition: all 0.15s ease;
+}
+.token.schel-asyndeton:hover { border-color: rgba(214,158,46,0.8); color: #7a4f0a; }
+.token.schel-asyndeton.confirmed {
+  background: rgba(214,158,46,0.22);
+  border: 1px solid rgba(214,158,46,0.85);
+  color: #7a4f0a;
+  font-weight: 800;
+}
+/* tendina di accettazione/conferma della congiunzione (sotto l'anteprima) */
+.schel-conn-bar {
+  display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  margin: 8px 0; padding: 6px 8px;
+  background: rgba(214,158,46,0.08);
+  border: 1px solid rgba(214,158,46,0.45);
+  border-left: 4px solid rgba(214,158,46,0.8);
+  border-radius: 9px;
+}
+.schel-conn-bar.is-confirmed { background: rgba(214,158,46,0.14); }
+.schel-conn-bar-word { font-weight: 800; color: #7a4f0a; font-size: 15px; }
+.schel-conn-bar-word.greek { font-family: var(--font-classical); }
+.schel-conn-bar .schel-conn-sel { flex: 0 1 240px; max-width: 280px; }
+body.poetrify-dark .schel-conn-bar { background: rgba(214,158,46,0.12); }
 /* sotto-sezione · completa l'analisi grammaticale dei verbi (fase Verbi) */
 .scheletro-verb-analysis { margin: 8px 0; }
 .scheletro-verb-analysis-head { font-family: var(--font-ui); font-size: 11px; font-weight: 700; color: var(--poetrify-sepia); margin: 6px 0 2px; }
@@ -2781,6 +2808,18 @@ body.poetrify-dark .schel-vq-word { color: #f1a3a3; }
 .schel-vq-head { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .schel-vq-head .schel-vq-word { flex: 1; }
 .schel-vq-suggest { background: rgba(214,158,46,0.16); border-color: rgba(214,158,46,0.5); color: #7a4f0a; }
+/* selettore FORMA del verbo (finito / non finito) + auto */
+.schel-vq-forma { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 2px 0 4px; }
+.schel-vq-forma-btn {
+  appearance: none; cursor: pointer; font-family: var(--font-ui); font-size: 11px; font-weight: 700;
+  padding: 4px 12px; border-radius: 999px; border: 1.5px solid rgba(197,48,48,0.45);
+  background: var(--poetrify-paper); color: #8b1f1f; transition: all 0.15s ease;
+}
+.schel-vq-forma-btn:hover { border-color: #8b1f1f; }
+.schel-vq-forma-btn.active { background: rgba(197,48,48,0.9); border-color: rgba(197,48,48,0.9); color: #fff; }
+.schel-vq-forma-btn.active.nf { background: rgba(214,90,60,0.92); border-color: rgba(214,90,60,0.92); }
+.schel-vq-forma-btn.nf { border-color: rgba(214,90,60,0.5); color: #b1481f; }
+body.poetrify-dark .schel-vq-forma-btn { background: rgba(255,255,255,0.06); }
 body.poetrify-dark .schel-vq-wrap { background: rgba(197,48,48,0.10); }
 body.poetrify-dark .schel-vq-row.is-active { background: rgba(197,48,48,0.12); }
 /* FASE 7 · Traduzione (ordo SVO + brutta) */
@@ -7467,6 +7506,26 @@ body[data-lang="greco"] .translation-sentence-card .ts-original { font-family: '
   flex-wrap: wrap;
 }
 
+/* ORDO VERBORUM · gruppi per PROPOSIZIONE (principale/coordinata/subordinata),
+   colorati con la palette del tagging periodale. */
+.ordo-prop-group {
+  border: 1px solid var(--poetrify-rule-soft);
+  border-left: 4px solid var(--case-strong, var(--poetrify-rule));
+  border-radius: var(--radius-md);
+  padding: 8px 10px;
+  margin-bottom: 10px;
+}
+.ordo-prop-group.is-none { opacity: 0.92; }
+.ordo-prop-head {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 6px;
+  color: var(--case-strong, var(--poetrify-sepia));
+}
+.ordo-prop-group .ordo-grid { background: transparent; border-color: transparent; padding: 0; min-height: 0; }
 /* ORDO VERBORUM chips */
 .ordo-grid {
   display: flex;
@@ -25040,6 +25099,53 @@ function scheletroOrdoSortInPlace(sentence) {
   });
 }
 
+/* Rende l'ordo verborum COMPARTIMENTATO PER PROPOSIZIONE (principale / coordinata
+   / subordinata), riprendendo i COLORI del tagging periodale. Ogni gruppo è una
+   proposizione: dentro, l'ordine SVO dei sintagmi. Gli elementi non riconducibili
+   a una proposizione finiscono in un gruppo «non assegnati». Usato sia nella fase
+   scheletro di traduzione sia nella scheda E (in ogni livello/finestra). */
+function scheletroOrdoGroupsHtml(sentence) {
+  const ordo = sentence.ordoVerborum || [];
+  if (!ordo.length) return '';
+  const annotated = annotatePeriodaleSiglas(sentence.periodale || []);
+  const propOf = (o) => {
+    const pos = scheletroOrdoPos(sentence, o);
+    let best = null;
+    annotated.forEach(p => { if ((p.tokenIndices || []).includes(pos)) best = p; });
+    return best;
+  };
+  const groups = []; const byKey = new Map();
+  ordo.forEach((o, idx) => {
+    const p = propOf(o);
+    const key = p ? p.id : '__none__';
+    let g = byKey.get(key);
+    if (!g) { g = { prop: p, items: [] }; byKey.set(key, g); groups.push(g); }
+    g.items.push(o);
+  });
+  const propPos = (p) => p && (p.tokenIndices || []).length ? Math.min.apply(null, p.tokenIndices) : 99999;
+  groups.sort((a, b) => propPos(a.prop) - propPos(b.prop));
+  return groups.map(g => {
+    const p = g.prop;
+    const style = p ? periodaleEntryStyle(p) : '';
+    const ruolo = p ? (p.ruolo || 'Proposizione') : '';
+    const tipo = p && p.tipo ? ' · ' + p.tipo : '';
+    const label = p ? `${p._sigla} · ${ruolo}${tipo}` : '∅ · non assegnati a una proposizione';
+    const chips = g.items.map((o, k) => renderOrdoChip(sentence.id, o, k)).join('');
+    return `<div class="ordo-prop-group${p ? '' : ' is-none'}"${style ? ` style="${style}"` : ''}>
+      <div class="ordo-prop-head">${escapeHtml(label)}</div>
+      <div class="ordo-grid">${chips}</div>
+    </div>`;
+  }).join('');
+}
+
+/* Scelta del rendering ordo: compartimentato per proposizione se la frase ha un
+   livello periodale, altrimenti lista piatta. */
+function scheletroOrdoChipsHtml(sentence) {
+  const ordo = sentence.ordoVerborum || [];
+  if ((sentence.periodale || []).length) return scheletroOrdoGroupsHtml(sentence);
+  return `<div class="ordo-grid">${ordo.map((o, i) => renderOrdoChip(sentence.id, o, i)).join('')}</div>`;
+}
+
 /* Semina l'ordo di una frase con i suoi sintagmi (logica) + verbi (predicati)
    non già presenti, poi riordina in SVO. Restituisce quanti elementi ha aggiunto. */
 function scheletroSeedOrdo(sentence) {
@@ -25119,7 +25225,7 @@ function renderScheletroTraduzione(sentences, lang) {
     const hasItalian = ordo.some(o => o.italian);
     const chips = ordo.length === 0
       ? `<div class="ordo-grid empty">Nessun elemento. Premi <strong>↻ Importa sintagmi e verbi</strong> per riprendere ciò che hai individuato nelle fasi precedenti.</div>`
-      : `<div class="ordo-grid">${ordo.map((o, i) => renderOrdoChip(sentence.id, o, i)).join('')}</div>`;
+      : scheletroOrdoChipsHtml(sentence);
     const proposed = hasItalian
       ? `<div class="muted-text" style="margin-top:6px;font-size:11px;font-style:italic;">Ordo proposto: ${ordo.filter(o => o.italian).map(o => escapeHtml(o.italian)).join(' · ')}</div>`
       : '';
@@ -25162,17 +25268,16 @@ function renderScheletroVerbi(sentences, lang) {
       const ge = (sentence.grammar || []).find(g => g.tokenIndex === tok.idx);
       const isV = ge && ge.partOfSpeech === 'Verbo';
       const isFin = isV && ge.verboForma === 'Forma finita';
-      const isNonFin = isV && ge._scheletroForma === 'non-finita';
+      const isNonFin = isV && !isFin;   // ogni verbo non finito → terracotta, comunque RISALTATO
       const cls = ['token', 'scheletro-token'];
-      if (isFin) cls.push('scheletro-verb-marked', 'case-verbo');
-      else if (isNonFin) cls.push('scheletro-verb-nonfin', 'case-verbo');
+      if (isFin) cls.push('scheletro-verb-marked', 'case-verbo');         // cremisi pieno
+      else if (isNonFin) cls.push('scheletro-verb-nonfin', 'case-verbo'); // terracotta pieno
       else cls.push('token-untagged');
-      // niente più chip grigio: il VERBO FINITO è in rosso pieno, il NON FINITO
-      // in rosso con sottolineatura ondulata e corsivo (vedi CSS) → distinguibili a vista.
-      return `<span class="${cls.join(' ')}" onclick="scheletroCycleVerb('${sentence.id}', ${tok.idx})" title="Click: ∅ → verbo finito (rosso pieno) → verbo non finito (rosso ondulato) → ∅">${escapeHtml(tok.text)}</span>`;
+      // Click = marca/smarca verbo; finito/non-finito si sceglie dal menù sotto.
+      return `<span class="${cls.join(' ')}" onclick="scheletroCycleVerb('${sentence.id}', ${tok.idx})" title="Click: marca / smarca come verbo · poi scegli finito o non finito dal menù sotto">${escapeHtml(tok.text)}</span>`;
     }).join('');
     const fin = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo' && g.verboForma === 'Forma finita').length;
-    const nf = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo' && g._scheletroForma === 'non-finita').length;
+    const nf = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo' && g.verboForma !== 'Forma finita').length;
     // menù a tendina COMPATTI sotto la frase per completare l'analisi di ogni verbo
     const verbs = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo').sort((a, b) => (a.tokenIndex || 0) - (b.tokenIndex || 0));
     const av = state.scheletroActiveVerb || {};
@@ -25191,7 +25296,7 @@ function renderScheletroVerbi(sentences, lang) {
 
   return `<div class="subsection">
     <div class="method-note" style="background:rgba(197,48,48,0.06);border-left-color:rgba(197,48,48,0.55);">
-      <strong>🎯 Fase 1 · Verbi.</strong> Clicca ogni forma verbale: 1° click = <strong>verbo finito</strong> (àncora di proposizione), 2° click = <strong>verbo non finito</strong> (participio, infinito, gerundio, supino…), 3° click = annulla. Sotto ogni frase, completa l'analisi di ciascun verbo dai menù a tendina.
+      <strong>🎯 Fase 1 · Verbi.</strong> Clicca una forma verbale per <strong>marcarla come verbo</strong> (riclicca per togliere). Poi, nel menù che si apre sotto, indica se è di <strong>modo finito</strong> (cremisi, àncora di proposizione) o <strong>non finito</strong> (terracotta: participio, infinito, gerundio, supino…) — oppure premi <strong>✨ auto</strong> per il riconoscimento automatico — e completa modo, tempo, diatesi, persona, numero.
       <em>Indizi:</em> -t/-nt, -bat, -vit / desinenze personali e augmento (gr.) per i <em>finiti</em>; -ns/-ntis, -re, -ndo / -ων, -ειν (gr.) per i <em>non finiti</em>.
     </div>
     ${blocks}
@@ -25201,19 +25306,51 @@ function renderScheletroVerbi(sentences, lang) {
 /* Riga di menù a tendina per completare l'analisi di un verbo (fase 1). Si apre
    SOLO sulla voce attiva (l'ultima cliccata/inserita): le altre restano chiuse
    come riepilogo cliccabile. */
+/* Campi morfologici del verbo per il menù scheletro: parte da getMorphSchema,
+   toglie il select «Forma» (la forma si sceglie coi bottoni finito/non finito)
+   e riordina modo/tempo secondo la lingua (LATINO: modo → tempo · GRECO: tempo →
+   modo). */
+function scheletroVerbFields(lang, verb) {
+  let schema = [];
+  try { schema = getMorphSchema(lang, verb) || []; } catch (_) { schema = []; }
+  schema = schema.filter(f => f.key !== 'verboForma' && Array.isArray(f.options) && f.options.length);
+  if (lang !== 'greco') {
+    const ti = schema.findIndex(f => f.key === 'tempo'), mi = schema.findIndex(f => f.key === 'modo');
+    if (ti > -1 && mi > -1) { const tmp = schema[ti]; schema[ti] = schema[mi]; schema[mi] = tmp; }
+  }
+  return schema;
+}
+
 function renderScheletroVerbQuick(sentenceId, verb, lang, isActive) {
   const isGreek = lang === 'greco';
+  const NONFIN = ['Infinito', 'Participio', 'Gerundio', 'Gerundivo', 'Supino'];
+  const isFin = verb.verboForma === 'Forma finita';
+  const isNonFin = verb._scheletroForma === 'non-finita' || NONFIN.includes(verb.verboForma);
   if (!isActive) {
-    const bits = [verb.verboForma === 'Forma finita' ? 'finito' : (verb._scheletroForma === 'non-finita' ? 'non finito' : ''), verb.tempo, verb.modo, verb.persona, verb.numero].filter(Boolean).join(' · ');
+    const formaLbl = isFin ? 'finito' : (isNonFin ? 'non finito' : '');
+    const bits = [formaLbl, verb.verboForma && verb.verboForma !== 'Forma finita' ? verb.verboForma.toLowerCase() : '', verb.tempo, verb.modo, verb.persona, verb.numero].filter(Boolean).join(' · ');
     return `<div class="schel-vq-row collapsed" onclick="scheletroSetActiveVerb('${sentenceId}', ${verb.tokenIndex})" title="Apri per completare l'analisi di questa voce">
       <span class="schel-vq-word ${isGreek ? 'greek' : ''}">${escapeHtml(verb.word || '?')}</span>
       <span class="schel-vq-summary">${escapeHtml(bits || 'da completare')}</span>
       <span class="schel-vq-open">completa ▾</span>
     </div>`;
   }
-  let schema = [];
-  try { schema = getMorphSchema(lang, verb) || []; } catch (_) { schema = []; }
-  const selects = schema.filter(f => Array.isArray(f.options) && f.options.length).map(f =>
+  // Selettore FORMA: finito / non finito (+ auto). Niente più doppio-click sul token.
+  const formaSeg = `<div class="schel-vq-forma">
+    <button class="schel-vq-forma-btn ${isFin ? 'active' : ''}" onclick="event.stopPropagation(); scheletroSetVerbForma('${sentenceId}','${verb.id}','finito')">modo finito</button>
+    <button class="schel-vq-forma-btn ${isNonFin ? 'active nf' : ''}" onclick="event.stopPropagation(); scheletroSetVerbForma('${sentenceId}','${verb.id}','nonfinito')">modo non finito</button>
+    <button class="schel-conn-btn schel-vq-suggest" onclick="event.stopPropagation(); scheletroSuggestVerb('${sentenceId}','${verb.id}')" title="Riconoscimento automatico di forma, tempo, modo, diatesi, persona, numero dalle desinenze e dai suffissi">✨ auto</button>
+  </div>`;
+  // Per il non-finito: select della forma specifica (Infinito / Participio / …)
+  const formeNonFin = (TAXONOMIES[lang] && TAXONOMIES[lang].verboForma || []).filter(f => NONFIN.includes(f));
+  const tipoSel = isNonFin ? `<label class="schel-vq-field"><span>Forma non finita</span>
+      <select class="field-select" onchange="scheletroSetVerbTipo('${sentenceId}','${verb.id}', this.value)">
+        <option value="">—</option>
+        ${formeNonFin.map(f => `<option value="${escapeHtml(f)}" ${verb.verboForma === f ? 'selected' : ''}>${escapeHtml(f)}</option>`).join('')}
+      </select></label>` : '';
+  // Campi morfologici (riordinati per lingua), escluso il select Forma
+  const schema = scheletroVerbFields(lang, verb);
+  const selects = schema.map(f =>
     `<label class="schel-vq-field"><span>${escapeHtml(f.label)}</span>
       <select class="field-select" onchange="updateGrammarField('${sentenceId}','${verb.id}','${f.key}', this.value)">
         <option value="">—</option>
@@ -25225,10 +25362,10 @@ function renderScheletroVerbQuick(sentenceId, verb, lang, isActive) {
   return `<div class="schel-vq-row is-active case-verbo">
     <div class="schel-vq-head" onclick="scheletroSetActiveVerb('${sentenceId}', ${verb.tokenIndex})" title="Chiudi questa voce">
       <span class="schel-vq-word ${isGreek ? 'greek' : ''}">${escapeHtml(verb.word || '?')}</span>
-      <button class="schel-conn-btn schel-vq-suggest" onclick="event.stopPropagation(); scheletroSuggestVerb('${sentenceId}','${verb.id}')" title="Suggerisci forma/tempo/modo/persona dalle desinenze, vocali tematiche e suffissi">✨ suggerisci</button>
       <span class="schel-vq-open">▴ chiudi</span>
     </div>
-    <div class="schel-vq-fields">${selects}${lemmaInput}</div>
+    ${formaSeg}
+    <div class="schel-vq-fields">${tipoSel}${selects}${lemmaInput}</div>
   </div>`;
 }
 
@@ -25247,11 +25384,17 @@ function scheletroSuggestVerb(sentenceId, verbId) {
   const v = (sentence.grammar || []).find(e => e.id === verbId);
   if (!v) return;
   const sug = suggestVerbMorph(v.word, state.meta.lingua);
+  // AUTO-RICONOSCIMENTO: applica (sovrascrive) i campi morfologici dedotti; il
+  // lemma resta intatto. È un suggerimento da rivedere ma esplicitamente richiesto.
   let n = 0;
-  Object.entries(sug).forEach(([k, val]) => { if (val && (!v[k] || v[k] === '')) { v[k] = val; n++; } });
-  if (v.partOfSpeech !== 'Verbo') v.partOfSpeech = 'Verbo';
+  Object.entries(sug).forEach(([k, val]) => { if (val) { v[k] = val; n++; } });
+  v.partOfSpeech = 'Verbo';
+  // imposta il flag non-finito (per il colore in anteprima) in base alla forma dedotta
+  const NONFIN = ['Infinito', 'Participio', 'Gerundio', 'Gerundivo', 'Supino'];
+  if (NONFIN.includes(v.verboForma)) v._scheletroForma = 'non-finita';
+  else if (v.verboForma === 'Forma finita') delete v._scheletroForma;
   persistCurrent(); renderEditor(); renderSidebarTabs();
-  showToast(n > 0 ? `✨ ${n} campi suggeriti da «${v.word}» · controlla e correggi` : 'Nessun suggerimento sicuro per questa forma');
+  showToast(n > 0 ? `✨ Riconoscimento da «${v.word}»: ${n} voci · controlla e correggi` : 'Nessun suggerimento sicuro per questa forma');
 }
 
 /* Euristica morfologica: dalle desinenze / vocali tematiche / suffissi modali-
@@ -25359,46 +25502,87 @@ function suggestVerbMorph(word, lang) {
    sintattiche complete (riusa la pipeline periodale: action bar + editor). */
 function renderScheletroProposizioni(sentences, lang) {
   const isGreek = lang === 'greco';
+  const tipoOpts = (typeof TAXONOMIES !== 'undefined' && TAXONOMIES[lang] && TAXONOMIES[lang].congiunzioneTipo) || [];
   const blocks = sentences.map((sentence, sIdx) => {
     const toks = tokenizeSentence(sentence.original);
     const annotated = annotatePeriodaleSiglas(sentence.periodale || []);
-    const tokensHtml = toks.map(tok => {
+    const asyndeta = sentence._asyndeta || [];
+    // Pre-pass: i punti dopo una sola lettera maiuscola sono ABBREVIAZIONI (C., M.,
+    // Q.…): vanno incollati alla parola e NON sono segni interagibili.
+    const abbrSkip = new Set();
+    toks.forEach((t, i) => {
+      if (t.kind === 'punct' && t.text === '.') {
+        const prev = toks[i - 1];
+        if (prev && prev.kind === 'word' && prev.text.length === 1 && /\p{Lu}/u.test(prev.text)) abbrSkip.add(i);
+      }
+    });
+    const tokensHtml = toks.map((tok, i) => {
       if (tok.kind === 'space') return ' ';
-      if (tok.kind === 'punct') return `<span class="token token-punct">${escapeHtml(tok.text)}</span>`;
+      if (tok.kind === 'punct') {
+        if (abbrSkip.has(i)) return '';   // incollato alla parola precedente
+        // segni di confine INTERAGIBILI: clic = conferma/annulla un asindeto
+        if (/^[,;:·.!?]$/.test(tok.text)) {
+          const on = asyndeta.includes(tok.idx);
+          return `<span class="token schel-asyndeton ${on ? 'confirmed' : ''}" onclick="scheletroToggleAsyndeton('${sentence.id}', ${tok.idx})" title="${on ? 'Asindeto/confine confermato — clic per togliere' : 'Clic per confermare un confine di proposizione (asindeto/punteggiatura)'}">${escapeHtml(tok.text)}</span>`;
+        }
+        return `<span class="token token-punct">${escapeHtml(tok.text)}</span>`;
+      }
       const pe = annotated.find(e => (e.tokenIndices || []).includes(tok.idx));
       const ge = (sentence.grammar || []).find(g => g.tokenIndex === tok.idx);
       const inSel = periodaleSel.sentenceId === sentence.id && periodaleSel.indices.includes(tok.idx);
+      // incolla l'eventuale punto di abbreviazione che segue
+      let displayText = tok.text;
+      if (abbrSkip.has(i + 1)) displayText += '.';
       const cls = ['token', 'scheletro-token'];
       let style = '';
+      const isConj = ge && ge.partOfSpeech === 'Congiunzione';
+      if (isConj) {
+        // CONGIUNZIONE: clic → tendina di accettazione/conferma (non entra nella selezione)
+        const confirmed = !!ge._connConfirmed;
+        const isActiveConn = state.scheletroActiveConn && state.scheletroActiveConn.sentenceId === sentence.id && state.scheletroActiveConn.tokenIdx === tok.idx;
+        cls.push(confirmed ? 'scheletro-conn-token' : 'scheletro-conn-candidate');
+        if (isActiveConn) cls.push('is-active-conn');
+        if (inSel) cls.push('token-selected');
+        return `<span class="${cls.join(' ')}" data-token-mode="periodale" data-token-idx="${tok.idx}" data-sentence-id="${sentence.id}" onclick="scheletroConnClick(event,'${sentence.id}',${tok.idx})" title="Congiunzione: clic per accettarla/confermarla o escluderla">${escapeHtml(displayText)}</span>`;
+      }
       if (pe) { cls.push('periodale-lvl'); style = ` style="${periodaleEntryStyle(pe)}"`; }
       else cls.push('token-untagged');
       if (inSel) cls.push('token-selected');
-      // VISIBILITÀ DELLE FORME VERBALI: finito = rosso pieno · non finito = rosso
-      // ondulato/corsivo (CSS) — niente chip grigio.
+      // VISIBILITÀ DELLE FORME VERBALI: finito = cremisi pieno · non finito = terracotta pieno
       const isVerb = ge && ge.partOfSpeech === 'Verbo';
-      const isNonFin = isVerb && ge._scheletroForma === 'non-finita';
-      if (isVerb) { cls.push('scheletro-verb-outline'); if (isNonFin) cls.push('scheletro-verb-nonfin'); }
-      let mark = (pe && Math.min.apply(null, (pe.tokenIndices || [tok.idx])) === tok.idx) ? `<span class="token-periodale-sigla">${pe._sigla}</span>` : '';
-      // CONGIUNZIONI: colorate direttamente; confermate = piene, candidate = tenui
-      if (ge && ge.partOfSpeech === 'Congiunzione') {
-        const confirmed = !!ge._connConfirmed;
-        cls.push(confirmed ? 'scheletro-conn-token' : 'scheletro-conn-candidate');
-        const ct = (ge.congiunzioneTipo || '').toLowerCase();
-        const lab = confirmed ? (ct.startsWith('subord') ? 'subord.' : ct.startsWith('coord') ? 'coord.' : 'cong.') : 'cong.?';
-        mark = `<span class="periodale-token-hint conn">${lab}</span>` + mark;
-      }
-      return `<span class="${cls.join(' ')}"${style} data-token-mode="periodale" data-token-idx="${tok.idx}" data-sentence-id="${sentence.id}" onclick="onPeriodaleTokenClick(event,'${sentence.id}',${tok.idx})" title="Click/trascina per selezionare i token di una proposizione">${escapeHtml(tok.text)}${mark}</span>`;
+      if (isVerb) { cls.push('scheletro-verb-outline'); if (ge.verboForma !== 'Forma finita') cls.push('scheletro-verb-nonfin'); }
+      const mark = (pe && Math.min.apply(null, (pe.tokenIndices || [tok.idx])) === tok.idx) ? `<span class="token-periodale-sigla">${pe._sigla}</span>` : '';
+      return `<span class="${cls.join(' ')}"${style} data-token-mode="periodale" data-token-idx="${tok.idx}" data-sentence-id="${sentence.id}" onclick="onPeriodaleTokenClick(event,'${sentence.id}',${tok.idx})" title="Click/trascina per selezionare i token di una proposizione">${escapeHtml(displayText)}${mark}</span>`;
     }).join('');
+    // Tendina di accettazione/conferma della congiunzione attiva (dal clic in anteprima)
+    let connBar = '';
+    if (state.scheletroActiveConn && state.scheletroActiveConn.sentenceId === sentence.id) {
+      const ci = state.scheletroActiveConn.tokenIdx;
+      const cg = (sentence.grammar || []).find(g => g.tokenIndex === ci);
+      if (cg) {
+        const ok = !!cg._connConfirmed;
+        connBar = `<div class="schel-conn-bar ${ok ? 'is-confirmed' : 'is-candidate'}">
+          <span class="schel-conn-bar-word ${isGreek ? 'greek' : ''}">${escapeHtml(cg.word || '')}</span>
+          <select class="field-select schel-conn-sel" onchange="scheletroSetConnTipo('${sentence.id}', ${ci}, this.value)">
+            <option value="">— subordinante / coordinante —</option>
+            ${tipoOpts.map(o => `<option value="${escapeHtml(o)}" ${cg.congiunzioneTipo === o ? 'selected' : ''}>${escapeHtml(o)}</option>`).join('')}
+          </select>
+          <button class="schel-conn-btn ${ok ? 'is-on' : ''}" onclick="scheletroConfirmConj('${sentence.id}', ${ci}, ${ok ? 'false' : 'true'})" title="${ok ? 'Annulla conferma' : 'Conferma come congiunzione/connettivo'}">${ok ? '✓ confermata' : '✓ conferma'}</button>
+          <button class="schel-conn-btn schel-conn-del" onclick="scheletroRemoveConj('${sentence.id}', ${ci})" title="Non è una congiunzione (es. copula o avverbio): escludi">✕ non è cong.</button>
+          <button class="schel-conn-btn" onclick="scheletroSetActiveConn('${sentence.id}', null)" title="Chiudi">chiudi</button>
+        </div>`;
+      }
+    }
     const entriesHtml = annotated.length
       ? annotated.map(e => renderPeriodaleEntry(sentence.id, e, lang, annotated)).join('')
-      : '<div class="muted-text" style="font-size:12px;padding:6px 2px;">Nessuna proposizione: seleziona i token di una proposizione (i confini sono le <em>congiunzioni</em> «cong.» o l\'asindeto/punteggiatura) e assegnale ruolo/tipo qui sotto.</div>';
+      : '<div class="muted-text" style="font-size:12px;padding:6px 2px;">Nessuna proposizione: nell\'anteprima seleziona i token di una proposizione (trascina o clicca), conferma gli <em>asindeti</em> sui segni di punteggiatura e le <em>congiunzioni</em> cliccandole, poi assegna ruolo/tipo qui sotto.</div>';
     return `<div class="scheletro-sentence-block">
       <div class="scheletro-sentence-header">
         <span class="scheletro-sentence-num">Frase ${sIdx + 1}</span>
         <span class="scheletro-sentence-count">${annotated.length} proposizione/i</span>
       </div>
-      ${renderScheletroConnettivi(sentence, lang)}
       <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
+      ${connBar}
       ${renderPeriodaleActionBar(sentence)}
       ${annotated.length ? `<div class="scheletro-autofill-row"><button class="btn btn-ghost btn-sm" onclick="scheletroAutofillProps('${sentence.id}')" title="Completa ruolo · tipo · modo · connettivo delle proposizioni in base al verbo e alla congiunzione">⚡ Completa proposizioni dai verbi</button></div>` : ''}
       <div class="scheletro-prop-list">${entriesHtml}</div>
@@ -25406,7 +25590,7 @@ function renderScheletroProposizioni(sentences, lang) {
   }).join('');
   return `<div class="subsection">
     <div class="method-note" style="background:rgba(192,38,211,0.06);border-left-color:rgba(192,38,211,0.55);">
-      <strong>✂️ Fase 2 · Proposizioni interne.</strong> Spezza il periodo: seleziona i token di ciascuna proposizione (i confini sono spesso le <em>congiunzioni</em> segnate «cong.» oppure l'asindeto/la punteggiatura) e completa subito le <strong>corrispondenze sintattiche</strong> — ruolo (principale / coordinata / subordinata), tipo, connettivo, da chi dipende — per intuire struttura e natura della frase.
+      <strong>✂️ Fase 2 · Proposizioni interne.</strong> L'<strong>anteprima è il pannello di lavoro</strong>: <strong>seleziona</strong> (clic o trascina) i token di ogni proposizione; <strong>conferma gli asindeti</strong> cliccando i segni di punteggiatura (i punti di abbreviazione dopo una maiuscola, come «C.», sono già esclusi); <strong>clicca una congiunzione</strong> per aprire la tendina di accettazione e classificarla (subordinante / coordinante) o escluderla. Poi completa ruolo · tipo · modo · connettivo · dipendenza qui sotto.
     </div>
     ${blocks}
   </div>`;
@@ -25433,7 +25617,7 @@ function renderScheletroLogic(sentences, lang, phase) {
       const le = (sentence.logic || []).find(e => (e.tokenIndices || []).includes(tok.idx));
       const ge = (sentence.grammar || []).find(g => g.tokenIndex === tok.idx);
       const isFinV = ge && ge.partOfSpeech === 'Verbo' && ge.verboForma === 'Forma finita';
-      const isNonFinV = ge && ge.partOfSpeech === 'Verbo' && ge._scheletroForma === 'non-finita';
+      const isNonFinV = ge && ge.partOfSpeech === 'Verbo' && !isFinV;
       const inSel = logicSel.sentenceId === sentence.id && logicSel.indices.includes(tok.idx);
       const cls = ['token', 'scheletro-token'];
       if (le) {
@@ -25499,6 +25683,10 @@ function renderScheletroLogic(sentences, lang, phase) {
 }
 
 /* Handler · Fase 1 · ciclo ∅ → verbo finito → verbo non finito → ∅ */
+/* Handler · Fase 1 · CLICK = marca/smarca il verbo (toggle ∅ ↔ verbo). NON cicla
+   più verso il non-finito: la distinzione finito/non-finito si fa nel menù sotto
+   (segmentato finito/non finito + ✨ auto). Default alla creazione: forma finita
+   (l'àncora più comune); poi si raffina dal menù. */
 function scheletroCycleVerb(sentenceId, tokenIdx) {
   const sentence = state.sentences.find(s => s.id === sentenceId);
   if (!sentence) return;
@@ -25506,23 +25694,54 @@ function scheletroCycleVerb(sentenceId, tokenIdx) {
   if (!tok || tok.kind !== 'word') return;
   let entry = (sentence.grammar || []).find(e => e.tokenIndex === tokenIdx);
   const isV = entry && entry.partOfSpeech === 'Verbo';
-  const isFin = isV && entry.verboForma === 'Forma finita';
   if (!isV) {
     if (!entry) { entry = makeEntry('grammar'); entry.word = tok.text; entry.tokenIndex = tokenIdx; insertEntrySorted(sentence.grammar, entry, 'grammar'); }
     entry.partOfSpeech = 'Verbo'; entry.verboForma = 'Forma finita'; delete entry._scheletroForma;
     propagateCrossAnalysis(sentence, 'grammar', entry);
     state.scheletroActiveVerb = { sentenceId, tokenIdx };   // apre la voce appena inserita
-  } else if (isFin) {
-    entry.verboForma = ''; entry._scheletroForma = 'non-finita';
-    state.scheletroActiveVerb = { sentenceId, tokenIdx };
   } else {
+    // era un verbo → smarca (toggle off)
     delete entry._scheletroForma; delete entry.verboForma;
     if (entry.partOfSpeech === 'Verbo') delete entry.partOfSpeech;
-    if (!entry.lemma && !entry.note && !entry.caso && !entry.tempo && !entry.modo && !entry.persona) {
+    if (!entry.lemma && !entry.note && !entry.caso && !entry.tempo && !entry.modo && !entry.persona && !entry.diatesi) {
       sentence.grammar = sentence.grammar.filter(e => e.id !== entry.id);
     }
     if (state.scheletroActiveVerb && state.scheletroActiveVerb.sentenceId === sentenceId && state.scheletroActiveVerb.tokenIdx === tokenIdx) state.scheletroActiveVerb = null;
   }
+  persistCurrent(); renderEditor(); renderSidebarTabs();
+}
+
+/* Imposta la forma del verbo dal menù: 'finito' o 'nonfinito'. Il non-finito
+   tiene il flag _scheletroForma (per il colore in anteprima) e, se la forma
+   specifica non è ancora scelta, propone «Infinito» come default raffinabile. */
+function scheletroSetVerbForma(sentenceId, verbId, kind) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const v = (sentence.grammar || []).find(e => e.id === verbId);
+  if (!v) return;
+  v.partOfSpeech = 'Verbo';
+  if (kind === 'finito') {
+    v.verboForma = 'Forma finita';
+    delete v._scheletroForma;
+  } else {
+    v._scheletroForma = 'non-finita';
+    // se era finita (o vuota), proponi una forma non-finita di default raffinabile
+    if (!v.verboForma || v.verboForma === 'Forma finita') v.verboForma = 'Infinito';
+    // i campi tipici del finito non si applicano al non-finito
+    delete v.persona;
+  }
+  persistCurrent(); renderEditor(); renderSidebarTabs();
+}
+
+/* Imposta la forma NON finita specifica (Infinito / Participio / Gerundio…),
+   mantenendo il flag _scheletroForma per il colore in anteprima. */
+function scheletroSetVerbTipo(sentenceId, verbId, val) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const v = (sentence.grammar || []).find(e => e.id === verbId);
+  if (!v) return;
+  v.verboForma = val || '';
+  v._scheletroForma = 'non-finita';
   persistCurrent(); renderEditor(); renderSidebarTabs();
 }
 
@@ -25669,53 +25888,32 @@ function scheletroLogicClick(event, sentenceId, tokenIdx) {
   renderEditor();
 }
 
-/* FASE 2 · sotto-fase «connettivi e confini»: classifica le congiunzioni come
-   subordinanti/coordinanti e mostra i confini di punteggiatura (asindeto),
-   ESCLUDENDO i punti di abbreviazione (punto dopo UNA sola lettera maiuscola:
-   «C.», «M.», «Q.» fanno parte dello stesso token e non sono confini). */
-function renderScheletroConnettivi(sentence, lang) {
-  const isGreek = lang === 'greco';
-  const toks = tokenizeSentence(sentence.original);
-  const tipoOpts = (typeof TAXONOMIES !== 'undefined' && TAXONOMIES[lang] && TAXONOMIES[lang].congiunzioneTipo) || [];
-  const conjs = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Congiunzione')
-    .sort((a, b) => (a.tokenIndex || 0) - (b.tokenIndex || 0));
-  const conjHtml = conjs.length ? conjs.map(g => {
-    const cur = g.congiunzioneTipo || '';
-    const ok = !!g._connConfirmed;
-    return `<span class="schel-conn-item ${ok ? 'is-confirmed' : 'is-candidate'}">
-      <span class="schel-conn-word ${isGreek ? 'greek' : ''}">${escapeHtml(g.word || '')}</span>
-      <select class="field-select schel-conn-sel" onchange="scheletroSetConnTipo('${sentence.id}', ${g.tokenIndex}, this.value)">
-        <option value="">— subord./coord. —</option>
-        ${tipoOpts.map(o => `<option value="${escapeHtml(o)}" ${cur === o ? 'selected' : ''}>${escapeHtml(o)}</option>`).join('')}
-      </select>
-      ${ok
-        ? `<button class="schel-conn-btn is-on" onclick="scheletroConfirmConj('${sentence.id}', ${g.tokenIndex}, false)" title="Annulla conferma">✓ confermata</button>`
-        : `<button class="schel-conn-btn" onclick="scheletroConfirmConj('${sentence.id}', ${g.tokenIndex}, true)" title="Conferma come connettivo">✓ conferma</button>`}
-      <button class="schel-conn-btn schel-conn-del" onclick="scheletroRemoveConj('${sentence.id}', ${g.tokenIndex})" title="Non è una congiunzione (es. è una copula): rimuovi">✕</button>
-    </span>`;
-  }).join('') : '<span class="muted-text" style="font-size:11px;">Nessuna congiunzione rilevata. In asindeto i confini sono solo la punteggiatura →</span>';
-  const pending = conjs.filter(g => !g._connConfirmed).length;
-  const confirmAllBtn = pending > 0 ? `<button class="btn btn-ghost btn-sm" style="margin-left:8px;" onclick="scheletroConfirmAllConj('${sentence.id}')">✓ conferma tutte (${pending})</button>` : '';
+/* FASE 2 · l'anteprima È l'interfaccia. Clic su una CONGIUNZIONE → apre la tendina
+   di accettazione/conferma (subordinante/coordinante o esclusione). Il drag-select
+   per le proposizioni resta attivo (la guardia justFinished evita il click dopo). */
+function scheletroConnClick(event, sentenceId, tokenIdx) {
+  if (dragSelect && dragSelect.justFinished) return;
+  const a = state.scheletroActiveConn;
+  if (a && a.sentenceId === sentenceId && a.tokenIdx === tokenIdx) state.scheletroActiveConn = null; // toggle
+  else state.scheletroActiveConn = { sentenceId, tokenIdx };
+  renderEditor();
+}
 
-  // confini di punteggiatura (asindeto), saltando le abbreviazioni
-  const bounds = [];
-  toks.forEach((t, i) => {
-    if (t.kind !== 'punct') return;
-    if (!/^[,;:·.]$/.test(t.text)) return;
-    if (t.text === '.') {
-      let prevWord = null;
-      for (let j = i - 1; j >= 0; j--) { if (toks[j].kind === 'word') { prevWord = toks[j]; break; } if (toks[j].kind === 'punct') break; }
-      if (prevWord && prevWord.text.length === 1 && /\p{Lu}/u.test(prevWord.text)) return; // abbreviazione → non è confine
-    }
-    bounds.push(t.text);
-  });
-  const boundHtml = bounds.length ? bounds.map(b => `<span class="schel-bound" title="confine di proposizione (asindeto/punteggiatura)">${escapeHtml(b)}</span>`).join('') : '<span class="muted-text" style="font-size:11px;">nessun confine</span>';
+/* Imposta/azzera la congiunzione attiva (tendina aperta sotto l'anteprima). */
+function scheletroSetActiveConn(sentenceId, tokenIdx) {
+  state.scheletroActiveConn = (tokenIdx == null) ? null : { sentenceId, tokenIdx };
+  renderEditor();
+}
 
-  return `<div class="schel-connettivi">
-    <div class="schel-connettivi-hint">Conferma le congiunzioni vere (alcune auto-rilevate possono essere copule o avverbi: rimuovile con ✕). Solo le confermate fanno da connettivo e colorano il token.</div>
-    <div class="schel-connettivi-row"><span class="schel-connettivi-label">① Congiunzioni</span><span class="schel-conn-list">${conjHtml}${confirmAllBtn}</span></div>
-    <div class="schel-connettivi-row"><span class="schel-connettivi-label">② Confini · asindeto</span><span class="schel-bound-list">${boundHtml}</span></div>
-  </div>`;
+/* Conferma/annulla un ASINDETO (confine di proposizione) cliccando un segno di
+   punteggiatura nell'anteprima. I punti di abbreviazione sono già esclusi a monte. */
+function scheletroToggleAsyndeton(sentenceId, punctIdx) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  if (!Array.isArray(sentence._asyndeta)) sentence._asyndeta = [];
+  const i = sentence._asyndeta.indexOf(punctIdx);
+  if (i >= 0) sentence._asyndeta.splice(i, 1); else sentence._asyndeta.push(punctIdx);
+  persistCurrent(); renderEditor();
 }
 
 /* Handler · conferma/annulla una congiunzione come connettivo. */
@@ -25749,8 +25947,9 @@ function scheletroRemoveConj(sentenceId, tokenIdx) {
   if (!entry.lemma && !entry.note && !entry.caso && !entry.tempo && !entry.modo && !entry.partOfSpeech) {
     sentence.grammar = sentence.grammar.filter(e => e.id !== entry.id);
   }
+  if (state.scheletroActiveConn && state.scheletroActiveConn.sentenceId === sentenceId && state.scheletroActiveConn.tokenIdx === tokenIdx) state.scheletroActiveConn = null;
   persistCurrent(); renderEditor(); renderSidebarTabs();
-  showToast('Congiunzione rimossa · ri-analizza il token (può essere copula o avverbio)');
+  showToast('Congiunzione esclusa · ri-analizza il token (può essere copula o avverbio)');
 }
 
 /* Handler · classifica una congiunzione (subordinante/coordinante). */
@@ -29439,7 +29638,7 @@ function renderTranslationSentenceCard(sentence, idx) {
 
   const ordoChipsHtml = ordo.length === 0
     ? `<div class="ordo-grid empty">Nessun elemento. Premi <strong>↻ Importa sintagmi dalla logica</strong> oppure <strong>+ Aggiungi</strong> per cominciare.</div>`
-    : `<div class="ordo-grid">${ordo.map((o, i) => renderOrdoChip(sentence.id, o, i)).join('')}</div>`;
+    : scheletroOrdoChipsHtml(sentence);
 
   return `
     <div class="translation-sentence-card">
