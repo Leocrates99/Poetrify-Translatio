@@ -3653,6 +3653,46 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: 'Times New R
   border: 1px solid var(--poetrify-rule-soft);
   border-radius: var(--radius-md);
 }
+/* BRANCH linguistico · le due lingue sono archivi separati (tab di branch) */
+.archive-branch-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 4px 0 14px;
+  padding: 10px 14px;
+  background: var(--poetrify-cream);
+  border: 1px solid var(--poetrify-rule-soft);
+  border-left: 4px solid var(--poetrify-primary);
+  border-radius: var(--radius-md);
+}
+.archive-branch-label {
+  font-family: var(--font-ui);
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--poetrify-sepia);
+  margin-right: 4px;
+}
+.archive-branch-btn {
+  padding: 6px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--poetrify-sepia);
+  background: var(--poetrify-paper);
+  border: 1px solid var(--poetrify-rule-soft);
+  font-family: var(--font-ui);
+  cursor: pointer;
+  transition: all var(--transition-base);
+}
+.archive-branch-btn:hover { border-color: var(--poetrify-primary); color: var(--poetrify-primary); }
+.archive-branch-btn.active {
+  background: var(--poetrify-primary);
+  color: var(--poetrify-paper);
+  border-color: var(--poetrify-primary);
+}
 .archive-search {
   flex: 1;
   min-width: 200px;
@@ -24367,12 +24407,15 @@ function syncTopbar() {
   document.getElementById('meta-autore').value = state.meta.autore || '';
   document.getElementById('meta-opera').value = state.meta.opera || '';
   document.getElementById('meta-titolo').value = state.meta.titolo || '';
+  // Nell'archivio (scheda D) il toggle riflette il BRANCH che si sta sfogliando;
+  // altrove riflette la lingua del progetto su cui si sta lavorando.
+  const activeLang = (state.currentStep === 4 && archiveFilters.lingua) ? archiveFilters.lingua : state.meta.lingua;
   document.querySelectorAll('.lang-toggle button').forEach(b => {
-    b.classList.toggle('active', b.dataset.lang === state.meta.lingua);
+    b.classList.toggle('active', b.dataset.lang === activeLang);
   });
   // Aggiorna la pillola identitaria linguistica
   const langPill = document.getElementById('poetrify-lang-pill');
-  if (langPill) langPill.textContent = state.meta.lingua === 'greco' ? 'Greco' : 'Latino';
+  if (langPill) langPill.textContent = activeLang === 'greco' ? 'Greco' : 'Latino';
   // Aggiorna la quick-bar con i tre segmented control sempre disponibili
   renderQuickBar();
 }
@@ -24849,20 +24892,17 @@ function scheletroPhaseFuncs(phase, lang) {
   const prepUnion = scheletroPrepUnionFuncs(lang);
 
   if (phase === 'preposizionali') {
+    // UNIFICATO lat/gr: accusativo (tranne oggetto/predicativo) + ablativo (solo
+    // latino: il greco non ha questo caso) + UNIONE delle funzioni rette da
+    // preposizione (PREP_PRESETS, che in greco copre gen/dat/acc) + luoghi/scopo
+    // + misti con preposizione. Così la fase è coerente nelle due lingue.
     const out = [];
     const add = it => { if (!out.includes(it)) out.push(it); };
-    if (lang === 'greco') {
-      // greco: nessun caso ablativo → la fase è guidata dall'unione delle
-      // funzioni rette da preposizione, più i complementi di luogo accusativi.
-      prepUnion.forEach(add);
-      ['Complemento di luogo (moto a)', 'Complemento di luogo (stato in)', 'Complemento di luogo (moto da)', 'Complemento di luogo (moto per)', 'Complemento di fine o scopo'].forEach(add);
-    } else {
-      // latino: accusativo (tranne oggetto/predicativo) + ablativo + unione preposizioni.
-      groupItems(/accusativo/i).filter(it => it !== 'Complemento oggetto' && it !== "Complemento predicativo dell'oggetto").forEach(add);
-      groupItems(/ablativo/i).forEach(add);
-      prepUnion.forEach(add);
-      ['Complemento concessivo', 'Complemento di esclusione', 'Complemento di denominazione'].forEach(add);
-    }
+    groupItems(/accusativo/i).filter(it => it !== 'Complemento oggetto' && it !== "Complemento predicativo dell'oggetto").forEach(add);
+    groupItems(/ablativo/i).forEach(add);                 // [] in greco
+    prepUnion.forEach(add);                               // gen/dat/acc retti da preposizione (incl. greco)
+    ['Complemento di luogo (moto a)', 'Complemento di luogo (stato in)', 'Complemento di luogo (moto da)', 'Complemento di luogo (moto per)', 'Complemento di fine o scopo',
+     'Complemento concessivo', 'Complemento di esclusione', 'Complemento di denominazione'].forEach(add);
     // riordina secondo le optgroup di caso, poi eventuali residui
     const ordered = [];
     groups.forEach(g => g.items.forEach(it => { if (out.includes(it) && !ordered.includes(it)) ordered.push(it); }));
@@ -24870,21 +24910,14 @@ function scheletroPhaseFuncs(phase, lang) {
     return ordered;
   }
 
-  // 'altri' = complementi a caso semplice (genitivo e dativo, + vocativo) SENZA
-  // preposizione: esclude il nucleo soggetto/oggetto, i modificatori di gruppo
-  // e tutto ciò che è confluito nella fase «preposizionali».
+  // 'altri' = complementi a CASO SEMPLICE, senza preposizione: genitivo + dativo
+  // (+ ablativo in latino) + vocativo. UNIFICATO lat/gr: in greco le funzioni che
+  // il latino marca in ablativo (mezzo, modo, compagnia, tempo…) stanno nei gruppi
+  // genitivo/dativo, quindi restano correttamente disponibili qui anche se alcune
+  // preposizioni possono reggerle (sovrapposizione voluta con «preposizionali»).
   const exclude = new Set(['Predicato verbale', 'Soggetto', 'Parte nominale', 'Predicato nominale', 'Copula',
     'Complemento predicativo del soggetto', 'Complemento oggetto', "Complemento predicativo dell'oggetto",
     'Apposizione', 'Attributo']);
-  if (lang === 'greco') {
-    const prep = new Set(scheletroPhaseFuncs('preposizionali', lang));
-    const out = [];
-    groups.forEach(g => g.items.forEach(it => { if (!exclude.has(it) && !prep.has(it) && !out.includes(it)) out.push(it); }));
-    if (!out.includes('Altro / da specificare')) out.push('Altro / da specificare');
-    return out;
-  }
-  // latino: genitivo + dativo + ABLATIVO (anche i complementi a caso semplice
-  // ablativo: mezzo, modo, causa, tempo, materia, limitazione…) + vocativo.
   const out = [];
   [...groupItems(/genitivo/i), ...groupItems(/dativo/i), ...groupItems(/ablativo/i), ...groupItems(/vocativo/i), 'Altro / da specificare']
     .forEach(it => { if (!exclude.has(it) && !out.includes(it)) out.push(it); });
@@ -26427,7 +26460,9 @@ function renderAnalysisContent(sentence) {
 /* ============================================
    ARCHIVIO — calcolo stato e rendering
    ============================================ */
-let archiveFilters = { status: 'all', search: '', sort: 'updated-desc' };
+// `lingua` = il BRANCH linguistico mostrato (le due lingue sono scorporate):
+// null → risolto a runtime sulla lingua del progetto corrente.
+let archiveFilters = { status: 'all', search: '', sort: 'updated-desc', lingua: null };
 
 function projectStatus(p) {
   if (!p.meta || !p.meta.testoOriginale) return 'todo';
@@ -26470,7 +26505,13 @@ function statusLabel(s) {
 }
 
 function renderArchiveHtml() {
-  const projects = loadAllProjects();
+  const allProjects = loadAllProjects();
+  // BRANCH LINGUISTICO: le due lingue sono scorporate. L'archivio mostra una sola
+  // lingua per volta (quella del progetto corrente, salvo scelta esplicita).
+  const branchLang = archiveFilters.lingua || state.meta.lingua || 'latino';
+  const otherLang = branchLang === 'greco' ? 'latino' : 'greco';
+  const projects = allProjects.filter(p => ((p.meta && p.meta.lingua) || 'latino') === branchLang);
+  const otherCount = allProjects.length - projects.length;
   const totals = { all: projects.length, todo: 0, progress: 0, done: 0 };
   projects.forEach(p => { totals[projectStatus(p)]++; });
 
@@ -26498,6 +26539,19 @@ function renderArchiveHtml() {
 
   const filterBtn = (key, label, count) => `
     <button class="archive-filter-btn ${archiveFilters.status === key ? 'active' : ''}" onclick="setArchiveFilter('status','${key}')">${label} <span style="opacity:0.7;">(${count})</span></button>`;
+
+  // Selettore di BRANCH linguistico: le due lingue sono archivi separati.
+  const langCount = l => allProjects.filter(p => ((p.meta && p.meta.lingua) || 'latino') === l).length;
+  const branchBtn = (l, label) => `
+    <button class="archive-branch-btn ${branchLang === l ? 'active' : ''}" data-lang="${l}" onclick="setArchiveFilter('lingua','${l}')" title="Mostra l'archivio ${l === 'greco' ? 'greco' : 'latino'}">
+      ${label} <span style="opacity:0.7;">(${langCount(l)})</span>
+    </button>`;
+  const branchBar = `
+    <div class="archive-branch-bar" role="tablist" aria-label="Branch linguistico">
+      <span class="archive-branch-label">Branch lingua</span>
+      ${branchBtn('latino', 'Latino')}
+      ${branchBtn('greco', 'Greco')}
+    </div>`;
 
   const toolbar = `
     <div class="archive-toolbar">
@@ -26537,21 +26591,23 @@ function renderArchiveHtml() {
       </div>
     </div>`;
 
+  const branchName = branchLang === 'greco' ? 'greco' : 'latino';
   let listHtml;
   if (filtered.length === 0) {
     listHtml = `<div class="archive-empty">${projects.length === 0
-      ? 'Ancora nessun brano in archivio. Inizia un nuovo lavoro dalla scheda <strong>A · Brano</strong>.'
-      : 'Nessun risultato con i filtri attuali.'}</div>`;
+      ? `Ancora nessun brano <strong>${branchName}</strong> in archivio. Crea il primo qui sotto con <strong>+ Nuovo brano ${branchName}</strong>${otherCount > 0 ? ` — oppure passa al branch ${otherLang === 'greco' ? 'greco' : 'latino'} (${otherCount}).` : '.'}`
+      : 'Nessun risultato con i filtri attuali in questo branch.'}</div>`;
   } else {
     listHtml = `<div class="archive-list">${filtered.map(p => renderArchiveCard(p)).join('')}</div>`;
   }
 
-  return sectionHeader('D', 'Archivio dei brani', 'sessioni storiche di traduzione: completate, in corso, da svolgere.')
+  return sectionHeader('D', 'Archivio dei brani', `branch ${branchName} · le due lingue sono archivi separati: completate, in corso, da svolgere.`)
+    + branchBar
     + stats
     + toolbar
     + `<div class="flex-between" style="margin-top: 8px;">
-        <span class="muted-text">${filtered.length} risultat${filtered.length === 1 ? 'o' : 'i'}</span>
-        <button class="btn btn-primary btn-sm" onclick="newProject()">+ Nuovo brano</button>
+        <span class="muted-text">${filtered.length} risultat${filtered.length === 1 ? 'o' : 'i'} · branch ${branchName}</span>
+        <button class="btn btn-primary btn-sm" onclick="newProjectInLang('${branchLang}')">+ Nuovo brano ${branchName}</button>
       </div>`
     + listHtml;
 }
@@ -33008,17 +33064,54 @@ function togglePreview() {
 function onTestoChange(v) { state.meta.testoOriginale = v; persistCurrent(); renderPreview(); renderSidebarTabs(); renderStats(); }
 function onTraduzioneChange(v) { state.meta.traduzione = v; persistCurrent(); renderPreview(); }
 function onMetaChange(field, v) { state.meta[field] = v; persistCurrent(); renderPreview(); }
+/* Lingua di un nuovo progetto in attesa di creazione (impostata dal pulsante
+   «+ Nuovo brano <lingua>» dell'archivio di un branch). Applicata in selectMode. */
+let pendingNewProjectLang = null;
+
 function setLingua(lang) {
   // Profilo medie: solo latino
   if (getUserProfile() === 'medie' && lang !== 'latino') {
     showToast('Il profilo Medie lavora solo sul latino — cambia profilo dalla pastiglia in alto a destra');
     return;
   }
-  state.meta.lingua = lang;
+  // BRANCH SCORPORATI: non si può lavorare lo stesso testo in due lingue. Se clicco
+  // la lingua già attiva del progetto corrente, resto sul lavoro (eventualmente
+  // rientrando dall'archivio). Se clicco l'ALTRA lingua, apro il suo archivio per
+  // scegliere/creare la versione su cui lavorare in quella lingua.
+  if (lang === state.meta.lingua && state.currentStep !== 4) {
+    return;   // già nella lingua corrente e già al lavoro: nessun cambiamento
+  }
+  if (lang === state.meta.lingua && state.currentStep === 4) {
+    // ero in archivio guardando un altro branch: torna al branch della lingua corrente
+    openLanguageBranch(lang);
+    return;
+  }
+  // cambio branch: salva il lavoro corrente (resta nell'archivio della sua lingua)
+  // e apri l'archivio della lingua di arrivo.
   persistCurrent();
-  syncTopbar();
-  renderEditor();
-  renderPreview();
+  openLanguageBranch(lang);
+}
+
+/* Apre la scheda Archivio (D) filtrata sul branch della lingua indicata, dove
+   l'utente sceglie una versione da riprendere o ne crea una nuova. Non altera la
+   lingua del progetto attualmente caricato: cambierà solo aprendone/creandone uno. */
+function openLanguageBranch(lang) {
+  archiveFilters.lingua = lang;
+  state.currentStep = 4;          // scheda D · Archivio
+  persistCurrent();
+  renderAll();
+  const ln = lang === 'greco' ? 'greco' : 'latino';
+  showToast(`Branch ${ln}: scegli una versione da riprendere o creane una nuova`);
+}
+
+/* Avvia un nuovo brano nella lingua indicata (dal branch d'archivio). */
+function newProjectInLang(lang) {
+  if (getUserProfile() === 'medie' && lang !== 'latino') {
+    showToast('Il profilo Medie lavora solo sul latino'); return;
+  }
+  pendingNewProjectLang = lang;
+  if (getUserProfile() === 'medie') { selectMode('guided'); return; }
+  document.getElementById('modal-mode').classList.add('open');
 }
 
 function confirmSetup() {
@@ -33057,6 +33150,8 @@ function selectMode(mode) {
   state = defaultState();
   state.mode = (mode === 'guided') ? 'guided' : 'free';
   state.guidedStep = 1;
+  // Lingua del nuovo brano: quella del branch da cui è stato avviato (se presente)
+  if (pendingNewProjectLang) { state.meta.lingua = pendingNewProjectLang; pendingNewProjectLang = null; }
   // Vincoli profilo medie: solo latino + guidata
   if (getUserProfile() === 'medie') {
     state.meta.lingua = 'latino';
