@@ -2770,8 +2770,9 @@ body.poetrify-dark .schel-conn-bar { background: rgba(214,158,46,0.12); }
 .prop-box {
   display: inline-flex; align-items: baseline; flex-wrap: wrap; gap: 2px 5px;
   padding: 5px 9px; margin: 5px 9px 5px 3px; border-radius: 9px; vertical-align: middle;
-  line-height: 1.5;
+  line-height: 1.5; cursor: pointer; transition: filter 0.15s ease;
 }
+.prop-box:hover { filter: brightness(0.97); box-shadow: 0 0 0 2px var(--case-strong); }
 .prop-box-sigla { font-family: var(--font-ui); font-size: 10px; font-weight: 800; color: var(--case-strong); margin-right: 4px; opacity: 0.95; }
 .prop-word { color: var(--poetrify-ink); }
 .prop-verb { font-weight: 800; }        /* verbi della proposizione: SOLO grassetto */
@@ -2817,7 +2818,8 @@ body.poetrify-dark .schel-vq-word { color: #f1a3a3; }
 /* i label dei riquadri (verbi/grammatica/logica) riprendono il colore del bordo (caso/funzione) */
 .entry-card[class*="case-"] .field-block-label,
 .schel-vq-row[class*="case-"] .schel-vq-field > span { color: var(--case-strong, var(--poetrify-sepia)); }
-.schel-vq-field .field-select, .schel-vq-field .field-input { font-size: 11px; padding: 3px 5px; }
+/* stessa grandezza dei controlli dei menù logica/periodale (13px) per uniformità */
+.schel-vq-field .field-select, .schel-vq-field .field-input { font-size: 13px; padding: 5px 8px; }
 .schel-vq-lemma { flex: 1 1 180px; }
 /* voce verbale chiusa (riepilogo cliccabile) vs attiva (aperta) */
 .schel-vq-row.collapsed { align-items: center; cursor: pointer; opacity: 0.85; }
@@ -11432,15 +11434,23 @@ function periodaleRoleColor(ruolo) {
   return 'rgba(120,113,108,0.6)';                    // neutro
 }
 
-/* DOPPIO BORDO della proposizione: bordo interno = RUOLO (gerarchia: blu/rosso/
-   verde), poi un sottile spazio bianco, poi un secondo bordo nel COLORE UNICO
-   della proposizione (distingue ordine/numero della stessa tipologia). Così con
-   un solo richiamo visivo si leggono sia la gerarchia sia l'identità. */
+/* DOPPIO BORDO solo a SINISTRA (menù a tendina / riquadri): stripe del RUOLO
+   (gerarchia: blu/rosso/verde) + sottile spazio bianco + stripe nel COLORE
+   PROPRIO della proposizione (ordine/identità). Niente bordatura totale. */
 function periodaleDoubleBorderStyle(entry) {
   const role = periodaleRoleColor(entry && entry.ruolo);
   const prop = periodaleColorFor(entry).border;
   const bg = periodaleColorFor(entry).bg;
-  return `border:2.5px solid ${role}; box-shadow: 0 0 0 2px var(--poetrify-paper), 0 0 0 4.5px ${prop}; background:${bg}; --case-strong:${role};`;
+  return `border-left:5px solid ${role}; box-shadow: -2px 0 0 0 var(--poetrify-paper), -6px 0 0 0 ${prop}; margin-left:7px; background:${bg}; --case-strong:${role};`;
+}
+
+/* Box d'ANTEPRIMA della proposizione confermata: un INTERO rettangolo nel colore
+   proprio + spessa stripe sinistra del RUOLO (gerarchia). */
+function periodalePreviewBoxStyle(entry) {
+  const role = periodaleRoleColor(entry && entry.ruolo);
+  const prop = periodaleColorFor(entry).border;
+  const bg = periodaleColorFor(entry).bg;
+  return `border:2px solid ${prop}; border-left:6px solid ${role}; background:${bg}; --case-strong:${role};`;
 }
 
 /* ============================================
@@ -25622,18 +25632,23 @@ function renderScheletroProposizioni(sentences, lang) {
       let dt = tok.text; if (abbrSkip.has(i + 1)) dt += '.';
       return `<span class="${cls}">${escapeHtml(dt)}</span>`;
     };
-    // Le proposizioni CONFERMATE sono racchiuse in UN UNICO rettangolo (doppio
-    // bordo ruolo + identità), senza più suddividere le parole.
+    // Le proposizioni CONFERMATE sono racchiuse in UN UNICO rettangolo; CLICCANDO
+    // il box (o una sua parola) si rientra in modifica (token caricati nel
+    // selettore) → flessibilità di modifica in ogni momento. I token in modifica
+    // (già nel selettore) restano singoli e selezionabili, non boxati.
     let tokensHtml = '';
     let curPeId = null, boxBuffer = '', boxEntry = null;
     const flushBox = () => {
       if (curPeId != null && boxEntry) {
-        tokensHtml += `<span class="prop-box" style="${periodaleDoubleBorderStyle(boxEntry)}" title="${escapeHtml((boxEntry.ruolo || 'proposizione') + ' ' + (boxEntry._sigla || ''))}"><span class="prop-box-sigla">${escapeHtml(boxEntry._sigla || '')}</span>${boxBuffer}</span> `;
+        tokensHtml += `<span class="prop-box" style="${periodalePreviewBoxStyle(boxEntry)}" onclick="selectPeriodaleEntryInTokenizer('${sentence.id}','${boxEntry.id}')" title="${escapeHtml((boxEntry.ruolo || 'proposizione') + ' ' + (boxEntry._sigla || '') + ' — clicca per modificare i token')}"><span class="prop-box-sigla">${escapeHtml(boxEntry._sigla || '')}</span>${boxBuffer}</span> `;
       }
       curPeId = null; boxBuffer = ''; boxEntry = null;
     };
     toks.forEach((tok, i) => {
-      const pe = (tok.kind === 'word') ? annotated.find(e => (e.tokenIndices || []).includes(tok.idx)) : null;
+      // i token già nel SELETTORE (proposizione in modifica) restano singoli e
+      // modificabili: non vengono boxati.
+      const inSel = tok.kind === 'word' && periodaleSel.sentenceId === sentence.id && periodaleSel.indices.includes(tok.idx);
+      const pe = (tok.kind === 'word' && !inSel) ? annotated.find(e => (e.tokenIndices || []).includes(tok.idx)) : null;
       if (curPeId != null) {
         if (tok.kind === 'space') { boxBuffer += ' '; return; }
         if (pe && pe.id === curPeId) { boxBuffer += innerWord(tok, i); return; }
