@@ -9732,6 +9732,21 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   .archive-stats { grid-template-columns: repeat(2, 1fr); }
   .translation-intro { grid-template-columns: 1fr 1fr; }
   .modal { max-width: 92vw; }
+  /* SCHELETRO · già su tablet le 7 fasi stanno su una riga scrollabile (con
+     etichette) invece di andare a capo in modo disordinato. */
+  .scheletro-stepper {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    gap: 6px;
+    scrollbar-width: thin;
+  }
+  .scheletro-stepper::-webkit-scrollbar { height: 3px; }
+  .scheletro-stepper::-webkit-scrollbar-thumb { background: var(--poetrify-rule); border-radius: 2px; }
+  .scheletro-step { flex-shrink: 0; }
+  .scheletro-step-sep { display: none; }
 }
 
 /* MOBILE / TABLET PORTRAIT — 720px
@@ -9894,6 +9909,32 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   .wizard-step-label { font-size: 9px; }
   .wizard-title { font-size: 18px; }
   .wizard-sentence-tab { padding: 5px 10px; font-size: 10px; }
+
+  /* SCHELETRO · stepper (7 fasi) → riga orizzontale scrollabile, non più a capo
+     su più righe: resta compatto e sticky, l'utente scorre lateralmente. */
+  .scheletro-stepper {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    gap: 6px;
+    padding: 8px 6px;
+    scrollbar-width: thin;
+  }
+  .scheletro-stepper::-webkit-scrollbar { height: 3px; }
+  .scheletro-stepper::-webkit-scrollbar-thumb { background: var(--poetrify-rule); border-radius: 2px; }
+  .scheletro-step { padding: 6px 11px; font-size: 11px; flex-shrink: 0; }
+  .scheletro-step-num { font-size: 14px; }
+  .scheletro-step-sep { display: none; }
+  .scheletro-stats { gap: 10px 14px; font-size: 11px; margin-bottom: 12px; }
+  .scheletro-stats strong, .scheletro-stat strong { font-size: 14px; }
+  /* barra di conferma logica + dropdown verbi: select a tutta larghezza e alti
+     abbastanza da essere toccabili */
+  .schel-confirm-sel { flex: 1 1 100%; max-width: 100%; }
+  .schel-confirm-sel, .schel-vq-field .field-select { min-height: 34px; }
+  .schel-trad-tools .btn { flex: 1 1 auto; justify-content: center; }
+  .archive-branch-bar { padding: 8px 10px; gap: 6px; }
 
   /* PREVIEW pane come overlay laterale */
   .preview {
@@ -10058,6 +10099,17 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   .ts-original { padding: 8px 10px; font-size: 13px; }
   .ordo-chip { min-width: 100%; max-width: 100%; }
   .translation-textarea { font-size: 13px; padding: 8px 10px; }
+
+  /* SCHELETRO su phone: step solo-icona tranne l'attivo (che mostra l'etichetta),
+     così le 7 fasi restano leggibili anche su schermo stretto. */
+  .scheletro-step { padding: 6px 9px; gap: 4px; }
+  .scheletro-step .scheletro-step-label { display: none; }
+  .scheletro-step.active .scheletro-step-label { display: inline; }
+  .scheletro-step-num { font-size: 15px; }
+  /* dropdown verbi (voce attiva): campi a due per riga + lemma a piena larghezza */
+  .schel-vq-field { flex: 1 1 46%; }
+  .schel-vq-lemma { flex: 1 1 100%; }
+  .schel-trad-original { font-size: 13px; }
 
   /* TREE: card ancora più piccolo */
   .tree-card { min-width: 110px; max-width: 170px; padding: 7px 9px; font-size: 11px; }
@@ -24825,6 +24877,13 @@ function setScheletroStep(step) {
   }
   persistCurrent();
   renderEditor();
+  // Su mobile lo stepper è una riga scrollabile: porta la fase attiva in vista.
+  requestAnimationFrame(() => {
+    try {
+      const el = document.querySelector('.scheletro-step.active');
+      if (el && el.scrollIntoView) el.scrollIntoView({ inline: 'center', block: 'nearest', behavior: 'smooth' });
+    } catch (_) {}
+  });
 }
 
 function renderStep3HtmlScheletro() {
