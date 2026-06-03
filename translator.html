@@ -6300,13 +6300,31 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: 'Times New Roman',
   color: var(--poetrify-paper);
   border-color: var(--poetrify-primary);
 }
-.integrale-grouped-body { display: flex; flex-direction: column; gap: 10px; }
+/* RETTANGOLI COMPATTI: le frasi sono chiuse di default e affiancate in griglia.
+   Aprendone una, occupa l'intera riga e mostra le voci. */
+.integrale-grouped-body { display: flex; flex-wrap: wrap; gap: 8px; }
 .integrale-sentence-block {
   background: var(--poetrify-ivory);
   border: 1px solid var(--poetrify-rule-soft);
   border-radius: var(--radius-sm);
   overflow: hidden;
 }
+.integrale-rect { flex: 0 1 auto; max-width: 100%; }
+.integrale-rect[open] { flex: 1 1 100%; }
+.integrale-rect > summary { display: flex; align-items: center; gap: 8px; padding: 6px 10px; cursor: pointer; list-style: none; font-family: var(--font-ui); border-left: 3px solid transparent; }
+.integrale-rect > summary::-webkit-details-marker { display: none; }
+.integrale-rect > summary::before { content: '▸'; font-size: 10px; color: var(--poetrify-sepia); transition: transform var(--transition-base); }
+.integrale-rect[open] > summary::before { transform: rotate(90deg); }
+.integrale-rect.empty > summary { background: var(--poetrify-cream); color: var(--poetrify-sepia); }
+.integrale-rect.has > summary { background: rgba(47,133,90,0.12); color: #1f5c3d; border-left-color: var(--poetrify-success); }
+.integrale-rect-num { font-weight: 800; font-size: 12px; }
+.integrale-rect-count { font-weight: 700; font-size: 10px; min-width: 16px; text-align: center; border-radius: 999px; padding: 0 5px; background: rgba(0,0,0,0.10); }
+.integrale-rect.has .integrale-rect-count { background: rgba(47,133,90,0.22); }
+.integrale-rect-text { font-size: 12px; color: var(--poetrify-ink-soft); max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.integrale-rect-text.greek { font-family: 'Times New Roman', 'Liberation Serif', serif; }
+.integrale-rect[open] .integrale-rect-text { white-space: normal; max-width: none; font-style: italic; }
+body.poetrify-dark .integrale-rect.empty > summary { background: rgba(255,255,255,0.05); }
+body.poetrify-dark .integrale-rect.has > summary { background: rgba(47,133,90,0.18); }
 .integrale-sentence-block-summary {
   display: flex;
   align-items: center;
@@ -26744,32 +26762,30 @@ function renderIntegraleTokenizer(macro, tab, isGreek) {
 function renderIntegraleGroupedEntries(sentences, level, lang) {
   const type = level === 'logica' ? 'logic' : level === 'periodale' ? 'periodale' : 'grammar';
   const isGreek = lang === 'greco';
+  // CHIUSE di default e ridotte a RETTANGOLI COLORATI (per status), affiancate
+  // in griglia: vista compatta, ordinata e minimale. Si espandono al clic.
   const blocks = sentences.map((s, i) => {
     const entries = (s[type] || []).slice().sort((a, b) => entrySortKey(a, type) - entrySortKey(b, type));
-    if (entries.length === 0) {
-      return `<details class="integrale-sentence-block" ${false ? 'open' : ''}>
-        <summary class="integrale-sentence-block-summary">
-          <span class="integrale-sentence-block-num">Frase ${i + 1}</span>
-          <span class="integrale-sentence-block-text ${isGreek ? 'greek' : ''}">${escapeHtml(s.original.substring(0, 90))}${s.original.length > 90 ? '…' : ''}</span>
-          <span class="integrale-sentence-block-count empty">— nessuna voce —</span>
-        </summary>
-      </details>`;
-    }
-    const entriesHtml = entries.map(entry => {
-      if (type === 'grammar')   return renderGrammarEntry(s.id, entry, lang);
-      if (type === 'logic')     return renderLogicEntry(s.id, entry, lang);
-      if (type === 'periodale') {
-        const annotated = annotatePeriodaleSiglas(s.periodale || []);
-        const annEntry = annotated.find(p => p.id === entry.id) || entry;
-        return renderPeriodaleEntry(s.id, annEntry, lang, annotated);
-      }
-      return '';
-    }).join('');
-    return `<details class="integrale-sentence-block" open>
+    const has = entries.length > 0;
+    const statusCls = has ? 'has' : 'empty';
+    const preview = escapeHtml(s.original.substring(0, 64)) + (s.original.length > 64 ? '…' : '');
+    const entriesHtml = has
+      ? entries.map(entry => {
+          if (type === 'grammar')   return renderGrammarEntry(s.id, entry, lang);
+          if (type === 'logic')     return renderLogicEntry(s.id, entry, lang);
+          if (type === 'periodale') {
+            const annotated = annotatePeriodaleSiglas(s.periodale || []);
+            const annEntry = annotated.find(p => p.id === entry.id) || entry;
+            return renderPeriodaleEntry(s.id, annEntry, lang, annotated);
+          }
+          return '';
+        }).join('')
+      : '<div class="muted-text" style="font-size:12px;padding:4px 2px;">Nessuna voce per questo livello in questa frase.</div>';
+    return `<details class="integrale-sentence-block integrale-rect ${statusCls}">
       <summary class="integrale-sentence-block-summary">
-        <span class="integrale-sentence-block-num">Frase ${i + 1}</span>
-        <span class="integrale-sentence-block-text ${isGreek ? 'greek' : ''}">${escapeHtml(s.original.substring(0, 90))}${s.original.length > 90 ? '…' : ''}</span>
-        <span class="integrale-sentence-block-count"><strong>${entries.length}</strong> voc${entries.length === 1 ? 'e' : 'i'}</span>
+        <span class="integrale-rect-num">${i + 1}</span>
+        <span class="integrale-rect-count">${has ? entries.length : '·'}</span>
+        <span class="integrale-rect-text ${isGreek ? 'greek' : ''}">${preview}</span>
       </summary>
       <div class="integrale-sentence-block-body">${entriesHtml}</div>
     </details>`;
@@ -27699,8 +27715,12 @@ function renderGuidedVerbiAnalysis(sentence) {
     let title = 'Clicca se è una forma verbale';
     if (tok.grammarEntry && tok.grammarEntry.partOfSpeech === 'Verbo') {
       classes.push('pos-verbo');
-      marker = `<span class="token-pos-marker">vb.</span>`;
-      title = 'Verbo · clicca per modificarne l\'analisi';
+      // riconoscimento coerente: non finito = terracotta (rosso diverso)
+      const NONFIN = ['Infinito', 'Participio', 'Gerundio', 'Gerundivo', 'Supino'];
+      const nf = tok.grammarEntry._scheletroForma === 'non-finita' || NONFIN.includes(tok.grammarEntry.verboForma);
+      if (nf) classes.push('scheletro-verb-nonfin');
+      marker = `<span class="token-pos-marker">vb.${nf ? '°' : ''}</span>`;
+      title = (nf ? 'Verbo (modo non finito)' : 'Verbo') + ' · clicca per modificarne l\'analisi';
     } else if (tok.grammarEntry && tok.grammarEntry.partOfSpeech) {
       const cls = posClass(tok.grammarEntry.partOfSpeech);
       if (cls) classes.push(cls);
@@ -30170,6 +30190,12 @@ function renderTokenChip(sentence, tok, mode) {
       const group = caseGroupForGrammarEntry(tok.grammarEntry);
       classes.push('case-' + group);
       classes.push('token-accent-start'); // un grammar token = un'entry, sempre "inizio"
+      // RICONOSCIMENTO VERBI coerente con l'approccio scheletro: il modo NON finito
+      // è risaltato in terracotta (rosso diverso), il finito resta cremisi (case-verbo).
+      if (tok.grammarEntry.partOfSpeech === 'Verbo') {
+        const NONFIN = ['Infinito', 'Participio', 'Gerundio', 'Gerundivo', 'Supino'];
+        if (tok.grammarEntry._scheletroForma === 'non-finita' || NONFIN.includes(tok.grammarEntry.verboForma)) classes.push('scheletro-verb-nonfin');
+      }
       const casoAbbr = tok.grammarEntry.caso ? ' ' + tok.grammarEntry.caso.toLowerCase().slice(0,3) + '.' : '';
       // Mini-indicatore di concordanza · cerca i partner adiacenti nominali
       // e mostra ✓ o ⚠ accanto al PoS marker.
