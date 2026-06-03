@@ -2705,6 +2705,7 @@ body.poetrify-dark .scheletro-role-tag { background: rgba(255,255,255,0.22); }
 }
 /* elenco proposizioni / voci logiche dentro un blocco-frase dello scheletro */
 .scheletro-prop-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.scheletro-tree-wrap { margin-top: 14px; }
 /* verbo nell'anteprima della segmentazione: colore PIENO (rosso), niente tratteggio */
 .scheletro-verb-outline {
   background: rgba(196,18,52,0.20) !important;
@@ -2769,7 +2770,7 @@ body.poetrify-dark .schel-conn-bar { background: rgba(214,158,46,0.12); }
   line-height: 1.5; cursor: pointer; transition: filter 0.15s ease;
 }
 .prop-box:hover { filter: brightness(0.97); box-shadow: 0 0 0 2px var(--case-strong); }
-.prop-box-sigla { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-ui); font-size: 10px; font-weight: 800; color: var(--poetrify-ink); margin-right: 6px; padding: 1px 7px; border: 1.5px solid; border-radius: 5px; white-space: nowrap; }
+.prop-box-sigla { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-ui); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--poetrify-ink); margin-right: 6px; padding: 1px 7px; border: 1.5px solid; border-radius: 5px; white-space: nowrap; }
 .prop-sigla-dot { opacity: 0.55; font-weight: 700; }
 .prop-word { color: var(--poetrify-ink); }
 .prop-verb { font-weight: 800; }        /* verbi della proposizione: SOLO grassetto */
@@ -3420,13 +3421,14 @@ body[data-lang="greco"] .token-action-bar .target-word { font-family: var(--font
   align-items: center;
   justify-content: center;
   gap: 5px;
-  min-width: 36px;
-  height: 26px;
-  padding: 0 10px;
+  height: 22px;
+  padding: 0 8px;
   border-radius: var(--radius-sm);
   font-family: var(--font-ui);
-  font-size: 13px;
+  font-size: 10px;                 /* identica ai label di classificazione dell'analisi logica */
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
   border: 1.5px solid;
   margin-right: 10px;
   white-space: nowrap;
@@ -25723,11 +25725,12 @@ function renderScheletroProposizioni(sentences, lang) {
       ${renderPeriodaleActionBar(sentence)}
       ${annotated.length ? `<div class="scheletro-autofill-row"><button class="btn btn-ghost btn-sm" onclick="scheletroAutofillProps('${sentence.id}')" title="Completa ruolo · tipo · modo · connettivo delle proposizioni in base al verbo e alla congiunzione">⚡ Completa proposizioni dai verbi</button></div>` : ''}
       <div class="scheletro-prop-list">${entriesHtml}</div>
+      ${annotated.length ? `<div class="scheletro-tree-wrap">${renderSyntaxTree(sentence, state.syntaxTreeView || 'classic')}</div>` : ''}
     </div>`;
   }).join('');
   return `<div class="subsection">
     <div class="method-note" style="background:rgba(192,38,211,0.06);border-left-color:rgba(192,38,211,0.55);">
-      <strong>✂️ Fase 2 · Proposizioni interne.</strong> L'<strong>anteprima è il pannello di lavoro</strong>: <strong>seleziona</strong> (clic o trascina) i token di ogni proposizione; una volta <strong>confermata</strong>, la proposizione si chiude in un <strong>unico rettangolo</strong> (doppio bordo: colore del ruolo + colore proprio), coi <strong>verbi in grassetto</strong> e le <strong>congiunzioni in corsivo</strong>. <strong>Conferma gli asindeti</strong> cliccando i segni di punteggiatura (il punto di fine frase è già asindeto; i punti di abbreviazione dopo una maiuscola, come «C.», sono esclusi). <strong>Clicca una congiunzione</strong> per accettarla/classificarla; se ne hai una non rilevata (es. un <strong>pronome relativo</strong>), selezionala da sola e premi «Definisci come congiunzione».
+      <strong>✂️ Fase 2 · Proposizioni interne.</strong> L'<strong>anteprima è il pannello di lavoro</strong>: <strong>seleziona</strong> (clic o trascina) i token di ogni proposizione; una volta <strong>confermata</strong>, la proposizione si chiude in un <strong>unico rettangolo</strong> (bordo nel colore del ruolo), coi <strong>verbi in grassetto</strong> e le <strong>congiunzioni in corsivo</strong>; in fondo trovi l'<strong>albero sintattico</strong> (vista classica) che cresce con le proposizioni. <strong>Conferma gli asindeti</strong> cliccando i segni di punteggiatura (il punto di fine frase è già asindeto; i punti di abbreviazione dopo una maiuscola, come «C.», sono esclusi). <strong>Clicca una congiunzione</strong> per accettarla/classificarla; se ne hai una non rilevata (es. un <strong>pronome relativo</strong>), selezionala da sola e premi «Definisci come congiunzione».
     </div>
     ${blocks}
   </div>`;
@@ -31576,7 +31579,7 @@ function removePeriodaleEntryById(sentenceId, entryId) {
    Mantengo `renderSyntaxTree` come funzione pubblica per back-compat.
    La toggle "vista classica / vista 2.0" è preservata via state.syntaxTreeView. */
 
-function renderSyntaxTree(sentence) {
+function renderSyntaxTree(sentence, forceView) {
   const annotated = annotatePeriodaleSiglas(sentence.periodale || []);
 
   // Pannello "Periodo ipotetico" — appare sopra l'albero se rilevato
@@ -31590,7 +31593,9 @@ function renderSyntaxTree(sentence) {
       `<div class="syntax-tree-wrap"><div class="syntax-tree-header"><span class="syntax-tree-title">Albero sintattico</span></div><div class="syntax-tree-empty">Nessuna proposizione ancora analizzata. Costruiscine almeno una col selettore qui sopra per veder crescere l'albero.</div></div>`;
   }
 
-  const view = state.syntaxTreeView || 'v2'; // default = nuovo
+  // forceView: se passato, impone la vista (es. «classic» nello scheletro);
+  // altrimenti segue il toggle globale (default v2).
+  const view = forceView || state.syntaxTreeView || 'v2';
   if (view === 'classic') return periodoIpotPanel + _renderSyntaxTreeClassic(sentence, annotated);
   return periodoIpotPanel + _renderSyntaxTreeV2(sentence, annotated);
 }
