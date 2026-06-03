@@ -2659,10 +2659,11 @@ body.poetrify-dark .scheletro-stepper { background: var(--poetrify-paper); }
   cursor: pointer;
   transition: all 0.15s ease;
 }
+/* VERBO FINITO · rosso CILIEGIA (vivido) */
 .scheletro-verb-marked {
-  background: rgba(197,48,48,0.18) !important;
-  border-color: rgba(197,48,48,0.55) !important;
-  color: #8b1f1f !important;
+  background: rgba(196,18,52,0.20) !important;
+  border-color: rgba(196,18,52,0.65) !important;
+  color: #a1102e !important;
   font-weight: 700;
 }
 .scheletro-sogg-marked {
@@ -2698,25 +2699,24 @@ body.poetrify-dark .scheletro-stepper { background: var(--poetrify-paper); }
 }
 body.poetrify-dark .scheletro-verb-tag,
 body.poetrify-dark .scheletro-role-tag { background: rgba(255,255,255,0.22); }
-/* verbo NON finito · RISALTATO esattamente come il finito (riempimento pieno),
-   ma in un rosso DIVERSO (terracotta/corallo) per distinguerlo dal finito
-   (cremisi). Niente ondulazione, niente corsivo. */
+/* verbo NON finito · RISALTATO come il finito (riempimento pieno) ma in rosso
+   RAMATO (rame/bronzo), nettamente distinto dal ciliegia del finito. */
 .scheletro-verb-nonfin {
-  background: rgba(224,98,64,0.22) !important;
-  border-color: rgba(214,90,60,0.65) !important;
-  color: #b1481f !important;
+  background: rgba(176,92,40,0.26) !important;
+  border-color: rgba(160,78,28,0.72) !important;
+  color: #8a4318 !important;
   font-weight: 700 !important;
 }
 /* elenco proposizioni / voci logiche dentro un blocco-frase dello scheletro */
 .scheletro-prop-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
 /* verbo nell'anteprima della segmentazione: colore PIENO (rosso), niente tratteggio */
 .scheletro-verb-outline {
-  background: rgba(197,48,48,0.20) !important;
-  border-color: rgba(197,48,48,0.7) !important;
-  color: #8b1f1f !important;
+  background: rgba(196,18,52,0.20) !important;
+  border-color: rgba(196,18,52,0.7) !important;
+  color: #a1102e !important;
   font-weight: 700;
 }
-.scheletro-verb-outline.scheletro-verb-nonfin { background: rgba(224,98,64,0.22) !important; border-color: rgba(214,90,60,0.65) !important; color: #b1481f !important; }
+.scheletro-verb-outline.scheletro-verb-nonfin { background: rgba(176,92,40,0.26) !important; border-color: rgba(160,78,28,0.72) !important; color: #8a4318 !important; }
 /* congiunzione (connettivo) confermata: colore PIENO ambra direttamente sul token */
 .scheletro-conn-token {
   background: rgba(214,158,46,0.22) !important;
@@ -2762,6 +2762,21 @@ body.poetrify-dark .scheletro-role-tag { background: rgba(255,255,255,0.22); }
 .schel-conn-bar-word.greek { font-family: var(--font-classical); }
 .schel-conn-bar .schel-conn-sel { flex: 0 1 240px; max-width: 280px; }
 body.poetrify-dark .schel-conn-bar { background: rgba(214,158,46,0.12); }
+/* barra «definisci come congiunzione» (singolo token, es. pronome relativo) */
+.schel-defconj-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 8px 0; padding: 6px 10px; background: var(--poetrify-cream); border: 1px dashed var(--poetrify-rule); border-radius: 9px; }
+.schel-defconj-word { font-weight: 800; color: var(--poetrify-primary); font-size: 14px; }
+.schel-defconj-word.greek { font-family: var(--font-classical); }
+/* PROPOSIZIONE CONFERMATA · racchiusa in un unico rettangolo (doppio bordo) */
+.prop-box {
+  display: inline-flex; align-items: baseline; flex-wrap: wrap; gap: 2px 5px;
+  padding: 5px 9px; margin: 5px 9px 5px 3px; border-radius: 9px; vertical-align: middle;
+  line-height: 1.5;
+}
+.prop-box-sigla { font-family: var(--font-ui); font-size: 10px; font-weight: 800; color: var(--case-strong); margin-right: 4px; opacity: 0.95; }
+.prop-word { color: var(--poetrify-ink); }
+.prop-verb { font-weight: 800; }        /* verbi della proposizione: SOLO grassetto */
+.prop-conj { font-style: italic; }      /* congiunzioni: SOLO corsivo */
+.prop-punct { color: var(--poetrify-sepia); }
 /* sotto-sezione · completa l'analisi grammaticale dei verbi (fase Verbi) */
 .scheletro-verb-analysis { margin: 8px 0; }
 .scheletro-verb-analysis-head { font-family: var(--font-ui); font-size: 11px; font-weight: 700; color: var(--poetrify-sepia); margin: 6px 0 2px; }
@@ -2796,7 +2811,12 @@ body.poetrify-dark .schel-vq-word { color: #f1a3a3; }
 .schel-vq-word.greek { font-family: var(--font-classical); }
 .schel-vq-fields { display: flex; flex-wrap: wrap; gap: 6px 10px; flex: 1; }
 .schel-vq-field { display: inline-flex; flex-direction: column; gap: 1px; }
-.schel-vq-field > span { font-family: var(--font-ui); font-size: 8px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--poetrify-sepia); }
+/* label dei campi verbo: stesso font/grandezza dei titoli dei menù dell'analisi
+   logica (.field-block-label) per coerenza visiva */
+.schel-vq-field > span { font-family: var(--font-ui); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--poetrify-sepia); }
+/* i label dei riquadri (verbi/grammatica/logica) riprendono il colore del bordo (caso/funzione) */
+.entry-card[class*="case-"] .field-block-label,
+.schel-vq-row[class*="case-"] .schel-vq-field > span { color: var(--case-strong, var(--poetrify-sepia)); }
 .schel-vq-field .field-select, .schel-vq-field .field-input { font-size: 11px; padding: 3px 5px; }
 .schel-vq-lemma { flex: 1 1 180px; }
 /* voce verbale chiusa (riepilogo cliccabile) vs attiva (aperta) */
@@ -7975,7 +7995,7 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
 /* PALETTE DISTINTIVA · soggetto=BLU/AZZURRO · verbo=ROSSO · oggetto=ARANCIO ·
    genitivo=FUCSIA · dativo=VIOLA · ablativo=VERDE · vocativo=teal */
 .case-nominativo { --case-strong: rgba(37, 99, 235, 0.88);  --case-bg: rgba(37, 99, 235, 0.13);  --case-border: rgba(37, 99, 235, 0.55);  --case-text: #1d4ed8; }
-.case-verbo      { --case-strong: rgba(197, 48, 48, 0.85);  --case-bg: rgba(197, 48, 48, 0.14);  --case-border: rgba(197, 48, 48, 0.55);  --case-text: #8b1f1f; }
+.case-verbo      { --case-strong: rgba(196, 18, 52, 0.88);  --case-bg: rgba(196, 18, 52, 0.14);  --case-border: rgba(196, 18, 52, 0.58);  --case-text: #a1102e; }  /* verbo · rosso ciliegia */
 .case-accusativo { --case-strong: rgba(245, 124, 0, 0.90);  --case-bg: rgba(245, 124, 0, 0.16);  --case-border: rgba(245, 124, 0, 0.58);  --case-text: #8a4500; }
 .case-dativo     { --case-strong: rgba(124, 58, 237, 0.85); --case-bg: rgba(124, 58, 237, 0.14); --case-border: rgba(124, 58, 237, 0.55); --case-text: #5b2bb8; }
 .case-ablativo   { --case-strong: rgba(22, 128, 61, 0.85);  --case-bg: rgba(22, 128, 61, 0.15);  --case-border: rgba(22, 128, 61, 0.55);  --case-text: #15803d; }
@@ -11400,6 +11420,27 @@ function periodaleColorFor(entry) {
 function periodaleEntryStyle(entry) {
   const c = periodaleColorFor(entry);
   return `background:${c.bg};border-color:${c.border};color:${c.color};--case-strong:${c.border};`;
+}
+
+/* Colore del RUOLO della proposizione (gerarchia): blu = principale · rosso =
+   coordinata · verde = subordinata. */
+function periodaleRoleColor(ruolo) {
+  const r = (ruolo || '').toLowerCase();
+  if (r.indexOf('princip') >= 0) return '#1d4ed8';   // blu
+  if (r.indexOf('coordin') >= 0) return '#c0142e';   // rosso
+  if (r.indexOf('subord') >= 0)  return '#157f3d';   // verde
+  return 'rgba(120,113,108,0.6)';                    // neutro
+}
+
+/* DOPPIO BORDO della proposizione: bordo interno = RUOLO (gerarchia: blu/rosso/
+   verde), poi un sottile spazio bianco, poi un secondo bordo nel COLORE UNICO
+   della proposizione (distingue ordine/numero della stessa tipologia). Così con
+   un solo richiamo visivo si leggono sia la gerarchia sia l'identità. */
+function periodaleDoubleBorderStyle(entry) {
+  const role = periodaleRoleColor(entry && entry.ruolo);
+  const prop = periodaleColorFor(entry).border;
+  const bg = periodaleColorFor(entry).bg;
+  return `border:2.5px solid ${role}; box-shadow: 0 0 0 2px var(--poetrify-paper), 0 0 0 4.5px ${prop}; background:${bg}; --case-strong:${role};`;
 }
 
 /* ============================================
@@ -25144,7 +25185,7 @@ function scheletroOrdoGroupsHtml(sentence) {
   groups.sort((a, b) => propPos(a.prop) - propPos(b.prop));
   return groups.map(g => {
     const p = g.prop;
-    const style = p ? periodaleEntryStyle(p) : '';
+    const style = p ? periodaleDoubleBorderStyle(p) : '';
     const ruolo = p ? (p.ruolo || 'Proposizione') : '';
     const tipo = p && p.tipo ? ' · ' + p.tipo : '';
     const label = p ? `${p._sigla} · ${ruolo}${tipo}` : '∅ · non assegnati a una proposizione';
@@ -25524,7 +25565,6 @@ function renderScheletroProposizioni(sentences, lang) {
   const blocks = sentences.map((sentence, sIdx) => {
     const toks = tokenizeSentence(sentence.original);
     const annotated = annotatePeriodaleSiglas(sentence.periodale || []);
-    const asyndeta = sentence._asyndeta || [];
     // Pre-pass: i punti dopo una sola lettera maiuscola sono ABBREVIAZIONI (C., M.,
     // Q.…): vanno incollati alla parola e NON sono segni interagibili.
     const abbrSkip = new Set();
@@ -25534,44 +25574,87 @@ function renderScheletroProposizioni(sentences, lang) {
         if (prev && prev.kind === 'word' && prev.text.length === 1 && /\p{Lu}/u.test(prev.text)) abbrSkip.add(i);
       }
     });
-    const tokensHtml = toks.map((tok, i) => {
+    // Il TERMINATORE di fine frase (. ! ?) è un asindeto di DEFAULT (seminato 1 volta).
+    let finalTermIdx = null;
+    for (let j = toks.length - 1; j >= 0; j--) {
+      if (toks[j].kind === 'punct' && /^[.!?]+$/.test(toks[j].text) && !abbrSkip.has(j)) { finalTermIdx = toks[j].idx; break; }
+    }
+    if (!Array.isArray(sentence._asyndeta)) sentence._asyndeta = (finalTermIdx != null) ? [finalTermIdx] : [];
+    const asyndeta = sentence._asyndeta;
+
+    // Token "sciolto" (fuori da una proposizione confermata): selezionabile,
+    // asindeti interagibili, congiunzioni cliccabili.
+    const looseToken = (tok, i) => {
       if (tok.kind === 'space') return ' ';
       if (tok.kind === 'punct') {
-        if (abbrSkip.has(i)) return '';   // incollato alla parola precedente
-        // segni di confine INTERAGIBILI: clic = conferma/annulla un asindeto
+        if (abbrSkip.has(i)) return '';
         if (/^[,;:·.!?]$/.test(tok.text)) {
           const on = asyndeta.includes(tok.idx);
-          return `<span class="token schel-asyndeton ${on ? 'confirmed' : ''}" onclick="scheletroToggleAsyndeton('${sentence.id}', ${tok.idx})" title="${on ? 'Asindeto/confine confermato — clic per togliere' : 'Clic per confermare un confine di proposizione (asindeto/punteggiatura)'}">${escapeHtml(tok.text)}</span>`;
+          return `<span class="token schel-asyndeton ${on ? 'confirmed' : ''}" onclick="scheletroToggleAsyndeton('${sentence.id}', ${tok.idx})" title="${on ? 'Asindeto/confine confermato — clic per togliere' : 'Clic per confermare un confine di proposizione (asindeto)'}">${escapeHtml(tok.text)}</span>`;
         }
         return `<span class="token token-punct">${escapeHtml(tok.text)}</span>`;
       }
-      const pe = annotated.find(e => (e.tokenIndices || []).includes(tok.idx));
       const ge = (sentence.grammar || []).find(g => g.tokenIndex === tok.idx);
       const inSel = periodaleSel.sentenceId === sentence.id && periodaleSel.indices.includes(tok.idx);
-      // incolla l'eventuale punto di abbreviazione che segue
-      let displayText = tok.text;
-      if (abbrSkip.has(i + 1)) displayText += '.';
+      let dt = tok.text; if (abbrSkip.has(i + 1)) dt += '.';
       const cls = ['token', 'scheletro-token'];
-      let style = '';
-      const isConj = ge && ge.partOfSpeech === 'Congiunzione';
-      if (isConj) {
-        // CONGIUNZIONE: clic → tendina di accettazione/conferma (non entra nella selezione)
+      if (ge && ge.partOfSpeech === 'Congiunzione') {
         const confirmed = !!ge._connConfirmed;
         const isActiveConn = state.scheletroActiveConn && state.scheletroActiveConn.sentenceId === sentence.id && state.scheletroActiveConn.tokenIdx === tok.idx;
         cls.push(confirmed ? 'scheletro-conn-token' : 'scheletro-conn-candidate');
         if (isActiveConn) cls.push('is-active-conn');
         if (inSel) cls.push('token-selected');
-        return `<span class="${cls.join(' ')}" data-token-mode="periodale" data-token-idx="${tok.idx}" data-sentence-id="${sentence.id}" onclick="scheletroConnClick(event,'${sentence.id}',${tok.idx})" title="Congiunzione: clic per accettarla/confermarla o escluderla">${escapeHtml(displayText)}</span>`;
+        return `<span class="${cls.join(' ')}" data-token-mode="periodale" data-token-idx="${tok.idx}" data-sentence-id="${sentence.id}" onclick="scheletroConnClick(event,'${sentence.id}',${tok.idx})" title="Congiunzione: clic per accettarla/confermarla o escluderla">${escapeHtml(dt)}</span>`;
       }
-      if (pe) { cls.push('periodale-lvl'); style = ` style="${periodaleEntryStyle(pe)}"`; }
-      else cls.push('token-untagged');
+      cls.push('token-untagged');
       if (inSel) cls.push('token-selected');
-      // VISIBILITÀ DELLE FORME VERBALI: finito = cremisi pieno · non finito = terracotta pieno
       const isVerb = ge && ge.partOfSpeech === 'Verbo';
       if (isVerb) { cls.push('scheletro-verb-outline'); if (ge.verboForma !== 'Forma finita') cls.push('scheletro-verb-nonfin'); }
-      const mark = (pe && Math.min.apply(null, (pe.tokenIndices || [tok.idx])) === tok.idx) ? `<span class="token-periodale-sigla">${pe._sigla}</span>` : '';
-      return `<span class="${cls.join(' ')}"${style} data-token-mode="periodale" data-token-idx="${tok.idx}" data-sentence-id="${sentence.id}" onclick="onPeriodaleTokenClick(event,'${sentence.id}',${tok.idx})" title="Click/trascina per selezionare i token di una proposizione">${escapeHtml(displayText)}${mark}</span>`;
-    }).join('');
+      return `<span class="${cls.join(' ')}" data-token-mode="periodale" data-token-idx="${tok.idx}" data-sentence-id="${sentence.id}" onclick="onPeriodaleTokenClick(event,'${sentence.id}',${tok.idx})" title="Click/trascina per selezionare i token di una proposizione">${escapeHtml(dt)}</span>`;
+    };
+    // Parola DENTRO una proposizione confermata: testo semplice; verbo in
+    // GRASSETTO, congiunzione in CORSIVO (niente più colore/box per token).
+    const innerWord = (tok, i) => {
+      const ge = (sentence.grammar || []).find(g => g.tokenIndex === tok.idx);
+      let cls = 'prop-word';
+      if (ge && ge.partOfSpeech === 'Verbo') cls += ' prop-verb';
+      if (ge && ge.partOfSpeech === 'Congiunzione') cls += ' prop-conj';
+      let dt = tok.text; if (abbrSkip.has(i + 1)) dt += '.';
+      return `<span class="${cls}">${escapeHtml(dt)}</span>`;
+    };
+    // Le proposizioni CONFERMATE sono racchiuse in UN UNICO rettangolo (doppio
+    // bordo ruolo + identità), senza più suddividere le parole.
+    let tokensHtml = '';
+    let curPeId = null, boxBuffer = '', boxEntry = null;
+    const flushBox = () => {
+      if (curPeId != null && boxEntry) {
+        tokensHtml += `<span class="prop-box" style="${periodaleDoubleBorderStyle(boxEntry)}" title="${escapeHtml((boxEntry.ruolo || 'proposizione') + ' ' + (boxEntry._sigla || ''))}"><span class="prop-box-sigla">${escapeHtml(boxEntry._sigla || '')}</span>${boxBuffer}</span> `;
+      }
+      curPeId = null; boxBuffer = ''; boxEntry = null;
+    };
+    toks.forEach((tok, i) => {
+      const pe = (tok.kind === 'word') ? annotated.find(e => (e.tokenIndices || []).includes(tok.idx)) : null;
+      if (curPeId != null) {
+        if (tok.kind === 'space') { boxBuffer += ' '; return; }
+        if (pe && pe.id === curPeId) { boxBuffer += innerWord(tok, i); return; }
+        if (tok.kind === 'punct') {
+          if (abbrSkip.has(i)) return;                          // punto di abbreviazione: già incollato
+          if (!asyndeta.includes(tok.idx)) {
+            // resta nel box SOLO se è punteggiatura davvero interna (prossima
+            // parola = stessa proposizione); altrimenti è un CONFINE → esce dal box
+            // e resta cliccabile come asindeto.
+            let k = i + 1; while (k < toks.length && toks[k].kind === 'space') k++;
+            const nxt = toks[k];
+            const nxtPe = (nxt && nxt.kind === 'word') ? annotated.find(e => (e.tokenIndices || []).includes(nxt.idx)) : null;
+            if (nxtPe && nxtPe.id === curPeId) { boxBuffer += `<span class="prop-punct">${escapeHtml(tok.text)}</span>`; return; }
+          }
+        }
+        flushBox();   // proposizione diversa, confine o asindeto confermato → chiude il box
+      }
+      if (pe) { curPeId = pe.id; boxEntry = pe; boxBuffer = innerWord(tok, i); return; }
+      tokensHtml += looseToken(tok, i);
+    });
+    flushBox();
     // Tendina di accettazione/conferma della congiunzione attiva (dal clic in anteprima)
     let connBar = '';
     if (state.scheletroActiveConn && state.scheletroActiveConn.sentenceId === sentence.id) {
@@ -25591,6 +25674,21 @@ function renderScheletroProposizioni(sentences, lang) {
         </div>`;
       }
     }
+    // Se è selezionato UN SOLO token che NON è già congiunzione, offri di definirlo
+    // come congiunzione (utile per i pronomi relativi non auto-rilevati).
+    let defConjBar = '';
+    if (periodaleSel.sentenceId === sentence.id && periodaleSel.indices.length === 1) {
+      const ti = periodaleSel.indices[0];
+      const ge = (sentence.grammar || []).find(g => g.tokenIndex === ti);
+      if (!(ge && ge.partOfSpeech === 'Congiunzione')) {
+        const tk = toks.find(t => t.idx === ti);
+        defConjBar = `<div class="schel-defconj-bar">
+          <span class="schel-defconj-word ${isGreek ? 'greek' : ''}">«${escapeHtml(tk ? tk.text : '')}»</span>
+          <span class="muted-text" style="font-size:11px;">è una congiunzione o un pronome relativo non rilevato?</span>
+          <button class="schel-conn-btn" onclick="scheletroMarkAsConj('${sentence.id}', ${ti})" title="Definiscila come congiunzione e apri la tendina di classificazione">↳ Definisci come congiunzione</button>
+        </div>`;
+      }
+    }
     const entriesHtml = annotated.length
       ? annotated.map(e => renderPeriodaleEntry(sentence.id, e, lang, annotated)).join('')
       : '<div class="muted-text" style="font-size:12px;padding:6px 2px;">Nessuna proposizione: nell\'anteprima seleziona i token di una proposizione (trascina o clicca), conferma gli <em>asindeti</em> sui segni di punteggiatura e le <em>congiunzioni</em> cliccandole, poi assegna ruolo/tipo qui sotto.</div>';
@@ -25601,6 +25699,7 @@ function renderScheletroProposizioni(sentences, lang) {
       </div>
       <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
       ${connBar}
+      ${defConjBar}
       ${renderPeriodaleActionBar(sentence)}
       ${annotated.length ? `<div class="scheletro-autofill-row"><button class="btn btn-ghost btn-sm" onclick="scheletroAutofillProps('${sentence.id}')" title="Completa ruolo · tipo · modo · connettivo delle proposizioni in base al verbo e alla congiunzione">⚡ Completa proposizioni dai verbi</button></div>` : ''}
       <div class="scheletro-prop-list">${entriesHtml}</div>
@@ -25608,7 +25707,7 @@ function renderScheletroProposizioni(sentences, lang) {
   }).join('');
   return `<div class="subsection">
     <div class="method-note" style="background:rgba(192,38,211,0.06);border-left-color:rgba(192,38,211,0.55);">
-      <strong>✂️ Fase 2 · Proposizioni interne.</strong> L'<strong>anteprima è il pannello di lavoro</strong>: <strong>seleziona</strong> (clic o trascina) i token di ogni proposizione; <strong>conferma gli asindeti</strong> cliccando i segni di punteggiatura (i punti di abbreviazione dopo una maiuscola, come «C.», sono già esclusi); <strong>clicca una congiunzione</strong> per aprire la tendina di accettazione e classificarla (subordinante / coordinante) o escluderla. Poi completa ruolo · tipo · modo · connettivo · dipendenza qui sotto.
+      <strong>✂️ Fase 2 · Proposizioni interne.</strong> L'<strong>anteprima è il pannello di lavoro</strong>: <strong>seleziona</strong> (clic o trascina) i token di ogni proposizione; una volta <strong>confermata</strong>, la proposizione si chiude in un <strong>unico rettangolo</strong> (doppio bordo: colore del ruolo + colore proprio), coi <strong>verbi in grassetto</strong> e le <strong>congiunzioni in corsivo</strong>. <strong>Conferma gli asindeti</strong> cliccando i segni di punteggiatura (il punto di fine frase è già asindeto; i punti di abbreviazione dopo una maiuscola, come «C.», sono esclusi). <strong>Clicca una congiunzione</strong> per accettarla/classificarla; se ne hai una non rilevata (es. un <strong>pronome relativo</strong>), selezionala da sola e premi «Definisci come congiunzione».
     </div>
     ${blocks}
   </div>`;
@@ -25921,6 +26020,21 @@ function scheletroConnClick(event, sentenceId, tokenIdx) {
 function scheletroSetActiveConn(sentenceId, tokenIdx) {
   state.scheletroActiveConn = (tokenIdx == null) ? null : { sentenceId, tokenIdx };
   renderEditor();
+}
+
+/* Definisce MANUALMENTE un token come congiunzione (es. pronome relativo non
+   auto-rilevato) e apre la tendina di classificazione. */
+function scheletroMarkAsConj(sentenceId, tokenIdx) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const tok = tokenizeSentence(sentence.original).find(t => t.idx === tokenIdx);
+  let entry = (sentence.grammar || []).find(e => e.tokenIndex === tokenIdx);
+  if (!entry) { entry = makeEntry('grammar'); entry.word = tok ? tok.text : ''; entry.tokenIndex = tokenIdx; insertEntrySorted(sentence.grammar, entry, 'grammar'); }
+  entry.partOfSpeech = 'Congiunzione';
+  periodaleSel = { sentenceId: null, indices: [] };          // libera la selezione
+  state.scheletroActiveConn = { sentenceId, tokenIdx };      // apri la tendina di definizione
+  persistCurrent(); renderEditor(); renderSidebarTabs();
+  showToast('Definita come congiunzione · classificala (subordinante/coordinante)');
 }
 
 /* Conferma/annulla un ASINDETO (confine di proposizione) cliccando un segno di
@@ -33236,7 +33350,7 @@ function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
        </div>`;
 
   return `
-    <div class="proposition-card heatmap-level-${heatLevel}${collapsed ? ' is-collapsed' : ''}" id="periodale-entry-${entry.id}" data-role="${ruoloLower}" data-level="${heatLevel}" style="--heat-stripe:${heatStripe};background:${c.bg};" ${entryDragAttrs(sentenceId, entry.id, 'periodale')}>
+    <div class="proposition-card prop-doubleborder heatmap-level-${heatLevel}${collapsed ? ' is-collapsed' : ''}" id="periodale-entry-${entry.id}" data-role="${ruoloLower}" data-level="${heatLevel}" style="--heat-stripe:${heatStripe};${periodaleDoubleBorderStyle(entry)}" ${entryDragAttrs(sentenceId, entry.id, 'periodale')}>
       <div class="entry-card-header">
         ${entryDragHandle()}
         ${headerInner}
