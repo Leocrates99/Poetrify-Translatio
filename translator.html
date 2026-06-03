@@ -2611,6 +2611,8 @@ body.poetrify-dark .scheletro-stepper { background: var(--poetrify-paper); }
   padding: 12px 14px;
   margin-bottom: 12px;
 }
+/* LINEA DI DEMARCAZIONE alla fine di ogni frase: marcata ma non troppo spessa */
+.scheletro-sentence-block { border-bottom: 3px solid rgba(44, 53, 57, 0.55); margin-bottom: 18px; }
 .scheletro-sentence-header,
 .scheletro-verb-card-header,
 .scheletro-finish-header {
@@ -2769,11 +2771,12 @@ body.poetrify-dark .schel-conn-bar { background: rgba(214,158,46,0.12); }
   display: inline-flex; align-items: baseline; flex-wrap: wrap; gap: 2px 5px;
   padding: 5px 9px; margin: 5px 9px 5px 3px; border-radius: 9px; vertical-align: middle;
   line-height: 1.5; cursor: pointer; transition: filter 0.15s ease;
+  font-size: 17px;   /* stessa grandezza dei token dell'analisi logica */
 }
 .prop-box:hover { filter: brightness(0.97); box-shadow: 0 0 0 2px var(--case-strong); }
 .prop-box-sigla { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-ui); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--poetrify-ink); margin-right: 6px; padding: 1px 7px; border: 1.5px solid; border-radius: 5px; white-space: nowrap; }
 .prop-sigla-dot { opacity: 0.55; font-weight: 700; }
-.prop-word { color: var(--poetrify-ink); }
+.prop-word { color: var(--poetrify-ink); }   /* stesso testo dei token logici (nero, 17px ereditato) */
 .prop-verb { font-weight: 800; }        /* verbi della proposizione: SOLO grassetto */
 .prop-conj { font-style: italic; }      /* congiunzioni: SOLO corsivo */
 .prop-punct { color: var(--poetrify-sepia); }
@@ -7590,8 +7593,8 @@ body[data-lang="greco"] .translation-sentence-card .ts-original { font-family: '
   border: 1.5px solid var(--poetrify-rule);
   border-radius: var(--radius-md);
   padding: 8px 10px 10px;
-  min-width: 140px;
-  max-width: 220px;
+  min-width: 160px;
+  max-width: none;      /* il sintagma deve restare sempre interamente visibile */
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -7655,8 +7658,17 @@ body[data-lang="greco"] .ordo-chip-phrase { font-family: 'Times New Roman', seri
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
   color: var(--poetrify-ink);
+  /* textarea che si adatta al contenuto: il sintagma resta sempre interamente
+     visibile (va a capo, niente troncamento) */
+  field-sizing: content;
+  min-height: 1.9em;
+  line-height: 1.35;
+  white-space: pre-wrap;
+  word-break: break-word;
+  resize: none;
+  overflow: hidden;
 }
-.ordo-chip-phrase-input { font-weight: 600; color: var(--poetrify-primary); font-size: 14px; }
+.ordo-chip-phrase-input { font-weight: 700; color: var(--poetrify-ink); font-size: 14px; }
 body[data-lang="greco"] .ordo-chip-phrase-input { font-family: 'Times New Roman', serif; }
 .ordo-chip-italian-input { font-style: italic; }
 .ordo-chip-italian-input:focus,
@@ -8129,7 +8141,28 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
   display: none;
 }
 
+/* anteprima voce: RIGA 1 = rettangolo di classificazione + titolo (allineati);
+   RIGA 2 = eventuali informazioni, interlinea stretta. */
 .entry-summary {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.entry-summary-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; min-width: 0; }
+.entry-summary-info { display: flex; align-items: center; gap: 6px 8px; flex-wrap: wrap; line-height: 1.25; }
+.entry-summary-info:empty { display: none; }
+/* rettangolino di classificazione a sinistra (PoS / funzione): solo bordo nel
+   colore della categoria, nessuna trasparenza, testo nero. */
+.entry-class-badge {
+  display: inline-flex; align-items: center; height: 22px; padding: 0 8px;
+  border-radius: var(--radius-sm); font-family: var(--font-ui); font-size: 10px;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  border: 1.5px solid var(--case-strong, var(--poetrify-rule));
+  color: var(--poetrify-ink); background: transparent; white-space: nowrap; flex: 0 0 auto;
+}
+.entry-summary-OLD {
   flex: 1;
   display: flex;
   align-items: center;
@@ -8159,12 +8192,12 @@ body[data-lang="greco"] .entry-summary-word { font-family: 'Times New Roman', se
   border-radius: var(--radius-sm);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  background: var(--poetrify-primary-pale);
-  color: var(--poetrify-primary);
-  border: 1px solid var(--poetrify-primary-border);
+  background: transparent;       /* solo bordo, niente trasparenza */
+  color: var(--poetrify-ink);
+  border: 1.5px solid var(--case-strong, var(--poetrify-primary));
 }
 .entry-summary-pos.muted {
-  background: var(--poetrify-cream);
+  background: transparent;
   color: var(--poetrify-sepia);
   border-color: var(--poetrify-rule-soft);
 }
@@ -24069,9 +24102,9 @@ function renderListToggleAllBtns(sentenceId, type, arr) {
 
 /* Costruzione del riepilogo testuale per ogni tipo di entry */
 function makeGrammarSummary(entry, lang) {
+  // La parte del discorso è ora nel rettangolino di classificazione a sinistra:
+  // qui resta solo il dettaglio morfologico + lemma.
   const parts = [];
-  if (entry.partOfSpeech) parts.push(`<span class="entry-summary-pos">${escapeHtml(entry.partOfSpeech)}</span>`);
-  else parts.push(`<span class="entry-summary-pos muted">parte ?</span>`);
   const morph = [];
   const isNominal = ['Sostantivo','Aggettivo','Pronome','Articolo','Numerale'].includes(entry.partOfSpeech);
   const isVerb = entry.partOfSpeech === 'Verbo';
@@ -24106,9 +24139,9 @@ function makeGrammarSummary(entry, lang) {
   return parts.join(' ');
 }
 function makeLogicSummary(entry) {
+  // La funzione (Soggetto / Compl. oggetto…) è ora nel rettangolino di
+  // classificazione a sinistra: qui resta solo il dettaglio (attributivo, note).
   const parts = [];
-  if (entry.funzione) parts.push(`<span class="entry-summary-pos">${escapeHtml(entry.funzione)}</span>`);
-  else parts.push(`<span class="entry-summary-pos muted">funzione ?</span>`);
   if (entry.isAttributivo) {
     // Risolvi il sintagma capo: cerca la frase corrente
     let headLabel = '';
@@ -29863,13 +29896,11 @@ function renderOrdoChip(sentenceId, ordo, idx) {
         <span class="ordo-chip-num">${idx + 1}</span>
         ${sourceTag}
       </div>
-      <input class="ordo-chip-phrase-input" type="text" value="${escapeHtml(ordo.phrase)}"
-             placeholder="testo originale"
-             oninput="updateOrdoField('${sentenceId}', '${ordo.id}', 'phrase', this.value)">
+      <textarea class="ordo-chip-phrase-input" rows="1" placeholder="testo originale"
+             oninput="updateOrdoField('${sentenceId}', '${ordo.id}', 'phrase', this.value)">${escapeHtml(ordo.phrase)}</textarea>
       <div class="ordo-chip-arrow">↓ in italiano</div>
-      <input class="ordo-chip-italian-input" type="text" value="${escapeHtml(ordo.italian)}"
-             placeholder="resa in italiano"
-             oninput="updateOrdoField('${sentenceId}', '${ordo.id}', 'italian', this.value)">
+      <textarea class="ordo-chip-italian-input" rows="1" placeholder="resa in italiano"
+             oninput="updateOrdoField('${sentenceId}', '${ordo.id}', 'italian', this.value)">${escapeHtml(ordo.italian)}</textarea>
     </div>`;
 }
 
@@ -32150,11 +32181,17 @@ function renderGrammarEntry(sentenceId, entry, lang) {
   const caseGroup = caseGroupForGrammarEntry(entry);
   const ellipticalCls = entry.isElliptical ? ' is-elliptical' : '';
   const wordDisplay = entry.word || (entry.isElliptical ? '[sottinteso]' : '(parola da inserire)');
+  const posBadge = entry.partOfSpeech
+    ? `<span class="entry-class-badge">${escapeHtml(entry.partOfSpeech)}${entry.caso ? ' · ' + entry.caso.slice(0, 3).toLowerCase() + '.' : ''}</span>`
+    : '<span class="entry-class-badge" style="border-color:var(--poetrify-rule-soft);color:var(--poetrify-sepia);">parte?</span>';
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','grammar', event)">
-         ${entry.isElliptical ? '<span class="entry-summary-ellipsis">sottinteso</span>' : ''}
-         <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.word ? '' : ' placeholder'}">${escapeHtml(wordDisplay)}</span>
-         ${summary}
+         <div class="entry-summary-head">
+           ${entry.isElliptical ? '<span class="entry-summary-ellipsis">sottinteso</span>' : ''}
+           ${posBadge}
+           <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.word ? '' : ' placeholder'}">${escapeHtml(wordDisplay)}</span>
+         </div>
+         <div class="entry-summary-info">${summary}</div>
        </div>`
     : `${entry.isElliptical ? '<span class="entry-summary-ellipsis" style="margin-right:8px;">sottinteso</span>' : ''}
        <div style="flex: 1;">
@@ -32486,14 +32523,19 @@ function renderLogicEntry(sentenceId, entry, lang) {
   const summary = makeLogicSummary(entry);
   const caseGroup = funzioneToCaseGroup(entry.funzione);
   const ellipticalCls = entry.isElliptical ? ' is-elliptical' : '';
-  // estratto del sintagma: nero, non in grassetto, prima lettera maiuscola (coerenza con le proposizioni)
+  // estratto del sintagma: prima lettera maiuscola
   const _ph = entry.phrase || '';
   const phraseCap = _ph ? _ph.charAt(0).toUpperCase() + _ph.slice(1) : '';
+  // RETTANGOLINO DI CLASSIFICAZIONE (a sinistra, bordo nel colore della categoria, no trasparenza)
+  const funzioneBadge = `<span class="entry-class-badge">${escapeHtml(entry.funzione || 'funzione?')}</span>`;
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','logic', event)">
-         ${entry.isElliptical ? '<span class="entry-summary-ellipsis">sottinteso</span>' : ''}
-         <span class="entry-summary-word is-extract ${isGreek ? 'greek' : ''}${entry.phrase ? '' : ' placeholder'}">${escapeHtml(phraseCap || '(sintagma da inserire)')}</span>
-         ${summary}
+         <div class="entry-summary-head">
+           ${entry.isElliptical ? '<span class="entry-summary-ellipsis">sottinteso</span>' : ''}
+           ${funzioneBadge}
+           <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.phrase ? '' : ' placeholder'}">${escapeHtml(phraseCap || '(sintagma da inserire)')}</span>
+         </div>
+         <div class="entry-summary-info">${summary}</div>
        </div>`
     : `${entry.isElliptical ? '<span class="entry-summary-ellipsis" style="margin-right:8px;">sottinteso</span>' : ''}
        <div style="flex: 1;">
@@ -33367,9 +33409,11 @@ function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
   const textPreview = capText.length > 90 ? capText.substring(0, 90) + '…' : capText;
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','periodale', event)">
-         ${siglaBadge}
-         <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.text ? '' : ' placeholder'}">${escapeHtml(textPreview || '(testo da inserire)')}</span>
-         ${summary}
+         <div class="entry-summary-head">
+           ${siglaBadge}
+           <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.text ? '' : ' placeholder'}">${escapeHtml(textPreview || '(testo da inserire)')}</span>
+         </div>
+         <div class="entry-summary-info">${summary}</div>
        </div>`
     : `${siglaBadge}
        <div style="flex: 1;">
