@@ -1202,7 +1202,7 @@ body[data-lang="greco"] .token-grid { font-family: var(--font-classical); }
    Banner verde nell'action bar che comunica esplicitamente all'utente che
    sta per creare UN SINGOLO sintagma con tutti i token, non N separati. */
 .token-action-bar.has-block {
-  background: linear-gradient(180deg, rgba(47, 133, 90, 0.06) 0%, var(--poetrify-paper) 100%);
+  background: var(--poetrify-paper);
   border: 1px solid rgba(47, 133, 90, 0.45);
   border-left: 4px solid rgb(47, 133, 90);
 }
@@ -1218,15 +1218,16 @@ body[data-lang="greco"] .token-grid { font-family: var(--font-classical); }
   align-items: center;
   gap: 12px;
   padding: 10px 14px;
-  background: linear-gradient(90deg, rgba(47, 133, 90, 0.12) 0%, rgba(47, 133, 90, 0.04) 100%);
+  background: var(--poetrify-paper);
   border: 1px solid rgba(47, 133, 90, 0.40);
+  border-left: 4px solid rgba(47, 133, 90, 0.6);
   border-radius: var(--radius-sm);
   font-family: var(--font-ui);
   font-size: 12.5px;
   flex-wrap: wrap;
 }
 .action-block-banner.action-block-banner-periodale {
-  background: linear-gradient(90deg, rgba(214, 158, 46, 0.12) 0%, rgba(214, 158, 46, 0.04) 100%);
+  background: var(--poetrify-paper);
   border-color: rgba(214, 158, 46, 0.45);
 }
 .block-banner-icon {
@@ -3235,8 +3236,9 @@ body.poetrify-dark .alt-reading.active               { background: rgba(99, 102,
   gap: 10px;
   padding: 10px 14px;
   margin-top: 12px;
-  background: var(--poetrify-primary-tint);
+  background: var(--poetrify-paper);
   border: 1px solid var(--poetrify-primary-border);
+  border-left: 4px solid var(--poetrify-primary);
   border-radius: var(--radius-md);
   flex-wrap: wrap;
   font-family: var(--font-ui);
@@ -3354,7 +3356,7 @@ body[data-lang="greco"] .token-action-bar .target-word { font-family: var(--font
 }
 .periodale-action-hint {
   padding: 8px 12px;
-  background: linear-gradient(90deg, rgba(56, 178, 172, 0.10), rgba(56, 178, 172, 0.04));
+  background: var(--poetrify-paper);
   border-left: 3px solid rgba(56, 178, 172, 0.65);
   border-radius: var(--radius-sm);
   font-family: var(--font-body);
@@ -8135,16 +8137,13 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
   flex-wrap: wrap;
   min-width: 0;
 }
-.entry-summary-word {
+.entry-summary-word, .entry-summary-word.is-extract {
   font-family: var(--font-body);
-  font-size: 16px;
-  font-weight: 700;            /* titolatura del menù: in grassetto */
-  color: var(--poetrify-ink);  /* nero, non più blu */
+  font-size: 16px;             /* grandezza UNIFORME in tutte le categorie */
+  font-weight: 700;            /* anteprima della voce: SEMPRE in grassetto */
+  color: var(--poetrify-ink);  /* nero, mai blu */
   padding: 2px 0;
 }
-/* l'ESTRATTO della proposizione (testo della subordinata/principale) NON è in
-   grassetto: è una citazione del testo, non un titolo. */
-.entry-summary-word.is-extract { font-weight: 500; }
 body[data-lang="greco"] .entry-summary-word { font-family: 'Times New Roman', serif; }
 .entry-summary-word.placeholder {
   color: var(--poetrify-sepia-soft);
@@ -9022,7 +9021,7 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
    proposizione, evitando che l'utente ricompili informazioni esistenti.
    Include anche i suggerimenti dalla tabella di conversione. */
 .deduced-panel {
-  background: linear-gradient(180deg, var(--poetrify-ivory) 0%, var(--poetrify-paper) 100%);
+  background: var(--poetrify-paper);
   border: 1px solid var(--poetrify-rule-soft);
   border-left: 3px solid var(--poetrify-accent);
   border-radius: var(--radius-sm);
@@ -32161,7 +32160,7 @@ function renderGrammarEntry(sentenceId, entry, lang) {
        <div style="flex: 1;">
          <label class="field-block-label">Parola${entry.isElliptical ? ' (sottintesa)' : ''}</label>
          <input class="field-input ${isGreek ? 'greek' : ''}" type="text"
-                style="font-size: 18px; font-weight: 700; color: var(--poetrify-primary); padding: 8px 12px; font-family: ${isGreek ? 'var(--font-classical)' : 'var(--font-body)'};"
+                style="font-size: 16px; font-weight: 700; color: var(--poetrify-ink); padding: 8px 12px; font-family: ${isGreek ? 'var(--font-classical)' : 'var(--font-body)'};"
                 value="${escapeHtml(entry.word || '')}"
                 oninput="updateGrammarField('${sentenceId}', '${entry.id}', 'word', this.value)"
                 placeholder="${entry.isElliptical ? '[forma sottintesa]' : ''}">
@@ -32500,7 +32499,7 @@ function renderLogicEntry(sentenceId, entry, lang) {
        <div style="flex: 1;">
          <label class="field-block-label">Parola o sintagma${entry.isElliptical ? ' (sottinteso)' : ''}</label>
          <input class="field-input ${isGreek ? 'greek' : ''}" type="text"
-                style="font-size: 16px; font-weight: 600; color: var(--poetrify-primary); font-family: ${isGreek ? 'var(--font-classical)' : 'var(--font-body)'};"
+                style="font-size: 16px; font-weight: 700; color: var(--poetrify-ink); font-family: ${isGreek ? 'var(--font-classical)' : 'var(--font-body)'};"
                 value="${escapeHtml(entry.phrase || '')}"
                 oninput="updateLogicField('${sentenceId}', '${entry.id}', 'phrase', this.value)">
        </div>`;
@@ -33369,14 +33368,14 @@ function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','periodale', event)">
          ${siglaBadge}
-         <span class="entry-summary-word is-extract ${isGreek ? 'greek' : ''}${entry.text ? '' : ' placeholder'}" style="font-size:14px;">${escapeHtml(textPreview || '(testo da inserire)')}</span>
+         <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.text ? '' : ' placeholder'}">${escapeHtml(textPreview || '(testo da inserire)')}</span>
          ${summary}
        </div>`
     : `${siglaBadge}
        <div style="flex: 1;">
          <label class="field-block-label">Testo della proposizione</label>
          <input class="field-input ${isGreek ? 'greek' : ''}" type="text"
-                style="font-size: 15px; font-weight: 500; font-family: ${isGreek ? 'var(--font-classical)' : 'var(--font-body)'}; font-style: ${isGreek ? 'normal' : 'italic'};"
+                style="font-size: 16px; font-weight: 700; color: var(--poetrify-ink); font-family: ${isGreek ? 'var(--font-classical)' : 'var(--font-body)'};"
                 value="${escapeHtml(entry.text || '')}"
                 oninput="updatePeriodaleField('${sentenceId}', '${entry.id}', 'text', this.value)">
        </div>`;
