@@ -1913,24 +1913,17 @@ body.poetrify-dark .onboarding-card         { background: rgba(20,20,30,0.98); b
   position: relative;
   transition: background 0.15s ease;
 }
-.proposition-card[data-level]::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: var(--heat-stripe, currentColor);
-  border-radius: 6px 0 0 6px;
-}
-.proposition-card.heatmap-level-0 { background: rgba(24,0,172,0.02); }
-.proposition-card.heatmap-level-1 { background: rgba(47,133,90,0.05); }
-.proposition-card.heatmap-level-2 { background: rgba(214,158,46,0.07); }
-.proposition-card.heatmap-level-3 { background: rgba(56,178,172,0.09); }
-.proposition-card.heatmap-level-4 { background: rgba(99,102,241,0.11); }
-.proposition-card.heatmap-level-5 { background: rgba(192,38,211,0.13); }
-.proposition-card.heatmap-level-6 { background: rgba(156,107,60,0.15); }
-.proposition-card.heatmap-level-7 { background: rgba(0,0,0,0.06); }
+/* Niente più stripe ::before né sfondi-heatmap trasparenti: la proposizione è
+   identificata SOLO dal doppio bordo sinistro (ruolo + colore proprio). */
+.proposition-card[data-level]::before { display: none; }
+.proposition-card.heatmap-level-0,
+.proposition-card.heatmap-level-1,
+.proposition-card.heatmap-level-2,
+.proposition-card.heatmap-level-3,
+.proposition-card.heatmap-level-4,
+.proposition-card.heatmap-level-5,
+.proposition-card.heatmap-level-6,
+.proposition-card.heatmap-level-7 { background: var(--poetrify-paper); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    PERIODO IPOTETICO · pannello protasi/apodosi
@@ -2803,7 +2796,7 @@ body.poetrify-dark .schel-conn-item { background: rgba(255,255,255,0.06); }
 .schel-conn-btn.schel-conn-del { color: var(--poetrify-danger); }
 .schel-conn-btn:hover { border-color: var(--poetrify-primary); }
 /* menù a tendina compatti per l'analisi dei verbi (fase 1) */
-.schel-vq-wrap { margin-top: 8px; padding: 8px 10px; background: rgba(197,48,48,0.05); border: 1px solid rgba(197,48,48,0.30); border-left: 3px solid rgba(197,48,48,0.6); border-radius: 8px; }
+.schel-vq-wrap { margin-top: 8px; padding: 8px 10px; background: transparent; border: 1px solid rgba(196,18,52,0.30); border-left: 3px solid rgba(196,18,52,0.7); border-radius: 8px; }
 .schel-vq-title { font-family: var(--font-ui); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: #8b1f1f; margin-bottom: 6px; }
 .schel-vq-row { display: flex; align-items: flex-start; gap: 10px; padding: 4px 0; border-top: 1px solid var(--poetrify-rule-soft); }
 .schel-vq-row:first-of-type { border-top: none; }
@@ -2826,7 +2819,7 @@ body.poetrify-dark .schel-vq-word { color: #f1a3a3; }
 .schel-vq-row.collapsed:hover { opacity: 1; }
 .schel-vq-summary { flex: 1; font-size: 11px; color: var(--poetrify-sepia); font-style: italic; }
 .schel-vq-open { font-family: var(--font-ui); font-size: 10px; font-weight: 700; color: var(--poetrify-primary); }
-.schel-vq-row.is-active { flex-direction: column; align-items: stretch; gap: 6px; background: rgba(197,48,48,0.05); border-radius: 6px; padding: 6px 8px; border-left: 3px solid var(--case-strong); }
+.schel-vq-row.is-active { flex-direction: column; align-items: stretch; gap: 6px; background: transparent; border-radius: 6px; padding: 6px 8px; border-left: 3px solid var(--case-strong); }
 .schel-vq-head { display: flex; align-items: center; gap: 8px; cursor: pointer; }
 .schel-vq-head .schel-vq-word { flex: 1; }
 .schel-vq-suggest { background: rgba(214,158,46,0.16); border-color: rgba(214,158,46,0.5); color: #7a4f0a; }
@@ -2842,8 +2835,8 @@ body.poetrify-dark .schel-vq-word { color: #f1a3a3; }
 .schel-vq-forma-btn.active.nf { background: rgba(214,90,60,0.92); border-color: rgba(214,90,60,0.92); }
 .schel-vq-forma-btn.nf { border-color: rgba(214,90,60,0.5); color: #b1481f; }
 body.poetrify-dark .schel-vq-forma-btn { background: rgba(255,255,255,0.06); }
-body.poetrify-dark .schel-vq-wrap { background: rgba(197,48,48,0.10); }
-body.poetrify-dark .schel-vq-row.is-active { background: rgba(197,48,48,0.12); }
+body.poetrify-dark .schel-vq-wrap { background: transparent; }
+body.poetrify-dark .schel-vq-row.is-active { background: transparent; }
 /* FASE 7 · Traduzione (ordo SVO + brutta) */
 .schel-trad-original { margin: 4px 0 8px; font-size: 14px; color: var(--poetrify-ink); font-style: italic; }
 .schel-trad-original.greek { font-family: var(--font-classical); font-style: normal; }
@@ -2854,7 +2847,7 @@ body.poetrify-dark .schel-vq-row.is-active { background: rgba(197,48,48,0.12); }
 .schel-confirm {
   display: flex; align-items: center; gap: 8px; flex-wrap: wrap;
   margin: 8px 0; padding: 5px 6px;
-  background: var(--case-bg, var(--poetrify-paper));
+  background: var(--poetrify-paper);
   border: 1px solid var(--case-border, var(--poetrify-rule));
   border-left: 4px solid var(--case-strong, var(--poetrify-primary));
   border-radius: 9px;
@@ -11440,17 +11433,16 @@ function periodaleRoleColor(ruolo) {
 function periodaleDoubleBorderStyle(entry) {
   const role = periodaleRoleColor(entry && entry.ruolo);
   const prop = periodaleColorFor(entry).border;
-  const bg = periodaleColorFor(entry).bg;
-  return `border-left:5px solid ${role}; box-shadow: -2px 0 0 0 var(--poetrify-paper), -6px 0 0 0 ${prop}; margin-left:7px; background:${bg}; --case-strong:${role};`;
+  // SOLO bordo colorato, nessuno sfondo trasparente (sfondo neutro come i menù logici).
+  return `border-left:5px solid ${role}; box-shadow: -2px 0 0 0 var(--poetrify-paper), -6px 0 0 0 ${prop}; margin-left:7px; background:var(--poetrify-paper); --case-strong:${role};`;
 }
 
 /* Box d'ANTEPRIMA della proposizione confermata: un INTERO rettangolo nel colore
-   proprio + spessa stripe sinistra del RUOLO (gerarchia). */
+   proprio + spessa stripe sinistra del RUOLO (gerarchia). Solo bordo, no sfondo. */
 function periodalePreviewBoxStyle(entry) {
   const role = periodaleRoleColor(entry && entry.ruolo);
   const prop = periodaleColorFor(entry).border;
-  const bg = periodaleColorFor(entry).bg;
-  return `border:2px solid ${prop}; border-left:6px solid ${role}; background:${bg}; --case-strong:${role};`;
+  return `border:2px solid ${prop}; border-left:6px solid ${role}; background:transparent; --case-strong:${role};`;
 }
 
 /* ============================================
