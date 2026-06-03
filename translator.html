@@ -1162,6 +1162,9 @@ body[data-lang="greco"] .token-grid { font-family: var(--font-classical); }
   position: relative;
   z-index: 2;
 }
+/* Sezione PROPOSIZIONI · niente sfumatura blu nel token selezionato: solo il
+   bordo segnala la selezione. */
+.token[data-token-mode="periodale"].token-selected { background: transparent !important; }
 /* Quando ci sono ≥2 token selezionati formano un BLOCCO UNICO. Rinforzo
    visivo: i token selezionati hanno bordo continuo che dà l'idea di gruppo,
    e il primo/ultimo token della selezione (per posizione) ricevono i
@@ -8133,8 +8136,8 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
 .entry-summary-word {
   font-family: var(--font-body);
   font-size: 16px;
-  font-weight: 700;
-  color: var(--poetrify-primary);
+  font-weight: 500;            /* niente grassetto */
+  color: var(--poetrify-ink);  /* nero, non più blu */
   padding: 2px 0;
 }
 body[data-lang="greco"] .entry-summary-word { font-family: 'Times New Roman', serif; }
@@ -32476,10 +32479,13 @@ function renderLogicEntry(sentenceId, entry, lang) {
   const summary = makeLogicSummary(entry);
   const caseGroup = funzioneToCaseGroup(entry.funzione);
   const ellipticalCls = entry.isElliptical ? ' is-elliptical' : '';
+  // estratto del sintagma: nero, non in grassetto, prima lettera maiuscola (coerenza con le proposizioni)
+  const _ph = entry.phrase || '';
+  const phraseCap = _ph ? _ph.charAt(0).toUpperCase() + _ph.slice(1) : '';
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','logic', event)">
          ${entry.isElliptical ? '<span class="entry-summary-ellipsis">sottinteso</span>' : ''}
-         <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.phrase ? '' : ' placeholder'}">${escapeHtml(entry.phrase || '(sintagma da inserire)')}</span>
+         <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.phrase ? '' : ' placeholder'}">${escapeHtml(phraseCap || '(sintagma da inserire)')}</span>
          ${summary}
        </div>`
     : `${entry.isElliptical ? '<span class="entry-summary-ellipsis" style="margin-right:8px;">sottinteso</span>' : ''}
@@ -33348,11 +33354,14 @@ function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
 
   const collapsed = isEntryCollapsed(entry);
   const summary = makePeriodaleSummary(entry);
-  const textPreview = (entry.text || '').length > 90 ? entry.text.substring(0, 90) + '…' : (entry.text || '');
+  // estratto: nero, non in grassetto, PRIMA LETTERA MAIUSCOLA, senza virgolette
+  const rawText = entry.text || '';
+  const capText = rawText ? rawText.charAt(0).toUpperCase() + rawText.slice(1) : '';
+  const textPreview = capText.length > 90 ? capText.substring(0, 90) + '…' : capText;
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','periodale', event)">
          ${siglaBadge}
-         <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.text ? '' : ' placeholder'}" style="font-size:14px;font-style:${isGreek ? 'normal' : 'italic'};">«${escapeHtml(textPreview || '(testo da inserire)')}»</span>
+         <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.text ? '' : ' placeholder'}" style="font-size:14px;">${escapeHtml(textPreview || '(testo da inserire)')}</span>
          ${summary}
        </div>`
     : `${siglaBadge}
