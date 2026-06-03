@@ -2766,7 +2766,8 @@ body.poetrify-dark .schel-conn-bar { background: rgba(214,158,46,0.12); }
   line-height: 1.5; cursor: pointer; transition: filter 0.15s ease;
 }
 .prop-box:hover { filter: brightness(0.97); box-shadow: 0 0 0 2px var(--case-strong); }
-.prop-box-sigla { font-family: var(--font-ui); font-size: 10px; font-weight: 800; color: var(--case-strong); margin-right: 4px; opacity: 0.95; }
+.prop-box-sigla { display: inline-flex; align-items: center; gap: 4px; font-family: var(--font-ui); font-size: 10px; font-weight: 800; color: var(--poetrify-ink); margin-right: 6px; padding: 1px 7px; border: 1.5px solid; border-radius: 5px; white-space: nowrap; }
+.prop-sigla-dot { opacity: 0.55; font-weight: 700; }
 .prop-word { color: var(--poetrify-ink); }
 .prop-verb { font-weight: 800; }        /* verbi della proposizione: SOLO grassetto */
 .prop-conj { font-style: italic; }      /* congiunzioni: SOLO corsivo */
@@ -2807,10 +2808,9 @@ body.poetrify-dark .schel-vq-word { color: #f1a3a3; }
 .schel-vq-field { display: inline-flex; flex-direction: column; gap: 1px; }
 /* label dei campi verbo: stesso font/grandezza dei titoli dei menù dell'analisi
    logica (.field-block-label) per coerenza visiva */
-.schel-vq-field > span { font-family: var(--font-ui); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--poetrify-sepia); }
-/* i label dei riquadri (verbi/grammatica/logica) riprendono il colore del bordo (caso/funzione) */
-.entry-card[class*="case-"] .field-block-label,
-.schel-vq-row[class*="case-"] .schel-vq-field > span { color: var(--case-strong, var(--poetrify-sepia)); }
+/* label dei campi · stesso font/grandezza e COLORE NERO uniforme in tutti i menù
+   (logica · periodale · grammatica · verbi) */
+.schel-vq-field > span { font-family: var(--font-ui); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--poetrify-ink); }
 /* stessa grandezza dei controlli dei menù logica/periodale (13px) per uniformità */
 .schel-vq-field .field-select, .schel-vq-field .field-input { font-size: 13px; padding: 5px 8px; }
 .schel-vq-lemma { flex: 1 1 180px; }
@@ -3416,16 +3416,17 @@ body[data-lang="greco"] .token-action-bar .target-word { font-family: var(--font
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 5px;
   min-width: 36px;
-  height: 28px;
-  padding: 0 8px;
+  height: 26px;
+  padding: 0 10px;
   border-radius: var(--radius-sm);
-  font-family: var(--font-display);
-  font-size: 16px;
+  font-family: var(--font-ui);
+  font-size: 13px;
   font-weight: 700;
   border: 1.5px solid;
   margin-right: 10px;
-  letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
 /* ============================================
@@ -9003,7 +9004,7 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--poetrify-sepia);
+  color: var(--poetrify-ink);   /* nero uniforme in tutti i menù dei livelli */
   display: flex;
   align-items: center;
   gap: 6px;
@@ -11432,17 +11433,23 @@ function periodaleRoleColor(ruolo) {
    PROPRIO della proposizione (ordine/identità). Niente bordatura totale. */
 function periodaleDoubleBorderStyle(entry) {
   const role = periodaleRoleColor(entry && entry.ruolo);
-  const prop = periodaleColorFor(entry).border;
-  // SOLO bordo colorato, nessuno sfondo trasparente (sfondo neutro come i menù logici).
-  return `border-left:5px solid ${role}; box-shadow: -2px 0 0 0 var(--poetrify-paper), -6px 0 0 0 ${prop}; margin-left:7px; background:var(--poetrify-paper); --case-strong:${role};`;
+  // MENÙ A TENDINA: un solo bordo del colore PRINCIPALE (ruolo) a sinistra. Il
+  // colore di VARIAZIONE va nel rettangolino di classificazione (A₁ · Principale).
+  return `border-left:5px solid ${role}; background:var(--poetrify-paper); --case-strong:${role};`;
 }
 
-/* Box d'ANTEPRIMA della proposizione confermata: un INTERO rettangolo nel colore
-   proprio + spessa stripe sinistra del RUOLO (gerarchia). Solo bordo, no sfondo. */
+/* Box d'ANTEPRIMA della proposizione confermata: intero rettangolo nel COLORE
+   PRINCIPALE (ruolo) della categoria. Solo bordo, no sfondo. */
 function periodalePreviewBoxStyle(entry) {
   const role = periodaleRoleColor(entry && entry.ruolo);
+  return `border:2.5px solid ${role}; background:transparent; --case-strong:${role};`;
+}
+
+/* Stile del RETTANGOLINO DI CLASSIFICAZIONE «A₁ · Principale»: solo bordo, nel
+   colore di VARIAZIONE proprio della proposizione; testo nero. */
+function periodaleSiglaBadgeStyle(entry) {
   const prop = periodaleColorFor(entry).border;
-  return `border:2px solid ${prop}; border-left:6px solid ${role}; background:transparent; --case-strong:${role};`;
+  return `border-color:${prop}; color:var(--poetrify-ink); background:transparent;`;
 }
 
 /* ============================================
@@ -24109,9 +24116,9 @@ function makeLogicSummary(entry) {
   return parts.join(' ');
 }
 function makePeriodaleSummary(entry) {
+  // Il RUOLO (principale/coordinata/subordinata) è ora nel rettangolino di
+  // classificazione a sinistra «A₁ · Principale»: qui resta solo il dettaglio.
   const parts = [];
-  if (entry.ruolo) parts.push(`<span class="entry-summary-pos">${escapeHtml(entry.ruolo)}</span>`);
-  else parts.push(`<span class="entry-summary-pos muted">ruolo ?</span>`);
   const bits = [];
   if (entry.tipo) bits.push(entry.tipo);
   if (entry.modo) bits.push(entry.modo.toLowerCase());
@@ -25632,7 +25639,7 @@ function renderScheletroProposizioni(sentences, lang) {
     let curPeId = null, boxBuffer = '', boxEntry = null;
     const flushBox = () => {
       if (curPeId != null && boxEntry) {
-        tokensHtml += `<span class="prop-box" style="${periodalePreviewBoxStyle(boxEntry)}" onclick="selectPeriodaleEntryInTokenizer('${sentence.id}','${boxEntry.id}')" title="${escapeHtml((boxEntry.ruolo || 'proposizione') + ' ' + (boxEntry._sigla || '') + ' — clicca per modificare i token')}"><span class="prop-box-sigla">${escapeHtml(boxEntry._sigla || '')}</span>${boxBuffer}</span> `;
+        tokensHtml += `<span class="prop-box" style="${periodalePreviewBoxStyle(boxEntry)}" onclick="selectPeriodaleEntryInTokenizer('${sentence.id}','${boxEntry.id}')" title="${escapeHtml((boxEntry.ruolo || 'proposizione') + ' ' + (boxEntry._sigla || '') + ' — clicca per modificare i token')}"><span class="prop-box-sigla" style="${periodaleSiglaBadgeStyle(boxEntry)}">${escapeHtml(boxEntry._sigla || '')}<span class="prop-sigla-dot">·</span>${escapeHtml(boxEntry.ruolo || 'ruolo?')}</span>${boxBuffer}</span> `;
       }
       curPeId = null; boxBuffer = ''; boxEntry = null;
     };
@@ -33333,21 +33340,22 @@ function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
   // COLORE UNICO per proposizione (mai identico tra pari livello): ancorato alla
   // famiglia del livello ma sfumato per ordinale entro il livello.
   const c = periodaleColorFor(entry);
-  const sigStyle = `background:${c.bg};border-color:${c.border};color:${c.color};`;
-  // HEATMAP di profondità: stripe colorata a sinistra + sfondo unico per proposizione.
   const heatLevel = Math.min(entry._level || 0, 7);
   const heatStripe = c.border;
+  // RETTANGOLINO DI CLASSIFICAZIONE: «A₁ · Principale» in un blocco unico, bordo
+  // nel colore di variazione, testo nero.
+  const siglaBadge = `<span class="prop-sigla-badge" style="${periodaleSiglaBadgeStyle(entry)}">${escapeHtml(entry._sigla || '')}<span class="prop-sigla-dot">·</span>${escapeHtml(entry.ruolo || 'ruolo?')}</span>`;
 
   const collapsed = isEntryCollapsed(entry);
   const summary = makePeriodaleSummary(entry);
   const textPreview = (entry.text || '').length > 90 ? entry.text.substring(0, 90) + '…' : (entry.text || '');
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','periodale', event)">
-         <span class="prop-sigla-badge" style="${sigStyle}">${entry._sigla || ''}</span>
+         ${siglaBadge}
          <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.text ? '' : ' placeholder'}" style="font-size:14px;font-style:${isGreek ? 'normal' : 'italic'};">«${escapeHtml(textPreview || '(testo da inserire)')}»</span>
          ${summary}
        </div>`
-    : `<span class="prop-sigla-badge" style="${sigStyle}">${entry._sigla || ''}</span>
+    : `${siglaBadge}
        <div style="flex: 1;">
          <label class="field-block-label">Testo della proposizione</label>
          <input class="field-input ${isGreek ? 'greek' : ''}" type="text"
