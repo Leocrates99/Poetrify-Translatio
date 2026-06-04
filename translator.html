@@ -2759,6 +2759,25 @@ body.poetrify-dark .scheletro-role-tag { background: rgba(255,255,255,0.22); }
 .schel-svo-group-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
 .schel-svo-nucleus { font-family: var(--font-body); font-size: 14px; font-weight: 700; color: var(--poetrify-ink); }
 .schel-svo-nucleus.is-elliptical { font-style: italic; font-weight: 600; color: var(--poetrify-sepia); }
+/* Pannello dei nuclei valenziali (fase Soggetto) */
+.nucleus-panel { margin: 10px 0 4px; padding: 10px 12px; border: 1px solid var(--poetrify-rule-soft); border-radius: 8px; background: var(--poetrify-cream); }
+.nucleus-panel-title { font-family: var(--font-ui); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--poetrify-sepia); margin-bottom: 8px; }
+.nucleus-panel-title span { font-weight: 600; text-transform: none; letter-spacing: 0; font-style: italic; }
+.nucleus-row { display: grid; grid-template-columns: minmax(110px, max-content) minmax(150px, 1.2fr) minmax(140px, 1fr) minmax(110px, 0.9fr); gap: 6px 12px; align-items: center; padding: 7px 0; border-top: 1px dashed var(--poetrify-rule-soft); }
+.nucleus-row:first-of-type { border-top: none; }
+.nucleus-cell { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; font-family: var(--font-ui); font-size: 12px; min-width: 0; }
+.nucleus-verb { font-family: var(--font-body); font-size: 14px; font-weight: 700; color: var(--poetrify-ink); }
+.nucleus-verb.is-elliptical { font-style: italic; font-weight: 600; color: var(--poetrify-sepia); }
+.nucleus-verb.is-missing { font-weight: 600; color: var(--poetrify-sepia-soft); font-style: italic; }
+.nucleus-trans { display: inline-flex; border: 1.5px solid var(--poetrify-rule); border-radius: 6px; overflow: hidden; }
+.nucleus-trans-btn { font-family: var(--font-ui); font-size: 11px; font-weight: 600; padding: 2px 8px; border: none; background: transparent; color: var(--poetrify-ink); cursor: pointer; }
+.nucleus-trans-btn + .nucleus-trans-btn { border-left: 1.5px solid var(--poetrify-rule); }
+.nucleus-trans-btn.is-on { background: #a1102e; color: #fff; }
+.nucleus-ok { color: #157f3d; font-weight: 600; }
+.nucleus-miss { color: #c0142e; font-weight: 600; }
+.nucleus-note { color: var(--poetrify-sepia); font-style: italic; }
+.nucleus-add { font-family: var(--font-ui); font-size: 12px; font-weight: 600; padding: 3px 10px; border: 1.5px dashed var(--poetrify-primary); border-radius: 6px; background: transparent; color: var(--poetrify-primary); cursor: pointer; }
+.nucleus-add:hover { background: var(--poetrify-primary); color: #fff; }
 /* verbo nell'anteprima della segmentazione: colore PIENO (rosso), niente tratteggio */
 .scheletro-verb-outline {
   background: rgba(196,18,52,0.20) !important;
@@ -25959,6 +25978,7 @@ function renderScheletroLogic(sentences, lang, phase) {
       </div>
       <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
       ${bar}
+      ${phase === 'soggetto' ? renderScheletroNucleusPanel(sentence, lang) : ''}
       ${list}
     </div>`;
   }).join('');
@@ -25987,6 +26007,73 @@ function renderLogicOrderToggle() {
 function setLogicOrder(v) {
   state.logicOrder = (v === 'svo') ? 'svo' : 'apparizione';
   renderEditor();
+}
+
+/* Transitività del verbo (valenza minima): 'transitivo' | 'intransitivo'.
+   Ri-cliccare lo stesso valore lo azzera. Guida l'argomento atteso (oggetto vs
+   complemento) nel pannello dei nuclei. */
+function scheletroSetVerbTransitivita(sentenceId, verbId, val) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const v = (sentence.grammar || []).find(e => e.id === verbId);
+  if (!v) return;
+  v.transitivo = (v.transitivo === val) ? '' : val;
+  persistCurrent();
+  renderEditor();
+}
+
+/* PANNELLO DEI NUCLEI VALENZIALI (fase Soggetto). Per ogni proposizione mostra:
+   nucleo verbale (anche sottinteso) + transitività · soggetto (presente o da
+   aggiungere come sottinteso, dedotto da persona+numero) · argomento atteso
+   (oggetto se transitivo). È la resa, partendo dalle proposizioni, del nucleo
+   valenziale: verbo → soggetto → argomento. */
+function renderScheletroNucleusPanel(sentence, lang) {
+  const annotated = annotatePeriodaleSiglas(sentence.periodale || []);
+  if (!annotated.length) return '';
+  const isGreek = lang === 'greco';
+  const table = _SUBJ_PRONOUN_BY_PERS_NUM[lang] || _SUBJ_PRONOUN_BY_PERS_NUM.latino;
+  const rows = annotated.map(p => {
+    const idxs = p.tokenIndices || [];
+    const inProp = (le) => (le.propId === p.id) || (le.tokenIndices || []).some(i => idxs.includes(i));
+    const verb = (sentence.grammar || []).find(g => g.partOfSpeech === 'Verbo' && idxs.includes(g.tokenIndex));
+    const verbFin = verb && verb.verboForma === 'Forma finita';
+    const subj = (sentence.logic || []).find(le => le.funzione === 'Soggetto' && inProp(le));
+    const obj  = (sentence.logic || []).find(le => le.funzione === 'Complemento oggetto' && inProp(le));
+    const vSott = p.isElliptical && p.verboSottinteso;
+    const nucleus = verb
+      ? `<span class="nucleus-verb ${isGreek ? 'greek' : ''}">⟐ ${escapeHtml(verb.word || '')}</span>`
+      : (vSott
+          ? `<span class="nucleus-verb is-elliptical ${isGreek ? 'greek' : ''}">⟐ [${escapeHtml(p.verboSottinteso)}]</span>`
+          : `<span class="nucleus-verb is-missing">⟐ verbo da individuare</span>`);
+    const tr = verb ? (verb.transitivo || '') : '';
+    const transCtl = verb ? `<span class="nucleus-trans">
+        <button class="nucleus-trans-btn ${tr === 'transitivo' ? 'is-on' : ''}" onclick="scheletroSetVerbTransitivita('${sentence.id}','${verb.id}','transitivo')" title="Il verbo regge un complemento oggetto">trans.</button>
+        <button class="nucleus-trans-btn ${tr === 'intransitivo' ? 'is-on' : ''}" onclick="scheletroSetVerbTransitivita('${sentence.id}','${verb.id}','intransitivo')" title="Il verbo non regge un oggetto diretto">intrans.</button>
+      </span>` : '';
+    let subjCell;
+    if (subj) {
+      const txt = (subj.phrase || '').replace(/^\[|\]$/g, '') || 'soggetto';
+      subjCell = `<span class="nucleus-ok">✓ ${subj.isElliptical ? '<em>[sott.]</em> ' : ''}${escapeHtml(txt)}</span>`;
+    } else if (verbFin && verb.persona && verb.numero && table[`${verb.persona}/${verb.numero}`]) {
+      const def = table[`${verb.persona}/${verb.numero}`];
+      subjCell = `<button class="nucleus-add" onclick="applySoggettoSottinteso('${sentence.id}','${verb.id}')" title="Aggiungi il soggetto sottinteso dedotto da persona+numero del verbo">+ soggetto sottinteso · ${escapeHtml(def.label)}</button>`;
+    } else {
+      subjCell = `<span class="nucleus-miss">soggetto da individuare</span>`;
+    }
+    let argHint = '';
+    if (tr === 'transitivo') argHint = obj ? `<span class="nucleus-ok">✓ oggetto</span>` : `<span class="nucleus-miss">manca l'oggetto</span>`;
+    else if (tr === 'intransitivo') argHint = `<span class="nucleus-note">argomento a caso / preposizione</span>`;
+    return `<div class="nucleus-row">
+      <span class="prop-sigla-badge" style="${periodaleSiglaBadgeStyle(p)}">${escapeHtml(p._sigla || '')}<span class="prop-sigla-dot">·</span>${escapeHtml(p.ruolo || 'ruolo?')}</span>
+      <span class="nucleus-cell nucleus-nucleus">${nucleus}${transCtl}</span>
+      <span class="nucleus-cell nucleus-subj">${subjCell}</span>
+      <span class="nucleus-cell nucleus-arg">${argHint}</span>
+    </div>`;
+  }).join('');
+  return `<div class="nucleus-panel">
+    <div class="nucleus-panel-title">⟐ Nuclei valenziali · <span>verbo → soggetto → argomento</span></div>
+    ${rows}
+  </div>`;
 }
 
 /* Vista SVO RAGGRUPPATA PER PROPOSIZIONE: ogni proposizione (dal tagging
@@ -28217,7 +28304,7 @@ function onVerbiFieldChange(sentenceId, key, value) {
   entry[key] = value;
   // Se cambia la forma del verbo, alcuni campi morfologici cambiano: re-render
   if (key === 'verboForma') {
-    const validKeys = new Set(['word','partOfSpeech','note','id','tokenIndex'].concat(getMorphSchema(state.meta.lingua, entry).map(f => f.key)));
+    const validKeys = new Set(['word','partOfSpeech','note','id','tokenIndex','transitivo','isElliptical','_expanded'].concat(getMorphSchema(state.meta.lingua, entry).map(f => f.key)));
     Object.keys(entry).forEach(k => { if (!validKeys.has(k)) delete entry[k]; });
     persistCurrent();
     renderEditor();
@@ -34316,7 +34403,7 @@ function updateGrammarField(sentenceId, entryId, key, value) {
     const validKeys = new Set([
       'word','partOfSpeech','note','id','tokenIndex',
       'lemma','lemmaCustom','tema','desinenza',
-      'tantum','reggenza','isElliptical','_expanded','_autoFilled'
+      'tantum','reggenza','isElliptical','_expanded','_autoFilled','transitivo'
     ].concat(schema.map(f => f.key)).concat(schema.map(f => f.key + '__mode')));
     Object.keys(entry).forEach(k => {
       if (!validKeys.has(k)) delete entry[k];
@@ -34527,7 +34614,7 @@ function confirmPendingGrammar(sentenceId) {
     // Se cambia la parte del discorso, ripulisco i campi morfologici non più rilevanti
     if (oldPart !== part) {
       const schema = getMorphSchema(state.meta.lingua, entry);
-      const validKeys = new Set(['word','partOfSpeech','note','id','tokenIndex'].concat(schema.map(f => f.key)).concat(schema.map(f => f.key + '__mode')));
+      const validKeys = new Set(['word','partOfSpeech','note','id','tokenIndex','transitivo'].concat(schema.map(f => f.key)).concat(schema.map(f => f.key + '__mode')));
       Object.keys(entry).forEach(k => { if (!validKeys.has(k)) delete entry[k]; });
     }
   } else {
@@ -34973,6 +35060,10 @@ function applySoggettoSottinteso(sentenceId, verbEntryId) {
   le.funzione = 'Soggetto';
   le.isElliptical = true;
   le.tokenIndices = [];
+  // Aggancio alla proposizione del verbo: così il soggetto sottinteso si
+  // raggruppa sotto la sua proposizione nella vista SVO (layer valenziale).
+  const pe = (sentence.periodale || []).find(p => (p.tokenIndices || []).includes(verb.tokenIndex));
+  if (pe) le.propId = pe.id;
   insertEntrySorted(sentence.logic, le, 'logic');
   persistCurrent();
   renderEditor();
