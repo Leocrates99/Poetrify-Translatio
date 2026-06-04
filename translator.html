@@ -2736,6 +2736,29 @@ body.poetrify-dark .scheletro-role-tag { background: rgba(255,255,255,0.22); }
 /* elenco proposizioni / voci logiche dentro un blocco-frase dello scheletro */
 .scheletro-prop-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
 .scheletro-tree-wrap { margin-top: 14px; }
+/* Segmentato «ordine dei sintagmi» (apparizione / SVO) */
+.schel-order-toggle {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin: 0 0 14px; padding: 8px 12px;
+  border: 1px solid var(--poetrify-rule-soft); border-radius: 8px;
+  background: var(--poetrify-cream);
+}
+.schel-order-label { font-family: var(--font-ui); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--poetrify-sepia); }
+.schel-order-seg { display: inline-flex; border: 1.5px solid var(--poetrify-rule); border-radius: 7px; overflow: hidden; }
+.schel-order-btn {
+  font-family: var(--font-ui); font-size: 12px; font-weight: 600;
+  padding: 5px 12px; border: none; background: transparent; color: var(--poetrify-ink);
+  cursor: pointer; transition: background 120ms ease, color 120ms ease;
+}
+.schel-order-btn + .schel-order-btn { border-left: 1.5px solid var(--poetrify-rule); }
+.schel-order-btn.is-on { background: var(--poetrify-primary); color: #fff; }
+/* Gruppi della vista SVO per proposizione */
+.scheletro-svo-wrap { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; }
+.schel-svo-group { border-left: 4px solid var(--poetrify-rule); padding-left: 12px; }
+.schel-svo-group.schel-svo-unassigned { border-left-color: var(--poetrify-rule-soft); opacity: 0.92; }
+.schel-svo-group-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 8px; }
+.schel-svo-nucleus { font-family: var(--font-body); font-size: 14px; font-weight: 700; color: var(--poetrify-ink); }
+.schel-svo-nucleus.is-elliptical { font-style: italic; font-weight: 600; color: var(--poetrify-sepia); }
 /* verbo nell'anteprima della segmentazione: colore PIENO (rosso), niente tratteggio */
 .scheletro-verb-outline {
   background: rgba(196,18,52,0.20) !important;
@@ -25919,7 +25942,16 @@ function renderScheletroLogic(sentences, lang, phase) {
     }
     const phaseCount = (sentence.logic || []).filter(e => allowedSet.has(e.funzione)).length;
     const allEntries = (sentence.logic || []).slice().sort((a, b) => Math.min.apply(null, a.tokenIndices || [999]) - Math.min.apply(null, b.tokenIndices || [999]));
-    const list = allEntries.length ? `<div class="scheletro-prop-list">${allEntries.map(e => renderLogicEntry(sentence.id, e, lang)).join('')}</div>` : '';
+    // ORDINE DEI SINTAGMI: di default «apparizione» (ordine dei token nella frase);
+    // su richiesta «SVO», riordinati in SVO e RAGGRUPPATI per proposizione (vista
+    // valenziale: ogni nucleo con i suoi argomenti/circostanti).
+    const logicOrder = state.logicOrder || 'apparizione';
+    let list = '';
+    if (allEntries.length) {
+      list = (logicOrder === 'svo')
+        ? `<div class="scheletro-svo-wrap">${renderScheletroLogicGroupedSVO(sentence.id, allEntries, lang)}</div>`
+        : `<div class="scheletro-prop-list">${allEntries.map(e => renderLogicEntry(sentence.id, e, lang)).join('')}</div>`;
+    }
     return `<div class="scheletro-sentence-block">
       <div class="scheletro-sentence-header">
         <h1 class="scheletro-sentence-num">Frase ${sIdx + 1}</h1>
@@ -25934,8 +25966,89 @@ function renderScheletroLogic(sentences, lang, phase) {
     <div class="method-note">
       <strong>${info.icon} Fase · ${escapeHtml(info.title)}.</strong> ${escapeHtml(info.note)} Il menù è già impostato su <strong>${phase === 'soggetto' ? 'Soggetto' : phase === 'oggetto' ? 'Complemento oggetto' : phase === 'preposizionali' ? 'il complemento più probabile per la preposizione reggente' : 'da scegliere'}</strong> (la scelta più probabile); se selezioni altro, il colore cambia di conseguenza. Stessa <em>anteprima dell'analisi logica</em> in tutte le fasi. La funzione resta memorizzata; cliccando un <strong>nuovo token</strong> il blocco precedente si <strong>conferma da solo</strong>.
     </div>
+    ${renderLogicOrderToggle()}
     ${blocks}
   </div>`;
+}
+
+/* Segmentato per l'ordine dei sintagmi nelle fasi logiche.
+   «Apparizione» = ordine dei token nella frase (default).
+   «SVO» = riordino valenziale raggruppato per proposizione. */
+function renderLogicOrderToggle() {
+  const order = state.logicOrder || 'apparizione';
+  return `<div class="schel-order-toggle">
+    <span class="schel-order-label">Ordine dei sintagmi:</span>
+    <div class="schel-order-seg">
+      <button class="schel-order-btn ${order === 'apparizione' ? 'is-on' : ''}" onclick="setLogicOrder('apparizione')" title="Nell'ordine in cui i token compaiono nella frase">↦ Apparizione</button>
+      <button class="schel-order-btn ${order === 'svo' ? 'is-on' : ''}" onclick="setLogicOrder('svo')" title="Riordinati in SVO e raggruppati per proposizione (vista valenziale: nucleo + argomenti)">⤢ SVO · per proposizione</button>
+    </div>
+  </div>`;
+}
+function setLogicOrder(v) {
+  state.logicOrder = (v === 'svo') ? 'svo' : 'apparizione';
+  renderEditor();
+}
+
+/* Vista SVO RAGGRUPPATA PER PROPOSIZIONE: ogni proposizione (dal tagging
+   periodale) diventa un gruppo col proprio colore di ruolo e il nucleo verbale
+   in testa; dentro, i sintagmi logici sono riordinati in SVO tramite
+   scheletroSVORank. I sintagmi non riconducibili a una proposizione (e quelli
+   ellittici senza propId) finiscono in un gruppo «non assegnati» in coda. */
+function renderScheletroLogicGroupedSVO(sentenceId, entries, lang) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return '';
+  const annotated = annotatePeriodaleSiglas(sentence.periodale || []);
+  const propOf = (e) => {
+    if (e.propId) return annotated.find(p => p.id === e.propId) || null;
+    const idxs = e.tokenIndices || [];
+    if (!idxs.length) return null;
+    let best = null, bestOverlap = 0;
+    annotated.forEach(p => {
+      const ov = (p.tokenIndices || []).filter(i => idxs.includes(i)).length;
+      if (ov > bestOverlap) { bestOverlap = ov; best = p; }
+    });
+    return best;
+  };
+  const svoSort = (arr) => arr.slice().sort((a, b) => {
+    const ra = scheletroSVORank(a.funzione, false), rb = scheletroSVORank(b.funzione, false);
+    if (ra !== rb) return ra - rb;
+    return Math.min.apply(null, a.tokenIndices || [9999]) - Math.min.apply(null, b.tokenIndices || [9999]);
+  });
+  const groups = new Map();
+  const unassigned = [];
+  entries.forEach(e => {
+    const p = propOf(e);
+    if (p) { if (!groups.has(p.id)) groups.set(p.id, []); groups.get(p.id).push(e); }
+    else unassigned.push(e);
+  });
+  const nucleusChip = (p) => {
+    const idxs = p.tokenIndices || [];
+    const v = (sentence.grammar || []).find(g => g.partOfSpeech === 'Verbo' && idxs.includes(g.tokenIndex));
+    const vb = (sentence.periodale || []).find(pp => pp.id === p.id && pp.isElliptical && pp.verboSottinteso);
+    if (v) return `<span class="schel-svo-nucleus" title="Nucleo verbale">⟐ ${escapeHtml(v.word || '')}</span>`;
+    if (vb) return `<span class="schel-svo-nucleus is-elliptical" title="Nucleo verbale sottinteso">⟐ [${escapeHtml(vb.verboSottinteso)}]</span>`;
+    return '';
+  };
+  let html = '';
+  annotated.forEach(p => {
+    if (!groups.has(p.id)) return;
+    const items = svoSort(groups.get(p.id));
+    html += `<div class="schel-svo-group" style="border-left-color:${periodaleRoleColor(p.ruolo)};">
+      <div class="schel-svo-group-head">
+        <span class="prop-sigla-badge" style="${periodaleSiglaBadgeStyle(p)}">${escapeHtml(p._sigla || '')}<span class="prop-sigla-dot">·</span>${escapeHtml(p.ruolo || 'ruolo?')}</span>
+        ${nucleusChip(p)}
+      </div>
+      <div class="scheletro-prop-list">${items.map(e => renderLogicEntry(sentenceId, e, lang)).join('')}</div>
+    </div>`;
+  });
+  if (unassigned.length) {
+    const items = svoSort(unassigned);
+    html += `<div class="schel-svo-group schel-svo-unassigned">
+      <div class="schel-svo-group-head"><span class="muted-text" style="font-size:11px;font-style:italic;">Non assegnati a una proposizione</span></div>
+      <div class="scheletro-prop-list">${items.map(e => renderLogicEntry(sentenceId, e, lang)).join('')}</div>
+    </div>`;
+  }
+  return html;
 }
 
 /* Handler · Fase 1 · ciclo ∅ → verbo finito → verbo non finito → ∅ */
