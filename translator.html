@@ -8156,6 +8156,10 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
 .proposition-card.is-collapsed .entry-card-header {
   margin-bottom: 0;
   cursor: pointer;
+  /* CENTRATURA VERTICALE della riga compressa: grip, rettangolo di
+     classificazione, testo e azioni risultano centrati nella loro altezza,
+     senza addossarsi al bordo superiore. */
+  align-items: center;
 }
 .entry-card .entry-body,
 .proposition-card .entry-body {
@@ -8191,8 +8195,10 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
 }
 /* ALLINEAMENTO UNIFORME DELLE ANTEPRIME: il rettangolino di classificazione
    occupa una colonna a larghezza fissa, così il testo della proposizione o del
-   complemento parte SEMPRE dalla stessa x in tutte le voci, nel loro insieme. */
-.entry-summary-head { align-items: flex-start; }
+   complemento parte SEMPRE dalla stessa x in tutte le voci, nel loro insieme.
+   Badge e testo sono centrati verticalmente fra loro: quando il rettangolo va
+   a due righe, il titolo resta al centro della sua altezza. */
+.entry-summary-head { align-items: center; }
 .entry-summary-head > .entry-class-badge,
 .entry-summary-head > .prop-sigla-badge {
   flex: 0 0 168px;
@@ -8209,7 +8215,7 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
   padding-bottom: 3px;
   margin-right: 0;
 }
-.entry-summary-head > .entry-summary-word { flex: 1 1 0; min-width: 0; padding-top: 1px; }
+.entry-summary-head > .entry-summary-word { flex: 1 1 0; min-width: 0; }
 /* TESTO COMPLETO IN ESPANSIONE: il campo della voce aperta cresce in altezza e
    manda a capo, così il testo si vede nella sua interezza, senza troncature. */
 .field-input.entry-fulltext {
