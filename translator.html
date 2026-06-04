@@ -8161,6 +8161,14 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
      senza addossarsi al bordo superiore. */
   align-items: center;
 }
+/* GRIP allineato alla riga del titolo: quando la voce ha una seconda riga di
+   informazioni, l'altezza complessiva cresce e il grip, se centrato sull'intera
+   riga, finiva sotto il titolo. Ancorandolo in alto resta a filo del titolo
+   (e per le righe a riga singola coincide comunque con il centro). */
+.entry-card.is-collapsed .entry-card-header > .entry-drag-handle,
+.proposition-card.is-collapsed .entry-card-header > .entry-drag-handle {
+  align-self: flex-start;
+}
 .entry-card .entry-body,
 .proposition-card .entry-body {
   margin-top: 12px;
