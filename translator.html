@@ -2611,9 +2611,15 @@ body.poetrify-dark .scheletro-stepper { background: var(--poetrify-paper); }
   padding: 12px 14px;
   margin-bottom: 12px;
 }
-/* LINEA DI DEMARCAZIONE alla fine di ogni frase: marcata ma non troppo spessa */
-.scheletro-sentence-block { border-bottom: 3px solid rgba(44, 53, 57, 0.55); margin-bottom: 18px; }
-.scheletro-sentence-header,
+/* ISOLAMENTO FORTE DI OGNI FRASE: barra superiore marcata nel colore di brand,
+   ampio respiro tra un blocco e l'altro, così le frasi risultano nettamente separate. */
+.scheletro-sentence-block {
+  border: 1px solid var(--poetrify-rule-soft);
+  border-top: 6px solid var(--poetrify-primary);
+  border-radius: 4px;
+  padding: 16px 16px 20px;
+  margin-bottom: 40px;
+}
 .scheletro-verb-card-header,
 .scheletro-finish-header {
   display: flex;
@@ -2622,7 +2628,16 @@ body.poetrify-dark .scheletro-stepper { background: var(--poetrify-paper); }
   margin-bottom: 10px;
   flex-wrap: wrap;
 }
-.scheletro-sentence-num,
+/* Intestazione di frase: titolo H1 in evidenza, con riga di separazione sotto. */
+.scheletro-sentence-header {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--poetrify-rule-soft);
+  flex-wrap: wrap;
+}
 .scheletro-verb-card-num,
 .scheletro-finish-num {
   font-family: var(--font-ui);
@@ -2631,6 +2646,18 @@ body.poetrify-dark .scheletro-stepper { background: var(--poetrify-paper); }
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--poetrify-primary);
+}
+/* "Frase N" come titolo gerarchico di livello H1 */
+h1.scheletro-sentence-num,
+.scheletro-sentence-num {
+  margin: 0;
+  font-family: var(--font-ui);
+  font-size: 23px;
+  font-weight: 800;
+  line-height: 1.1;
+  text-transform: none;
+  letter-spacing: 0.005em;
+  color: var(--poetrify-ink);
 }
 .scheletro-sentence-count,
 .scheletro-verb-card-stats,
@@ -8161,6 +8188,38 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
   font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
   border: 1.5px solid var(--case-strong, var(--poetrify-rule));
   color: var(--poetrify-ink); background: transparent; white-space: nowrap; flex: 0 0 auto;
+}
+/* ALLINEAMENTO UNIFORME DELLE ANTEPRIME: il rettangolino di classificazione
+   occupa una colonna a larghezza fissa, così il testo della proposizione o del
+   complemento parte SEMPRE dalla stessa x in tutte le voci, nel loro insieme. */
+.entry-summary-head { align-items: flex-start; }
+.entry-summary-head > .entry-class-badge,
+.entry-summary-head > .prop-sigla-badge {
+  flex: 0 0 168px;
+  width: 168px;
+  min-width: 168px;
+  max-width: 168px;
+  height: auto;
+  min-height: 22px;
+  justify-content: flex-start;
+  text-align: left;
+  white-space: normal;
+  line-height: 1.18;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  margin-right: 0;
+}
+.entry-summary-head > .entry-summary-word { flex: 1 1 0; min-width: 0; padding-top: 1px; }
+/* TESTO COMPLETO IN ESPANSIONE: il campo della voce aperta cresce in altezza e
+   manda a capo, così il testo si vede nella sua interezza, senza troncature. */
+.field-input.entry-fulltext {
+  field-sizing: content;
+  min-height: 2.3em;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+  resize: none;
+  overflow: hidden;
 }
 .entry-summary-OLD {
   flex: 1;
@@ -24076,7 +24135,16 @@ function toggleEntryExpanded(sentenceId, entryId, type, evt) {
   if (!arr) return;
   const entry = arr.find(e => e.id === entryId);
   if (!entry) return;
-  entry._expanded = (entry._expanded === false) ? true : false;
+  const willExpand = entry._expanded !== true;
+  if (willExpand) {
+    // Comportamento a fisarmonica: aprendo una voce, tutte le altre voci
+    // della stessa frase (qualunque categoria) si richiudono in automatico.
+    ['grammar', 'logic', 'periodale'].forEach(t => {
+      const list = sentence[t];
+      if (Array.isArray(list)) list.forEach(e => { if (e !== entry) e._expanded = false; });
+    });
+  }
+  entry._expanded = willExpand;
   persistCurrent();
   renderEditor();
 }
@@ -25339,7 +25407,7 @@ function renderScheletroTraduzione(sentences, lang) {
       : '';
     return `<div class="scheletro-sentence-block">
       <div class="scheletro-sentence-header">
-        <span class="scheletro-sentence-num">Frase ${sIdx + 1}</span>
+        <h1 class="scheletro-sentence-num">Frase ${sIdx + 1}</h1>
         <span class="scheletro-sentence-count">${ordo.length} element${ordo.length === 1 ? 'o' : 'i'} · ${sentence.translation && sentence.translation.trim() ? 'brutta ✓' : 'brutta —'}</span>
       </div>
       <div class="schel-trad-original ${isGreek ? 'greek' : ''}">${escapeHtml(sentence.original)}</div>
@@ -25394,7 +25462,7 @@ function renderScheletroVerbi(sentences, lang) {
       : '';
     return `<div class="scheletro-sentence-block">
       <div class="scheletro-sentence-header">
-        <span class="scheletro-sentence-num">Frase ${sIdx + 1}</span>
+        <h1 class="scheletro-sentence-num">Frase ${sIdx + 1}</h1>
         <span class="scheletro-sentence-count">${fin} finiti · ${nf} non finiti</span>
       </div>
       <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
@@ -25748,7 +25816,7 @@ function renderScheletroProposizioni(sentences, lang) {
       : '<div class="muted-text" style="font-size:12px;padding:6px 2px;">Nessuna proposizione: nell\'anteprima seleziona i token di una proposizione (trascina o clicca), conferma gli <em>asindeti</em> sui segni di punteggiatura e le <em>congiunzioni</em> cliccandole, poi assegna ruolo/tipo qui sotto.</div>';
     return `<div class="scheletro-sentence-block">
       <div class="scheletro-sentence-header">
-        <span class="scheletro-sentence-num">Frase ${sIdx + 1}</span>
+        <h1 class="scheletro-sentence-num">Frase ${sIdx + 1}</h1>
         <span class="scheletro-sentence-count">${annotated.length} proposizione/i</span>
       </div>
       <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
@@ -25838,7 +25906,7 @@ function renderScheletroLogic(sentences, lang, phase) {
     const list = allEntries.length ? `<div class="scheletro-prop-list">${allEntries.map(e => renderLogicEntry(sentence.id, e, lang)).join('')}</div>` : '';
     return `<div class="scheletro-sentence-block">
       <div class="scheletro-sentence-header">
-        <span class="scheletro-sentence-num">Frase ${sIdx + 1}</span>
+        <h1 class="scheletro-sentence-num">Frase ${sIdx + 1}</h1>
         <span class="scheletro-sentence-count">${phaseCount} ${escapeHtml(info.title.toLowerCase())} · ${allEntries.length} sintagmi tot.</span>
       </div>
       <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
@@ -26185,7 +26253,7 @@ function renderScheletroStep1(sentences, lang, totalVerbsFinite) {
     const verbCount = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo' && g.verboForma === 'Forma finita').length;
     return `<div class="scheletro-sentence-block">
       <div class="scheletro-sentence-header">
-        <span class="scheletro-sentence-num">Frase ${sIdx + 1}</span>
+        <h1 class="scheletro-sentence-num">Frase ${sIdx + 1}</h1>
         <span class="scheletro-sentence-count">${verbCount} verbo/i finito/i</span>
       </div>
       <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
@@ -32187,20 +32255,19 @@ function renderGrammarEntry(sentenceId, entry, lang) {
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','grammar', event)">
          <div class="entry-summary-head">
-           ${entry.isElliptical ? '<span class="entry-summary-ellipsis">sottinteso</span>' : ''}
            ${posBadge}
            <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.word ? '' : ' placeholder'}">${escapeHtml(wordDisplay)}</span>
+           ${entry.isElliptical ? '<span class="entry-summary-ellipsis">sottinteso</span>' : ''}
          </div>
          <div class="entry-summary-info">${summary}</div>
        </div>`
     : `${entry.isElliptical ? '<span class="entry-summary-ellipsis" style="margin-right:8px;">sottinteso</span>' : ''}
        <div style="flex: 1;">
          <label class="field-block-label">Parola${entry.isElliptical ? ' (sottintesa)' : ''}</label>
-         <input class="field-input ${isGreek ? 'greek' : ''}" type="text"
+         <textarea class="field-input entry-fulltext ${isGreek ? 'greek' : ''}" rows="1"
                 style="font-size: 16px; font-weight: 700; color: var(--poetrify-ink); padding: 8px 12px; font-family: ${isGreek ? 'var(--font-classical)' : 'var(--font-body)'};"
-                value="${escapeHtml(entry.word || '')}"
                 oninput="updateGrammarField('${sentenceId}', '${entry.id}', 'word', this.value)"
-                placeholder="${entry.isElliptical ? '[forma sottintesa]' : ''}">
+                placeholder="${entry.isElliptical ? '[forma sottintesa]' : ''}">${escapeHtml(entry.word || '')}</textarea>
        </div>`;
 
   return `
@@ -32531,19 +32598,18 @@ function renderLogicEntry(sentenceId, entry, lang) {
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','logic', event)">
          <div class="entry-summary-head">
-           ${entry.isElliptical ? '<span class="entry-summary-ellipsis">sottinteso</span>' : ''}
            ${funzioneBadge}
            <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.phrase ? '' : ' placeholder'}">${escapeHtml(phraseCap || '(sintagma da inserire)')}</span>
+           ${entry.isElliptical ? '<span class="entry-summary-ellipsis">sottinteso</span>' : ''}
          </div>
          <div class="entry-summary-info">${summary}</div>
        </div>`
     : `${entry.isElliptical ? '<span class="entry-summary-ellipsis" style="margin-right:8px;">sottinteso</span>' : ''}
        <div style="flex: 1;">
          <label class="field-block-label">Parola o sintagma${entry.isElliptical ? ' (sottinteso)' : ''}</label>
-         <input class="field-input ${isGreek ? 'greek' : ''}" type="text"
+         <textarea class="field-input entry-fulltext ${isGreek ? 'greek' : ''}" rows="1"
                 style="font-size: 16px; font-weight: 700; color: var(--poetrify-ink); font-family: ${isGreek ? 'var(--font-classical)' : 'var(--font-body)'};"
-                value="${escapeHtml(entry.phrase || '')}"
-                oninput="updateLogicField('${sentenceId}', '${entry.id}', 'phrase', this.value)">
+                oninput="updateLogicField('${sentenceId}', '${entry.id}', 'phrase', this.value)">${escapeHtml(entry.phrase || '')}</textarea>
        </div>`;
   return `
     <div class="entry-card case-${caseGroup}${collapsed ? ' is-collapsed' : ''}${ellipticalCls}" ${entryDragAttrs(sentenceId, entry.id, 'logic')}>
@@ -33406,7 +33472,8 @@ function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
   // estratto: nero, non in grassetto, PRIMA LETTERA MAIUSCOLA, senza virgolette
   const rawText = entry.text || '';
   const capText = rawText ? rawText.charAt(0).toUpperCase() + rawText.slice(1) : '';
-  const textPreview = capText.length > 90 ? capText.substring(0, 90) + '…' : capText;
+  // anteprima completa (manda a capo), uniforme alle altre categorie: niente troncatura
+  const textPreview = capText;
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','periodale', event)">
          <div class="entry-summary-head">
@@ -33418,10 +33485,9 @@ function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
     : `${siglaBadge}
        <div style="flex: 1;">
          <label class="field-block-label">Testo della proposizione</label>
-         <input class="field-input ${isGreek ? 'greek' : ''}" type="text"
+         <textarea class="field-input entry-fulltext ${isGreek ? 'greek' : ''}" rows="1"
                 style="font-size: 16px; font-weight: 700; color: var(--poetrify-ink); font-family: ${isGreek ? 'var(--font-classical)' : 'var(--font-body)'};"
-                value="${escapeHtml(entry.text || '')}"
-                oninput="updatePeriodaleField('${sentenceId}', '${entry.id}', 'text', this.value)">
+                oninput="updatePeriodaleField('${sentenceId}', '${entry.id}', 'text', this.value)">${escapeHtml(entry.text || '')}</textarea>
        </div>`;
 
   return `
