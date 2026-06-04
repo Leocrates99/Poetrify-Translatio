@@ -2778,6 +2778,16 @@ body.poetrify-dark .scheletro-role-tag { background: rgba(255,255,255,0.22); }
 .nucleus-note { color: var(--poetrify-sepia); font-style: italic; }
 .nucleus-add { font-family: var(--font-ui); font-size: 12px; font-weight: 600; padding: 3px 10px; border: 1.5px dashed var(--poetrify-primary); border-radius: 6px; background: transparent; color: var(--poetrify-primary); cursor: pointer; }
 .nucleus-add:hover { background: var(--poetrify-primary); color: #fff; }
+/* Verbo sottinteso nelle proposizioni (ellissi del nucleo) */
+.prop-vsott-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; text-transform: none; letter-spacing: 0; }
+.prop-vsott-toggle input { width: auto; margin: 0; }
+.prop-vsott-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+.prop-vsott-row .field-input { flex: 1 1 180px; min-width: 0; }
+.prop-vsott-presets { display: inline-flex; gap: 4px; flex-wrap: wrap; }
+.prop-vsott-chip { font-family: var(--font-body); font-size: 13px; padding: 2px 9px; border: 1px solid var(--poetrify-rule); border-radius: 6px; background: transparent; color: var(--poetrify-ink); cursor: pointer; }
+.prop-vsott-chip:hover { border-color: var(--poetrify-primary); color: var(--poetrify-primary); }
+.prop-vsott-badge { display: inline-flex; align-items: center; font-family: var(--font-body); font-size: 13px; font-style: italic; font-weight: 600; color: var(--poetrify-sepia); }
+.prop-ghost-verb { font-family: var(--font-body); font-style: italic; font-weight: 700; color: var(--poetrify-sepia); }
 /* verbo nell'anteprima della segmentazione: colore PIENO (rosso), niente tratteggio */
 .scheletro-verb-outline {
   background: rgba(196,18,52,0.20) !important;
@@ -25805,7 +25815,7 @@ function renderScheletroProposizioni(sentences, lang) {
     let curPeId = null, boxBuffer = '', boxEntry = null;
     const flushBox = () => {
       if (curPeId != null && boxEntry) {
-        tokensHtml += `<span class="prop-box" style="${periodalePreviewBoxStyle(boxEntry)}" onclick="selectPeriodaleEntryInTokenizer('${sentence.id}','${boxEntry.id}')" title="${escapeHtml((boxEntry.ruolo || 'proposizione') + ' ' + (boxEntry._sigla || '') + ' — clicca per modificare i token')}"><span class="prop-box-sigla" style="${periodaleSiglaBadgeStyle(boxEntry)}">${escapeHtml(boxEntry._sigla || '')}<span class="prop-sigla-dot">·</span>${escapeHtml(boxEntry.ruolo || 'ruolo?')}</span>${boxBuffer}</span> `;
+        tokensHtml += `<span class="prop-box" style="${periodalePreviewBoxStyle(boxEntry)}" onclick="selectPeriodaleEntryInTokenizer('${sentence.id}','${boxEntry.id}')" title="${escapeHtml((boxEntry.ruolo || 'proposizione') + ' ' + (boxEntry._sigla || '') + ' — clicca per modificare i token')}"><span class="prop-box-sigla" style="${periodaleSiglaBadgeStyle(boxEntry)}">${escapeHtml(boxEntry._sigla || '')}<span class="prop-sigla-dot">·</span>${escapeHtml(boxEntry.ruolo || 'ruolo?')}</span>${(boxEntry.isElliptical && boxEntry.verboSottinteso) ? `<span class="prop-ghost-verb ${isGreek ? 'greek' : ''}" title="Verbo sottinteso (nucleo eliso)">[${escapeHtml(boxEntry.verboSottinteso)}]</span> ` : ''}${boxBuffer}</span> `;
       }
       curPeId = null; boxBuffer = ''; boxEntry = null;
     };
@@ -25888,7 +25898,7 @@ function renderScheletroProposizioni(sentences, lang) {
   }).join('');
   return `<div class="subsection">
     <div class="method-note" style="background:rgba(192,38,211,0.06);border-left-color:rgba(192,38,211,0.55);">
-      <strong>✂️ Fase 2 · Proposizioni interne.</strong> L'<strong>anteprima è il pannello di lavoro</strong>: <strong>seleziona</strong> (clic o trascina) i token di ogni proposizione; una volta <strong>confermata</strong>, la proposizione si chiude in un <strong>unico rettangolo</strong> (bordo nel colore del ruolo), coi <strong>verbi in grassetto</strong> e le <strong>congiunzioni in corsivo</strong>; in fondo trovi l'<strong>albero sintattico</strong> (vista classica) che cresce con le proposizioni. <strong>Conferma gli asindeti</strong> cliccando i segni di punteggiatura (il punto di fine frase è già asindeto; i punti di abbreviazione dopo una maiuscola, come «C.», sono esclusi). <strong>Clicca una congiunzione</strong> per accettarla/classificarla; se ne hai una non rilevata (es. un <strong>pronome relativo</strong>), selezionala da sola e premi «Definisci come congiunzione».
+      <strong>✂️ Fase 2 · Proposizioni interne.</strong> L'<strong>anteprima è il pannello di lavoro</strong>: <strong>seleziona</strong> (clic o trascina) i token di ogni proposizione; una volta <strong>confermata</strong>, la proposizione si chiude in un <strong>unico rettangolo</strong> (bordo nel colore del ruolo), coi <strong>verbi in grassetto</strong> e le <strong>congiunzioni in corsivo</strong>; in fondo trovi l'<strong>albero sintattico</strong> (vista classica) che cresce con le proposizioni. <strong>Conferma gli asindeti</strong> cliccando i segni di punteggiatura (il punto di fine frase è già asindeto; i punti di abbreviazione dopo una maiuscola, come «C.», sono esclusi). <strong>Clicca una congiunzione</strong> per accettarla/classificarla; se ne hai una non rilevata (es. un <strong>pronome relativo</strong>), selezionala da sola e premi «Definisci come congiunzione». Se una proposizione ha il <strong>verbo sottinteso</strong> (copula o verbo ad altissima frequenza non ripetuto), aprila e attiva <strong>«⟐ Nucleo a verbo sottinteso»</strong>: ricostruisci la forma (<em>est, sunt…</em>) e comparirà come <em>verbo-fantasma</em> <code>[est]</code> nell'anteprima e nei nuclei.
     </div>
     ${blocks}
   </div>`;
@@ -26018,6 +26028,32 @@ function scheletroSetVerbTransitivita(sentenceId, verbId, val) {
   const v = (sentence.grammar || []).find(e => e.id === verbId);
   if (!v) return;
   v.transitivo = (v.transitivo === val) ? '' : val;
+  persistCurrent();
+  renderEditor();
+}
+
+/* Marca/smarca una proposizione come "a verbo sottinteso" (nucleo eliso: copula
+   o verbo ad altissima frequenza non ripetuto). Imposta isElliptical e prepara
+   il campo verboSottinteso (forma ricostruita, es. est/sunt, ἐστί/εἰσί). */
+function scheletroToggleVerboSottinteso(sentenceId, entryId, checked) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const e = (sentence.periodale || []).find(x => x.id === entryId);
+  if (!e) return;
+  e.isElliptical = !!checked;
+  if (!checked) delete e.verboSottinteso;
+  persistCurrent();
+  renderEditor();
+}
+/* Imposta la forma del verbo sottinteso e ridisegna (così anteprima, badge e
+   nuclei riflettono subito il verbo-fantasma). */
+function scheletroSetVerboSottinteso(sentenceId, entryId, val) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return;
+  const e = (sentence.periodale || []).find(x => x.id === entryId);
+  if (!e) return;
+  e.isElliptical = true;
+  e.verboSottinteso = val;
   persistCurrent();
   renderEditor();
 }
@@ -33646,6 +33682,19 @@ function renderPeriodaleBody(sentenceId, entry, lang) {
                    oninput="updatePeriodaleField('${sentenceId}', '${entry.id}', 'connettivo', this.value)"
                    placeholder="${isGreek ? 'ἵνα, ὅτι, ὥστε…' : 'ut, quod, cum, qui…'}">
           </div>
+          <div class="field-block prop-vsott-block" style="grid-column: 1/-1;">
+            <label class="field-block-label prop-vsott-toggle">
+              <input type="checkbox" ${entry.isElliptical ? 'checked' : ''} onchange="scheletroToggleVerboSottinteso('${sentenceId}', '${entry.id}', this.checked)">
+              ⟐ Nucleo a verbo sottinteso (ellissi)
+            </label>
+            ${entry.isElliptical ? `
+            <div class="prop-vsott-row">
+              <input class="field-input ${isGreek ? 'greek' : ''}" type="text" value="${escapeHtml(entry.verboSottinteso || '')}"
+                     oninput="updatePeriodaleField('${sentenceId}', '${entry.id}', 'verboSottinteso', this.value)" onchange="renderEditor()"
+                     placeholder="${isGreek ? 'forma ricostruita: ἐστί, εἰσί, ἦν…' : 'forma ricostruita: est, sunt, erat…'}">
+              <span class="prop-vsott-presets">${(isGreek ? ['ἐστί', 'εἰσί', 'ἦν', 'ἦσαν', 'εἶναι'] : ['est', 'sunt', 'erat', 'erant', 'esse']).map(f => `<button type="button" class="prop-vsott-chip ${isGreek ? 'greek' : ''}" onclick="scheletroSetVerboSottinteso('${sentenceId}', '${entry.id}', '${f}')" title="Usa «${f}» come verbo ricostruito">${f}</button>`).join('')}</span>
+            </div>` : ''}
+          </div>
           ${ruoloLower === 'subordinata' ? renderConditionalField(sentenceId, entry, { key: 'grado', label: 'Grado di subordinazione', options: PROPOSIZIONI.grado }, 'periodale') : ''}
           ${ruoloLower !== 'principale' && ruoloLower !== '' ? `
             <div class="field-block">
@@ -33698,6 +33747,7 @@ function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
            ${entryDragHandle()}
            ${siglaBadge}
            <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.text ? '' : ' placeholder'}">${escapeHtml(textPreview || '(testo da inserire)')}</span>
+           ${entry.isElliptical && entry.verboSottinteso ? `<span class="prop-vsott-badge ${isGreek ? 'greek' : ''}" title="Nucleo a verbo sottinteso">⟐ [${escapeHtml(entry.verboSottinteso)}]</span>` : ''}
          </div>
          <div class="entry-summary-info">${summary}</div>
        </div>`
@@ -33710,7 +33760,7 @@ function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
        </div>`;
 
   return `
-    <div class="proposition-card prop-doubleborder heatmap-level-${heatLevel}${collapsed ? ' is-collapsed' : ''}" id="periodale-entry-${entry.id}" data-role="${ruoloLower}" data-level="${heatLevel}" style="--heat-stripe:${heatStripe};${periodaleDoubleBorderStyle(entry)}" ${entryDragAttrs(sentenceId, entry.id, 'periodale')}>
+    <div class="proposition-card prop-doubleborder heatmap-level-${heatLevel}${collapsed ? ' is-collapsed' : ''}${entry.isElliptical ? ' is-elliptical' : ''}" id="periodale-entry-${entry.id}" data-role="${ruoloLower}" data-level="${heatLevel}" style="--heat-stripe:${heatStripe};${periodaleDoubleBorderStyle(entry)}" ${entryDragAttrs(sentenceId, entry.id, 'periodale')}>
       <div class="entry-card-header">
         ${collapsed ? '' : entryDragHandle()}
         ${headerInner}
