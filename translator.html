@@ -8161,13 +8161,15 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
      senza addossarsi al bordo superiore. */
   align-items: center;
 }
-/* GRIP allineato alla riga del titolo: quando la voce ha una seconda riga di
-   informazioni, l'altezza complessiva cresce e il grip, se centrato sull'intera
-   riga, finiva sotto il titolo. Ancorandolo in alto resta a filo del titolo
-   (e per le righe a riga singola coincide comunque con il centro). */
-.entry-card.is-collapsed .entry-card-header > .entry-drag-handle,
-.proposition-card.is-collapsed .entry-card-header > .entry-drag-handle {
-  align-self: flex-start;
+/* GRIP dentro la riga del titolo: nelle voci compresse il grip è ora il primo
+   elemento di .entry-summary-head, così si centra verticalmente INSIEME al
+   rettangolo di classificazione e al testo (anche quando il rettangolo va a più
+   righe), indipendentemente dall'eventuale seconda riga di informazioni che
+   resta sotto. Spaziatura affidata al gap della riga. */
+.entry-summary-head > .entry-drag-handle {
+  flex: 0 0 auto;
+  align-self: center;
+  margin-right: 0;
 }
 .entry-card .entry-body,
 .proposition-card .entry-body {
@@ -24129,7 +24131,7 @@ function entryDragAttrs(sentenceId, entryId, type) {
     ondrop="onEntryDrop(event, '${sentenceId}', '${entryId}', '${type}')"`;
 }
 function entryDragHandle() {
-  return `<span class="entry-drag-handle" title="Trascina per riordinare">⋮⋮</span>`;
+  return `<span class="entry-drag-handle" title="Trascina per riordinare" onclick="event.stopPropagation()">⋮⋮</span>`;
 }
 
 /* ============================================
@@ -32269,6 +32271,7 @@ function renderGrammarEntry(sentenceId, entry, lang) {
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','grammar', event)">
          <div class="entry-summary-head">
+           ${entryDragHandle()}
            ${posBadge}
            <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.word ? '' : ' placeholder'}">${escapeHtml(wordDisplay)}</span>
            ${entry.isElliptical ? '<span class="entry-summary-ellipsis">sottinteso</span>' : ''}
@@ -32287,7 +32290,7 @@ function renderGrammarEntry(sentenceId, entry, lang) {
   return `
     <div class="entry-card case-${caseGroup}${collapsed ? ' is-collapsed' : ''}${ellipticalCls}" ${entryDragAttrs(sentenceId, entry.id, 'grammar')}>
       <div class="entry-card-header">
-        ${entryDragHandle()}
+        ${collapsed ? '' : entryDragHandle()}
         ${headerInner}
         <div class="entry-actions">
           ${renderEntryToggleBtn(sentenceId, entry.id, 'grammar', collapsed)}
@@ -32612,6 +32615,7 @@ function renderLogicEntry(sentenceId, entry, lang) {
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','logic', event)">
          <div class="entry-summary-head">
+           ${entryDragHandle()}
            ${funzioneBadge}
            <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.phrase ? '' : ' placeholder'}">${escapeHtml(phraseCap || '(sintagma da inserire)')}</span>
            ${entry.isElliptical ? '<span class="entry-summary-ellipsis">sottinteso</span>' : ''}
@@ -32628,7 +32632,7 @@ function renderLogicEntry(sentenceId, entry, lang) {
   return `
     <div class="entry-card case-${caseGroup}${collapsed ? ' is-collapsed' : ''}${ellipticalCls}" ${entryDragAttrs(sentenceId, entry.id, 'logic')}>
       <div class="entry-card-header">
-        ${entryDragHandle()}
+        ${collapsed ? '' : entryDragHandle()}
         ${headerInner}
         <div class="entry-actions">
           ${renderEntryToggleBtn(sentenceId, entry.id, 'logic', collapsed)}
@@ -33491,6 +33495,7 @@ function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
   const headerInner = collapsed
     ? `<div class="entry-summary" onclick="toggleEntryExpanded('${sentenceId}','${entry.id}','periodale', event)">
          <div class="entry-summary-head">
+           ${entryDragHandle()}
            ${siglaBadge}
            <span class="entry-summary-word ${isGreek ? 'greek' : ''}${entry.text ? '' : ' placeholder'}">${escapeHtml(textPreview || '(testo da inserire)')}</span>
          </div>
@@ -33507,7 +33512,7 @@ function renderPeriodaleEntry(sentenceId, entry, lang, annotatedList) {
   return `
     <div class="proposition-card prop-doubleborder heatmap-level-${heatLevel}${collapsed ? ' is-collapsed' : ''}" id="periodale-entry-${entry.id}" data-role="${ruoloLower}" data-level="${heatLevel}" style="--heat-stripe:${heatStripe};${periodaleDoubleBorderStyle(entry)}" ${entryDragAttrs(sentenceId, entry.id, 'periodale')}>
       <div class="entry-card-header">
-        ${entryDragHandle()}
+        ${collapsed ? '' : entryDragHandle()}
         ${headerInner}
         <div class="entry-actions">
           ${renderEntryToggleBtn(sentenceId, entry.id, 'periodale', collapsed)}
