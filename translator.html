@@ -9116,6 +9116,58 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
 }
 .field-toolbar-btn svg { width: 13px; height: 13px; }
 
+/* ── OCR · scansione del testo da immagine ─────────────────────────────────── */
+.ocr-lang-row {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 16px; font-family: var(--font-body); font-size: 13px;
+  color: var(--poetrify-sepia);
+}
+.ocr-lang-pill {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px; border-radius: 999px;
+  background: var(--poetrify-primary-tint); color: var(--poetrify-primary);
+  font-weight: 600; border: 1px solid var(--poetrify-rule-soft);
+}
+.ocr-dropzone {
+  border: 2px dashed var(--poetrify-rule); border-radius: var(--radius-md);
+  background: var(--poetrify-paper);
+  padding: 30px 18px; text-align: center; cursor: pointer;
+  transition: all var(--transition-base); color: var(--poetrify-sepia);
+}
+.ocr-dropzone:hover { border-color: var(--poetrify-primary); background: var(--poetrify-primary-tint); }
+.ocr-dropzone.dragover { border-color: var(--poetrify-primary); background: var(--poetrify-primary-tint); transform: scale(1.01); }
+.ocr-dropzone-icon { font-size: 34px; line-height: 1; margin-bottom: 8px; }
+.ocr-dropzone-title { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--poetrify-primary); margin-bottom: 4px; }
+.ocr-dropzone-hint { font-size: 12.5px; font-style: italic; }
+.ocr-preview-wrap { margin-top: 16px; text-align: center; }
+.ocr-preview-wrap img {
+  max-width: 100%; max-height: 260px; border-radius: var(--radius-md);
+  border: 1px solid var(--poetrify-rule-soft); box-shadow: 0 4px 14px rgba(44,53,57,0.15);
+}
+.ocr-progress-wrap { margin-top: 16px; }
+.ocr-progress-label { font-family: var(--font-body); font-size: 13px; color: var(--poetrify-sepia); margin-bottom: 6px; display: flex; justify-content: space-between; }
+.ocr-progress-track { height: 8px; border-radius: 999px; background: var(--poetrify-rule-soft); overflow: hidden; }
+.ocr-progress-bar { height: 100%; width: 0%; border-radius: 999px; background: var(--poetrify-primary); transition: width 0.25s ease; }
+.ocr-result-wrap { margin-top: 18px; }
+.ocr-result-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.ocr-result-label { font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--poetrify-primary); }
+.ocr-confidence { font-size: 12px; font-style: italic; color: var(--poetrify-sepia); }
+.ocr-result-textarea {
+  width: 100%; min-height: 150px; resize: vertical;
+  padding: 12px 14px; border-radius: var(--radius-md);
+  border: 1px solid var(--poetrify-rule); background: var(--poetrify-paper);
+  color: var(--poetrify-ink); font-family: var(--font-classical); font-size: 15px; line-height: 1.6;
+}
+.ocr-result-textarea:focus { outline: none; border-color: var(--poetrify-primary); }
+.ocr-note {
+  margin-top: 12px; padding: 10px 12px; border-radius: var(--radius-sm);
+  background: var(--poetrify-primary-tint); border: 1px solid var(--poetrify-rule-soft);
+  font-family: var(--font-body); font-size: 12.5px; color: var(--poetrify-sepia); line-height: 1.5;
+}
+.ocr-error { color: var(--poetrify-danger, #c53030); font-weight: 600; }
+body.dark-mode .ocr-dropzone { background: rgba(255,255,255,0.03); }
+body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.92); }
+
 .preview-copy-row {
   display: flex;
   gap: 6px;
@@ -10622,6 +10674,58 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
     <div class="project-list" id="project-list"></div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeModal('modal-projects')">Chiudi</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODALE OCR — acquisizione del testo da foto/immagine, riconoscimento locale -->
+<div class="modal-backdrop" id="modal-ocr">
+  <div class="modal" style="max-width: 600px;">
+    <h3 class="modal-title">📷 Scansiona il testo</h3>
+    <p class="modal-subtitle">Fotografa o carica una pagina e il testo verrà riconosciuto qui, pronto da inserire nel brano. L'immagine resta sul tuo dispositivo: il riconoscimento avviene nel browser.</p>
+
+    <div class="ocr-lang-row">
+      <span>Lingua del riconoscimento:</span>
+      <span class="ocr-lang-pill" id="ocr-lang-pill">—</span>
+      <span style="font-style:italic;">(segue la lingua del brano)</span>
+    </div>
+
+    <!-- input file nascosto: accept=image + capture apre la fotocamera su telefono/tablet -->
+    <input type="file" id="ocr-file-input" accept="image/*" capture="environment" style="display:none;" onchange="ocrOnFileChosen(event)">
+
+    <div class="ocr-dropzone" id="ocr-dropzone" onclick="document.getElementById('ocr-file-input').click()">
+      <div class="ocr-dropzone-icon">🖼️</div>
+      <div class="ocr-dropzone-title">Carica o scatta una foto</div>
+      <div class="ocr-dropzone-hint">Tocca per scegliere un file o aprire la fotocamera · trascina qui un'immagine · oppure incolla con Ctrl+V</div>
+    </div>
+
+    <div class="ocr-preview-wrap" id="ocr-preview-wrap" style="display:none;">
+      <img id="ocr-preview" alt="Anteprima dell'immagine da scansionare">
+    </div>
+
+    <div class="ocr-progress-wrap" id="ocr-progress-wrap" style="display:none;">
+      <div class="ocr-progress-label"><span id="ocr-progress-text">Preparazione…</span><span id="ocr-progress-pct"></span></div>
+      <div class="ocr-progress-track"><div class="ocr-progress-bar" id="ocr-progress-bar"></div></div>
+    </div>
+
+    <div class="ocr-result-wrap" id="ocr-result-wrap" style="display:none;">
+      <div class="ocr-result-head">
+        <span class="ocr-result-label">Testo riconosciuto · rivedilo prima di inserirlo</span>
+        <span class="ocr-confidence" id="ocr-confidence"></span>
+      </div>
+      <textarea class="ocr-result-textarea classical" id="ocr-result" spellcheck="false" placeholder="Il testo riconosciuto comparirà qui…"></textarea>
+      <div class="ocr-note" id="ocr-greek-note" style="display:none;">
+        <strong>Nota sul greco.</strong> L'OCR del greco antico politonico è la sfida più ardua: controlla con attenzione spiriti, accenti, iota sottoscritte e le lettere simili (ε/σ, η/ν, ο/θ). Correggi qui prima di inserire.
+      </div>
+    </div>
+
+    <div class="ocr-note ocr-error" id="ocr-error" style="display:none;"></div>
+
+    <div class="modal-actions" style="flex-wrap:wrap; gap:8px;">
+      <button class="btn btn-ghost" onclick="closeOcrModal()">Chiudi</button>
+      <button class="btn btn-ghost" id="ocr-retry-btn" onclick="ocrReset()" style="display:none;">↻ Altra immagine</button>
+      <button class="btn btn-brand-soft" id="ocr-append-btn" onclick="ocrInsertResult('append')" style="display:none;">+ Aggiungi al testo</button>
+      <button class="btn btn-primary" id="ocr-replace-btn" onclick="ocrInsertResult('replace')" style="display:none;">Inserisci nel testo →</button>
     </div>
   </div>
 </div>
@@ -25038,6 +25142,7 @@ function renderStep1Html() {
             <div class="field-toolbar">
               <button class="field-toolbar-btn" onclick="copyFieldContent('field-testo', event)" title="Copia il contenuto">📋</button>
               <button class="field-toolbar-btn" onclick="pasteIntoField('field-testo')" title="Incolla dagli appunti">📥</button>
+              <button class="field-toolbar-btn" onclick="openOcrModal('field-testo')" title="Scansiona il testo da una foto (OCR)">📷</button>
               ${isGreek ? '<button class="field-toolbar-btn" onclick="toggleGreekKeyboard()" title="Apri tastiera greca">Ω</button>' : ''}
             </div>
             <textarea id="field-testo" class="classical" placeholder="${isGreek ? 'Incolla qui il brano in greco antico…\n\nLa traduzione sarà visibile lateralmente come riferimento durante l’analisi.' : 'Incolla qui il brano in latino…\n\nLa traduzione sarà visibile lateralmente come riferimento durante l’analisi.'}" oninput="onTestoChange(this.value)"></textarea>
@@ -36144,6 +36249,179 @@ async function pasteIntoField(fieldId) {
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
+   OCR · scansione del testo da immagine (telefono / tablet / fotocamera / file)
+   Il motore vive in modules/translator/ocr.js (window.PoetrifyOCR), caricato lazy
+   da CDN al primo uso. Qui sta solo la colla UI: apertura modale, acquisizione
+   immagine (file · incolla · drag&drop), avvio riconoscimento, inserimento.
+   ═══════════════════════════════════════════════════════════════════════════ */
+const ocrState = { targetField: 'field-testo', lang: 'latino', busy: false };
+
+function openOcrModal(targetField) {
+  ocrState.targetField = targetField || 'field-testo';
+  ocrState.lang = (state && state.meta && state.meta.lingua) ? state.meta.lingua : 'latino';
+  ocrReset();
+  const pill = document.getElementById('ocr-lang-pill');
+  if (pill) pill.textContent = ocrState.lang === 'greco' ? 'Greco antico (grc)' : 'Latino (lat)';
+  const greekNote = document.getElementById('ocr-greek-note');
+  if (greekNote) greekNote.dataset.greek = ocrState.lang === 'greco' ? '1' : '';
+  document.getElementById('modal-ocr').classList.add('open');
+  // Listener di incolla e drag&drop attivi solo mentre il modale è aperto.
+  document.addEventListener('paste', ocrHandlePaste);
+  const dz = document.getElementById('ocr-dropzone');
+  if (dz) {
+    dz.addEventListener('dragover', ocrHandleDragOver);
+    dz.addEventListener('dragleave', ocrHandleDragLeave);
+    dz.addEventListener('drop', ocrHandleDrop);
+  }
+}
+
+function closeOcrModal() {
+  document.getElementById('modal-ocr').classList.remove('open');
+  document.removeEventListener('paste', ocrHandlePaste);
+  const dz = document.getElementById('ocr-dropzone');
+  if (dz) {
+    dz.removeEventListener('dragover', ocrHandleDragOver);
+    dz.removeEventListener('dragleave', ocrHandleDragLeave);
+    dz.removeEventListener('drop', ocrHandleDrop);
+    dz.classList.remove('dragover');
+  }
+}
+
+/* Riporta il modale allo stato iniziale (pronto per una nuova immagine). */
+function ocrReset() {
+  ocrState.busy = false;
+  const set = (id, disp) => { const el = document.getElementById(id); if (el) el.style.display = disp; };
+  set('ocr-preview-wrap', 'none');
+  set('ocr-progress-wrap', 'none');
+  set('ocr-result-wrap', 'none');
+  set('ocr-error', 'none');
+  set('ocr-greek-note', 'none');
+  set('ocr-retry-btn', 'none');
+  set('ocr-append-btn', 'none');
+  set('ocr-replace-btn', 'none');
+  const ta = document.getElementById('ocr-result'); if (ta) ta.value = '';
+  const fi = document.getElementById('ocr-file-input'); if (fi) fi.value = '';
+  const dz = document.getElementById('ocr-dropzone'); if (dz) dz.style.display = '';
+}
+
+function ocrShowError(msg) {
+  const box = document.getElementById('ocr-error');
+  if (box) { box.textContent = msg; box.style.display = ''; }
+  document.getElementById('ocr-progress-wrap').style.display = 'none';
+  ocrState.busy = false;
+}
+
+// ── Acquisizione immagine: file · incolla · drag&drop ─────────────────────────
+function ocrOnFileChosen(evt) {
+  const file = evt && evt.target && evt.target.files && evt.target.files[0];
+  if (file) ocrProcessImage(file);
+}
+function ocrHandlePaste(evt) {
+  const items = (evt.clipboardData && evt.clipboardData.items) || [];
+  for (const it of items) {
+    if (it.type && it.type.indexOf('image') === 0) {
+      const file = it.getAsFile();
+      if (file) { evt.preventDefault(); ocrProcessImage(file); return; }
+    }
+  }
+}
+function ocrHandleDragOver(evt) { evt.preventDefault(); evt.currentTarget.classList.add('dragover'); }
+function ocrHandleDragLeave(evt) { evt.currentTarget.classList.remove('dragover'); }
+function ocrHandleDrop(evt) {
+  evt.preventDefault();
+  evt.currentTarget.classList.remove('dragover');
+  const file = evt.dataTransfer && evt.dataTransfer.files && evt.dataTransfer.files[0];
+  if (file && file.type && file.type.indexOf('image') === 0) ocrProcessImage(file);
+  else showToast('Trascina un file immagine');
+}
+
+/* Pipeline: anteprima → (lazy-load motore) → riconoscimento → testo editabile. */
+async function ocrProcessImage(file) {
+  if (ocrState.busy) return;
+  if (!window.PoetrifyOCR) { ocrShowError('Modulo OCR non ancora caricato: ricarica la pagina e riprova.'); return; }
+  ocrState.busy = true;
+  document.getElementById('ocr-error').style.display = 'none';
+  document.getElementById('ocr-result-wrap').style.display = 'none';
+  document.getElementById('ocr-dropzone').style.display = 'none';
+
+  let prepared;
+  try {
+    prepared = await window.PoetrifyOCR.prepareImage(file, 2200);
+  } catch (e) {
+    ocrShowError(e.message || 'Immagine non valida'); return;
+  }
+  const img = document.getElementById('ocr-preview');
+  img.src = prepared;
+  document.getElementById('ocr-preview-wrap').style.display = '';
+
+  // Barra di avanzamento
+  const pw = document.getElementById('ocr-progress-wrap');
+  const bar = document.getElementById('ocr-progress-bar');
+  const txt = document.getElementById('ocr-progress-text');
+  const pct = document.getElementById('ocr-progress-pct');
+  pw.style.display = ''; bar.style.width = '0%'; pct.textContent = '';
+  txt.textContent = 'Avvio del motore OCR…';
+
+  const onProgress = (m) => {
+    if (!m) return;
+    const phase = {
+      'loading tesseract core': 'Caricamento motore…',
+      'initializing tesseract': 'Inizializzazione…',
+      'loading language traineddata': 'Caricamento dati lingua…',
+      'initializing api': 'Preparazione…',
+      'recognizing text': 'Riconoscimento del testo…',
+    }[m.status] || m.status || '…';
+    txt.textContent = phase;
+    if (typeof m.progress === 'number') {
+      const p = Math.round(m.progress * 100);
+      bar.style.width = p + '%';
+      pct.textContent = p + '%';
+    }
+  };
+
+  try {
+    const res = await window.PoetrifyOCR.recognize(prepared, ocrState.lang, onProgress);
+    bar.style.width = '100%'; pct.textContent = '100%'; txt.textContent = 'Completato';
+    pw.style.display = 'none';
+    const ta = document.getElementById('ocr-result');
+    ta.value = res.text || '';
+    ta.classList.toggle('greek', ocrState.lang === 'greco');
+    document.getElementById('ocr-result-wrap').style.display = '';
+    const conf = document.getElementById('ocr-confidence');
+    conf.textContent = (res.confidence != null) ? ('confidenza ~' + res.confidence + '%') : '';
+    document.getElementById('ocr-greek-note').style.display = ocrState.lang === 'greco' ? '' : 'none';
+    document.getElementById('ocr-retry-btn').style.display = '';
+    document.getElementById('ocr-append-btn').style.display = '';
+    document.getElementById('ocr-replace-btn').style.display = '';
+    if (!res.text) showToast('Nessun testo riconosciuto: prova una foto più nitida');
+  } catch (e) {
+    ocrShowError(e.message || 'Riconoscimento fallito');
+  } finally {
+    ocrState.busy = false;
+  }
+}
+
+/* Inserisce il testo riconosciuto nel campo di destinazione. mode:
+   'replace' = sostituisce tutto · 'append' = aggiunge in coda. In entrambi i casi
+   scatena l'evento input perché onTestoChange aggiorni lo stato e l'anteprima. */
+function ocrInsertResult(mode) {
+  const ta = document.getElementById('ocr-result');
+  const text = ta ? ta.value.trim() : '';
+  if (!text) { showToast('Niente testo da inserire'); return; }
+  const el = document.getElementById(ocrState.targetField);
+  if (!el) { showToast('Campo di destinazione non trovato'); return; }
+  if (mode === 'append' && el.value.trim()) {
+    el.value = el.value.replace(/\s+$/, '') + '\n' + text;
+  } else {
+    el.value = text;
+  }
+  el.dispatchEvent(new Event('input', { bubbles: true }));
+  kbdState.lastFocusedField = el;
+  closeOcrModal();
+  showToast(mode === 'append' ? 'Testo aggiunto al brano' : 'Testo inserito nel brano');
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
    DRAG-SELECT IMPLEMENTAZIONE · listener globali pointer events
    Compatibile con mouse (PC), touch (mobile/tablet), penna/stilo.
 
@@ -37203,6 +37481,15 @@ document.addEventListener('DOMContentLoaded', () => {
      il DOM è stato parsato e dopo che lo script inline ha già definito le
      sue funzioni globali. È quindi sicuro confrontare i due insiemi.
      ═══════════════════════════════════════════════════════════════════════ -->
+<!-- Modulo OCR: motore di riconoscimento testo da immagine, esposto su window.
+     Indipendente dall'engine; il bundle Tesseract è caricato lazy al primo uso. -->
+<script type="module">
+import * as OCR from './modules/translator/ocr.js';
+window.PoetrifyOCR = OCR;
+const INFO_BADGE_OCR = 'background:#1800AC;color:#fff;padding:2px 6px;border-radius:3px;';
+console.log('%c Poetrify OCR ', INFO_BADGE_OCR, 'ocr v' + OCR.OCR_META.version + ' · ' + OCR.OCR_META.engine + ' ' + OCR.OCR_META.engineVersion + ' (lazy CDN)');
+</script>
+
 <script type="module">
 import * as Engine     from './modules/engine/index.js';
 import * as TranslatorUI from './modules/translator/index.js';
