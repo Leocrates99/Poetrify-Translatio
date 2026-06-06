@@ -476,6 +476,10 @@ input, textarea, select { font-family: inherit; color: inherit; }
 .brano-meta-extra > summary::-webkit-details-marker { display: none; }
 .brano-meta-extra > summary:hover,
 .brano-meta-extra[open] > summary { color: var(--poetrify-primary); border-color: var(--poetrify-primary); }
+/* Bottone compatto "Dati del brano": icona + titolo troncato con ellissi */
+.brano-info > summary { display: inline-flex; align-items: center; gap: 6px; max-width: 230px; text-transform: none; }
+.brano-info-icon { font-size: 13px; line-height: 1; }
+.brano-info-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 185px; }
 .brano-meta-pop {
   position: absolute;
   top: calc(100% + 6px);
@@ -8794,6 +8798,10 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
   background: var(--poetrify-primary-dark);
   transform: scale(0.95);
 }
+/* Tastiera greca (FAB + pannello): compaiono SOLO quando si lavora in greco.
+   In latino non servono e non devono apparire. */
+body[data-lang="latino"] .greek-kbd-toggle,
+body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 .greek-kbd-toggle .kbd-toggle-label {
   font-family: var(--font-ui);
   font-size: 8px;
@@ -10624,13 +10632,20 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
       </div>
 
       <div class="brano-meta">
-        <div class="meta-field meta-field-titolo">
-          <label for="meta-titolo">Titolo</label>
-          <input type="text" id="meta-titolo" placeholder="Es. Cesare, BG I, incipit">
-        </div>
-        <details class="brano-meta-extra">
-          <summary title="Autore, opera e locus del brano">＋ dettagli</summary>
+        <!-- Dati del brano (titolo/autore/opera) raccolti in un UNICO popover
+             compatto: non più input onnipresenti nell'header. Gli ID restano
+             invariati, così listener e syncTopbar continuano a funzionare. Il
+             label del bottone riflette il titolo corrente (aggiornato in syncTopbar). -->
+        <details class="brano-meta-extra brano-info" id="brano-info">
+          <summary title="Titolo, autore, opera e locus del brano">
+            <span class="brano-info-icon" aria-hidden="true">📄</span>
+            <span class="brano-info-label" id="brano-info-label">Dati del brano</span>
+          </summary>
           <div class="brano-meta-pop">
+            <div class="meta-field">
+              <label for="meta-titolo">Titolo</label>
+              <input type="text" id="meta-titolo" placeholder="Es. Cesare, BG I, incipit">
+            </div>
             <div class="meta-field">
               <label for="meta-autore">Autore</label>
               <input type="text" id="meta-autore" placeholder="Cesare, Tacito, Sofocle…">
@@ -10684,6 +10699,10 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
           <span>Nuovo</span>
         </button>
+        <button class="sidebar-btn sidebar-btn-export" onclick="openExportModal()" title="Esporta il lavoro · Markdown, Word, PNG, PDF, JSON">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+          <span>Esporta</span>
+        </button>
         <!-- Pulsante "Approccio" rimosso: l'approccio si cambia direttamente dal
              segmented control nella quick-bar in topbar. Lo shortcut "a" è
              ancora attivo (chiama openApproachModal) per accedere alla scheda
@@ -10728,21 +10747,13 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
 
   <!-- BOTTOM BAR -->
   <footer class="bottombar">
-    <div class="export-group">
-      <span class="export-label">Esporta</span>
-      <button class="btn-export" onclick="openExportModal()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-        Esporta lavoro
-      </button>
-    </div>
-
-    <div class="bottom-spacer"></div>
-
     <div class="stats" id="stats">
       <span class="stat-item">frasi: <strong id="stat-sentences">0</strong></span>
       <span class="stat-item">parole: <strong id="stat-words">0</strong></span>
       <span class="stat-item">avanzamento: <strong id="stat-progress">0%</strong></span>
     </div>
+
+    <div class="bottom-spacer"></div>
 
     <button class="btn-preview-toggle" id="btn-preview-toggle" onclick="togglePreview()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -25007,6 +25018,9 @@ function syncTopbar() {
   document.getElementById('meta-autore').value = state.meta.autore || '';
   document.getElementById('meta-opera').value = state.meta.opera || '';
   document.getElementById('meta-titolo').value = state.meta.titolo || '';
+  // Il bottone compatto "Dati del brano" mostra il titolo corrente (o l'etichetta neutra).
+  const infoLabel = document.getElementById('brano-info-label');
+  if (infoLabel) infoLabel.textContent = (state.meta.titolo && state.meta.titolo.trim()) ? state.meta.titolo.trim() : 'Dati del brano';
   // Nell'archivio (scheda D) il toggle riflette il BRANCH che si sta sfogliando;
   // altrove riflette la lingua del progetto su cui si sta lavorando.
   const activeLang = (state.currentStep === 4 && archiveFilters.lingua) ? archiveFilters.lingua : state.meta.lingua;
