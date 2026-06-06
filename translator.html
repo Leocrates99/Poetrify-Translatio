@@ -2125,18 +2125,10 @@ body.poetrify-dark .periodo-ipot-col { background: rgba(255,255,255,0.04); }
   font-family: monospace;
   font-size: 10px;
 }
-@media (max-width: 720px) {
-  .inline-translation-panel {
-    right: 8px;
-    bottom: 8px;
-    width: calc(100vw - 16px);
-    max-width: calc(100vw - 16px);
-  }
-  .inline-translation-panel.is-collapsed {
-    width: 150px;
-  }
-  .inline-translation-textarea { min-height: 80px; }
-}
+/* Posizionamento mobile/tablet del pannello "Traduzione di lavoro" consolidato
+   nel blocco finale "area inferiore senza accavallamenti" (@media max-width:900),
+   così da avere l'ultima parola nella cascade ed evitare sovrapposizioni con la
+   bottombar, il FAB greco e il contenuto. */
 
 /* ═══════════════════════════════════════════════════════════════════════════
    DOMINO MODE · banner di replica analisi
@@ -10543,6 +10535,73 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
   .entry-drag-handle { padding: 4px 6px; }
   .ordo-chip-delete { opacity: 1; }
   .field-toolbar { opacity: 1; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   RIFINITURA MOBILE/TABLET · area inferiore SENZA accavallamenti
+   Ultimo blocco responsive: ha l'ultima parola nella cascade. Garantisce che il
+   pannello "Traduzione di lavoro", il FAB greco e la bottombar non si coprano mai
+   fra loro né coprano il contenuto, a qualunque larghezza ≤ 900px.
+   ════════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  /* Bottombar: una sola riga scrollabile, altezza stabile (~52px) */
+  .bottombar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    gap: 10px;
+    padding: 8px 14px;
+  }
+  .bottombar > * { flex-shrink: 0; }
+  .bottombar::-webkit-scrollbar { height: 0; }
+
+  /* Pannello traduzione · z-index sopra il FAB: da espanso lo copre in modo
+     pulito (niente angolo che spunta). */
+  .inline-translation-panel { z-index: 260; }
+  /* COLLASSATO = pillola compatta in basso a DESTRA, sopra la bottombar */
+  .inline-translation-panel.is-collapsed {
+    left: auto; right: 10px;
+    width: auto; max-width: 72vw;
+    bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+  }
+  .inline-translation-panel.is-collapsed .inline-translation-title {
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  /* ESPANSO = foglio a tutta larghezza, altezza limitata, scroll interno,
+     ancorato SOPRA la bottombar */
+  .inline-translation-panel:not(.is-collapsed) {
+    left: 10px; right: 10px;
+    width: auto; max-width: none;
+    bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+    max-height: 58vh;
+    display: flex; flex-direction: column;
+  }
+  .inline-translation-body { overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .inline-translation-textarea { max-height: 32vh; min-height: 72px; }
+
+  /* FAB tastiera greca: in basso a SINISTRA, sopra la bottombar → mai sulla
+     pillola traduzione (a destra). */
+  .greek-kbd-toggle {
+    left: 14px; right: auto;
+    bottom: calc(58px + env(safe-area-inset-bottom, 0px));
+    width: 48px; height: 48px;
+  }
+
+  /* Spazio di rispetto: lo scorrimento del contenuto non finisce MAI sotto la
+     pillola traduzione + la bottombar. */
+  .editor { padding-bottom: calc(120px + env(safe-area-inset-bottom, 0px)); }
+
+  /* Tab di analisi: scorrimento orizzontale con scrollbar visibile (affordance,
+     così nessuna tab resta "tagliata" senza che si capisca che si scorre). */
+  .analysis-tabs::-webkit-scrollbar { height: 3px; }
+  .analysis-tabs::-webkit-scrollbar-thumb { background: var(--poetrify-rule); border-radius: 2px; }
+  .analysis-tab { flex: 0 0 auto; }
+}
+
+@media (max-width: 600px) {
+  .inline-translation-panel.is-collapsed { max-width: 64vw; }
+  .greek-kbd-toggle { width: 44px; height: 44px; }
 }
 
 @media print {
@@ -30633,6 +30692,12 @@ function exportProjectFromArchive(id) {
    ════════════════════════════════════════════════════════════════════════════ */
 function renderInlineTranslationPanel(sentence) {
   if (!sentence) return '';
+  // Su mobile/tablet (≤900px) il pannello parte COLLASSATO: una pillola che non
+  // copre il contenuto. Su desktop resta aperto. La scelta dell'utente, una
+  // volta toccato il pannello, viene poi rispettata.
+  if (state.uiInlineTranslationCollapsed === undefined) {
+    state.uiInlineTranslationCollapsed = (typeof window !== 'undefined' && window.innerWidth <= 900);
+  }
   const collapsed = !!state.uiInlineTranslationCollapsed;
   const isGreek = state.meta.lingua === 'greco';
   const len = (sentence.translation || '').length;
