@@ -2534,35 +2534,49 @@ body.poetrify-dark .unified-layer-view { background: rgba(255,255,255,0.03); }
 /* ═══════════════════════════════════════════════════════════════════════════
    APPROCCIO SCHELETRO · stepper + tokenizer fasi 1 e 2 + finish card fase 3
    ═══════════════════════════════════════════════════════════════════════════ */
-.scheletro-stepper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  margin: 0 0 14px;
-  flex-wrap: wrap;
-  /* barra delle fasi SEMPRE visibile: resta in cima mentre scorri, così cambi
-     livello senza risalire la pagina */
+/* Barra compatta delle fasi Scheletro: UNA sola riga slim e sticky sotto
+   l'header, con lo stepper scorrevole a sinistra e le statistiche inline a
+   destra. Resta visibile mentre scorri, senza ingombrare la vista. */
+.scheletro-bar {
   position: sticky;
   top: 0;
   z-index: 20;
-  padding: 12px 8px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 0 0 14px;
+  padding: 7px 10px;
   background: var(--poetrify-ivory);
   border-bottom: 1px solid var(--poetrify-rule-soft);
-  box-shadow: 0 4px 10px var(--poetrify-shadow);
+  box-shadow: 0 3px 8px var(--poetrify-shadow);
 }
-body.poetrify-dark .scheletro-stepper { background: var(--poetrify-paper); }
+body.poetrify-dark .scheletro-bar { background: var(--poetrify-paper); }
+.scheletro-stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: 1 1 auto;
+  min-width: 0;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.scheletro-stepper::-webkit-scrollbar { height: 3px; }
+.scheletro-stepper::-webkit-scrollbar-thumb { background: var(--poetrify-rule); border-radius: 2px; }
 .scheletro-step {
   appearance: none;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
+  gap: 5px;
+  padding: 5px 11px;
+  flex-shrink: 0;
+  white-space: nowrap;
   background: var(--poetrify-paper);
   border: 1.5px solid var(--poetrify-rule);
   border-radius: 999px;
   font-family: var(--font-ui);
-  font-size: 12px;
+  font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.18s ease;
@@ -2580,23 +2594,25 @@ body.poetrify-dark .scheletro-stepper { background: var(--poetrify-paper); }
   border-color: rgba(47,133,90,0.55);
   color: #1f5c3d;
 }
-.scheletro-step-num { font-size: 16px; }
+.scheletro-step-num { font-size: 14px; }
 .scheletro-step-label { letter-spacing: 0.02em; }
-.scheletro-step-sep { color: var(--poetrify-rule); font-weight: 700; }
+.scheletro-step-sep { display: none; }   /* niente frecce: barra più compatta */
 
+/* Statistiche inline a destra della barra (non più una riga a sé). */
 .scheletro-stats {
   display: flex;
-  justify-content: center;
-  gap: 18px;
-  margin-bottom: 16px;
-  flex-wrap: wrap;
+  flex-shrink: 0;
+  gap: 12px;
+  margin: 0;
+  flex-wrap: nowrap;
 }
 .scheletro-stat {
   font-family: var(--font-ui);
-  font-size: 12px;
+  font-size: 11px;
   color: var(--poetrify-sepia);
+  white-space: nowrap;
 }
-.scheletro-stat strong { color: var(--poetrify-primary); font-size: 16px; }
+.scheletro-stat strong { color: var(--poetrify-primary); font-size: 13px; }
 
 .scheletro-sentence-block,
 .scheletro-verb-card,
@@ -25669,8 +25685,7 @@ function renderStep3HtmlScheletro() {
 
   return sectionHeader('C', 'Analisi · approccio Scheletro', STEPS[step - 1].hint)
     + renderApproachBanner()
-    + stepperHtml
-    + stats
+    + `<div class="scheletro-bar">${stepperHtml}${stats}</div>`
     + bodyHtml
     + navButtons;
 }
