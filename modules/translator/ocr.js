@@ -2,13 +2,17 @@
    ocr.js · Motore OCR client-side per Poetrify
 
    Riconoscimento ottico del testo (foto da telefono/tablet/fotocamera, immagini
-   incollate, file trascinati) interamente DENTRO il browser, via Tesseract.js
-   caricato lazy da CDN al primo utilizzo.
+   incollate, file trascinati) interamente DENTRO il browser, via Tesseract.js.
+
+   SISTEMA INTERNO (vendoring): motore, worker, core WASM e dati lingua sono
+   serviti dai file locali in vendor/tesseract/ (stesso GitHub Pages, stessa
+   origine). NESSUNA dipendenza da CDN o server esterni, né a runtime né al primo
+   uso → funziona anche completamente offline. Tutti i componenti sono Apache-2.0
+   (file di licenza in vendor/tesseract/, vedi vendor/tesseract/README.md).
 
    Principio cardine — coerente con la promessa "Nessun dato lascia il tuo
    dispositivo": l'immagine non viene mai inviata a un server. Tutto il calcolo
-   (WASM + dati lingua) gira in locale. Richiede internet solo la PRIMA volta,
-   per scaricare il motore e i dati lingua; poi il browser li mette in cache.
+   (WASM + dati lingua) gira in locale.
 
    Lingue supportate: 'lat' (latino) e 'grc' (greco antico politonico).
    ────────────────────────────────────────────────────────────────────────────
@@ -20,15 +24,19 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 export const OCR_META = {
-  version: '0.2.0', // 0.2.0: crop + raddrizzamento + formattazione compatta in prosa
+  version: '0.3.0', // 0.3.0: vendoring · zero CDN, tutto servito in locale (offline)
   engine: 'tesseract.js',
   engineVersion: '5.1.1',
+  selfHosted: true,
   languages: ['lat', 'grc'],
 };
 
-// Bundle UMD di Tesseract.js. jsdelivr ospita anche worker/core/dati coerenti
-// con questa versione, evitando disallineamenti tra le parti.
-const TESSERACT_CDN = 'https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js';
+/* Base locale dei file vendored, risolta rispetto a questo modulo:
+   ocr.js sta in /modules/translator/ → i file stanno in /vendor/tesseract/.
+   Niente URL assoluti hard-coded: funziona a qualsiasi sotto-percorso (es. il
+   project page GitHub /Poetrify-Translatio/). */
+const VENDOR_BASE = new URL('../../vendor/tesseract/', import.meta.url).href;
+const TESSERACT_SCRIPT = VENDOR_BASE + 'tesseract.min.js';
 
 // Mappa lingua-di-progetto → traineddata Tesseract.
 const LANG_MAP = { greco: 'grc', latino: 'lat' };
@@ -42,15 +50,15 @@ export function tesseractLangFor(projectLang) {
   return LANG_MAP[projectLang] || 'lat';
 }
 
-/* Carica una sola volta lo script UMD di Tesseract iniettando un <script>.
-   Idempotente: chiamate successive riusano la stessa Promise / il global già
-   presente. In caso di errore di rete azzera la cache così un retry è possibile. */
+/* Carica una sola volta lo script UMD di Tesseract iniettando un <script> dal
+   file locale vendored. Idempotente: chiamate successive riusano la stessa
+   Promise / il global già presente. In caso di errore azzera la cache (retry). */
 export function loadTesseract() {
   if (typeof window !== 'undefined' && window.Tesseract) return Promise.resolve(window.Tesseract);
   if (_tesseractPromise) return _tesseractPromise;
   _tesseractPromise = new Promise((resolve, reject) => {
     const s = document.createElement('script');
-    s.src = TESSERACT_CDN;
+    s.src = TESSERACT_SCRIPT;
     s.async = true;
     s.onload = () => {
       if (window.Tesseract) resolve(window.Tesseract);
@@ -58,19 +66,25 @@ export function loadTesseract() {
     };
     s.onerror = () => {
       _tesseractPromise = null;
-      reject(new Error('Impossibile scaricare il motore OCR dalla rete (sei offline?)'));
+      reject(new Error('Impossibile caricare il motore OCR locale (vendor/tesseract/)'));
     };
     document.head.appendChild(s);
   });
   return _tesseractPromise;
 }
 
-/* Crea (o riusa) un worker Tesseract per la lingua data. Riusare il worker tra
-   scansioni successive evita di riscaricare core+dati ogni volta. */
+/* Crea (o riusa) un worker Tesseract per la lingua data, puntando worker, core
+   WASM e dati lingua ai file LOCALI vendored (nessuna CDN). corePath è la cartella
+   core/: Tesseract sceglie da sé la variante (SIMD/LSTM) adatta al browser.
+   langPath è la cartella lang/ con i {lang}.traineddata.gz. Riusare il worker tra
+   scansioni successive evita di ricaricare core+dati ogni volta. */
 async function getWorker(lang, onProgress) {
   if (_workers.has(lang)) return _workers.get(lang);
   const Tesseract = await loadTesseract();
   const worker = await Tesseract.createWorker(lang, 1, {
+    workerPath: VENDOR_BASE + 'worker.min.js',
+    corePath: VENDOR_BASE + 'core',
+    langPath: VENDOR_BASE + 'lang',
     logger: m => { if (typeof onProgress === 'function') onProgress(m); },
   });
   _workers.set(lang, worker);

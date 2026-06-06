@@ -36335,9 +36335,10 @@ async function pasteIntoField(fieldId) {
 
 /* ════════════════════════════════════════════════════════════════════════════
    OCR · scansione del testo da immagine (telefono / tablet / fotocamera / file)
-   Il motore vive in modules/translator/ocr.js (window.PoetrifyOCR), caricato lazy
-   da CDN al primo uso. Qui sta solo la colla UI: apertura modale, acquisizione
-   immagine (file · incolla · drag&drop), avvio riconoscimento, inserimento.
+   Il motore vive in modules/translator/ocr.js (window.PoetrifyOCR) e gira tutto
+   in locale dai file vendored in vendor/tesseract/ (nessuna CDN). Qui sta solo la
+   colla UI: modale, acquisizione (file · incolla · drag&drop), crop+raddrizza,
+   riconoscimento, inserimento.
    ═══════════════════════════════════════════════════════════════════════════ */
 const ocrState = {
   targetField: 'field-testo', lang: 'latino', busy: false,
@@ -37727,7 +37728,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- Modulo OCR: motore di riconoscimento testo da immagine, esposto su window.
      Indipendente dall'engine; il bundle Tesseract è caricato lazy al primo uso. -->
 <script type="module">
-import * as OCR from './modules/translator/ocr.js?v=0.2.0';
+import * as OCR from './modules/translator/ocr.js?v=0.3.0';
 window.PoetrifyOCR = OCR;
 const INFO_BADGE_OCR = 'background:#1800AC;color:#fff;padding:2px 6px;border-radius:3px;';
 console.log('%c Poetrify OCR ', INFO_BADGE_OCR, 'ocr v' + OCR.OCR_META.version + ' · ' + OCR.OCR_META.engine + ' ' + OCR.OCR_META.engineVersion + ' (lazy CDN)');

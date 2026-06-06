@@ -1,0 +1,7 @@
+# File vendored di Tesseract: vanno conservati byte-per-byte, senza alcuna
+# conversione di fine riga (altrimenti i loader Emscripten/minificati e i dati
+# binari si corromperebbero). I .wasm e i .gz sono già binari per natura.
+*.wasm        binary
+*.wasm.js     binary
+*.min.js      binary
+*.traineddata.gz binary
