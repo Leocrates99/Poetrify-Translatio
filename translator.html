@@ -10613,15 +10613,50 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
-   HEADER MINIMALE + MENÙ LATERALE A TENDINA (mobile/tablet ≤900px)
-   Header = hamburger · Poetrify · titolo versione · lingua · save.
-   Tutto il resto (navigazione, impostazioni, dati del brano, strumenti) nel menù
-   laterale off-canvas. Desktop (>900px) invariato.
+   HEADER MINIMALE + MENÙ LATERALE
+   Header (tutte le larghezze) = [hamburger su mobile] · Poetrify · titolo della
+   versione · lingua · save. Navigazione, impostazioni, dati del brano e strumenti
+   vivono nel menù di sinistra: su DESKTOP (>900px) è una colonna FISSA sempre
+   visibile; su mobile/tablet (≤900px) è un drawer off-canvas con hamburger.
    ════════════════════════════════════════════════════════════════════════════ */
-.drawer-toggle { display: none; }   /* hamburger: solo mobile/tablet */
-.topbar-title  { display: none; }   /* titolo nell'header: solo mobile/tablet */
-.drawer-only   { display: none; }   /* sezioni/slot del drawer: solo mobile/tablet */
+.drawer-toggle   { display: none; }   /* hamburger: solo mobile/tablet */
 .drawer-backdrop { display: none; }
+.drawer-only     { display: block; }  /* sezioni del menù: sempre visibili nella sidebar */
+
+/* HEADER MINIMALE su tutte le larghezze (logo · titolo · lingua · save). */
+.topbar-row-main { display: flex !important; align-items: center; gap: 12px; grid-template-columns: none !important; }
+.topbar-title {
+  display: block; flex: 1 1 auto; min-width: 40px;
+  font-family: var(--font-ui); font-size: 14px; font-style: italic;
+  color: var(--poetrify-sepia); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.brand, .brano-meta, .save-status { flex-shrink: 0; }
+.poetrify-lang-pill { display: none; }   /* ridondante con il toggle LAT/ΕΛ */
+
+/* Quick-bar (impostazioni) impaginata in COLONNA dentro il menù stretto: ogni
+   gruppo a tutta larghezza, segmenti distribuiti. Vale per sidebar e drawer. */
+#drawer-settings-slot .quick-bar { flex-direction: column; align-items: stretch; gap: 10px; border-top: none; padding: 4px 0; margin: 0; }
+#drawer-settings-slot .quick-bar-group { width: 100%; }
+#drawer-settings-slot .quick-bar-custom { flex-direction: column; align-items: stretch; gap: 10px; flex-basis: auto; }
+#drawer-settings-slot .quick-seg { display: flex; width: 100%; flex-wrap: wrap; }
+#drawer-settings-slot .quick-seg-btn { flex: 1 1 auto; justify-content: center; padding: 6px 8px; font-size: 11px; }
+#drawer-brano-slot .brano-info { width: 100%; }
+#drawer-brano-slot .brano-info > summary { width: 100%; max-width: none; }
+#drawer-brano-slot .brano-meta-pop { position: static; box-shadow: none; border: none; padding: 8px 0 0; min-width: 0; }
+
+/* ── DESKTOP (>900px): menù di sinistra FISSO e pieno (annulla il rail icone) ── */
+@media (min-width: 901px) {
+  .main { grid-template-columns: 264px 1fr 0fr !important; }
+  .main.preview-open { grid-template-columns: 264px 1fr minmax(320px, 0.8fr) !important; }
+  .sidebar { padding: 18px 12px; }
+  .sidebar-section-label { display: block !important; }
+  .tab-title { display: inline !important; }
+  .tab-item { flex-direction: row !important; }
+  .sidebar-actions { flex-direction: column; padding: 12px 0 0 !important; border-left: none; }
+  .sidebar-btn { justify-content: flex-start !important; padding: 9px 10px !important; width: 100%; }
+  .sidebar-btn span { display: inline !important; }
+  .sidebar-zoom-control { display: flex !important; }
+}
 
 @media (max-width: 900px) {
   /* ── HEADER MINIMALE · una sola riga ───────────────────────────────────── */
@@ -25152,25 +25187,16 @@ function toggleDrawer(force) {
 }
 function closeDrawer() { document.body.classList.remove('drawer-open'); }
 
-/* Colloca la quick-bar (impostazioni) e il popover "Dati del brano":
-   nell'header su desktop, nel drawer su mobile/tablet. Idempotente — sposta solo
-   se non è già al posto giusto, così è sicuro chiamarla a ogni cambio di soglia. */
+/* Colloca la quick-bar (impostazioni) e il popover "Dati del brano" SEMPRE nel
+   menù di sinistra (sidebar) — sia su desktop (colonna fissa) sia su mobile
+   (drawer a scomparsa). L'header resta minimale ovunque. Idempotente. */
 function arrangeChrome() {
-  const mobile = window.matchMedia('(max-width: 900px)').matches;
   const qb = document.getElementById('quick-bar');
   const brano = document.getElementById('brano-info');
-  const topbar = document.getElementById('topbar');
-  const tBrano = document.getElementById('topbar-brano-slot');
   const sSettings = document.getElementById('drawer-settings-slot');
   const sBrano = document.getElementById('drawer-brano-slot');
-  if (mobile) {
-    if (qb && sSettings && qb.parentElement !== sSettings) sSettings.appendChild(qb);
-    if (brano && sBrano && brano.parentElement !== sBrano) sBrano.appendChild(brano);
-  } else {
-    closeDrawer();
-    if (qb && topbar && qb.parentElement !== topbar) topbar.appendChild(qb);
-    if (brano && tBrano && brano.parentElement !== tBrano) tBrano.insertBefore(brano, tBrano.firstChild);
-  }
+  if (qb && sSettings && qb.parentElement !== sSettings) sSettings.appendChild(qb);
+  if (brano && sBrano && brano.parentElement !== sBrano) sBrano.appendChild(brano);
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
@@ -37740,9 +37766,10 @@ document.addEventListener('DOMContentLoaded', () => {
     b.addEventListener('click', () => setLingua(b.dataset.lang));
   });
 
-  // Menù laterale a tendina: colloca i controlli e reagisci al cambio di soglia.
+  // Menù laterale: colloca impostazioni e dati-brano nel menù (header minimale).
   arrangeChrome();
-  window.matchMedia('(max-width: 900px)').addEventListener('change', arrangeChrome);
+  // Passando da mobile a desktop il drawer eventualmente aperto va chiuso.
+  window.matchMedia('(max-width: 900px)').addEventListener('change', e => { if (!e.matches) closeDrawer(); });
   const sidebarEl = document.getElementById('sidebar');
   if (sidebarEl) sidebarEl.addEventListener('click', e => {
     if (window.matchMedia('(max-width: 900px)').matches && e.target.closest('.tab-item, .sidebar-btn')) closeDrawer();
