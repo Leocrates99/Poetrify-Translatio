@@ -9116,6 +9116,36 @@ body[data-lang="greco"] .concordance-chip { font-family: 'Times New Roman', seri
 }
 .field-toolbar-btn svg { width: 13px; height: 13px; }
 
+/* ── OCR · call-to-action prominente per la scansione del testo ────────────── */
+.ocr-cta-row { margin: 14px 0 18px; }
+.ocr-cta-btn {
+  display: flex; align-items: center; gap: 14px; width: 100%;
+  text-align: left; cursor: pointer;
+  padding: 14px 16px; min-height: 60px;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--poetrify-primary);
+  background: var(--poetrify-primary-tint);
+  color: var(--poetrify-primary);
+  transition: all var(--transition-base);
+}
+.ocr-cta-btn:hover {
+  background: var(--poetrify-primary); color: var(--poetrify-paper);
+  transform: translateY(-1px); box-shadow: 0 6px 18px rgba(44,53,57,0.18);
+}
+.ocr-cta-icon { font-size: 26px; line-height: 1; flex-shrink: 0; }
+.ocr-cta-text { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
+.ocr-cta-text strong { font-family: var(--font-display); font-size: 15.5px; font-weight: 700; line-height: 1.2; }
+.ocr-cta-text small { font-size: 12px; font-style: italic; opacity: 0.85; line-height: 1.4; }
+.ocr-cta-arrow { font-size: 20px; flex-shrink: 0; opacity: 0.55; transition: all var(--transition-base); }
+.ocr-cta-btn:hover .ocr-cta-arrow { opacity: 1; transform: translateX(3px); }
+body.dark-mode .ocr-cta-btn { background: rgba(139,125,255,0.10); }
+@media (max-width: 640px) {
+  .ocr-cta-btn { padding: 12px 14px; gap: 11px; }
+  .ocr-cta-icon { font-size: 23px; }
+  .ocr-cta-text strong { font-size: 14.5px; }
+  .ocr-cta-text small { font-size: 11.5px; }
+}
+
 /* ── OCR · scansione del testo da immagine ─────────────────────────────────── */
 .ocr-lang-row {
   display: flex; align-items: center; gap: 10px;
@@ -25136,13 +25166,22 @@ function renderStep1Html() {
         <div class="method-note">
           <strong>Nota di metodo.</strong> La scomposizione automatica per punteggiatura sarà disponibile nella scheda <em>B</em>. Potrai correggerla a mano: aggiungere, separare, accorpare frasi.
         </div>
+        <div class="ocr-cta-row">
+          <button class="ocr-cta-btn" type="button" onclick="openOcrModal('field-testo')">
+            <span class="ocr-cta-icon" aria-hidden="true">📷</span>
+            <span class="ocr-cta-text">
+              <strong>Scansiona il testo da una foto</strong>
+              <small>Da telefono, tablet, fotocamera o screenshot · il riconoscimento avviene sul tuo dispositivo</small>
+            </span>
+            <span class="ocr-cta-arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
         <div class="field-group cols-1">
           <div class="field field-with-toolbar">
-            <label for="field-testo">Testo originale</label>
+            <label for="field-testo">…oppure incolla o scrivi il testo originale</label>
             <div class="field-toolbar">
               <button class="field-toolbar-btn" onclick="copyFieldContent('field-testo', event)" title="Copia il contenuto">📋</button>
               <button class="field-toolbar-btn" onclick="pasteIntoField('field-testo')" title="Incolla dagli appunti">📥</button>
-              <button class="field-toolbar-btn" onclick="openOcrModal('field-testo')" title="Scansiona il testo da una foto (OCR)">📷</button>
               ${isGreek ? '<button class="field-toolbar-btn" onclick="toggleGreekKeyboard()" title="Apri tastiera greca">Ω</button>' : ''}
             </div>
             <textarea id="field-testo" class="classical" placeholder="${isGreek ? 'Incolla qui il brano in greco antico…\n\nLa traduzione sarà visibile lateralmente come riferimento durante l’analisi.' : 'Incolla qui il brano in latino…\n\nLa traduzione sarà visibile lateralmente come riferimento durante l’analisi.'}" oninput="onTestoChange(this.value)"></textarea>
