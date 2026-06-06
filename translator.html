@@ -9169,11 +9169,40 @@ body.dark-mode .ocr-cta-btn { background: rgba(139,125,255,0.10); }
 .ocr-dropzone-icon { font-size: 34px; line-height: 1; margin-bottom: 8px; }
 .ocr-dropzone-title { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--poetrify-primary); margin-bottom: 4px; }
 .ocr-dropzone-hint { font-size: 12.5px; font-style: italic; }
-.ocr-preview-wrap { margin-top: 16px; text-align: center; }
-.ocr-preview-wrap img {
-  max-width: 100%; max-height: 260px; border-radius: var(--radius-md);
-  border: 1px solid var(--poetrify-rule-soft); box-shadow: 0 4px 14px rgba(44,53,57,0.15);
+/* fase ritaglio + raddrizzamento */
+.ocr-crop-wrap { margin-top: 16px; }
+.ocr-crop-hint { font-family: var(--font-body); font-size: 12.5px; color: var(--poetrify-sepia); line-height: 1.45; margin-bottom: 10px; }
+.ocr-canvas-holder {
+  display: flex; align-items: center; justify-content: center;
+  background: repeating-conic-gradient(#0000000a 0% 25%, transparent 0% 50%) 50% / 18px 18px, var(--poetrify-rule-soft);
+  border: 1px solid var(--poetrify-rule-soft); border-radius: var(--radius-md);
+  padding: 8px; overflow: hidden;
 }
+#ocr-canvas { max-width: 100%; height: auto; cursor: crosshair; touch-action: none; border-radius: 3px; display: block; }
+.ocr-rotate-row { display: flex; align-items: center; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.ocr-rotate-label { font-family: var(--font-body); font-size: 13px; font-weight: 600; color: var(--poetrify-primary); }
+.ocr-rotate-row input[type=range] { flex: 1; min-width: 120px; accent-color: var(--poetrify-primary); }
+.ocr-rotate-val { font-family: var(--font-body); font-size: 13px; color: var(--poetrify-sepia); min-width: 38px; text-align: right; font-variant-numeric: tabular-nums; }
+.ocr-rotate-nudge {
+  width: 28px; height: 28px; flex-shrink: 0; border-radius: var(--radius-sm);
+  border: 1px solid var(--poetrify-rule-soft); background: var(--poetrify-paper);
+  color: var(--poetrify-sepia); font-size: 15px; cursor: pointer; transition: all var(--transition-base);
+}
+.ocr-rotate-nudge:hover { background: var(--poetrify-primary); color: var(--poetrify-paper); border-color: var(--poetrify-primary); }
+.ocr-crop-reset {
+  font-family: var(--font-body); font-size: 12px; cursor: pointer;
+  background: transparent; border: 1px solid var(--poetrify-rule-soft);
+  border-radius: var(--radius-sm); padding: 4px 10px; color: var(--poetrify-sepia);
+  transition: all var(--transition-base);
+}
+.ocr-crop-reset:hover { border-color: var(--poetrify-primary); color: var(--poetrify-primary); }
+.ocr-crop-actions { display: flex; justify-content: space-between; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+.ocr-compact-toggle {
+  display: flex; align-items: center; gap: 7px; margin: 8px 0 2px;
+  font-family: var(--font-body); font-size: 12.5px; color: var(--poetrify-sepia); cursor: pointer;
+}
+.ocr-compact-toggle input { accent-color: var(--poetrify-primary); width: 15px; height: 15px; }
+.ocr-compact-toggle small { font-style: italic; opacity: 0.8; }
 .ocr-progress-wrap { margin-top: 16px; }
 .ocr-progress-label { font-family: var(--font-body); font-size: 13px; color: var(--poetrify-sepia); margin-bottom: 6px; display: flex; justify-content: space-between; }
 .ocr-progress-track { height: 8px; border-radius: 999px; background: var(--poetrify-rule-soft); overflow: hidden; }
@@ -10729,8 +10758,24 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
       <div class="ocr-dropzone-hint">Tocca per scegliere un file o aprire la fotocamera · trascina qui un'immagine · oppure incolla con Ctrl+V</div>
     </div>
 
-    <div class="ocr-preview-wrap" id="ocr-preview-wrap" style="display:none;">
-      <img id="ocr-preview" alt="Anteprima dell'immagine da scansionare">
+    <!-- Fase di ritaglio + raddrizzamento, fra lo scatto e il riconoscimento -->
+    <div class="ocr-crop-wrap" id="ocr-crop-wrap" style="display:none;">
+      <div class="ocr-crop-hint">Trascina sull'immagine per <strong>ritagliare</strong> solo il testo. Usa il cursore per <strong>raddrizzarla</strong> e allineare le righe all'orizzontale.</div>
+      <div class="ocr-canvas-holder">
+        <canvas id="ocr-canvas"></canvas>
+      </div>
+      <div class="ocr-rotate-row">
+        <span class="ocr-rotate-label">Raddrizza</span>
+        <button class="ocr-rotate-nudge" type="button" onclick="ocrNudgeRotate(-0.5)" title="Ruota a sinistra">⟲</button>
+        <input type="range" id="ocr-rotate" min="-15" max="15" step="0.2" value="0" oninput="ocrOnRotate(this.value)">
+        <button class="ocr-rotate-nudge" type="button" onclick="ocrNudgeRotate(0.5)" title="Ruota a destra">⟳</button>
+        <span class="ocr-rotate-val" id="ocr-rotate-val">0°</span>
+        <button class="ocr-crop-reset" type="button" onclick="ocrResetCrop()">Tutta l'immagine</button>
+      </div>
+      <div class="ocr-crop-actions">
+        <button class="btn btn-ghost" onclick="ocrReset()">↻ Altra immagine</button>
+        <button class="btn btn-primary" onclick="ocrRunRecognition()">Riconosci il testo →</button>
+      </div>
     </div>
 
     <div class="ocr-progress-wrap" id="ocr-progress-wrap" style="display:none;">
@@ -10743,6 +10788,7 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
         <span class="ocr-result-label">Testo riconosciuto · rivedilo prima di inserirlo</span>
         <span class="ocr-confidence" id="ocr-confidence"></span>
       </div>
+      <label class="ocr-compact-toggle"><input type="checkbox" id="ocr-compact" checked onchange="ocrToggleCompact()"> Testo compatto in prosa <small>(unisce gli a capo)</small></label>
       <textarea class="ocr-result-textarea classical" id="ocr-result" spellcheck="false" placeholder="Il testo riconosciuto comparirà qui…"></textarea>
       <div class="ocr-note" id="ocr-greek-note" style="display:none;">
         <strong>Nota sul greco.</strong> L'OCR del greco antico politonico è la sfida più ardua: controlla con attenzione spiriti, accenti, iota sottoscritte e le lettere simili (ε/σ, η/ν, ο/θ). Correggi qui prima di inserire.
@@ -36293,7 +36339,15 @@ async function pasteIntoField(fieldId) {
    da CDN al primo uso. Qui sta solo la colla UI: apertura modale, acquisizione
    immagine (file · incolla · drag&drop), avvio riconoscimento, inserimento.
    ═══════════════════════════════════════════════════════════════════════════ */
-const ocrState = { targetField: 'field-testo', lang: 'latino', busy: false };
+const ocrState = {
+  targetField: 'field-testo', lang: 'latino', busy: false,
+  img: null, imgW: 0, imgH: 0,         // immagine sorgente preparata
+  rotation: 0,                          // gradi, raddrizzamento fine (−15…+15)
+  crop: null,                           // rettangolo in coord. canvas display · null = tutta
+  displayScale: 1, rotatedW: 0, rotatedH: 0,
+  dragging: false, dragStart: null,
+  rawOcrText: '',                       // testo grezzo OCR (per ricalcolare compatto/righe)
+};
 
 function openOcrModal(targetField) {
   ocrState.targetField = targetField || 'field-testo';
@@ -36317,6 +36371,7 @@ function openOcrModal(targetField) {
 function closeOcrModal() {
   document.getElementById('modal-ocr').classList.remove('open');
   document.removeEventListener('paste', ocrHandlePaste);
+  ocrDetachCanvas();
   const dz = document.getElementById('ocr-dropzone');
   if (dz) {
     dz.removeEventListener('dragover', ocrHandleDragOver);
@@ -36329,8 +36384,11 @@ function closeOcrModal() {
 /* Riporta il modale allo stato iniziale (pronto per una nuova immagine). */
 function ocrReset() {
   ocrState.busy = false;
+  ocrState.img = null; ocrState.rotation = 0; ocrState.crop = null;
+  ocrState.dragging = false; ocrState.dragStart = null; ocrState.rawOcrText = '';
+  ocrDetachCanvas();
   const set = (id, disp) => { const el = document.getElementById(id); if (el) el.style.display = disp; };
-  set('ocr-preview-wrap', 'none');
+  set('ocr-crop-wrap', 'none');
   set('ocr-progress-wrap', 'none');
   set('ocr-result-wrap', 'none');
   set('ocr-error', 'none');
@@ -36340,6 +36398,8 @@ function ocrReset() {
   set('ocr-replace-btn', 'none');
   const ta = document.getElementById('ocr-result'); if (ta) ta.value = '';
   const fi = document.getElementById('ocr-file-input'); if (fi) fi.value = '';
+  const rot = document.getElementById('ocr-rotate'); if (rot) rot.value = '0';
+  const rotv = document.getElementById('ocr-rotate-val'); if (rotv) rotv.textContent = '0°';
   const dz = document.getElementById('ocr-dropzone'); if (dz) dz.style.display = '';
 }
 
@@ -36374,57 +36434,189 @@ function ocrHandleDrop(evt) {
   else showToast('Trascina un file immagine');
 }
 
-/* Pipeline: anteprima → (lazy-load motore) → riconoscimento → testo editabile. */
+/* Acquisita l'immagine, la prepara e apre la fase di ritaglio/raddrizzamento.
+   Il riconoscimento NON parte qui: si avvia da ocrRunRecognition() dopo il crop. */
 async function ocrProcessImage(file) {
   if (ocrState.busy) return;
   if (!window.PoetrifyOCR) { ocrShowError('Modulo OCR non ancora caricato: ricarica la pagina e riprova.'); return; }
-  ocrState.busy = true;
   document.getElementById('ocr-error').style.display = 'none';
   document.getElementById('ocr-result-wrap').style.display = 'none';
   document.getElementById('ocr-dropzone').style.display = 'none';
-
   let prepared;
   try {
     prepared = await window.PoetrifyOCR.prepareImage(file, 2200);
-  } catch (e) {
-    ocrShowError(e.message || 'Immagine non valida'); return;
-  }
-  const img = document.getElementById('ocr-preview');
+  } catch (e) { ocrShowError(e.message || 'Immagine non valida'); return; }
+  const img = new Image();
+  img.onload = () => {
+    ocrState.img = img;
+    ocrState.imgW = img.naturalWidth || img.width;
+    ocrState.imgH = img.naturalHeight || img.height;
+    ocrState.rotation = 0; ocrState.crop = null;
+    const rot = document.getElementById('ocr-rotate'); if (rot) rot.value = '0';
+    const rotv = document.getElementById('ocr-rotate-val'); if (rotv) rotv.textContent = '0°';
+    document.getElementById('ocr-crop-wrap').style.display = '';
+    ocrAttachCanvas();
+    ocrRenderCanvas();
+  };
+  img.onerror = () => ocrShowError('Immagine non leggibile');
   img.src = prepared;
-  document.getElementById('ocr-preview-wrap').style.display = '';
+}
 
-  // Barra di avanzamento
+// ── Canvas di ritaglio: aggancio/sgancio dei pointer event (mouse + touch) ────
+function ocrAttachCanvas() {
+  const cv = document.getElementById('ocr-canvas');
+  if (!cv || cv._ocrBound) return;
+  cv.addEventListener('pointerdown', ocrCanvasDown);
+  cv.addEventListener('pointermove', ocrCanvasMove);
+  cv.addEventListener('pointerup', ocrCanvasUp);
+  cv.addEventListener('pointercancel', ocrCanvasUp);
+  cv._ocrBound = true;
+}
+function ocrDetachCanvas() {
+  const cv = document.getElementById('ocr-canvas');
+  if (!cv || !cv._ocrBound) return;
+  cv.removeEventListener('pointerdown', ocrCanvasDown);
+  cv.removeEventListener('pointermove', ocrCanvasMove);
+  cv.removeEventListener('pointerup', ocrCanvasUp);
+  cv.removeEventListener('pointercancel', ocrCanvasUp);
+  cv._ocrBound = false;
+}
+
+/* Disegna l'immagine ruotata, adattata al contenitore, con l'eventuale rettangolo
+   di ritaglio (area esterna oscurata). Display e estrazione usano la STESSA
+   trasformazione (rotazione centrata nel bounding box), così la mappatura tra
+   coordinate canvas e piena risoluzione è una semplice divisione per displayScale. */
+function ocrRenderCanvas() {
+  if (!ocrState.img) return;
+  const theta = ocrState.rotation * Math.PI / 180;
+  const bb = window.PoetrifyOCR.rotatedBoundingBox(ocrState.imgW, ocrState.imgH, theta);
+  ocrState.rotatedW = bb.w; ocrState.rotatedH = bb.h;
+  const holder = document.querySelector('.ocr-canvas-holder');
+  const cw = (holder && holder.clientWidth) ? holder.clientWidth : 520;
+  const maxW = Math.max(200, cw - 16);
+  const maxH = 320;
+  const scale = Math.min(maxW / bb.w, maxH / bb.h, 1);
+  ocrState.displayScale = scale;
+  const cv = document.getElementById('ocr-canvas');
+  cv.width = Math.max(1, Math.round(bb.w * scale));
+  cv.height = Math.max(1, Math.round(bb.h * scale));
+  const ctx = cv.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, cv.width, cv.height);
+  ctx.save();
+  ctx.translate(cv.width / 2, cv.height / 2);
+  ctx.rotate(theta);
+  ctx.scale(scale, scale);
+  ctx.drawImage(ocrState.img, -ocrState.imgW / 2, -ocrState.imgH / 2, ocrState.imgW, ocrState.imgH);
+  ctx.restore();
+  const r = ocrState.crop;
+  if (r && r.w > 2 && r.h > 2) {
+    ctx.fillStyle = 'rgba(18,18,26,0.5)';
+    ctx.fillRect(0, 0, cv.width, r.y);                              // sopra
+    ctx.fillRect(0, r.y + r.h, cv.width, cv.height - (r.y + r.h));  // sotto
+    ctx.fillRect(0, r.y, r.x, r.h);                                 // sinistra
+    ctx.fillRect(r.x + r.w, r.y, cv.width - (r.x + r.w), r.h);      // destra
+    ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2;
+    ctx.strokeRect(r.x + 1, r.y + 1, Math.max(0, r.w - 2), Math.max(0, r.h - 2));
+  }
+}
+
+function ocrCanvasPoint(e) {
+  const cv = document.getElementById('ocr-canvas');
+  const rect = cv.getBoundingClientRect();
+  const x = (e.clientX - rect.left) * (cv.width / rect.width);
+  const y = (e.clientY - rect.top) * (cv.height / rect.height);
+  return { x: Math.max(0, Math.min(cv.width, x)), y: Math.max(0, Math.min(cv.height, y)) };
+}
+function ocrCanvasDown(e) {
+  if (!ocrState.img) return;
+  e.preventDefault();
+  const cv = document.getElementById('ocr-canvas');
+  try { cv.setPointerCapture(e.pointerId); } catch (er) {}
+  ocrState.dragging = true;
+  ocrState.dragStart = ocrCanvasPoint(e);
+  ocrState.crop = { x: ocrState.dragStart.x, y: ocrState.dragStart.y, w: 0, h: 0 };
+}
+function ocrCanvasMove(e) {
+  if (!ocrState.dragging) return;
+  e.preventDefault();
+  const p = ocrCanvasPoint(e), s = ocrState.dragStart;
+  ocrState.crop = { x: Math.min(s.x, p.x), y: Math.min(s.y, p.y), w: Math.abs(p.x - s.x), h: Math.abs(p.y - s.y) };
+  ocrRenderCanvas();
+}
+function ocrCanvasUp(e) {
+  if (!ocrState.dragging) return;
+  ocrState.dragging = false;
+  const r = ocrState.crop;
+  if (!r || r.w < 10 || r.h < 10) ocrState.crop = null; // ritaglio troppo piccolo → tutta l'immagine
+  ocrRenderCanvas();
+}
+
+function ocrResetCrop() { ocrState.crop = null; ocrRenderCanvas(); }
+function ocrOnRotate(v) {
+  ocrState.rotation = parseFloat(v) || 0;
+  const rotv = document.getElementById('ocr-rotate-val');
+  if (rotv) rotv.textContent = (ocrState.rotation > 0 ? '+' : '') + ocrState.rotation.toFixed(1) + '°';
+  ocrState.crop = null; // la geometria del bounding box cambia: azzera il ritaglio
+  ocrRenderCanvas();
+}
+function ocrNudgeRotate(delta) {
+  let v = (ocrState.rotation || 0) + delta;
+  v = Math.max(-15, Math.min(15, Math.round(v * 10) / 10));
+  const rot = document.getElementById('ocr-rotate'); if (rot) rot.value = String(v);
+  ocrOnRotate(v);
+}
+
+function ocrPhaseLabel(status) {
+  return {
+    'loading tesseract core': 'Caricamento motore…',
+    'initializing tesseract': 'Inizializzazione…',
+    'loading language traineddata': 'Caricamento dati lingua…',
+    'initializing api': 'Preparazione…',
+    'recognizing text': 'Riconoscimento del testo…',
+  }[status] || status || '…';
+}
+
+/* Applica crop + rotazione all'immagine e avvia il riconoscimento sul ritaglio. */
+async function ocrRunRecognition() {
+  if (ocrState.busy || !ocrState.img) return;
+  ocrState.busy = true;
+  const theta = ocrState.rotation * Math.PI / 180;
+  let region = null;
+  const r = ocrState.crop;
+  if (r && r.w > 2 && r.h > 2) {
+    const inv = 1 / (ocrState.displayScale || 1);
+    region = { sx: r.x * inv, sy: r.y * inv, sw: r.w * inv, sh: r.h * inv };
+  }
+  let source;
+  try {
+    source = window.PoetrifyOCR.extractRegion(ocrState.img, ocrState.imgW, ocrState.imgH, theta, region);
+  } catch (e) { ocrShowError('Ritaglio non riuscito: ' + (e.message || e)); return; }
+
+  document.getElementById('ocr-crop-wrap').style.display = 'none';
   const pw = document.getElementById('ocr-progress-wrap');
   const bar = document.getElementById('ocr-progress-bar');
   const txt = document.getElementById('ocr-progress-text');
   const pct = document.getElementById('ocr-progress-pct');
   pw.style.display = ''; bar.style.width = '0%'; pct.textContent = '';
   txt.textContent = 'Avvio del motore OCR…';
-
   const onProgress = (m) => {
     if (!m) return;
-    const phase = {
-      'loading tesseract core': 'Caricamento motore…',
-      'initializing tesseract': 'Inizializzazione…',
-      'loading language traineddata': 'Caricamento dati lingua…',
-      'initializing api': 'Preparazione…',
-      'recognizing text': 'Riconoscimento del testo…',
-    }[m.status] || m.status || '…';
-    txt.textContent = phase;
+    txt.textContent = ocrPhaseLabel(m.status);
     if (typeof m.progress === 'number') {
       const p = Math.round(m.progress * 100);
-      bar.style.width = p + '%';
-      pct.textContent = p + '%';
+      bar.style.width = p + '%'; pct.textContent = p + '%';
     }
   };
 
   try {
-    const res = await window.PoetrifyOCR.recognize(prepared, ocrState.lang, onProgress);
+    const res = await window.PoetrifyOCR.recognize(source, ocrState.lang, onProgress);
     bar.style.width = '100%'; pct.textContent = '100%'; txt.textContent = 'Completato';
     pw.style.display = 'none';
+    ocrState.rawOcrText = res.rawText || res.text || '';
     const ta = document.getElementById('ocr-result');
-    ta.value = res.text || '';
     ta.classList.toggle('greek', ocrState.lang === 'greco');
+    ocrApplyCleanup();
     document.getElementById('ocr-result-wrap').style.display = '';
     const conf = document.getElementById('ocr-confidence');
     conf.textContent = (res.confidence != null) ? ('confidenza ~' + res.confidence + '%') : '';
@@ -36432,13 +36624,25 @@ async function ocrProcessImage(file) {
     document.getElementById('ocr-retry-btn').style.display = '';
     document.getElementById('ocr-append-btn').style.display = '';
     document.getElementById('ocr-replace-btn').style.display = '';
-    if (!res.text) showToast('Nessun testo riconosciuto: prova una foto più nitida');
+    if (!ta.value) showToast('Nessun testo riconosciuto: ritaglia meglio o usa una foto più nitida');
   } catch (e) {
     ocrShowError(e.message || 'Riconoscimento fallito');
+    // torna alla fase di ritaglio così l'utente può ritentare/aggiustare
+    if (ocrState.img) document.getElementById('ocr-crop-wrap').style.display = '';
   } finally {
     ocrState.busy = false;
   }
 }
+
+/* Rigenera il testo mostrato dal grezzo OCR, secondo lo switch "Testo compatto". */
+function ocrApplyCleanup() {
+  const ta = document.getElementById('ocr-result');
+  if (!ta) return;
+  const compactEl = document.getElementById('ocr-compact');
+  const compact = compactEl ? compactEl.checked : true;
+  ta.value = window.PoetrifyOCR.cleanupText(ocrState.rawOcrText || '', { compact });
+}
+function ocrToggleCompact() { ocrApplyCleanup(); }
 
 /* Inserisce il testo riconosciuto nel campo di destinazione. mode:
    'replace' = sostituisce tutto · 'append' = aggiunge in coda. In entrambi i casi
@@ -37523,7 +37727,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- Modulo OCR: motore di riconoscimento testo da immagine, esposto su window.
      Indipendente dall'engine; il bundle Tesseract è caricato lazy al primo uso. -->
 <script type="module">
-import * as OCR from './modules/translator/ocr.js';
+import * as OCR from './modules/translator/ocr.js?v=0.2.0';
 window.PoetrifyOCR = OCR;
 const INFO_BADGE_OCR = 'background:#1800AC;color:#fff;padding:2px 6px;border-radius:3px;';
 console.log('%c Poetrify OCR ', INFO_BADGE_OCR, 'ocr v' + OCR.OCR_META.version + ' · ' + OCR.OCR_META.engine + ' ' + OCR.OCR_META.engineVersion + ' (lazy CDN)');

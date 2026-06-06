@@ -20,7 +20,7 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 export const OCR_META = {
-  version: '0.1.0',
+  version: '0.2.0', // 0.2.0: crop + raddrizzamento + formattazione compatta in prosa
   engine: 'tesseract.js',
   engineVersion: '5.1.1',
   languages: ['lat', 'grc'],
@@ -118,7 +118,7 @@ export async function recognize(imageSource, projectLang, onProgress) {
   const worker = await getWorker(lang, onProgress);
   const { data } = await worker.recognize(imageSource);
   return {
-    text: cleanupText(data.text, projectLang),
+    text: cleanupText(data.text, { compact: true }),
     rawText: data.text,
     confidence: typeof data.confidence === 'number' ? Math.round(data.confidence) : null,
     lang,
@@ -130,19 +130,60 @@ const LETTER = 'A-Za-z\\u00C0-\\u024F\\u0370-\\u03FF\\u1F00-\\u1FFF';
 const RE_HYPHEN_BREAK = new RegExp('([' + LETTER + '])-\\n\\s*([' + LETTER + '])', 'g');
 const RE_SPACE_BEFORE_PUNCT = /\s+([,.;:·!?])/g; // · = punto in alto greco
 
-/* Pulizia post-OCR conservativa: normalizza a-capo e spazi, ricuce le parole
-   spezzate da trattino a fine riga ("popu-\nlus" → "populus"), toglie gli spazi
-   prima della punteggiatura, collassa le righe vuote. Volutamente prudente: non
-   tenta di "correggere" lettere, per non introdurre errori nel testo classico. */
-export function cleanupText(text /*, projectLang */) {
+/* Pulizia post-OCR conservativa. Volutamente prudente: non tenta di "correggere"
+   lettere, per non introdurre errori nel testo classico. Ricuce sempre le parole
+   spezzate da trattino a fine riga ("popu-\nlus" → "populus") e toglie gli spazi
+   prima della punteggiatura. Con { compact: true } (default per le versioni in
+   prosa) unisce TUTTI gli a capo in un flusso continuo; senza, preserva le righe. */
+export function cleanupText(text, opts) {
+  opts = opts || {};
   if (!text) return '';
   let t = text.replace(/\r\n?/g, '\n');
-  t = t.replace(RE_HYPHEN_BREAK, '$1$2');     // ricuci sillabazione di fine riga
-  t = t.replace(/[ \t]{2,}/g, ' ');           // spazi multipli → uno
-  t = t.replace(RE_SPACE_BEFORE_PUNCT, '$1'); // niente spazio prima di , . ; : · ! ?
-  t = t.replace(/\n{3,}/g, '\n\n');           // max una riga vuota
-  t = t.split('\n').map(l => l.trim()).join('\n').trim();
+  t = t.replace(RE_HYPHEN_BREAK, '$1$2');       // ricuci sillabazione di fine riga
+  if (opts.compact) {
+    t = t.replace(/\n+/g, ' ');                 // prosa: ogni a capo → spazio
+  } else {
+    t = t.replace(/\n{3,}/g, '\n\n');           // max una riga vuota
+  }
+  t = t.replace(/[ \t]{2,}/g, ' ');             // spazi multipli → uno
+  t = t.replace(RE_SPACE_BEFORE_PUNCT, '$1');   // niente spazio prima di , . ; : · ! ?
+  if (opts.compact) t = t.trim();
+  else t = t.split('\n').map(l => l.trim()).join('\n').trim();
   return t;
+}
+
+/* ── Geometria per il ritaglio + raddrizzamento (tutto su <canvas>, niente libs) ──
+   Dimensioni del rettangolo che contiene l'immagine ruotata di theta radianti. */
+export function rotatedBoundingBox(w, h, theta) {
+  const c = Math.abs(Math.cos(theta)), s = Math.abs(Math.sin(theta));
+  return { w: w * c + h * s, h: w * s + h * c };
+}
+
+/* Estrae una regione dell'immagine ruotata e la restituisce come dataURL PNG.
+   img          = HTMLImageElement sorgente
+   srcW, srcH   = dimensioni reali dell'immagine
+   theta        = rotazione in radianti
+   region       = { sx, sy, sw, sh } in coordinate del bounding box ruotato a
+                  piena risoluzione; se null → tutta l'immagine ruotata.
+   Lo sfondo è bianco così gli angoli "vuoti" creati dalla rotazione non
+   diventano neri/trasparenti (meglio per l'OCR). */
+export function extractRegion(img, srcW, srcH, theta, region) {
+  const bb = rotatedBoundingBox(srcW, srcH, theta);
+  const sx = region ? region.sx : 0;
+  const sy = region ? region.sy : 0;
+  const sw = region ? region.sw : bb.w;
+  const sh = region ? region.sh : bb.h;
+  const out = document.createElement('canvas');
+  out.width = Math.max(1, Math.round(sw));
+  out.height = Math.max(1, Math.round(sh));
+  const ctx = out.getContext('2d');
+  ctx.fillStyle = '#ffffff';
+  ctx.fillRect(0, 0, out.width, out.height);
+  ctx.translate(-sx, -sy);          // porta l'origine della regione su (0,0)
+  ctx.translate(bb.w / 2, bb.h / 2); // centro del bounding box ruotato
+  ctx.rotate(theta);
+  ctx.drawImage(img, -srcW / 2, -srcH / 2, srcW, srcH);
+  return out.toDataURL('image/png');
 }
 
 /* Chiude i worker e libera la memoria (utile su mobile). Idempotente. */
