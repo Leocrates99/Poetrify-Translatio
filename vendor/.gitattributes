@@ -1,0 +1,5 @@
+# File vendored: conservati byte-per-byte, nessuna conversione di fine riga.
+*.woff2   binary
+*.min.js  binary
+*.wasm    binary
+*.traineddata.gz binary
