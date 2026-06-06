@@ -4,7 +4,7 @@
     {
       "name": "poetrify",
       "runtimeExecutable": "python",
-      "runtimeArgs": ["-m", "http.server", "8000"],
+      "runtimeArgs": ["-c", "from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler; ThreadingHTTPServer(('127.0.0.1',8000), SimpleHTTPRequestHandler).serve_forever()"],
       "port": 8000,
       "autoPort": false
     }
