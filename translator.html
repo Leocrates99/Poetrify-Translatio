@@ -25656,12 +25656,6 @@ function renderStep3HtmlScheletro() {
     </button>`;
   }).join('<span class="scheletro-step-sep">→</span>')}</div>`;
 
-  /* Statistiche */
-  const totalVerbs = sentences.reduce((a, s) => a + (s.grammar || []).filter(g => g.partOfSpeech === 'Verbo').length, 0);
-  const totalProp  = sentences.reduce((a, s) => a + (s.periodale || []).length, 0);
-  const totalSubjs = sentences.reduce((a, s) => a + (s.logic || []).filter(e => e.funzione === 'Soggetto').length, 0);
-  const totalObjs  = sentences.reduce((a, s) => a + (s.logic || []).filter(e => e.funzione === 'Complemento oggetto').length, 0);
-
   let bodyHtml;
   if (step === 1) bodyHtml = renderScheletroVerbi(sentences, lang);
   else if (step === 2) bodyHtml = renderScheletroProposizioni(sentences, lang);
@@ -25671,21 +25665,16 @@ function renderStep3HtmlScheletro() {
   else if (step === 6) bodyHtml = renderScheletroLogic(sentences, lang, 'altri');
   else bodyHtml = renderScheletroTraduzione(sentences, lang);
 
-  const stats = `<div class="scheletro-stats">
-    <span class="scheletro-stat"><strong>${totalVerbs}</strong> verbi</span>
-    <span class="scheletro-stat"><strong>${totalProp}</strong> proposizioni</span>
-    <span class="scheletro-stat"><strong>${totalSubjs}</strong> soggetti</span>
-    <span class="scheletro-stat"><strong>${totalObjs}</strong> oggetti</span>
-  </div>`;
-
   const navButtons = `<div class="scheletro-nav">
     ${step > 1 ? `<button class="btn btn-ghost btn-sm" onclick="setScheletroStep(${step - 1})">← Fase precedente</button>` : '<span></span>'}
     ${step < 7 ? `<button class="btn btn-primary btn-sm" onclick="setScheletroStep(${step + 1})">Fase successiva (${escapeHtml(STEPS[step].label)}) →</button>` : '<button class="btn btn-primary btn-sm" onclick="scheletroExportToTranslation()">✓ Esporta nella sezione Traduzione →</button>'}
   </div>`;
 
-  return sectionHeader('C', 'Analisi · approccio Scheletro', STEPS[step - 1].hint)
+  // La barra delle fasi va in CIMA al contenuto (subito sotto l'header), resta
+  // fissa (sticky) e — vivendo dentro l'editor — non scavalca il menù di sinistra.
+  return `<div class="scheletro-bar">${stepperHtml}</div>`
+    + sectionHeader('C', 'Analisi · approccio Scheletro', STEPS[step - 1].hint)
     + renderApproachBanner()
-    + `<div class="scheletro-bar">${stepperHtml}${stats}</div>`
     + bodyHtml
     + navButtons;
 }
