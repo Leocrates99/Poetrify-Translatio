@@ -10646,13 +10646,20 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
 .drawer-only     { display: block; }  /* sezioni del menù: sempre visibili nella sidebar */
 
 /* HEADER MINIMALE su tutte le larghezze (logo · titolo · lingua · save). */
-.topbar-row-main { display: flex !important; align-items: center; gap: 12px; grid-template-columns: none !important; }
+/* Tutto l'header allineato sulla STESSA linea di base: "Poetrify", il sottotitolo
+   e il titolo della versione stanno sullo stesso asse; i controlli (lingua, save,
+   hamburger) restano centrati verticalmente. */
+.topbar-row-main { display: flex !important; align-items: baseline; gap: 12px; grid-template-columns: none !important; }
+.brand { flex-shrink: 0; }
+.brano-meta, .save-status, .drawer-toggle { flex-shrink: 0; align-self: center; }
+/* Titolo della versione = H1 (gerarchia primaria): titolo vero e proprio, non più
+   sottotitolo in corsivo. */
 .topbar-title {
-  display: block; flex: 1 1 auto; min-width: 40px;
-  font-family: var(--font-ui); font-size: 14px; font-style: italic;
-  color: var(--poetrify-sepia); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  display: block; flex: 1 1 auto; min-width: 40px; margin: 0;
+  font-family: var(--font-display); font-size: 20px; font-weight: 600; font-style: normal;
+  letter-spacing: -0.01em; color: var(--poetrify-ink);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.brand, .brano-meta, .save-status { flex-shrink: 0; }
 .poetrify-lang-pill { display: none; }   /* ridondante con il toggle LAT/ΕΛ */
 
 /* Quick-bar (impostazioni) impaginata in COLONNA dentro il menù stretto: ogni
@@ -10697,9 +10704,9 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
   .brand-mark { font-size: 20px; }
   .brand-sub { display: none; }
   .topbar-title {
-    display: block; flex: 1; min-width: 0;
-    font-family: var(--font-ui); font-size: 13.5px; font-style: italic;
-    color: var(--poetrify-sepia); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    display: block; flex: 1; min-width: 0; margin: 0;
+    font-family: var(--font-display); font-size: 15px; font-weight: 600; font-style: normal;
+    color: var(--poetrify-ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
   .brano-meta { grid-column: auto !important; grid-row: auto !important; display: flex !important; gap: 6px; flex-shrink: 0; }
   .poetrify-lang-pill { display: none; }
@@ -10779,8 +10786,8 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
         <span class="brand-mark">Poetrify</span>
         <span class="brand-sub">Officina del greco e del latino</span>
       </div>
-      <!-- Titolo della versione in lavorazione: in evidenza nell'header (solo mobile/tablet). -->
-      <span class="topbar-title" id="topbar-title"></span>
+      <!-- Titolo della versione in lavorazione: gerarchia H1 (titolo primario). -->
+      <h1 class="topbar-title" id="topbar-title"></h1>
 
       <div class="brano-meta" id="topbar-brano-slot">
         <!-- Dati del brano (titolo/autore/opera) raccolti in un UNICO popover
