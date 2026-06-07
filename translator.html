@@ -233,12 +233,13 @@ body[data-lang="latino"] .lang-toggle button.active {
   color: var(--poetrify-paper);
 }
 
-/* 3. Tab principale "C · Analisi" attiva quando si lavora in latino */
+/* 3. Menù di sinistra (latino): lettere, spunte di verifica e accento del tab
+   attivo in rosso pompeiano invece del blu. */
+body[data-lang="latino"] .tab-letter { color: var(--poetrify-lang-accent); }
+body[data-lang="latino"] .tab-progress.has-content { background: var(--poetrify-lang-accent); }
 body[data-lang="latino"] .tab-item.active {
   box-shadow: inset 4px 0 0 var(--poetrify-lang-accent);
-}
-body[data-lang="latino"] .tab-item.active .tab-letter {
-  color: var(--poetrify-lang-accent);
+  border-left-color: var(--poetrify-lang-accent);
 }
 
 /* 4. Banner della frase corrente */
@@ -247,9 +248,10 @@ body[data-lang="latino"] .fpf-sentence-banner {
   border-left-color: var(--poetrify-lang-accent);
 }
 
-/* 5. Section headers (lettera grande A·B·C·…) */
+/* 5. Section headers (lettera grande A·B·C·…): rosso pompeiano, SENZA sfondo */
 body[data-lang="latino"] .section-letter {
-  background: var(--poetrify-lang-accent);
+  color: var(--poetrify-lang-accent);
+  background: none;
 }
 
 /* 6. Wizard guidato — header */
@@ -296,19 +298,8 @@ body[data-lang="latino"] .lemma-final {
 body[data-lang="latino"] .poetrify-lang-pill::before { content: '🏛 '; }
 body[data-lang="greco"]  .poetrify-lang-pill::before { content: '𝛼 '; font-family: 'Times New Roman', serif; }
 
-/* 10. Editor content border-top sottile come "barra di contesto" linguistico */
-body[data-lang="latino"] .editor::before,
-body[data-lang="greco"]  .editor::before {
-  content: '';
-  position: sticky;
-  top: 0;
-  left: 0;
-  right: 0;
-  display: block;
-  height: 3px;
-  background: var(--poetrify-lang-accent);
-  z-index: 10;
-}
+/* 10. (rimossa) La barretta-accento in cima all'editor è stata eliminata:
+   risultava superflua e ingombrante a inizio pagina. */
 
 /* 11. Token-action-bar (selettori di sintagma/grammatica/proposizione) */
 body[data-lang="latino"] .token-action-bar { border-left: 3px solid var(--poetrify-lang-accent); padding-left: 12px; }
