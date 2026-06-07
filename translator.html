@@ -2614,6 +2614,21 @@ body.poetrify-dark .scheletro-bar { background: var(--poetrify-paper); }
 }
 .scheletro-stat strong { color: var(--poetrify-primary); font-size: 13px; }
 
+/* Barra Scheletro FUSA all'header: nessuno stacco sopra (azzero il padding-top
+   dell'editor quando la barra è presente) e a tutta larghezza della colonna di
+   analisi (esce dal padding laterale dell'editor), mentre il resto del contenuto
+   resta centrato e leggibile. Usa :has() (browser moderni); dove non supportato,
+   la barra resta semplicemente in cima — degrada con grazia. La barra vive dentro
+   l'editor, quindi NON scavalca mai il menù fisso di sinistra. */
+.editor:has(.scheletro-bar) { padding-top: 0; }
+.editor:has(.scheletro-bar)::before { display: none; }
+.editor:has(.scheletro-bar) > .editor-content { max-width: none; }
+.editor:has(.scheletro-bar) > .editor-content > :not(.scheletro-bar) { max-width: 920px; margin-left: auto; margin-right: auto; }
+.editor:has(.scheletro-bar) > .editor-content > .scheletro-bar { margin-left: -48px; margin-right: -48px; padding-left: 48px; padding-right: 48px; }
+@media (max-width: 1100px) { .editor:has(.scheletro-bar) > .editor-content > .scheletro-bar { margin-left: -24px; margin-right: -24px; padding-left: 24px; padding-right: 24px; } }
+@media (max-width: 900px)  { .editor:has(.scheletro-bar) > .editor-content > .scheletro-bar { margin-left: -28px; margin-right: -28px; padding-left: 28px; padding-right: 28px; } }
+@media (max-width: 720px)  { .editor:has(.scheletro-bar) > .editor-content > .scheletro-bar { margin-left: -14px; margin-right: -14px; padding-left: 14px; padding-right: 14px; } }
+
 .scheletro-sentence-block,
 .scheletro-verb-card,
 .scheletro-finish-card {
