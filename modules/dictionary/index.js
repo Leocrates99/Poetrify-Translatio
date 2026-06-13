@@ -104,6 +104,11 @@ export class DictionaryApp {
     });
     this.verbose = !!opts.verbose;
     this.currentLang = 'latino';
+    /* Lingua delle GLOSSE/traduzioni mostrate: 'it' (default · interfaccia
+     * italiana) oppure 'en' (riservata alla futura versione inglese, dove la
+     * definizione Lewis/LSJ torna a essere la traduzione primaria). In modalità
+     * 'it' la definizione inglese è nascosta. */
+    this.glossLang = 'it';
     this.currentQuery = '';
     this.currentHit = null;
     this.acIndex = -1;
@@ -555,6 +560,7 @@ export class DictionaryApp {
     const shardLetter = normalizeText(this.browsePrefix).charAt(0);
     try {
       await this.engine._loadShard(this.currentLang, shardLetter);
+      await this.engine._loadGlossesIt(this.currentLang, shardLetter).catch(() => {});
     } catch (err) {
       this.$results.innerHTML = this._renderError(err);
       return;
@@ -646,15 +652,24 @@ export class DictionaryApp {
     const lemmasHtml = shown.map(l => {
       const entry = shard.dict[l] || {};
       const pos = entry.pos ? `<span class="browse-pos">${escapeHtml(entry.pos)}</span>` : '';
-      const ita = getItalianGloss(l, this.currentLang);
-      const itaHtml = ita ? `<span class="browse-ita">${escapeHtml(ita)}</span>` : '';
-      const en = entry.definition ? `<span class="browse-en muted-text">${escapeHtml((entry.definition || '').substring(0, 60))}${(entry.definition || '').length > 60 ? '…' : ''}</span>` : '';
+      const curated = getItalianGloss(l, this.currentLang);
+      const auto = curated ? '' : ((this.engine.getAutoGloss(this.currentLang, l) || {}).it || '');
+      let transHtml;
+      if (this.glossLang === 'en') {
+        transHtml = entry.definition ? `<span class="browse-en muted-text">${escapeHtml((entry.definition || '').substring(0, 60))}${(entry.definition || '').length > 60 ? '…' : ''}</span>` : '';
+      } else if (curated) {
+        transHtml = `<span class="browse-ita">${escapeHtml(curated)}</span>`;
+      } else if (auto) {
+        transHtml = `<span class="browse-ita is-auto" title="bozza automatica · da verificare">${escapeHtml(auto)}</span>`;
+      } else {
+        transHtml = '';
+      }
       const freq = getFrequency(l, this.currentLang);
       const freqHtml = freq >= 2 ? `<span class="browse-freq" title="${describeFrequency(freq)}">${renderStars(freq)}</span>` : '';
       return `<li class="browse-item${this._posClass(entry.pos)}" data-lemma="${escapeHtml(l)}">
         <span class="browse-lemma${isGreek ? ' greek' : ''}">${escapeHtml(l)}</span>
         ${pos}${freqHtml}
-        ${itaHtml || en}
+        ${transHtml}
       </li>`;
     }).join('');
 
@@ -933,10 +948,13 @@ export class DictionaryApp {
       ${parsingHtml}
       <!-- 1 · TRADUZIONE (risalto) -->
       ${translationHtml}
-      <!-- definizione di riferimento (secondaria) -->
-      ${hit.definition
-        ? `<p class="dict-entry-definition">${escapeHtml(hit.definition)}</p>`
-        : (translationHtml ? '' : '<p class="dict-entry-definition muted-text"><em>Definizione non disponibile.</em></p>')}
+      <!-- definizione inglese (Lewis/LSJ): mostrata SOLO in modalità inglese;
+           in italiano la traduzione è la glossa IT qui sopra -->
+      ${this.glossLang === 'en'
+        ? (hit.definition
+            ? `<p class="dict-entry-definition">${escapeHtml(hit.definition)}</p>`
+            : '<p class="dict-entry-definition muted-text"><em>Definition unavailable.</em></p>')
+        : ''}
       <!-- 2 · CATEGORIE GRAMMATICALI -->
       ${grammarHtml}
       <!-- 3 · PARADIGMA (parti principali) -->
@@ -1193,9 +1211,19 @@ export class DictionaryApp {
   /* Traduzione italiana in risalto (gerarchia top). Per ora usa le glosse IT
      curate; predisposto per accogliere le traduzioni complete in italiano. */
   _renderTranslationHero(hit) {
-    const it = getItalianGloss(hit.lemma, this.currentLang);
-    if (!it) return '';
-    return `<div class="dict-translation">${escapeHtml(it)}</div>`;
+    /* In modalità inglese la traduzione è la definizione Lewis/LSJ (resa altrove). */
+    if (this.glossLang === 'en') return '';
+    /* Priorità: glossa CURATA (autorevole) → glossa AUTO (bozza) → segnaposto. */
+    const curated = getItalianGloss(hit.lemma, this.currentLang);
+    if (curated) return `<div class="dict-translation">${escapeHtml(curated)}</div>`;
+    const auto = hit.italianGlossAuto || ((this.engine.getAutoGloss(this.currentLang, hit.lemma) || {}).it) || '';
+    if (auto) {
+      return `<div class="dict-translation is-auto">
+        <span class="dict-tr-draft" title="Traduzione automatica di base, ancora da verificare">bozza</span>
+        ${escapeHtml(auto)}
+      </div>`;
+    }
+    return `<div class="dict-translation is-missing"><em>Traduzione italiana in arrivo.</em></div>`;
   }
 
   /* Categorie grammaticali di classificazione (PoS + declinazione/coniugazione + genere). */
@@ -1459,12 +1487,21 @@ export class DictionaryApp {
     const hits = [];
     for (const [letter, shard] of all.entries()) {
       if (!shard || !shard.dict) continue;
+      await this.engine._loadGlossesIt(lang, letter).catch(() => {});
       for (const lemma of Object.keys(shard.dict)) {
         const entry = shard.dict[lemma] || {};
         const def = (entry.definition || '').toLowerCase();
-        const ita = (getItalianGloss(lemma, lang) || '').toLowerCase();
-        if (def.includes(qLow) || ita.includes(qLow)) {
-          hits.push({ lemma, pos: entry.pos || '', definition: entry.definition || '', ita: getItalianGloss(lemma, lang) || '', letter });
+        const curated = getItalianGloss(lemma, lang) || '';
+        const auto = curated ? '' : ((this.engine.getAutoGloss(lang, lemma) || {}).it || '');
+        const itaAll = (curated + ' ' + auto).toLowerCase();
+        /* In italiano la ricerca inversa interroga le glosse IT (curate+bozza);
+         * l'inglese resta interrogabile come recall, ma non viene mostrato. */
+        const match = (this.glossLang === 'en')
+          ? (def.includes(qLow) || itaAll.includes(qLow))
+          : (itaAll.includes(qLow) || def.includes(qLow));
+        if (match) {
+          hits.push({ lemma, pos: entry.pos || '', definition: entry.definition || '',
+                      ita: curated, auto, letter });
           if (hits.length >= 100) break;
         }
       }
@@ -1494,8 +1531,9 @@ export class DictionaryApp {
           <span class="reverse-lemma${isGreek ? ' greek' : ''}">${escapeHtml(h.lemma)}</span>
           ${h.pos ? `<span class="reverse-pos">${escapeHtml(h.pos)}</span>` : ''}
         </div>
-        ${h.ita ? `<div class="reverse-ita">${highlight(h.ita)}</div>` : ''}
-        ${def ? `<div class="reverse-def">${highlight(def)}</div>` : ''}
+        ${h.ita ? `<div class="reverse-ita">${highlight(h.ita)}</div>`
+          : (h.auto ? `<div class="reverse-ita is-auto"><span class="dict-tr-draft" title="bozza · da verificare">bozza</span> ${highlight(h.auto)}</div>` : '')}
+        ${(this.glossLang === 'en' && def) ? `<div class="reverse-def">${highlight(def)}</div>` : ''}
       </li>`;
     }).join('');
     this.$results.innerHTML = `<div class="dict-query-info">

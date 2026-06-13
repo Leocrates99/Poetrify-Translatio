@@ -1339,6 +1339,17 @@ body.poetrify-dark .clp-verb-table th, body.poetrify-dark .clp-verb-table td {
   margin: 10px 0 6px;
 }
 .dict-translation .dict-translation-more { font-size: 14px; font-weight: 400; color: var(--sepia); }
+/* traduzione italiana: bozza automatica (da verificare) e segnaposto */
+.dict-translation.is-auto { color: var(--ink); }
+.dict-translation.is-missing { font-size: 15px; font-weight: 400; font-style: italic; color: var(--sepia); }
+.dict-tr-draft {
+  display: inline-block; font-family: var(--font-ui, sans-serif); font-size: 10px;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  padding: 1px 6px; margin-right: 6px; vertical-align: middle;
+  border: 1px solid var(--sepia); border-radius: 4px; color: var(--sepia); background: transparent;
+}
+.browse-ita.is-auto { opacity: 0.85; border-bottom: 1px dotted var(--sepia); }
+.reverse-ita.is-auto { opacity: 0.9; }
 .dict-entry-card .dict-entry-definition {   /* definizione: ora secondaria */
   font-size: 13px;
   color: var(--sepia);

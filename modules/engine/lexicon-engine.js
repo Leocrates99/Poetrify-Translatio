@@ -71,6 +71,9 @@ export class LexiconEngine {
      * archiviate (epigrafiche/testimonia rimosse dal nucleo scolastico).
      * Caricato lazy SOLO come fallback per il lookup diretto di un lemma. */
     this._archives = Object.create(null);
+    /* _glossesIt[lang] : Map<letter, { glosses } | null> — glosse italiane di
+     * base (bozza auto) da data/<lang>/glosses_it/<letter>.json. Lazy. */
+    this._glossesIt = Object.create(null);
     this._inflight = Object.create(null);
   }
 
@@ -224,6 +227,64 @@ export class LexiconEngine {
   }
 
   /* ─────────────────────────────────────────────────────────────────────
+     GLOSSE ITALIANE (bozza auto) · loader lazy + getter sincrono
+     ───────────────────────────────────────────────────────────────────── */
+
+  /**
+   * Carica (lazy) lo shard delle glosse italiane di base
+   * `data/<lang>/glosses_it/<letter>.json`. Mai fatale: se il file manca
+   * (lettera senza glosse) memorizza null e prosegue.
+   * @returns {Promise<{glosses:object}|null>}
+   */
+  async _loadGlossesIt(lang, letter) {
+    if (!letter) return null;
+    if (!this._glossesIt[lang]) this._glossesIt[lang] = new Map();
+    if (this._glossesIt[lang].has(letter)) return this._glossesIt[lang].get(letter);
+    const key = `${lang}:glossesIt:${letter}`;
+    if (this._inflight[key]) return this._inflight[key];
+    const url = `${this.baseUrl}${_LANG_FOLDER[lang]}/glosses_it/${encodeURIComponent(letter)}.json`;
+    const promise = fetch(url).then(r => {
+      if (!r.ok) throw new Error(`fetch ${url} → ${r.status}`);
+      return r.json();
+    }).then(payload => {
+      const shard = { glosses: payload.glosses || {} };
+      this._glossesIt[lang].set(letter, shard);
+      delete this._inflight[key];
+      return shard;
+    }).catch(err => {
+      delete this._inflight[key];
+      this._glossesIt[lang].set(letter, null);
+      if (this.verbose) console.warn(`[LexiconEngine] glosses_it '${letter}' n/d: ${err.message}`);
+      return null;
+    });
+    this._inflight[key] = promise;
+    return promise;
+  }
+
+  /**
+   * Glossa italiana auto per un lemma, dalla cache (lo shard della lettera
+   * dev'essere già stato caricato via _loadGlossesIt). Tollera i diacritici.
+   * @returns {{it:string, src:string}|null}
+   */
+  getAutoGloss(lang, lemma) {
+    if (!lemma || !this._glossesIt[lang]) return null;
+    const letter = normalizeText(lemma).charAt(0) || '_';
+    const shard = this._glossesIt[lang].get(letter);
+    if (!shard) return null;
+    let hit = shard.glosses[lemma];
+    if (!hit) {
+      if (!shard._normIndex) {
+        const idx = Object.create(null);
+        for (const l of Object.keys(shard.glosses)) idx[normalizeText(l)] = l;
+        Object.defineProperty(shard, '_normIndex', { value: idx, enumerable: false });
+      }
+      const realKey = shard._normIndex[normalizeText(lemma)];
+      if (realKey) hit = shard.glosses[realKey];
+    }
+    return hit || null;
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────
      LOOKUP · pipeline async: prima lettera → fetch shard → forms → dict
      ───────────────────────────────────────────────────────────────────── */
 
@@ -366,12 +427,17 @@ export class LexiconEngine {
         shards: shardsTouched,
       };
     }
+    /* Glossa italiana di base (bozza auto) per il lemma, se disponibile. */
+    const lemLetter = normalizeText(lemma).charAt(0) || '_';
+    await this._loadGlossesIt(lang, lemLetter);
+    const autoG = this.getAutoGloss(lang, lemma);
     return {
       word,
       lemma,
       parsing,
       pos: dictEntry.pos || '',
       definition: dictEntry.definition || '',
+      italianGlossAuto: autoG ? autoG.it : '',
       source: archived ? 'archived' : source,
       archived,
       shards: shardsTouched,
