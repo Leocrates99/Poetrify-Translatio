@@ -9838,6 +9838,20 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
 }
 .preview-content .preview-text { white-space: pre-wrap; }
 .preview-content.greek .preview-text { font-family: var(--font-classical); }
+/* IMPAGINAZIONE A VERSI (modalità poesia) */
+.preview-verses { white-space: normal; }
+.verse-line {
+  display: grid; grid-template-columns: 34px 1fr; align-items: baseline; gap: 10px;
+  padding: 1px 0; line-height: 1.6;
+}
+.verse-num {
+  font-family: var(--font-ui); font-size: 11px; color: var(--poetrify-sepia-soft);
+  text-align: right; user-select: none; font-variant-numeric: tabular-nums;
+}
+.verse-num.is-milestone { color: var(--poetrify-primary); font-weight: 700; }
+.verse-text { font-size: 15px; color: var(--poetrify-ink); }
+.preview-content.greek .verse-text { font-family: var(--font-classical); }
+.verse-blank { height: 0.7em; }
 .preview-meta {
   font-family: var(--font-ui);
   font-size: 12px;
@@ -10831,6 +10845,17 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
               <label for="meta-opera">Opera e locus</label>
               <input type="text" id="meta-opera" placeholder="De bello Gallico I, 1, 1–3">
             </div>
+            <div class="meta-field">
+              <label for="meta-tipotesto">Tipo di testo</label>
+              <select id="meta-tipotesto">
+                <option value="prosa">Prosa</option>
+                <option value="poesia">Poesia · impaginazione a versi</option>
+              </select>
+            </div>
+            <div class="meta-field" id="meta-verso-field" style="display:none;">
+              <label for="meta-versoiniziale">Verso iniziale <small>(se è un estratto)</small></label>
+              <input type="number" id="meta-versoiniziale" min="1" step="1" value="1" placeholder="1">
+            </div>
           </div>
         </details>
         <div class="lang-toggle" role="tablist" aria-label="Lingua">
@@ -11663,6 +11688,8 @@ const defaultState = () => ({
   meta: {
     lingua: 'latino', titolo: '', sottotitolo: '', autore: '', opera: '',
     genere: '',             // racconto · militare · filosofica · lettera · discorso · storica
+    tipoTesto: 'prosa',     // 'prosa' | 'poesia' — in poesia l'impaginazione è a VERSI
+    versoIniziale: 1,       // numero del primo verso (per i brani estratti da un'opera)
     letturaIntegrale: false, // checkbox "vista dall'alto" del wizard guidato (Fase A)
     testoOriginale: '',
     traduzione: '',         // brutta copia complessiva (esistente)
@@ -11866,6 +11893,11 @@ function deleteProjectById(id) {
 /* 4. UTILITY */
 function splitTextIntoSentences(text) {
   if (!text || !text.trim()) return [];
+  // POESIA: ogni VERSO (riga) è un'unità d'analisi. Si spezza sull'a-capo,
+  // preservando i versi così come sono andati a capo nel testo originale.
+  if (state.meta && state.meta.tipoTesto === 'poesia') {
+    return text.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+  }
   // Spezza SOLO sul punto fermo (.). Esclude i punti che fungono da abbreviativi:
   // - una singola lettera maiuscola isolata prima del punto (es. M. Lucius, P. Cornelius, M.T. Cicero)
   // - eventuali catene di iniziali (M.T.), riconosciute perché la lettera è preceduta da '.' o spazio o inizio
@@ -11892,6 +11924,21 @@ function splitTextIntoSentences(text) {
   const tail = buffer.trim();
   if (tail.length > 0) sentences.push(tail);
   return sentences;
+}
+
+/* Modalità poesia attiva? */
+function isPoesia() { return !!(state.meta && state.meta.tipoTesto === 'poesia'); }
+
+/* Numero di verso di un'unità (0-based) nel conteggio del brano, tenendo conto
+   del verso iniziale impostato (per i brani estratti da un'opera). */
+function verseNumber(idx) {
+  const start = Math.max(1, parseInt((state.meta && state.meta.versoIniziale), 10) || 1);
+  return start + idx;
+}
+
+/* Etichetta dell'unità d'analisi: «v. N» in poesia, «Frase N» in prosa. */
+function unitLabel(idx) {
+  return isPoesia() ? `v. ${verseNumber(idx)}` : `Frase ${idx + 1}`;
 }
 
 function makeSentence(text) {
@@ -25207,6 +25254,12 @@ function syncTopbar() {
   document.getElementById('meta-autore').value = state.meta.autore || '';
   document.getElementById('meta-opera').value = state.meta.opera || '';
   document.getElementById('meta-titolo').value = state.meta.titolo || '';
+  const tipoSel = document.getElementById('meta-tipotesto');
+  if (tipoSel) tipoSel.value = (state.meta.tipoTesto === 'poesia') ? 'poesia' : 'prosa';
+  const versoField = document.getElementById('meta-verso-field');
+  if (versoField) versoField.style.display = (state.meta.tipoTesto === 'poesia') ? '' : 'none';
+  const versoInput = document.getElementById('meta-versoiniziale');
+  if (versoInput) versoInput.value = Math.max(1, parseInt(state.meta.versoIniziale, 10) || 1);
   // Il bottone compatto "Dati del brano" mostra il titolo corrente (o l'etichetta neutra).
   const infoLabel = document.getElementById('brano-info-label');
   if (infoLabel) infoLabel.textContent = (state.meta.titolo && state.meta.titolo.trim()) ? state.meta.titolo.trim() : 'Dati del brano';
@@ -25565,7 +25618,7 @@ function renderSentenceListInner() {
     const periodaleFilled = s.periodale.length > 0;
     return `<div class="sentence-card ${state.currentSentenceIdx === idx ? 'active' : ''}">
       <div class="sentence-header">
-        <span class="sentence-label">Frase ${idx + 1}</span>
+        <span class="sentence-label">${unitLabel(idx)}</span>
         <div style="display:flex; gap:4px; flex-wrap:wrap;">
           <button class="btn btn-ghost btn-sm" onclick="editSentenceText('${s.id}')" title="Modifica testo">✎</button>
           <button class="btn btn-danger-soft btn-sm" onclick="deleteSentence('${s.id}')" title="Elimina">🗑</button>
@@ -25602,11 +25655,11 @@ function renderStep3HtmlAttuale() {
     + renderApproachBanner()
     + `<div class="flex-between">
         <button class="btn btn-ghost btn-sm" onclick="navigateSentence(-1)" ${idx === 0 ? 'disabled' : ''}>← Frase precedente</button>
-        <span class="muted-text">Frase <strong>${idx + 1}</strong> di ${state.sentences.length}</span>
+        <span class="muted-text"><strong>${unitLabel(idx)}</strong> di ${state.sentences.length}</span>
         <button class="btn btn-ghost btn-sm" onclick="navigateSentence(1)" ${idx === state.sentences.length - 1 ? 'disabled' : ''}>Frase successiva →</button>
       </div>
       <div class="current-sentence-banner">
-        <span class="label">Frase ${idx + 1} di ${state.sentences.length}</span>
+        <span class="label">${unitLabel(idx)} di ${state.sentences.length}</span>
         <div class="text">${escapeHtml(sentence.original)}</div>
         ${sentence.translation ? `<div style="margin-top:8px; font-size: 13px; font-style: italic; color: var(--poetrify-sepia);">Resa di lavoro: ${escapeHtml(sentence.translation)}</div>` : ''}
       </div>
@@ -25939,7 +25992,7 @@ function renderScheletroTraduzione(sentences, lang) {
       : '';
     return `<div class="scheletro-sentence-block">
       <div class="scheletro-sentence-header">
-        <h1 class="scheletro-sentence-num">Frase ${sIdx + 1}</h1>
+        <h1 class="scheletro-sentence-num">${unitLabel(sIdx)}</h1>
         <span class="scheletro-sentence-count">${ordo.length} element${ordo.length === 1 ? 'o' : 'i'} · ${sentence.translation && sentence.translation.trim() ? 'brutta ✓' : 'brutta —'}</span>
       </div>
       <div class="schel-trad-original ${isGreek ? 'greek' : ''}">${escapeHtml(sentence.original)}</div>
@@ -25994,7 +26047,7 @@ function renderScheletroVerbi(sentences, lang) {
       : '';
     return `<div class="scheletro-sentence-block">
       <div class="scheletro-sentence-header">
-        <h1 class="scheletro-sentence-num">Frase ${sIdx + 1}</h1>
+        <h1 class="scheletro-sentence-num">${unitLabel(sIdx)}</h1>
         <span class="scheletro-sentence-count">${fin} finiti · ${nf} non finiti</span>
       </div>
       <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
@@ -26348,7 +26401,7 @@ function renderScheletroProposizioni(sentences, lang) {
       : '<div class="muted-text" style="font-size:12px;padding:6px 2px;">Nessuna proposizione: nell\'anteprima seleziona i token di una proposizione (trascina o clicca), conferma gli <em>asindeti</em> sui segni di punteggiatura e le <em>congiunzioni</em> cliccandole, poi assegna ruolo/tipo qui sotto.</div>';
     return `<div class="scheletro-sentence-block">
       <div class="scheletro-sentence-header">
-        <h1 class="scheletro-sentence-num">Frase ${sIdx + 1}</h1>
+        <h1 class="scheletro-sentence-num">${unitLabel(sIdx)}</h1>
         <span class="scheletro-sentence-count">${annotated.length} proposizione/i</span>
       </div>
       <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
@@ -26447,7 +26500,7 @@ function renderScheletroLogic(sentences, lang, phase) {
     }
     return `<div class="scheletro-sentence-block">
       <div class="scheletro-sentence-header">
-        <h1 class="scheletro-sentence-num">Frase ${sIdx + 1}</h1>
+        <h1 class="scheletro-sentence-num">${unitLabel(sIdx)}</h1>
         <span class="scheletro-sentence-count">${phaseCount} ${escapeHtml(info.title.toLowerCase())} · ${allEntries.length} sintagmi tot.</span>
       </div>
       <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
@@ -26969,7 +27022,7 @@ function renderScheletroStep1(sentences, lang, totalVerbsFinite) {
     const verbCount = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo' && g.verboForma === 'Forma finita').length;
     return `<div class="scheletro-sentence-block">
       <div class="scheletro-sentence-header">
-        <h1 class="scheletro-sentence-num">Frase ${sIdx + 1}</h1>
+        <h1 class="scheletro-sentence-num">${unitLabel(sIdx)}</h1>
         <span class="scheletro-sentence-count">${verbCount} verbo/i finito/i</span>
       </div>
       <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
@@ -27022,7 +27075,7 @@ function renderScheletroStep2(sentences, lang, totalVerbsFinite) {
       }).join('');
       verbCards.push(`<div class="scheletro-verb-card">
         <div class="scheletro-verb-card-header">
-          <span class="scheletro-verb-card-num">Frase ${sIdx + 1}</span>
+          <span class="scheletro-verb-card-num">${unitLabel(sIdx)}</span>
           <span class="scheletro-verb-card-verb ${isGreek ? 'greek' : ''}">📌 verbo: <strong>${escapeHtml(verb.word || '?')}</strong>${verb.persona ? ` · ${verb.persona} ${verb.numero || ''}` : ''}</span>
           <span class="scheletro-verb-card-stats">${sogg ? '✓ Sogg.' : '○ Sogg.'} · ${ogg ? '✓ Ogg.' : '○ Ogg.'}</span>
         </div>
@@ -27055,7 +27108,7 @@ function renderScheletroStep3(sentences, lang) {
     const grammarPct = totalWords > 0 ? Math.round((grammarCount / totalWords) * 100) : 0;
     return `<div class="scheletro-finish-card">
       <div class="scheletro-finish-header">
-        <span class="scheletro-finish-num">Frase ${sIdx + 1}</span>
+        <span class="scheletro-finish-num">${unitLabel(sIdx)}</span>
         <span class="scheletro-finish-stats">${grammarCount}/${totalWords} gram · ${logicCount} sint · ${periodaleCount} prop</span>
       </div>
       <div class="scheletro-finish-text ${isGreek ? 'greek' : ''}">${escapeHtml(sentence.original)}</div>
@@ -27797,7 +27850,7 @@ function renderStep3HtmlFrasePerFrase() {
   return sectionHeader('C', `Wizard frase ${idx + 1} di ${sentences.length}`, 'completa ogni step in ordine, poi passa alla frase successiva.')
     + renderApproachBanner()
     + `<div class="fpf-sentence-banner">
-        <span class="label">Frase ${idx + 1} di ${sentences.length}</span>
+        <span class="label">${unitLabel(idx)} di ${sentences.length}</span>
         <div class="text">${escapeHtml(sentence.original)}</div>
       </div>
       <div class="fpf-step-bar">${stepIndicators}</div>
@@ -30616,7 +30669,7 @@ function renderTranslationSentenceCard(sentence, idx) {
   return `
     <div class="translation-sentence-card">
       <div class="ts-header">
-        <span class="ts-num">Frase ${idx + 1}</span>
+        <span class="ts-num">${unitLabel(idx)}</span>
         <span class="ts-stats">${stats}</span>
       </div>
       <div class="ts-original">${escapeHtml(sentence.original)}</div>
@@ -34467,9 +34520,28 @@ function renderPreview() {
        <button class="preview-copy-btn" onclick="copyPreviewOriginal(event)" title="Copia il testo originale">📋 copia testo originale</button>
        <button class="preview-copy-btn" onclick="pasteIntoActiveField()" title="Incolla negli appunti nel campo attivo">📥 incolla nel campo attivo</button>
      </div>` : ''}
-    <div class="preview-text">${escapeHtml(text)}</div>
+    ${hasOriginal && isPoesia()
+      ? `<div class="preview-text preview-verses">${renderVersesHtml(text)}</div>`
+      : `<div class="preview-text">${escapeHtml(text)}</div>`}
     ${translation}
   `;
+}
+
+/* Impaginazione a versi: ogni a-capo è un verso numerato. La numerazione parte
+   dal «verso iniziale» del brano; multipli di 5 evidenziati (uso filologico). */
+function renderVersesHtml(text) {
+  const lines = String(text).split(/\r?\n/);
+  let vIdx = 0;
+  return lines.map(line => {
+    const t = line.trim();
+    if (!t) return `<div class="verse-blank"></div>`;   // stacco di strofe
+    const n = verseNumber(vIdx); vIdx++;
+    const milestone = (n % 5 === 0);
+    return `<div class="verse-line">
+      <span class="verse-num${milestone ? ' is-milestone' : ''}">${n}</span>
+      <span class="verse-text">${escapeHtml(t)}</span>
+    </div>`;
+  }).join('');
 }
 
 function renderStats() {
@@ -34510,6 +34582,27 @@ function togglePreview() {
 function onTestoChange(v) { state.meta.testoOriginale = v; persistCurrent(); renderPreview(); renderSidebarTabs(); renderStats(); }
 function onTraduzioneChange(v) { state.meta.traduzione = v; persistCurrent(); renderPreview(); }
 function onMetaChange(field, v) { state.meta[field] = v; persistCurrent(); renderPreview(); }
+/* Passa prosa ⇄ poesia. NON ri-spezza da solo le unità già create (per non
+   perdere le analisi): se ci sono già frasi, propone di rigenerare i versi. */
+function onTipoTestoChange(v) {
+  const next = (v === 'poesia') ? 'poesia' : 'prosa';
+  state.meta.tipoTesto = next;
+  const versoField = document.getElementById('meta-verso-field');
+  if (versoField) versoField.style.display = (next === 'poesia') ? '' : 'none';
+  persistCurrent();
+  if (next === 'poesia' && state.meta.testoOriginale && state.meta.testoOriginale.trim()) {
+    const hasAnalysis = state.sentences.some(s => (s.grammar||[]).length || (s.logic||[]).length || (s.periodale||[]).length);
+    const msg = hasAnalysis
+      ? 'Passare a poesia rigenera le unità come VERSI (a-capo) e azzera le analisi esistenti. Procedere?'
+      : 'Rigenero le unità come VERSI (un\'unità per a-capo)?';
+    if (confirm(msg)) {
+      state.sentences = splitTextIntoSentences(state.meta.testoOriginale).map(makeSentence);
+      state.currentSentenceIdx = 0;
+      persistCurrent();
+    }
+  }
+  renderPreview(); renderEditor(); renderSidebarTabs(); renderStats(); syncTopbar();
+}
 /* Lingua di un nuovo progetto in attesa di creazione (impostata dal pulsante
    «+ Nuovo brano <lingua>» dell'archivio di un branch). Applicata in selectMode. */
 let pendingNewProjectLang = null;
@@ -37798,6 +37891,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('meta-autore').addEventListener('input', e => onMetaChange('autore', e.target.value));
   document.getElementById('meta-opera').addEventListener('input', e => onMetaChange('opera', e.target.value));
   document.getElementById('meta-titolo').addEventListener('input', e => onMetaChange('titolo', e.target.value));
+  const tipoSelEl = document.getElementById('meta-tipotesto');
+  if (tipoSelEl) tipoSelEl.addEventListener('change', e => onTipoTestoChange(e.target.value));
+  const versoEl = document.getElementById('meta-versoiniziale');
+  if (versoEl) versoEl.addEventListener('input', e => { state.meta.versoIniziale = Math.max(1, parseInt(e.target.value, 10) || 1); persistCurrent(); renderPreview(); renderEditor(); });
   document.querySelectorAll('.lang-toggle button').forEach(b => {
     b.addEventListener('click', () => setLingua(b.dataset.lang));
   });
