@@ -9852,6 +9852,41 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
 .verse-text { font-size: 15px; color: var(--poetrify-ink); }
 .preview-content.greek .verse-text { font-family: var(--font-classical); }
 .verse-blank { height: 0.7em; }
+.verse-metr-toggle {
+  font-size: 13px; line-height: 1; padding: 1px 5px; margin-left: 6px;
+  border: 1px solid var(--poetrify-rule-soft); border-radius: 4px;
+  background: transparent; color: var(--poetrify-sepia); cursor: pointer;
+}
+.verse-metr-toggle.is-on { background: var(--poetrify-primary); color: #fff; border-color: var(--poetrify-primary); }
+/* Pannello di scansione metrica */
+.metr-panel {
+  grid-column: 1 / -1; margin: 4px 0 10px 34px; padding: 10px 12px;
+  border: 1px solid var(--poetrify-rule-soft); border-left: 3px solid var(--poetrify-primary);
+  border-radius: 6px; background: var(--poetrify-cream);
+}
+.metr-toolbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.metr-metro-label { font-family: var(--font-ui); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--poetrify-sepia); }
+.metr-metro-sel { font-family: var(--font-ui); font-size: 12px; padding: 3px 6px; border: 1px solid var(--poetrify-rule); border-radius: 5px; background: var(--poetrify-paper); }
+.metr-pattern { font-family: var(--font-ui); font-size: 14px; letter-spacing: 0.04em; color: var(--poetrify-primary); margin-left: 4px; }
+.metr-line { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 2px; margin-bottom: 8px; }
+.metr-syll {
+  display: inline-flex; flex-direction: column; align-items: center; gap: 1px;
+  padding: 2px 4px 1px; border-radius: 5px; cursor: pointer; border: 1px solid transparent;
+}
+.metr-syll:hover { background: var(--poetrify-paper); border-color: var(--poetrify-rule-soft); }
+.metr-syll.q-lunga { background: rgba(29,78,216,0.08); }
+.metr-syll.q-breve { background: rgba(21,127,61,0.08); }
+.metr-syll.q-anceps { background: rgba(176,92,40,0.10); }
+.metr-ictus {
+  font-size: 12px; line-height: 1; height: 13px; padding: 0 2px; border: none; background: transparent;
+  color: var(--poetrify-rule); cursor: pointer;
+}
+.metr-ictus.is-on { color: var(--poetrify-primary); font-weight: 700; }
+.metr-syll-q { font-family: var(--font-ui); font-size: 13px; height: 15px; color: var(--poetrify-ink); }
+.metr-syll-t { font-family: var(--font-body); font-size: 15px; color: var(--poetrify-ink); }
+.metr-syll-t.greek { font-family: var(--font-classical); }
+.metr-wordgap { width: 8px; display: inline-block; }
+.metr-help { font-size: 11px; line-height: 1.4; }
 .preview-meta {
   font-family: var(--font-ui);
   font-size: 12px;
@@ -11690,6 +11725,7 @@ const defaultState = () => ({
     genere: '',             // racconto · militare · filosofica · lettera · discorso · storica
     tipoTesto: 'prosa',     // 'prosa' | 'poesia' — in poesia l'impaginazione è a VERSI
     versoIniziale: 1,       // numero del primo verso (per i brani estratti da un'opera)
+    metrica: { metroDefault: '', perVerse: {} }, // scansione per-verso (modalità poesia)
     letturaIntegrale: false, // checkbox "vista dall'alto" del wizard guidato (Fase A)
     testoOriginale: '',
     traduzione: '',         // brutta copia complessiva (esistente)
@@ -34531,17 +34567,202 @@ function renderPreview() {
    dal «verso iniziale» del brano; multipli di 5 evidenziati (uso filologico). */
 function renderVersesHtml(text) {
   const lines = String(text).split(/\r?\n/);
+  const lang = state.meta.lingua;
   let vIdx = 0;
   return lines.map(line => {
     const t = line.trim();
     if (!t) return `<div class="verse-blank"></div>`;   // stacco di strofe
-    const n = verseNumber(vIdx); vIdx++;
+    const idx = vIdx; vIdx++;
+    const n = verseNumber(idx);
     const milestone = (n % 5 === 0);
+    const open = !!(state._metrOpen && state._metrOpen[idx]);
     return `<div class="verse-line">
       <span class="verse-num${milestone ? ' is-milestone' : ''}">${n}</span>
       <span class="verse-text">${escapeHtml(t)}</span>
-    </div>`;
+      <button class="verse-metr-toggle ${open ? 'is-on' : ''}" onclick="metricaToggleVerse(${idx})" title="Scansione metrica del verso">𝄢</button>
+    </div>${open ? renderVerseMetrica(idx, t, lang) : ''}`;
   }).join('');
+}
+
+/* ============================================
+   METRICA E SCANSIONE (modalità poesia) · incremento 2
+   Approccio "manuale con assist": la sillabazione è automatica (di supporto),
+   quantità e ictus li segna l'utente; il pattern del metro scelto fa da guida.
+   ============================================ */
+
+/* Archivio dei metra del NUCLEO, in ordine di frequenza (a scendere). */
+const METRA = [
+  { id: 'esametro', nome: 'Esametro dattilico',
+    pattern: '¯˘˘ ¯˘˘ ¯˘˘ ¯˘˘ ¯˘˘ ¯×',
+    nota: 'Sei piedi. I primi 4 (e talora il 5°) sono dattilo ¯˘˘ o spondeo ¯¯; il 5° quasi sempre dattilo; l’ultimo piede è bisillabo (¯×).' },
+  { id: 'pentametro', nome: 'Pentametro dattilico',
+    pattern: '¯˘˘ ¯˘˘ ¯ ‖ ¯˘˘ ¯˘˘ ¯',
+    nota: 'Due hemiepe divisi da dieresi mediana; nella seconda metà i dattili sono obbligatori.' },
+  { id: 'distico', nome: 'Distico elegiaco', composite: ['esametro', 'pentametro'],
+    nota: 'Esametro + pentametro alternati (verso dispari = esametro, pari = pentametro).' },
+  { id: 'asclepiadeo-minore', nome: 'Asclepiadeo minore',
+    pattern: '¯¯ ¯˘˘¯ ‖ ¯˘˘¯ ˘×',
+    nota: 'Base spondaica + due coriambi, con cesura dopo il primo coriambo.' },
+  { id: 'asclepiadeo-maggiore', nome: 'Asclepiadeo maggiore',
+    pattern: '¯¯ ¯˘˘¯ ‖ ¯˘˘¯ ‖ ¯˘˘¯ ˘×',
+    nota: 'Come il minore, con un coriambo in più (tre coriambi).' },
+  { id: 'saffico-minore', nome: 'Endecasillabo saffico',
+    pattern: '¯˘ ¯× ¯˘˘ ¯˘ ¯×',
+    nota: 'Verso della strofe saffica (tre per strofe).' },
+  { id: 'adonio', nome: 'Adonio',
+    pattern: '¯˘˘ ¯×',
+    nota: 'Clausola (quarto verso) della strofe saffica.' },
+  { id: 'saffica', nome: 'Strofe saffica', composite: ['saffico-minore', 'saffico-minore', 'saffico-minore', 'adonio'],
+    nota: 'Tre endecasillabi saffici + un adonio.' },
+];
+function metroById(id) { return METRA.find(m => m.id === id) || null; }
+function metroPatternText(m) {
+  if (!m) return '';
+  if (m.pattern) return m.pattern;
+  if (m.composite) return m.composite.map(c => { const cc = metroById(c); return cc ? cc.pattern : ''; }).filter(Boolean).join('   ‖   ');
+  return '';
+}
+
+/* ---- Sillabazione di assist (conserva accenti/spiriti) ---- */
+function _graphemes(word) {
+  const d = word.normalize('NFD');
+  const out = [];
+  for (const ch of d) {
+    if (/\p{M}/u.test(ch) && out.length) out[out.length - 1] += ch;
+    else out.push(ch);
+  }
+  return out;
+}
+function _gBase(cl) { return (cl[0] || '').toLowerCase(); }
+function syllabifyWord(word, lang) {
+  const isGreek = lang === 'greco';
+  let cls = _graphemes(word);
+  if (cls.length < 2) return [word];
+  // Latino: «qu» (e «gu» dopo «n») è un'unica consonante, la «u» non è nucleo.
+  if (!isGreek) {
+    const merged = [];
+    for (let j = 0; j < cls.length; j++) {
+      const b = _gBase(cls[j]);
+      if (b === 'q' && j + 1 < cls.length && _gBase(cls[j + 1]) === 'u') { merged.push(cls[j] + cls[j + 1]); j++; }
+      else if (b === 'g' && j + 1 < cls.length && _gBase(cls[j + 1]) === 'u' && j > 0 && _gBase(cls[j - 1]) === 'n') { merged.push(cls[j] + cls[j + 1]); j++; }
+      else merged.push(cls[j]);
+    }
+    cls = merged;
+  }
+  const vset = isGreek ? 'αεηιουω' : 'aeiouy';
+  const isV = cl => vset.includes(_gBase(cl));
+  const DITT = isGreek
+    ? new Set(['αι', 'ει', 'οι', 'υι', 'αυ', 'ευ', 'ου', 'ηυ', 'ωυ'])
+    : new Set(['ae', 'au', 'oe', 'eu', 'ei', 'ui']);
+  const hasDiaer = cl => /̈/.test(cl);
+  const nuclei = [];
+  let k = 0;
+  while (k < cls.length) {
+    if (isV(cls[k])) {
+      if (k + 1 < cls.length && isV(cls[k + 1]) && !hasDiaer(cls[k + 1]) && DITT.has(_gBase(cls[k]) + _gBase(cls[k + 1]))) {
+        nuclei.push({ start: k, end: k + 2 }); k += 2;
+      } else { nuclei.push({ start: k, end: k + 1 }); k += 1; }
+    } else k += 1;
+  }
+  if (nuclei.length <= 1) return [cls.join('').normalize('NFC')];
+  const MUTA = isGreek ? 'βγδθκπτφχ' : 'bcdgpt';
+  const LIQ = isGreek ? 'λρ' : 'lr';
+  const cuts = [0];
+  for (let i = 0; i < nuclei.length - 1; i++) {
+    const aEnd = nuclei[i].end, bStart = nuclei[i + 1].start;
+    const cc = bStart - aEnd;
+    let cut;
+    if (cc <= 0) cut = bStart;
+    else if (cc === 1) cut = aEnd;
+    else {
+      const c1 = _gBase(cls[bStart - 2]), c2 = _gBase(cls[bStart - 1]);
+      cut = (MUTA.includes(c1) && LIQ.includes(c2)) ? bStart - 2 : bStart - 1;
+    }
+    cuts.push(cut);
+  }
+  const sylls = [];
+  for (let i = 0; i < cuts.length; i++) {
+    const s = cuts[i], e = (i + 1 < cuts.length) ? cuts[i + 1] : cls.length;
+    sylls.push(cls.slice(s, e).join('').normalize('NFC'));
+  }
+  return sylls;
+}
+/* Sillaba l'intero verso, segnando i confini di parola. */
+function syllabifyLine(line, lang) {
+  const out = [];
+  const tokens = String(line).normalize('NFC').split(/(\s+|[^\p{L}]+)/u).filter(Boolean);
+  tokens.forEach(tok => {
+    if (/[\p{L}]/u.test(tok) && !/^\s/.test(tok)) {
+      syllabifyWord(tok, lang).forEach(s => out.push({ text: s, wordEnd: false }));
+      if (out.length) out[out.length - 1].wordEnd = true;
+    } else {
+      if (out.length) out[out.length - 1].wordEnd = true;   // spazio/punteggiatura
+    }
+  });
+  return out;
+}
+
+/* ---- Stato per-verso ---- */
+function getVerseMetrica(idx) {
+  if (!state.meta.metrica) state.meta.metrica = { metroDefault: '', perVerse: {} };
+  if (!state.meta.metrica.perVerse) state.meta.metrica.perVerse = {};
+  if (!state.meta.metrica.perVerse[idx]) state.meta.metrica.perVerse[idx] = { metro: '', marks: {} };
+  return state.meta.metrica.perVerse[idx];
+}
+function metricaToggleVerse(idx) {
+  if (!state._metrOpen) state._metrOpen = {};
+  state._metrOpen[idx] = !state._metrOpen[idx];
+  renderPreview();
+}
+function metricaSetMetro(idx, val) {
+  const m = getVerseMetrica(idx);
+  m.metro = val || '';
+  if (val && !state.meta.metrica.metroDefault) state.meta.metrica.metroDefault = val;
+  persistCurrent(); renderPreview();
+}
+const _QUANT_CYCLE = { '': '¯', '¯': '˘', '˘': '×', '×': '' };
+function metricaCycleQuant(idx, si) {
+  const m = getVerseMetrica(idx);
+  if (!m.marks[si]) m.marks[si] = {};
+  m.marks[si].q = _QUANT_CYCLE[m.marks[si].q || ''];
+  persistCurrent(); renderPreview();
+}
+function metricaToggleIctus(idx, si) {
+  const m = getVerseMetrica(idx);
+  if (!m.marks[si]) m.marks[si] = {};
+  m.marks[si].ictus = !m.marks[si].ictus;
+  persistCurrent(); renderPreview();
+}
+
+/* ---- Render del pannello di scansione di un verso ---- */
+function renderVerseMetrica(idx, verseText, lang) {
+  const isGreek = lang === 'greco';
+  const m = getVerseMetrica(idx);
+  const metroId = m.metro || (state.meta.metrica && state.meta.metrica.metroDefault) || '';
+  const metro = metroById(metroId);
+  const sylls = syllabifyLine(verseText, lang);
+  const opts = METRA.map(x => `<option value="${x.id}" ${x.id === metroId ? 'selected' : ''}>${escapeHtml(x.nome)}</option>`).join('');
+  const syllHtml = sylls.map((s, si) => {
+    const mk = m.marks[si] || {};
+    const q = mk.q || '';
+    const qcls = q === '¯' ? 'lunga' : q === '˘' ? 'breve' : q === '×' ? 'anceps' : 'none';
+    return `<span class="metr-syll q-${qcls}" onclick="metricaCycleQuant(${idx},${si})" title="Clic: quantità">
+        <button class="metr-ictus ${mk.ictus ? 'is-on' : ''}" onclick="metricaToggleIctus(${idx},${si});event.stopPropagation()" title="Ictus (accento metrico)">´</button>
+        <span class="metr-syll-q">${q || '·'}</span>
+        <span class="metr-syll-t ${isGreek ? 'greek' : ''}">${escapeHtml(s.text)}</span>
+      </span>${s.wordEnd ? '<span class="metr-wordgap"> </span>' : ''}`;
+  }).join('');
+  return `<div class="metr-panel">
+    <div class="metr-toolbar">
+      <label class="metr-metro-label">Metro</label>
+      <select class="metr-metro-sel" onchange="metricaSetMetro(${idx}, this.value)">
+        <option value="">— scegli un metro —</option>${opts}
+      </select>
+      ${metro ? `<span class="metr-pattern" title="${escapeHtml(metro.nota || '')}">${escapeHtml(metroPatternText(metro))}</span>` : ''}
+    </div>
+    <div class="metr-line">${syllHtml || '<span class="muted-text">— verso vuoto —</span>'}</div>
+    <div class="metr-help muted-text">Clic su una sillaba: quantità ¯ → ˘ → × → ∅. L’apostrofo (´) segna l’ictus. Il pattern del metro è la guida (¯ lunga · ˘ breve · × anceps · ‖ cesura).</div>
+  </div>`;
 }
 
 function renderStats() {
