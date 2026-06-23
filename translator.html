@@ -9887,6 +9887,25 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
 .metr-syll-t.greek { font-family: var(--font-classical); }
 .metr-wordgap { width: 8px; display: inline-block; }
 .metr-help { font-size: 11px; line-height: 1.4; }
+/* switch di modalità del clic (quantità / fenomeni) */
+.metr-mode { display: inline-flex; align-items: center; gap: 4px; margin-left: auto; }
+.metr-mode-label { font-family: var(--font-ui); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--poetrify-sepia); }
+.metr-mode-btn { font-family: var(--font-ui); font-size: 11px; padding: 2px 8px; border: 1px solid var(--poetrify-rule); border-radius: 5px; background: var(--poetrify-paper); color: var(--poetrify-ink); cursor: pointer; }
+.metr-mode-btn.is-on { background: var(--poetrify-primary); color: #fff; border-color: var(--poetrify-primary); }
+/* badge del fenomeno fonetico sotto la sillaba */
+.metr-syll-fen { font-family: var(--font-ui); font-size: 9px; line-height: 1; text-transform: uppercase; letter-spacing: 0.03em; color: var(--poetrify-primary); margin-top: 1px; }
+.metr-syll.fen-elisione .metr-syll-t { text-decoration: line-through; opacity: 0.55; }
+.metr-syll.fen-aferesi .metr-syll-t { opacity: 0.7; }
+.metr-syll.fen-aferesi .metr-syll-t::before { content: '’'; color: var(--poetrify-primary); }
+.metr-syll.fen-correptio { background: rgba(176,92,40,0.12); }
+.metr-syll.fen-sinizesi .metr-syll-t { border-bottom: 2px solid var(--poetrify-primary); }
+.metr-syll.fen-iato .metr-syll-t { border-bottom: 2px dotted var(--poetrify-sepia); }
+/* enjambement */
+.verse-tools { display: inline-flex; gap: 4px; margin-left: 6px; }
+.verse-enj-toggle { font-size: 13px; line-height: 1; padding: 1px 5px; border: 1px solid var(--poetrify-rule-soft); border-radius: 4px; background: transparent; color: var(--poetrify-sepia); cursor: pointer; }
+.verse-enj-toggle.is-on { background: var(--poetrify-primary); color: #fff; border-color: var(--poetrify-primary); }
+.verse-enj-mark { color: var(--poetrify-primary); font-weight: 700; margin-left: 4px; }
+.verse-line.has-enj .verse-text { border-bottom: 1px dashed rgba(29,78,216,0.4); }
 .preview-meta {
   font-family: var(--font-ui);
   font-size: 12px;
@@ -34576,10 +34595,15 @@ function renderVersesHtml(text) {
     const n = verseNumber(idx);
     const milestone = (n % 5 === 0);
     const open = !!(state._metrOpen && state._metrOpen[idx]);
-    return `<div class="verse-line">
+    const vm = state.meta.metrica && state.meta.metrica.perVerse && state.meta.metrica.perVerse[idx];
+    const enj = !!(vm && vm.enjambement);
+    return `<div class="verse-line${enj ? ' has-enj' : ''}">
       <span class="verse-num${milestone ? ' is-milestone' : ''}">${n}</span>
-      <span class="verse-text">${escapeHtml(t)}</span>
-      <button class="verse-metr-toggle ${open ? 'is-on' : ''}" onclick="metricaToggleVerse(${idx})" title="Scansione metrica del verso">𝄢</button>
+      <span class="verse-text">${escapeHtml(t)}${enj ? '<span class="verse-enj-mark" title="Enjambement: la frase prosegue nel verso seguente">⤸</span>' : ''}</span>
+      <span class="verse-tools">
+        <button class="verse-enj-toggle ${enj ? 'is-on' : ''}" onclick="metricaToggleEnjambement(${idx})" title="Segna enjambement (la sintassi scavalca l'a-capo)">⤸</button>
+        <button class="verse-metr-toggle ${open ? 'is-on' : ''}" onclick="metricaToggleVerse(${idx})" title="Scansione metrica del verso">𝄢</button>
+      </span>
     </div>${open ? renderVerseMetrica(idx, t, lang) : ''}`;
   }).join('');
 }
@@ -34733,6 +34757,36 @@ function metricaToggleIctus(idx, si) {
   m.marks[si].ictus = !m.marks[si].ictus;
   persistCurrent(); renderPreview();
 }
+/* Fenomeni fonetici per-sillaba (marcatura manuale). */
+const _FEN_LABEL = {
+  elisione:  { abbr: 'elis', full: 'Elisione: la vocale (o vocale+m) finale cade davanti a vocale/h iniziale' },
+  aferesi:   { abbr: 'afer', full: 'Aferesi / prodelisione: cade la vocale INIZIALE (es. est → ’st, ἐστί → ’στί)' },
+  correptio: { abbr: 'corr', full: 'Correptio epica: vocale/dittongo lungo finale abbreviato davanti a vocale' },
+  sinizesi:  { abbr: 'sin',  full: 'Sinizesi: due vocali contigue pronunciate in una sola sillaba' },
+  iato:      { abbr: 'iato', full: 'Iato: incontro di vocali SENZA elisione' },
+};
+const _FEN_CYCLE = { '': 'elisione', elisione: 'aferesi', aferesi: 'correptio', correptio: 'sinizesi', sinizesi: 'iato', iato: '' };
+/* Lo switch di modalità decide cosa segna il clic sulla sillaba. */
+function metricaSetMode(mode) {
+  state._metrMode = (mode === 'fen') ? 'fen' : 'quant';
+  renderPreview();
+}
+function metricaSyllClick(idx, si) {
+  if ((state._metrMode || 'quant') === 'fen') metricaCyclePhenomenon(idx, si);
+  else metricaCycleQuant(idx, si);
+}
+function metricaCyclePhenomenon(idx, si) {
+  const m = getVerseMetrica(idx);
+  if (!m.marks[si]) m.marks[si] = {};
+  m.marks[si].fen = _FEN_CYCLE[m.marks[si].fen || ''];
+  persistCurrent(); renderPreview();
+}
+/* Enjambement: la sintassi del verso prosegue nel verso seguente. */
+function metricaToggleEnjambement(idx) {
+  const m = getVerseMetrica(idx);
+  m.enjambement = !m.enjambement;
+  persistCurrent(); renderPreview();
+}
 
 /* ---- Render del pannello di scansione di un verso ---- */
 function renderVerseMetrica(idx, verseText, lang) {
@@ -34746,10 +34800,14 @@ function renderVerseMetrica(idx, verseText, lang) {
     const mk = m.marks[si] || {};
     const q = mk.q || '';
     const qcls = q === '¯' ? 'lunga' : q === '˘' ? 'breve' : q === '×' ? 'anceps' : 'none';
-    return `<span class="metr-syll q-${qcls}" onclick="metricaCycleQuant(${idx},${si})" title="Clic: quantità">
+    const fen = mk.fen || '';
+    const fenCls = fen ? ' fen-' + fen : '';
+    const fenBadge = fen ? `<span class="metr-syll-fen" title="${escapeHtml(_FEN_LABEL[fen] ? _FEN_LABEL[fen].full : fen)}">${_FEN_LABEL[fen] ? _FEN_LABEL[fen].abbr : fen}</span>` : '';
+    return `<span class="metr-syll q-${qcls}${fenCls}" onclick="metricaSyllClick(${idx},${si})" title="Clic: ${(state._metrMode === 'fen') ? 'fenomeno fonetico' : 'quantità'}">
         <button class="metr-ictus ${mk.ictus ? 'is-on' : ''}" onclick="metricaToggleIctus(${idx},${si});event.stopPropagation()" title="Ictus (accento metrico)">´</button>
         <span class="metr-syll-q">${q || '·'}</span>
         <span class="metr-syll-t ${isGreek ? 'greek' : ''}">${escapeHtml(s.text)}</span>
+        ${fenBadge}
       </span>${s.wordEnd ? '<span class="metr-wordgap"> </span>' : ''}`;
   }).join('');
   return `<div class="metr-panel">
@@ -34759,9 +34817,16 @@ function renderVerseMetrica(idx, verseText, lang) {
         <option value="">— scegli un metro —</option>${opts}
       </select>
       ${metro ? `<span class="metr-pattern" title="${escapeHtml(metro.nota || '')}">${escapeHtml(metroPatternText(metro))}</span>` : ''}
+      <span class="metr-mode" role="group" aria-label="Cosa segna il clic">
+        <span class="metr-mode-label">clic:</span>
+        <button class="metr-mode-btn ${(state._metrMode === 'fen') ? '' : 'is-on'}" onclick="metricaSetMode('quant')" title="Il clic segna la quantità">quantità</button>
+        <button class="metr-mode-btn ${(state._metrMode === 'fen') ? 'is-on' : ''}" onclick="metricaSetMode('fen')" title="Il clic segna i fenomeni fonetici">fenomeni</button>
+      </span>
     </div>
     <div class="metr-line">${syllHtml || '<span class="muted-text">— verso vuoto —</span>'}</div>
-    <div class="metr-help muted-text">Clic su una sillaba: quantità ¯ → ˘ → × → ∅. L’apostrofo (´) segna l’ictus. Il pattern del metro è la guida (¯ lunga · ˘ breve · × anceps · ‖ cesura).</div>
+    <div class="metr-help muted-text">${(state._metrMode === 'fen')
+      ? 'Clic su una sillaba: fenomeno ∅ → elisione → aferesi → correptio (epica) → sinizesi → iato → ∅. L’apostrofo (´) segna l’ictus.'
+      : 'Clic su una sillaba: quantità ¯ → ˘ → × → ∅. L’apostrofo (´) segna l’ictus. Il pattern è la guida (¯ lunga · ˘ breve · × anceps · ‖ cesura).'}</div>
   </div>`;
 }
 
