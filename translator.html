@@ -11736,6 +11736,9 @@ function getMorphSchema(lang, entry) {
 
 /* 3. STATE */
 const STORAGE_KEY = 'poetrify-translator-v1';
+/* Versione di schema dei progetti salvati. Incrementare quando si introducono
+   campi/strutture nuove che richiedono una migrazione in lettura. */
+const SCHEMA_VERSION = 2;
 
 const defaultState = () => ({
   id: 'project-' + Date.now(),
@@ -11873,6 +11876,7 @@ function persistCurrent() {
   // Non salvare progetti vuoti (per evitare voci fantasma in archivio)
   const isEmpty = !state.meta.testoOriginale && !state.meta.titolo && !state.meta.autore && !state.meta.opera && (!state.sentences || state.sentences.length === 0);
   state.meta.updatedAt = new Date().toISOString();
+  state.meta.schemaVersion = SCHEMA_VERSION;
   try {
     const all = loadAllProjects();
     const idx = all.findIndex(p => p.id === state.id);
@@ -11890,16 +11894,98 @@ function persistCurrent() {
     if (txt) txt.textContent = 'salvato automaticamente';
   } catch (e) {
     console.error('Persist error:', e);
+    // GUARDIA DI QUOTA: la setItem fallita NON cancella i dati già salvati, ma
+    // le modifiche correnti non sono su disco. Avvisa in modo inequivocabile e
+    // spingi all'export, invece di fallire in silenzio.
+    const isQuota = e && (e.name === 'QuotaExceededError' || e.code === 22 || e.code === 1014 || /quota/i.test(String(e.message || '')));
+    const dot = document.querySelector('.save-dot');
+    if (dot) dot.style.background = 'var(--poetrify-danger, #c0142e)';
     const txt = document.getElementById('save-text');
-    if (txt) txt.textContent = 'errore di salvataggio';
+    if (txt) txt.textContent = isQuota ? '⚠ spazio esaurito — esporta un backup!' : 'errore di salvataggio';
+    if (isQuota && typeof showToast === 'function') {
+      showToast('⚠ Memoria del browser piena: le ultime modifiche NON sono salvate. Esporta un backup (palette → «Backup») e libera spazio.', 8000);
+    }
   }
 }
 
 function loadAllProjects() {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : [];
+    const arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr.map(_migrateProject) : [];
   } catch (e) { console.error('Load error:', e); return []; }
+}
+
+/* Migrazione in lettura: porta i progetti vecchi allo schema corrente riempiendo
+   i campi mancanti, così le feature nuove non trovano `undefined`. Guidata (in
+   futuro) da meta.schemaVersion. */
+function _migrateProject(p) {
+  if (!p || !p.meta) return p;
+  const m = p.meta;
+  if (m.tipoTesto == null) m.tipoTesto = 'prosa';
+  if (m.versoIniziale == null) m.versoIniziale = 1;
+  if (m.metrica == null || typeof m.metrica !== 'object') m.metrica = { metroDefault: '', perVerse: {} };
+  if (m.metrica.perVerse == null) m.metrica.perVerse = {};
+  return p;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   BACKUP · export/import dell'archivio progetti in JSON.
+   Rete anti perdita-dati: tutti i progetti vivono in un solo blob localStorage;
+   un export periodico è l'unica difesa contro corruzione/quota/cancellazione.
+   ════════════════════════════════════════════════════════════════════════════ */
+function _safeSetProjects(all) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(all)); return true; }
+  catch (e) { console.error('Save error:', e); if (typeof showToast === 'function') showToast('⚠ Salvataggio fallito (memoria piena?). Esporta un backup.', 7000); return false; }
+}
+function exportAllProjects() {
+  const projects = loadAllProjects();
+  const payload = { app: 'poetrify-translator', kind: 'backup', schemaVersion: SCHEMA_VERSION, exportedAt: new Date().toISOString(), count: projects.length, projects };
+  const ts = new Date().toISOString().slice(0, 10);
+  downloadBlob(JSON.stringify(payload, null, 2), `poetrify-backup-${ts}.json`, 'application/json');
+  if (typeof showToast === 'function') showToast(`Backup esportato · ${projects.length} progetto/i`);
+}
+function exportCurrentProjectJson() {
+  const payload = { app: 'poetrify-translator', kind: 'project', schemaVersion: SCHEMA_VERSION, exportedAt: new Date().toISOString(), projects: [state] };
+  const title = ((state.meta && state.meta.titolo) || 'brano').replace(/[^\p{L}\p{N}_-]+/gu, '_').slice(0, 40);
+  const ts = new Date().toISOString().slice(0, 10);
+  downloadBlob(JSON.stringify(payload, null, 2), `poetrify-${title}-${ts}.json`, 'application/json');
+  if (typeof showToast === 'function') showToast('Progetto corrente esportato');
+}
+function importProjectsFromFile() {
+  const input = document.createElement('input');
+  input.type = 'file'; input.accept = 'application/json,.json';
+  input.onchange = () => {
+    const file = input.files && input.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const data = JSON.parse(reader.result);
+        const incoming = Array.isArray(data) ? data : (data && Array.isArray(data.projects) ? data.projects : null);
+        if (!incoming) { showToast('File non valido: nessun progetto trovato'); return; }
+        const valid = incoming.filter(p => p && p.id && p.meta);
+        if (!valid.length) { showToast('File non valido: progetti senza struttura attesa'); return; }
+        const all = loadAllProjects();
+        let added = 0, updated = 0;
+        valid.forEach(p => {
+          const mp = _migrateProject(p);
+          const i = all.findIndex(x => x.id === mp.id);
+          if (i >= 0) { all[i] = mp; updated++; } else { all.push(mp); added++; }
+        });
+        if (_safeSetProjects(all)) {
+          showToast(`Importati: ${added} nuovo/i · ${updated} aggiornato/i`);
+          if (typeof renderSidebarTabs === 'function') renderSidebarTabs();
+          if (typeof renderEditor === 'function') renderEditor();
+        }
+      } catch (e) {
+        console.error('Import error:', e);
+        showToast('Errore nell\'importazione: file JSON non leggibile');
+      }
+    };
+    reader.readAsText(file);
+  };
+  input.click();
 }
 
 /* Pulisce i campi transienti dallo state caricato da localStorage.
@@ -37741,6 +37827,9 @@ function buildCommandPaletteIndex() {
   add('Approccio · 🎯 Attuale (per frase)', 'Approccio', () => setApproach('attuale'),          '', '🎯');
   add('Approccio · 📍 Frase per frase',     'Approccio', () => setApproach('frase-per-frase'),  '', '📍');
   add('Approccio · 🦴 Scheletro prima',     'Approccio', () => setApproach('scheletro'),        '', '🦴');
+  add('Backup · 💾 Esporta tutti i progetti (JSON)', 'Backup', () => exportAllProjects(),        '', '💾');
+  add('Backup · 💾 Esporta solo il brano corrente',  'Backup', () => exportCurrentProjectJson(), '', '💾');
+  add('Backup · 📥 Importa progetti da file (JSON)',  'Backup', () => importProjectsFromFile(),   '', '📥');
 
   // === Profilo ===
   add('Profilo · 🌱 Medie',     'Profilo', () => selectProfile('medie'),    '', '🌱');
@@ -38489,6 +38578,26 @@ if (typeof window.renderCongiunzioneTipoOptions === 'function') {
 if (typeof window.makePeriodaleSummary === 'function') {
   const e = { ruolo:'Subordinata', tipo:'Finale', modo:'Congiuntivo', grado:'Di secondo grado', connettivo:'ut' };
   tests.push(_assertEqualResult('makePeriodaleSummary', TranslatorUI.makePeriodaleSummary(e), window.makePeriodaleSummary(e), e));
+}
+
+// 5. CORRETTEZZA della logica inline NUOVA (poesia · metrica · valenza).
+//    Non è parità coi moduli: sono asserzioni input→output attese, una rete di
+//    regressione che gira a ogni boot per ciò che vive solo nel file inline.
+function _ok(name, cond, detail) { tests.push(cond ? { ok: true, name } : { ok: false, name, detail: String(detail || '') }); }
+if (typeof window.syllabifyWord === 'function') {
+  const sw = (w, l) => window.syllabifyWord(w, l).join('-');
+  _ok('sillabazione lat · virumque', sw('virumque', 'latino') === 'vi-rum-que', sw('virumque', 'latino'));
+  _ok('sillabazione lat · Maecenas', sw('Maecenas', 'latino') === 'Mae-ce-nas', sw('Maecenas', 'latino'));
+  _ok('sillabazione lat · arma', sw('arma', 'latino') === 'ar-ma', sw('arma', 'latino'));
+  _ok('sillabazione gr · ἄειδε', sw('ἄειδε', 'greco') === 'ἄ-ει-δε', sw('ἄειδε', 'greco'));
+}
+if (typeof window.scheletroSVORank === 'function') {
+  _ok('SVO · soggetto prima di oggetto', window.scheletroSVORank('Soggetto', false) < window.scheletroSVORank('Complemento oggetto', false), '');
+  _ok('SVO · vocativo in testa', window.scheletroSVORank('Complemento di vocazione', false) === 0, window.scheletroSVORank('Complemento di vocazione', false));
+}
+if (typeof window.metroById === 'function') {
+  _ok('metra · esametro presente', !!window.metroById('esametro'), '');
+  _ok('metra · id inesistente → null', window.metroById('__nope__') === null, '');
 }
 
 const failed = tests.filter(t => !t.ok);
