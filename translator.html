@@ -425,23 +425,12 @@ input, textarea, select { font-family: inherit; color: inherit; }
   display: flex;
   align-items: baseline;
   gap: 10px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity var(--transition-base);
 }
-/* Pulsante HOME nella topbar: torna sempre alla dashboard (app.html) */
-.topbar-home {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 5px 10px; margin-left: 4px;
-  border: 1px solid var(--poetrify-rule-soft); border-radius: var(--radius-sm);
-  color: var(--poetrify-sepia); background: transparent;
-  font-family: var(--font-ui); font-size: 12px; font-weight: 600;
-  text-decoration: none; white-space: nowrap; flex-shrink: 0;
-  transition: all var(--transition-base);
-}
-.topbar-home:hover {
-  background: var(--poetrify-ivory);
-  color: var(--poetrify-lang-accent);
-  border-color: var(--poetrify-lang-accent);
-}
-@media (max-width: 600px) { .topbar-home span { display: none; } }   /* solo icona su mobile */
+.brand:hover { opacity: 0.8; }
+.brand:hover .brand-mark { text-decoration: underline; }
 .brand-mark {
   font-family: var(--font-display);
   font-weight: 700;
@@ -10928,17 +10917,18 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
       <button class="drawer-toggle" id="drawer-toggle" onclick="toggleDrawer()" aria-label="Apri il menù" title="Menù">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
       </button>
-      <div class="brand">
+      <!-- Logo cliccabile: torna sempre all'inizio del sistema (dashboard app.html),
+           salvando il lavoro corrente prima di lasciare la pagina. -->
+      <a class="brand" href="app.html" title="Torna all'inizio (dashboard Poetrify)" onclick="try{persistCurrent()}catch(e){}">
         <span class="brand-mark">Poetrify</span>
         <span class="brand-sub">Officina del greco e del latino</span>
-      </div>
-      <!-- HOME: torna sempre all'inizio del sistema (dashboard app.html).
-           Salva il lavoro corrente prima di lasciare la pagina. -->
-      <a class="topbar-home" href="app.html" title="Torna all'inizio (dashboard Poetrify)" onclick="try{persistCurrent()}catch(e){}">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8M5 10v10a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1V10"/></svg>
-        <span>Home</span>
       </a>
-      <!-- Titolo della versione in lavorazione: gerarchia H1 (titolo primario). -->
+      <!-- Toggle lingua (shift) subito a destra del logo. -->
+      <div class="lang-toggle" role="tablist" aria-label="Lingua">
+        <button class="active" data-lang="latino" title="Latino">LAT</button>
+        <button data-lang="greco" title="Greco">ΕΛ</button>
+      </div>
+      <!-- Titolo della versione in lavorazione (nascosto in archivio/dizionario). -->
       <h1 class="topbar-title" id="topbar-title"></h1>
 
       <div class="brano-meta" id="topbar-brano-slot">
@@ -10979,16 +10969,7 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
             </div>
           </div>
         </details>
-        <div class="lang-toggle" role="tablist" aria-label="Lingua">
-          <button class="active" data-lang="latino" title="Latino">LAT</button>
-          <button data-lang="greco" title="Greco">ΕΛ</button>
-        </div>
         <span class="poetrify-lang-pill" id="poetrify-lang-pill" aria-hidden="true">Latino</span>
-      </div>
-
-      <div class="save-status">
-        <span class="save-dot"></span>
-        <span id="save-text">salvato automaticamente</span>
       </div>
     </div>
 
@@ -25735,7 +25716,13 @@ function syncTopbar() {
   if (infoLabel) infoLabel.textContent = (state.meta.titolo && state.meta.titolo.trim()) ? state.meta.titolo.trim() : 'Dati del brano';
   // Titolo della versione mostrato nell'header minimale (mobile/tablet).
   const tbTitle = document.getElementById('topbar-title');
-  if (tbTitle) tbTitle.textContent = (state.meta.titolo && state.meta.titolo.trim()) ? state.meta.titolo.trim() : 'Versione senza titolo';
+  if (tbTitle) {
+    // Il titolo della versione di lavoro non ha senso in archivio (D) o dizionario
+    // (F): lì non si sta lavorando un brano specifico → nascondilo.
+    const noBrano = (state.currentStep === 4 || state.currentStep === 6);
+    tbTitle.style.display = noBrano ? 'none' : '';
+    tbTitle.textContent = (state.meta.titolo && state.meta.titolo.trim()) ? state.meta.titolo.trim() : 'Versione senza titolo';
+  }
   // Il toggle in alto a destra riflette la lingua attiva (già calcolata sopra).
   document.querySelectorAll('.lang-toggle button').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === activeLang);
