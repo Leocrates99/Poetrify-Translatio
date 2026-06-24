@@ -4365,6 +4365,16 @@ body.poetrify-dark .quick-bar {
 .langgate-gr .langgate-title, .langgate-gr .langgate-icon { color: #1800AC; }
 .langgate-gr .langgate-icon { font-family: 'Times New Roman', serif; font-style: italic; }
 .langgate-gr:hover { background: #ede9fc; }
+/* PROFILO STUDENTE · layout del modale */
+.sp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0 8px; }
+.sp-field { display: flex; flex-direction: column; gap: 4px; }
+.sp-field-full { grid-column: 1 / -1; }
+.sp-field label { font-family: var(--font-ui); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--poetrify-sepia); }
+.sp-field select, .sp-field input, .sp-field textarea { font-family: var(--font-ui); font-size: 13px; padding: 7px 9px; border: 1px solid var(--poetrify-rule); border-radius: var(--radius-sm); background: var(--poetrify-paper); color: var(--poetrify-ink); width: 100%; }
+.sp-manuali { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-bottom: 6px; }
+.sp-manuale { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-ui); font-size: 12px; font-weight: 500; color: var(--poetrify-ink); text-transform: none; letter-spacing: 0; }
+.sp-manuale input { width: auto; }
+@media (max-width: 560px) { .sp-grid { grid-template-columns: 1fr; } }
 .profile-card {
   text-align: left;
   background: var(--poetrify-paper);
@@ -10999,6 +11009,10 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
           <span>Nuovo</span>
         </button>
+        <button class="sidebar-btn" onclick="openStudentProfileModal()" title="Profilo studente: classe, livello, competenze, manuali">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <span>Profilo</span>
+        </button>
         <button class="sidebar-btn sidebar-btn-export" onclick="openExportModal()" title="Esporta il lavoro · Markdown, Word, PNG, PDF, JSON">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
           <span>Esporta</span>
@@ -11341,6 +11355,65 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
         <span class="langgate-title">Greco antico</span>
         <span class="langgate-sub">Ramo greco · blu Poetrify</span>
       </button>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILO STUDENTE · classe · livello · competenze · manuali -->
+<div class="modal-backdrop" id="modal-student-profile">
+  <div class="modal" style="max-width: 740px;">
+    <h3 class="modal-title">Profilo studente</h3>
+    <p class="modal-subtitle">Delinea il tuo profilo: la <strong>classe</strong> determina la fascia (medie/biennio/triennio) e l'interfaccia si adegua. I <strong>manuali</strong> si legano alla provenienza delle versioni «📖 dal libro».</p>
+    <div class="sp-grid">
+      <div class="sp-field">
+        <label for="sp-classe">Classe</label>
+        <select id="sp-classe">
+          <option value="">— scegli —</option>
+          <optgroup label="Scuole medie">
+            <option value="medie-1">1ª media</option>
+            <option value="medie-2">2ª media</option>
+            <option value="medie-3">3ª media</option>
+          </optgroup>
+          <optgroup label="Biennio (superiori)">
+            <option value="sup-1">1ª superiore</option>
+            <option value="sup-2">2ª superiore</option>
+          </optgroup>
+          <optgroup label="Triennio (superiori)">
+            <option value="sup-3">3ª superiore</option>
+            <option value="sup-4">4ª superiore</option>
+            <option value="sup-5">5ª superiore</option>
+          </optgroup>
+          <optgroup label="Oltre">
+            <option value="univ">Università</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="sp-field">
+        <label for="sp-abilita">Livello di abilità</label>
+        <select id="sp-abilita">
+          <option value="principiante">Principiante</option>
+          <option value="intermedio">Intermedio</option>
+          <option value="avanzato">Avanzato</option>
+        </select>
+      </div>
+      <div class="sp-field sp-field-full">
+        <label for="sp-competenze">Competenze e note (libero)</label>
+        <textarea id="sp-competenze" rows="2" placeholder="Es. morfologia solida, sintassi dei casi in corso, debole sul periodo ipotetico…"></textarea>
+      </div>
+      <div class="sp-field sp-field-full">
+        <label>Manuali · Latino</label>
+        <div id="sp-manuali-lat" class="sp-manuali"></div>
+        <input type="text" id="sp-manuali-lat-altro" placeholder="Altro manuale di latino (digita)">
+      </div>
+      <div class="sp-field sp-field-full">
+        <label>Manuali · Greco</label>
+        <div id="sp-manuali-gr" class="sp-manuali"></div>
+        <input type="text" id="sp-manuali-gr-altro" placeholder="Altro manuale di greco (digita)">
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="document.getElementById('modal-student-profile').classList.remove('open')">Annulla</button>
+      <button class="btn btn-primary" onclick="saveStudentProfileFromModal()">Salva profilo</button>
     </div>
   </div>
 </div>
@@ -11936,6 +12009,68 @@ function chooseGateLanguage(lang) {
   if (l === state.meta.lingua) { syncTopbar(); return; }   // già nel settore scelto: resta sul lavoro
   if (typeof openLanguageBranch === 'function') openLanguageBranch(l);   // ancora al ramo scelto (suo archivio)
   else { if (typeof archiveFilters !== 'undefined') archiveFilters.lingua = l; if (typeof goToStep === 'function') goToStep(4); }
+}
+
+/* ── PROFILO STUDENTE · classe · abilità · competenze · manuali ───────────────
+   La classe determina la fascia (medie/biennio/triennio) usata dal gating CSS.
+   Manuali: lista curata + «Altro» libero, per lingua, legati alla provenienza
+   «dal libro» delle versioni. Salvato su localStorage (device-level). */
+const STUDENT_PROFILE_KEY = 'poetrify-student-profile';
+const MANUALI = {
+  latino: ['Il nuovo Tantucci', 'Cotidie discere (Flocchini)', 'Lingua Latina per se illustrata (Ørberg)', 'Nuovo Expedite (Flocchini)', 'Ad astra (Diotti)', 'Lingua Mater (Bettini)', 'Latina lectio'],
+  greco: ['Il nuovo Greco di Campanini', 'Klimax', 'Hellenistì', 'Greco. Lingua, civiltà, lessico', 'Meltemi', 'Kata logon', 'Triakonta'],
+};
+function classeToTier(classe) {
+  if (!classe) return 'triennio';
+  if (classe.indexOf('medie') === 0) return 'medie';
+  if (classe === 'sup-1' || classe === 'sup-2') return 'biennio';
+  return 'triennio';   // sup-3/4/5 · università
+}
+function getStudentProfile() {
+  try { const v = JSON.parse(localStorage.getItem(STUDENT_PROFILE_KEY) || 'null'); if (v && typeof v === 'object') return v; } catch (e) {}
+  return { classe: '', abilita: 'intermedio', competenze: '', manuali: { latino: [], greco: [] }, manualiAltro: { latino: '', greco: '' } };
+}
+function saveStudentProfile(p) {
+  try { localStorage.setItem(STUDENT_PROFILE_KEY, JSON.stringify(p)); } catch (e) {}
+  if (p.classe) {   // deriva e applica la fascia (mantiene il gating dell'interfaccia)
+    const tier = classeToTier(p.classe);
+    try { localStorage.setItem(PROFILE_STORAGE_KEY, tier); } catch (e) {}
+    applyProfileToBody();
+    if (typeof renderQuickBar === 'function') renderQuickBar();
+  }
+}
+function _renderManualiChecklist(lang, selected) {
+  return (MANUALI[lang] || []).map(m =>
+    `<label class="sp-manuale"><input type="checkbox" value="${escapeHtml(m)}" ${selected.includes(m) ? 'checked' : ''}> ${escapeHtml(m)}</label>`
+  ).join('');
+}
+function openStudentProfileModal() {
+  const p = getStudentProfile();
+  const m = document.getElementById('modal-student-profile');
+  if (!m) return;
+  const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
+  setVal('sp-classe', p.classe || '');
+  setVal('sp-abilita', p.abilita || 'intermedio');
+  setVal('sp-competenze', p.competenze || '');
+  setVal('sp-manuali-lat-altro', (p.manualiAltro && p.manualiAltro.latino) || '');
+  setVal('sp-manuali-gr-altro', (p.manualiAltro && p.manualiAltro.greco) || '');
+  const lat = document.getElementById('sp-manuali-lat'); if (lat) lat.innerHTML = _renderManualiChecklist('latino', (p.manuali && p.manuali.latino) || []);
+  const gr = document.getElementById('sp-manuali-gr'); if (gr) gr.innerHTML = _renderManualiChecklist('greco', (p.manuali && p.manuali.greco) || []);
+  m.classList.add('open');
+}
+function saveStudentProfileFromModal() {
+  const getVal = id => { const el = document.getElementById(id); return el ? el.value : ''; };
+  const checks = cid => [].slice.call(document.querySelectorAll('#' + cid + ' input[type=checkbox]:checked')).map(c => c.value);
+  const p = {
+    classe: getVal('sp-classe'),
+    abilita: getVal('sp-abilita') || 'intermedio',
+    competenze: getVal('sp-competenze'),
+    manuali: { latino: checks('sp-manuali-lat'), greco: checks('sp-manuali-gr') },
+    manualiAltro: { latino: getVal('sp-manuali-lat-altro'), greco: getVal('sp-manuali-gr-altro') },
+  };
+  saveStudentProfile(p);
+  const m = document.getElementById('modal-student-profile'); if (m) m.classList.remove('open');
+  if (typeof showToast === 'function') showToast('Profilo studente salvato');
 }
 
 function selectProfile(profile) {
