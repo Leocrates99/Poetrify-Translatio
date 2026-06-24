@@ -11418,6 +11418,19 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
   </div>
 </div>
 
+<!-- PASSAGGIO D'ANNO · compare al 1° settembre finché non si conferma -->
+<div class="modal-backdrop" id="modal-year-rollover">
+  <div class="modal" style="max-width: 560px;">
+    <h3 class="modal-title">È iniziato un nuovo anno scolastico</h3>
+    <p class="modal-subtitle">Anno <strong id="yr-label">—</strong>. Sei stato ammesso all'anno successivo?</p>
+    <p id="yr-detail" class="muted-text" style="font-size:13px; text-align:center; margin: 8px 0 4px;"></p>
+    <div class="modal-actions" style="justify-content:center; gap:12px;">
+      <button class="btn btn-ghost" onclick="confirmYearRollover(false)">No, ripeto l'anno</button>
+      <button class="btn btn-primary" onclick="confirmYearRollover(true)">Sì, sono promosso →</button>
+    </div>
+  </div>
+</div>
+
 <!-- COMMAND PALETTE — Ctrl+K → barra di ricerca azioni rapide -->
 <div class="modal-backdrop" id="modal-command-palette">
   <div class="modal modal-command-palette" role="dialog" aria-label="Command palette">
@@ -12031,6 +12044,7 @@ function getStudentProfile() {
   return { classe: '', abilita: 'intermedio', competenze: '', manuali: { latino: [], greco: [] }, manualiAltro: { latino: '', greco: '' } };
 }
 function saveStudentProfile(p) {
+  if (!p.annoConfermato) p.annoConfermato = currentSchoolYear();   // primo salvataggio: conferma l'anno corrente
   try { localStorage.setItem(STUDENT_PROFILE_KEY, JSON.stringify(p)); } catch (e) {}
   if (p.classe) {   // deriva e applica la fascia (mantiene il gating dell'interfaccia)
     const tier = classeToTier(p.classe);
@@ -12071,6 +12085,53 @@ function saveStudentProfileFromModal() {
   saveStudentProfile(p);
   const m = document.getElementById('modal-student-profile'); if (m) m.classList.remove('open');
   if (typeof showToast === 'function') showToast('Profilo studente salvato');
+}
+
+/* ── PASSAGGIO D'ANNO (1° settembre) ──────────────────────────────────────────
+   L'anno scolastico inizia il 1° settembre. Finché l'utente non conferma il
+   nuovo anno, all'avvio compare il modale promosso/ripeti, e la classe (quindi
+   la fascia) si adegua. */
+const CLASSE_SEQ = ['medie-1', 'medie-2', 'medie-3', 'sup-1', 'sup-2', 'sup-3', 'sup-4', 'sup-5', 'univ'];
+const CLASSE_LABELS = { 'medie-1': '1ª media', 'medie-2': '2ª media', 'medie-3': '3ª media', 'sup-1': '1ª superiore', 'sup-2': '2ª superiore', 'sup-3': '3ª superiore', 'sup-4': '4ª superiore', 'sup-5': '5ª superiore', 'univ': 'Università' };
+function classeLabel(c) { return CLASSE_LABELS[c] || '—'; }
+function currentSchoolYear() {
+  const now = new Date();
+  const start = (now.getMonth() >= 8) ? now.getFullYear() : now.getFullYear() - 1;   // mese 8 = settembre (0-based)
+  return start + '/' + (start + 1);
+}
+function advanceClasse(classe) {
+  const i = CLASSE_SEQ.indexOf(classe);
+  if (i < 0 || i >= CLASSE_SEQ.length - 1) return classe;   // università → resta
+  return CLASSE_SEQ[i + 1];
+}
+function showYearRollover() {
+  const p = getStudentProfile();
+  const m = document.getElementById('modal-year-rollover');
+  if (!m) return;
+  const lbl = document.getElementById('yr-label'); if (lbl) lbl.textContent = currentSchoolYear();
+  const det = document.getElementById('yr-detail');
+  if (det) {
+    const next = advanceClasse(p.classe);
+    const fasciaCambia = classeToTier(p.classe) !== classeToTier(next);
+    det.innerHTML = `Classe attuale: <strong>${escapeHtml(classeLabel(p.classe))}</strong>. Se promosso passi a <strong>${escapeHtml(classeLabel(next))}</strong>`
+      + (fasciaCambia ? ` <em>(nuova fascia: ${escapeHtml(classeToTier(next))})</em>` : '') + '.';
+  }
+  m.classList.add('open');
+}
+function maybeShowYearRollover() {
+  const p = getStudentProfile();
+  if (!p.classe) return false;                                   // nessuna classe impostata → niente rollover
+  if (p.annoConfermato === currentSchoolYear()) return false;    // già confermato per quest'anno
+  showYearRollover();
+  return true;
+}
+function confirmYearRollover(promosso) {
+  const p = getStudentProfile();
+  if (promosso) p.classe = advanceClasse(p.classe);
+  p.annoConfermato = currentSchoolYear();
+  saveStudentProfile(p);
+  const m = document.getElementById('modal-year-rollover'); if (m) m.classList.remove('open');
+  if (typeof showToast === 'function') showToast(promosso ? `Promosso · ora ${classeLabel(p.classe)}` : `Confermato · resti in ${classeLabel(p.classe)}`);
 }
 
 function selectProfile(profile) {
@@ -38878,7 +38939,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (!getUserProfile()) {
     setTimeout(openProfileModal, 250);
   } else {
-    setTimeout(maybeShowLanguageGate, 300);
+    // Il passaggio d'anno (1° set.) ha precedenza; se non scatta, mostra il gate lingua.
+    setTimeout(() => { if (!maybeShowYearRollover()) maybeShowLanguageGate(); }, 300);
   }
 
   // autosave
