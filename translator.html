@@ -565,6 +565,10 @@ input, textarea, select { font-family: inherit; color: inherit; }
 .sidebar {
   background: var(--poetrify-paper);
   border-right: 1px solid var(--poetrify-rule-soft);
+  /* BANDA D'IDENTITÀ LINGUISTICA: bordo superiore spesso nel colore della lingua
+     (rosso pompeiano = latino · blu Poetrify = greco) → le due sezioni si
+     distinguono a colpo d'occhio. */
+  border-top: 5px solid var(--poetrify-lang-accent);
   padding: 24px 0;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
@@ -583,6 +587,12 @@ input, textarea, select { font-family: inherit; color: inherit; }
   padding: 0 22px 10px;
   border-bottom: 1px solid var(--poetrify-rule-soft);
   margin-bottom: 8px;
+}
+/* Nome della lingua di lavoro accanto all'etichetta, nel colore della lingua. */
+.sidebar-section-label::after {
+  content: " · " var(--poetrify-lang-name);
+  color: var(--poetrify-lang-accent);
+  font-weight: 800;
 }
 .tab-list { list-style: none; display: flex; flex-direction: column; gap: 3px; padding: 2px 10px 2px 0; }
 .tab-item {
