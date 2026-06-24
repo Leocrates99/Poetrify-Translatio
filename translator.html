@@ -196,7 +196,7 @@ body.dark-mode ::-webkit-scrollbar-thumb:hover { background: var(--poetrify-sepi
 body[data-lang="latino"] {
   --poetrify-lang-accent: #A22E37;        /* rosso pompeiano */
   --poetrify-lang-accent-soft: #c44a52;
-  --poetrify-lang-accent-pale: #fbeceee;
+  --poetrify-lang-accent-pale: #fbecee;
   --poetrify-lang-accent-dark: #6e1f25;
   --poetrify-lang-accent-border: #e8b8bc;
   --poetrify-lang-name: 'Latino';
@@ -584,25 +584,26 @@ input, textarea, select { font-family: inherit; color: inherit; }
   border-bottom: 1px solid var(--poetrify-rule-soft);
   margin-bottom: 8px;
 }
-.tab-list { list-style: none; display: flex; flex-direction: column; }
+.tab-list { list-style: none; display: flex; flex-direction: column; gap: 3px; padding: 2px 10px 2px 0; }
 .tab-item {
-  padding: 14px 22px;
+  padding: 13px 20px;
   cursor: pointer;
   border-left: 3px solid transparent;
+  border-radius: 0 9px 9px 0;   /* il riquadro attivo/hover si arrotonda a destra: forma «linguetta» */
   transition: all var(--transition-base);
   position: relative;
 }
 .tab-item:hover { background: var(--poetrify-ivory); }
 .tab-item.active {
-  background: var(--poetrify-primary-tint);
-  border-left-color: var(--poetrify-primary);
+  background: var(--poetrify-lang-accent-pale);
+  border-left-color: var(--poetrify-lang-accent);
 }
 .tab-item.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
 .tab-letter {
   font-family: var(--font-display);
   font-size: 22px;
   font-weight: 700;
-  color: var(--poetrify-primary);
+  color: var(--poetrify-lang-accent);
   line-height: 1;
   letter-spacing: -0.02em;
 }
@@ -630,7 +631,7 @@ input, textarea, select { font-family: inherit; color: inherit; }
   justify-content: center;
   font-family: var(--font-ui);
 }
-.tab-progress.has-content { background: var(--poetrify-primary); color: white; }
+.tab-progress.has-content { background: var(--poetrify-lang-accent); color: white; }
 
 .sidebar-actions {
   margin-top: auto;
@@ -10297,7 +10298,7 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
   }
   .tab-item.active {
     border-left-color: transparent !important;
-    border-bottom-color: var(--poetrify-primary);
+    border-bottom-color: var(--poetrify-lang-accent);
   }
   .tab-letter { font-size: 18px; }
   .tab-title { display: none; }
@@ -10825,7 +10826,7 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
   /* navigazione e strumenti verticali nel drawer */
   .tab-list { flex-direction: column !important; flex: 0 0 auto !important; gap: 2px; }
   .tab-item { border-left: 3px solid transparent !important; border-bottom: none !important; flex-direction: row !important; justify-content: flex-start; }
-  .tab-item.active { border-left-color: var(--poetrify-primary) !important; border-bottom-color: transparent !important; }
+  .tab-item.active { border-left-color: var(--poetrify-lang-accent) !important; border-bottom-color: transparent !important; }
   .tab-title { display: inline !important; }
   .sidebar-actions {
     flex-direction: column !important; align-items: stretch;
