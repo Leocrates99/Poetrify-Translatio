@@ -10925,12 +10925,14 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
               <input type="text" id="meta-titolo" placeholder="Es. Cesare, BG I, incipit">
             </div>
             <div class="meta-field">
-              <label for="meta-autore">Autore</label>
-              <input type="text" id="meta-autore" placeholder="Cesare, Tacito, Sofocle…">
+              <label for="meta-autore-select">Autore</label>
+              <select id="meta-autore-select" title="Scegli dall'elenco degli autori (della lingua attiva) o «Dal libro / non in elenco»"></select>
+              <input type="text" id="meta-autore" placeholder="Autore (o specifica)" style="margin-top:4px;">
             </div>
             <div class="meta-field">
-              <label for="meta-opera">Opera e locus</label>
-              <input type="text" id="meta-opera" placeholder="De bello Gallico I, 1, 1–3">
+              <label for="meta-opera-select">Opera e locus</label>
+              <select id="meta-opera-select" title="Opere dell'autore scelto (a cascata)"></select>
+              <input type="text" id="meta-opera" placeholder="Opera e locus (es. I, 1, 1–3)" style="margin-top:4px;">
             </div>
             <div class="meta-field">
               <label for="meta-tipotesto">Tipo di testo</label>
@@ -11797,6 +11799,7 @@ const defaultState = () => ({
   id: 'project-' + Date.now(),
   meta: {
     lingua: 'latino', titolo: '', sottotitolo: '', autore: '', opera: '',
+    dalLibro: false,        // la versione proviene dal manuale scolastico (flag in cima al menù autore)
     genere: '',             // racconto · militare · filosofica · lettera · discorso · storica
     tipoTesto: 'prosa',     // 'prosa' | 'poesia' — in poesia l'impaginazione è a VERSI
     versoIniziale: 1,       // numero del primo verso (per i brani estratti da un'opera)
@@ -25501,6 +25504,8 @@ function syncTopbar() {
   document.getElementById('meta-autore').value = state.meta.autore || '';
   document.getElementById('meta-opera').value = state.meta.opera || '';
   document.getElementById('meta-titolo').value = state.meta.titolo || '';
+  populateMetaAutoreSelect();   // menù autore (per lingua) + opera a cascata
+  populateMetaOperaSelect();
   const tipoSel = document.getElementById('meta-tipotesto');
   if (tipoSel) tipoSel.value = (state.meta.tipoTesto === 'poesia') ? 'poesia' : 'prosa';
   const versoField = document.getElementById('meta-verso-field');
@@ -35067,6 +35072,121 @@ function togglePreview() {
 function onTestoChange(v) { state.meta.testoOriginale = v; persistCurrent(); renderPreview(); renderSidebarTabs(); renderStats(); }
 function onTraduzioneChange(v) { state.meta.traduzione = v; persistCurrent(); renderPreview(); }
 function onMetaChange(field, v) { state.meta[field] = v; persistCurrent(); renderPreview(); }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   CATALOGO AUTORI → OPERE (nucleo scolastico) per il menù a tendina del titolo.
+   Non esaustivo: gli autori e le opere effettivamente studiati al liceo. Voci
+   fuori elenco → «Autore/Opera non in elenco» (testo libero). In cima «Dal libro».
+   ════════════════════════════════════════════════════════════════════════════ */
+const AUTORI_OPERE = {
+  latino: [
+    { a: 'Cesare', o: ['De bello Gallico', 'De bello civili'] },
+    { a: 'Cicerone', o: ['Catilinarie', 'In Verrem', 'Pro Archia', 'Philippicae', 'De officiis', 'De amicitia (Laelius)', 'De senectute (Cato maior)', 'Tusculanae disputationes', 'De re publica', 'De oratore', 'Epistulae ad familiares', 'Epistulae ad Atticum'] },
+    { a: 'Livio', o: ['Ab urbe condita'] },
+    { a: 'Sallustio', o: ['De Catilinae coniuratione', 'Bellum Iugurthinum'] },
+    { a: 'Tacito', o: ['Annales', 'Historiae', 'Germania', 'Agricola', 'Dialogus de oratoribus'] },
+    { a: 'Svetonio', o: ['De vita Caesarum'] },
+    { a: 'Cornelio Nepote', o: ['De viris illustribus'] },
+    { a: 'Seneca', o: ['Epistulae morales ad Lucilium', 'De brevitate vitae', 'De ira', 'De clementia', 'De providentia', 'Naturales quaestiones', 'Medea', 'Phaedra', 'Thyestes'] },
+    { a: 'Plinio il Vecchio', o: ['Naturalis historia'] },
+    { a: 'Plinio il Giovane', o: ['Epistulae', 'Panegyricus'] },
+    { a: 'Quintiliano', o: ['Institutio oratoria'] },
+    { a: 'Virgilio', o: ['Eneide', 'Georgiche', 'Bucoliche'] },
+    { a: 'Orazio', o: ['Odi (Carmina)', 'Satire (Sermones)', 'Epistole', 'Epodi', 'Ars poetica'] },
+    { a: 'Ovidio', o: ['Metamorfosi', 'Ars amatoria', 'Heroides', 'Fasti', 'Tristia', 'Amores'] },
+    { a: 'Catullo', o: ['Liber (Carmina)'] },
+    { a: 'Lucrezio', o: ['De rerum natura'] },
+    { a: 'Tibullo', o: ['Elegiae'] },
+    { a: 'Properzio', o: ['Elegiae'] },
+    { a: 'Marziale', o: ['Epigrammata'] },
+    { a: 'Giovenale', o: ['Saturae'] },
+    { a: 'Fedro', o: ['Fabulae'] },
+    { a: 'Plauto', o: ['Aulularia', 'Miles gloriosus', 'Menaechmi', 'Amphitruo', 'Pseudolus'] },
+    { a: 'Terenzio', o: ['Adelphoe', 'Andria', 'Heautontimorumenos', 'Eunuchus', 'Phormio'] },
+    { a: 'Apuleio', o: ['Metamorphoses (Asinus aureus)', 'Apologia'] },
+    { a: 'Petronio', o: ['Satyricon'] },
+    { a: "Agostino", o: ['Confessiones', 'De civitate Dei'] },
+    { a: 'Boezio', o: ['De consolatione philosophiae'] },
+  ],
+  greco: [
+    { a: 'Omero', o: ['Iliade', 'Odissea'] },
+    { a: 'Esiodo', o: ['Teogonia', 'Le opere e i giorni'] },
+    { a: 'Erodoto', o: ['Storie'] },
+    { a: 'Tucidide', o: ['La guerra del Peloponneso'] },
+    { a: 'Senofonte', o: ['Anabasi', 'Elleniche', 'Ciropedia', 'Memorabili', 'Economico'] },
+    { a: 'Platone', o: ['Apologia di Socrate', 'Critone', 'Fedone', 'Simposio', 'Repubblica', 'Fedro', 'Gorgia', 'Protagora', 'Menone'] },
+    { a: 'Aristotele', o: ['Etica Nicomachea', 'Politica', 'Poetica', 'Retorica', 'Metafisica'] },
+    { a: 'Lisia', o: ['Contro Eratostene', "Per l'uccisione di Eratostene"] },
+    { a: 'Demostene', o: ['Filippiche', 'Olintiache', 'Sulla corona'] },
+    { a: 'Isocrate', o: ['Panegirico', 'Contro i sofisti'] },
+    { a: 'Eschilo', o: ['Agamennone', 'Coefore', 'Eumenidi', 'Persiani', 'Prometeo incatenato', 'Sette contro Tebe'] },
+    { a: 'Sofocle', o: ['Edipo re', 'Antigone', 'Aiace', 'Elettra', 'Edipo a Colono', 'Filottete', 'Trachinie'] },
+    { a: 'Euripide', o: ['Medea', 'Baccanti', 'Ifigenia in Aulide', 'Ippolito', 'Le Troiane', 'Elettra', 'Alcesti', 'Andromaca'] },
+    { a: 'Aristofane', o: ['Le nuvole', 'Le rane', 'Gli uccelli', 'Lisistrata', 'Le vespe', 'Gli Acarnesi', 'La pace'] },
+    { a: 'Pindaro', o: ['Olimpiche', 'Pitiche', 'Nemee', 'Istmiche'] },
+    { a: 'Saffo', o: ['Frammenti (Carmi)'] },
+    { a: 'Alceo', o: ['Frammenti'] },
+    { a: 'Anacreonte', o: ['Frammenti'] },
+    { a: 'Teocrito', o: ['Idilli'] },
+    { a: 'Callimaco', o: ['Inni', 'Aitia', 'Epigrammi'] },
+    { a: 'Apollonio Rodio', o: ['Argonautiche'] },
+    { a: 'Plutarco', o: ['Vite parallele', 'Moralia'] },
+    { a: 'Luciano', o: ['Dialoghi dei morti', 'Storia vera'] },
+    { a: 'Polibio', o: ['Storie'] },
+    { a: 'Menandro', o: ['Il misantropo (Dyskolos)', "L'arbitrato (Epitrepontes)"] },
+    { a: 'Teofrasto', o: ['Caratteri'] },
+    { a: 'Eschine', o: ['Contro Ctesifonte'] },
+    { a: 'Diodoro Siculo', o: ['Bibliotheca historica'] },
+    { a: 'Esopo', o: ['Favole'] },
+    { a: 'Antologia Palatina', o: ['Epigrammi'] },
+  ],
+};
+function _autoriFor(lang) { return AUTORI_OPERE[lang === 'greco' ? 'greco' : 'latino'] || []; }
+function _opereOf(lang, autore) { const e = _autoriFor(lang).find(x => x.a === autore); return e ? e.o : []; }
+
+/* Popola il <select> autore in base alla lingua attiva; «Dal libro» in cima. */
+function populateMetaAutoreSelect() {
+  const sel = document.getElementById('meta-autore-select');
+  if (!sel) return;
+  const lang = state.meta.lingua;
+  const cur = state.meta.autore || '';
+  const known = _autoriFor(lang).some(x => x.a === cur);
+  const top = `<option value="__libro__">📖 Versione dal libro di testo</option>
+    <option value="__altro__">— Autore non in elenco (digita sotto) —</option>`;
+  const opts = _autoriFor(lang).map(x => `<option value="${escapeHtml(x.a)}">${escapeHtml(x.a)}</option>`).join('');
+  sel.innerHTML = top + opts;
+  sel.value = known ? cur : (state.meta.dalLibro ? '__libro__' : '__altro__');
+}
+/* Popola il <select> opera a cascata dall'autore selezionato. */
+function populateMetaOperaSelect() {
+  const sel = document.getElementById('meta-opera-select');
+  if (!sel) return;
+  const lang = state.meta.lingua;
+  const opere = _opereOf(lang, state.meta.autore || '');
+  const cur = state.meta.opera || '';
+  const known = opere.includes(cur);
+  const top = `<option value="__altro__">— Opera non in elenco / con locus (digita sotto) —</option>`;
+  sel.innerHTML = top + opere.map(o => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join('');
+  sel.value = known ? cur : '__altro__';
+  sel.disabled = opere.length === 0;
+}
+function onMetaAutoreSelect(val) {
+  if (val === '__libro__') { state.meta.dalLibro = true; }
+  else if (val === '__altro__') { state.meta.dalLibro = false; }
+  else {
+    state.meta.dalLibro = false;
+    state.meta.autore = val;
+    const inp = document.getElementById('meta-autore'); if (inp) inp.value = val;
+  }
+  populateMetaOperaSelect();
+  persistCurrent(); renderPreview();
+}
+function onMetaOperaSelect(val) {
+  if (val === '__altro__') return;   // testo libero: lascia il campo all'utente
+  state.meta.opera = val;
+  const inp = document.getElementById('meta-opera'); if (inp) inp.value = val;
+  persistCurrent(); renderPreview();
+}
 /* Passa prosa ⇄ poesia. NON ri-spezza da solo le unità già create (per non
    perdere le analisi): se ci sono già frasi, propone di rigenerare i versi. */
 function onTipoTestoChange(v) {
@@ -38416,6 +38536,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('meta-autore').addEventListener('input', e => onMetaChange('autore', e.target.value));
   document.getElementById('meta-opera').addEventListener('input', e => onMetaChange('opera', e.target.value));
   document.getElementById('meta-titolo').addEventListener('input', e => onMetaChange('titolo', e.target.value));
+  const autSel = document.getElementById('meta-autore-select');
+  if (autSel) autSel.addEventListener('change', e => onMetaAutoreSelect(e.target.value));
+  const opSel = document.getElementById('meta-opera-select');
+  if (opSel) opSel.addEventListener('change', e => onMetaOperaSelect(e.target.value));
   const tipoSelEl = document.getElementById('meta-tipotesto');
   if (tipoSelEl) tipoSelEl.addEventListener('change', e => onTipoTestoChange(e.target.value));
   const versoEl = document.getElementById('meta-versoiniziale');
