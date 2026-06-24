@@ -11769,7 +11769,16 @@ const defaultState = () => ({
   //                      token, batch operativo sull'intero brano
   //   'frase-per-frase'— wizard sequenziale: completa grammar+logic+sintassi+
   //                      traduzione di una frase prima di passare alla successiva
+  // ASSI ORTOGONALI (riorganizzazione): la scelta di lavoro è scomposta in
+  //   · metodo  — COME si analizza
+  //   · vista   — QUANTO testo si vede
+  //   · mode    — CON QUANTA disciplina (Guida: libera/guidata) [campo 'mode']
+  //   · profilo — CHI sei (medie/biennio/triennio) [localStorage]
+  // `approach` resta come valore DERIVATO da (metodo × vista) per il dispatcher
+  // di rendering esistente, così la pipeline non cambia.
   approach: 'attuale',
+  metodo: 'strati',      // 'strati' (grammatica→logica→periodo) | 'valenziale' (Scheletro)
+  vista: 'frase',        // 'frase' (frase corrente) | 'intero' (brano intero)
   approachShown: false,  // true dopo che l'utente ha effettuato (almeno una volta) la scelta
   // Wizard "frase per frase": tieni traccia dello step corrente per la frase corrente
   frasePerFraseStep: 1,  // 1=grammar, 2=logic, 3=periodale, 4=traduzione frase
@@ -11802,6 +11811,10 @@ function getUserProfile() {
   return null;
 }
 
+/* Mappa profilo scolastico → densità d'interfaccia (data-level). Il vecchio asse
+   «Livello» è stato assorbito qui: medie→base, biennio→intermedio, triennio→
+   avanzato. Le regole CSS su body[data-level] continuano così a funzionare. */
+const PROFILE_TO_LEVEL = { medie: 'base', biennio: 'intermedio', triennio: 'avanzato' };
 function applyProfileToBody() {
   const profile = getUserProfile();
   if (profile) {
@@ -11809,6 +11822,7 @@ function applyProfileToBody() {
   } else {
     delete document.body.dataset.profile;
   }
+  document.body.dataset.level = PROFILE_TO_LEVEL[profile] || 'intermedio';
   updateProfileChip();
 }
 
@@ -11926,6 +11940,15 @@ function _migrateProject(p) {
   if (m.versoIniziale == null) m.versoIniziale = 1;
   if (m.metrica == null || typeof m.metrica !== 'object') m.metrica = { metroDefault: '', perVerse: {} };
   if (m.metrica.perVerse == null) m.metrica.perVerse = {};
+  // Riorganizzazione a 4 assi: dai vecchi `approach` ricava metodo/vista/mode.
+  if (p.metodo == null || p.vista == null) {
+    const a = p.approach || 'attuale';
+    if (a === 'scheletro') { p.metodo = 'valenziale'; p.vista = p.vista || 'frase'; }
+    else if (a === 'integrale') { p.metodo = 'strati'; p.vista = 'intero'; }
+    else if (a === 'frase-per-frase') { p.metodo = 'strati'; p.vista = 'frase'; if (p.mode !== 'guided') p.mode = 'guided'; }
+    else { p.metodo = 'strati'; p.vista = 'frase'; }            // 'attuale' o ignoto
+    p.approach = (p.metodo === 'valenziale') ? 'scheletro' : (p.vista === 'intero' ? 'integrale' : 'attuale');
+  }
   return p;
 }
 
@@ -25464,7 +25487,8 @@ function getLevel() {
   try { const v = localStorage.getItem(LEVEL_STORAGE_KEY); if (LEVEL_PRESETS[v]) return v; } catch (e) {}
   return 'intermedio';
 }
-function applyLevelToBody() { document.body.dataset.level = getLevel(); }
+/* Densità: derivata dal PROFILO (l'asse «Livello» autonomo è stato rimosso). */
+function applyLevelToBody() { document.body.dataset.level = PROFILE_TO_LEVEL[getUserProfile()] || 'intermedio'; }
 function toggleQuickBarCustom() { quickBarCustomOpen = !quickBarCustomOpen; renderQuickBar(); }
 
 function setLevel(level) {
@@ -25497,29 +25521,26 @@ function renderQuickBar() {
   const isMedie = profile === 'medie';
   const level = getLevel();
 
-  const levelBtns = [
-    { value: 'base',       label: 'Base',       title: 'Percorso guidato, interfaccia essenziale · ideale per cominciare' },
-    { value: 'intermedio', label: 'Intermedio', title: 'Analisi per frase su tre livelli · equilibrio fra guida e libertà' },
-    { value: 'avanzato',   label: 'Avanzato',   title: 'Vista integrale e tutti gli strumenti · per chi traduce in autonomia' },
-  ];
+  const metodo = state.metodo || 'strati';
+  const vista = state.vista || 'frase';
 
-  // Per le medie la modalità è bloccata su "guidata" (vincolo didattico):
-  // il pulsante "Libera" appare disabilitato — il CSS lo nasconde del tutto
-  // tramite body[data-profile="medie"], ma teniamo l'attributo per chiarezza.
-  const modeBtns = [
-    { value: 'free',   icon: '🪶', label: 'Libera',   title: 'Tutti gli strumenti sbloccati · ordine a tua discrezione' },
-    { value: 'guided', icon: '🧭', label: 'Guidata',  title: 'Wizard a 9 tappe in 4 macro-fasi (Lettura · Analisi · Traduzione · Versione)' },
+  const metodoBtns = [
+    { value: 'strati',     icon: '🧱', label: 'Per strati',            title: 'Analisi a livelli: grammatica → analisi logica → analisi del periodo' },
+    { value: 'valenziale', icon: '🦴', label: 'Valenziale (Scheletro)', title: 'Dal nucleo del verbo: verbo → soggetto/oggetto → complementi → ordine SVO (come i classicisti esperti)' },
   ];
-  const approachBtns = [
-    { value: 'integrale',       icon: '🌐', label: 'Integrale',  title: 'Tutta la versione mostrata insieme · ottima per brani coesi e batch' },
-    { value: 'attuale',         icon: '🎯', label: 'Attuale',    title: 'Per frase, con libertà di salto · approccio bilanciato' },
-    { value: 'frase-per-frase', icon: '📍', label: 'Frase/frase',title: 'Wizard sequenziale per ogni frase · massima disciplina didattica' },
-    { value: 'scheletro',       icon: '🦴', label: 'Scheletro',  title: 'Verbi → proposizioni → soggetto/oggetto → complementi → traduzione SVO · come traducono i classicisti esperti' },
+  const vistaBtns = [
+    { value: 'frase',  icon: '🎯', label: 'Frase corrente', title: 'Una frase (o un verso) alla volta, con libertà di salto' },
+    { value: 'intero', icon: '🌐', label: 'Brano intero',   title: 'Tutto il testo mostrato insieme · utile per brani coesi e lavoro in blocco' },
+  ];
+  // GUIDA (ex «modalità»): per le medie è bloccata su "guidata" (vincolo didattico).
+  const guidaBtns = [
+    { value: 'free',   icon: '🪶', label: 'Libera',  title: 'Tutti gli strumenti sbloccati, nell’ordine che preferisci' },
+    { value: 'guided', icon: '🧭', label: 'Guidata', title: 'Percorso sequenziale a tappe: Lettura → Analisi → Traduzione → Versione' },
   ];
   const profileBtns = [
-    { value: 'medie',    icon: '🌱', label: 'Medie',    title: 'Latino · solo guidata · interfaccia ridotta' },
-    { value: 'biennio',  icon: '🌿', label: 'Biennio',  title: 'Latino · greco · funzionalità intermedie' },
-    { value: 'triennio', icon: '🌳', label: 'Triennio', title: 'Tutto sbloccato · profilo avanzato / universitario' },
+    { value: 'medie',    icon: '🌱', label: 'Medie',          title: 'Solo latino · percorso guidato · interfaccia essenziale' },
+    { value: 'biennio',  icon: '🌿', label: 'Biennio',        title: 'Latino e greco · strumenti intermedi' },
+    { value: 'triennio', icon: '🌳', label: 'Triennio/Univ.', title: 'Tutto sbloccato · profilo avanzato / universitario' },
   ];
 
   const seg = (label, btns, currentValue, onclickFn, extraAttr) => {
@@ -25539,28 +25560,15 @@ function renderQuickBar() {
             </div>`;
   };
 
-  // Controllo principale: UN solo selettore "Livello".
-  const levelSeg = `<div class="quick-bar-group quick-bar-level">
-      <span class="quick-bar-label">Livello</span>
-      <div class="quick-seg">${levelBtns.map(b =>
-        `<button class="quick-seg-btn ${b.value === level ? 'active' : ''}" data-mode="${b.value}"
-           onclick="setLevel('${b.value}')" title="${escapeHtml(b.title)}">${escapeHtml(b.label)}</button>`
-      ).join('')}</div>
-    </div>`;
-
-  // Expander "Personalizza": ri-espone i controlli fini (Modalità/Approccio/Profilo).
-  const personalizeBtn = `<button class="quick-personalize" type="button" aria-expanded="${quickBarCustomOpen}"
-      onclick="toggleQuickBarCustom()" title="Imposta a mano modalità, approccio e profilo didattico">
-      ${quickBarCustomOpen ? 'Nascondi opzioni' : 'Personalizza'}<span class="qp-caret">${quickBarCustomOpen ? '▴' : '▾'}</span>
-    </button>`;
-
-  const customSegs = quickBarCustomOpen ? `<div class="quick-bar-custom">
-      ${seg('Modalità', modeBtns, mode, 'quickSwitchMode', { disabledFor: b => isMedie && b.value === 'free' })}
-      ${seg('Approccio', approachBtns, approach, 'quickSwitchApproach', null)}
-      ${seg('Profilo', profileBtns, profile, 'quickSwitchProfile', null)}
-    </div>` : '';
-
-  bar.innerHTML = levelSeg + personalizeBtn + customSegs;
+  // QUATTRO ASSI ORTOGONALI, sempre visibili: Profilo · Metodo · Vista · Guida.
+  // In modalità Guidata la Vista non si applica (il wizard è sequenziale per
+  // frase): il gruppo Vista resta disabilitato, per chiarezza.
+  const vistaDisabled = (mode === 'guided');
+  bar.innerHTML =
+    seg('Profilo', profileBtns, profile, 'quickSwitchProfile', null) +
+    seg('Metodo',  metodoBtns,  metodo,  'setMetodo', null) +
+    seg('Vista',   vistaBtns,   vista,   'setVista', { disabledFor: () => vistaDisabled }) +
+    seg('Guida',   guidaBtns,   mode,    'quickSwitchMode', { disabledFor: b => isMedie && b.value === 'free' });
 }
 
 /* Wrapper sottili dei setter esistenti, con verifica e toast informativo.
@@ -35147,15 +35155,50 @@ const APPROACH_DESCRIPTORS = {
 
 function getApproach() { return state.approach || 'attuale'; }
 
-function setApproach(newApproach) {
-  if (!APPROACH_DESCRIPTORS[newApproach]) return;
-  state.approach = newApproach;
+/* ── BRIDGE ASSI ↔ approach (riorganizzazione a 4 assi) ───────────────────────
+   `approach` è DERIVATO dagli assi e serve solo al dispatcher di rendering:
+   metodo='valenziale' → 'scheletro'; altrimenti vista='intero' → 'integrale';
+   altrimenti 'attuale'. Il vecchio 'frase-per-frase' NON si genera più: la
+   disciplina sequenziale è la Guida (modalità guidata). */
+function deriveApproachFromAxes() {
+  if (state.metodo === 'valenziale') return 'scheletro';
+  if (state.vista === 'intero') return 'integrale';
+  return 'attuale';
+}
+function _syncApproach() { state.approach = deriveApproachFromAxes(); }
+
+function setMetodo(value) {
+  const v = (value === 'valenziale') ? 'valenziale' : 'strati';
+  if (state.metodo === v) return;
+  state.metodo = v;
   state.approachShown = true;
-  if (newApproach === 'frase-per-frase') state.frasePerFraseStep = 1;
+  _syncApproach();
   persistCurrent();
   renderAll();
-  const d = APPROACH_DESCRIPTORS[newApproach];
-  showToast(`${d.icon} Approccio: ${d.title}`);
+  showToast(v === 'valenziale' ? '🦴 Metodo: Valenziale (Scheletro)' : '🧱 Metodo: Per strati');
+}
+function setVista(value) {
+  const v = (value === 'intero') ? 'intero' : 'frase';
+  if (state.vista === v) return;
+  state.vista = v;
+  _syncApproach();
+  persistCurrent();
+  renderAll();
+  showToast(v === 'intero' ? '🌐 Vista: Brano intero' : '🎯 Vista: Frase corrente');
+}
+
+/* Compat: i chiamanti storici (modale, palette) passano un vecchio `approach`;
+   lo traduciamo negli ASSI e poi deriviamo. */
+function setApproach(newApproach) {
+  if (newApproach === 'scheletro') { state.metodo = 'valenziale'; }
+  else if (newApproach === 'integrale') { state.metodo = 'strati'; state.vista = 'intero'; }
+  else if (newApproach === 'frase-per-frase') { state.metodo = 'strati'; state.vista = 'frase'; if (getUserProfile() !== 'medie') state.mode = 'guided'; }
+  else if (newApproach === 'attuale') { state.metodo = 'strati'; state.vista = 'frase'; }
+  else return;
+  state.approachShown = true;
+  _syncApproach();
+  persistCurrent();
+  renderAll();
 }
 
 function renderApproachOptions() {
@@ -37823,10 +37866,12 @@ function buildCommandPaletteIndex() {
   add('Modalità · Guidata',     'Modalità',  () => switchMode('guided'), '', '🧭');
 
   // === Approccio ===
-  add('Approccio · 🌐 Integrale',           'Approccio', () => setApproach('integrale'),        '', '🌐');
-  add('Approccio · 🎯 Attuale (per frase)', 'Approccio', () => setApproach('attuale'),          '', '🎯');
-  add('Approccio · 📍 Frase per frase',     'Approccio', () => setApproach('frase-per-frase'),  '', '📍');
-  add('Approccio · 🦴 Scheletro prima',     'Approccio', () => setApproach('scheletro'),        '', '🦴');
+  add('Metodo · 🧱 Per strati',              'Metodo', () => setMetodo('strati'),       '', '🧱');
+  add('Metodo · 🦴 Valenziale (Scheletro)',  'Metodo', () => setMetodo('valenziale'),   '', '🦴');
+  add('Vista · 🎯 Frase corrente',           'Vista',  () => setVista('frase'),         '', '🎯');
+  add('Vista · 🌐 Brano intero',             'Vista',  () => setVista('intero'),        '', '🌐');
+  add('Guida · 🪶 Libera',                   'Guida',  () => quickSwitchMode('free'),   '', '🪶');
+  add('Guida · 🧭 Guidata (wizard)',         'Guida',  () => quickSwitchMode('guided'), '', '🧭');
   add('Backup · 💾 Esporta tutti i progetti (JSON)', 'Backup', () => exportAllProjects(),        '', '💾');
   add('Backup · 💾 Esporta solo il brano corrente',  'Backup', () => exportCurrentProjectJson(), '', '💾');
   add('Backup · 📥 Importa progetti da file (JSON)',  'Backup', () => importProjectsFromFile(),   '', '📥');
