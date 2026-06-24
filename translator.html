@@ -529,11 +529,17 @@ input, textarea, select { font-family: inherit; color: inherit; }
   letter-spacing: 0.05em;
   transition: all var(--transition-base);
 }
+/* Ogni pulsante porta il colore della SUA lingua anche da spento, così il
+   toggle si legge a colpo d'occhio come «rosso = latino · blu = greco». */
+.lang-toggle button[data-lang="latino"] { color: #A22E37; }
+.lang-toggle button[data-lang="greco"]  { color: #1800AC; }
 .lang-toggle button.active {
-  background: var(--poetrify-primary);
-  color: var(--poetrify-paper);
+  background: var(--poetrify-lang-accent);   /* rosso se latino attivo · blu se greco attivo */
+  color: #fff;
   box-shadow: 0 2px 6px var(--poetrify-shadow-strong);
 }
+body.dark-mode .lang-toggle button[data-lang="latino"] { color: #e58a90; }
+body.dark-mode .lang-toggle button[data-lang="greco"]  { color: #8b7dff; }
 .save-status {
   display: flex;
   align-items: center;
@@ -4255,8 +4261,8 @@ body[data-level="avanzato"] .syntax-tree-legend {
   color: var(--poetrify-primary);
 }
 .quick-seg-btn.active {
-  background: var(--poetrify-primary);
-  color: var(--poetrify-paper);
+  background: var(--poetrify-lang-accent);   /* rosso in latino · blu in greco (variabile definita) */
+  color: #fff;
   box-shadow: 0 1px 3px var(--poetrify-shadow-strong);
 }
 .quick-seg-btn[disabled] {
@@ -4269,13 +4275,9 @@ body[data-level="avanzato"] .syntax-tree-legend {
   font-size: 13px;
   line-height: 1;
 }
-/* Variante "monolingue" per il greco e per il latino — l'accento cambia */
-body[data-lang="latino"] .quick-seg-btn.active {
-  background: var(--poetrify-accent-lat);
-}
-body[data-lang="greco"] .quick-seg-btn.active {
-  background: var(--poetrify-accent-gr, var(--poetrify-primary));
-}
+/* (Le vecchie regole monolingue usavano variabili inesistenti
+   --poetrify-accent-lat/--poetrify-accent-gr → sfondo non valido → testo bianco
+   invisibile. Ora il colore lo dà --poetrify-lang-accent nella regola base.) */
 /* Profilo medie: nasconde l'opzione "libera" del segmented mode (le medie
  * sono vincolate a guidata) e nasconde "Frase per frase" dell'approccio
  * (l'approccio è quello "attuale" by default). Manteniamo gli stili coerenti
@@ -25425,7 +25427,13 @@ function renderAll() {
 }
 
 function syncTopbar() {
-  document.body.dataset.lang = state.meta.lingua;
+  // LINGUA ATTIVA DELLA UI: nell'archivio (scheda D) è il BRANCH che si sta
+  // sfogliando; altrove è la lingua del progetto aperto. Tutta l'identità
+  // cromatica e le etichette seguono QUESTA, non il progetto caricato — così
+  // sfogliando il branch greco la UI diventa blu anche se il brano aperto è
+  // latino (e viceversa). Era qui il bug: il body usava state.meta.lingua.
+  const activeLang = (state.currentStep === 4 && archiveFilters.lingua) ? archiveFilters.lingua : state.meta.lingua;
+  document.body.dataset.lang = activeLang;
   document.getElementById('meta-autore').value = state.meta.autore || '';
   document.getElementById('meta-opera').value = state.meta.opera || '';
   document.getElementById('meta-titolo').value = state.meta.titolo || '';
@@ -25441,9 +25449,7 @@ function syncTopbar() {
   // Titolo della versione mostrato nell'header minimale (mobile/tablet).
   const tbTitle = document.getElementById('topbar-title');
   if (tbTitle) tbTitle.textContent = (state.meta.titolo && state.meta.titolo.trim()) ? state.meta.titolo.trim() : 'Versione senza titolo';
-  // Nell'archivio (scheda D) il toggle riflette il BRANCH che si sta sfogliando;
-  // altrove riflette la lingua del progetto su cui si sta lavorando.
-  const activeLang = (state.currentStep === 4 && archiveFilters.lingua) ? archiveFilters.lingua : state.meta.lingua;
+  // Il toggle in alto a destra riflette la lingua attiva (già calcolata sopra).
   document.querySelectorAll('.lang-toggle button').forEach(b => {
     b.classList.toggle('active', b.dataset.lang === activeLang);
   });
