@@ -28261,15 +28261,39 @@ function renderArchiveCard(p) {
           <span class="archive-card-progress-pct">${completion}%</span>
         </div>
       </div>
-      <div class="archive-card-actions">
+      <div class="archive-card-actions" data-card-lang="${p.meta.lingua === 'greco' ? 'greco' : 'latino'}">
         ${isCurrent
           ? `<button class="btn btn-ghost btn-sm" onclick="goToStep(1)">Vai al brano →</button>`
           : `<button class="btn btn-brand-soft btn-sm" onclick="loadProjectById('${p.id}')">${status === 'done' ? 'Rivedi' : 'Riprendi'} →</button>`}
         <button class="btn btn-ghost btn-sm" onclick="duplicateProject('${p.id}')" title="Duplica">⎘</button>
+        <button class="btn btn-ghost btn-sm" onclick="transferProjectLanguage('${p.id}')" title="Sposta nell'altra lingua (latino ⇄ greco) — utile se la lingua era stata scelta per errore">⇄ ${p.meta.lingua === 'greco' ? 'Lat' : 'Gr'}</button>
         <button class="btn btn-ghost btn-sm" onclick="exportProjectFromArchive('${p.id}')" title="Esporta">⤓</button>
         ${isCurrent ? '' : `<button class="btn btn-danger-soft btn-sm" onclick="deleteProjectById('${p.id}'); renderEditor(); renderSidebarTabs();" title="Elimina">🗑</button>`}
       </div>
     </div>`;
+}
+
+/* Sposta un brano da un ramo linguistico all'altro (latino ⇄ greco). Utile
+   quando la lingua era stata scelta per errore a monte (es. testo greco creato
+   nel ramo latino). Cambia solo meta.lingua: l'analisi resta invariata. */
+function transferProjectLanguage(id) {
+  const all = loadAllProjects();
+  const i = all.findIndex(x => x.id === id);
+  if (i < 0 || !all[i].meta) return;
+  const from = all[i].meta.lingua === 'greco' ? 'greco' : 'latino';
+  const to = from === 'greco' ? 'latino' : 'greco';
+  const name = all[i].meta.titolo || all[i].meta.opera || 'questo brano';
+  if (!confirm(`Spostare «${name}» dal ramo ${from} al ramo ${to}?\n\nL'analisi (grammatica, logica, periodo…) resta invariata: cambia solo la lingua di lavoro e il ramo d'archivio.`)) return;
+  if (state.id === id) {
+    state.meta.lingua = to;
+    persistCurrent();
+  } else {
+    all[i].meta.lingua = to;
+    _safeSetProjects(all);
+  }
+  if (typeof archiveFilters !== 'undefined') archiveFilters.lingua = to;   // segui il brano nel ramo di arrivo
+  renderAll();
+  showToast(`Brano spostato nel ramo ${to === 'greco' ? 'greco' : 'latino'}`);
 }
 
 /* ============================================
