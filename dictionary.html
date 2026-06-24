@@ -1840,6 +1840,19 @@ body.poetrify-dark .dict-prev-lemma, body.poetrify-dark .dict-next-lemma { backg
   header.topbar small { display: none; }
   section { padding: 12px 14px; }
 }
+/* GATE LINGUA del dizionario · àncora il settore all'ingresso */
+.dict-langgate { position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; }
+.dict-langgate-box { background: #fff; border-radius: 12px; padding: 28px 32px; max-width: 560px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.35); text-align: center; }
+.dict-langgate-box h2 { margin: 0 0 6px; font-size: 22px; }
+.dict-langgate-box p { margin: 0; font-size: 13px; opacity: 0.8; }
+.dict-langgate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
+@media (max-width: 520px) { .dict-langgate-grid { grid-template-columns: 1fr; } }
+.dict-langgate-card { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 26px 18px; border: 2px solid #ccc; border-radius: 10px; background: #fff; cursor: pointer; transition: all 0.15s ease; }
+.dict-langgate-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
+.dict-langgate-card .ic { font-size: 40px; line-height: 1; }
+.dict-langgate-card .t { font-size: 21px; font-weight: 800; }
+.dict-langgate-card.lat { border-color: #A22E37; } .dict-langgate-card.lat .ic, .dict-langgate-card.lat .t { color: #A22E37; } .dict-langgate-card.lat:hover { background: #fbecee; }
+.dict-langgate-card.gr { border-color: #1800AC; } .dict-langgate-card.gr .ic, .dict-langgate-card.gr .t { color: #1800AC; } .dict-langgate-card.gr .ic { font-family: 'Times New Roman', serif; font-style: italic; } .dict-langgate-card.gr:hover { background: #ede9fc; }
 </style>
 </head>
 <body>
@@ -1943,6 +1956,18 @@ body.poetrify-dark .dict-prev-lemma, body.poetrify-dark .dict-next-lemma { backg
 <!-- ══════════════════════════════════════════════════════════════════════════
      BOOTSTRAP MODULARE
      ══════════════════════════════════════════════════════════════════════════ -->
+<!-- GATE LINGUA · finestra d'ingresso che àncora il settore (una volta per sessione) -->
+<div id="dict-langgate" class="dict-langgate" style="display:none;">
+  <div class="dict-langgate-box">
+    <h2>In che lingua vuoi consultare?</h2>
+    <p>Scegli il settore del dizionario: la consultazione resta ancorata a quella lingua. Potrai cambiarla dal selettore in alto.</p>
+    <div class="dict-langgate-grid">
+      <button class="dict-langgate-card lat" data-lang="latino"><span class="ic">🏛</span><span class="t">Latino</span></button>
+      <button class="dict-langgate-card gr" data-lang="greco"><span class="ic">α</span><span class="t">Greco antico</span></button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 import { initDictionary, DictionaryApp, DICTIONARY_META }
   from './modules/dictionary/index.js';
@@ -1955,6 +1980,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const app = initDictionary();
   window.PoetrifyDictionary = app;
   window.PoetrifyDictionaryClass = DictionaryApp;
+
+  // GATE LINGUA · una volta per sessione, àncora il settore del dizionario.
+  try {
+    const KEY = 'poetrify-dict-langgate-session';
+    const gate = document.getElementById('dict-langgate');
+    if (gate && !sessionStorage.getItem(KEY)) {
+      gate.style.display = 'flex';
+      gate.querySelectorAll('.dict-langgate-card').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const lang = btn.dataset.lang === 'greco' ? 'greco' : 'latino';
+          try { sessionStorage.setItem(KEY, lang); } catch (e) {}
+          const sel = document.getElementById('dict-lang-select');
+          if (sel) { sel.value = lang; sel.dispatchEvent(new Event('change', { bubbles: true })); }
+          gate.style.display = 'none';
+        });
+      });
+    }
+  } catch (e) { /* il gate è un di più: non bloccare il dizionario */ }
 
   console.log('%c Poetrify dictionary · module OK ', BADGE_OK,
     `engine v${ENGINE_META.version} · dictionary v${DICTIONARY_META.version}`);

@@ -4345,6 +4345,26 @@ body.poetrify-dark .quick-bar {
   margin: 18px 0 8px;
 }
 @media (max-width: 820px) { .profile-grid { grid-template-columns: 1fr; } }
+/* GATE LINGUA · due grandi carte cromaticamente distinte */
+.langgate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0 4px; }
+@media (max-width: 560px) { .langgate-grid { grid-template-columns: 1fr; } }
+.langgate-card {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 26px 18px; border-radius: var(--radius-md); cursor: pointer;
+  border: 2px solid var(--poetrify-rule); background: var(--poetrify-paper);
+  transition: all var(--transition-base);
+}
+.langgate-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--poetrify-shadow-strong); }
+.langgate-icon { font-size: 40px; line-height: 1; }
+.langgate-title { font-family: var(--font-display); font-size: 22px; font-weight: 800; }
+.langgate-sub { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.03em; opacity: 0.8; }
+.langgate-lat { border-color: #A22E37; }
+.langgate-lat .langgate-title, .langgate-lat .langgate-icon { color: #A22E37; }
+.langgate-lat:hover { background: #fbecee; }
+.langgate-gr { border-color: #1800AC; }
+.langgate-gr .langgate-title, .langgate-gr .langgate-icon { color: #1800AC; }
+.langgate-gr .langgate-icon { font-family: 'Times New Roman', serif; font-style: italic; }
+.langgate-gr:hover { background: #ede9fc; }
 .profile-card {
   text-align: left;
   background: var(--poetrify-paper);
@@ -11303,6 +11323,26 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
   </div>
 </div>
 
+<!-- GATE LINGUA · finestra d'ingresso che àncora il settore (latino/greco) -->
+<div class="modal-backdrop" id="modal-langgate">
+  <div class="modal" style="max-width: 600px;">
+    <h3 class="modal-title">In che lingua vuoi lavorare?</h3>
+    <p class="modal-subtitle">Scegli il settore: tutto ciò che fai resta ancorato a quella lingua, nel suo ramo separato — niente travasi accidentali. Potrai cambiarlo in qualsiasi momento dal toggle in alto a destra.</p>
+    <div class="langgate-grid">
+      <button class="langgate-card langgate-lat" onclick="chooseGateLanguage('latino')">
+        <span class="langgate-icon">🏛</span>
+        <span class="langgate-title">Latino</span>
+        <span class="langgate-sub">Ramo latino · rosso pompeiano</span>
+      </button>
+      <button class="langgate-card langgate-gr" onclick="chooseGateLanguage('greco')">
+        <span class="langgate-icon">α</span>
+        <span class="langgate-title">Greco antico</span>
+        <span class="langgate-sub">Ramo greco · blu Poetrify</span>
+      </button>
+    </div>
+  </div>
+</div>
+
 <!-- COMMAND PALETTE — Ctrl+K → barra di ricerca azioni rapide -->
 <div class="modal-backdrop" id="modal-command-palette">
   <div class="modal modal-command-palette" role="dialog" aria-label="Command palette">
@@ -11869,6 +11909,30 @@ function closeProfileModal() {
     try { localStorage.setItem(PROFILE_STORAGE_KEY, 'triennio'); } catch (e) {}
     applyProfileToBody();
   }
+}
+
+/* ── GATE LINGUA · àncora il settore (latino/greco) all'ingresso ──────────────
+   Compare una volta per SESSIONE (sessionStorage): scelto il latino si entra nel
+   ramo latino, scelto il greco nel ramo greco. */
+const LANGGATE_SESSION_KEY = 'poetrify-langgate-session';
+function showLanguageGate() {
+  const m = document.getElementById('modal-langgate');
+  if (m) m.classList.add('open');
+}
+function maybeShowLanguageGate() {
+  try { if (sessionStorage.getItem(LANGGATE_SESSION_KEY)) return; } catch (e) {}
+  if (!getUserProfile()) return;   // al primissimo avvio precede il modale Profilo
+  showLanguageGate();
+}
+function chooseGateLanguage(lang) {
+  let l = (lang === 'greco') ? 'greco' : 'latino';
+  if (getUserProfile() === 'medie') l = 'latino';   // le medie lavorano solo il latino
+  try { sessionStorage.setItem(LANGGATE_SESSION_KEY, l); } catch (e) {}
+  const m = document.getElementById('modal-langgate');
+  if (m) m.classList.remove('open');
+  if (l === state.meta.lingua) { syncTopbar(); return; }   // già nel settore scelto: resta sul lavoro
+  if (typeof openLanguageBranch === 'function') openLanguageBranch(l);   // ancora al ramo scelto (suo archivio)
+  else { if (typeof archiveFilters !== 'undefined') archiveFilters.lingua = l; if (typeof goToStep === 'function') goToStep(4); }
 }
 
 function selectProfile(profile) {
@@ -38550,9 +38614,12 @@ document.addEventListener('DOMContentLoaded', () => {
     bd.addEventListener('click', e => { if (e.target === bd) bd.classList.remove('open'); });
   });
 
-  // Primo avvio: se non c'è alcun profilo, mostra il modale di benvenuto
+  // Primo avvio: se non c'è alcun profilo, mostra il modale di benvenuto;
+  // altrimenti àncora la lingua di lavoro con il gate (una volta per sessione).
   if (!getUserProfile()) {
     setTimeout(openProfileModal, 250);
+  } else {
+    setTimeout(maybeShowLanguageGate, 300);
   }
 
   // autosave
