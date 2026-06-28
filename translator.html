@@ -617,6 +617,19 @@ body.dark-mode .lang-toggle button[data-lang="greco"]  { color: #8b7dff; }
   font-weight: 800;
 }
 .tab-list { list-style: none; display: flex; flex-direction: column; gap: 3px; padding: 2px 10px 2px 0; }
+.tab-group-label {
+  list-style: none;
+  padding: 13px 20px 3px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--poetrify-sepia);
+  opacity: 0.7;
+  cursor: default;
+  user-select: none;
+}
+.tab-group-label:first-child { padding-top: 2px; }
 .tab-item {
   padding: 13px 20px;
   cursor: pointer;
@@ -10226,7 +10239,7 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
   .tab-title { display: none; }
   .tab-letter { font-size: 28px; }
   .tab-progress { right: 6px; }
-  .sidebar-section-label { display: none; }
+  .sidebar-section-label, .tab-group-label { display: none; }
   .sidebar-actions { padding: 12px 8px; }
   .sidebar-btn { justify-content: center; padding: 8px 4px; }
   .sidebar-btn span { display: none; }
@@ -10338,7 +10351,7 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
   }
   .sidebar::-webkit-scrollbar { height: 4px; }
   .sidebar::-webkit-scrollbar-thumb { background: var(--poetrify-rule); border-radius: 2px; }
-  .sidebar-section-label { display: none; }
+  .sidebar-section-label, .tab-group-label { display: none; }
   .tab-list {
     flex-direction: row;
     flex: 1;
@@ -25909,49 +25922,61 @@ function renderSidebarTabs() {
   const isMedie = profile === 'medie';
   if (state.mode === 'guided') {
     tabs = [
-      { num: 1, letter: 'A', title: 'Brano', enabled: true,
+      { num: 1, letter: 'A', title: 'Brano', group: 'lavoro', enabled: true,
         hasContent: !!state.meta.testoOriginale },
-      { num: 2, letter: 'B', title: 'Analisi guidata',
+      { num: 2, letter: 'B', title: 'Analisi guidata', group: 'lavoro',
         enabled: !!state.meta.testoOriginale,
         hasContent: state.sentences.length > 0,
         badge: state.sentences.length > 0 ? `${Math.min(state.guidedStep || 1, 6)}/6` : '·' },
-      { num: 5, letter: 'E', title: 'Traduzione',
+      { num: 5, letter: 'E', title: 'Traduzione', group: 'traduzione',
         enabled: !!state.meta.testoOriginale,
         hasContent: hasTranslation, hideForMedie: true },
-      { num: 4, letter: 'D', title: 'Archivio', enabled: true,
+      { num: 4, letter: 'D', title: 'Archivio', group: 'strumenti', enabled: true,
         hasContent: archiveCount > 0, badge: archiveCount },
-      { num: 6, letter: 'F', title: 'Dizionario', enabled: true,
+      { num: 6, letter: 'F', title: 'Dizionario', group: 'strumenti', enabled: true,
         hasContent: true, badge: '📖' },
     ];
   } else {
     tabs = [
-      { num: 1, letter: 'A', title: 'Brano', enabled: true,
+      { num: 1, letter: 'A', title: 'Brano', group: 'lavoro', enabled: true,
         hasContent: !!state.meta.testoOriginale },
-      { num: 2, letter: 'B', title: 'Scomposizione',
+      { num: 2, letter: 'B', title: 'Scomposizione', group: 'lavoro',
         enabled: !!state.meta.testoOriginale,
         hasContent: state.sentences.length > 0 },
-      { num: 3, letter: 'C', title: 'Analisi',
+      { num: 3, letter: 'C', title: 'Analisi', group: 'lavoro',
         enabled: state.sentences.length > 0,
         hasContent: state.sentences.some(s => s.grammar.length || s.logic.length || s.periodale.length) },
-      { num: 5, letter: 'E', title: 'Traduzione',
+      { num: 5, letter: 'E', title: 'Traduzione', group: 'traduzione',
         enabled: !!state.meta.testoOriginale,
         hasContent: hasTranslation, hideForMedie: true },
-      { num: 4, letter: 'D', title: 'Archivio', enabled: true,
+      { num: 4, letter: 'D', title: 'Archivio', group: 'strumenti', enabled: true,
         hasContent: archiveCount > 0, badge: archiveCount },
-      { num: 6, letter: 'F', title: 'Dizionario', enabled: true,
+      { num: 6, letter: 'F', title: 'Dizionario', group: 'strumenti', enabled: true,
         hasContent: true, badge: '📖' },
     ];
   }
   // Per il profilo medie filtra le schede non pertinenti
   if (isMedie) tabs = tabs.filter(t => !t.hideForMedie);
-  list.innerHTML = tabs.map(t => `
+  // Navigazione raggruppata per funzione (sezioni con titolo), ispirata al
+  // cruscotto-docente: si distingue a colpo d'occhio dove si lavora, si traduce
+  // e si consulta. Le lettere A–F restano come ancora mnemonica.
+  const GROUPS = [
+    { key: 'lavoro', label: 'Lavoro' },
+    { key: 'traduzione', label: 'Traduzione' },
+    { key: 'strumenti', label: 'Strumenti' },
+  ];
+  const itemHtml = t => `
     <li class="tab-item ${state.currentStep === t.num ? 'active' : ''} ${t.enabled ? '' : 'disabled'}"
         ${t.enabled ? `onclick="goToStep(${t.num})"` : ''}>
       <span class="tab-letter">${t.letter}</span>
       <span class="tab-title">${escapeHtml(t.title)}</span>
       <span class="tab-progress ${t.hasContent ? 'has-content' : ''}">${t.badge != null ? t.badge : (t.hasContent ? '✓' : '·')}</span>
-    </li>
-  `).join('');
+    </li>`;
+  list.innerHTML = GROUPS.map(g => {
+    const items = tabs.filter(t => t.group === g.key);
+    if (!items.length) return '';
+    return `<li class="tab-group-label" aria-hidden="true">${g.label}</li>` + items.map(itemHtml).join('');
+  }).join('');
 }
 
 function renderEditor() {
