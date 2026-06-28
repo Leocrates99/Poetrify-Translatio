@@ -4087,6 +4087,30 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: 'Times New R
   min-width: 40px;
   text-align: right;
 }
+.archive-card-phases {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-top: 8px;
+}
+.phase-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--poetrify-sepia);
+}
+.phase-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--poetrify-rule);
+  flex-shrink: 0;
+}
+.phase-chip[data-state="done"]     .phase-dot { background: var(--poetrify-success); }
+.phase-chip[data-state="progress"] .phase-dot { background: var(--poetrify-warning); }
+.phase-chip[data-state="done"]     { color: var(--poetrify-success); }
+.phase-chip[data-state="progress"] { color: var(--poetrify-warning); }
 .archive-card-actions {
   display: flex;
   gap: 6px;
@@ -28421,6 +28445,25 @@ function projectCompletion(p) {
   return Math.min(100, Math.round((score / weight) * 100));
 }
 
+/* Avanzamento per FASE (semaforo): scomposizione · analisi · traduzione.
+   Stato per fase: 'todo' | 'progress' | 'done'. Per l'analisi riporta anche
+   quante frasi sono complete su quante (k/tot). Ispirato all'AvanzamentoView
+   del cruscotto-docente. */
+function projectPhases(p) {
+  const sents = (p && p.sentences) || [];
+  const total = sents.length;
+  const hasText = !!(p && p.meta && p.meta.testoOriginale);
+  const scomp = total > 0 ? 'done' : (hasText ? 'progress' : 'todo');
+  const analDone = sents.filter(s => (s.grammar||[]).length && (s.logic||[]).length && (s.periodale||[]).length).length;
+  const analAny  = sents.filter(s => (s.grammar||[]).length || (s.logic||[]).length || (s.periodale||[]).length).length;
+  const analisi = total === 0 ? 'todo' : (analDone === total ? 'done' : (analAny > 0 ? 'progress' : 'todo'));
+  const tradCount = sents.filter(s => s.translation || s.translationFinal || (s.ordoVerborum||[]).length).length;
+  const tradMeta = !!(p && p.meta && (p.meta.traduzioneBella || p.meta.traduzione));
+  const trad = ((total > 0 && tradCount === total) || (p && p.meta && p.meta.traduzioneBella)) ? 'done'
+             : (tradCount > 0 || tradMeta) ? 'progress' : 'todo';
+  return { scomp, analisi, trad, analDone, total };
+}
+
 function projectWordCount(p) {
   return ((p.meta && p.meta.testoOriginale) || '').split(/\s+/).filter(Boolean).length;
 }
@@ -28551,6 +28594,14 @@ function renderArchiveCard(p) {
   const wordCount = projectWordCount(p);
   const sentenceCount = (p.sentences || []).length;
 
+  const ph = projectPhases(p);
+  const phaseChip = (st, label) => `<span class="phase-chip" data-state="${st}"><span class="phase-dot"></span>${label}</span>`;
+  const phasesHtml = `<div class="archive-card-phases" aria-label="Avanzamento per fase">`
+    + phaseChip(ph.scomp, 'Scomposizione')
+    + phaseChip(ph.analisi, ph.analisi === 'progress' ? `Analisi ${ph.analDone}/${ph.total}` : 'Analisi')
+    + phaseChip(ph.trad, 'Traduzione')
+    + `</div>`;
+
   return `
     <div class="archive-card ${isCurrent ? 'is-current' : ''}" data-status="${status}">
       <div class="archive-card-info">
@@ -28573,6 +28624,7 @@ function renderArchiveCard(p) {
           </div>
           <span class="archive-card-progress-pct">${completion}%</span>
         </div>
+        ${phasesHtml}
       </div>
       <div class="archive-card-actions" data-card-lang="${p.meta.lingua === 'greco' ? 'greco' : 'latino'}">
         ${isCurrent
