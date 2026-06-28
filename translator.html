@@ -511,6 +511,17 @@ input, textarea, select { font-family: inherit; color: inherit; }
   min-width: 0;
   transition: border-color var(--transition-base);
 }
+.meta-field label.meta-dallibro {
+  display: flex; flex-direction: row; align-items: center; gap: 6px;
+  margin-top: 6px;
+  font-size: 12px; text-transform: none; letter-spacing: normal;
+  font-weight: 500; color: var(--poetrify-ink); cursor: pointer;
+}
+.meta-field label.meta-dallibro input {
+  width: auto; min-width: 0; padding: 0; margin: 0;
+  border: none; background: none;
+  accent-color: var(--poetrify-lang-accent);
+}
 .meta-field input:focus,
 .meta-field select:focus {
   outline: none;
@@ -10947,14 +10958,15 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
               <input type="text" id="meta-titolo" placeholder="Es. Cesare, BG I, incipit">
             </div>
             <div class="meta-field">
-              <label for="meta-autore-select">Autore</label>
-              <select id="meta-autore-select" title="Scegli dall'elenco degli autori (della lingua attiva) o «Dal libro / non in elenco»"></select>
-              <input type="text" id="meta-autore" placeholder="Autore (o specifica)" style="margin-top:4px;">
+              <label for="meta-autore">Autore</label>
+              <input type="text" id="meta-autore" list="dl-autori" autocomplete="off" placeholder="Cerca o scrivi l'autore…">
+              <datalist id="dl-autori"></datalist>
+              <label class="meta-dallibro"><input type="checkbox" id="meta-dallibro"> 📖 Versione dal libro di testo</label>
             </div>
             <div class="meta-field">
-              <label for="meta-opera-select">Opera e locus</label>
-              <select id="meta-opera-select" title="Opere dell'autore scelto (a cascata)"></select>
-              <input type="text" id="meta-opera" placeholder="Opera e locus (es. I, 1, 1–3)" style="margin-top:4px;">
+              <label for="meta-opera">Opera e locus</label>
+              <input type="text" id="meta-opera" list="dl-opere" autocomplete="off" placeholder="Cerca l'opera, poi aggiungi il locus…">
+              <datalist id="dl-opere"></datalist>
             </div>
             <div class="meta-field">
               <label for="meta-tipotesto">Tipo di testo</label>
@@ -25703,8 +25715,10 @@ function syncTopbar() {
   document.getElementById('meta-autore').value = state.meta.autore || '';
   document.getElementById('meta-opera').value = state.meta.opera || '';
   document.getElementById('meta-titolo').value = state.meta.titolo || '';
-  populateMetaAutoreSelect();   // menù autore (per lingua) + opera a cascata
+  populateMetaAutoreSelect();   // datalist autori (per lingua) + opere a cascata
   populateMetaOperaSelect();
+  const dalLibroEl = document.getElementById('meta-dallibro');
+  if (dalLibroEl) dalLibroEl.checked = !!state.meta.dalLibro;
   const tipoSel = document.getElementById('meta-tipotesto');
   if (tipoSel) tipoSel.value = (state.meta.tipoTesto === 'poesia') ? 'poesia' : 'prosa';
   const versoField = document.getElementById('meta-verso-field');
@@ -35349,47 +35363,27 @@ const AUTORI_OPERE = {
 function _autoriFor(lang) { return AUTORI_OPERE[lang === 'greco' ? 'greco' : 'latino'] || []; }
 function _opereOf(lang, autore) { const e = _autoriFor(lang).find(x => x.a === autore); return e ? e.o : []; }
 
-/* Popola il <select> autore in base alla lingua attiva; «Dal libro» in cima. */
+/* Combobox ricercabile (input + datalist): popola l'elenco autori per la lingua
+   attiva. Il campo resta a testo libero (per «dal libro» / autori non in elenco). */
 function populateMetaAutoreSelect() {
-  const sel = document.getElementById('meta-autore-select');
-  if (!sel) return;
-  const lang = state.meta.lingua;
-  const cur = state.meta.autore || '';
-  const known = _autoriFor(lang).some(x => x.a === cur);
-  const top = `<option value="__libro__">📖 Versione dal libro di testo</option>
-    <option value="__altro__">— Autore non in elenco (digita sotto) —</option>`;
-  const opts = _autoriFor(lang).map(x => `<option value="${escapeHtml(x.a)}">${escapeHtml(x.a)}</option>`).join('');
-  sel.innerHTML = top + opts;
-  sel.value = known ? cur : (state.meta.dalLibro ? '__libro__' : '__altro__');
+  const dl = document.getElementById('dl-autori');
+  if (!dl) return;
+  dl.innerHTML = _autoriFor(state.meta.lingua).map(x => `<option value="${escapeHtml(x.a)}"></option>`).join('');
 }
-/* Popola il <select> opera a cascata dall'autore selezionato. */
+/* Opere a cascata dall'autore corrente, nel datalist dell'opera. */
 function populateMetaOperaSelect() {
-  const sel = document.getElementById('meta-opera-select');
-  if (!sel) return;
-  const lang = state.meta.lingua;
-  const opere = _opereOf(lang, state.meta.autore || '');
-  const cur = state.meta.opera || '';
-  const known = opere.includes(cur);
-  const top = `<option value="__altro__">— Opera non in elenco / con locus (digita sotto) —</option>`;
-  sel.innerHTML = top + opere.map(o => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join('');
-  sel.value = known ? cur : '__altro__';
-  sel.disabled = opere.length === 0;
+  const dl = document.getElementById('dl-opere');
+  if (!dl) return;
+  dl.innerHTML = _opereOf(state.meta.lingua, state.meta.autore || '').map(o => `<option value="${escapeHtml(o)}"></option>`).join('');
 }
-function onMetaAutoreSelect(val) {
-  if (val === '__libro__') { state.meta.dalLibro = true; }
-  else if (val === '__altro__') { state.meta.dalLibro = false; }
-  else {
-    state.meta.dalLibro = false;
-    state.meta.autore = val;
-    const inp = document.getElementById('meta-autore'); if (inp) inp.value = val;
-  }
+/* L'autore è cambiato: aggiorna le opere suggerite a cascata. */
+function onAutoreInput(v) {
+  state.meta.autore = v;
   populateMetaOperaSelect();
   persistCurrent(); renderPreview();
 }
-function onMetaOperaSelect(val) {
-  if (val === '__altro__') return;   // testo libero: lascia il campo all'utente
-  state.meta.opera = val;
-  const inp = document.getElementById('meta-opera'); if (inp) inp.value = val;
+function onDalLibroChange(checked) {
+  state.meta.dalLibro = !!checked;
   persistCurrent(); renderPreview();
 }
 /* Passa prosa ⇄ poesia. NON ri-spezza da solo le unità già create (per non
@@ -38738,13 +38732,11 @@ document.addEventListener('keydown', (e) => {
 /* 10. AVVIO */
 document.addEventListener('DOMContentLoaded', () => {
   // bind topbar
-  document.getElementById('meta-autore').addEventListener('input', e => onMetaChange('autore', e.target.value));
+  document.getElementById('meta-autore').addEventListener('input', e => onAutoreInput(e.target.value));
   document.getElementById('meta-opera').addEventListener('input', e => onMetaChange('opera', e.target.value));
   document.getElementById('meta-titolo').addEventListener('input', e => onMetaChange('titolo', e.target.value));
-  const autSel = document.getElementById('meta-autore-select');
-  if (autSel) autSel.addEventListener('change', e => onMetaAutoreSelect(e.target.value));
-  const opSel = document.getElementById('meta-opera-select');
-  if (opSel) opSel.addEventListener('change', e => onMetaOperaSelect(e.target.value));
+  const dalLibroEl = document.getElementById('meta-dallibro');
+  if (dalLibroEl) dalLibroEl.addEventListener('change', e => onDalLibroChange(e.target.checked));
   const tipoSelEl = document.getElementById('meta-tipotesto');
   if (tipoSelEl) tipoSelEl.addEventListener('change', e => onTipoTestoChange(e.target.value));
   const versoEl = document.getElementById('meta-versoiniziale');
