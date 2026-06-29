@@ -14336,9 +14336,16 @@ function _refreshOpenParadigm() {
 function getDarkMode() {
   try { return localStorage.getItem('poetrify-dark-mode') === '1'; } catch (e) { return false; }
 }
+/* Le regole scure del design system usano DUE classi storiche (body.dark-mode e
+   body.poetrify-dark): le applichiamo in coppia, così TUTTI i componenti — non
+   solo quelli base — passano davvero al tema scuro (parità di token). */
+function _applyDarkClasses(on) {
+  document.body.classList.toggle('dark-mode', !!on);
+  document.body.classList.toggle('poetrify-dark', !!on);
+}
 function setDarkMode(on) {
   try { localStorage.setItem('poetrify-dark-mode', on ? '1' : '0'); } catch (e) {}
-  document.body.classList.toggle('dark-mode', !!on);
+  _applyDarkClasses(!!on);
   const btn = document.getElementById('dark-mode-toggle');
   if (btn) {
     btn.classList.toggle('active', !!on);
@@ -14383,10 +14390,10 @@ function resetZoom() { setZoomLevel(100); }
 /* Applica subito allo start della pagina */
 (function applyDarkModeOnLoad() {
   if (typeof document !== 'undefined' && document.body) {
-    document.body.classList.toggle('dark-mode', getDarkMode());
+    _applyDarkClasses(getDarkMode());
   } else if (typeof document !== 'undefined') {
     document.addEventListener('DOMContentLoaded', () => {
-      document.body.classList.toggle('dark-mode', getDarkMode());
+      _applyDarkClasses(getDarkMode());
     });
   }
 })();
