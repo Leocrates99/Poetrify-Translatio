@@ -235,7 +235,8 @@ body[data-lang="latino"] .lang-toggle button.active {
 
 /* 3. Menù di sinistra (latino): lettere, spunte di verifica e accento del tab
    attivo in rosso pompeiano invece del blu. */
-body[data-lang="latino"] .tab-letter { color: var(--poetrify-lang-accent); }
+body[data-lang="latino"] .tab-letter,
+body[data-lang="latino"] .tab-icon { color: var(--poetrify-lang-accent); }
 body[data-lang="latino"] .tab-progress.has-content { background: var(--poetrify-lang-accent); }
 body[data-lang="latino"] .tab-item.active {
   box-shadow: inset 4px 0 0 var(--poetrify-lang-accent);
@@ -535,6 +536,23 @@ input, textarea, select { font-family: inherit; color: inherit; }
   padding: 3px;
   border: 1px solid var(--poetrify-rule-soft);
 }
+.topbar-iconbtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px; height: 30px;
+  flex-shrink: 0;
+  border-radius: var(--radius-sm);
+  color: var(--poetrify-sepia);
+  border: 1px solid transparent;
+  transition: all var(--transition-base);
+}
+.topbar-iconbtn svg { width: 17px; height: 17px; display: block; }
+.topbar-iconbtn:hover {
+  color: var(--poetrify-lang-accent);
+  background: var(--poetrify-ivory);
+  border-color: var(--poetrify-rule-soft);
+}
 .lang-toggle button {
   padding: 5px 14px;
   border-radius: var(--radius-sm);
@@ -619,19 +637,22 @@ body.dark-mode .lang-toggle button[data-lang="greco"]  { color: #8b7dff; }
 .tab-list { list-style: none; display: flex; flex-direction: column; gap: 3px; padding: 2px 10px 2px 0; }
 .tab-group-label {
   list-style: none;
-  padding: 13px 20px 3px;
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: 700;
+  padding: 14px 16px 5px;
+  font-size: 11px;
+  text-transform: lowercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
   color: var(--poetrify-sepia);
-  opacity: 0.7;
+  opacity: 0.8;
   cursor: default;
   user-select: none;
 }
 .tab-group-label:first-child { padding-top: 2px; }
 .tab-item {
-  padding: 13px 20px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 12px 8px 16px;
   cursor: pointer;
   border-left: 3px solid transparent;
   border-radius: 0 9px 9px 0;   /* il riquadro attivo/hover si arrotonda a destra: forma «linguetta» */
@@ -644,6 +665,14 @@ body.dark-mode .lang-toggle button[data-lang="greco"]  { color: #8b7dff; }
   border-left-color: var(--poetrify-lang-accent);
 }
 .tab-item.disabled { opacity: 0.4; cursor: not-allowed; pointer-events: none; }
+.tab-icon {
+  display: inline-flex;
+  color: var(--poetrify-lang-accent);
+  flex-shrink: 0;
+}
+.tab-icon svg { width: 17px; height: 17px; display: block; }
+/* .tab-letter: eredità della nav a lettere (le lettere A–F vivono ora solo
+   nelle intestazioni di sezione e nei tooltip delle voci). */
 .tab-letter {
   font-family: var(--font-display);
   font-size: 22px;
@@ -653,19 +682,21 @@ body.dark-mode .lang-toggle button[data-lang="greco"]  { color: #8b7dff; }
   letter-spacing: -0.02em;
 }
 .tab-title {
-  display: block;
-  font-size: 12px;
-  color: var(--poetrify-sepia);
-  margin-top: 4px;
+  display: inline-block;
+  font-size: 13px;
+  color: var(--poetrify-ink-soft);
   font-weight: 500;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .tab-item.active .tab-title { color: var(--poetrify-ink); font-weight: 600; }
 .tab-progress {
-  position: absolute;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 22px; height: 22px;
+  margin-left: auto;
+  width: 20px; height: 20px;
+  flex-shrink: 0;
   border-radius: 50%;
   background: var(--poetrify-cream);
   font-size: 10px;
@@ -677,6 +708,7 @@ body.dark-mode .lang-toggle button[data-lang="greco"]  { color: #8b7dff; }
   font-family: var(--font-ui);
 }
 .tab-progress.has-content { background: var(--poetrify-lang-accent); color: white; }
+.tab-progress:empty { visibility: hidden; }
 
 .sidebar-actions {
   margin-top: auto;
@@ -10335,6 +10367,8 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
   .main.preview-open { grid-template-columns: 60px 1fr minmax(320px, 0.7fr); }
   .tab-title { display: none; }
   .tab-letter { font-size: 28px; }
+  .tab-icon svg { width: 22px; height: 22px; }
+  .tab-item { justify-content: center; }
   .tab-progress { right: 6px; }
   .sidebar-section-label, .tab-group-label { display: none; }
   .sidebar-actions { padding: 12px 8px; }
@@ -10469,6 +10503,7 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
     border-bottom-color: var(--poetrify-lang-accent);
   }
   .tab-letter { font-size: 18px; }
+  .tab-icon svg { width: 18px; height: 18px; }
   .tab-title { display: none; }
   .tab-progress {
     position: static !important;
@@ -10790,6 +10825,7 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
 
   .tab-item { padding: 6px 10px; }
   .tab-letter { font-size: 16px; }
+  .tab-icon svg { width: 16px; height: 16px; }
 }
 
 /* INTERAZIONI TOUCH — pulsanti più cliccabili su tutti i mobile */
@@ -11049,6 +11085,10 @@ body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color:
         <button class="active" data-lang="latino" title="Latino">LAT</button>
         <button data-lang="greco" title="Greco">ΕΛ</button>
       </div>
+      <!-- Home discreta a icona (dal mockup): torna alla dashboard salvando. -->
+      <a class="topbar-iconbtn" href="app.html" onclick="try{persistCurrent()}catch(e){}" title="Torna alla home (dashboard Poetrify)" aria-label="Home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
+      </a>
       <!-- Titolo della versione in lavorazione (nascosto in archivio/dizionario). -->
       <h1 class="topbar-title" id="topbar-title"></h1>
 
@@ -26017,6 +26057,23 @@ function quickSwitchProfile(value) {
   selectProfile(value);
 }
 
+/* Icone della navigazione (Tabler Icons, outline, MIT) incorporate come SVG
+   inline: nessuna dipendenza esterna, colore via currentColor (segue la lingua). */
+const NAV_ICONS = (() => {
+  const w = (inner) => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + inner + '</svg>';
+  return {
+    dashboard: w('<rect x="4" y="4" width="6" height="8" rx="1"/><rect x="4" y="16" width="6" height="4" rx="1"/><rect x="14" y="12" width="6" height="8" rx="1"/><rect x="14" y="4" width="6" height="4" rx="1"/>'),
+    file:      w('<path d="M14 3v4a1 1 0 0 0 1 1h4"/><path d="M17 21h-10a2 2 0 0 1 -2 -2v-14a2 2 0 0 1 2 -2h7l5 5v11a2 2 0 0 1 -2 2z"/><path d="M9 9h1"/><path d="M9 13h6"/><path d="M9 17h6"/>'),
+    scissors:  w('<circle cx="6" cy="7" r="3"/><circle cx="6" cy="17" r="3"/><path d="M8.6 8.6l10.4 10.4"/><path d="M8.6 15.4l10.4 -10.4"/>'),
+    tree:      w('<path d="M9 6h11"/><path d="M12 12h8"/><path d="M15 18h5"/><path d="M5 6v.01"/><path d="M8 12v.01"/><path d="M11 18v.01"/>'),
+    pencil:    w('<path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4"/><path d="M13.5 6.5l4 4"/>'),
+    book:      w('<path d="M3 19a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6a9 9 0 0 1 9 0a9 9 0 0 1 9 0"/><path d="M3 6v13"/><path d="M12 6v13"/><path d="M21 6v13"/>'),
+    folder:    w('<path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/>'),
+    book2:     w('<path d="M19 4v16h-12a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12z"/><path d="M19 16h-12a2 2 0 0 0 -2 2"/><path d="M9 8h6"/>'),
+    user:      w('<circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/>'),
+  };
+})();
+
 function renderSidebarTabs() {
   const list = document.getElementById('tab-list');
   const archiveCount = loadAllProjects().length;
@@ -26025,45 +26082,58 @@ function renderSidebarTabs() {
                           state.meta.traduzione || state.meta.traduzioneBella;
   const profile = getUserProfile();
   const isMedie = profile === 'medie';
+  // Traduzione sdoppiata in due voci (dal mockup): Bozza = officina per frase,
+  // Bella copia = resa complessiva finale. Entrambe portano alla scheda E,
+  // con vista diversa (state.traduzioneVista).
+  const bellaDone = !!((state.meta.traduzioneBella || '').trim());
   if (state.mode === 'guided') {
     tabs = [
-      { num: 1, letter: 'A', title: 'Brano', group: 'lavoro', enabled: true,
+      { num: 1, letter: 'A', icon: 'file', title: 'Brano', group: 'lavoro', enabled: true,
         hasContent: !!state.meta.testoOriginale },
-      { num: 2, letter: 'B', title: 'Analisi guidata', group: 'lavoro',
+      { num: 2, letter: 'B', icon: 'tree', title: 'Analisi guidata', group: 'lavoro',
         enabled: !!state.meta.testoOriginale,
         hasContent: state.sentences.length > 0,
         badge: state.sentences.length > 0 ? `${Math.min(state.guidedStep || 1, 6)}/6` : '·' },
-      { num: 5, letter: 'E', title: 'Traduzione', group: 'traduzione',
-        enabled: !!state.meta.testoOriginale,
+      { num: 5, sub: 'bozza', letter: 'E', icon: 'pencil', title: 'Bozza', group: 'traduzione',
+        enabled: !!state.meta.testoOriginale, onclick: "goToTraduzione('bozza')",
         hasContent: hasTranslation, hideForMedie: true },
-      { num: 4, letter: 'D', title: 'Archivio', group: 'strumenti', enabled: true,
+      { num: 5, sub: 'bella', letter: 'E', icon: 'book', title: 'Bella copia', group: 'traduzione',
+        enabled: !!state.meta.testoOriginale, onclick: "goToTraduzione('bella')",
+        hasContent: bellaDone, hideForMedie: true },
+      { num: 4, letter: 'D', icon: 'folder', title: 'Archivio', group: 'strumenti', enabled: true,
         hasContent: archiveCount > 0, badge: archiveCount },
-      { num: 6, letter: 'F', title: 'Dizionario', group: 'strumenti', enabled: true,
-        hasContent: true, badge: '📖' },
+      { num: 6, letter: 'F', icon: 'book2', title: 'Dizionario', group: 'strumenti', enabled: true,
+        hasContent: true, badge: '' },
     ];
   } else {
     tabs = [
-      { num: 1, letter: 'A', title: 'Brano', group: 'lavoro', enabled: true,
+      { num: 1, letter: 'A', icon: 'file', title: 'Brano', group: 'lavoro', enabled: true,
         hasContent: !!state.meta.testoOriginale },
-      { num: 2, letter: 'B', title: 'Scomposizione', group: 'lavoro',
+      { num: 2, letter: 'B', icon: 'scissors', title: 'Scomposizione', group: 'lavoro',
         enabled: !!state.meta.testoOriginale,
         hasContent: state.sentences.length > 0 },
-      { num: 3, letter: 'C', title: 'Analisi', group: 'lavoro',
+      { num: 3, letter: 'C', icon: 'tree', title: 'Analisi', group: 'lavoro',
         enabled: state.sentences.length > 0,
         hasContent: state.sentences.some(s => s.grammar.length || s.logic.length || s.periodale.length) },
-      { num: 5, letter: 'E', title: 'Traduzione', group: 'traduzione',
-        enabled: !!state.meta.testoOriginale,
+      { num: 5, sub: 'bozza', letter: 'E', icon: 'pencil', title: 'Bozza', group: 'traduzione',
+        enabled: !!state.meta.testoOriginale, onclick: "goToTraduzione('bozza')",
         hasContent: hasTranslation, hideForMedie: true },
-      { num: 4, letter: 'D', title: 'Archivio', group: 'strumenti', enabled: true,
+      { num: 5, sub: 'bella', letter: 'E', icon: 'book', title: 'Bella copia', group: 'traduzione',
+        enabled: !!state.meta.testoOriginale, onclick: "goToTraduzione('bella')",
+        hasContent: bellaDone, hideForMedie: true },
+      { num: 4, letter: 'D', icon: 'folder', title: 'Archivio', group: 'strumenti', enabled: true,
         hasContent: archiveCount > 0, badge: archiveCount },
-      { num: 6, letter: 'F', title: 'Dizionario', group: 'strumenti', enabled: true,
-        hasContent: true, badge: '📖' },
+      { num: 6, letter: 'F', icon: 'book2', title: 'Dizionario', group: 'strumenti', enabled: true,
+        hasContent: true, badge: '' },
     ];
   }
+  // Voce Profilo (dal mockup): apre la scheda dello studente, non è uno step.
+  tabs.push({ num: 0, icon: 'user', title: 'Profilo', group: 'strumenti', enabled: true,
+    hasContent: true, badge: '', onclick: 'openStudentProfileModal()' });
   // Per il profilo medie filtra le schede non pertinenti
   if (isMedie) tabs = tabs.filter(t => !t.hideForMedie);
   // Vista d'insieme (Π = Panoramica): sempre disponibile, in testa alla nav.
-  tabs.unshift({ num: 7, letter: 'Π', title: 'Panoramica', group: 'home', enabled: true, hasContent: true, badge: '' });
+  tabs.unshift({ num: 7, letter: 'Π', icon: 'dashboard', title: 'Panoramica', group: 'home', enabled: true, hasContent: true, badge: '' });
   // Navigazione raggruppata per funzione (sezioni con titolo), ispirata al
   // cruscotto-docente: si distingue a colpo d'occhio dove si lavora, si traduce
   // e si consulta. Le lettere A–F restano come ancora mnemonica.
@@ -26073,13 +26143,19 @@ function renderSidebarTabs() {
     { key: 'traduzione', label: 'Traduzione' },
     { key: 'strumenti', label: 'Strumenti' },
   ];
-  const itemHtml = t => `
-    <li class="tab-item ${state.currentStep === t.num ? 'active' : ''} ${t.enabled ? '' : 'disabled'}"
-        ${t.enabled ? `onclick="goToStep(${t.num})"` : ''}>
-      <span class="tab-letter">${t.letter}</span>
+  const traduzioneVista = (state.traduzioneVista === 'bella') ? 'bella' : 'bozza';
+  const itemHtml = t => {
+    const isActive = state.currentStep === t.num && (!t.sub || traduzioneVista === t.sub);
+    const handler = t.onclick || ('goToStep(' + t.num + ')');
+    const click = t.enabled ? (' onclick="' + handler + '"') : '';
+    const tip = t.letter ? ('Scheda ' + t.letter + ' · ' + t.title) : t.title;
+    return `
+    <li class="tab-item ${isActive ? 'active' : ''} ${t.enabled ? '' : 'disabled'}"${click} title="${tip}">
+      <span class="tab-icon" aria-hidden="true">${NAV_ICONS[t.icon] || ''}</span>
       <span class="tab-title">${escapeHtml(t.title)}</span>
       <span class="tab-progress ${t.hasContent ? 'has-content' : ''}">${t.badge != null ? t.badge : (t.hasContent ? '✓' : '·')}</span>
     </li>`;
+  };
   list.innerHTML = GROUPS.map(g => {
     const items = tabs.filter(t => t.group === g.key);
     if (!items.length) return '';
@@ -30611,27 +30687,18 @@ function renderTranslationHtml() {
     return sectionHeader('E', 'Traduzione', 'workflow brutta · ordo verborum · bella')
       + `<div class="entry-empty">Devi prima scomporre il brano in frasi (scheda <strong>B</strong>). Senza frasi non posso preparare i campi di traduzione.</div>`;
   }
-  // Per l'approccio "frase per frase" la sezione E diventa una panoramica
-  // organica finale: tutte le frasi tradotte in successione + bella copia
-  // d'insieme. Il flow di lavoro per-frase è già stato eseguito nel wizard.
+  // Vista della scheda E (dal mockup): «bozza» = officina di lavoro,
+  // «bella» = resa complessiva finale. Due voci di nav, una scheda.
+  const vista = (state.traduzioneVista === 'bella') ? 'bella' : 'bozza';
+  // Per l'approccio "frase per frase" la bozza è una panoramica organica delle
+  // rese già fatte nel wizard; la bella copia è la resa unica d'insieme.
   if (getApproach() === 'frase-per-frase') {
     const sentences = state.sentences || [];
     const allTranslated = sentences.every(s => (s.translation || '').trim().length > 0);
-    const sentencesHtml = sentences.map((s, i) => `
-      <div class="fpf-overview-row">
-        <div class="fpf-overview-num">Frase ${i + 1}</div>
-        <div class="fpf-overview-orig ${state.meta.lingua === 'greco' ? 'greek' : ''}">${escapeHtml(s.original)}</div>
-        <div class="fpf-overview-trad ${s.translation ? '' : 'pending'}">${s.translation ? escapeHtml(s.translation) : '(traduzione non ancora compilata)'}</div>
-      </div>`).join('');
-    return sectionHeader('E', 'Traduzione · panoramica d\'insieme', 'visione organica dell\'intera versione, frase per frase')
-      + renderApproachBanner()
-      + `<div class="fpf-overview-status ${allTranslated ? 'done' : 'partial'}">
-          ${allTranslated
-            ? '✓ Tutte le frasi sono state tradotte. Puoi rivedere e armonizzare la resa d\'insieme nella bella copia qui sotto.'
-            : 'Alcune frasi non sono ancora state tradotte. Torna alla scheda C · Analisi (Ctrl+3) per completare il wizard.'}
-        </div>
-        <div class="fpf-overview-list">${sentencesHtml}</div>
-        <div class="translation-block" style="margin-top: 18px;">
+    if (vista === 'bella') {
+      return sectionHeader('E', 'Bella copia', 'resa organica e definitiva dell\'intera versione')
+        + renderApproachBanner()
+        + `<div class="translation-block">
           <h3 class="subsection-title">Bella copia · resa organica della versione</h3>
           <p class="muted-text" style="font-size:12px;font-style:italic;">Rilegge tutte le frasi in sequenza e produce una resa unica, armonica, con i giusti collegamenti.</p>
           <textarea class="field-input" style="width:100%;min-height:240px;font-family:var(--font-body);font-size:15px;line-height:1.6;"
@@ -30639,8 +30706,27 @@ function renderTranslationHtml() {
             placeholder="Componi qui la traduzione d'insieme dell'intera versione…">${escapeHtml(state.meta.traduzioneBella || '')}</textarea>
         </div>
         <div class="flex-between" style="margin-top: 18px;">
-          <button class="btn btn-ghost btn-sm" onclick="goToStep(3)">← Torna all'analisi</button>
+          <button class="btn btn-ghost btn-sm" onclick="goToTraduzione('bozza')">← Torna alla bozza</button>
           <button class="btn btn-brand-soft btn-sm" onclick="openExportModal()">📤 Esporta traduzione</button>
+        </div>`;
+    }
+    const sentencesHtml = sentences.map((s, i) => `
+      <div class="fpf-overview-row">
+        <div class="fpf-overview-num">Frase ${i + 1}</div>
+        <div class="fpf-overview-orig ${state.meta.lingua === 'greco' ? 'greek' : ''}">${escapeHtml(s.original)}</div>
+        <div class="fpf-overview-trad ${s.translation ? '' : 'pending'}">${s.translation ? escapeHtml(s.translation) : '(traduzione non ancora compilata)'}</div>
+      </div>`).join('');
+    return sectionHeader('E', 'Bozza · panoramica d\'insieme', 'le rese di lavoro dell\'intera versione, frase per frase')
+      + renderApproachBanner()
+      + `<div class="fpf-overview-status ${allTranslated ? 'done' : 'partial'}">
+          ${allTranslated
+            ? '✓ Tutte le frasi sono state tradotte. Passa alla bella copia per armonizzare la resa d\'insieme.'
+            : 'Alcune frasi non sono ancora state tradotte. Torna alla scheda C · Analisi (Ctrl+3) per completare il wizard.'}
+        </div>
+        <div class="fpf-overview-list">${sentencesHtml}</div>
+        <div class="flex-between" style="margin-top: 18px;">
+          <button class="btn btn-ghost btn-sm" onclick="goToStep(3)">← Torna all'analisi</button>
+          <button class="btn btn-brand-soft btn-sm" onclick="goToTraduzione('bella')">Vai alla bella copia →</button>
         </div>`;
   }
 
@@ -30669,13 +30755,13 @@ function renderTranslationHtml() {
   const globalBrutta = state.meta.traduzione || '';
   const globalBella = state.meta.traduzioneBella || '';
 
-  const globalSection = `
-    <div class="translation-global">
+  const globalHeader = `
       <div class="translation-global-header">
         <span class="translation-global-title">Traduzione complessiva del brano</span>
         <span class="muted-text">${pct}% completata · ${state.sentences.length} frasi</span>
       </div>
-      <div class="translation-progress-bar"><div class="translation-progress-fill" style="width:${pct}%;"></div></div>
+      <div class="translation-progress-bar"><div class="translation-progress-fill" style="width:${pct}%;"></div></div>`;
+  const bruttaGlobalRow = `
       <div class="translation-global-row" style="margin-top:18px;">
         <div class="ts-section-title">
           <span class="ts-section-num">B</span>Brutta copia complessiva
@@ -30685,8 +30771,9 @@ function renderTranslationHtml() {
           </div>
         </div>
         <textarea class="translation-textarea brutta" placeholder="Brutta copia complessiva — premi «Compila da frasi» per assemblare le bozze, oppure scrivi a mano." oninput="onMetaChange('traduzione', this.value)">${escapeHtml(globalBrutta)}</textarea>
-      </div>
-      <div class="translation-global-row">
+      </div>`;
+  const bellaGlobalRow = `
+      <div class="translation-global-row" style="margin-top:18px;">
         <div class="ts-section-title">
           <span class="ts-section-num">B</span>Bella copia complessiva
           <div class="ts-tools">
@@ -30695,14 +30782,29 @@ function renderTranslationHtml() {
           </div>
         </div>
         <textarea class="translation-textarea bella" placeholder="Bella copia complessiva — la resa finale destinata al lettore, rifinita dalle bozze precedenti." oninput="onMetaChange('traduzioneBella', this.value)">${escapeHtml(globalBella)}</textarea>
-      </div>
-    </div>`;
+      </div>`;
 
-  return sectionHeader('E', 'Traduzione del brano', 'percorso brutta → ordo verborum → bella, frase per frase')
+  // Vista «Bella copia»: solo la resa finale complessiva, pulita, con export.
+  if (vista === 'bella') {
+    return sectionHeader('E', 'Bella copia', 'la resa finale del brano, rifinita dalle bozze')
+      + `<div class="method-note"><strong>Metodo.</strong> La bella copia complessiva è la resa destinata al lettore: puoi comporla assemblando le belle copie delle singole frasi («Compila da frasi») e poi armonizzarla — collegamenti, scorrevolezza, registro.</div>`
+      + `<div class="translation-global">` + globalHeader + bellaGlobalRow + `</div>`
+      + `<div class="flex-between" style="margin-top: 18px;">
+          <button class="btn btn-ghost btn-sm" onclick="goToTraduzione('bozza')">← Torna alla bozza</button>
+          <button class="btn btn-brand-soft btn-sm" onclick="openExportModal()">📤 Esporta traduzione</button>
+        </div>`;
+  }
+
+  // Vista «Bozza»: l'officina per frase + la brutta complessiva.
+  return sectionHeader('E', 'Bozza di lavoro', 'percorso brutta → ordo verborum → bella, frase per frase')
     + intro
-    + `<div class="method-note"><strong>Metodo.</strong> Per ogni frase: ① scrivi una <em>brutta copia</em> ancora vicina all'originale, ② disponi i <em>sintagmi</em> nell'ordo italiano (puoi importarli dalla logica e trascinarli per riordinare), ③ rifinisci la <em>bella copia</em>. In fondo trovi la traduzione complessiva: la puoi compilare automaticamente dalle frasi o scriverla a mano.</div>`
+    + `<div class="method-note"><strong>Metodo.</strong> Per ogni frase: ① scrivi una <em>brutta copia</em> ancora vicina all'originale, ② disponi i <em>sintagmi</em> nell'ordo italiano (puoi importarli dalla logica e trascinarli per riordinare), ③ rifinisci la <em>bella copia</em>. La resa complessiva finale vive nella scheda <strong>Bella copia</strong>.</div>`
     + sentencesHtml
-    + globalSection;
+    + `<div class="translation-global">` + globalHeader + bruttaGlobalRow + `</div>`
+    + `<div class="flex-between" style="margin-top: 18px;">
+        <span></span>
+        <button class="btn btn-brand-soft btn-sm" onclick="goToTraduzione('bella')">Vai alla bella copia →</button>
+      </div>`;
 }
 
 /* ============================================
@@ -36072,6 +36174,15 @@ function goToStep(num) {
   // nel segmented control della quick-bar. Per la scheda descrittiva con
   // pro/contro resta lo shortcut da tastiera "a" e la chiamata diretta
   // openApproachModal() (non più cablata a nessun pulsante UI).
+}
+
+/* Naviga alla scheda E scegliendo la vista: 'bozza' (officina per frase) o
+   'bella' (resa complessiva). Le due voci della nav «Traduzione» puntano qui. */
+function goToTraduzione(vista) {
+  state.traduzioneVista = (vista === 'bella') ? 'bella' : 'bozza';
+  if (state.currentStep !== 5) { goToStep(5); return; }
+  persistCurrent();
+  renderAll();
 }
 
 function resplitSentences() {
