@@ -26085,8 +26085,8 @@ function renderStep1Html() {
             <div class="field-toolbar">
               <button class="field-toolbar-btn" onclick="copyFieldContent('field-testo', event)" title="Copia il contenuto">📋</button>
               <button class="field-toolbar-btn" onclick="pasteIntoField('field-testo')" title="Incolla dagli appunti">📥</button>
-              ${isGreek ? '<button class="field-toolbar-btn" onclick="toggleGreekKeyboard()" title="Apri tastiera greca">Ω</button>'
-                        : '<button class="field-toolbar-btn field-toolbar-btn--ortho" onclick="applyOrthographyNormalization()" title="Normalizza la grafia restituta → scolastica: u consonantica → v (es. aeui → aevi, seruus → servus), æ/œ → ae/oe, j → i. Reversibile con Ctrl+Z.">u→v</button>'}
+              ${isGreek ? '<button class="field-toolbar-btn" onclick="toggleGreekKeyboard()" title="Apri tastiera greca">Ω</button>' : ''}
+              <button class="field-toolbar-btn field-toolbar-btn--ortho" onclick="applyOrthographyNormalization()" title="${isGreek ? 'Normalizza il sigma: sigma lunato ϲ/Ϲ → σ/Σ (e varianti β/θ/φ/π/κ/ρ/ε) e sigma finale automatico — ς a fine parola, σ altrove. Reversibile con Ctrl+Z.' : 'Normalizza la grafia restituta → scolastica: u consonantica → v (es. aeui → aevi, seruus → servus), æ/œ → ae/oe, j → i. Reversibile con Ctrl+Z.'}">${isGreek ? 'ϲ→σ' : 'u→v'}</button>
             </div>
             <textarea id="field-testo" class="classical" placeholder="${isGreek ? 'Incolla qui il brano in greco antico…\n\nLa traduzione sarà visibile lateralmente come riferimento durante l’analisi.' : 'Incolla qui il brano in latino…\n\nLa traduzione sarà visibile lateralmente come riferimento durante l’analisi.'}" oninput="onTestoChange(this.value)"></textarea>
           </div>
@@ -35447,8 +35447,26 @@ function normalizeLatinUV(text) {
   });
   return { text: out, count };
 }
+/* GRECO · normalizza il sigma: varianti-simbolo (sigma lunato ϲ/Ϲ e affini) →
+   lettera standard, poi posizione corretta del sigma minuscolo — finale «ς» a
+   fine parola, mediale «σ» altrimenti (utile anche se il testo usa σ ovunque
+   senza il sigma finale). Le maiuscole restano Σ (non hanno forma finale). */
+function _isGreekLetter(ch) {
+  if (!ch || !/\p{L}/u.test(ch)) return false;   // esclude spazi, punteggiatura, · ; e accenti spazianti
+  const c = ch.codePointAt(0);
+  return (c >= 0x0370 && c <= 0x03FF) || (c >= 0x1F00 && c <= 0x1FFF);
+}
+function normalizeGreekSigma(text) {
+  const orig = text;
+  const SYMS = { 'ϲ':'σ','Ϲ':'Σ','ϐ':'β','ϑ':'θ','ϕ':'φ','ϖ':'π','ϰ':'κ','ϱ':'ρ','ϵ':'ε','ϴ':'Θ','ϒ':'Υ' };
+  text = text.replace(/[ϲϹϐϑϕϖϰϱϵϴϒ]/g, (m) => SYMS[m]);       // varianti-simbolo → lettere (incl. sigma lunato)
+  text = text.replace(/[σς]/g, (m, idx, str) => _isGreekLetter(str[idx + 1]) ? 'σ' : 'ς');  // sigma mediale/finale
+  let count = 0;
+  for (let i = 0; i < text.length; i++) if (text[i] !== orig[i]) count++;   // tutte sostituzioni 1:1
+  return { text, count };
+}
 function normalizeOrthography(text, lang) {
-  if (lang === 'greco') return { text, count: 0 };  // per ora: solo latino
+  if (lang === 'greco') return normalizeGreekSigma(text);
   let count = 0;
   text = text.replace(/[æÆœŒ]/g, (m) => { count++; return { 'æ':'ae','Æ':'Ae','œ':'oe','Œ':'Oe' }[m]; });
   text = text.replace(/[jJ]/g, (m) => { count++; return m === 'J' ? 'I' : 'i'; });
@@ -35459,7 +35477,6 @@ function normalizeOrthography(text, lang) {
 function applyOrthographyNormalization() {
   const ta = document.getElementById('field-testo');
   if (!ta) return;
-  if (state.meta.lingua === 'greco') { showToast('Normalizzazione grafia: al momento disponibile per il latino.'); return; }
   const res = normalizeOrthography(ta.value, state.meta.lingua);
   if (res.count === 0) { showToast('Grafia già in forma standard: nessuna correzione.'); return; }
   // Applica integrandosi con l'undo nativo del browser (Ctrl+Z), con fallback.
