@@ -9233,6 +9233,14 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   border-color: var(--poetrify-success);
 }
 .field-toolbar-btn svg { width: 13px; height: 13px; }
+.field-toolbar-btn--ortho {
+  width: auto;
+  padding: 0 8px;
+  font-family: var(--font-classical, var(--font-display));
+  font-size: 12px;
+  font-style: italic;
+  letter-spacing: 0.02em;
+}
 
 /* ── OCR · call-to-action prominente per la scansione del testo ────────────── */
 .ocr-cta-row { margin: 14px 0 18px; }
@@ -26077,7 +26085,8 @@ function renderStep1Html() {
             <div class="field-toolbar">
               <button class="field-toolbar-btn" onclick="copyFieldContent('field-testo', event)" title="Copia il contenuto">📋</button>
               <button class="field-toolbar-btn" onclick="pasteIntoField('field-testo')" title="Incolla dagli appunti">📥</button>
-              ${isGreek ? '<button class="field-toolbar-btn" onclick="toggleGreekKeyboard()" title="Apri tastiera greca">Ω</button>' : ''}
+              ${isGreek ? '<button class="field-toolbar-btn" onclick="toggleGreekKeyboard()" title="Apri tastiera greca">Ω</button>'
+                        : '<button class="field-toolbar-btn field-toolbar-btn--ortho" onclick="applyOrthographyNormalization()" title="Normalizza la grafia restituta → scolastica: u consonantica → v (es. aeui → aevi, seruus → servus), æ/œ → ae/oe, j → i. Reversibile con Ctrl+Z.">u→v</button>'}
             </div>
             <textarea id="field-testo" class="classical" placeholder="${isGreek ? 'Incolla qui il brano in greco antico…\n\nLa traduzione sarà visibile lateralmente come riferimento durante l’analisi.' : 'Incolla qui il brano in latino…\n\nLa traduzione sarà visibile lateralmente come riferimento durante l’analisi.'}" oninput="onTestoChange(this.value)"></textarea>
           </div>
@@ -35373,6 +35382,97 @@ function togglePreview() {
 
 /* 6. ACTIONS */
 function onTestoChange(v) { state.meta.testoOriginale = v; persistCurrent(); renderPreview(); renderSidebarTabs(); renderStats(); }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   NORMALIZZAZIONE DELLA GRAFIA (latino) · restituta → scolastica
+   Molti testi usano la grafia in cui «u» vale sia vocale sia consonante (es.
+   "aeui" per "aevi", "seruus" per "servus"), con legature æ/œ e «j» per la i
+   consonantica. Qui riportiamo alla grafia scolastica: æ/œ → ae/oe, j → i, e
+   «u» consonantica → «v» con un'euristica POSIZIONALE (non è un dizionario:
+   distingue vita/servus da tua/cruor guardando il contorno, ma casi rari come
+   "coluit" vs "solvit" possono sfuggire). L'azione è reversibile (Ctrl+Z) e
+   riporta quante sostituzioni ha fatto. Solo latino. */
+function _isVowelUV(ch) {
+  if (!ch) return false;
+  const b = ch.normalize('NFD')[0].toLowerCase();  // ā→a, é→e… (diacritici ignorati)
+  return 'aeiouy'.indexOf(b) !== -1;
+}
+/* Forme (grafia restituta, minuscole) in cui vocale+l/r+u+vocale è VOCALICO:
+   perfetti in -uit/-ui (valuit, caluit, coluit…) e presenti di -luo/-ruo
+   (diluo, eruit…), che l'euristica «dopo liquida» convertirebbe per sbaglio.
+   Non esaustivo: i residui restano correggibili a mano (e con Ctrl+Z). */
+const _UV_KEEP = (() => {
+  const s = new Set();
+  const perfStems = ['al','col','mol','vol','val','cal','dol','ol','car','par','appar','coal','sal'];
+  const perfEnds  = ['ui','uisti','uit','uimus','uistis','uerunt','uere','ueram','ueras','uerat','uerimus','uerint','uissem','uisse','uero'];
+  perfStems.forEach(st => perfEnds.forEach(e => s.add(st + e)));
+  const prStems = ['dilu','elu','prolu','ablu','eru','diru','proru'];
+  const prEnds  = ['o','is','it','imus','itis','unt','am','as','at','ebam','ebat','ere','ens','entis'];
+  prStems.forEach(st => prEnds.forEach(e => s.add(st + e)));
+  return s;
+})();
+/* Decide se la «u» in posizione i della parola w è consonantica (→ v). */
+function _uConsonantalAt(w, i) {
+  const next = w[i + 1];
+  if (!_isVowelUV(next)) return false;              // u non seguita da vocale = vocale
+  const prev = i > 0 ? w[i - 1] : '';
+  const pl = prev.toLowerCase();
+  if (pl === 'q' || pl === 'g' || pl === 's') return false;   // qu, gu, su → resta u
+  if (next === 'u' || next === 'U') {               // sequenza «uu…»
+    const nn = w[i + 2];
+    if (_isVowelUV(nn)) return false;               // uu+vocale → prima u vocale (uua→uva, iuuenis→iuvenis)
+    if (prev === '') return true;                   // inizio parola: uulnus→vulnus
+    if (_isVowelUV(prev)) return true;              // vocale+uu+cons: uiuus→vivus, aeuum→aevum, auus→avus
+    if ((pl === 'l' || pl === 'r') && _isVowelUV(w[i - 2])) return true; // seruus→servus, curuus→curvus
+    return false;                                   // duum, mortuus, tuus → prima u vocale
+  }
+  if (prev === '') return true;                     // inizio parola: uir→vir, uita→vita
+  if (prev === 'u' || prev === 'U') return true;    // 2ª u del gruppo: uua→uva, iuuenis→iuvenis
+  if (_isVowelUV(prev)) return true;                // intervocalica: aeui→aevi, auis→avis
+  if ((pl === 'l' || pl === 'r') && _isVowelUV(w[i - 2])) return true;  // vocale+l/r+u+voc: silua→silva
+  return false;                                     // altre consonanti: tua, duo, puer → resta
+}
+function normalizeLatinUV(text) {
+  let count = 0;
+  const out = text.replace(/\p{L}+/gu, (word) => {
+    if (_UV_KEEP.has(word.toLowerCase())) return word;
+    let w = '';
+    for (let i = 0; i < word.length; i++) {
+      const ch = word[i];
+      if ((ch === 'u' || ch === 'U') && _uConsonantalAt(word, i)) {
+        w += (ch === 'U') ? 'V' : 'v'; count++;
+      } else w += ch;
+    }
+    return w;
+  });
+  return { text: out, count };
+}
+function normalizeOrthography(text, lang) {
+  if (lang === 'greco') return { text, count: 0 };  // per ora: solo latino
+  let count = 0;
+  text = text.replace(/[æÆœŒ]/g, (m) => { count++; return { 'æ':'ae','Æ':'Ae','œ':'oe','Œ':'Oe' }[m]; });
+  text = text.replace(/[jJ]/g, (m) => { count++; return m === 'J' ? 'I' : 'i'; });
+  const uv = normalizeLatinUV(text);
+  return { text: uv.text, count: count + uv.count };
+}
+/* Bottone della toolbar del testo (scheda A): normalizza la grafia del campo. */
+function applyOrthographyNormalization() {
+  const ta = document.getElementById('field-testo');
+  if (!ta) return;
+  if (state.meta.lingua === 'greco') { showToast('Normalizzazione grafia: al momento disponibile per il latino.'); return; }
+  const res = normalizeOrthography(ta.value, state.meta.lingua);
+  if (res.count === 0) { showToast('Grafia già in forma standard: nessuna correzione.'); return; }
+  // Applica integrandosi con l'undo nativo del browser (Ctrl+Z), con fallback.
+  ta.focus();
+  let applied = false;
+  try {
+    ta.setSelectionRange(0, ta.value.length);
+    applied = document.execCommand && document.execCommand('insertText', false, res.text);
+  } catch (e) { applied = false; }
+  if (!applied) ta.value = res.text;
+  onTestoChange(ta.value);
+  showToast(`Grafia normalizzata · ${res.count} sostituzion${res.count === 1 ? 'e' : 'i'} (Ctrl+Z per annullare)`);
+}
 function onTraduzioneChange(v) { state.meta.traduzione = v; persistCurrent(); renderPreview(); }
 function onMetaChange(field, v) { state.meta[field] = v; persistCurrent(); renderPreview(); }
 
