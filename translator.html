@@ -4111,6 +4111,71 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: 'Times New R
 .phase-chip[data-state="progress"] .phase-dot { background: var(--poetrify-warning); }
 .phase-chip[data-state="done"]     { color: var(--poetrify-success); }
 .phase-chip[data-state="progress"] { color: var(--poetrify-warning); }
+
+/* ── PANORAMICA (Π) · ripresa rapida ─────────────────────────────────────── */
+.panoramica-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  color: var(--poetrify-sepia);
+  margin: 18px 0 8px;
+}
+.resume-list { display: flex; flex-direction: column; gap: 8px; }
+.resume-card {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  background: var(--poetrify-cream);
+  border: 1px solid var(--poetrify-rule-soft);
+  border-radius: var(--radius-md, 10px);
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: border-color var(--transition-base), box-shadow var(--transition-base);
+}
+.resume-card:hover {
+  border-color: var(--poetrify-lang-accent);
+  box-shadow: 0 2px 10px var(--poetrify-shadow);
+}
+.resume-card-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.resume-card-title {
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--poetrify-ink);
+}
+.resume-card-meta { font-size: 11px; color: var(--poetrify-sepia); }
+.resume-card-status {
+  margin-left: auto;
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--poetrify-sepia);
+}
+.resume-card-bar {
+  display: block;
+  height: 5px;
+  background: var(--poetrify-rule-soft);
+  border-radius: 999px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+.resume-card-fill {
+  display: block;
+  height: 100%;
+  background: var(--poetrify-sepia);
+  border-radius: 999px;
+}
+.resume-card[data-status="progress"] .resume-card-status { color: var(--poetrify-warning); }
+.resume-card[data-status="done"]     .resume-card-status { color: var(--poetrify-success); }
+.resume-card[data-status="progress"] .resume-card-fill   { background: var(--poetrify-warning); }
+.resume-card[data-status="done"]     .resume-card-fill   { background: var(--poetrify-success); }
 .archive-card-actions {
   display: flex;
   gap: 6px;
@@ -25757,12 +25822,13 @@ function renderAll() {
 }
 
 function syncTopbar() {
-  // LINGUA ATTIVA DELLA UI: nell'archivio (scheda D) è il BRANCH che si sta
-  // sfogliando; altrove è la lingua del progetto aperto. Tutta l'identità
-  // cromatica e le etichette seguono QUESTA, non il progetto caricato — così
-  // sfogliando il branch greco la UI diventa blu anche se il brano aperto è
-  // latino (e viceversa). Era qui il bug: il body usava state.meta.lingua.
-  const activeLang = (state.currentStep === 4 && archiveFilters.lingua) ? archiveFilters.lingua : state.meta.lingua;
+  // LINGUA ATTIVA DELLA UI: nell'archivio (D) e nella panoramica (Π) è il BRANCH
+  // che si sta sfogliando; altrove è la lingua del progetto aperto. Tutta
+  // l'identità cromatica e le etichette seguono QUESTA, non il progetto caricato
+  // — così sfogliando il branch greco la UI diventa blu anche se il brano aperto
+  // è latino (e viceversa). Era qui il bug: il body usava state.meta.lingua.
+  const isBranchView = (state.currentStep === 4 || state.currentStep === 7);
+  const activeLang = (isBranchView && archiveFilters.lingua) ? archiveFilters.lingua : state.meta.lingua;
   document.body.dataset.lang = activeLang;
   document.getElementById('meta-autore').value = state.meta.autore || '';
   document.getElementById('meta-opera').value = state.meta.opera || '';
@@ -25783,9 +25849,9 @@ function syncTopbar() {
   // Titolo della versione mostrato nell'header minimale (mobile/tablet).
   const tbTitle = document.getElementById('topbar-title');
   if (tbTitle) {
-    // Il titolo della versione di lavoro non ha senso in archivio (D) o dizionario
-    // (F): lì non si sta lavorando un brano specifico → nascondilo.
-    const noBrano = (state.currentStep === 4 || state.currentStep === 6);
+    // Il titolo della versione di lavoro non ha senso in archivio (D), dizionario
+    // (F) o panoramica (Π): lì non si sta lavorando un brano specifico → nascondilo.
+    const noBrano = (state.currentStep === 4 || state.currentStep === 6 || state.currentStep === 7);
     tbTitle.style.display = noBrano ? 'none' : '';
     tbTitle.textContent = (state.meta.titolo && state.meta.titolo.trim()) ? state.meta.titolo.trim() : 'Versione senza titolo';
   }
@@ -25996,10 +26062,13 @@ function renderSidebarTabs() {
   }
   // Per il profilo medie filtra le schede non pertinenti
   if (isMedie) tabs = tabs.filter(t => !t.hideForMedie);
+  // Vista d'insieme (Π = Panoramica): sempre disponibile, in testa alla nav.
+  tabs.unshift({ num: 7, letter: 'Π', title: 'Panoramica', group: 'home', enabled: true, hasContent: true, badge: '' });
   // Navigazione raggruppata per funzione (sezioni con titolo), ispirata al
   // cruscotto-docente: si distingue a colpo d'occhio dove si lavora, si traduce
   // e si consulta. Le lettere A–F restano come ancora mnemonica.
   const GROUPS = [
+    { key: 'home', label: '' },
     { key: 'lavoro', label: 'Lavoro' },
     { key: 'traduzione', label: 'Traduzione' },
     { key: 'strumenti', label: 'Strumenti' },
@@ -26014,7 +26083,8 @@ function renderSidebarTabs() {
   list.innerHTML = GROUPS.map(g => {
     const items = tabs.filter(t => t.group === g.key);
     if (!items.length) return '';
-    return `<li class="tab-group-label" aria-hidden="true">${g.label}</li>` + items.map(itemHtml).join('');
+    const label = g.label ? `<li class="tab-group-label" aria-hidden="true">${g.label}</li>` : '';
+    return label + items.map(itemHtml).join('');
   }).join('');
 }
 
@@ -26029,6 +26099,7 @@ function renderEditor() {
   else if (state.currentStep === 4) c.innerHTML = renderArchiveHtml();
   else if (state.currentStep === 5) c.innerHTML = renderTranslationHtml();
   else if (state.currentStep === 6) c.innerHTML = renderDictionaryHtml();
+  else if (state.currentStep === 7) c.innerHTML = renderPanoramicaHtml();
   if (state.currentStep === 1) {
     const t = document.getElementById('field-testo');
     const tr = document.getElementById('field-traduzione');
@@ -28490,6 +28561,97 @@ function statusLabel(s) {
   return 'Da svolgere';
 }
 
+/* ════════════════════════════════════════════════════════════════════════════
+   PANORAMICA (Π) · dashboard del branch — dal mockup «shell/nav/dashboard».
+   Colpo d'occhio: KPI del branch attivo + «ripresa rapida» dei brani più
+   recenti. Come l'archivio è una vista di BRANCH (segue archiveFilters.lingua,
+   non il progetto aperto). Ispirata alla HomeView del cruscotto-docente. */
+function renderPanoramicaHtml() {
+  const allProjects = loadAllProjects();
+  const branchLang = archiveFilters.lingua || state.meta.lingua || 'latino';
+  const branchName = branchLang === 'greco' ? 'greco' : 'latino';
+  const projects = allProjects.filter(p => ((p.meta && p.meta.lingua) || 'latino') === branchLang);
+  const totals = { all: projects.length, todo: 0, progress: 0, done: 0 };
+  projects.forEach(p => { totals[projectStatus(p)]++; });
+
+  const langCount = l => allProjects.filter(p => ((p.meta && p.meta.lingua) || 'latino') === l).length;
+  const branchBtn = (l, label) => `
+    <button class="archive-branch-btn ${branchLang === l ? 'active' : ''}" data-lang="${l}" onclick="setArchiveFilter('lingua','${l}')" title="Panoramica del branch ${l === 'greco' ? 'greco' : 'latino'}">
+      ${label} <span style="opacity:0.7;">(${langCount(l)})</span>
+    </button>`;
+  const branchBar = `
+    <div class="archive-branch-bar" role="tablist" aria-label="Branch linguistico">
+      <span class="archive-branch-label">Branch lingua</span>
+      ${branchBtn('latino', 'Latino')}
+      ${branchBtn('greco', 'Greco')}
+    </div>`;
+
+  const stats = `
+    <div class="archive-stats">
+      <div class="archive-stat-card total">
+        <span class="archive-stat-label">Totale brani</span>
+        <span class="archive-stat-value">${totals.all}</span>
+      </div>
+      <div class="archive-stat-card todo">
+        <span class="archive-stat-label">Da svolgere</span>
+        <span class="archive-stat-value">${totals.todo}</span>
+      </div>
+      <div class="archive-stat-card progress">
+        <span class="archive-stat-label">In corso</span>
+        <span class="archive-stat-value">${totals.progress}</span>
+      </div>
+      <div class="archive-stat-card done">
+        <span class="archive-stat-label">Completati</span>
+        <span class="archive-stat-value">${totals.done}</span>
+      </div>
+    </div>`;
+
+  const recent = projects.slice()
+    .sort((a, b) => new Date(b.meta.updatedAt) - new Date(a.meta.updatedAt))
+    .slice(0, 3);
+  const resumeCards = recent.map(p => {
+    const status = projectStatus(p);
+    const completion = projectCompletion(p);
+    const isCurrent = p.id === state.id;
+    const who = [p.meta.autore, p.meta.opera].filter(Boolean).join(' · ');
+    const main = who || p.meta.titolo || 'Senza titolo';
+    const nfr = (p.sentences || []).length;
+    const sub = [who ? (p.meta.titolo || '') : '', `${nfr} fras${nfr === 1 ? 'e' : 'i'}`].filter(Boolean).join(' · ');
+    const statusTxt = status === 'done' ? 'completato' : (status === 'progress' ? `in corso ${completion}%` : 'da svolgere');
+    return `
+      <button class="resume-card" data-status="${status}" onclick="resumeProject('${p.id}')" title="${isCurrent ? 'Torna al brano aperto' : 'Riprendi questo brano'}">
+        <span class="resume-card-row">
+          <span class="resume-card-title">${escapeHtml(main)}</span>
+          <span class="resume-card-meta">${escapeHtml(sub)}</span>
+          ${isCurrent ? '<span class="current-tag">in lavorazione</span>' : ''}
+          <span class="resume-card-status">${statusTxt}</span>
+        </span>
+        <span class="resume-card-bar"><span class="resume-card-fill" style="width:${completion}%;"></span></span>
+      </button>`;
+  }).join('');
+
+  const resumeBlock = recent.length === 0
+    ? `<div class="archive-empty">Ancora nessun brano <strong>${branchName}</strong>: creane uno con <strong>+ Nuovo brano ${branchName}</strong> qui sotto.</div>`
+    : `<div class="panoramica-label">Ripresa rapida</div><div class="resume-list">${resumeCards}</div>`;
+
+  return sectionHeader('Π', 'Panoramica', `colpo d'occhio sul branch ${branchName}: lo stato dei brani e la ripresa del lavoro.`)
+    + branchBar
+    + stats
+    + resumeBlock
+    + `<div class="flex-between" style="margin-top: 14px;">
+        <button class="btn btn-ghost btn-sm" onclick="goToStep(4)">Apri l'archivio completo →</button>
+        <button class="btn btn-primary btn-sm" onclick="newProjectInLang('${branchLang}')">+ Nuovo brano ${branchName}</button>
+      </div>`;
+}
+
+/* Ripresa dalla panoramica: carica il progetto e, se era stato salvato su una
+   vista «meta» (archivio/dizionario/panoramica), riportalo alla stanza A. */
+function resumeProject(id) {
+  if (id === state.id) { goToStep(1); return; }
+  loadProjectById(id);
+  if (state.currentStep === 4 || state.currentStep === 6 || state.currentStep === 7) goToStep(1);
+}
+
 function renderArchiveHtml() {
   const allProjects = loadAllProjects();
   // BRANCH LINGUISTICO: le due lingue sono scorporate. L'archivio mostra una sola
@@ -30411,6 +30573,9 @@ function removeConnettivo(sentenceId, entryId) {
 
 function setArchiveFilter(key, value) {
   archiveFilters[key] = value;
+  // Il cambio di branch guida anche l'identità cromatica della UI (D e Π):
+  // senza questo, i colori restavano alla lingua precedente fino al prossimo sync.
+  if (key === 'lingua') syncTopbar();
   renderEditor();
   if (key === 'search') {
     setTimeout(() => {
@@ -35620,13 +35785,14 @@ function setLingua(lang) {
   }
   // BRANCH SCORPORATI: non si può lavorare lo stesso testo in due lingue. Se clicco
   // la lingua già attiva del progetto corrente, resto sul lavoro (eventualmente
-  // rientrando dall'archivio). Se clicco l'ALTRA lingua, apro il suo archivio per
-  // scegliere/creare la versione su cui lavorare in quella lingua.
-  if (lang === state.meta.lingua && state.currentStep !== 4) {
+  // rientrando da una vista di branch: archivio D o panoramica Π). Se clicco
+  // l'ALTRA lingua, apro il suo branch per scegliere/creare la versione.
+  const inBranchView = (state.currentStep === 4 || state.currentStep === 7);
+  if (lang === state.meta.lingua && !inBranchView) {
     return;   // già nella lingua corrente e già al lavoro: nessun cambiamento
   }
-  if (lang === state.meta.lingua && state.currentStep === 4) {
-    // ero in archivio guardando un altro branch: torna al branch della lingua corrente
+  if (lang === state.meta.lingua && inBranchView) {
+    // ero su una vista di branch guardando un altro branch: torna al mio
     openLanguageBranch(lang);
     return;
   }
@@ -35636,12 +35802,13 @@ function setLingua(lang) {
   openLanguageBranch(lang);
 }
 
-/* Apre la scheda Archivio (D) filtrata sul branch della lingua indicata, dove
-   l'utente sceglie una versione da riprendere o ne crea una nuova. Non altera la
-   lingua del progetto attualmente caricato: cambierà solo aprendone/creandone uno. */
+/* Apre il branch della lingua indicata, dove l'utente sceglie una versione da
+   riprendere o ne crea una nuova. Se sono già su una vista di branch (Π o D)
+   resto su quella; altrimenti apro l'archivio (D). Non altera la lingua del
+   progetto attualmente caricato: cambierà solo aprendone/creandone uno. */
 function openLanguageBranch(lang) {
   archiveFilters.lingua = lang;
-  state.currentStep = 4;          // scheda D · Archivio
+  if (state.currentStep !== 7) state.currentStep = 4;   // default: scheda D · Archivio
   persistCurrent();
   renderAll();
   const ln = lang === 'greco' ? 'greco' : 'latino';
