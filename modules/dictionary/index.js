@@ -221,6 +221,8 @@ export class DictionaryApp {
     if (this.$searchBtn) this.$searchBtn.addEventListener('click', () => this.search());
     if (this.$clearBtn) this.$clearBtn.addEventListener('click', () => this._onClear());
     if (this.$darkToggle) this.$darkToggle.addEventListener('click', () => this._toggleDark());
+    const passoBtn = document.getElementById('dict-passo-toggle');
+    if (passoBtn) passoBtn.addEventListener('click', () => { this.viewMode = 'passo'; this.render(); });
     if (this.$levelToggle) this.$levelToggle.addEventListener('click', () => this._cycleLevel());
     if (this.$fontToggle) this.$fontToggle.addEventListener('click', () => this._cycleFontSize());
     if (this.$kbdToggle) this.$kbdToggle.addEventListener('click', () => this._toggleGreekKbd());
@@ -725,6 +727,9 @@ export class DictionaryApp {
     if (this.viewMode === 'reverse') {
       return this._renderReverseResults();
     }
+    if (this.viewMode === 'passo') {
+      return this._renderPasso();
+    }
     if (!this.currentQuery) {
       this.$results.innerHTML = this._renderEmpty();
       return;
@@ -732,7 +737,7 @@ export class DictionaryApp {
     this.$results.innerHTML = this._renderLoading();
     try {
       await this.engine.loadLanguageData(this.currentLang);
-      const hit = await this.engine.lookUpWord(this.currentQuery, this.currentLang);
+      const hit = await this.engine.lookUpSmart(this.currentQuery, this.currentLang);
       this.currentHit = hit;
       /* [NEW 5] aggiorna cronologia (solo per query reali, non auto) */
       if (hit) {
@@ -754,6 +759,20 @@ export class DictionaryApp {
   _wireEntryButtons() {
     const saveBtn = this.$results.querySelector('.dict-entry-save');
     if (saveBtn) saveBtn.addEventListener('click', () => this._toggleSaveVocab());
+    /* letture alternative → naviga al lemma */
+    this.$results.querySelectorAll('.alt-lemma-chip').forEach(b => {
+      b.addEventListener('click', () => this._navigateTo(b.dataset.lemma, this.currentLang));
+    });
+    /* tab della flessione segmentata (modo × tempo) */
+    this.$results.querySelectorAll('[data-seg-modo]').forEach(b => {
+      b.addEventListener('click', () => { this.segSel = { modo: b.dataset.segModo }; this.render(); });
+    });
+    this.$results.querySelectorAll('[data-seg-tempo]').forEach(b => {
+      b.addEventListener('click', () => {
+        this.segSel = Object.assign({}, this.segSel, { tempo: b.dataset.segTempo });
+        this.render();
+      });
+    });
     /* [NEW 13] prev/next alfabetici · click handlers */
     const prevBtn = this.$results.querySelector('.dict-prev-lemma');
     const nextBtn = this.$results.querySelector('.dict-next-lemma');
@@ -821,6 +840,84 @@ export class DictionaryApp {
   /* ════════════════════════════════════════════════════════════════════
      RENDERER · empty / loading / error / not-found / entry / paradigma
      ════════════════════════════════════════════════════════════════════ */
+  /* ══ ANALIZZA UN PASSO · glossario parola per parola dentro il dizionario ══ */
+  _renderPasso() {
+    const isGreek = this.currentLang === 'greco';
+    const acc = isGreek ? '#1800ac' : '#a22e37';
+    this.$results.innerHTML = `<div class="passo-view" style="--md-accent:${acc}">
+      <h2 class="passo-title">📖 Analizza un passo <small>· ${escapeHtml(LANG_LABELS[this.currentLang])}</small></h2>
+      <p class="muted-text passo-hint">Incolla una frase o un brano: ottieni parola → lemma · analisi · glossa, con la copertura del lessico. Le parole sono cliccabili.</p>
+      <textarea id="passo-input" class="passo-input${isGreek ? ' greek' : ''}" rows="4"
+        placeholder="${isGreek ? 'Es. Δαρείου καὶ Παρυσάτιδος γίγνονται παῖδες δύο…' : 'Es. Gallia est omnis divisa in partes tres…'}">${escapeHtml(this._passoText || '')}</textarea>
+      <div class="passo-actions">
+        <button type="button" id="passo-run" class="topbar-btn">🔍 Analizza</button>
+        <button type="button" id="passo-copy" class="topbar-btn" ${this._passoLines ? '' : 'disabled'}>📋 Copia glossario</button>
+        <button type="button" id="passo-back" class="topbar-btn">← Torna alla ricerca</button>
+      </div>
+      <div id="passo-out">${this._passoHtml || ''}</div>
+    </div>`;
+    const run = document.getElementById('passo-run');
+    if (run) run.addEventListener('click', () => this._runPasso());
+    const back = document.getElementById('passo-back');
+    if (back) back.addEventListener('click', () => { this.viewMode = 'search'; this.render(); });
+    const cp = document.getElementById('passo-copy');
+    if (cp) cp.addEventListener('click', () => {
+      if (this._passoLines) navigator.clipboard.writeText(this._passoLines)
+        .then(() => { cp.textContent = '✓ Copiato'; setTimeout(() => { cp.textContent = '📋 Copia glossario'; }, 1600); });
+    });
+    this._wirePassoWords();
+  }
+  _wirePassoWords() {
+    this.$results.querySelectorAll('.passo-w').forEach(b => b.addEventListener('click', () => {
+      this.viewMode = 'search';
+      if (this.$searchInput) this.$searchInput.value = b.dataset.q;
+      this.currentQuery = b.dataset.q;
+      this._syncUrl();
+      this.render();
+    }));
+  }
+  async _runPasso() {
+    const ta = document.getElementById('passo-input');
+    const out = document.getElementById('passo-out');
+    if (!ta || !out) return;
+    this._passoText = ta.value;
+    const words = [];
+    const seen = new Set();
+    for (const w of ta.value.split(/[^\p{L}᾽'’]+/u)) {
+      const k = normalizeText(w);
+      if (!w || !k || seen.has(k)) continue;
+      seen.add(k); words.push(w);
+    }
+    if (!words.length) { out.innerHTML = '<p class="muted-text">Nessuna parola da analizzare.</p>'; return; }
+    out.innerHTML = '<p class="muted-text">⏳ Interrogo il patrimonio lessicale…</p>';
+    try { await this.engine.lookUpBatch(words, this.currentLang); } catch (_) {}
+    const rows = []; const miss = []; const lines = [];
+    for (const w of words) {
+      let r;
+      try { r = await this.engine.lookUpSmart(w, this.currentLang); } catch (_) { r = null; }
+      const found = r && (r.source === 'dict' || r.source === 'lemmata+dict' || r.source === 'archived');
+      if (!found) { miss.push(w); continue; }
+      const gloss = getItalianGloss(r.lemma, this.currentLang)
+        || (r.src === 'curated' && r.definition ? r.definition : '')
+        || r.italianGlossAuto || '';
+      const analisi = r.parsing || r.pos || '';
+      rows.push(`<div class="passo-row">
+        <button type="button" class="passo-w${this.currentLang === 'greco' ? ' greek' : ''}" data-q="${escapeHtml(w)}" title="Apri la scheda">${escapeHtml(w)}</button>
+        <span class="passo-l">${escapeHtml(r.lemma)}${analisi ? ' · ' + escapeHtml(analisi) : ''}</span>
+        <span class="passo-g">${escapeHtml(gloss || '—')}</span>
+      </div>`);
+      lines.push(`${w} → ${r.lemma}${r.parsing ? ' (' + r.parsing + ')' : ''}${gloss ? ': ' + gloss : ''}`);
+    }
+    this._passoLines = lines.join('\n');
+    out.innerHTML = `<div class="passo-cov">coperte <strong>${rows.length}/${words.length}</strong>${miss.length
+        ? `<span class="passo-miss"> · non trovate (nomi propri o refusi?): ${miss.map(m => escapeHtml(m)).join(' · ')}</span>` : ''}</div>
+      <div class="passo-grid">${rows.join('')}</div>`;
+    this._passoHtml = out.innerHTML;
+    const cp = document.getElementById('passo-copy');
+    if (cp) cp.disabled = !lines.length;
+    this._wirePassoWords();
+  }
+
   _placeholderFor(lang) {
     return lang === 'greco'
       ? 'Cerca un lemma greco (es. λόγος, λύω, ἔβην)…'
@@ -899,6 +996,20 @@ export class DictionaryApp {
     const parsingHtml = hit.parsing
       ? `<div class="dict-entry-parsing">⤷ ${escapeHtml(hit.word)} · ${escapeHtml(hit.parsing)}</div>`
       : '';
+    /* Via filologica (lookUpSmart): enclitica staccata, elisione, ν efelcistico */
+    const viaMap = {
+      'enclitica': `staccata l'enclitica ${escapeHtml(hit.enclitic || '')}`,
+      'elisione': `elisione: ${escapeHtml(hit.word)} = ${escapeHtml(hit.elisionFull || hit.lemma)}`,
+      'ny-efelcistico': 'ν efelcistico',
+    };
+    const viaHtml = viaMap[hit.via]
+      ? `<div class="dict-entry-via">⚑ ${viaMap[hit.via]}</div>` : '';
+    /* Letture alternative esplicite (legis = legō E lēx) */
+    const _alts = (hit.alternatives || []).filter(a => a.lemma && a.lemma !== hit.lemma);
+    const altsHtml = _alts.length
+      ? `<div class="dict-entry-alts">Altre letture: ${_alts.slice(0, 5).map(a =>
+          `<button type="button" class="alt-lemma-chip${lemmaCls}" data-lemma="${escapeHtml(a.lemma)}">${escapeHtml(a.lemma)}${a.parsing ? ` <small>${escapeHtml(a.parsing)}</small>` : ''}</button>`).join('')}</div>`
+      : '';
     const sourceLabel = {
       'lemmata+dict': 'forma flessa riconosciuta',
       'dict': 'lemma diretto',
@@ -910,7 +1021,12 @@ export class DictionaryApp {
     const saveBtnLabel = isSaved ? '★ Salvato' : '⭐ Salva';
     /* Paradigma costruito UNA volta: condiviso da categorie, riga «Paradigma» e tabella. */
     const built = this._buildEntryParadigm(hit);
-    const paradigmHtml = this._renderClassicalParadigm(built);
+    /* Flessione SEGMENTATA per morfema (indice pre-generato e validato):
+       quando esiste, ha la precedenza; il modello ricostruito resta sotto,
+       ripiegato. */
+    const segPar = await this._loadSegParadigm(hit.lemma);
+    const segHtml = segPar ? this._renderSegParadigm(segPar, hit) : '';
+    const paradigmHtml = this._renderClassicalParadigm(built, !segHtml);
     const grammarHtml = this._renderGrammarCategories(hit, built);
     const translationHtml = this._renderTranslationHero(hit);
     const paradigmaLine = (built && built.citation)
@@ -946,6 +1062,8 @@ export class DictionaryApp {
       </header>
       ${translitHtml}
       ${parsingHtml}
+      ${viaHtml}
+      ${altsHtml}
       <!-- 1 · TRADUZIONE (risalto) -->
       ${translationHtml}
       <!-- definizione inglese (Lewis/LSJ): mostrata SOLO in modalità inglese;
@@ -963,6 +1081,7 @@ export class DictionaryApp {
       ${etymHtml}
       ${cognateHtml}
       <!-- 5 · TABELLA MORFOLOGICA -->
+      ${segHtml}
       ${paradigmHtml}
       <footer class="dict-entry-actions">
         <button class="dict-entry-save ${isSaved ? 'is-saved' : ''}" type="button">${saveBtnLabel}</button>
@@ -1236,11 +1355,136 @@ export class DictionaryApp {
   }
 
   /* Tabella morfologica (declinazione/coniugazione completa). */
-  _renderClassicalParadigm(built) {
+  /* ══ FLESSIONE SEGMENTATA · tabelle colorate per morfema ═══════════════
+     Legge data/<lang>/paradigms/<lettera>.json (celle già scomposte in
+     [testo, ruolo] dai generatori validati: a=aumento/raddoppiamento,
+     t=tema, v=vocale tematica/contratta, s=suffisso, d=desinenza). */
+  async _loadSegParadigm(lemma) {
+    if (!lemma) return null;
+    const letter = normalizeText(lemma).charAt(0);
+    const folder = this.currentLang === 'greco' ? 'greek' : 'latin';
+    const key = folder + ':' + letter;
+    if (!this._segCache) this._segCache = new Map();
+    if (!this._segCache.has(key)) {
+      try {
+        const url = new URL(`../../data/${folder}/paradigms/${encodeURIComponent(letter)}.json`, import.meta.url);
+        const r = await fetch(url);
+        this._segCache.set(key, r.ok ? ((await r.json()).paradigms || {}) : {});
+      } catch (_) { this._segCache.set(key, {}); }
+    }
+    const p = this._segCache.get(key);
+    if (p[lemma]) return p[lemma];
+    const nl = normalizeText(lemma);
+    for (const k of Object.keys(p)) if (normalizeText(k) === nl) return p[k];
+    return null;
+  }
+  _segCellHtml(cell, hitNorm) {
+    if (!cell) return '<span class="muted-text">—</span>';
+    const form = cell.map(s => s[0]).join('');
+    const hitCls = hitNorm && normalizeText(form) === hitNorm ? ' mseg-hit' : '';
+    return `<span class="mseg-form${hitCls}${this.currentLang === 'greco' ? ' greek' : ''}">`
+      + cell.map(([t, r]) => `<span class="mseg mseg-${r}">${escapeHtml(t)}</span>`).join('')
+      + '</span>';
+  }
+  _renderSegParadigm(par, hit) {
+    const isGreek = this.currentLang === 'greco';
+    const acc = isGreek ? '#1800ac' : '#a22e37';
+    const accDark = isGreek ? '#8b7dff' : '#e58a90';
+    const hitNorm = normalizeText(hit.word || '');
+    const legend = `<div class="seg-legend">
+      <span class="mseg mseg-a">aumento/raddopp.</span>
+      <span class="mseg mseg-t">tema</span>
+      <span class="mseg mseg-v">vocale tematica</span>
+      <span class="mseg mseg-s">suffisso</span>
+      <span class="mseg mseg-d">desinenza</span>
+    </div>`;
+    let body = '';
+    if (par.nome) {
+      const CASES = [['nom','nominativo'],['gen','genitivo'],['dat','dativo'],['acc','accusativo'],['voc','vocativo'],['abl','ablativo']];
+      const rows = CASES.filter(([k]) => (par.nome.sg && par.nome.sg[k]) || (par.nome.pl && par.nome.pl[k])).map(([k, label]) =>
+        `<div class="seg-row"><span class="seg-case">${label}</span>
+          <span>${this._segCellHtml(par.nome.sg && par.nome.sg[k], hitNorm)}</span>
+          <span>${this._segCellHtml(par.nome.pl && par.nome.pl[k], hitNorm)}</span></div>`).join('');
+      body = `<div class="seg-table" style="--segc: 100px 1fr 1fr;">
+        <div class="seg-row seg-head"><span>caso</span><span>singolare</span><span>plurale</span></div>${rows}</div>`;
+    }
+    if (par.verbo) {
+      const MODI = [['ind','Indicativo'],['cong','Congiuntivo'],['imv','Imperativo'],['inf','Infinito'],['ptc','Participio']];
+      const TEMPI = { pres:'presente', impf:'imperfetto', fut:'futuro', aor:'aoristo', aorp:'aor. passivo',
+                      pf:'perfetto', pfmp:'pf. medio-passivo', ppf:'piuccheperfetto', futant:'futuro anteriore' };
+      let sel = this.segSel || {};
+      /* Se non c'è una scelta manuale, apri il pannello che CONTIENE la
+         forma cercata (amavisset → Congiuntivo · piuccheperfetto). */
+      if (!sel.modo && hitNorm) {
+        const isCell = (x) => Array.isArray(x) && x.length > 0 && Array.isArray(x[0]) && typeof x[0][0] === 'string';
+        const cellIs = (c) => c && isCell(c) && normalizeText(c.map(s => s[0]).join('')) === hitNorm;
+        outer:
+        for (const [mk, grp] of Object.entries(par.verbo)) {
+          if (!grp || typeof grp !== 'object' || isCell(grp)) continue;
+          for (const [tk, sub] of Object.entries(grp)) {
+            if (cellIs(sub)) { sel = { modo: mk, tempo: tk }; break outer; }        // inf/ptc: cella diretta
+            if (Array.isArray(sub)) {                                               // lista di celle
+              if (sub.some(cellIs)) { sel = { modo: mk, tempo: tk }; break outer; }
+            } else if (sub && typeof sub === 'object') {                            // colonne att/pass/mp
+              for (const arr of Object.values(sub)) {
+                if (Array.isArray(arr) && arr.some(cellIs)) { sel = { modo: mk, tempo: tk }; break outer; }
+              }
+            }
+          }
+        }
+      }
+      const modi = MODI.filter(([k]) => par.verbo[k] && Object.keys(par.verbo[k]).length);
+      const hasGer = !!par.verbo.ger;
+      let modo = (sel.modo === 'ger' && hasGer) ? 'ger'
+        : (sel.modo && par.verbo[sel.modo] ? sel.modo : (modi[0] ? modi[0][0] : null));
+      const tabsModo = modi.map(([k, l]) =>
+          `<button type="button" class="seg-tab ${k === modo ? 'is-on' : ''}" data-seg-modo="${k}">${l}</button>`).join('')
+        + (hasGer ? `<button type="button" class="seg-tab ${modo === 'ger' ? 'is-on' : ''}" data-seg-modo="ger">Gerundivo</button>` : '');
+      let pane = '';
+      if (modo === 'ger') {
+        pane = `<div class="seg-list-row"><span class="seg-case">gerundivo</span>${this._segCellHtml(par.verbo.ger, hitNorm)}</div>`;
+      } else if (modo === 'inf' || modo === 'ptc') {
+        const LBL = { pres_att:'presente attivo', pres_pass:'presente passivo', pres_mp:'presente medio-passivo',
+                      pf_att:'perfetto attivo', aor_att:'aoristo attivo', aor_mp:'aoristo medio', aorp:'aoristo passivo',
+                      pres:'presente', pres_gen:'presente · genitivo', pf:'perfetto', fut:'futuro' };
+        pane = Object.entries(par.verbo[modo]).map(([k, cell]) =>
+          `<div class="seg-list-row"><span class="seg-case">${LBL[k] || k}</span>${this._segCellHtml(cell, hitNorm)}</div>`).join('');
+      } else if (modo) {
+        const grp = par.verbo[modo];
+        const tempi = Object.keys(grp);
+        const tempo = sel.tempo && grp[sel.tempo] ? sel.tempo : tempi[0];
+        const tabsTempo = tempi.map(k =>
+          `<button type="button" class="seg-tab seg-tab-t ${k === tempo ? 'is-on' : ''}" data-seg-tempo="${k}">${TEMPI[k] || k}</button>`).join('');
+        const cols = grp[tempo] || {};
+        const colKeys = Object.keys(cols);
+        const COLL = { att: 'attivo', pass: 'passivo', mp: isGreek ? 'medio-passivo' : 'forma passiva (dep.)' };
+        const PERS = ['1ª sg.','2ª sg.','3ª sg.','1ª pl.','2ª pl.','3ª pl.'];
+        const head = `<div class="seg-row seg-head"><span>persona</span>${colKeys.map(k => `<span>${COLL[k] || k}</span>`).join('')}</div>`;
+        const rows = PERS.map((p, i) =>
+          `<div class="seg-row"><span class="seg-case">${p}</span>${colKeys.map(k =>
+            `<span>${this._segCellHtml((cols[k] || [])[i], hitNorm)}</span>`).join('')}</div>`).join('');
+        pane = `<div class="seg-tempo-tabs">${tabsTempo}</div>
+          <div class="seg-table" style="--segc: 76px repeat(${Math.max(1, colKeys.length)}, 1fr);">${head}${rows}</div>`;
+      }
+      body += `<div class="seg-modo-tabs">${tabsModo}</div>${pane}`;
+    }
+    const nota = par.nota ? `<p class="clp-disclaimer muted-text">⚠ ${escapeHtml(par.nota)}</p>` : '';
+    return `<details class="dict-paradigm seg-par" open style="--md-accent:${acc};--md-accent-dark:${accDark}">
+      <summary>🧩 Flessione con analisi dei morfemi <small>· ${escapeHtml(par.classe || '')}</small></summary>
+      <div class="clp-wrap">
+        ${legend}
+        ${body}
+        <p class="clp-disclaimer muted-text">${escapeHtml(par.testa || '')} · ogni colore è un morfema; le fusioni irriducibili restano nel segmento più ampio.</p>
+        ${nota}
+      </div>
+    </details>`;
+  }
+
+  _renderClassicalParadigm(built, open = true) {
     if (!built) return '';
     const inner = renderClassicalParadigm(built);
     if (!inner) return '';
-    return `<details class="dict-paradigm dict-paradigm-classic" open>
+    return `<details class="dict-paradigm dict-paradigm-classic" ${open ? 'open' : ''}>
       <summary>📐 Tabella morfologica completa</summary>
       <div class="clp-wrap">
         ${inner}
