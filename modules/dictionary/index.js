@@ -748,9 +748,12 @@ export class DictionaryApp {
         this._pushHistory({ query: this.currentQuery, lang: this.currentLang, lemma: hit.lemma });
         this._renderHistoryBar();
       }
+      /* RICERCA MULTI-LEMMA (mockup): oltre alla scheda, la lista dei lemmi
+         che iniziano con la query — o al posto del «nessun risultato». */
+      const listHtml = await this._renderLemmaList(this.currentQuery, hit);
       this.$results.innerHTML = hit
-        ? await this._renderEntry(hit)
-        : await this._renderNotFound();
+        ? (await this._renderEntry(hit)) + listHtml
+        : (listHtml || await this._renderNotFound());
       this._wireEntryButtons();
       this._updateBackForwardButtons();
     } catch (err) {
@@ -763,6 +766,10 @@ export class DictionaryApp {
     if (saveBtn) saveBtn.addEventListener('click', () => this._toggleSaveVocab());
     /* letture alternative → naviga al lemma */
     this.$results.querySelectorAll('.alt-lemma-chip').forEach(b => {
+      b.addEventListener('click', () => this._navigateTo(b.dataset.lemma, this.currentLang));
+    });
+    /* lista multi-lemma → naviga al lemma */
+    this.$results.querySelectorAll('.lemma-row').forEach(b => {
       b.addEventListener('click', () => this._navigateTo(b.dataset.lemma, this.currentLang));
     });
     /* tab della flessione segmentata (modo × tempo) */
@@ -842,6 +849,43 @@ export class DictionaryApp {
   /* ════════════════════════════════════════════════════════════════════
      RENDERER · empty / loading / error / not-found / entry / paradigma
      ════════════════════════════════════════════════════════════════════ */
+  /* ══ RICERCA MULTI-LEMMA · lista dei lemmi in prefisso (mockup 3) ═════════
+     Righe: lemma · categoria a pastiglia · glossa italiana · frequenza ★.
+     Sotto la scheda quando c'è un hit; al posto del vuoto quando non c'è. */
+  async _renderLemmaList(query, hit) {
+    const q = normalizeText((query || '').trim());
+    if (!q || q.length < 2) return '';
+    try { await this.engine._loadShard(this.currentLang, q.charAt(0)); } catch (_) { return ''; }
+    const shard = this.engine._shards[this.currentLang] && this.engine._shards[this.currentLang].get(q.charAt(0));
+    if (!shard || !shard.dict) return '';
+    const skip = hit && hit.lemma ? normalizeText(hit.lemma) : '';
+    const rows = [];
+    for (const k of Object.keys(shard.dict)) {
+      const nk = normalizeText(k.replace(/\d+$/, ''));
+      if (!nk.startsWith(q) || nk === skip) continue;
+      const e = shard.dict[k];
+      rows.push({ k, nk, pos: (e && e.pos) || '', freq: getFrequency(k, this.currentLang) || 0,
+                  gloss: getItalianGloss(k, this.currentLang)
+                    || (e && e.src === 'curated' && e.definition ? e.definition : '') });
+      if (rows.length > 60) break;
+    }
+    if (!rows.length) return '';
+    rows.sort((a, b) => (b.freq - a.freq) || (a.nk.length - b.nk.length) || a.nk.localeCompare(b.nk));
+    const isGreek = this.currentLang === 'greco';
+    const items = rows.slice(0, 10).map(r => `
+      <button type="button" class="lemma-row" data-lemma="${escapeHtml(r.k)}">
+        <span class="lemma-row-l${isGreek ? ' greek' : ''}">${escapeHtml(r.k.replace(/\d+$/, ''))}</span>
+        ${r.pos ? `<span class="lemma-row-pos">${escapeHtml(r.pos)}</span>` : ''}
+        <span class="lemma-row-g">${escapeHtml((r.gloss || '').slice(0, 70))}</span>
+        ${r.freq > 0 ? `<span class="lemma-row-f">${renderStars(r.freq)}</span>` : ''}
+        <span class="lemma-row-go">›</span>
+      </button>`).join('');
+    return `<div class="lemma-list">
+      <div class="lemma-list-head">${hit ? 'Altri lemmi' : 'Lemmi'} che iniziano per «${escapeHtml(query)}» <small>· ${rows.length > 10 ? 'primi 10 di ' + rows.length : rows.length}</small></div>
+      ${items}
+    </div>`;
+  }
+
   /* ══ ANALIZZA UN PASSO · glossario parola per parola dentro il dizionario ══ */
   _renderPasso() {
     const isGreek = this.currentLang === 'greco';

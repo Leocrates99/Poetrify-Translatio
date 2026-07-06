@@ -2020,6 +2020,34 @@ header.topbar { background: linear-gradient(180deg, var(--dacc) 0%, var(--dacc-d
 .seg-tab.is-on { background: var(--dacc); border-color: var(--dacc); color: #fff; }
 .poetrify-dark .seg-tab.is-on { color: #1c1f24; }
 .mseg-hit { background: var(--dacc-pale); outline: 1px solid var(--dacc-border); }
+
+/* ── Lista multi-lemma (mockup 3) ── */
+.lemma-list { margin-top: 16px; border: 1px solid #e6e3dc; border-radius: 12px; overflow: hidden; background: #fff; }
+.poetrify-dark .lemma-list { background: #232730; border-color: #3a3f49; }
+.lemma-list-head { padding: 9px 14px; background: #f6f4ef; font-size: 11px; letter-spacing: 0.04em; color: #6b6660; }
+.poetrify-dark .lemma-list-head { background: #2a2e38; color: #a8a39b; }
+.lemma-row {
+  display: flex; align-items: baseline; gap: 10px; width: 100%;
+  padding: 9px 14px; border: none; border-top: 1px solid #eeece6;
+  background: transparent; cursor: pointer; text-align: left; font-family: inherit;
+}
+.lemma-row:hover { background: var(--dacc-pale); }
+.poetrify-dark .lemma-row { border-top-color: #2c303a; }
+.lemma-row-l { font-family: Georgia, 'Palatino Linotype', serif; font-size: 17px; color: var(--dacc); }
+.lemma-row-l.greek { font-family: 'Times New Roman', serif; font-size: 18px; }
+.lemma-row-pos { font-size: 10.5px; padding: 1px 9px; border-radius: 999px; background: var(--dacc-pale); color: var(--dacc); text-transform: lowercase; white-space: nowrap; }
+.lemma-row-g { flex: 1; font-family: Georgia, serif; font-size: 13px; color: #4a5568; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.poetrify-dark .lemma-row-g { color: #c8c5be; }
+.lemma-row-f { font-size: 10.5px; color: #b9791f; white-space: nowrap; }
+.lemma-row-go { color: #b3afa7; font-size: 15px; }
+
+/* ── coerenza cromatica delle viste secondarie ── */
+.ac-item.is-active, .ac-item:hover { background: var(--dacc-pale) !important; }
+.ac-item .ac-key { color: var(--dacc); }
+.drill-bucket:hover { border-color: var(--dacc) !important; color: var(--dacc) !important; }
+.drill-count { background: var(--dacc-pale) !important; color: var(--dacc) !important; }
+.vocab-lemma { color: var(--dacc) !important; font-family: Georgia, serif; }
+.dym-suggest { color: var(--dacc) !important; }
 </style>
 </head>
 <body>
