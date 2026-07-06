@@ -721,6 +721,8 @@ export class DictionaryApp {
 
   async render() {
     if (!this.$results) return;
+    /* identità cromatica per lingua: rosso pompeiano LAT · blu Poetrify GR */
+    document.body.dataset.lang = this.currentLang;
     if (this.viewMode === 'browse' && this.browsePrefix) {
       return this._renderBrowse();
     }
@@ -1333,7 +1335,8 @@ export class DictionaryApp {
     /* In modalità inglese la traduzione è la definizione Lewis/LSJ (resa altrove). */
     if (this.glossLang === 'en') return '';
     /* Priorità: glossa CURATA (autorevole) → glossa AUTO (bozza) → segnaposto. */
-    const curated = getItalianGloss(hit.lemma, this.currentLang);
+    const curated = getItalianGloss(hit.lemma, this.currentLang)
+      || (hit.src === 'curated' && hit.definition ? hit.definition : '');
     if (curated) return `<div class="dict-translation">${escapeHtml(curated)}</div>`;
     const auto = hit.italianGlossAuto || ((this.engine.getAutoGloss(this.currentLang, hit.lemma) || {}).it) || '';
     if (auto) {

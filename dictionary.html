@@ -1918,6 +1918,108 @@ body.poetrify-dark .dict-prev-lemma, body.poetrify-dark .dict-next-lemma { backg
 .poetrify-dark .passo-row { border-top-color: #2c303a; }
 .poetrify-dark .passo-l { color: #a8a39b; }
 .poetrify-dark .passo-g { color: #e8e6e1; }
+
+/* ══ RESTYLING · estetica dei mockup (scheda lessicale unificata) ══════════
+   Identità cromatica PER LINGUA via body[data-lang] (sincronizzato dall'app):
+   rosso pompeiano per il latino, blu Poetrify per il greco — anche in testata. */
+:root { --dacc: #A22E37; --dacc-deep: #7d232b; --dacc-pale: rgba(162,46,55,0.10); --dacc-border: rgba(162,46,55,0.30); }
+body[data-lang="greco"] { --dacc: #1800AC; --dacc-deep: #0f0070; --dacc-pale: rgba(24,0,172,0.08); --dacc-border: rgba(24,0,172,0.28); }
+body.poetrify-dark { --dacc: #e58a90; --dacc-deep: #b95d63; --dacc-pale: rgba(229,138,144,0.16); --dacc-border: rgba(229,138,144,0.38); }
+body.poetrify-dark[data-lang="greco"] { --dacc: #8b7dff; --dacc-deep: #6a5fd0; --dacc-pale: rgba(139,125,255,0.16); --dacc-border: rgba(139,125,255,0.38); }
+
+header.topbar { background: linear-gradient(180deg, var(--dacc) 0%, var(--dacc-deep) 100%) !important; transition: background 0.25s ease; }
+
+.dict-entry-card {
+  background: #fff !important;
+  border: 1px solid #e6e3dc !important;
+  border-top: 4px solid var(--dacc) !important;
+  border-radius: 14px !important;
+  padding: 18px 20px !important;
+  box-shadow: 0 4px 18px rgba(44,53,57,0.06);
+}
+.poetrify-dark .dict-entry-card { background: #232730 !important; border-color: #3a3f49 !important; border-top-color: var(--dacc) !important; }
+.dict-entry-header { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.dict-entry-lemma {
+  font-family: Georgia, 'Palatino Linotype', 'Times New Roman', serif !important;
+  font-size: 30px !important;
+  font-weight: 700 !important;
+  color: var(--dacc) !important;
+  line-height: 1.15;
+}
+.dict-entry-pos {
+  font-size: 12px !important;
+  font-weight: 600;
+  padding: 3px 12px !important;
+  border-radius: 999px !important;
+  background: var(--dacc-pale) !important;
+  color: var(--dacc) !important;
+  border: none !important;
+  text-transform: lowercase;
+}
+.dict-entry-parsing {
+  display: inline-block;
+  font-size: 12.5px !important;
+  padding: 4px 12px !important;
+  border-radius: 999px;
+  background: #f6f4ef;
+  border: 1px solid #e6e3dc;
+  color: #4a5568 !important;
+  margin: 8px 0 2px;
+}
+.poetrify-dark .dict-entry-parsing { background: #2a2e38; border-color: #3a3f49; color: #c8c5be !important; }
+.dict-translation {
+  font-family: Georgia, 'Palatino Linotype', serif !important;
+  font-size: 19px !important;
+  line-height: 1.55 !important;
+  color: #2c3539 !important;
+  margin: 10px 0 12px !important;
+  padding: 0 !important;
+  background: none !important;
+  border: none !important;
+}
+.poetrify-dark .dict-translation { color: #e8e6e1 !important; }
+.dict-query-info { font-size: 11.5px !important; color: #8a857d !important; margin-bottom: 10px; }
+.dict-entry-actions {
+  display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
+  margin-top: 14px; padding-top: 12px;
+  border-top: 1px dashed #e6e3dc;
+}
+.poetrify-dark .dict-entry-actions { border-top-color: #3a3f49; }
+.dict-entry-save {
+  font-size: 13px !important;
+  padding: 6px 16px !important;
+  border-radius: 999px !important;
+  border: 1px solid var(--dacc-border) !important;
+  background: transparent !important;
+  color: var(--dacc) !important;
+  cursor: pointer;
+  font-weight: 600;
+}
+.dict-entry-save.is-saved { background: var(--dacc-pale) !important; }
+.dict-entry-save:hover { background: var(--dacc-pale) !important; }
+.dict-entry-link {
+  font-size: 13px !important;
+  padding: 6px 16px !important;
+  border-radius: 999px !important;
+  border: 1px solid #d5d2cb;
+  color: #4a5568 !important;
+  text-decoration: none !important;
+  background: transparent !important;
+}
+.dict-entry-link:hover { border-color: var(--dacc); color: var(--dacc) !important; }
+.poetrify-dark .dict-entry-link { border-color: #3a3f49; color: #c8c5be !important; }
+#dict-search-input:focus {
+  border-color: var(--dacc) !important;
+  box-shadow: 0 0 0 3px var(--dacc-pale) !important;
+  outline: none;
+}
+.alt-lemma-chip:hover { border-color: var(--dacc); color: var(--dacc); }
+.passo-w { color: var(--dacc); }
+.mseg-d { color: var(--dacc); }
+.poetrify-dark .mseg-d { color: var(--dacc); }
+.seg-tab.is-on { background: var(--dacc); border-color: var(--dacc); color: #fff; }
+.poetrify-dark .seg-tab.is-on { color: #1c1f24; }
+.mseg-hit { background: var(--dacc-pale); outline: 1px solid var(--dacc-border); }
 </style>
 </head>
 <body>
