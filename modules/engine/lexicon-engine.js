@@ -310,6 +310,39 @@ export class LexiconEngine {
    *                    pos:string, definition:string, source:string,
    *                    shards:string[]}|null>}
    */
+  /* ── risoluzione di una chiave del dizionario ───────────────────────────
+     Prova: 1) chiave esatta; 2) normalizzata (NFD, senza diacritici);
+     3) piegatura canonica: '# ' spurio, trattini/underscore di morfema,
+        j→i (grafia latina), numero d'omografo finale (duo → duo1).
+     `minNormLen`: lunghezza minima della chiave normalizzata perché i
+     fallback NON esatti siano ammessi — con 3, i monosillabi esigono il
+     match esatto (in greco spiriti e accenti sono distintivi: ἡ ≠ ἤ,
+     οὐ ≠ οὗ). La piegatura d'omografo si registra solo per chiavi > 2. */
+  _canonLemma(name) {
+    return (name || '').replace(/^#\s*/, '').replace(/[-_]/g, '')
+      .replace(/[jJ]/g, (m) => (m === 'J' ? 'I' : 'i'));
+  }
+  _dictKey(shardLike, name, minNormLen = 1) {
+    if (!shardLike || !shardLike.dict || !name) return null;
+    if (shardLike.dict[name]) return name;
+    const n1 = normalizeText(name);
+    if (n1.length < minNormLen) return null;
+    if (!shardLike._normDictIndex) {
+      const idx = Object.create(null);
+      for (const l of Object.keys(shardLike.dict)) {
+        const nk = normalizeText(l);
+        if (!(nk in idx)) idx[nk] = l;
+        const fk = normalizeText(this._canonLemma(l)).replace(/\d+$/, '');
+        if (fk.length > 2 && !(fk in idx)) idx[fk] = l;
+      }
+      Object.defineProperty(shardLike, '_normDictIndex', { value: idx, enumerable: false, configurable: true });
+    }
+    if (shardLike._normDictIndex[n1]) return shardLike._normDictIndex[n1];
+    const n2 = normalizeText(this._canonLemma(name)).replace(/\d+$/, '');
+    if (n2.length > 2 && shardLike._normDictIndex[n2]) return shardLike._normDictIndex[n2];
+    return null;
+  }
+
   async lookUpWord(word, lang) {
     if (!word) return null;
     if (!_LANG_FOLDER[lang]) {
@@ -353,7 +386,18 @@ export class LexiconEngine {
         }
       }
     }
-    if (candidates && candidates.length > 0) {
+    /* Step 3b: PRIORITÀ AL LEMMA STESSO. Se la parola coincide con un lemma
+       a dizionario (arma, itaque, quoque, μετά…), quella è la lettura
+       primaria; le analisi come forma flessa di ALTRI lemmi (arma → armo)
+       restano fra le `alternatives`. Per i monosillabi il match dev'essere
+       esatto (ἡ ≠ ἤ: spiriti e accenti sono distintivi). */
+    const selfKey = shard ? this._dictKey(shard, word, 3) : null;
+    if (selfKey) {
+      const sameCand = (candidates || []).find(c => normalizeText(c.lemma) === normalizeText(selfKey));
+      lemma = selfKey;
+      parsing = sameCand ? (sameCand.parsing || '') : '';
+      source = 'lemmata+dict';
+    } else if (candidates && candidates.length > 0) {
       lemma = candidates[0].lemma;
       parsing = candidates[0].parsing || '';
       source = 'lemmata+dict';
@@ -366,7 +410,7 @@ export class LexiconEngine {
      * Il lemma potrebbe essere in uno shard DIVERSO da quello della forma
      * (es. ἔβην in ε.json, lemma βαίνω in β.json). In quel caso, carica
      * anche lo shard del lemma. */
-    const lemmaFirstLetter = normalizeText(lemma).charAt(0) || '_';
+    const lemmaFirstLetter = normalizeText(this._canonLemma(lemma)).charAt(0) || '_';
     let lemmaShard = shard;
     if (lemmaFirstLetter !== firstLetter) {
       lemmaShard = await this._loadShard(lang, lemmaFirstLetter);
@@ -375,21 +419,10 @@ export class LexiconEngine {
 
     let dictEntry = null;
     if (lemmaShard) {
-      dictEntry = lemmaShard.dict[lemma] || null;
-      /* Fallback normalizzato sul dict */
-      if (!dictEntry) {
-        if (!lemmaShard._normDictIndex) {
-          const idx = Object.create(null);
-          for (const l of Object.keys(lemmaShard.dict)) {
-            idx[normalizeText(l)] = l;
-          }
-          Object.defineProperty(lemmaShard, '_normDictIndex', { value: idx, enumerable: false });
-        }
-        const realKey = lemmaShard._normDictIndex[normalizeText(lemma)];
-        if (realKey) {
-          dictEntry = lemmaShard.dict[realKey];
-          lemma = realKey;
-        }
+      const realKey = this._dictKey(lemmaShard, lemma, 1);
+      if (realKey) {
+        dictEntry = lemmaShard.dict[realKey];
+        lemma = realKey;
       }
     }
 
@@ -401,16 +434,8 @@ export class LexiconEngine {
     if (!dictEntry) {
       const archShard = await this._loadArchiveShard(lang, lemmaFirstLetter);
       if (archShard) {
-        dictEntry = archShard.dict[lemma] || null;
-        if (!dictEntry) {
-          if (!archShard._normDictIndex) {
-            const idx = Object.create(null);
-            for (const l of Object.keys(archShard.dict)) idx[normalizeText(l)] = l;
-            Object.defineProperty(archShard, '_normDictIndex', { value: idx, enumerable: false });
-          }
-          const realKey = archShard._normDictIndex[normalizeText(lemma)];
-          if (realKey) { dictEntry = archShard.dict[realKey]; lemma = realKey; }
-        }
+        const realKey = this._dictKey(archShard, lemma, 1);
+        if (realKey) { dictEntry = archShard.dict[realKey]; lemma = realKey; }
         if (dictEntry) archived = true;
       }
     }
@@ -424,6 +449,7 @@ export class LexiconEngine {
         definition: '',
         source: source === 'dict' ? 'none' : 'lemmata-only',
         archived: false,
+        alternatives: (candidates || []).slice(0, 8).map(c => ({ lemma: c.lemma, parsing: c.parsing || '' })),
         shards: shardsTouched,
       };
     }
@@ -440,8 +466,99 @@ export class LexiconEngine {
       italianGlossAuto: autoG ? autoG.it : '',
       source: archived ? 'archived' : source,
       archived,
+      alternatives: (candidates || []).slice(0, 8).map(c => ({ lemma: c.lemma, parsing: c.parsing || '' })),
       shards: shardsTouched,
     };
+  }
+
+  /* ─────────────────────────────────────────────────────────────────────
+     LOOKUP «SMART» · involucro filologico di lookUpWord.
+     Se il match diretto non trova una voce di dizionario prova, nell'ordine:
+       LATINO · distacco delle enclitiche -que / -ne / -ve
+                (virumque → vir; audisne → audis; duabusve → duabus);
+       GRECO  · restituzione dell'elisione (δ᾽ → δέ, καθ᾽ → κατά, …),
+                poi ν efelcistico (ἐστίν ⇄ ἐστί, λύουσιν ⇄ λύουσι).
+     Il risultato riporta `via` ('diretto' | 'enclitica' | 'elisione' |
+     'ny-efelcistico' | 'none') e, quando pertinente, `enclitic` (es. '-que')
+     o `elisionFull` (la forma piena restituita). La parola originale resta
+     in `word`; eventuale punteggiatura ai bordi viene ripulita.
+     ───────────────────────────────────────────────────────────────────── */
+  async lookUpSmart(word, lang) {
+    const raw = (word || '').trim();
+    /* Pulizia dei bordi: punteggiatura latina e greca (l'apostrofo finale NON
+       si tocca: in greco è il segno dell'elisione). */
+    let clean = raw
+      .replace(/^[\s.,;:!?·—–«»()\[\]{}"“”‹›]+/u, '')
+      .replace(/[\s.,;:!?·—–«»()\[\]{}"“”‹›]+$/u, '');
+    if (!clean) return { word: raw, lemma: '', parsing: '', pos: '', definition: '', source: 'none', archived: false, alternatives: [], via: 'none' };
+
+    const found = (r) => r && (r.source === 'dict' || r.source === 'lemmata+dict' || r.source === 'archived');
+
+    /* 1 · match diretto */
+    const apostrophe = /[᾽’'ʼ᾿′]$/u;
+    const hasElision = apostrophe.test(clean);
+    let direct = null;
+    if (!hasElision) {
+      direct = await this.lookUpWord(clean, lang);
+      if (found(direct)) return { ...direct, word: raw, via: 'diretto' };
+    }
+
+    if (lang === 'latino') {
+      /* 2 · enclitiche: prova solo se il match diretto è fallito e il corpo
+         residuo è plausibile (≥ 3 lettere). L'ordine que→ne→ve riflette la
+         frequenza reale. Le forme lessicalizzate (itaque, quisque, neque…)
+         sono già state trovate al passo 1. */
+      for (const enc of ['que', 'ne', 've']) {
+        const low = clean.toLowerCase();
+        if (low.endsWith(enc) && clean.length - enc.length >= 3) {
+          const base = clean.slice(0, clean.length - enc.length);
+          const r = await this.lookUpWord(base, lang);
+          if (found(r)) return { ...r, word: raw, via: 'enclitica', enclitic: '-' + enc };
+        }
+      }
+    } else if (lang === 'greco') {
+      /* 2 · elisione: la vocale finale breve cade davanti a vocale; davanti
+         a spirito aspro la muta si aspira (κατ᾽→καθ᾽, ἀπ᾽→ἀφ᾽, μετ᾽→μεθ᾽).
+         Mappa: forma elisa normalizzata → forma piena da cercare. */
+      const ELISION = {
+        'δ': 'δέ', 'τ': 'τε', 'θ': 'τε', 'γ': 'γε', 'μ': 'με', 'σ': 'σε',
+        'αλλ': 'ἀλλά', 'ουδ': 'οὐδέ', 'μηδ': 'μηδέ', 'ουτ': 'οὔτε', 'μητ': 'μήτε',
+        'ποτ': 'ποτέ', 'ποθ': 'ποτέ', 'τοτ': 'τότε', 'τοθ': 'τότε',
+        'ωστ': 'ὥστε', 'ωσθ': 'ὥστε', 'ετ': 'ἔτι', 'εθ': 'ἔτι', 'ειτ': 'εἶτα', 'ειθ': 'εἶτα',
+        'επειτ': 'ἔπειτα', 'επειθ': 'ἔπειτα', 'ουκετ': 'οὐκέτι', 'ουκεθ': 'οὐκέτι',
+        'απ': 'ἀπό', 'αφ': 'ἀπό', 'επ': 'ἐπί', 'εφ': 'ἐπί', 'υπ': 'ὑπό', 'υφ': 'ὑπό',
+        'κατ': 'κατά', 'καθ': 'κατά', 'μετ': 'μετά', 'μεθ': 'μετά',
+        'παρ': 'παρά', 'αν': 'ἀνά', 'ανθ': 'ἀντί', 'αντ': 'ἀντί', 'δι': 'διά', 'αμφ': 'ἀμφί',
+        'ιν': 'ἵνα', 'αρ': 'ἄρα', 'ηδ': 'ἠδέ', 'εστ': 'ἐστί', 'εσθ': 'ἐστί',
+        'τουτ': 'τοῦτο', 'τουθ': 'τοῦτο', 'ταυτ': 'ταῦτα', 'ταυθ': 'ταῦτα',
+        'παντ': 'πάντα', 'πανθ': 'πάντα', 'ενθαδ': 'ἐνθάδε', 'ενθαδθ': 'ἐνθάδε',
+      };
+      if (hasElision) {
+        const stem = clean.replace(apostrophe, '');
+        const full = ELISION[normalizeText(stem)];
+        if (full) {
+          const r = await this.lookUpWord(full, lang);
+          if (found(r)) return { ...r, word: raw, via: 'elisione', elisionFull: full };
+        }
+        /* elisione non in mappa: tenta il gambo così com'è */
+        const r2 = await this.lookUpWord(stem, lang);
+        if (found(r2)) return { ...r2, word: raw, via: 'elisione', elisionFull: stem };
+      }
+      /* 3 · ν efelcistico, in entrambe le direzioni */
+      if (/[ίιε]ν$/u.test(clean) || /σιν$/u.test(normalizeText(clean))) {
+        const r = await this.lookUpWord(clean.slice(0, -1), lang);
+        if (found(r)) return { ...r, word: raw, via: 'ny-efelcistico' };
+      }
+      if (/[ίιε]$/u.test(clean)) {
+        const r = await this.lookUpWord(clean + 'ν', lang);
+        if (found(r)) return { ...r, word: raw, via: 'ny-efelcistico' };
+      }
+    }
+
+    /* Nessuna strada ha portato a una voce: restituisci l'esito del diretto
+       (che contiene comunque eventuali candidati lemmata-only). */
+    if (!direct) direct = await this.lookUpWord(clean.replace(apostrophe, ''), lang);
+    return { ...direct, word: raw, via: 'none' };
   }
 
   /**
