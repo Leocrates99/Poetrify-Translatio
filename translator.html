@@ -8256,6 +8256,97 @@ body[data-lang="greco"] .lemma-input { font-family: 'Times New Roman', serif; }
   font-style: italic;
   color: var(--poetrify-ink);
 }
+button.dict-suggest-pill { cursor: pointer; transition: all var(--transition-base); }
+button.dict-suggest-pill:hover { background: rgba(24, 0, 172, 0.16); }
+.dict-suggest-pill--empty { opacity: 0.85; }
+
+/* ── SCHEDA LESSICALE FLOTTANTE (dizionario vivo) ────────────────────────── */
+.dict-popover {
+  position: fixed;
+  z-index: 4000;
+  width: 340px;
+  max-width: calc(100vw - 16px);
+  max-height: min(70vh, 460px);
+  overflow: auto;
+  background: var(--poetrify-cream);
+  border: 1px solid var(--poetrify-rule);
+  border-top: 3px solid var(--poetrify-lang-accent);
+  border-radius: var(--radius-md, 10px);
+  box-shadow: 0 10px 34px var(--poetrify-shadow-strong, rgba(0,0,0,0.25));
+  padding: 12px 14px;
+  font-family: var(--font-ui);
+}
+.dict-pop-head { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+.dict-pop-word {
+  font-family: var(--font-classical, var(--font-body));
+  font-size: 16px;
+  color: var(--poetrify-sepia);
+}
+.dict-pop-close {
+  margin-left: auto;
+  border: none; background: none; cursor: pointer;
+  color: var(--poetrify-sepia); font-size: 13px;
+  padding: 2px 6px; border-radius: var(--radius-sm);
+}
+.dict-pop-close:hover { background: var(--poetrify-ivory); color: var(--poetrify-ink); }
+.dict-pop-lemma {
+  font-family: var(--font-classical, var(--font-body));
+  font-size: 21px;
+  color: var(--poetrify-lang-accent);
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.dict-pop-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+.dict-pop-pos, .dict-pop-parsing, .dict-pop-arch, .dict-pop-via {
+  font-size: 10.5px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--poetrify-ivory);
+  color: var(--poetrify-sepia);
+  border: 1px solid var(--poetrify-rule-soft);
+}
+.dict-pop-pos { color: var(--poetrify-lang-accent); border-color: var(--poetrify-lang-accent-pale); background: var(--poetrify-lang-accent-pale); }
+.dict-pop-via { font-style: italic; }
+.dict-pop-gloss {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--poetrify-ink);
+  line-height: 1.5;
+  margin-bottom: 8px;
+}
+.dict-pop-draft {
+  font-size: 10px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: rgba(214, 158, 46, 0.16);
+  color: var(--poetrify-warning);
+  font-style: normal;
+}
+.dict-pop-def { margin: 6px 0 8px; }
+.dict-pop-def summary { font-size: 11px; color: var(--poetrify-sepia); cursor: pointer; }
+.dict-pop-def div {
+  font-size: 12px; line-height: 1.5; color: var(--poetrify-ink-soft);
+  max-height: 140px; overflow: auto; margin-top: 6px;
+  padding: 8px 10px; background: var(--poetrify-ivory); border-radius: var(--radius-sm);
+}
+.dict-pop-alts { font-size: 11px; color: var(--poetrify-sepia); margin: 6px 0 8px; display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.dict-alt-chip {
+  font-family: var(--font-classical, var(--font-body));
+  font-size: 12px;
+  padding: 2px 9px;
+  border: 1px solid var(--poetrify-rule-soft);
+  border-radius: 999px;
+  background: var(--poetrify-paper);
+  color: var(--poetrify-ink);
+  cursor: pointer;
+}
+.dict-alt-chip:hover { border-color: var(--poetrify-lang-accent); color: var(--poetrify-lang-accent); }
+.dict-pop-miss { font-size: 13px; color: var(--poetrify-ink-soft); margin-bottom: 6px; }
+.dict-pop-hint { font-size: 11px; margin-bottom: 6px; }
+.dict-pop-actions { display: flex; gap: 8px; margin-top: 4px; }
+.dict-pop-star.on { color: var(--poetrify-warning); }
+.bridge-engine { margin-top: 10px; }
+body.dark-mode .dict-popover { box-shadow: 0 10px 34px rgba(0,0,0,0.55); }
 /* Pillola "⇆" — indica suggerimento incrociato fra analisi grammaticale e logica */
 .cross-suggest-pill {
   display: inline-flex;
@@ -30807,6 +30898,181 @@ function renderTranslationHtml() {
       </div>`;
 }
 
+/* ════════════════════════════════════════════════════════════════════════════
+   DIZIONARIO VIVO · il patrimonio lessicale completo (22k+ lemmi, 280k forme,
+   shard lazy in data/) DENTRO il flusso di lavoro. Moduli ES caricati
+   on-demand con dynamic import; senza server (file://) si degrada con grazia
+   al dizionario ad alta frequenza incorporato.
+   ════════════════════════════════════════════════════════════════════════════ */
+let _lexModsPromise = null;
+function getLexiconModules() {
+  if (!_lexModsPromise) {
+    _lexModsPromise = Promise.all([
+      import('./modules/engine/lexicon-engine.js'),
+      import('./modules/dictionary/italian-glosses.js'),
+      import('./modules/dictionary/personal-vocab.js'),
+    ]).then(function (mods) {
+      return { engine: mods[0].lexiconEngine, gloss: mods[1], vocab: mods[2] };
+    }).catch(function (e) {
+      console.warn('[Poetrify] patrimonio lessicale non raggiungibile (serve un server):', e);
+      return null;
+    });
+  }
+  return _lexModsPromise;
+}
+
+function closeDictPopover() {
+  const p = document.getElementById('dict-popover');
+  if (p) p.remove();
+  document.removeEventListener('mousedown', _dictPopoverOutside, true);
+  document.removeEventListener('keydown', _dictPopoverEsc, true);
+}
+function _dictPopoverOutside(e) {
+  const p = document.getElementById('dict-popover');
+  if (p && !p.contains(e.target)) closeDictPopover();
+}
+function _dictPopoverEsc(e) { if (e.key === 'Escape') closeDictPopover(); }
+
+/* Scheda lessicale flottante ancorata a un token/elemento. */
+async function openTokenDictPopover(word, anchorEl) {
+  word = (word || '').trim();
+  if (!word) return;
+  closeDictPopover();
+  window._dictPopAnchor = anchorEl || null;
+  const lang = state.meta.lingua || 'latino';
+  const pop = document.createElement('div');
+  pop.id = 'dict-popover';
+  pop.className = 'dict-popover';
+  pop.innerHTML = '<div class="dict-pop-head">'
+    + '<span class="dict-pop-word ' + (lang === 'greco' ? 'greek' : '') + '">' + escapeHtml(word) + '</span>'
+    + '<button type="button" class="dict-pop-close" onclick="closeDictPopover()" aria-label="Chiudi">✕</button></div>'
+    + '<div class="dict-pop-body"><span class="muted-text">Cerco nel patrimonio lessicale…</span></div>';
+  document.body.appendChild(pop);
+  const W = 340;
+  let left = 20, top = 80;
+  if (anchorEl && anchorEl.getBoundingClientRect) {
+    const r = anchorEl.getBoundingClientRect();
+    left = Math.max(8, Math.min(r.left, window.innerWidth - W - 12));
+    top = r.bottom + 8;
+    if (top + 340 > window.innerHeight) {
+      pop.style.bottom = Math.max(8, window.innerHeight - r.top + 8) + 'px';
+      top = -1;
+    }
+  }
+  pop.style.left = left + 'px';
+  if (top >= 0) pop.style.top = top + 'px';
+  setTimeout(function () {
+    document.addEventListener('mousedown', _dictPopoverOutside, true);
+    document.addEventListener('keydown', _dictPopoverEsc, true);
+  }, 0);
+  const body = pop.querySelector('.dict-pop-body');
+  const mods = await getLexiconModules();
+  if (!document.getElementById('dict-popover') || !body) return;
+  if (!mods) {
+    const hit = lookupHighFreqDict(word, lang);
+    body.innerHTML = hit
+      ? '<div class="dict-pop-lemma">' + escapeHtml(hit.lemma) + '</div><div class="dict-pop-pos">' + escapeHtml(hit.pos || '') + '</div>' + (hit.note ? '<div class="dict-pop-gloss">' + escapeHtml(hit.note) + '</div>' : '')
+      : '<span class="muted-text">Patrimonio completo non raggiungibile e nessuna voce locale per questa parola.</span>';
+    return;
+  }
+  try {
+    const res = await mods.engine.lookUpSmart(word, lang);
+    if (!document.getElementById('dict-popover')) return;
+    body.innerHTML = renderDictPopResult(res, lang, mods);
+  } catch (e) {
+    body.innerHTML = '<span class="muted-text">Errore di consultazione: ' + escapeHtml(e.message) + '</span>';
+  }
+}
+
+/* Corpo della scheda lessicale (usato anche dal ponte in F). */
+function renderDictPopResult(res, lang, mods) {
+  const found = res && (res.source === 'dict' || res.source === 'lemmata+dict' || res.source === 'archived');
+  const dictUrl = 'dictionary.html?lang=' + encodeURIComponent(lang) + '&lemma=' + encodeURIComponent(found ? res.lemma : (res && res.word || ''));
+  if (!found) {
+    const alts = (res && res.alternatives || []).map(function (a) {
+      return '<button type="button" class="dict-alt-chip" data-lemma="' + escapeHtml(a.lemma) + '" onclick="openTokenDictPopover(this.dataset.lemma, window._dictPopAnchor)">' + escapeHtml(a.lemma) + '</button>';
+    }).join('');
+    return '<div class="dict-pop-miss">Nessuna voce trovata nel patrimonio' + (res && res.source === 'lemmata-only' ? ' (lemma riconosciuto ma senza scheda)' : '') + '.</div>'
+      + (alts ? '<div class="dict-pop-alts">Letture possibili: ' + alts + '</div>' : '')
+      + '<div class="dict-pop-hint muted-text">Se è un nome proprio o un refuso OCR è normale. Puoi cercare nel dizionario completo:</div>'
+      + '<div class="dict-pop-actions"><a class="btn btn-ghost btn-sm" href="' + escapeHtml(dictUrl) + '" target="_blank" rel="noopener">Apri il dizionario ↗</a></div>';
+  }
+  const curated = mods && mods.gloss ? mods.gloss.getItalianGloss(res.lemma, lang) : null;
+  const gloss = curated || res.italianGlossAuto || '';
+  const glossHtml = gloss
+    ? '<div class="dict-pop-gloss">' + escapeHtml(gloss) + (curated ? '' : ' <span class="dict-pop-draft">bozza automatica</span>') + '</div>'
+    : '';
+  let viaNote = '';
+  if (res.via === 'enclitica') viaNote = 'staccata l\'enclitica ' + (res.enclitic || '');
+  else if (res.via === 'elisione') viaNote = 'elisione: ' + escapeHtml(res.word) + ' = ' + escapeHtml(res.elisionFull || res.lemma);
+  else if (res.via === 'ny-efelcistico') viaNote = 'ν efelcistico';
+  const alts = (res.alternatives || []).filter(function (a) { return a.lemma !== res.lemma; });
+  const altsHtml = alts.length
+    ? '<div class="dict-pop-alts">Altre letture: ' + alts.slice(0, 5).map(function (a) {
+        return '<button type="button" class="dict-alt-chip" data-lemma="' + escapeHtml(a.lemma) + '" onclick="openTokenDictPopover(this.dataset.lemma, window._dictPopAnchor)">' + escapeHtml(a.lemma) + '</button>';
+      }).join('') + '</div>'
+    : '';
+  window._dictPopLast = { lemma: res.lemma, pos: res.pos || '', definition: res.definition || '', gloss: gloss, lang: lang };
+  const starred = mods && mods.vocab ? mods.vocab.hasEntry(res.lemma, lang) : false;
+  return '<div class="dict-pop-lemma ' + (lang === 'greco' ? 'greek' : '') + '">' + escapeHtml(res.lemma) + '</div>'
+    + '<div class="dict-pop-meta">'
+    + (res.pos ? '<span class="dict-pop-pos">' + escapeHtml(res.pos) + '</span>' : '')
+    + (res.parsing ? '<span class="dict-pop-parsing">' + escapeHtml(res.parsing) + '</span>' : '')
+    + (res.archived ? '<span class="dict-pop-arch">voce d\'archivio</span>' : '')
+    + (viaNote ? '<span class="dict-pop-via">' + viaNote + '</span>' : '')
+    + '</div>'
+    + glossHtml
+    + (res.definition ? '<details class="dict-pop-def"><summary>Definizione estesa (L&amp;S / LSJ)</summary><div>' + escapeHtml(res.definition) + '</div></details>' : '')
+    + altsHtml
+    + '<div class="dict-pop-actions">'
+    + '<button type="button" class="btn btn-ghost btn-sm dict-pop-star ' + (starred ? 'on' : '') + '" onclick="dictPopToggleVocab(this)">' + (starred ? '★ Nel lessico' : '⭐ Salva nel lessico') + '</button>'
+    + '<a class="btn btn-ghost btn-sm" href="' + escapeHtml(dictUrl) + '" target="_blank" rel="noopener">Dizionario ↗</a>'
+    + '</div>';
+}
+
+async function dictPopToggleVocab(btn) {
+  const mods = await getLexiconModules();
+  const d = window._dictPopLast;
+  if (!mods || !mods.vocab || !d) { showToast('Lessico personale non disponibile'); return; }
+  if (mods.vocab.hasEntry(d.lemma, d.lang)) {
+    mods.vocab.removeEntry(d.lemma, d.lang);
+    if (btn) { btn.classList.remove('on'); btn.textContent = '⭐ Salva nel lessico'; }
+    showToast('Rimosso dal lessico personale');
+  } else {
+    mods.vocab.addEntry({ lemma: d.lemma, pos: d.pos, definition: d.definition, italianGloss: d.gloss, lang: d.lang });
+    if (btn) { btn.classList.add('on'); btn.textContent = '★ Nel lessico'; }
+    showToast('⭐ Salvato nel lessico personale');
+  }
+}
+
+/* Doppio click su un token, ovunque (scomposizione, analisi, scheletro):
+   apre la scheda lessicale. Il click singolo resta libero per l'analisi. */
+document.addEventListener('dblclick', function (e) {
+  const t = e.target && e.target.closest ? e.target.closest('.token') : null;
+  if (!t || t.classList.contains('token-punct')) return;
+  const w = (t.textContent || '').trim();
+  if (!w || w.length > 40) return;
+  e.preventDefault();
+  openTokenDictPopover(w, t);
+});
+
+/* Riempie in asincrono il risultato «patrimonio completo» del ponte (F). */
+function _fillBridgeEngineResult(q, lang, token) {
+  getLexiconModules().then(function (mods) {
+    const box = document.getElementById('bridge-engine-result');
+    if (!box || window._bridgeLookupToken !== token) return;
+    if (!mods) { box.innerHTML = '<span class="muted-text">Patrimonio completo non raggiungibile (aprire tramite server / GitHub Pages).</span>'; return; }
+    mods.engine.lookUpSmart(q, lang).then(function (res) {
+      const box2 = document.getElementById('bridge-engine-result');
+      if (!box2 || window._bridgeLookupToken !== token) return;
+      box2.innerHTML = renderDictPopResult(res, lang, mods);
+    }).catch(function (e) {
+      const box2 = document.getElementById('bridge-engine-result');
+      if (box2) box2.innerHTML = '<span class="muted-text">Errore: ' + escapeHtml(e.message) + '</span>';
+    });
+  });
+}
+
 /* ============================================
    SEZIONE F · DIZIONARIO — consultazione parallela
    ============================================ */
@@ -31144,6 +31410,16 @@ function renderDictionaryBridgeHtml() {
     }
   }
 
+  /* Ricerca ASINCRONA sul patrimonio completo (motore + shard lazy):
+     il segnaposto viene riempito da _fillBridgeEngineResult quando i
+     moduli e lo shard della lettera sono pronti. */
+  let engineBlock = '';
+  if (q) {
+    const tk = (window._bridgeLookupToken = (window._bridgeLookupToken || 0) + 1);
+    setTimeout(function () { _fillBridgeEngineResult(q, lang, tk); }, 0);
+    engineBlock = `<div class="bridge-engine" id="bridge-engine-result"><span class="muted-text">⏳ Cerco «${escapeHtml(q)}» nel patrimonio completo (lemmi, forme flesse, enclitiche, elisioni)…</span></div>`;
+  }
+
   const html = sectionHeader('F', titolo, sottot) + `
     <div class="dict-bridge">
       <div class="dict-bridge-hero">
@@ -31179,6 +31455,7 @@ function renderDictionaryBridgeHtml() {
           <button class="btn btn-brand-soft btn-sm" onclick="state.dictBridgeQuery = ''; renderEditor();">Pulisci</button>
         </div>
         ${lookupCard}
+        ${engineBlock}
       </div>
 
       <details class="dict-bridge-footer">
@@ -32438,9 +32715,11 @@ function renderGrammarActionBar(sentence) {
   const crossSuggestedPart = crossHint && crossHint.partOfSpeech ? crossHint.partOfSpeech : '';
   // Suggerimento PoS: priorità a cross-hint (univoca), poi dizionario
   const suggestedPart = (!currentPart) ? (crossSuggestedPart || (dictHit ? dictHit.pos : '')) : '';
+  // La pillola è CLICCABILE: apre la scheda lessicale completa (patrimonio
+  // shard + glosse + lessico personale). Presente anche senza hit locale.
   const dictBadge = dictHit
-    ? `<span class="dict-suggest-pill" title="${escapeHtml(dictHit.lemma)}${dictHit.note ? ' · ' + escapeHtml(dictHit.note) : ''}">📖 dal dizionario · <strong>${escapeHtml(dictHit.pos)}</strong> · <em>${escapeHtml(dictHit.lemma)}</em></span>`
-    : '';
+    ? `<button type="button" class="dict-suggest-pill" data-word="${escapeHtml(tok.text)}" onclick="openTokenDictPopover(this.dataset.word, this)" title="${escapeHtml(dictHit.lemma)}${dictHit.note ? ' · ' + escapeHtml(dictHit.note) : ''} — clic per la scheda lessicale completa">📖 dal dizionario · <strong>${escapeHtml(dictHit.pos)}</strong> · <em>${escapeHtml(dictHit.lemma)}</em></button>`
+    : `<button type="button" class="dict-suggest-pill dict-suggest-pill--empty" data-word="${escapeHtml(tok.text)}" onclick="openTokenDictPopover(this.dataset.word, this)" title="Consulta il patrimonio lessicale completo (lemma, glossa, paradigma)">📖 scheda lessicale</button>`;
   // Badge cross-section: mostra quale funzione logica costringe il PoS/caso
   const crossBadge = (linkedLogic && linkedLogic.funzione && crossHint)
     ? `<span class="cross-suggest-pill" title="Funzione logica «${escapeHtml(linkedLogic.funzione)}»">⇆ da logica · <strong>${escapeHtml(crossHint.partOfSpeech || '')}${crossHint.caso ? ' · ' + escapeHtml(crossHint.caso) : ''}</strong></span>`
