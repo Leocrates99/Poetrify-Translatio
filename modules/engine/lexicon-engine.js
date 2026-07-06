@@ -46,6 +46,19 @@ import { normalizeText } from './text-utils.js';
  * app.html — tutti fratelli della cartella modules/). */
 const _DEFAULT_BASE = new URL('../../data/', import.meta.url).href;
 
+/* Disambiguazione curata delle forme iper-frequenti ambigue: lettura primaria
+   scolastica quando una forma appartiene a più paradigmi. «est/es/esse…» sono
+   di sum (ēst di edō resta fra le alternative); «suis» è di suus (non di sūs,
+   il maiale). Greco: chiavi ESATTE con diacritici (ἦν di εἰμί ≠ ἥν relativo). */
+const _PREFERRED_LEMMA = {
+  latino: {
+    est: 'sum', es: 'sum', esse: 'sum', esses: 'sum', esset: 'sum',
+    essent: 'sum', estis: 'sum', este: 'sum', esto: 'sum', estote: 'sum',
+    suis: 'suus', sui: 'suus', cum: 'cum',
+  },
+  greco: { 'ἦν': 'εἰμί', 'ἦσαν': 'εἰμί', 'ἔστι': 'εἰμί', 'ἐστί': 'εἰμί' },
+};
+
 /* Mappa nome-lingua → nome cartella shard */
 const _LANG_FOLDER = {
   latino: 'latin',
@@ -386,6 +399,21 @@ export class LexiconEngine {
         }
       }
     }
+    /* Step 3a-bis: DISAMBIGUAZIONE CURATA delle forme iper-frequenti ambigue.
+       «est» è 3ª sg. sia di sum sia di edō (ēst = mangia): nei testi scolastici
+       la lettura primaria è sum, e così per le altre voci del verbo essere.
+       L'altra lettura resta fra le alternatives. */
+    const PREFERRED = _PREFERRED_LEMMA[lang];
+    if (candidates && candidates.length > 0 && PREFERRED) {
+      /* latino: chiave normalizzata; greco: SOLO parola esatta (ἦν ≠ ἥν) */
+      const pref = PREFERRED[word] || (lang === 'latino' ? PREFERRED[norm] : undefined);
+      if (pref) {
+        const idxPref = candidates.findIndex(c => normalizeText(this._canonLemma(c.lemma)) === normalizeText(pref));
+        if (idxPref > 0) candidates.unshift(candidates.splice(idxPref, 1)[0]);
+        else if (idxPref < 0) candidates.unshift({ lemma: pref, parsing: '' });
+      }
+    }
+
     /* Step 3b: PRIORITÀ AL LEMMA STESSO. Se la parola coincide con un lemma
        a dizionario (arma, itaque, quoque, μετά…), quella è la lettura
        primaria; le analisi come forma flessa di ALTRI lemmi (arma → armo)
@@ -463,6 +491,7 @@ export class LexiconEngine {
       parsing,
       pos: dictEntry.pos || '',
       definition: dictEntry.definition || '',
+      src: dictEntry.src || '',
       italianGlossAuto: autoG ? autoG.it : '',
       source: archived ? 'archived' : source,
       archived,

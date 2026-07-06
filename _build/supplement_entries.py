@@ -305,7 +305,52 @@ LATIN = {
  'Venereus': (A, 'Venereus, -a, -um: di Venere; venereo (Venus, -eris)'),
 }
 
+# ── PAROLE-FUNZIONE LATINE (batch FORZATO: sovrascrive voci rotte/tronche) ──
+# L'audit ha trovato: cum/ut/si/ab/a/vel/dum ASSENTI; in=«aggettivo»,
+# iam=«aggettivo», pro/sine/apud/ne/e/quia senza pos o con definizioni tronche.
+LATIN_FUNC = {
+ 'in':   (PR, '+ abl.: in, su (stato in luogo); + acc.: in, verso, contro (moto a luogo)'),
+ 'a':    (PR, 'ā: forma di ab davanti a consonante — + abl.: da, via da; complemento d\'agente'),
+ 'ab':   (PR, '+ abl.: da, a partire da (moto da luogo, origine); complemento d\'agente coi passivi (ā davanti a cons., abs in abs tē)'),
+ 'e':    (PR, 'ē: forma di ex davanti a consonante — + abl.: da, fuori da'),
+ 'de':   (PR, '+ abl.: da, giù da (moto dall\'alto); riguardo a, intorno a (Dē bellō Gallicō); di (partitivo)'),
+ 'cum':  (PR, '1) prep. + abl.: con, insieme a (mēcum, tēcum) | 2) cong.: quando (cum + ind.); poiché, sebbene, mentre (cum narrativo + cong.)'),
+ 'ut':   (C, '+ ind.: come, quando; + cong.: affinché (finale), che (completiva), cosicché (consecutiva; spesso con ita/sic), sebbene (concessiva)'),
+ 'ne':   (C, '1) + cong.: affinché non (finale negativa), che (dopo i verba timendi) | 2) nē … quidem: neppure | 3) -ne enclitica interrogativa'),
+ 'si':   (C, 'se (introduce il periodo ipotetico: + ind. realtà, + cong. possibilità/irrealtà)'),
+ 'vel':  (C, 'o, oppure (scelta indifferente: vel … vel); avv.: perfino, ad esempio'),
+ 'dum':  (C, 'mentre (+ ind. presente); finché (+ ind./cong.); purché (+ cong.: dum, dummodo)'),
+ 'pro':  (PR, '+ abl.: davanti a; in difesa di, in favore di (prō patriā); al posto di, in cambio di; in proporzione a'),
+ 'sine': (PR, '+ abl.: senza'),
+ 'apud': (PR, '+ acc.: presso, in casa di, davanti a; in (un autore: apud Homērum)'),
+ 'quia': (C, 'perché, poiché (causale oggettiva)'),
+ 'iam':  (AV, 'già, ormai; subito, ora; nōn iam: non più; iam prīdem: già da tempo'),
+ 'propter': (PR, '+ acc.: a causa di, per; avv.: vicino, accanto'),
+ 'ante': (PR, '+ acc.: davanti a (luogo), prima di (tempo); avv.: prima, davanti (ante quam → antequam)'),
+ 'post': (PR, '+ acc.: dopo (tempo), dietro (luogo); avv.: poi, in seguito (post quam → postquam)'),
+ 'contra': (PR, '+ acc.: contro, di fronte a; avv.: al contrario, invece'),
+ 'nec':  (C, 'né, e non (= neque; nec … nec: né … né)'),
+ 'ergo': (C, 'dunque, quindi, perciò (conclusiva); + gen. preposto: a causa di (arcaico)'),
+}
+
 def main():
+    # batch forzato: le parole-funzione sovrascrivono voci rotte o mancanti
+    base = 'data/latin'
+    shards = {}
+    forced = 0
+    for lemma, (pos, definition) in LATIN_FUNC.items():
+        letter = norm(lemma)[:1]
+        path = os.path.join(base, f'{letter}.json')
+        if not os.path.exists(path): continue
+        data = shards.get(path) or json.load(open(path, encoding='utf-8'))
+        shards[path] = data
+        data['dict'][lemma] = { 'pos': pos, 'definition': definition, 'src': 'curated' }
+        forced += 1
+    for path, data in shards.items():
+        data.setdefault('meta', {})['lemmas_count'] = len(data['dict'])
+        json.dump(data, open(path, 'w', encoding='utf-8'), ensure_ascii=False)
+    print(f'latin: {forced} parole-funzione curate (forzate)')
+
     for lang, table in (('greek', GREEK), ('latin', LATIN)):
         base = f'data/{lang}'
         shards = {}

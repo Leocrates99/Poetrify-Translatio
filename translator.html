@@ -8347,6 +8347,56 @@ button.dict-suggest-pill:hover { background: rgba(24, 0, 172, 0.16); }
 .dict-pop-star.on { color: var(--poetrify-warning); }
 .bridge-engine { margin-top: 10px; }
 body.dark-mode .dict-popover { box-shadow: 0 10px 34px rgba(0,0,0,0.55); }
+
+/* ── GLOSSARIO PROATTIVO (frase e brano) ─────────────────────────────────── */
+.ts-glossario {
+  margin-top: 12px;
+  border: 1px solid var(--poetrify-rule-soft);
+  border-radius: var(--radius-sm);
+  background: var(--poetrify-ivory);
+  padding: 8px 12px;
+}
+.ts-glossario summary { font-size: 12px; font-weight: 600; color: var(--poetrify-sepia); cursor: pointer; }
+.ts-glossario[open] summary { margin-bottom: 8px; }
+.brano-glossario { margin-top: 18px; background: var(--poetrify-cream); }
+.gloss-actions { margin-bottom: 8px; }
+.gloss-head { font-size: 11px; margin-bottom: 6px; }
+.gloss-box { max-height: 340px; overflow: auto; }
+.gloss-row {
+  display: grid;
+  grid-template-columns: minmax(80px, 0.8fr) minmax(110px, 1fr) 2fr;
+  gap: 4px 12px;
+  align-items: baseline;
+  padding: 4px 2px;
+  border-bottom: 1px dashed var(--poetrify-rule-soft);
+  font-size: 12.5px;
+}
+.gloss-row:last-of-type { border-bottom: none; }
+.gloss-w {
+  font-family: var(--font-classical, var(--font-body));
+  font-size: 14px;
+  color: var(--poetrify-ink);
+  background: none; border: none; padding: 0;
+  text-align: left; cursor: pointer;
+}
+.gloss-w:hover { color: var(--poetrify-lang-accent); text-decoration: underline dotted; }
+.gloss-l { font-size: 11.5px; color: var(--poetrify-sepia); }
+.gloss-g { font-family: var(--font-body); color: var(--poetrify-ink-soft); }
+.gloss-en {
+  font-size: 9.5px; padding: 1px 6px; border-radius: 999px;
+  background: var(--poetrify-lang-accent-pale); color: var(--poetrify-lang-accent);
+}
+.gloss-miss {
+  margin-top: 8px; padding: 7px 10px;
+  font-size: 12px; color: var(--poetrify-ink-soft);
+  background: rgba(214, 158, 46, 0.10);
+  border-left: 3px solid var(--poetrify-warning);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+@media (max-width: 720px) {
+  .gloss-row { grid-template-columns: 1fr 1.4fr; }
+  .gloss-g { grid-column: 1 / -1; padding-left: 8px; }
+}
 /* Pillola "⇆" — indica suggerimento incrociato fra analisi grammaticale e logica */
 .cross-suggest-pill {
   display: inline-flex;
@@ -30814,8 +30864,9 @@ function renderTranslationHtml() {
             ? '✓ Tutte le frasi sono state tradotte. Passa alla bella copia per armonizzare la resa d\'insieme.'
             : 'Alcune frasi non sono ancora state tradotte. Torna alla scheda C · Analisi (Ctrl+3) per completare il wizard.'}
         </div>
-        <div class="fpf-overview-list">${sentencesHtml}</div>
-        <div class="flex-between" style="margin-top: 18px;">
+        <div class="fpf-overview-list">${sentencesHtml}</div>`
+      + renderBranoGlossarySection()
+      + `<div class="flex-between" style="margin-top: 18px;">
           <button class="btn btn-ghost btn-sm" onclick="goToStep(3)">← Torna all'analisi</button>
           <button class="btn btn-brand-soft btn-sm" onclick="goToTraduzione('bella')">Vai alla bella copia →</button>
         </div>`;
@@ -30891,6 +30942,7 @@ function renderTranslationHtml() {
     + intro
     + `<div class="method-note"><strong>Metodo.</strong> Per ogni frase: ① scrivi una <em>brutta copia</em> ancora vicina all'originale, ② disponi i <em>sintagmi</em> nell'ordo italiano (puoi importarli dalla logica e trascinarli per riordinare), ③ rifinisci la <em>bella copia</em>. La resa complessiva finale vive nella scheda <strong>Bella copia</strong>.</div>`
     + sentencesHtml
+    + renderBranoGlossarySection()
     + `<div class="translation-global">` + globalHeader + bruttaGlobalRow + `</div>`
     + `<div class="flex-between" style="margin-top: 18px;">
         <span></span>
@@ -30997,7 +31049,8 @@ function renderDictPopResult(res, lang, mods) {
       + '<div class="dict-pop-hint muted-text">Se è un nome proprio o un refuso OCR è normale. Puoi cercare nel dizionario completo:</div>'
       + '<div class="dict-pop-actions"><a class="btn btn-ghost btn-sm" href="' + escapeHtml(dictUrl) + '" target="_blank" rel="noopener">Apri il dizionario ↗</a></div>';
   }
-  const curated = mods && mods.gloss ? mods.gloss.getItalianGloss(res.lemma, lang) : null;
+  const curated = (mods && mods.gloss ? mods.gloss.getItalianGloss(res.lemma, lang) : null)
+    || (res.src === 'curated' && res.definition ? res.definition : null);
   const gloss = curated || res.italianGlossAuto || '';
   const glossHtml = gloss
     ? '<div class="dict-pop-gloss">' + escapeHtml(gloss) + (curated ? '' : ' <span class="dict-pop-draft">bozza automatica</span>') + '</div>'
@@ -31022,7 +31075,7 @@ function renderDictPopResult(res, lang, mods) {
     + (viaNote ? '<span class="dict-pop-via">' + viaNote + '</span>' : '')
     + '</div>'
     + glossHtml
-    + (res.definition ? '<details class="dict-pop-def"><summary>Definizione estesa (L&amp;S / LSJ)</summary><div>' + escapeHtml(res.definition) + '</div></details>' : '')
+    + (res.definition && res.definition !== gloss ? '<details class="dict-pop-def"><summary>Definizione estesa (L&amp;S / LSJ)</summary><div>' + escapeHtml(res.definition) + '</div></details>' : '')
     + altsHtml
     + '<div class="dict-pop-actions">'
     + '<button type="button" class="btn btn-ghost btn-sm dict-pop-star ' + (starred ? 'on' : '') + '" onclick="dictPopToggleVocab(this)">' + (starred ? '★ Nel lessico' : '⭐ Salva nel lessico') + '</button>'
@@ -31071,6 +31124,94 @@ function _fillBridgeEngineResult(q, lang, token) {
       if (box2) box2.innerHTML = '<span class="muted-text">Errore: ' + escapeHtml(e.message) + '</span>';
     });
   });
+}
+
+/* ── GLOSSARIO PROATTIVO · la frase e il brano si auto-glossano ──────────────
+   Usa il motore completo: per ogni parola → lemma, categoria, glossa
+   (curata > auto «bozza» > incipit della definizione EN). Le parole non
+   trovate (nomi propri, refusi OCR) sono raccolte a parte. */
+function _glossPick(res, mods) {
+  const curated = mods && mods.gloss ? mods.gloss.getItalianGloss(res.lemma, res._lang) : null;
+  if (curated) return { text: curated, kind: 'curata' };
+  /* le voci con src 'curated' hanno la definizione GIÀ in italiano col paradigma */
+  if (res.src === 'curated' && res.definition) return { text: res.definition, kind: 'curata' };
+  if (res.italianGlossAuto) return { text: res.italianGlossAuto, kind: 'auto' };
+  if (res.definition) {
+    let d = res.definition.replace(/\s+/g, ' ').trim();
+    if (d.length > 80) d = d.slice(0, 77) + '…';
+    return { text: d, kind: 'en' };
+  }
+  return { text: '', kind: '' };
+}
+async function buildGlossaryRows(words, lang) {
+  const mods = await getLexiconModules();
+  if (!mods) return { html: '<span class="muted-text">Patrimonio non raggiungibile (serve il server).</span>', text: '', found: 0, tot: 0 };
+  const seen = new Set();
+  const uniq = [];
+  for (const w of words) {
+    const k = (lang === 'greco' ? normalizeText(w) : w.toLowerCase());
+    if (!k || seen.has(k)) continue;
+    seen.add(k); uniq.push(w);
+  }
+  await mods.engine.lookUpBatch(uniq, lang).catch(function () { return null; });   // scalda gli shard
+  const results = [];
+  for (const w of uniq) results.push(await mods.engine.lookUpSmart(w, lang));
+  const okRows = [], missRows = [], lines = [];
+  for (const res of results) {
+    const found = res.source === 'dict' || res.source === 'lemmata+dict' || res.source === 'archived';
+    if (!found) { missRows.push(res.word); continue; }
+    res._lang = lang;
+    const g = _glossPick(res, mods);
+    const mark = g.kind === 'auto' ? ' <span class="dict-pop-draft">bozza</span>' : (g.kind === 'en' ? ' <span class="gloss-en">EN</span>' : '');
+    okRows.push('<div class="gloss-row">'
+      + '<button type="button" class="gloss-w ' + (lang === 'greco' ? 'greek' : '') + '" data-word="' + escapeHtml(res.word) + '" onclick="openTokenDictPopover(this.dataset.word, this)" title="Apri la scheda lessicale">' + escapeHtml(res.word) + '</button>'
+      + '<span class="gloss-l">' + escapeHtml(res.lemma) + (res.pos ? ' · ' + escapeHtml(res.pos) : '') + (res.enclitic ? ' (' + res.enclitic + ')' : '') + '</span>'
+      + '<span class="gloss-g">' + escapeHtml(g.text || '—') + mark + '</span>'
+      + '</div>');
+    lines.push(res.word + ' → ' + res.lemma + (res.pos ? ' (' + res.pos + ')' : '') + (g.text ? ': ' + g.text : ''));
+  }
+  let html = okRows.join('');
+  if (missRows.length) {
+    html += '<div class="gloss-miss"><strong>Non trovate</strong> (nomi propri o refusi?): ' + missRows.map(escapeHtml).join(' · ') + '</div>';
+  }
+  return { html: html || '<span class="muted-text">Nessuna parola da glossare.</span>',
+           text: lines.join('\n'), found: okRows.length, tot: uniq.length };
+}
+async function fillSentenceGlossary(sentenceId, detailsEl) {
+  const box = detailsEl ? detailsEl.querySelector('.gloss-box') : null;
+  if (!box || detailsEl.dataset.filled === '1') return;
+  detailsEl.dataset.filled = '1';
+  box.innerHTML = '<span class="muted-text">⏳ Interrogo il patrimonio lessicale…</span>';
+  const s = state.sentences.find(function (x) { return x.id === sentenceId; });
+  if (!s) { box.innerHTML = ''; return; }
+  const words = tokenizeSentence(s.original).filter(function (t) { return t.kind === 'word'; }).map(function (t) { return t.text; });
+  const r = await buildGlossaryRows(words, state.meta.lingua || 'latino');
+  box.innerHTML = '<div class="gloss-head muted-text">coperte ' + r.found + '/' + r.tot + '</div>' + r.html;
+}
+function renderBranoGlossarySection() {
+  return `
+    <details class="ts-glossario brano-glossario" ontoggle="if (this.open) fillBranoGlossary(this)">
+      <summary>📖 Glossario dell'intero brano <span class="muted-text">· ripasso lessicale generato dal testo</span></summary>
+      <div class="gloss-actions"><button type="button" class="btn btn-ghost btn-sm" onclick="copyTextRaw(window._branoGlossText || '', event)">📋 Copia il glossario</button></div>
+      <div class="gloss-box"><span class="muted-text">…</span></div>
+    </details>`;
+}
+async function fillBranoGlossary(detailsEl) {
+  const box = detailsEl ? detailsEl.querySelector('.gloss-box') : null;
+  if (!box || detailsEl.dataset.filled === '1') return;
+  detailsEl.dataset.filled = '1';
+  box.innerHTML = '<span class="muted-text">⏳ Costruisco il glossario del brano (può richiedere qualche secondo)…</span>';
+  let words = [];
+  if (state.sentences.length) {
+    state.sentences.forEach(function (s) {
+      tokenizeSentence(s.original).forEach(function (t) { if (t.kind === 'word') words.push(t.text); });
+    });
+  } else {
+    tokenizeSentence(state.meta.testoOriginale || '').forEach(function (t) { if (t.kind === 'word') words.push(t.text); });
+  }
+  const r = await buildGlossaryRows(words, state.meta.lingua || 'latino');
+  window._branoGlossText = (state.meta.titolo ? state.meta.titolo + '\n' : '') + r.text;
+  box.innerHTML = '<div class="gloss-head muted-text">lessico del brano: ' + r.found + '/' + r.tot + ' parole coperte</div>' + r.html;
 }
 
 /* ============================================
@@ -31822,6 +31963,11 @@ function renderTranslationSentenceCard(sentence, idx) {
         </div>
         <textarea class="translation-textarea bella" placeholder="Resa finale in italiano corretto, rifinita dalla brutta e dall'ordo." oninput="updateSentenceTranslationFinal('${sentence.id}', this.value)">${escapeHtml(sentence.translationFinal || '')}</textarea>
       </div>
+
+      <details class="ts-glossario" ontoggle="if (this.open) fillSentenceGlossary('${sentence.id}', this)">
+        <summary>📖 Glossario della frase <span class="muted-text">· lemma e glossa per ogni parola</span></summary>
+        <div class="gloss-box"><span class="muted-text">…</span></div>
+      </details>
     </div>`;
 }
 
