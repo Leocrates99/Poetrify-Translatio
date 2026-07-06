@@ -1,0 +1,659 @@
+# -*- coding: utf-8 -*-
+"""Indice dei PARADIGMI SEGMENTATI · data/<lang>/paradigms/<lettera>.json
+
+Per ogni lemma classificato emette la tabella flessiva con le celle già
+SCOMPOSTE in morfemi, ciascuno col suo ruolo:
+    a = aumento / raddoppiamento        (ἐ-, λε-)
+    t = tema (del presente, del perfetto, dell'aoristo…)
+    v = vocale tematica / di coniugazione / contratta   (a, e, i · ο/ε · ῶ, ᾷ)
+    s = suffisso di tempo/modo          (ba, bi, era, isse, re, nd · σ(α), θη, κ)
+    d = desinenza personale o casuale
+Cella = [[testo, ruolo], …]; la CONCATENAZIONE dei testi è la forma piena
+(cross-validata contro l'indice piatto generato da gen_latin_forms /
+gen_greek_forms). Le fusioni irriducibili restano nel segmento più ampio e
+la voce porta una nota (ξ = gutturale+σ; vocale contratta = v+d fuse).
+
+Struttura: { meta, paradigms: { lemma: { pos, classe, testa, nota?,
+  nome?: {sg:{nom:CELL,…}, pl:{…}},
+  verbo?: {ind:{pres:{att:[6],pass|mp:[6]},…}, cong?, imv?, inf:{…}, ptc:{…}, ger?} } }
+"""
+import json, os, re, sys, unicodedata, collections
+sys.stdout.reconfigure(encoding='utf-8')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from gen_latin_forms import (N as NL, parse_noun_head, parse_verb_head)
+from gen_greek_forms import (VERBS, classify_nominal, NOMINAL_EXTRA, strip_acc,
+                             recessive, accent_at, split_preverb, augment_stem,
+                             de_augment, CONTR, N as NG, NFC, lemma_accent_dist,
+                             persistent, dat_pl_3, syllable_nuclei)
+
+def seg(*pairs):
+    return [[t, r] for t, r in pairs if t]
+
+# ═══════════════════ LATINO · NOMI ═══════════════════
+def lat_noun_table(lemma, gen_full, gen_raw, gender):
+    lem = NL(lemma); g = NL(gen_full)
+    raw = gen_raw
+    def C(*p): return seg(*p)
+    if g.endswith('ae'):
+        st = g[:-2]; cl = '1ª declinazione'
+        sg = dict(nom=C((st,'t'),('a','d')), gen=C((st,'t'),('ae','d')), dat=C((st,'t'),('ae','d')),
+                  acc=C((st,'t'),('am','d')), voc=C((st,'t'),('a','d')), abl=C((st,'t'),('a','d')))
+        pl = dict(nom=C((st,'t'),('ae','d')), gen=C((st,'t'),('arum','d')), dat=C((st,'t'),('is','d')),
+                  acc=C((st,'t'),('as','d')), voc=C((st,'t'),('ae','d')), abl=C((st,'t'),('is','d')))
+    elif raw.strip() in ('ūs',) or (raw.strip() == 'us' and 'ū' in raw):
+        st = g[:-2]; cl = '4ª declinazione'
+        sg = dict(nom=C((st,'t'),('us','d')), gen=C((st,'t'),('us','d')), dat=C((st,'t'),('ui','d')),
+                  acc=C((st,'t'),('um','d')), voc=C((st,'t'),('us','d')), abl=C((st,'t'),('u','d')))
+        pl = dict(nom=C((st,'t'),('us','d')), gen=C((st,'t'),('uum','d')), dat=C((st,'t'),('ibus','d')),
+                  acc=C((st,'t'),('us','d')), voc=C((st,'t'),('us','d')), abl=C((st,'t'),('ibus','d')))
+    elif g.endswith('ei'):
+        st = g[:-2]; cl = '5ª declinazione'
+        sg = dict(nom=C((st,'t'),('es','d')), gen=C((st,'t'),('ei','d')), dat=C((st,'t'),('ei','d')),
+                  acc=C((st,'t'),('em','d')), voc=C((st,'t'),('es','d')), abl=C((st,'t'),('e','d')))
+        pl = dict(nom=C((st,'t'),('es','d')), gen=C((st,'t'),('erum','d')), dat=C((st,'t'),('ebus','d')),
+                  acc=C((st,'t'),('es','d')), voc=C((st,'t'),('es','d')), abl=C((st,'t'),('ebus','d')))
+    elif g.endswith('i') and not g.endswith('is'):
+        st = g[:-1]
+        if gender == 'n':
+            cl = '2ª declinazione (neutro)'
+            nomv = C((st,'t'),('um','d'))
+            sg = dict(nom=nomv, gen=C((st,'t'),('i','d')), dat=C((st,'t'),('o','d')),
+                      acc=nomv, voc=nomv, abl=C((st,'t'),('o','d')))
+            pl = dict(nom=C((st,'t'),('a','d')), gen=C((st,'t'),('orum','d')), dat=C((st,'t'),('is','d')),
+                      acc=C((st,'t'),('a','d')), voc=C((st,'t'),('a','d')), abl=C((st,'t'),('is','d')))
+        else:
+            cl = '2ª declinazione'
+            if lem.endswith('us'):
+                nomc = C((st,'t'),('us','d'))
+                vocc = C((st[:-1],'t'),('i','d')) if lem.endswith('ius') else C((st,'t'),('e','d'))
+            else:
+                nomc = C((lem,'t')); vocc = C((lem,'t'))
+            sg = dict(nom=nomc, gen=C((st,'t'),('i','d')), dat=C((st,'t'),('o','d')),
+                      acc=C((st,'t'),('um','d')), voc=vocc, abl=C((st,'t'),('o','d')))
+            pl = dict(nom=C((st,'t'),('i','d')), gen=C((st,'t'),('orum','d')), dat=C((st,'t'),('is','d')),
+                      acc=C((st,'t'),('os','d')), voc=C((st,'t'),('i','d')), abl=C((st,'t'),('is','d')))
+    elif g.endswith('is'):
+        st = g[:-2]
+        parisyll = lem.endswith(('is', 'es')) and abs(len(lem) - len(g)) <= 1
+        double_cons = len(st) >= 2 and st[-1] not in 'aeiou' and st[-2] not in 'aeiou'
+        neuter_ial = lem.endswith(('e', 'al', 'ar')) and gender == 'n'
+        istem = parisyll or double_cons or neuter_ial
+        gpl = 'ium' if istem else 'um'
+        cl = '3ª declinazione' + (' (tema in -i)' if istem else '')
+        nomc = C((lem,'t'))
+        if gender == 'n':
+            sg = dict(nom=nomc, gen=C((st,'t'),('is','d')), dat=C((st,'t'),('i','d')),
+                      acc=nomc, voc=nomc, abl=C((st,'t'),('i' if neuter_ial else 'e','d')))
+            plna = C((st,'t'),('ia' if neuter_ial else 'a','d'))
+            pl = dict(nom=plna, gen=C((st,'t'),(gpl,'d')), dat=C((st,'t'),('ibus','d')),
+                      acc=plna, voc=plna, abl=C((st,'t'),('ibus','d')))
+        else:
+            sg = dict(nom=nomc, gen=C((st,'t'),('is','d')), dat=C((st,'t'),('i','d')),
+                      acc=C((st,'t'),('em','d')), voc=nomc, abl=C((st,'t'),('e','d')))
+            es = C((st,'t'),('es','d'))
+            pl = dict(nom=es, gen=C((st,'t'),(gpl,'d')), dat=C((st,'t'),('ibus','d')),
+                      acc=es, voc=es, abl=C((st,'t'),('ibus','d')))
+    else:
+        return None
+    return dict(classe=cl, tab={'sg': sg, 'pl': pl})
+
+# ═══════════════════ LATINO · VERBI ═══════════════════
+P6 = ('m','s','t','mus','tis','nt')
+R6 = ('r','ris','tur','mur','mini','ntur')
+# (vocale, suffisso, desinenza) per cella; '' = segmento assente
+LV = {
+ '1': dict(v='a',
+   pres=[('','','o'),('a','','s'),('a','','t'),('a','','mus'),('a','','tis'),('a','','nt')],
+   fut=[('a','b','o'),('a','bi','s'),('a','bi','t'),('a','bi','mus'),('a','bi','tis'),('a','b','unt')],
+   cong=[('','e','m'),('','e','s'),('','e','t'),('','e','mus'),('','e','tis'),('','e','nt')],
+   impf_vs=('a','ba'), inf=('a','re'), imv=[('a',''),('a','te')], ptc=('a','ns'), ptcob=('a','nt'), ger=('a','nd'),
+   prpass=[('','','or'),('a','','ris'),('a','','tur'),('a','','mur'),('a','','mini'),('a','','ntur')],
+   futpass=[('a','b','or'),('a','be','ris'),('a','bi','tur'),('a','bi','mur'),('a','bi','mini'),('a','bu','ntur')],
+   infpass=('a','ri')),
+ '2': dict(v='e',
+   pres=[('e','','o'),('e','','s'),('e','','t'),('e','','mus'),('e','','tis'),('e','','nt')],
+   fut=[('e','b','o'),('e','bi','s'),('e','bi','t'),('e','bi','mus'),('e','bi','tis'),('e','b','unt')],
+   cong=[('e','a','m'),('e','a','s'),('e','a','t'),('e','a','mus'),('e','a','tis'),('e','a','nt')],
+   impf_vs=('e','ba'), inf=('e','re'), imv=[('e',''),('e','te')], ptc=('e','ns'), ptcob=('e','nt'), ger=('e','nd'),
+   prpass=[('e','','or'),('e','','ris'),('e','','tur'),('e','','mur'),('e','','mini'),('e','','ntur')],
+   futpass=[('e','b','or'),('e','be','ris'),('e','bi','tur'),('e','bi','mur'),('e','bi','mini'),('e','bu','ntur')],
+   infpass=('e','ri')),
+ '3': dict(v='i/u',
+   pres=[('','','o'),('i','','s'),('i','','t'),('i','','mus'),('i','','tis'),('u','','nt')],
+   fut=[('','a','m'),('','e','s'),('','e','t'),('','e','mus'),('','e','tis'),('','e','nt')],
+   cong=[('','a','m'),('','a','s'),('','a','t'),('','a','mus'),('','a','tis'),('','a','nt')],
+   impf_vs=('','eba'), inf=('e','re'), imv=[('e',''),('i','te')], ptc=('e','ns'), ptcob=('e','nt'), ger=('e','nd'),
+   prpass=[('','','or'),('e','','ris'),('i','','tur'),('i','','mur'),('i','','mini'),('u','','ntur')],
+   futpass=[('','a','r'),('','e','ris'),('','e','tur'),('','e','mur'),('','e','mini'),('','e','ntur')],
+   infpass=('','i')),
+ '3io': dict(v='i',
+   pres=[('i','','o'),('i','','s'),('i','','t'),('i','','mus'),('i','','tis'),('iu','','nt')],
+   fut=[('i','a','m'),('i','e','s'),('i','e','t'),('i','e','mus'),('i','e','tis'),('i','e','nt')],
+   cong=[('i','a','m'),('i','a','s'),('i','a','t'),('i','a','mus'),('i','a','tis'),('i','a','nt')],
+   impf_vs=('i','eba'), inf=('e','re'), imv=[('e',''),('i','te')], ptc=('ie','ns'), ptcob=('ie','nt'), ger=('ie','nd'),
+   prpass=[('i','','or'),('e','','ris'),('i','','tur'),('i','','mur'),('i','','mini'),('iu','','ntur')],
+   futpass=[('i','a','r'),('i','e','ris'),('i','e','tur'),('i','e','mur'),('i','e','mini'),('i','e','ntur')],
+   infpass=('','i')),
+ '4': dict(v='i',
+   pres=[('i','','o'),('i','','s'),('i','','t'),('i','','mus'),('i','','tis'),('iu','','nt')],
+   fut=[('i','a','m'),('i','e','s'),('i','e','t'),('i','e','mus'),('i','e','tis'),('i','e','nt')],
+   cong=[('i','a','m'),('i','a','s'),('i','a','t'),('i','a','mus'),('i','a','tis'),('i','a','nt')],
+   impf_vs=('i','eba'), inf=('i','re'), imv=[('i',''),('i','te')], ptc=('ie','ns'), ptcob=('ie','nt'), ger=('ie','nd'),
+   prpass=[('i','','or'),('i','','ris'),('i','','tur'),('i','','mur'),('i','','mini'),('iu','','ntur')],
+   futpass=[('i','a','r'),('i','e','ris'),('i','e','tur'),('i','e','mur'),('i','e','mini'),('i','e','ntur')],
+   infpass=('i','ri')),
+}
+CONJ_LABEL = {'1':'1ª coniugazione','2':'2ª coniugazione','3':'3ª coniugazione','3io':'coniugazione mista (-iō)','4':'4ª coniugazione'}
+
+def lat_verb_table(lemma, conj, pstem, pfstem, supstem, dep):
+    T = LV[conj]
+    def row6(triples):
+        return [seg((pstem,'t'),(v,'v'),(s,'s'),(d,'d')) for v, s, d in triples]
+    def impf6(ends):
+        v, s = T['impf_vs']
+        return [seg((pstem,'t'),(v,'v'),(s,'s'),(e,'d')) for e in ends]
+    verbo = {'ind': {}, 'cong': {}, 'imv': {}, 'inf': {}, 'ptc': {}}
+    if not dep:
+        verbo['ind']['pres'] = {'att': row6(T['pres'])}
+        verbo['ind']['impf'] = {'att': impf6(P6)}
+        verbo['ind']['fut'] = {'att': row6(T['fut'])}
+        verbo['cong']['pres'] = {'att': row6(T['cong'])}
+        vi, si = T['inf']
+        verbo['cong']['impf'] = {'att': [seg((pstem,'t'),(vi,'v'),(si,'s'),(e,'d')) for e in P6]}
+        verbo['imv']['pres'] = {'att': [seg((pstem,'t'),(v,'v'),(d,'d')) for v, d in T['imv']]}
+        verbo['inf']['pres_att'] = seg((pstem,'t'),(vi,'v'),(si,'s'))
+        pv, ps = T['ptc']
+        verbo['ptc']['pres'] = seg((pstem,'t'),(pv,'v'),(ps,'s'))
+        ov, osx = T['ptcob']
+        verbo['ptc']['pres_gen'] = seg((pstem,'t'),(ov,'v'),(osx,'s'),('is','d'))
+        gv, gs = T['ger']
+        verbo['ger'] = seg((pstem,'t'),(gv,'v'),(gs,'s'),('us','d'))
+    lbl = 'mp' if dep else 'pass'
+    verbo['ind'].setdefault('pres', {})[lbl] = row6(T['prpass'])
+    v, s = T['impf_vs']
+    verbo['ind'].setdefault('impf', {})[lbl] = [seg((pstem,'t'),(v,'v'),(s,'s'),(e,'d')) for e in R6]
+    verbo['ind'].setdefault('fut', {})[lbl] = row6(T['futpass'])
+    congp = []
+    for i, (cv, cs, cd) in enumerate(T['cong']):
+        base = cd
+        rd = {0: base[:-1]+'r' if base.endswith('m') else base+'r'}.get(0)
+        congp.append((cv, cs, R6[i] if i else ('r' if base == 'm' else base+'r')))
+    verbo['cong'].setdefault('pres', {})[lbl] = [seg((pstem,'t'),(cv,'v'),(cs,'s'),(rd,'d'))
+        for (cv, cs, _), rd in zip(T['cong'], R6)]
+    iv, isf = T['infpass']
+    verbo['inf']['pres_' + lbl] = seg((pstem,'t'),(iv,'v'),(isf,'s')) if isf else seg((pstem,'t'),(iv,'v'),('i','d'))
+    if conj in ('3', '3io'):
+        verbo['inf']['pres_' + lbl] = seg((pstem,'t'),('i','d'))
+    if pfstem:
+        verbo['ind']['pf'] = {'att': [seg((pfstem,'t'),(e,'d')) for e in ('i','isti','it','imus','istis','erunt')]}
+        verbo['ind']['ppf'] = {'att': [seg((pfstem,'t'),('era','s'),(e,'d')) for e in P6]}
+        verbo['ind']['futant'] = {'att': [seg((pfstem,'t'),('er','s'),('o','d'))] +
+            [seg((pfstem,'t'),('eri','s'),(e,'d')) for e in ('s','t','mus','tis','nt')]}
+        verbo['cong']['pf'] = {'att': [seg((pfstem,'t'),('eri','s'),(e,'d')) for e in P6]}
+        verbo['cong']['ppf'] = {'att': [seg((pfstem,'t'),('isse','s'),(e,'d')) for e in P6]}
+        verbo['inf']['pf_att'] = seg((pfstem,'t'),('isse','s'))
+    if supstem:
+        verbo['ptc']['pf'] = seg((supstem,'t'),('us','d'))
+        verbo['ptc']['fut'] = seg((supstem,'t'),('ur','s'),('us','d'))
+    testa = lemma
+    if pfstem: testa += f', {pfstem}i'
+    if supstem: testa += f', {supstem}um'
+    testa += f', {pstem}{"" if dep else T["inf"][0] + T["inf"][1]}{(T["inf"][0] + "ri") if dep and conj != "3" else ""}'
+    nota = None
+    return dict(classe=CONJ_LABEL[conj] + (' · deponente' if dep else ''), testa=testa, verbo=verbo, nota=nota)
+
+# ═══════════════════ GRECO ═══════════════════
+def split_accented(form, parts):
+    """Rispalma i diacritici della forma accentata sui segmenti non accentati.
+    parts = [(testo_senza_accento, ruolo)] · concat(base(parts)) == base(form)."""
+    nfd = unicodedata.normalize('NFD', form)
+    lens = []
+    for txt, _ in parts:
+        lens.append(sum(1 for c in unicodedata.normalize('NFD', txt) if not unicodedata.combining(c)))
+    out, i, li = [], 0, 0
+    for (txt, role), L in zip(parts, lens):
+        buf = ''
+        count = 0
+        while i < len(nfd) and count < L:
+            c = nfd[i]
+            buf += c
+            if not unicodedata.combining(c):
+                count += 1
+            i += 1
+        while i < len(nfd) and unicodedata.combining(nfd[i]):
+            buf += nfd[i]; i += 1
+        out.append([NFC(buf), role])
+    return out
+
+def gk_cell(parts, accent='recessive', pre=None):
+    """parts non accentati (con spiriti) → forma accentata + segmenti."""
+    plain = ''.join(t for t, _ in parts)
+    if pre is not None:
+        form = pre
+    elif accent == 'recessive':
+        form = recessive(NFC(plain))
+    else:
+        form = NFC(plain)
+    return split_accented(form, parts)
+
+GK_PRES_A = [('','ω'),('','εις'),('','ει'),('ο','μεν'),('ε','τε'),('','ουσι')]
+GK_PRES_M = [('ο','μαι'),('','ῃ'),('ε','ται'),('ο','μεθα'),('ε','σθε'),('ο','νται')]
+GK_IMPF_A = [('ο','ν'),('ε','ς'),('ε',''),('ο','μεν'),('ε','τε'),('ο','ν')]
+GK_IMPF_M = [('ο','μην'),('','ου'),('ε','το'),('ο','μεθα'),('ε','σθε'),('ο','ντο')]
+GK_AOR1 =  [('σα',''),('σα','ς'),('σε',''),('σα','μεν'),('σα','τε'),('σα','ν')]
+GK_AORP =  [('θη','ν'),('θη','ς'),('θη',''),('θη','μεν'),('θη','τε'),('θη','σαν')]
+GK_PF_A =  [('','α'),('','ας'),('','ε'),('','αμεν'),('','ατε'),('','ασι')]
+
+def gk_split_contract(s):
+    """'ῶμεν' → ('ῶ','μεν'): vocale contratta + resto."""
+    nfd = unicodedata.normalize('NFD', s)
+    i = 0; seen_v = False
+    VOW = 'αεηιουω'
+    while i < len(nfd):
+        c = nfd[i]
+        if unicodedata.combining(c): i += 1; continue
+        if c in VOW:
+            seen_v = True; i += 1; continue
+        break
+    head = NFC(nfd[:i]); tail = NFC(nfd[i:])
+    return head, tail
+
+def gk_verb_table(lemma, v):
+    ps = v['pres']; contract = v['contract']; dep = v['dep']
+    T = strip_acc(ps)
+    verbo = {'ind': {}, 'inf': {}, 'ptc': {}}
+    nota = []
+    prev = split_preverb(lemma)
+    def aug_parts():
+        """(aumento, tema) per l'imperfetto/aoristi dal tema del presente."""
+        if prev:
+            pv = split_preverb(ps)
+            if pv:
+                pre, el, core = pv
+                aug = augment_stem(core)
+                base = strip_acc(aug)
+                inner = strip_acc(core)
+                if base != inner and base.startswith('ἐ') and NG(base[1:]) == NG(inner):
+                    return (el + 'ἐ' if False else el, base) if False else ((el, 'ἐ', inner))
+                return ((el, '', base))
+        aug = strip_acc(augment_stem(ps))
+        inner = T
+        if aug.startswith('ἐ') and NG(aug[1:]) == NG(inner):
+            return ('', 'ἐ', inner)
+        return ('', aug[:max(1, len(aug)-len(inner))], inner) if len(aug) > len(inner) else ('', '', aug)
+    # presente e imperfetto
+    if contract:
+        Tc = T[:-1]   # la vocale del tema è DENTRO la contrazione (τιμ+ῶ, non τιμα+ῶ)
+        def crow(base6, mid=False):
+            cells = []
+            for ve, de in base6:
+                cfull = CONTR[contract].get(ve + de)
+                if cfull is None:
+                    cells.append(None); continue
+                h, t2 = gk_split_contract(cfull)
+                cells.append(gk_cell([(Tc,'t'),(h,'v'),(t2,'d')] if t2 or h else [(Tc,'t'),(cfull,'d')], pre=NFC(Tc+cfull)))
+            return cells
+        if not dep: verbo['ind']['pres'] = {'att': crow(GK_PRES_A)}
+        verbo['ind'].setdefault('pres', {})['mp'] = crow(GK_PRES_M)
+        pre_el, A, core = aug_parts()
+        def crow_i(base6):
+            cells = []
+            corec = core[:-1]
+            for ve, de in base6:
+                cfull = CONTR[contract].get(ve + de)
+                if cfull is None: cells.append(None); continue
+                h, t2 = gk_split_contract(cfull)
+                parts = [(x, r) for x, r in [(pre_el,'t'),(A,'a'),(corec,'t'),(h,'v'),(t2,'d')] if x]
+                cells.append(gk_cell(parts, pre=NFC(pre_el + A + corec + cfull)))
+            return cells
+        if not dep: verbo['ind']['impf'] = {'att': crow_i(GK_IMPF_A)}
+        verbo['ind'].setdefault('impf', {})['mp'] = crow_i(GK_IMPF_M)
+        infc = CONTR[contract]['εσθαι']
+        h, t2 = gk_split_contract(infc)
+        verbo['inf']['pres_mp'] = gk_cell([(Tc,'t'),(h,'v'),(t2,'d')], pre=NFC(Tc+infc))
+        if not dep:
+            infa = CONTR[contract]['ειν']
+            h, t2 = gk_split_contract(infa)
+            verbo['inf']['pres_att'] = gk_cell([(Tc,'t'),(h,'v'),(t2,'d')], pre=NFC(Tc+infa))
+        nota.append('presente contratto: la vocale evidenziata è la CONTRAZIONE di vocale tematica e desinenza')
+    else:
+        def row(base6, mid=False):
+            return [gk_cell([(T,'t')] + ([(ve,'v')] if ve else []) + ([(de,'d')] if de else [])) for ve, de in base6]
+        if not dep: verbo['ind']['pres'] = {'att': row(GK_PRES_A)}
+        verbo['ind'].setdefault('pres', {})['mp'] = row(GK_PRES_M)
+        pre_el, A, core = aug_parts()
+        def rowi(base6):
+            out = []
+            for ve, de in base6:
+                parts = [(x, r) for x, r in [(pre_el,'t'),(A,'a'),(core,'t'),(ve,'v'),(de,'d')] if x]
+                out.append(gk_cell(parts))
+            return out
+        if not dep: verbo['ind']['impf'] = {'att': rowi(GK_IMPF_A)}
+        verbo['ind'].setdefault('impf', {})['mp'] = rowi(GK_IMPF_M)
+        if not dep:
+            verbo['inf']['pres_att'] = gk_cell([(T,'t'),('ειν','d')], pre=NFC(accent_at(T + 'ειν', 2)))
+        verbo['inf']['pres_mp'] = gk_cell([(T,'t'),('ε','v'),('σθαι','d')])
+        if not dep:
+            verbo['ptc']['pres_att'] = gk_cell([(T,'t'),('ων','d')], pre=NFC(strip_acc(T) + 'ών') if False else None) or None
+            verbo['ptc']['pres_att'] = gk_cell([(T,'t'),('ων','d')])
+        verbo['ptc']['pres_mp'] = gk_cell([(T,'t'),('ο','v'),('μενος','d')])
+    # futuro
+    if v['fut']:
+        fs = strip_acc(v['fut'])
+        liquid = fs.endswith('~')
+        if liquid:
+            fs = fs[:-1]
+            cells = []
+            for ve, de in GK_PRES_A:
+                cfull = CONTR['ε'].get(ve + de)
+                if cfull is None: cells.append(None); continue
+                h, t2 = gk_split_contract(cfull)
+                cells.append(gk_cell([(fs,'t'),(h,'v'),(t2,'d')], pre=NFC(fs + cfull)))
+            verbo['ind']['fut'] = {('mp' if dep else 'att'): cells}
+            nota.append('futuro contratto (tema in liquida): -ῶ, -εῖς…')
+        else:
+            sig = fs.endswith('σ')
+            base = fs[:-1] if sig else fs
+            def rowf(base6):
+                out = []
+                for ve, de in base6:
+                    parts = [(base,'t')] + ([('σ','s')] if sig else []) + ([(ve,'v')] if ve else []) + ([(de,'d')] if de else [])
+                    out.append(gk_cell(parts))
+                return out
+            verbo['ind']['fut'] = {('mp' if dep else 'att'): rowf(GK_PRES_M if dep else GK_PRES_A)}
+            if not sig:
+                nota.append('futuro: la caratteristica σ è fusa nel tema (ξ = gutt.+σ, ψ = lab.+σ)')
+    # aoristo
+    at = v.get('aor_type') or ''
+    if v['aor'] and (at in ('1','1m') or at.startswith('2') or at.startswith('root') or at.startswith('kappa')):
+        aor = strip_acc(v['aor'])
+        if at in ('1', '1m'):
+            stem_aug = aor[:-1] if at == '1' else aor[:-4]
+            sig = stem_aug.endswith('σ')
+            body = stem_aug[:-1] if sig else stem_aug
+            un = de_augment(body if not sig else body + 'σ', lemma)
+            A2, T2 = ('', body)
+            if un:
+                unb = un[:-1] if sig and un.endswith('σ') else un
+                if NG(body).endswith(NG(unb)) and len(body) > len(unb):
+                    A2, T2 = body[:len(body)-len(unb)], unb
+            def rowa(base6, mid=False):
+                out = []
+                for sfx, de in base6:
+                    if sig:
+                        s_seg = sfx  # σα/σε già con σ? no: GK_AOR1 ha σα/σε compreso σ
+                        parts = [(x, r) for x, r in [(A2,'a'),(T2,'t'),(s_seg,'s'),(de,'d')] if x]
+                    else:
+                        parts = [(x, r) for x, r in [(A2,'a'),(T2 + sfx[0],'t'),(sfx[1:],'s'),(de,'d')] if x]
+                    out.append(gk_cell(parts))
+                return out
+            if sig:
+                if at == '1':
+                    verbo['ind']['aor'] = {'att': rowa(GK_AOR1)}
+                    verbo['ind']['aor']['mp'] = [gk_cell([(x,r) for x, r in [(A2,'a'),(T2,'t'),(s,'s'),(d,'d')] if x])
+                        for s, d in [('σα','μην'),('σ','ω'),('σα','το'),('σα','μεθα'),('σα','σθε'),('σα','ντο')]]
+                else:
+                    verbo['ind']['aor'] = {'mp': [gk_cell([(x,r) for x, r in [(A2,'a'),(T2,'t'),(s,'s'),(d,'d')] if x])
+                        for s, d in [('σα','μην'),('σ','ω'),('σα','το'),('σα','μεθα'),('σα','σθε'),('σα','ντο')]]}
+                un2 = de_augment(stem_aug, lemma)
+                if un2 and at == '1':
+                    verbo['inf']['aor_att'] = gk_cell([(un2[:-1],'t'),('σ','s'),('αι','d')],
+                        pre=NFC(accent_at(un2 + 'αι', 2)))
+            else:
+                verbo['ind']['aor'] = {('att' if at == '1' else 'mp'):
+                    [gk_cell([(x,r) for x, r in [(A2,'a'),(T2,'t'),(s,'s'),(d,'d')] if x]) for s, d in
+                     ([('α',''),('α','ς'),('ε',''),('α','μεν'),('α','τε'),('α','ν')] if at == '1' else
+                      [('α','μην'),('','ω'),('α','το'),('α','μεθα'),('α','σθε'),('α','ντο')])]}
+                nota.append('aoristo sigmatico: il σ è fuso nel tema (ξ, ψ)')
+        elif at.startswith('2m:') or at.startswith('2:'):
+            st2 = strip_acc(at.split(':')[1])
+            mid = at.startswith('2m')
+            stem_aug = aor[:-4] if mid else aor[:-2]
+            A2, T2 = ('', stem_aug)
+            if NG(stem_aug).endswith(NG(st2)) and len(stem_aug) > len(st2):
+                A2, T2 = stem_aug[:len(stem_aug)-len(st2)], st2
+            base6 = GK_IMPF_M if mid else GK_IMPF_A
+            verbo['ind']['aor'] = {('mp' if mid else 'att'):
+                [gk_cell([(x, r) for x, r in [(A2,'a'),(T2,'t'),(ve,'v'),(de,'d')] if x]) for ve, de in base6]}
+            if mid:
+                verbo['inf']['aor_mp'] = gk_cell([(st2,'t'),('ε','v'),('σθαι','d')],
+                    pre=NFC(accent_at(st2 + 'εσθαι', 2)))
+            else:
+                verbo['inf']['aor_att'] = gk_cell([(st2,'t'),('εῖν','d')], pre=NFC(strip_acc(st2) + 'εῖν'))
+                verbo['ptc']['aor_att'] = gk_cell([(st2,'t'),('ών','d')], pre=NFC(strip_acc(st2) + 'ών'))
+            nota.append('aoristo II (tematico): tema dell\'aoristo diverso dal tema del presente')
+        elif at.startswith('root:'):
+            long_s, short_s = at[5:].split('/')
+            base = aor[:-1] if aor.endswith('ν') else aor
+            stem_pure = strip_acc(long_s)
+            A2 = base[:len(base)-len(stem_pure)] if NG(base).endswith(NG(stem_pure)) else ''
+            T2 = stem_pure if A2 else base
+            ends = [('ν',),('ς',),('',),('μεν',),('τε',),('σαν',)]
+            verbo['ind']['aor'] = {'att': [gk_cell([(x, r) for x, r in [(A2,'a'),(T2,'t'),(e[0],'d')] if x]) for e in ends]}
+            verbo['inf']['aor_att'] = gk_cell([(stem_pure,'t'),('ναι','d')],
+                pre=NFC(accent_at(stem_pure + 'ναι', 2, circum=True)))
+            nota.append('aoristo radicale atematico (ἔβην, ἔγνων)')
+        elif at.startswith('kappa:'):
+            short_s = at[6:]
+            stem_aug = aor[:-1]
+            body = stem_aug[:-1]
+            A2 = ''
+            un = de_augment(body + 'κ', lemma)
+            if un and NG(stem_aug).endswith(NG(un)):
+                A2 = stem_aug[:len(stem_aug)-len(un)]
+                body = un[:-1]
+            verbo['ind']['aor'] = {'att': [gk_cell([(x, r) for x, r in
+                [(A2,'a'),(body,'t'),('κ','s'),(d,'d')] if x]) for d in ('α','ας','ε','αμεν','ατε','αν')]}
+            nota.append('aoristo in -κα (δίδωμι, τίθημι, ἵημι)')
+    # aoristo passivo
+    if v['aorp']:
+        ap = strip_acc(v['aorp'])
+        stem_aug = ap[:-2]
+        theta = stem_aug.endswith('θ')
+        body = stem_aug[:-1] if theta else stem_aug
+        un = de_augment(stem_aug, lemma)
+        A2, T2 = '', body
+        if un:
+            unb = un[:-1] if theta and un.endswith('θ') else un
+            if NG(body).endswith(NG(unb)) and len(body) > len(unb):
+                A2, T2 = body[:len(body)-len(unb)], unb
+        S2 = 'θη' if theta else 'η'
+        verbo['ind']['aorp'] = {'pass': [gk_cell([(x, r) for x, r in
+            [(A2,'a'),(T2,'t'),(S2,'s'),(d,'d')] if x]) for _, d in
+            [(None,'ν'),(None,'ς'),(None,''),(None,'μεν'),(None,'τε'),(None,'σαν')]]}
+        un2 = de_augment(stem_aug, lemma)
+        if un2:
+            base_inf = un2[:-1] if theta else un2
+            verbo['inf']['aorp'] = gk_cell([(base_inf,'t'),('θῆ' if theta else 'ῆ','s'),('ναι','d')],
+                pre=NFC(accent_at(un2 + 'ηναι'.replace('η','η'), 2, circum=True)) if False else
+                    NFC(accent_at(un2 + 'ηναι', 2, circum=True)))
+        if not theta:
+            nota.append('aoristo passivo II in -η- (senza θ)')
+    # perfetto
+    if v['pf']:
+        pf = strip_acc(v['pf'])
+        pstem_pf = pf[:-1]
+        kappa = pstem_pf.endswith('κ')
+        body = pstem_pf[:-1] if kappa else pstem_pf
+        R2 = ''
+        b = NG(body)
+        if len(b) >= 3 and b[1] == 'ε' and b[0] == b[2]:
+            R2 = body[:2]; body = body[2:]
+        verbo['ind']['pf'] = {'att': [gk_cell([(x, r) for x, r in
+            [(R2,'a'),(body,'t'),('κ' if kappa else '','s'),(d,'d')] if x]) for _, d in zip(range(6), ('α','ας','ε','αμεν','ατε','ασι'))]}
+        if R2: nota.append('perfetto: raddoppiamento evidenziato come aumento stabile')
+    if v['pfmp']:
+        mp = strip_acc(v['pfmp'])
+        base = mp[:-3] if mp.endswith('μαι') else mp
+        R2 = ''
+        b = NG(base)
+        if len(b) >= 3 and b[1] == 'ε' and b[0] == b[2]:
+            R2 = base[:2]; core2 = base[2:]
+        else:
+            core2 = base
+        nb = NG(base)
+        # il TEMA porta la consonante assimilata; la desinenza resta pulita
+        if nb.endswith('μ'):
+            root = core2[:-1]
+            cells = [(root+'μ','μαι'),(root+'ψ','αι'),(root+'π','ται'),(root+'μ','μεθα'),(root+'φ','θε'),(None,None)]
+        elif nb.endswith('γ'):
+            root = core2[:-1]
+            cells = [(root+'γ','μαι'),(root+'ξ','αι'),(root+'κ','ται'),(root+'γ','μεθα'),(root+'χ','θε'),(None,None)]
+        elif nb.endswith('σ'):
+            cells = [(core2,'μαι'),(core2,'αι'),(core2,'ται'),(core2,'μεθα'),(core2,'θε'),(None,None)]
+        else:
+            cells = [(core2,'μαι'),(core2,'σαι'),(core2,'ται'),(core2,'μεθα'),(core2,'σθε'),(core2,'νται')]
+        row = []
+        for tt, dd in cells:
+            if tt is None: row.append(None); continue
+            row.append(gk_cell([(x, r) for x, r in [(R2,'a'),(tt,'t'),(dd,'d')] if x]))
+        verbo['ind']['pfmp'] = {'mp': row}
+        nota.append('perfetto medio-passivo: desinenze assimilate al tema (μμαι, ξαι, σται…)')
+    parts_head = [lemma]
+    if v['fut']: parts_head.append(v['fut'].replace('~','ῶ' if v['fut'].endswith('~') else '') + ('ω' if not v['fut'].endswith('~') else ''))
+    if v['aor']: parts_head.append(v['aor'])
+    if v['pf']: parts_head.append(v['pf'])
+    if v['aorp']: parts_head.append(v['aorp'])
+    return dict(classe=('verbo contratto in -' + contract + 'ω' if contract else 'verbo tematico') + (' · deponente' if dep else ''),
+                testa=', '.join(parts_head), verbo=verbo, nota=(' · '.join(dict.fromkeys(nota)) or None))
+
+def gk_noun_table(lemma, klass, stem):
+    # ACCENTO PERSISTENTE: resta sulla stessa sillaba CONTATA DALL'INIZIO
+    # (σῶμα → σώματος, σώμασι), finché la legge del trisillabismo non lo
+    # spinge avanti (θάλασσα → θαλάσσης, ultima lunga).
+    n_lemma = len(syllable_nuclei(lemma))
+    idx_start = max(0, n_lemma - lemma_accent_dist(lemma))
+    LONGE = re.compile(r'(η|ης|ω|ων|ως|ου|ους|ῳ|ῃ|αις|οις|ας|εως|εων)$')
+    def C(st, end, pre=None, force_dist=None):
+        parts = [(st,'t')] + ([(end,'d')] if end else [])
+        plain = NFC(st + end)
+        if pre is None:
+            n = len(syllable_nuclei(plain))
+            if force_dist:
+                d = min(force_dist, n)   # eccezione πόλεως: bypassa la legge
+            else:
+                maxd = 2 if LONGE.search(NG(plain)) else 3
+                d = max(1, min(n - idx_start, maxd, n))
+            pre = accent_at(strip_acc(plain), d)
+        return split_accented(pre, parts)
+    def GPL(st, end='ων'):
+        return C(st, end, pre=NFC(strip_acc(st + end)[:-2] + 'ῶν'))
+    if klass == '2':
+        sg = dict(nom=C(stem,'ος'), gen=C(stem,'ου'), dat=C(stem,'ῳ'), acc=C(stem,'ον'), voc=C(stem,'ε'))
+        pl = dict(nom=C(stem,'οι'), gen=C(stem,'ων'), dat=C(stem,'οις'), acc=C(stem,'ους'), voc=C(stem,'οι'))
+        cl = '2ª declinazione'
+    elif klass == '2n':
+        n = C(stem,'ον'); npl = C(stem,'α')
+        sg = dict(nom=n, gen=C(stem,'ου'), dat=C(stem,'ῳ'), acc=n, voc=n)
+        pl = dict(nom=npl, gen=C(stem,'ων'), dat=C(stem,'οις'), acc=npl, voc=npl)
+        cl = '2ª declinazione (neutro)'
+    elif klass in ('1h','1a','1am'):
+        e1 = {'1h': ('η','ης','ῃ','ην'), '1a': ('α','ας','ᾳ','αν'), '1am': ('α','ης','ῃ','αν')}[klass]
+        sg = dict(nom=C(stem,e1[0]), gen=C(stem,e1[1]), dat=C(stem,e1[2]), acc=C(stem,e1[3]), voc=C(stem,e1[0]))
+        pl = dict(nom=C(stem,'αι'), gen=GPL(stem), dat=C(stem,'αις'), acc=C(stem,'ας'), voc=C(stem,'αι'))
+        cl = '1ª declinazione' + {'1h':' (in -η)','1a':' (in -ᾱ puro)','1am':' (in -ᾰ misto)'}[klass]
+    elif klass == '1m':
+        sg = dict(nom=C(stem,'ης'), gen=C(stem,'ου'), dat=C(stem,'ῃ'), acc=C(stem,'ην'), voc=C(stem,'α'))
+        pl = dict(nom=C(stem,'αι'), gen=GPL(stem), dat=C(stem,'αις'), acc=C(stem,'ας'), voc=C(stem,'αι'))
+        cl = '1ª declinazione (maschile in -ης)'
+    elif klass == 'ma':
+        sg = dict(nom=C(stem,'α'), gen=C(stem,'ατος'), dat=C(stem,'ατι'), acc=C(stem,'α'), voc=C(stem,'α'))
+        pl = dict(nom=C(stem,'ατα'), gen=C(stem,'ατων'), dat=C(stem,'ασι'), acc=C(stem,'ατα'), voc=C(stem,'ατα'))
+        cl = '3ª declinazione (tema in -ματ)'
+    elif klass == 'es':
+        sg = dict(nom=C(stem,'ος'), gen=C(stem,'ους'), dat=C(stem,'ει'), acc=C(stem,'ος'), voc=C(stem,'ος'))
+        pl = dict(nom=C(stem,'η'), gen=GPL(stem), dat=C(stem,'εσι'), acc=C(stem,'η'), voc=C(stem,'η'))
+        cl = '3ª declinazione (tema in -εσ, neutro)'
+    elif klass == 'is':
+        # πόλεως/πόλεων: l'accento resta sull'antepenultima MALGRADO l'ultima
+        # lunga (metatesi quantitativa attica) — eccezione codificata.
+        sg = dict(nom=C(stem,'ις'), gen=C(stem,'εως', force_dist=3), dat=C(stem,'ει'), acc=C(stem,'ιν'), voc=C(stem,'ι'))
+        pl = dict(nom=C(stem,'εις'), gen=C(stem,'εων', force_dist=3), dat=C(stem,'εσι'), acc=C(stem,'εις'), voc=C(stem,'εις'))
+        cl = '3ª declinazione (tema in -ι: πόλις)'
+    elif klass == '3':
+        dp = dat_pl_3(stem)
+        dsplit = ('σι' if dp.endswith('σι') else 'ι')
+        sg = dict(nom=[[lemma,'t']], gen=C(stem,'ος'), dat=C(stem,'ι'), acc=C(stem,'α'), voc=[[lemma,'t']])
+        es = C(stem,'ες')
+        pl = dict(nom=es, gen=C(stem,'ων'), dat=C(dp[:len(dp)-len(dsplit)], dsplit),
+                  acc=C(stem,'ας'), voc=es)
+        cl = '3ª declinazione'
+    else:
+        return None
+    return dict(classe=cl, tab={'sg': sg, 'pl': pl})
+
+# ═══════════════════ MAIN ═══════════════════
+def main(write=True):
+    out = {'latin': collections.defaultdict(dict), 'greek': collections.defaultdict(dict)}
+    stats = collections.Counter()
+    # LATINO
+    base = 'data/latin'
+    for f in sorted(os.listdir(base)):
+        if not f.endswith('.json') or f.startswith('_'): continue
+        data = json.load(open(os.path.join(base, f), encoding='utf-8'))
+        for lemma, e in (data.get('dict') or {}).items():
+            if not isinstance(e, dict): continue
+            dfn = e.get('definition', ''); pos = e.get('pos', '')
+            entry = None
+            if pos in ('sostantivo', 'aggettivo', ''):
+                h = parse_noun_head(lemma, dfn)
+                if h:
+                    t = lat_noun_table(lemma, h['gen_full'], h['gen_raw'], h['gender'])
+                    if t:
+                        entry = dict(pos='nome', classe=t['classe'],
+                                     testa=f"{lemma}, {h['gen_full']} {h['gender']}", nome=t['tab'])
+                        stats['lat_nomi'] += 1
+            if entry is None and pos in ('verbo', '') and (NL(lemma).endswith('o') or NL(lemma).endswith('or')):
+                h = parse_verb_head(lemma, dfn)
+                if h:
+                    t = lat_verb_table(lemma, h['conj'], h['pstem'], h['pfstem'], h['supstem'], h['dep'])
+                    entry = dict(pos='verbo', classe=t['classe'], testa=t['testa'], verbo=t['verbo'])
+                    if t.get('nota'): entry['nota'] = t['nota']
+                    stats['lat_verbi'] += 1
+            if entry:
+                out['latin'][NL(lemma)[:1]][lemma] = entry
+    # GRECO · verbi curati
+    for lemma, v in VERBS.items():
+        try:
+            t = gk_verb_table(lemma, v)
+            entry = dict(pos='verbo', classe=t['classe'], testa=t['testa'], verbo=t['verbo'])
+            if t.get('nota'): entry['nota'] = t['nota']
+            out['greek'][NG(lemma)[:1]][lemma] = entry
+            stats['gr_verbi'] += 1
+        except Exception as ex:
+            print(f'  [!] {lemma}: {ex}')
+    # GRECO · nominali
+    base = 'data/greek'
+    for f in sorted(os.listdir(base)):
+        if not f.endswith('.json') or f.startswith('_'): continue
+        p = os.path.join(base, f)
+        if os.path.isdir(p): continue
+        data = json.load(open(p, encoding='utf-8'))
+        for lemma, e in (data.get('dict') or {}).items():
+            if not isinstance(e, dict) or e.get('pos') != 'sostantivo': continue
+            cl = classify_nominal(lemma, e.get('definition', ''))
+            if not cl and lemma in NOMINAL_EXTRA:
+                lb = strip_acc(lemma); k = NOMINAL_EXTRA[lemma]
+                cl = (k, lb[:-2] if k in ('2','2n') else lb[:-1])
+            if not cl: continue
+            t = gk_noun_table(lemma, cl[0], cl[1])
+            if not t: continue
+            m = re.match(r'^\s*(ὁ|ἡ|τό|ὁ/ἡ)\s+(\S+?),\s+(\S+?)(?:\s*·|\s*$|\s)', e.get('definition',''))
+            testa = f"{m.group(1)} {lemma}, {m.group(3)}" if m else lemma
+            out['greek'][NG(lemma)[:1]][lemma] = dict(pos='nome', classe=t['classe'], testa=testa, nome=t['tab'])
+            stats['gr_nomi'] += 1
+    print('paradigmi:', dict(stats))
+    if not write:
+        return out
+    for lang in ('latin', 'greek'):
+        d = f'data/{lang}/paradigms'
+        os.makedirs(d, exist_ok=True)
+        for letter, paradigms in sorted(out[lang].items()):
+            json.dump({'meta': {'lang': lang, 'letter': letter, 'count': len(paradigms)},
+                       'paradigms': paradigms},
+                      open(os.path.join(d, f'{letter}.json'), 'w', encoding='utf-8'), ensure_ascii=False)
+        print(f'{lang}: scritte {len(out[lang])} lettere in {d}/')
+    return out
+
+if __name__ == '__main__':
+    main(write='--dry' not in sys.argv)
