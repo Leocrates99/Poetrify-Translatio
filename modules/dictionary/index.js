@@ -188,6 +188,7 @@ export class DictionaryApp {
     const params = new URLSearchParams(window.location.search);
     this.currentLang = (params.get('lang') === 'greco') ? 'greco' : 'latino';
     this.currentQuery = (params.get('lemma') || '').trim();
+    document.body.dataset.lang = this.currentLang;   // identità cromatica shell da subito
     this._applyDarkMode(this._isDark());
     this._applyLevel();
     this._loadFontSize();
@@ -259,6 +260,7 @@ export class DictionaryApp {
      ════════════════════════════════════════════════════════════════════ */
   _onLangChange() {
     this.currentLang = this.$langSelect.value;
+    document.body.dataset.lang = this.currentLang;   // vira l'intera shell (testata, pannelli, pulsanti)
     if (this.$searchInput) {
       /* Cambio lingua: NON conservare la parola digitata (alfabeti diversi) */
       this.$searchInput.value = '';
