@@ -5,6 +5,11 @@
 # Gli script di build restano invece versionati per riproducibilità.
 _build/backup/
 
+# Cache e artefatti di build Python
+__pycache__/
+*.pyc
+_build/_unresolved_*.json
+
 # Cartella di staging creata dal workflow di deploy (solo in CI)
 _site/
 

@@ -127,45 +127,35 @@ def persistent(word, lemma_dist, ultima_long):
     return accent_at(w, d)
 
 def lemma_accent_dist(lemma):
-    """Distanza (sillabe dalla fine) dell'accento del lemma."""
+    """Distanza (sillabe dalla fine) dell'accento del lemma. Rispetta i confini
+    consonantici: due vocali separate da consonante (es. ο..ι in πόλις) NON
+    formano dittongo, quindi contano come due nuclei distinti."""
     nfd = unicodedata.normalize('NFD', lemma)
-    nuclei = syllable_nuclei(lemma)
-    if not nuclei: return 1
-    # trova l'indice del nucleo che porta acuto/circonflesso
-    marks = {'́', '͂', '̀'}
-    pos_acc = None
-    base_positions = []
-    j = 0; bi = 0
-    basemap = []  # per ogni char nfd non-combining vocalico → indice base
-    base = ''
-    for c in nfd:
-        if not unicodedata.combining(c):
-            base += N(c) if N(c) else c
-    # semplificazione robusta: cerca la vocale accentata contando i nuclei da fine
-    naked = []
-    j = 0
-    nfd2 = nfd
-    vowel_idx = -1
-    acc_vowel = None
-    for k, c in enumerate(nfd2):
-        if c in VOWELS:
-            vowel_idx += 1
-        if c in marks:
-            acc_vowel = vowel_idx
-    if acc_vowel is None: return 2
-    # conta quante vocali totali; mappa vocali→nuclei (dittonghi = 2 vocali, 1 nucleo)
-    seq = [c for c in nfd2 if c in VOWELS]
-    # ricostruisci nuclei sulla sequenza di vocali
-    nuc_of_vowel = []
-    i = 0; nn = 0
-    while i < len(seq):
-        if i + 1 < len(seq) and seq[i] + seq[i+1] in DIPHTH:
-            nuc_of_vowel += [nn, nn]; i += 2
+    marks = {'́', '͂', '̀'}  # acuto, circonflesso, grave
+    accented = []   # un bool per nucleo, sinistra → destra
+    i, n = 0, len(nfd)
+    while i < n:
+        c = nfd[i]
+        if c.lower() in VOWELS:
+            has = False
+            j = i + 1
+            while j < n and unicodedata.combining(nfd[j]):
+                if nfd[j] in marks: has = True
+                j += 1
+            # dittongo solo se la seconda vocale è ADIACENTE (nessuna consonante)
+            if j < n and nfd[j].lower() in VOWELS and (c.lower() + nfd[j].lower()) in DIPHTH:
+                j += 1
+                while j < n and unicodedata.combining(nfd[j]):
+                    if nfd[j] in marks: has = True
+                    j += 1
+            accented.append(has)
+            i = j
         else:
-            nuc_of_vowel += [nn]; i += 1
-        nn += 1
-    if acc_vowel >= len(nuc_of_vowel): return 2
-    return nn - nuc_of_vowel[acc_vowel]
+            i += 1
+    for idx in range(len(accented)):
+        if accented[idx]:
+            return len(accented) - idx
+    return 2
 
 # ───────────────────────── NOMINALI ─────────────────────────
 def decl2(stem, neuter=False):
