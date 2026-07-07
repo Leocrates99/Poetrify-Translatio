@@ -25,6 +25,7 @@ from gen_greek_forms import (VERBS, classify_nominal, NOMINAL_EXTRA, strip_acc,
                              recessive, accent_at, split_preverb, augment_stem,
                              de_augment, CONTR, N as NG, NFC, lemma_accent_dist,
                              persistent, dat_pl_3, syllable_nuclei)
+from accentuation import accent_nominal, nominal_idx_start   # motore di accentazione
 
 def seg(*pairs):
     return [[t, r] for t, r in pairs if t]
@@ -558,77 +559,52 @@ def gk_verb_table(lemma, v):
                 testa=', '.join(parts_head), verbo=verbo, nota=(' · '.join(dict.fromkeys(nota)) or None))
 
 def gk_noun_table(lemma, klass, stem):
-    # Accento PERSISTENTE (resta sulla sillaba del lemma, entro la legge del
-    # trisillabismo) + TIPO acuto/circonflesso calcolato:
-    #  · properispomeno: penultima lunga (η/ω/dittongo) + ultima breve → circonf.
-    #  · ossitono: gen./dat. → circonflesso sull'ultima lunga
-    # L'ambiguità di ᾰ/ῐ/ῠ (breve o lunga) si passa esplicita per caso: ult_long.
-    n_lemma = len(syllable_nuclei(lemma))
-    idx_start = max(0, n_lemma - lemma_accent_dist(lemma))
-    def penult_long(plain):
-        nuc = syllable_nuclei(plain)
-        return len(nuc) >= 2 and nuc[-2][2]
-    def C(st, end, ult_long=False, gendat=False, pre=None, force_dist=None):
-        parts = [(st,'t')] + ([(end,'d')] if end else [])
-        plain = NFC(st + end)
-        if pre is None:
-            n = len(syllable_nuclei(plain))
-            if force_dist:
-                d = min(force_dist, n)   # eccezione πόλεως: bypassa la legge
-            else:
-                maxd = 2 if ult_long else 3
-                d = max(1, min(n - idx_start, maxd, n))
-            if d == 1:
-                circ = ult_long and gendat                    # ossitono: gen./dat.
-            elif d == 2:
-                circ = penult_long(plain) and not ult_long     # properispomeno
-            else:
-                circ = False
-            pre = accent_at(strip_acc(plain), d, circum=circ)
-        return split_accented(pre, parts)
-    def GPL(st):   # 1ª decl. gen. pl.: sempre -ῶν
-        return C(st, 'ων', pre=NFC(strip_acc(st + 'ων')[:-2] + 'ῶν'))
+    # Accentazione delegata al motore condiviso (accentuation.accent_nominal):
+    # posizione persistente + acuto/circonflesso + quantità vocaliche. Qui restano
+    # solo le uscite per classe e la segmentazione in morfemi (tema + desinenza).
+    idx_start = nominal_idx_start(lemma)
+    def C(end, gendat=False):
+        pre = accent_nominal(lemma, klass, NFC(stem + end), end, gendat, idx_start)
+        return split_accented(pre, [(stem, 't'), (end, 'd')])
     if klass == '2':
-        sg = dict(nom=C(stem,'ος'), gen=C(stem,'ου',True,True), dat=C(stem,'ῳ',True,True), acc=C(stem,'ον'), voc=C(stem,'ε'))
-        pl = dict(nom=C(stem,'οι'), gen=C(stem,'ων',True,True), dat=C(stem,'οις',True,True), acc=C(stem,'ους',True), voc=C(stem,'οι'))
+        sg = dict(nom=C('ος'), gen=C('ου', True), dat=C('ῳ', True), acc=C('ον'), voc=C('ε'))
+        pl = dict(nom=C('οι'), gen=C('ων', True), dat=C('οις', True), acc=C('ους'), voc=C('οι'))
         cl = '2ª declinazione'
     elif klass == '2n':
-        nn = C(stem,'ον'); npl = C(stem,'α')
-        sg = dict(nom=nn, gen=C(stem,'ου',True,True), dat=C(stem,'ῳ',True,True), acc=nn, voc=nn)
-        pl = dict(nom=npl, gen=C(stem,'ων',True,True), dat=C(stem,'οις',True,True), acc=npl, voc=npl)
+        nn = C('ον'); npl = C('α')
+        sg = dict(nom=nn, gen=C('ου', True), dat=C('ῳ', True), acc=nn, voc=nn)
+        pl = dict(nom=npl, gen=C('ων', True), dat=C('οις', True), acc=npl, voc=npl)
         cl = '2ª declinazione (neutro)'
-    elif klass in ('1h','1a','1am'):
+    elif klass in ('1h', '1a', '1am'):
         e1 = {'1h': ('η','ης','ῃ','ην'), '1a': ('α','ας','ᾳ','αν'), '1am': ('α','ης','ῃ','αν')}[klass]
-        ul = {'1h': (True,True,True,True), '1a': (True,True,True,True), '1am': (False,True,True,False)}[klass]
-        sg = dict(nom=C(stem,e1[0],ul[0]), gen=C(stem,e1[1],ul[1],True), dat=C(stem,e1[2],ul[2],True),
-                  acc=C(stem,e1[3],ul[3]), voc=C(stem,e1[0],ul[0]))
-        pl = dict(nom=C(stem,'αι'), gen=GPL(stem), dat=C(stem,'αις',True,True), acc=C(stem,'ας',True), voc=C(stem,'αι'))
+        sg = dict(nom=C(e1[0]), gen=C(e1[1], True), dat=C(e1[2], True), acc=C(e1[3]), voc=C(e1[0]))
+        pl = dict(nom=C('αι'), gen=C('ων', True), dat=C('αις', True), acc=C('ας'), voc=C('αι'))
         cl = '1ª declinazione' + {'1h':' (in -η)','1a':' (in -ᾱ puro)','1am':' (in -ᾰ misto)'}[klass]
     elif klass == '1m':
-        sg = dict(nom=C(stem,'ης',True), gen=C(stem,'ου',True,True), dat=C(stem,'ῃ',True,True), acc=C(stem,'ην',True), voc=C(stem,'α'))
-        pl = dict(nom=C(stem,'αι'), gen=GPL(stem), dat=C(stem,'αις',True,True), acc=C(stem,'ας',True), voc=C(stem,'αι'))
+        sg = dict(nom=C('ης'), gen=C('ου', True), dat=C('ῃ', True), acc=C('ην'), voc=C('α'))
+        pl = dict(nom=C('αι'), gen=C('ων', True), dat=C('αις', True), acc=C('ας'), voc=C('αι'))
         cl = '1ª declinazione (maschile in -ης)'
     elif klass == 'ma':
-        sg = dict(nom=C(stem,'α'), gen=C(stem,'ατος'), dat=C(stem,'ατι'), acc=C(stem,'α'), voc=C(stem,'α'))
-        pl = dict(nom=C(stem,'ατα'), gen=C(stem,'ατων',True), dat=C(stem,'ασι'), acc=C(stem,'ατα'), voc=C(stem,'ατα'))
+        sg = dict(nom=C('α'), gen=C('ατος', True), dat=C('ατι', True), acc=C('α'), voc=C('α'))
+        pl = dict(nom=C('ατα'), gen=C('ατων', True), dat=C('ασι', True), acc=C('ατα'), voc=C('ατα'))
         cl = '3ª declinazione (tema in -ματ)'
     elif klass == 'es':
-        sg = dict(nom=C(stem,'ος'), gen=C(stem,'ους',True,True), dat=C(stem,'ει',True,True), acc=C(stem,'ος'), voc=C(stem,'ος'))
-        pl = dict(nom=C(stem,'η',True), gen=GPL(stem), dat=C(stem,'εσι'), acc=C(stem,'η',True), voc=C(stem,'η',True))
+        sg = dict(nom=C('ος'), gen=C('ους', True), dat=C('ει', True), acc=C('ος'), voc=C('ος'))
+        pl = dict(nom=C('η'), gen=C('ων', True), dat=C('εσι', True), acc=C('η'), voc=C('η'))
         cl = '3ª declinazione (tema in -εσ, neutro)'
     elif klass == 'is':
-        # πόλεως/πόλεων: l'accento resta sull'antepenultima MALGRADO l'ultima
-        # lunga (metatesi quantitativa attica) — eccezione codificata.
-        sg = dict(nom=C(stem,'ις'), gen=C(stem,'εως', force_dist=3), dat=C(stem,'ει',True,True), acc=C(stem,'ιν'), voc=C(stem,'ι'))
-        pl = dict(nom=C(stem,'εις',True), gen=C(stem,'εων', force_dist=3), dat=C(stem,'εσι'), acc=C(stem,'εις',True), voc=C(stem,'εις',True))
+        sg = dict(nom=C('ις'), gen=C('εως', True), dat=C('ει', True), acc=C('ιν'), voc=C('ι'))
+        pl = dict(nom=C('εις'), gen=C('εων', True), dat=C('εσι', True), acc=C('εις'), voc=C('εις'))
         cl = '3ª declinazione (tema in -ι: πόλις)'
     elif klass == '3':
         dp = dat_pl_3(stem)
         dsplit = ('σι' if dp.endswith('σι') else 'ι')
-        sg = dict(nom=[[lemma,'t']], gen=C(stem,'ος',False,True), dat=C(stem,'ι',False,True), acc=C(stem,'α'), voc=[[lemma,'t']])
-        es = C(stem,'ες')
-        pl = dict(nom=es, gen=C(stem,'ων',True,True), dat=C(dp[:len(dp)-len(dsplit)], dsplit),
-                  acc=C(stem,'ας'), voc=es)
+        dpstem = dp[:len(dp) - len(dsplit)]
+        pldat = split_accented(accent_nominal(lemma, klass, dp, dsplit, True, idx_start),
+                               [(dpstem, 't'), (dsplit, 'd')])
+        sg = dict(nom=[[lemma,'t']], gen=C('ος', True), dat=C('ι', True), acc=C('α'), voc=[[lemma,'t']])
+        es = C('ες')
+        pl = dict(nom=es, gen=C('ων', True), dat=pldat, acc=C('ας'), voc=es)
         cl = '3ª declinazione'
     else:
         return None

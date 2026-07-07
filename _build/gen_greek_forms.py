@@ -271,44 +271,10 @@ def classify_nominal(lemma, definition):
         return ('1a' if prev in 'ειρ' else '1am', base[:-1])
     return None
 
-# Lunghezza dell'ultima per (classe, uscita): distingue ᾰ breve (σῶμα) da ᾱ lunga
-# (χώρα). Le uscite -ῶν del gen. pl. (1ª decl., -εσ) sono gestite a parte.
-_NOM_ULT = {
- '2':  {'ος':0,'ου':1,'ῳ':1,'ον':0,'ε':0,'οι':0,'ων':1,'οις':1,'ους':1},
- '2n': {'ον':0,'ου':1,'ῳ':1,'α':0,'ων':1,'οις':1},
- '1h': {'η':1,'ης':1,'ῃ':1,'ην':1,'αι':0,'αις':1,'ας':1},
- '1a': {'α':1,'ας':1,'ᾳ':1,'αν':1,'αι':0,'αις':1},
- '1am':{'α':0,'ης':1,'ῃ':1,'αν':0,'αι':0,'αις':1,'ας':1},
- '1m': {'ης':1,'ου':1,'ῃ':1,'ην':1,'αι':0,'αις':1,'ας':1,'α':0},
- 'ma': {'α':0,'ατος':0,'ατι':0,'ατα':0,'ατων':1,'ασι':0,'ασιν':0},
- 'es': {'ος':0,'ους':1,'ει':1,'η':1,'εσι':0},
- 'is': {'ις':0,'ει':1,'ιν':0,'ι':0,'εις':1,'εσι':0},
- '3':  {'ος':0,'ι':0,'α':0,'ες':0,'ων':1,'ας':0},
-}
-_NOM_FORCE3 = {('is','εως'), ('is','εων')}   # metatesi quantitativa attica (πόλεως)
-_NOM_ULT_FB = re.compile(r'(η|ω|ου|ῳ|ῃ|αις|οις|ους|εως|εων)$')  # fallback: senza 'ας' (ambigua)
-
-def _nom_accent(plain, idx_start, ult_long, gendat, force_dist=None):
-    """Accento nominale (identico a gk_noun_table): posizione persistente CONTATA
-    DALL'INIZIO + tipo acuto/circonflesso (properispomeno / ossitono al gen.-dat.)."""
-    nuc = syllable_nuclei(plain)
-    n = len(nuc)
-    if force_dist:
-        d = min(force_dist, n)
-    else:
-        maxd = 2 if ult_long else 3
-        d = max(1, min(n - idx_start, maxd, n))
-    if d == 1:
-        circ = ult_long and gendat
-    elif d == 2:
-        circ = (n >= 2 and nuc[-2][2]) and not ult_long
-    else:
-        circ = False
-    return accent_at(strip_acc(plain), d, circum=circ)
+from accentuation import accent_nominal, nominal_idx_start   # motore di accentazione
 
 def gen_nominal(lemma, klass, stem):
-    n_lemma = len(syllable_nuclei(lemma))
-    idx_start = max(0, n_lemma - lemma_accent_dist(lemma))
+    idx_start = nominal_idx_start(lemma)
     out = {}
     if klass == '2':   table = { stem + e: p for e, p in decl2(stem).items() }
     elif klass == '2n': table = { stem + e: p for e, p in decl2(stem, neuter=True).items() }
@@ -321,20 +287,11 @@ def gen_nominal(lemma, klass, stem):
     elif klass == 'is': table = decl3_is(stem)
     elif klass == '3':  table = decl3(stem)
     else: return out
-    ulmap = _NOM_ULT.get(klass, {})
     for form, parsing in table.items():
-        if '(-ῶν)' in parsing and form.endswith('ων'):
-            acc = NFC(strip_acc(form)[:-2] + 'ῶν')
-            parsing = parsing.replace(' (-ῶν)', '')
-        else:
-            ending = form[len(stem):]
-            gendat = 'gen.' in parsing or 'dat.' in parsing
-            f3 = 3 if (klass, ending) in _NOM_FORCE3 else None
-            ul = ulmap.get(ending)
-            if ul is None:
-                ul = 1 if _NOM_ULT_FB.search(N(form)) else 0
-            acc = _nom_accent(form, idx_start, bool(ul), gendat, f3)
-        out[acc] = parsing
+        ending = form[len(stem):]
+        gendat = 'gen.' in parsing or 'dat.' in parsing
+        parsing = parsing.replace(' (-ῶν)', '')
+        out[accent_nominal(lemma, klass, form, ending, gendat, idx_start)] = parsing
     return out
 
 # ───────────────────────── VERBI ─────────────────────────
