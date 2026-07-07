@@ -71,6 +71,7 @@ const POS_FILTER_KEY = 'poetrify-dict-pos-filter';
 /* [P6] preferenza di visualizzazione del paradigma: 'classico' (tabella scolastica
  * completa, default) | 'attestato' (forme attestate nel corpus) */
 const PARADIGM_MODE_KEY = 'poetrify-dict-paradigm-mode';
+const SEGMORPH_KEY = 'poetrify-dict-segmorph';   // vista morfologica (colori+trattini) on/off
 /* [UI] Livello di difficoltà condiviso col translator (densità dell'interfaccia).
  * A Base le sezioni avanzate dell'entry (etimologia, cognati) restano nascoste. */
 const LEVEL_STORAGE_KEY = 'poetrify-level';
@@ -194,6 +195,7 @@ export class DictionaryApp {
     this._loadFontSize();
     this._loadPosFilter();
     try { this.paradigmMode = localStorage.getItem(PARADIGM_MODE_KEY) === 'attestato' ? 'attestato' : 'classico'; } catch (_) { this.paradigmMode = 'classico'; }
+    try { this.segMorph = localStorage.getItem(SEGMORPH_KEY) === '1'; } catch (_) { this.segMorph = false; }
 
     if (this.$langSelect) this.$langSelect.value = this.currentLang;
     if (this.$searchInput) {
@@ -656,24 +658,13 @@ export class DictionaryApp {
     const lemmasHtml = shown.map(l => {
       const entry = shard.dict[l] || {};
       const pos = entry.pos ? `<span class="browse-pos">${escapeHtml(entry.pos)}</span>` : '';
-      const curated = getItalianGloss(l, this.currentLang);
-      const auto = curated ? '' : ((this.engine.getAutoGloss(this.currentLang, l) || {}).it || '');
-      let transHtml;
-      if (this.glossLang === 'en') {
-        transHtml = entry.definition ? `<span class="browse-en muted-text">${escapeHtml((entry.definition || '').substring(0, 60))}${(entry.definition || '').length > 60 ? '…' : ''}</span>` : '';
-      } else if (curated) {
-        transHtml = `<span class="browse-ita">${escapeHtml(curated)}</span>`;
-      } else if (auto) {
-        transHtml = `<span class="browse-ita is-auto" title="bozza automatica · da verificare">${escapeHtml(auto)}</span>`;
-      } else {
-        transHtml = '';
-      }
       const freq = getFrequency(l, this.currentLang);
       const freqHtml = freq >= 2 ? `<span class="browse-freq" title="${describeFrequency(freq)}">${renderStars(freq)}</span>` : '';
+      /* Nella sfoglia: lemma + categoria (colore = PoS) + frequenza. Niente
+         glossa qui: l'aggancio semantico è il COLORE della parte del discorso. */
       return `<li class="browse-item${this._posClass(entry.pos)}" data-lemma="${escapeHtml(l)}">
         <span class="browse-lemma${isGreek ? ' greek' : ''}">${escapeHtml(l)}</span>
         ${pos}${freqHtml}
-        ${transHtml}
       </li>`;
     }).join('');
 
@@ -774,13 +765,27 @@ export class DictionaryApp {
     this.$results.querySelectorAll('.lemma-row').forEach(b => {
       b.addEventListener('click', () => this._navigateTo(b.dataset.lemma, this.currentLang));
     });
-    /* tab della flessione segmentata (modo × tempo) */
+    /* tab della flessione segmentata: diatesi → modo → tempo (gerarchia) */
+    this.$results.querySelectorAll('[data-seg-voce]').forEach(b => {
+      b.addEventListener('click', () => { this.segSel = { voce: b.dataset.segVoce }; this.render(); });
+    });
     this.$results.querySelectorAll('[data-seg-modo]').forEach(b => {
-      b.addEventListener('click', () => { this.segSel = { modo: b.dataset.segModo }; this.render(); });
+      b.addEventListener('click', () => {
+        this.segSel = { voce: (this.segSel && this.segSel.voce) || undefined, modo: b.dataset.segModo };
+        this.render();
+      });
     });
     this.$results.querySelectorAll('[data-seg-tempo]').forEach(b => {
       b.addEventListener('click', () => {
         this.segSel = Object.assign({}, this.segSel, { tempo: b.dataset.segTempo });
+        this.render();
+      });
+    });
+    /* toggle vista morfologica (colori + trattini), persistito */
+    this.$results.querySelectorAll('[data-seg-morph]').forEach(b => {
+      b.addEventListener('click', () => {
+        this.segMorph = !this.segMorph;
+        try { localStorage.setItem(SEGMORPH_KEY, this.segMorph ? '1' : '0'); } catch (_) {}
         this.render();
       });
     });
@@ -875,7 +880,7 @@ export class DictionaryApp {
     rows.sort((a, b) => (b.freq - a.freq) || (a.nk.length - b.nk.length) || a.nk.localeCompare(b.nk));
     const isGreek = this.currentLang === 'greco';
     const items = rows.slice(0, 10).map(r => `
-      <button type="button" class="lemma-row" data-lemma="${escapeHtml(r.k)}">
+      <button type="button" class="lemma-row${this._posClass(r.pos)}" data-lemma="${escapeHtml(r.k)}">
         <span class="lemma-row-l${isGreek ? ' greek' : ''}">${escapeHtml(r.k.replace(/\d+$/, ''))}</span>
         ${r.pos ? `<span class="lemma-row-pos">${escapeHtml(r.pos)}</span>` : ''}
         <span class="lemma-row-g">${escapeHtml((r.gloss || '').slice(0, 70))}</span>
@@ -1074,7 +1079,16 @@ export class DictionaryApp {
        ripiegato. */
     const segPar = await this._loadSegParadigm(hit.lemma);
     const segHtml = segPar ? this._renderSegParadigm(segPar, hit) : '';
-    const paradigmHtml = this._renderClassicalParadigm(built, !segHtml);
+    /* «Tabella morfologica completa» (modello ricostruito) SOSPESA quando c'è
+       la flessione segmentata: sarebbe ridondante. Resta solo come fallback. */
+    const paradigmHtml = segHtml ? '' : this._renderClassicalParadigm(built, true);
+    /* Parti principali accanto al lemma (come nei mockup): laudo, laudavi,
+       laudatum, laudare · 1ª coniugazione. */
+    const ppText = (segPar && segPar.testa) || (built && built.citation) || '';
+    const ppClass = (segPar && segPar.classe) ? segPar.classe : '';
+    const ppHtml = ppText
+      ? `<div class="dict-principal-parts${isGreek ? ' greek' : ''}">${escapeHtml(ppText)}${ppClass ? ` <span class="dict-pp-class">· ${escapeHtml(ppClass)}</span>` : ''}</div>`
+      : '';
     const grammarHtml = this._renderGrammarCategories(hit, built);
     const translationHtml = this._renderTranslationHero(hit);
     const paradigmaLine = (built && built.citation)
@@ -1102,6 +1116,7 @@ export class DictionaryApp {
         ${freqHtml}
         ${navHtml}
       </header>
+      ${ppHtml}
       <div class="dict-source-label"><em>${escapeHtml(sourceLabel)}</em></div>
       ${translitHtml}
       ${parsingHtml}
@@ -1423,98 +1438,128 @@ export class DictionaryApp {
     for (const k of Object.keys(p)) if (normalizeText(k) === nl) return p[k];
     return null;
   }
-  _segCellHtml(cell, hitNorm) {
+  /* Rende una cella flessiva. In vista NORMALE (segMorph off) mostra la forma
+     piana; in vista MORFOLOGICA i segmenti colorati separati da trattino
+     (laud-a-t) e registra in `roles` i tipi di morfema effettivamente usati. */
+  _segCellHtml(cell, hitNorm, roles) {
     if (!cell) return '<span class="muted-text">—</span>';
     const form = cell.map(s => s[0]).join('');
     const hitCls = hitNorm && normalizeText(form) === hitNorm ? ' mseg-hit' : '';
-    return `<span class="mseg-form${hitCls}${this.currentLang === 'greco' ? ' greek' : ''}">`
-      + cell.map(([t, r]) => `<span class="mseg mseg-${r}">${escapeHtml(t)}</span>`).join('')
+    const gk = this.currentLang === 'greco' ? ' greek' : '';
+    if (!this.segMorph) {
+      return `<span class="mseg-form${hitCls}${gk}">${escapeHtml(form)}</span>`;
+    }
+    const segs = cell.filter(s => s[0]);
+    if (roles) segs.forEach(s => roles.add(s[1]));
+    return `<span class="mseg-form is-morph${hitCls}${gk}">`
+      + segs.map(([t, r], i) => (i ? '<span class="mseg-sep">-</span>' : '')
+          + `<span class="mseg mseg-${r}">${escapeHtml(t)}</span>`).join('')
       + '</span>';
   }
+
   _renderSegParadigm(par, hit) {
     const isGreek = this.currentLang === 'greco';
     const acc = isGreek ? '#1800ac' : '#a22e37';
     const accDark = isGreek ? '#8b7dff' : '#e58a90';
     const hitNorm = normalizeText(hit.word || '');
-    const legend = `<div class="seg-legend">
-      <span class="mseg mseg-a">aumento/raddopp.</span>
-      <span class="mseg mseg-t">tema</span>
-      <span class="mseg mseg-v">vocale tematica</span>
-      <span class="mseg mseg-s">suffisso</span>
-      <span class="mseg mseg-d">desinenza</span>
-    </div>`;
+    const morphOn = !!this.segMorph;
+    const roles = new Set();   // morfemi effettivamente mostrati → legenda dinamica
+    const TEMPI = { pres:'presente', impf:'imperfetto', fut:'futuro', aor:'aoristo', aorp:'aor. passivo',
+                    pf:'perfetto', pfmp:'pf. medio-passivo', ppf:'piuccheperfetto', futant:'futuro anteriore' };
     let body = '';
+
     if (par.nome) {
       const CASES = [['nom','nominativo'],['gen','genitivo'],['dat','dativo'],['acc','accusativo'],['voc','vocativo'],['abl','ablativo']];
       const rows = CASES.filter(([k]) => (par.nome.sg && par.nome.sg[k]) || (par.nome.pl && par.nome.pl[k])).map(([k, label]) =>
         `<div class="seg-row"><span class="seg-case">${label}</span>
-          <span>${this._segCellHtml(par.nome.sg && par.nome.sg[k], hitNorm)}</span>
-          <span>${this._segCellHtml(par.nome.pl && par.nome.pl[k], hitNorm)}</span></div>`).join('');
-      body = `<div class="seg-table" style="--segc: 100px 1fr 1fr;">
+          <span>${this._segCellHtml(par.nome.sg && par.nome.sg[k], hitNorm, roles)}</span>
+          <span>${this._segCellHtml(par.nome.pl && par.nome.pl[k], hitNorm, roles)}</span></div>`).join('');
+      body = `<div class="seg-table" style="--segc: 110px 1fr 1fr;">
         <div class="seg-row seg-head"><span>caso</span><span>singolare</span><span>plurale</span></div>${rows}</div>`;
     }
+
     if (par.verbo) {
-      const MODI = [['ind','Indicativo'],['cong','Congiuntivo'],['imv','Imperativo'],['inf','Infinito'],['ptc','Participio']];
-      const TEMPI = { pres:'presente', impf:'imperfetto', fut:'futuro', aor:'aoristo', aorp:'aor. passivo',
-                      pf:'perfetto', pfmp:'pf. medio-passivo', ppf:'piuccheperfetto', futant:'futuro anteriore' };
+      const V = par.verbo;
+      const FIN = [['ind','Indicativo'],['cong','Congiuntivo'],['imv','Imperativo']];
+      const NONFIN = [['inf','Infinito'],['ptc','Participio'],['ger','Gerundivo']];
+      const voiceOfKey = (k) => k.endsWith('_att') ? 'att' : k.endsWith('_pass') ? 'pass' : (k.endsWith('_mp') || k === 'aorp') ? 'mp' : null;
+      const VOICE_LBL = { att: 'Attivo', pass: 'Passivo', mp: isGreek ? 'Medio-passivo' : 'Passivo / deponente' };
+      const VOICE_ORDER = ['att', 'mp', 'pass'];
+      const NF_LBL = { pres_att:'presente', pres_pass:'presente', pres_mp:'presente', pres:'presente',
+                       pres_gen:'presente (gen.)', pf_att:'perfetto', pf:'perfetto', fut:'futuro',
+                       aor_att:'aoristo', aor_mp:'aoristo', aorp:'aoristo' };
+      // voci realmente presenti
+      const availV = new Set();
+      for (const [mk] of FIN) if (V[mk]) for (const t in V[mk]) for (const v in V[mk][t]) availV.add(v);
+      for (const [mk] of NONFIN) if (V[mk] && mk !== 'ger') for (const k in V[mk]) { const vv = voiceOfKey(k); if (vv) availV.add(vv); }
+      const voices = VOICE_ORDER.filter(v => availV.has(v));
+
       let sel = this.segSel || {};
-      /* Se non c'è una scelta manuale, apri il pannello che CONTIENE la
-         forma cercata (amavisset → Congiuntivo · piuccheperfetto). */
-      if (!sel.modo && hitNorm) {
-        const isCell = (x) => Array.isArray(x) && x.length > 0 && Array.isArray(x[0]) && typeof x[0][0] === 'string';
-        const cellIs = (c) => c && isCell(c) && normalizeText(c.map(s => s[0]).join('')) === hitNorm;
+      /* Auto-seleziona diatesi·modo·tempo che CONTENGONO la forma cercata, ma
+         SOLO al primo render (nessuna scelta manuale): appena l'utente tocca
+         un tab (diatesi/modo/tempo) rispettiamo la sua navigazione. */
+      if (!sel.modo && !sel.voce && hitNorm) {
+        const cellIs = c => Array.isArray(c) && c.length && Array.isArray(c[0]) && normalizeText(c.map(s => s[0]).join('')) === hitNorm;
         outer:
-        for (const [mk, grp] of Object.entries(par.verbo)) {
-          if (!grp || typeof grp !== 'object' || isCell(grp)) continue;
-          for (const [tk, sub] of Object.entries(grp)) {
-            if (cellIs(sub)) { sel = { modo: mk, tempo: tk }; break outer; }        // inf/ptc: cella diretta
-            if (Array.isArray(sub)) {                                               // lista di celle
-              if (sub.some(cellIs)) { sel = { modo: mk, tempo: tk }; break outer; }
-            } else if (sub && typeof sub === 'object') {                            // colonne att/pass/mp
-              for (const arr of Object.values(sub)) {
-                if (Array.isArray(arr) && arr.some(cellIs)) { sel = { modo: mk, tempo: tk }; break outer; }
-              }
-            }
-          }
+        for (const [mk] of FIN) { if (!V[mk]) continue;
+          for (const t in V[mk]) for (const v in V[mk][t])
+            if (Array.isArray(V[mk][t][v]) && V[mk][t][v].some(cellIs)) { sel = { voce: v, modo: mk, tempo: t }; break outer; }
+        }
+        if (!sel.modo) nf: for (const [mk] of NONFIN) { if (!V[mk]) continue;
+          if (mk === 'ger') { if (cellIs(V.ger)) { sel = { modo: 'ger' }; break nf; } continue; }
+          for (const k in V[mk]) if (cellIs(V[mk][k])) { sel = { voce: voiceOfKey(k) || 'att', modo: mk }; break nf; }
         }
       }
-      const modi = MODI.filter(([k]) => par.verbo[k] && Object.keys(par.verbo[k]).length);
-      const hasGer = !!par.verbo.ger;
-      let modo = (sel.modo === 'ger' && hasGer) ? 'ger'
-        : (sel.modo && par.verbo[sel.modo] ? sel.modo : (modi[0] ? modi[0][0] : null));
-      const tabsModo = modi.map(([k, l]) =>
-          `<button type="button" class="seg-tab ${k === modo ? 'is-on' : ''}" data-seg-modo="${k}">${l}</button>`).join('')
-        + (hasGer ? `<button type="button" class="seg-tab ${modo === 'ger' ? 'is-on' : ''}" data-seg-modo="ger">Gerundivo</button>` : '');
+      const voce = (sel.voce && availV.has(sel.voce)) ? sel.voce : (voices[0] || 'att');
+
+      const modiFin = FIN.filter(([mk]) => V[mk] && Object.values(V[mk]).some(t => t[voce]));
+      const modiNF = NONFIN.filter(([mk]) => {
+        if (mk === 'ger') return !!V.ger;
+        if (!V[mk]) return false;
+        return Object.keys(V[mk]).some(k => { const vv = voiceOfKey(k); return vv === voce || vv === null; });
+      });
+      const allModi = [...modiFin, ...modiNF];
+      const modo = (sel.modo && allModi.some(([k]) => k === sel.modo)) ? sel.modo : (allModi[0] ? allModi[0][0] : null);
+
+      // 1 · DIATESI (attivo/passivo/medio) — solo se più d'una
+      const voiceTabs = voices.length > 1
+        ? `<div class="seg-tabrow"><span class="seg-tabrow-lbl">diatesi</span>${voices.map(v =>
+            `<button type="button" class="seg-tab seg-tab-voce ${v === voce ? 'is-on' : ''}" data-seg-voce="${v}">${VOICE_LBL[v] || v}</button>`).join('')}</div>`
+        : '';
+      // 2 · MODO
+      const modoTabs = `<div class="seg-tabrow"><span class="seg-tabrow-lbl">modo</span>${allModi.map(([k, l]) =>
+        `<button type="button" class="seg-tab ${k === modo ? 'is-on' : ''}" data-seg-modo="${k}">${l}</button>`).join('')}</div>`;
+
       let pane = '';
       if (modo === 'ger') {
-        pane = `<div class="seg-lists"><div class="seg-list-row"><span class="seg-case">gerundivo</span>${this._segCellHtml(par.verbo.ger, hitNorm)}</div></div>`;
+        pane = `<div class="seg-lists"><div class="seg-list-row"><span class="seg-case">gerundivo</span>${this._segCellHtml(V.ger, hitNorm, roles)}</div></div>`;
       } else if (modo === 'inf' || modo === 'ptc') {
-        const LBL = { pres_att:'presente attivo', pres_pass:'presente passivo', pres_mp:'presente medio-passivo',
-                      pf_att:'perfetto attivo', aor_att:'aoristo attivo', aor_mp:'aoristo medio', aorp:'aoristo passivo',
-                      pres:'presente', pres_gen:'presente · genitivo', pf:'perfetto', fut:'futuro' };
-        pane = `<div class="seg-lists">` + Object.entries(par.verbo[modo]).map(([k, cell]) =>
-          `<div class="seg-list-row"><span class="seg-case">${LBL[k] || k}</span>${this._segCellHtml(cell, hitNorm)}</div>`).join('') + `</div>`;
+        const entries = Object.entries(V[modo]).filter(([k]) => { const vv = voiceOfKey(k); return vv === voce || vv === null; });
+        pane = `<div class="seg-lists">` + entries.map(([k, cell]) =>
+          `<div class="seg-list-row"><span class="seg-case">${NF_LBL[k] || k}</span>${this._segCellHtml(cell, hitNorm, roles)}</div>`).join('') + `</div>`;
       } else if (modo) {
-        const grp = par.verbo[modo];
-        const tempi = Object.keys(grp);
-        const tempo = sel.tempo && grp[sel.tempo] ? sel.tempo : tempi[0];
-        const tabsTempo = tempi.map(k =>
-          `<button type="button" class="seg-tab seg-tab-t ${k === tempo ? 'is-on' : ''}" data-seg-tempo="${k}">${TEMPI[k] || k}</button>`).join('');
-        const cols = grp[tempo] || {};
-        const colKeys = Object.keys(cols);
-        const COLL = { att: 'attivo', pass: 'passivo', mp: isGreek ? 'medio-passivo' : 'forma passiva (dep.)' };
-        const PERS = ['1ª sg.','2ª sg.','3ª sg.','1ª pl.','2ª pl.','3ª pl.'];
-        const head = `<div class="seg-row seg-head"><span>persona</span>${colKeys.map(k => `<span>${COLL[k] || k}</span>`).join('')}</div>`;
-        const rows = PERS.map((p, i) =>
-          `<div class="seg-row"><span class="seg-case">${p}</span>${colKeys.map(k =>
-            `<span>${this._segCellHtml((cols[k] || [])[i], hitNorm)}</span>`).join('')}</div>`).join('');
-        pane = `<div class="seg-tempo-tabs">${tabsTempo}</div>
-          <div class="seg-table" style="--segc: 76px repeat(${Math.max(1, colKeys.length)}, 1fr);">${head}${rows}</div>`;
+        const grp = V[modo];
+        const tempi = Object.keys(grp).filter(t => grp[t][voce]);
+        const tempo = (sel.tempo && grp[sel.tempo] && grp[sel.tempo][voce]) ? sel.tempo : tempi[0];
+        // 3 · TEMPO
+        const tempoTabs = `<div class="seg-tabrow"><span class="seg-tabrow-lbl">tempo</span>${tempi.map(t =>
+          `<button type="button" class="seg-tab seg-tab-t ${t === tempo ? 'is-on' : ''}" data-seg-tempo="${t}">${TEMPI[t] || t}</button>`).join('')}</div>`;
+        const arr = (grp[tempo] && grp[tempo][voce]) || [];
+        const PERS = ['1ª sg.', '2ª sg.', '3ª sg.', '1ª pl.', '2ª pl.', '3ª pl.'];
+        const head = `<div class="seg-row seg-head"><span>persona</span><span>${VOICE_LBL[voce] || voce}</span></div>`;
+        const rows = PERS.map((p, i) => `<div class="seg-row"><span class="seg-case">${p}</span><span>${this._segCellHtml(arr[i], hitNorm, roles)}</span></div>`).join('');
+        pane = tempoTabs + `<div class="seg-table" style="--segc: 92px 1fr;">${head}${rows}</div>`;
       }
-      body += `<div class="seg-modo-tabs">${tabsModo}</div>${pane}`;
+      body = voiceTabs + modoTabs + pane;
     }
-    const nota = par.nota ? `<p class="clp-disclaimer muted-text">⚠ ${escapeHtml(par.nota)}</p>` : '';
-    /* Conta le celle-forma dell'intero paradigma per il badge (come nel mockup). */
+
+    // Legenda DINAMICA: solo i morfemi realmente coinvolti, e solo in vista morfologica.
+    const LEG = { a: 'aumento/raddopp.', t: 'tema', v: 'vocale tematica', s: 'suffisso', d: 'desinenza' };
+    const legend = morphOn
+      ? `<div class="seg-legend">${['a','t','v','s','d'].filter(r => roles.has(r)).map(r => `<span class="mseg mseg-${r}">${LEG[r]}</span>`).join('')}</div>`
+      : '';
+    const toggle = `<button type="button" class="seg-morph-toggle ${morphOn ? 'is-on' : ''}" data-seg-morph aria-pressed="${morphOn}" title="Mostra/nascondi la scomposizione in morfemi (colori + trattini)">${morphOn ? '🎨 Morfemi: attivi' : '🔍 Mostra i morfemi'}</button>`;
+
     let nForme = 0;
     (function count(n) {
       if (Array.isArray(n) && n.length && Array.isArray(n[0]) && typeof n[0][0] === 'string') { nForme++; return; }
@@ -1522,12 +1567,15 @@ export class DictionaryApp {
       else if (n && typeof n === 'object') Object.values(n).forEach(count);
     })(par.verbo || par.nome);
     const badge = `<span class="seg-badge">${nForme} forme${par.verbo && par.verbo.ind && par.verbo.ind.pf ? ' · sistema del perfetto ✓' : ''}</span>`;
+    const nota = par.nota ? `<p class="clp-disclaimer muted-text">⚠ ${escapeHtml(par.nota)}</p>` : '';
+
     return `<details class="dict-paradigm seg-par" open style="--md-accent:${acc};--md-accent-dark:${accDark}">
-      <summary>🧩 Flessione con analisi dei morfemi <small>· ${escapeHtml(par.classe || '')}</small>${badge}</summary>
+      <summary>🧩 Flessione${morphOn ? ' · analisi dei morfemi' : ''} <small>· ${escapeHtml(par.classe || '')}</small>${badge}</summary>
       <div class="clp-wrap">
+        <div class="seg-controls">${toggle}</div>
         ${legend}
         ${body}
-        <p class="clp-disclaimer muted-text">${escapeHtml(par.testa || '')} · ogni colore è un morfema; le fusioni irriducibili restano nel segmento più ampio.</p>
+        ${morphOn ? '<p class="clp-disclaimer muted-text">ogni colore è un morfema; le fusioni irriducibili restano nel segmento più ampio.</p>' : ''}
         ${nota}
       </div>
     </details>`;
