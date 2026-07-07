@@ -271,7 +271,7 @@ def classify_nominal(lemma, definition):
         return ('1a' if prev in 'ειρ' else '1am', base[:-1])
     return None
 
-from accentuation import accent_nominal, nominal_idx_start   # motore di accentazione
+from accentuation import accent_nominal, nominal_idx_start, accent_verb, long_dichra   # motore di accentazione
 
 def gen_nominal(lemma, klass, stem):
     idx_start = nominal_idx_start(lemma)
@@ -520,10 +520,11 @@ def mp_perfect(stem_mp):
 
 def gen_verb(lemma, v):
     out = {}
+    ld = long_dichra(lemma)   # dichrona lunghi deducibili dal lemma
     def add(form, parsing, rec=True, opt=False, pre_accented=False):
         f = NFC(form)
         if not pre_accented and rec:
-            f = recessive(f, opt=opt)
+            f = accent_verb(f, ld, opt=opt)
         # forme ambigue (ἔλυον 1ª sg E 3ª pl): fondi i parsing, non sovrascrivere
         if f in out and parsing not in out[f]:
             out[f] = out[f] + ' / ' + parsing.replace(f' di {lemma}', '')
@@ -548,12 +549,11 @@ def gen_verb(lemma, v):
         if not dep: add(ps[:-1] + CONTR[contract]['ειν'], f'inf. pres. att. di {lemma}', pre_accented=True)
         add(ps[:-1] + CONTR[contract]['εσθαι'], f'inf. pres. m.-p. di {lemma}', pre_accented=True)
     else:
-        if not dep: add(ps + 'ειν', f'inf. pres. att. di {lemma}', rec=False, pre_accented=True) or out.update({NFC(accent_at(strip_acc(ps+'ειν'), 2)): f'inf. pres. att. di {lemma}'})
+        if not dep: add(accent_at(strip_acc(ps + 'ειν'), 2), f'inf. pres. att. di {lemma}', pre_accented=True)
         add(ps + 'εσθαι', f'inf. pres. m.-p. di {lemma}')
     # participi presenti (nom. e basi oblique principali)
     if not dep and not contract:
-        add(ps + 'ων', f'ptc. pres. att. nom. m. sg. di {lemma}', rec=False, pre_accented=True)
-        out[NFC(strip_acc(ps) + 'ων')] = f'ptc. pres. att. nom. m. sg. di {lemma}'
+        add(accent_at(strip_acc(ps) + 'ων', 2), f'ptc. pres. att. nom. m. sg. di {lemma}', pre_accented=True)
         for e, p in (('οντος','gen. m./n. sg.'), ('οντι','dat. sg.'), ('οντα','acc. sg.'), ('οντες','nom. pl.'), ('οντων','gen. pl.'), ('ουσι','dat. pl.'), ('ουσα','nom. f. sg.'), ('ουσης','gen. f. sg.'), ('ον','nom. n. sg.')):
             add(ps + e, f'ptc. pres. att. {p} di {lemma}')
     add(ps + ('ομενος' if not contract else ''), f'ptc. pres. m.-p. nom. m. sg. di {lemma}') if not contract else None
@@ -581,6 +581,8 @@ def gen_verb(lemma, v):
         e2 = CONTR[contract].get(real, None) if contract else real
         if contract and e2 is None: continue
         form = impf_stem[:-1] + e2 if contract else impf_stem + real
+        if contract and form == strip_acc(form):
+            form = accent_at(form, 2)   # imperf. contratto att. sg./3ª pl.: penultima acuta
         add(form, f'impf. ind. att. {pers} di {lemma}', rec=not contract, pre_accented=bool(contract))
     for end, pers in IMPF_MP.items():
         e2 = CONTR[contract].get(end, None) if contract else end
@@ -639,8 +641,7 @@ def gen_verb(lemma, v):
             stem_aug = strip_acc(v['aor'])[:-4]  # ἐγεν- da ἐγενόμην
             for end, pers in AOR2_MID.items():
                 add(stem_aug + end, f'aor. ind. med. {pers} di {lemma}')
-            add(st + 'εσθαι', f'inf. aor. med. di {lemma}', rec=False, pre_accented=True)
-            out[NFC(accent_at(strip_acc(st + 'εσθαι'), 2))] = f'inf. aor. med. di {lemma}'
+            add(accent_at(strip_acc(st + 'εσθαι'), 2), f'inf. aor. med. di {lemma}', pre_accented=True)
             add(st + 'ομενος', f'ptc. aor. med. nom. m. sg. di {lemma}')
         elif at.startswith('2:'):
             st = at[2:]
@@ -691,8 +692,7 @@ def gen_verb(lemma, v):
         pstem = strip_acc(v['pf'])[:-1]  # λελυκ-
         for end, pers in PF_ACT.items():
             add(pstem + end, f'pf. ind. att. {pers} di {lemma}')
-        add(pstem + 'εναι', f'inf. pf. att. di {lemma}', rec=False, pre_accented=True)
-        out[NFC(accent_at(strip_acc(pstem + 'εναι'), 2))] = f'inf. pf. att. di {lemma}'
+        add(accent_at(strip_acc(pstem + 'εναι'), 2), f'inf. pf. att. di {lemma}', pre_accented=True)
         out[NFC(strip_acc(pstem) + 'ώς')] = f'ptc. pf. att. nom. m. sg. di {lemma}'
     if v['pfmp'] and 'μαι' in v['pfmp']:
         stem_mp = strip_acc(v['pfmp'])

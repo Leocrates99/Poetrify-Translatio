@@ -25,7 +25,7 @@ from gen_greek_forms import (VERBS, classify_nominal, NOMINAL_EXTRA, strip_acc,
                              recessive, accent_at, split_preverb, augment_stem,
                              de_augment, CONTR, N as NG, NFC, lemma_accent_dist,
                              persistent, dat_pl_3, syllable_nuclei)
-from accentuation import accent_nominal, nominal_idx_start   # motore di accentazione
+from accentuation import accent_nominal, nominal_idx_start, accent_verb, long_dichra   # motore di accentazione
 
 def seg(*pairs):
     return [[t, r] for t, r in pairs if t]
@@ -234,13 +234,16 @@ def split_accented(form, parts):
         out.append([NFC(buf), role])
     return out
 
+_VERB_LD = frozenset()   # dichrona lunghi del verbo in corso (impostato da gk_verb_table)
+
 def gk_cell(parts, accent='recessive', pre=None):
-    """parts non accentati (con spiriti) → forma accentata + segmenti."""
+    """parts non accentati (con spiriti) → forma accentata + segmenti.
+    L'accento recessivo passa dal motore condiviso (accentuation.accent_verb)."""
     plain = ''.join(t for t, _ in parts)
     if pre is not None:
         form = pre
     elif accent == 'recessive':
-        form = recessive(NFC(plain))
+        form = accent_verb(NFC(plain), _VERB_LD)
     else:
         form = NFC(plain)
     return split_accented(form, parts)
@@ -281,6 +284,8 @@ MI_PTC_END = {'δίδωμι':'υς', 'τίθημι':'ις', 'ἵστημι':'ς'
 MI_ATT3PL  = {'ἵστημι':'ἱστᾶσι', 'ἵημι':'ἱᾶσι'}   # 3ª pl. att. con accento forzato (contrazione)
 
 def gk_verb_table(lemma, v):
+    global _VERB_LD
+    _VERB_LD = long_dichra(lemma)   # dichrona lunghi deducibili dal lemma (per l'accento recessivo)
     ps = v['pres']; contract = v['contract']; dep = v['dep']
     T = strip_acc(ps)
     verbo = {'ind': {}, 'inf': {}, 'ptc': {}}

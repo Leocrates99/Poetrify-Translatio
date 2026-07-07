@@ -68,5 +68,22 @@ for lemma, kl, stem, exp_sg, exp_pl in GOLD:
         if got_sg != exp_sg: print(f'      SG atteso: {exp_sg}\n         ottenuto: {got_sg}')
         if got_pl != exp_pl: print(f'      PL atteso: {exp_pl}\n         ottenuto: {got_pl}')
 
-print(f"\n{'TUTTO OK' if not fails else str(fails)+' PARADIGMI FALLITI'}")
+# ── verbi: accento recessivo con circonflesso (properispomeno) ──
+from accentuation import accent_verb
+VGOLD = [
+ ('ηχα','ῆχα'),        # η lunga + α breve → circonflesso (pf. ἄγω)
+ ('ηρξα','ῆρξα'),      # η + α breve → circonflesso (aor. ἄρχω)
+ ('πειθον','πεῖθον'),  # ει dittongo + ον breve → circonflesso (ptc. n.)
+ ('φημι','φῆμι'),      # η + ι breve → circonflesso
+ ('λυομεν','λύομεν'),  # υ breve → acuto
+ ('ελυσαμεν','ελύσαμεν'),  # antepenultima → acuto
+]
+print('— verbi (accento recessivo) —')
+for plain, exp in VGOLD:
+    got = accent_verb(plain)
+    ok = got == exp
+    print(f"{'OK  ' if ok else 'FAIL'} {plain} → {got}" + ('' if ok else f'  (atteso {exp})'))
+    if not ok: fails += 1
+
+print(f"\n{'TUTTO OK' if not fails else str(fails)+' TEST FALLITI'}")
 sys.exit(1 if fails else 0)

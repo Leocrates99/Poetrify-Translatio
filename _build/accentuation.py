@@ -100,24 +100,31 @@ def lemma_accent_dist(lemma):
             return len(accented) - idx
     return 2
 
-def recessive(word, opt=False):
-    """Accento recessivo (verbi finiti): il più indietro possibile, con acuto o
-    circonflesso secondo la quantità dell'ultima."""
+def accent_verb(word, long_dichra=frozenset(), opt=False):
+    """Accento RECESSIVO (verbi finiti): il più indietro possibile, con acuto o
+    circonflesso secondo la quantità (properispomeno = penultima lunga + ultima
+    breve). `long_dichra` = insieme dei dichrona ᾰ/ῐ/ῠ da trattare come lunghi
+    (di norma vuoto; si popola dall'inferenza sul lemma o dal lessico verbale)."""
     w = strip_accents(word)
     nuc = syllable_nuclei(w)
     if not nuc: return w
     if len(nuc) == 1: return place_accent(w, 1)
+    b = base(w)
     st, ln, isL = nuc[-1]
-    ultima = base(w)[st:st+ln]
+    ultima = b[st:st+ln]
     ultima_long = isL
     if ultima in ('αι', 'οι') and not opt:
         ultima_long = False
     if ultima_long or len(nuc) == 2:
-        # penultima accentata: circonflesso se penult. lunga + ultima breve
-        pen_long = nuc[-2][2]
-        circ = pen_long and not ultima_long and len(nuc) >= 2
+        p_st, p_ln, p_isL = nuc[-2]
+        pv = b[p_st:p_st+p_ln]
+        pen_long = p_isL or (pv in DICHRONA and pv in long_dichra)
+        circ = pen_long and not ultima_long
         return place_accent(w, 2, circum=circ)
     return place_accent(w, 3)
+
+def recessive(word, opt=False):   # alias storico: senza risoluzione dei dichrona
+    return accent_verb(word, frozenset(), opt)
 
 # ─────────────────────── quantità dei dichrona (lessico + inferenza) ───────────
 # Dichrona (α/ι/υ) LUNGHI nei temi. Risoluzione a cascata:
@@ -215,3 +222,17 @@ def accent_nominal(lemma, klass, form, ending, gendat, idx_start):
     else:
         circ = False
     return place_accent(strip_accents(plain), d, circum=circ)
+
+def long_dichra(lemma, *extra):
+    """Insieme dei dichrona lunghi deducibili dal lemma (e da altre forme date):
+    un dichron col circonflesso è per forza lungo. Usato per l'accento verbale."""
+    out = set(_lemma_long_dichra(lemma))
+    for e in extra:
+        out |= _lemma_long_dichra(e)
+    return out
+
+# ── alias di compatibilità coi nomi usati storicamente dai generatori ──
+N = base
+NFC = nfc
+strip_acc = strip_accents
+accent_at = place_accent
