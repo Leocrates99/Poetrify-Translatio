@@ -183,9 +183,67 @@ footer {
 .status-card .count { font-size: 19px; font-weight: 700; color: var(--primary); margin-top: 3px; }
 .status-card .desc { margin-top: 3px; font-size: 12px; color: var(--ink); font-style: italic; }
 
+/* ── Doppia identità di lingua (rosso pompeiano · blu Poetrify) ── */
+.lang-duo {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: -28px auto 44px;
+}
+.lang-chip {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 5px 14px;
+  border-radius: 999px;
+  border: 1.5px solid;
+}
+.lang-chip.lat { color: var(--accent-lat); border-color: var(--accent-lat); background: rgba(162,46,55,0.07); }
+.lang-chip.gr  { color: var(--accent-gr);  border-color: var(--accent-gr);  background: rgba(24,0,172,0.06); }
+
+/* ── Pastiglie delle funzioni (coerenti con translator/dizionario) ── */
+.hub-card-feats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 2px;
+}
+.hub-card-feats span {
+  font-family: 'Source Sans 3', sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--cream);
+  color: var(--sepia);
+  border: 1px solid var(--rule-soft);
+}
+
+/* ── Dark mode (armonizzata con translator e dizionario) ── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #a99cff;
+    --primary-dark: #8b7dff;
+    --accent-lat: #e58a90;
+    --accent-gr: #8b7dff;
+    --paper: #232730;
+    --ivory: #1c1f24;
+    --cream: #2a2e38;
+    --ink: #e8e6e1;
+    --sepia: #a8a39b;
+    --rule: #3b3f4a;
+    --rule-soft: #2c303a;
+  }
+  .hub-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.45); }
+  .lang-chip.lat { background: rgba(229,138,144,0.12); }
+  .lang-chip.gr  { background: rgba(139,125,255,0.12); }
+}
+
 @media (max-width: 560px) {
   .hub { grid-template-columns: 1fr; }
   .site-header { margin-top: 56px; }
+  .lang-duo { margin-top: -16px; }
 }
 </style>
 </head>
@@ -198,13 +256,21 @@ footer {
 
 <p class="intro">Analizza e traduci il latino e il greco antico con un metodo chiaro, calibrato sul tuo livello.</p>
 
+<p class="lang-duo" aria-label="Le due lingue hanno identità cromatiche distinte">
+  <span class="lang-chip lat">LATINO · rosso pompeiano</span>
+  <span class="lang-chip gr">ΕΛΛΗΝΙΚΑ · blu Poetrify</span>
+</p>
+
 <main class="hub">
-  <a class="hub-card lat" href="translator.html">
+  <a class="hub-card" href="translator.html">
     <svg class="hub-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
       <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M9 7h7M9 11h5"/>
     </svg>
     <span class="hub-card-title">Translator</span>
-    <span class="hub-card-desc">Analisi grammaticale, logica e sintattica, con traduzione guidata o libera. Si adatta a tre livelli di difficoltà.</span>
+    <span class="hub-card-desc">Analisi grammaticale, logica e sintattica, con traduzione guidata o libera. Il dizionario vive dentro il lavoro: doppio click su una parola per lemma, analisi e glossa; glossario automatico della frase e del brano.</span>
+    <span class="hub-card-feats">
+      <span>panoramica dei brani</span><span>bozza → bella copia</span><span>dizionario vivo</span><span>profilo studente</span>
+    </span>
     <span class="hub-card-cta">Apri →</span>
   </a>
 
@@ -213,7 +279,10 @@ footer {
       <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/><path d="M8.5 11h5M11 8.5v5"/>
     </svg>
     <span class="hub-card-title">Dizionario</span>
-    <span class="hub-card-desc">Lessico latino e greco: paradigmi completi, etimologia, famiglia di parole e frequenza d'uso.</span>
+    <span class="hub-card-desc">Lessico latino e greco con analisi morfologica: cerchi una forma flessa e trovi lemma, glossa e la flessione completa con i morfemi colorati (aumento · tema · suffisso · desinenza).</span>
+    <span class="hub-card-feats">
+      <span>flessione a colori</span><span>analizza un passo</span><span>ricerca multi-lemma</span><span>lessico personale ⭐</span>
+    </span>
     <span class="hub-card-cta">Apri →</span>
   </a>
 </main>
