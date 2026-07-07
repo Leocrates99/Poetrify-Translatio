@@ -50,13 +50,16 @@ body[data-dict-font-size="l"] { --dict-scale: 1.15; }
    virano INSIEME — rosso pompeiano in latino, blu Poetrify in greco. --dacc
    (usato dalla scheda restilizzata) deriva da --primary: un solo sistema.
    ═══════════════════════════════════════════════════════════════════════════ */
-body[data-lang="latino"] { --primary: #A22E37; --primary-dark: #7d232b; --primary-pale: rgba(162,46,55,0.09); }
-body[data-lang="greco"]  { --primary: #1800AC; --primary-dark: #0f0070; --primary-pale: rgba(24,0,172,0.08); }
-:root {
-  --dacc: var(--primary);
-  --dacc-deep: var(--primary-dark);
-  --dacc-pale: var(--primary-pale);
-  --dacc-border: color-mix(in srgb, var(--primary) 34%, transparent);
+/* NB: --dacc* con VALORI CONCRETI per lingua (non alias di --primary su :root:
+   una var() risolta su :root erediterebbe il valore di :root — blu — ovunque,
+   ignorando body[data-lang]). Qui ogni lingua/modo porta i suoi valori. */
+body[data-lang="latino"] {
+  --primary: #A22E37; --primary-dark: #7d232b; --primary-pale: rgba(162,46,55,0.09);
+  --dacc: #A22E37; --dacc-deep: #7d232b; --dacc-pale: rgba(162,46,55,0.10); --dacc-border: rgba(162,46,55,0.32);
+}
+body[data-lang="greco"] {
+  --primary: #1800AC; --primary-dark: #0f0070; --primary-pale: rgba(24,0,172,0.08);
+  --dacc: #1800AC; --dacc-deep: #0f0070; --dacc-pale: rgba(24,0,172,0.10); --dacc-border: rgba(24,0,172,0.30);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -936,11 +939,11 @@ body.poetrify-dark .greek-kbd-key.greek-kbd-var { background: rgba(255,255,255,0
 
 /* ─── [NEW 8] Etimologia + famiglia ──────────────────────────────────────── */
 .dict-etymology {
-  margin-top: 14px;
-  padding: 10px 12px;
-  background: rgba(162,46,55,0.05);
-  border: 1px solid rgba(162,46,55,0.25);
-  border-radius: var(--radius-sm);
+  margin-top: 16px;
+  padding: 10px 14px;
+  background: transparent;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md);
 }
 .dict-etymology summary {
   cursor: pointer;
@@ -1007,10 +1010,10 @@ body.poetrify-dark .greek-kbd-key.greek-kbd-var { background: rgba(255,255,255,0
 /* ─── [NEW 11] Cognati LAT↔GR ────────────────────────────────────────────── */
 .dict-cognate {
   margin-top: 10px;
-  padding: 10px 12px;
-  background: rgba(24,0,172,0.04);
-  border: 1px solid rgba(24,0,172,0.25);
-  border-radius: var(--radius-sm);
+  padding: 10px 14px;
+  background: transparent;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md);
 }
 .dict-cognate summary {
   cursor: pointer;
@@ -1809,8 +1812,10 @@ body.poetrify-dark {
   background: #171a1f;
 }
 /* --primary schiarito PER LINGUA anche in scuro (leggibile su fondo scuro) */
-body.poetrify-dark[data-lang="latino"] { --primary: #e58a90; --primary-dark: #b95d63; --primary-pale: rgba(229,138,144,0.16); }
-body.poetrify-dark[data-lang="greco"]  { --primary: #8b7dff; --primary-dark: #6a5fd0; --primary-pale: rgba(139,125,255,0.16); }
+body.poetrify-dark[data-lang="latino"] { --primary: #e58a90; --primary-dark: #b95d63; --primary-pale: rgba(229,138,144,0.16);
+  --dacc: #e58a90; --dacc-deep: #b95d63; --dacc-pale: rgba(229,138,144,0.16); --dacc-border: rgba(229,138,144,0.38); }
+body.poetrify-dark[data-lang="greco"]  { --primary: #8b7dff; --primary-dark: #6a5fd0; --primary-pale: rgba(139,125,255,0.16);
+  --dacc: #8b7dff; --dacc-deep: #6a5fd0; --dacc-pale: rgba(139,125,255,0.16); --dacc-border: rgba(139,125,255,0.38); }
 /* La testata in scuro resta profonda ma TINTA della lingua (non un blu fisso) */
 body.poetrify-dark[data-lang="latino"] header.topbar { background: linear-gradient(180deg, #3a1418 0%, #220b0e 100%); }
 body.poetrify-dark[data-lang="greco"]  header.topbar { background: linear-gradient(180deg, #1a1f3a 0%, #0e1226 100%); }
@@ -1889,28 +1894,86 @@ body.poetrify-dark .dict-prev-lemma, body.poetrify-dark .dict-next-lemma { backg
 .poetrify-dark .mseg-v { color: #fbbf24; }
 .poetrify-dark .mseg-s { color: #2dd4bf; }
 .poetrify-dark .mseg-d { color: var(--md-accent-dark, #e58a90); }
-.mseg-form { font-size: 15px; letter-spacing: 0.01em; white-space: nowrap; }
-.mseg-form.greek { font-family: 'Times New Roman', 'Palatino Linotype', serif; font-size: 16px; }
-.mseg-hit { background: color-mix(in srgb, var(--md-accent, #A22E37) 14%, transparent); border-radius: 6px; padding: 1px 6px; outline: 1px solid color-mix(in srgb, var(--md-accent, #A22E37) 35%, transparent); }
-.seg-legend { display: flex; flex-wrap: wrap; gap: 10px 16px; margin: 4px 0 12px; font-size: 12px; }
-.seg-legend .mseg { font-size: 12px; }
-.seg-modo-tabs, .seg-tempo-tabs { display: flex; flex-wrap: wrap; gap: 5px; margin: 10px 0 8px; }
-.seg-tab { font-size: 12px; padding: 4px 12px; border-radius: 999px; border: 1px solid #d5d2cb; background: transparent; cursor: pointer; color: #4a5568; }
-.seg-tab.is-on { background: var(--md-accent, #A22E37); border-color: var(--md-accent, #A22E37); color: #fff; font-weight: 600; }
-.seg-tab-t { font-size: 11px; padding: 3px 10px; }
-.poetrify-dark .seg-tab { border-color: #3a3f49; color: #c8c5be; }
-.poetrify-dark .seg-tab.is-on { background: var(--md-accent-dark, #e58a90); border-color: var(--md-accent-dark, #e58a90); color: #1c1f24; }
-.seg-table { margin-top: 6px; border: 1px solid #e3e0d9; border-radius: 10px; overflow: hidden; }
-.seg-table .seg-row { display: grid; grid-template-columns: var(--segc, 100px 1fr 1fr); gap: 10px; padding: 6px 12px; border-top: 1px solid #eeece6; align-items: baseline; }
+.mseg-form { font-size: 16px; letter-spacing: 0.01em; white-space: nowrap; }
+.mseg-form.greek { font-family: 'Times New Roman', 'Palatino Linotype', serif; font-size: 17px; }
+.mseg-hit { background: var(--dacc-pale); border-radius: 999px; padding: 2px 12px; outline: 1px solid var(--dacc-border); }
+
+/* La sezione flessione NON è un riquadro tinto: è una tabella pulita e ariosa
+   (come nei mockup). Annulla lo sfondo indaco ereditato da .dict-paradigm. */
+.seg-par.dict-paradigm {
+  background: none;
+  border: none;
+  padding: 0;
+  margin-top: 20px;
+}
+.seg-par > summary {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.seg-par > summary small { color: var(--sepia); font-weight: 500; }
+.seg-badge {
+  margin-left: auto;
+  font-family: var(--font-ui);
+  font-size: 10.5px; font-weight: 600;
+  color: var(--sepia);
+  padding: 3px 12px; border-radius: 999px;
+  background: var(--cream); border: 1px solid var(--rule-soft);
+}
+.seg-par > summary::before { content: ''; margin: 0; }
+.seg-par .clp-wrap { margin-top: 0; }
+.seg-legend {
+  display: flex; flex-wrap: wrap; gap: 7px 9px;
+  margin: 0 0 16px;
+}
+.seg-legend .mseg {
+  font-size: 11px; font-weight: 600;
+  padding: 3px 11px; border-radius: 999px;
+  background: var(--cream); border: 1px solid var(--rule-soft);
+}
+.seg-modo-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
+.seg-tempo-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
+.seg-tab {
+  font-size: 12.5px; padding: 6px 15px; border-radius: 999px;
+  border: 1px solid var(--rule); background: transparent; cursor: pointer;
+  color: var(--ink-soft); font-family: var(--font-ui); font-weight: 600;
+  transition: all 0.15s ease;
+}
+.seg-tab:hover { border-color: var(--primary); color: var(--primary); }
+.seg-tab.is-on { background: var(--primary); border-color: var(--primary); color: #fff; }
+.seg-tab-t { font-size: 11.5px; padding: 4px 12px; font-weight: 500; }
+.poetrify-dark .seg-tab.is-on { color: #1c1f24; }
+.seg-table {
+  margin-top: 4px; border: 1px solid var(--rule-soft);
+  border-radius: 12px; overflow: hidden; background: var(--paper);
+}
+.seg-table .seg-row {
+  display: grid; grid-template-columns: var(--segc, 110px 1fr 1fr);
+  gap: 14px; padding: 10px 18px; border-top: 1px solid var(--rule-soft);
+  align-items: baseline;
+}
 .seg-table .seg-row:first-child { border-top: none; }
-.seg-table .seg-head { background: #f6f4ef; font-size: 10.5px; letter-spacing: 0.05em; text-transform: uppercase; color: #6b6660; }
-.seg-case { font-size: 11.5px; color: #6b6660; }
-.seg-list-row { display: grid; grid-template-columns: 170px 1fr; gap: 10px; padding: 6px 4px; align-items: baseline; border-bottom: 1px dashed #eeece6; }
-.poetrify-dark .seg-table { border-color: #3a3f49; }
-.poetrify-dark .seg-table .seg-row { border-top-color: #2c303a; }
-.poetrify-dark .seg-table .seg-head { background: #232730; color: #a8a39b; }
-.poetrify-dark .seg-case { color: #a8a39b; }
-.poetrify-dark .seg-list-row { border-bottom-color: #2c303a; }
+.seg-table .seg-head {
+  background: var(--cream); font-size: 10.5px; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--sepia); font-family: var(--font-ui);
+}
+.seg-case { font-size: 12px; color: var(--sepia); font-family: var(--font-ui); }
+.seg-list-row {
+  display: grid; grid-template-columns: 180px 1fr; gap: 12px;
+  padding: 9px 18px; align-items: baseline; border-top: 1px solid var(--rule-soft);
+  background: var(--paper);
+}
+.seg-list-row:first-of-type { border-top: none; }
+.seg-lists { border: 1px solid var(--rule-soft); border-radius: 12px; overflow: hidden; }
+.poetrify-dark .seg-table .seg-head { background: var(--cream); }
 .dict-entry-via { font-size: 12px; font-style: italic; color: #6b6660; margin: 4px 0; }
 .dict-entry-alts { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; font-size: 12px; color: #6b6660; margin: 6px 0; }
 .alt-lemma-chip { font-size: 13px; padding: 2px 10px; border: 1px solid #d5d2cb; border-radius: 999px; background: transparent; cursor: pointer; }
@@ -1946,13 +2009,20 @@ body.poetrify-dark .dict-prev-lemma, body.poetrify-dark .dict-next-lemma { backg
 header.topbar { transition: background 0.25s ease; }
 
 .dict-entry-card {
-  background: #fff !important;
-  border: 1px solid #e6e3dc !important;
+  background: var(--paper) !important;
+  border: 1px solid var(--rule-soft) !important;
   border-top: 4px solid var(--dacc) !important;
   border-radius: 14px !important;
-  padding: 18px 20px !important;
+  padding: 24px 28px !important;
   box-shadow: 0 4px 18px rgba(44,53,57,0.06);
 }
+.dict-source-label {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: var(--sepia);
+  margin: 6px 0 2px;
+}
+.dict-source-label em { font-style: italic; }
 .poetrify-dark .dict-entry-card { background: #232730 !important; border-color: #3a3f49 !important; border-top-color: var(--dacc) !important; }
 .dict-entry-header { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .dict-entry-lemma {

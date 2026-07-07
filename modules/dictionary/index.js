@@ -1095,19 +1095,14 @@ export class DictionaryApp {
     /* [NEW 13] prev/next alfabetici */
     const navHtml = await this._renderSiblingNav(hit);
 
-    return `<div class="dict-query-info">
-      Lingua: <strong>${escapeHtml(langLabel)}</strong>
-      · Query: <strong>${escapeHtml(hit.word)}</strong>
-      · <em>${escapeHtml(sourceLabel)}</em>
-      ${hit.shards ? `· shard: ${hit.shards.map(s => escapeHtml(s)).join(', ')}` : ''}
-    </div>
-    <article class="dict-entry-card${this._posClass(hit.pos)}">
+    return `<article class="dict-entry-card${this._posClass(hit.pos)}">
       <header class="dict-entry-header">
         <span class="dict-entry-lemma${lemmaCls}">${escapeHtml(hit.lemma)}</span>
         ${hit.pos ? `<span class="dict-entry-pos">${escapeHtml(hit.pos)}</span>` : ''}
         ${freqHtml}
         ${navHtml}
       </header>
+      <div class="dict-source-label"><em>${escapeHtml(sourceLabel)}</em></div>
       ${translitHtml}
       ${parsingHtml}
       ${viaHtml}
@@ -1121,15 +1116,16 @@ export class DictionaryApp {
             ? `<p class="dict-entry-definition">${escapeHtml(hit.definition)}</p>`
             : '<p class="dict-entry-definition muted-text"><em>Definition unavailable.</em></p>')
         : ''}
-      <!-- 2 · CATEGORIE GRAMMATICALI -->
+      <!-- 2 · FLESSIONE COLORATA (protagonista, come nei mockup) -->
+      ${segHtml}
+      <!-- 3 · CATEGORIE GRAMMATICALI -->
       ${grammarHtml}
-      <!-- 3 · PARADIGMA (parti principali) -->
+      <!-- 4 · PARADIGMA (parti principali) -->
       ${paradigmaLine}
-      <!-- 4 · ETIMOLOGIA (aperta) -->
+      <!-- 5 · ETIMOLOGIA (collassata) -->
       ${etymHtml}
       ${cognateHtml}
-      <!-- 5 · TABELLA MORFOLOGICA -->
-      ${segHtml}
+      <!-- 6 · MODELLO RICOSTRUITO (fallback, ripiegato) -->
       ${paradigmHtml}
       <footer class="dict-entry-actions">
         <button class="dict-entry-save ${isSaved ? 'is-saved' : ''}" type="button">${saveBtnLabel}</button>
@@ -1491,13 +1487,13 @@ export class DictionaryApp {
         + (hasGer ? `<button type="button" class="seg-tab ${modo === 'ger' ? 'is-on' : ''}" data-seg-modo="ger">Gerundivo</button>` : '');
       let pane = '';
       if (modo === 'ger') {
-        pane = `<div class="seg-list-row"><span class="seg-case">gerundivo</span>${this._segCellHtml(par.verbo.ger, hitNorm)}</div>`;
+        pane = `<div class="seg-lists"><div class="seg-list-row"><span class="seg-case">gerundivo</span>${this._segCellHtml(par.verbo.ger, hitNorm)}</div></div>`;
       } else if (modo === 'inf' || modo === 'ptc') {
         const LBL = { pres_att:'presente attivo', pres_pass:'presente passivo', pres_mp:'presente medio-passivo',
                       pf_att:'perfetto attivo', aor_att:'aoristo attivo', aor_mp:'aoristo medio', aorp:'aoristo passivo',
                       pres:'presente', pres_gen:'presente · genitivo', pf:'perfetto', fut:'futuro' };
-        pane = Object.entries(par.verbo[modo]).map(([k, cell]) =>
-          `<div class="seg-list-row"><span class="seg-case">${LBL[k] || k}</span>${this._segCellHtml(cell, hitNorm)}</div>`).join('');
+        pane = `<div class="seg-lists">` + Object.entries(par.verbo[modo]).map(([k, cell]) =>
+          `<div class="seg-list-row"><span class="seg-case">${LBL[k] || k}</span>${this._segCellHtml(cell, hitNorm)}</div>`).join('') + `</div>`;
       } else if (modo) {
         const grp = par.verbo[modo];
         const tempi = Object.keys(grp);
@@ -1518,8 +1514,16 @@ export class DictionaryApp {
       body += `<div class="seg-modo-tabs">${tabsModo}</div>${pane}`;
     }
     const nota = par.nota ? `<p class="clp-disclaimer muted-text">⚠ ${escapeHtml(par.nota)}</p>` : '';
+    /* Conta le celle-forma dell'intero paradigma per il badge (come nel mockup). */
+    let nForme = 0;
+    (function count(n) {
+      if (Array.isArray(n) && n.length && Array.isArray(n[0]) && typeof n[0][0] === 'string') { nForme++; return; }
+      if (Array.isArray(n)) n.forEach(x => x && count(x));
+      else if (n && typeof n === 'object') Object.values(n).forEach(count);
+    })(par.verbo || par.nome);
+    const badge = `<span class="seg-badge">${nForme} forme${par.verbo && par.verbo.ind && par.verbo.ind.pf ? ' · sistema del perfetto ✓' : ''}</span>`;
     return `<details class="dict-paradigm seg-par" open style="--md-accent:${acc};--md-accent-dark:${accDark}">
-      <summary>🧩 Flessione con analisi dei morfemi <small>· ${escapeHtml(par.classe || '')}</small></summary>
+      <summary>🧩 Flessione con analisi dei morfemi <small>· ${escapeHtml(par.classe || '')}</small>${badge}</summary>
       <div class="clp-wrap">
         ${legend}
         ${body}
