@@ -625,7 +625,14 @@ def gk_verb_table(lemma, v):
         verbo['ind']['pfmp'] = {'mp': row}
         nota.append('perfetto medio-passivo: desinenze assimilate al tema (μμαι, ξαι, σται…)')
     parts_head = [lemma]
-    if v['fut']: parts_head.append(v['fut'].replace('~','ῶ' if v['fut'].endswith('~') else '') + ('ω' if not v['fut'].endswith('~') else ''))
+    # futuro nella «voce»: prendi la 1ª sing. GIÀ ACCENTATA dal paradigma generato
+    # (ricostruirla dallo stem nudo dava λυσω senza accento)
+    _futn = verbo.get('ind', {}).get('fut')
+    _f1 = next(iter(_futn.values()))[0] if _futn else None
+    if _f1:
+        parts_head.append(''.join(s[0] for s in _f1))
+    elif v['fut']:
+        parts_head.append(accent_verb(NFC(strip_acc(v['fut'].replace('~','')) + 'ω')))
     if v['aor']: parts_head.append(v['aor'])
     if v['pf']: parts_head.append(v['pf'])
     if v['aorp']: parts_head.append(v['aorp'])
