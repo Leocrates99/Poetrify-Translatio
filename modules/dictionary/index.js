@@ -1411,7 +1411,15 @@ export class DictionaryApp {
     if (hit.pos) cats.push(hit.pos);
     if (built && built.label) built.label.split('·').forEach(s => { s = s.trim(); if (s) cats.push(s); });
     if (!cats.length) return '';
-    return `<div class="dict-grammar">${cats.map(c => `<span class="dict-gram-chip">${escapeHtml(c)}</span>`).join('')}</div>`;
+    // il GENERE va per esteso, a capo e senza grassetto (non come chip)
+    const GEN = /^(maschile|femminile|neutro|comune)(\s+(e|o)\s+(maschile|femminile|neutro))?$/i;
+    const genders = cats.filter(c => GEN.test(c));
+    const rest = cats.filter(c => !GEN.test(c));
+    const chips = rest.length
+      ? `<div class="dict-grammar">${rest.map(c => `<span class="dict-gram-chip">${escapeHtml(c)}</span>`).join('')}</div>` : '';
+    const genderLine = genders.length
+      ? `<div class="dict-gender">${escapeHtml(genders[0].toLowerCase())}</div>` : '';
+    return chips + genderLine;
   }
 
   /* Tabella morfologica (declinazione/coniugazione completa). */
@@ -1480,18 +1488,40 @@ export class DictionaryApp {
 
     if (par.verbo) {
       const V = par.verbo;
-      const FIN = [['ind','Indicativo'],['cong','Congiuntivo'],['imv','Imperativo']];
-      const NONFIN = [['inf','Infinito'],['ptc','Participio'],['ger','Gerundivo']];
+      const FIN = [['ind','Indicativo'],['cong','Congiuntivo'],['opt','Ottativo'],['imv','Imperativo']];
+      const NONFIN = [['inf','Infinito'],['ptc','Participio'],['gerundio','Gerundio'],['gerundivo','Gerundivo']];
       const voiceOfKey = (k) => k.endsWith('_att') ? 'att' : k.endsWith('_pass') ? 'pass' : (k.endsWith('_mp') || k === 'aorp') ? 'mp' : null;
-      const VOICE_LBL = { att: 'Attivo', pass: 'Passivo', mp: isGreek ? 'Medio-passivo' : 'Passivo / deponente' };
-      const VOICE_ORDER = ['att', 'mp', 'pass'];
       const NF_LBL = { pres_att:'presente', pres_pass:'presente', pres_mp:'presente', pres:'presente',
                        pres_gen:'presente (gen.)', pf_att:'perfetto', pf:'perfetto', fut:'futuro',
                        aor_att:'aoristo', aor_mp:'aoristo', aorp:'aoristo' };
-      // voci realmente presenti
+      /* GRECO: medio e passivo coincidono in pres./pf. (chiave dato 'mp') ma si
+         DISTINGUONO in fut./aor. ('mid' vs 'pass'). Presentiamo 3 voci UNIFORMI
+         Attivo/Medio/Passivo risolvendo la voce di display nella chiave-dato in
+         modo tempo-aware. Il LATINO resta Attivo/Passivo(+deponente 'mp'). */
+      const hasMid = (() => { const chk = g => g && Object.values(g).some(t => t && t.mid);
+        return chk(V.ptc_decl) || chk(V.inf_full) || FIN.some(([mk]) => chk(V[mk])); })();
+      // risolve la voce di DISPLAY → chiave-dato per un nodo {att,mp,mid,pass}.
+      // In greco medio e passivo COINCIDONO ('mp') tranne in aor./fut., dove
+      // 'mp' (se c'è, es. ind. aor.) è il MEDIO: non va mostrato sotto Passivo.
+      const SPLIT_T = new Set(['aor', 'fut', 'aorp']);
+      const rk = (node, dv, t) => !node ? undefined
+        : dv === 'att' ? node.att
+        : dv === 'med' ? (node.mid || node.mp)
+        : dv === 'pass' ? (node.pass || (hasMid && !SPLIT_T.has(t) ? node.mp : undefined))
+        : node[dv];
+      const key2disp = (k) => k === 'mid' ? 'med' : k === 'mp' ? (hasMid ? 'med' : 'mp') : k;
+      const VOICE_LBL = hasMid
+        ? { att: 'Attivo', med: 'Medio', pass: 'Passivo' }
+        : { att: 'Attivo', mp: isGreek ? 'Medio-passivo' : 'Passivo / deponente', pass: 'Passivo' };
+      const VOICE_ORDER = hasMid ? ['att', 'med', 'pass'] : ['att', 'mp', 'pass'];
+      // voci di display realmente presenti
       const availV = new Set();
-      for (const [mk] of FIN) if (V[mk]) for (const t in V[mk]) for (const v in V[mk][t]) availV.add(v);
-      for (const [mk] of NONFIN) if (V[mk] && mk !== 'ger') for (const k in V[mk]) { const vv = voiceOfKey(k); if (vv) availV.add(vv); }
+      const addVoices = (node, t) => { for (const dv of VOICE_ORDER) if (rk(node, dv, t)) availV.add(dv); };
+      for (const [mk] of FIN) if (V[mk]) for (const t in V[mk]) addVoices(V[mk][t], t);
+      if (V.ptc_decl) { for (const t in V.ptc_decl) addVoices(V.ptc_decl[t], t); }
+      else if (V.ptc) { for (const k in V.ptc) { const vv = voiceOfKey(k); if (vv) availV.add(vv); } }
+      if (V.inf_full) { for (const t in V.inf_full) addVoices(V.inf_full[t], t); }
+      else if (V.inf) { for (const k in V.inf) { const vv = voiceOfKey(k); if (vv) availV.add(vv); } }
       const voices = VOICE_ORDER.filter(v => availV.has(v));
 
       let sel = this.segSel || {};
@@ -1503,20 +1533,34 @@ export class DictionaryApp {
         outer:
         for (const [mk] of FIN) { if (!V[mk]) continue;
           for (const t in V[mk]) for (const v in V[mk][t])
-            if (Array.isArray(V[mk][t][v]) && V[mk][t][v].some(cellIs)) { sel = { voce: v, modo: mk, tempo: t }; break outer; }
+            if (Array.isArray(V[mk][t][v]) && V[mk][t][v].some(cellIs)) { sel = { voce: key2disp(v), modo: mk, tempo: t }; break outer; }
         }
-        if (!sel.modo) nf: for (const [mk] of NONFIN) { if (!V[mk]) continue;
-          if (mk === 'ger') { if (cellIs(V.ger)) { sel = { modo: 'ger' }; break nf; } continue; }
-          for (const k in V[mk]) if (cellIs(V[mk][k])) { sel = { voce: voiceOfKey(k) || 'att', modo: mk }; break nf; }
+        if (!sel.modo && V.ptc_decl) ptc: for (const t in V.ptc_decl) for (const v in V.ptc_decl[t]) {
+          const nd = V.ptc_decl[t][v];
+          for (const g in nd) for (const n in nd[g]) for (const c in nd[g][n])
+            if (cellIs(nd[g][n][c])) { sel = { voce: key2disp(v), modo: 'ptc', tempo: t }; break ptc; }
         }
+        if (!sel.modo && V.inf_full) iff: for (const t in V.inf_full) for (const v in V.inf_full[t])
+          if (cellIs(V.inf_full[t][v])) { sel = { voce: key2disp(v), modo: 'inf', tempo: t }; break iff; }
+        if (!sel.modo && V.gerundivo) gvo: for (const g in V.gerundivo) for (const n in V.gerundivo[g]) for (const c in V.gerundivo[g][n])
+          if (cellIs(V.gerundivo[g][n][c])) { sel = { modo: 'gerundivo' }; break gvo; }
+        if (!sel.modo && V.gerundio) for (const c in V.gerundio.sg)
+          if (cellIs(V.gerundio.sg[c])) { sel = { modo: 'gerundio' }; break; }
+        if (!sel.modo && !V.ptc_decl && V.ptc) for (const k in V.ptc)
+          if (cellIs(V.ptc[k])) { sel = { voce: voiceOfKey(k) || 'att', modo: 'ptc' }; break; }
+        if (!sel.modo && !V.inf_full && V.inf) for (const k in V.inf)
+          if (cellIs(V.inf[k])) { sel = { voce: voiceOfKey(k) || 'att', modo: 'inf' }; break; }
       }
       const voce = (sel.voce && availV.has(sel.voce)) ? sel.voce : (voices[0] || 'att');
 
-      const modiFin = FIN.filter(([mk]) => V[mk] && Object.values(V[mk]).some(t => t[voce]));
+      const modiFin = FIN.filter(([mk]) => V[mk] && Object.entries(V[mk]).some(([tk, tn]) => rk(tn, voce, tk)));
+      const nfVoiceMatch = (obj) => obj && Object.keys(obj).some(k => { const vv = voiceOfKey(k); return vv === voce || vv === null; });
       const modiNF = NONFIN.filter(([mk]) => {
-        if (mk === 'ger') return !!V.ger;
-        if (!V[mk]) return false;
-        return Object.keys(V[mk]).some(k => { const vv = voiceOfKey(k); return vv === voce || vv === null; });
+        if (mk === 'gerundio') return !!V.gerundio;
+        if (mk === 'gerundivo') return !!(V.gerundivo || V.ger);
+        if (mk === 'inf') return V.inf_full ? Object.entries(V.inf_full).some(([tk, tn]) => rk(tn, voce, tk)) : nfVoiceMatch(V.inf);
+        if (mk === 'ptc') return V.ptc_decl ? Object.entries(V.ptc_decl).some(([tk, tn]) => rk(tn, voce, tk)) : nfVoiceMatch(V.ptc);
+        return false;
       });
       const allModi = [...modiFin, ...modiNF];
       const modo = (sel.modo && allModi.some(([k]) => k === sel.modo)) ? sel.modo : (allModi[0] ? allModi[0][0] : null);
@@ -1530,21 +1574,56 @@ export class DictionaryApp {
       const modoTabs = `<div class="seg-tabrow"><span class="seg-tabrow-lbl">modo</span>${allModi.map(([k, l]) =>
         `<button type="button" class="seg-tab ${k === modo ? 'is-on' : ''}" data-seg-modo="${k}">${l}</button>`).join('')}</div>`;
 
+      // tabella DECLINATA (participio/gerundivo come aggettivo): asse del numero, generi in colonne
+      const GEN = [['m','masch.'],['f','femm.'],['n','neut.']];
+      const declTable = (node) => {
+        const gens = GEN.filter(([g]) => node[g]);
+        const nums = [['sg','singolare'],['pl','plurale']].filter(([nn]) => gens.some(([g]) => node[g][nn]));
+        const CO = [['nom','nom.'],['gen','gen.'],['dat','dat.'],['acc','acc.'],['voc','voc.'],['abl','abl.']];
+        const cols = `58px ${gens.map(() => '1fr').join(' ')}`;
+        return `<div class="seg-declwrap">` + nums.map(([nn, nlab]) => {
+          const cs = CO.filter(([c]) => gens.some(([g]) => node[g][nn] && node[g][nn][c]));
+          const head = `<div class="seg-row seg-head"><span>${nlab}</span>${gens.map(([, gl]) => `<span>${gl}</span>`).join('')}</div>`;
+          const rows = cs.map(([c, cl]) => `<div class="seg-row"><span class="seg-case">${cl}</span>${gens.map(([g]) =>
+            `<span>${this._segCellHtml(node[g][nn] && node[g][nn][c], hitNorm, roles)}</span>`).join('')}</div>`).join('');
+          return `<div class="seg-table seg-decl" style="--segc:${cols};">${head}${rows}</div>`;
+        }).join('') + `</div>`;
+      };
+      const nfList = (pairs) => `<div class="seg-lists">` + pairs.map(([lab, cell]) =>
+        `<div class="seg-list-row"><span class="seg-case">${lab}</span>${this._segCellHtml(cell, hitNorm, roles)}</div>`).join('') + `</div>`;
+
       let pane = '';
-      if (modo === 'ger') {
-        pane = `<div class="seg-lists"><div class="seg-list-row"><span class="seg-case">gerundivo</span>${this._segCellHtml(V.ger, hitNorm, roles)}</div></div>`;
-      } else if (modo === 'inf' || modo === 'ptc') {
-        const entries = Object.entries(V[modo]).filter(([k]) => { const vv = voiceOfKey(k); return vv === voce || vv === null; });
-        pane = `<div class="seg-lists">` + entries.map(([k, cell]) =>
-          `<div class="seg-list-row"><span class="seg-case">${NF_LBL[k] || k}</span>${this._segCellHtml(cell, hitNorm, roles)}</div>`).join('') + `</div>`;
+      if (modo === 'gerundio' && V.gerundio) {
+        // gerundio = nome neutro (senza nominativo): gen./dat./acc./abl.
+        const CO = [['gen','genitivo'],['dat','dativo'],['acc','accusativo'],['abl','ablativo']];
+        pane = `<div class="seg-table" style="--segc:110px 1fr;"><div class="seg-row seg-head"><span>caso</span><span>gerundio</span></div>`
+          + CO.filter(([c]) => V.gerundio.sg && V.gerundio.sg[c]).map(([c, cl]) =>
+              `<div class="seg-row"><span class="seg-case">${cl}</span><span>${this._segCellHtml(V.gerundio.sg[c], hitNorm, roles)}</span></div>`).join('') + `</div>`;
+      } else if (modo === 'gerundivo') {
+        pane = V.gerundivo ? declTable(V.gerundivo) : nfList([['gerundivo', V.ger]]);
+      } else if (modo === 'ptc') {
+        if (V.ptc_decl) {
+          const grp = V.ptc_decl;
+          const tempi = Object.keys(grp).filter(t => rk(grp[t], voce, t));
+          const tempo = (sel.tempo && grp[sel.tempo] && rk(grp[sel.tempo], voce, sel.tempo)) ? sel.tempo : tempi[0];
+          const tempoTabs = tempi.length > 1 ? `<div class="seg-tabrow"><span class="seg-tabrow-lbl">tempo</span>${tempi.map(t =>
+            `<button type="button" class="seg-tab seg-tab-t ${t === tempo ? 'is-on' : ''}" data-seg-tempo="${t}">${TEMPI[t] || t}</button>`).join('')}</div>` : '';
+          pane = tempoTabs + declTable(rk(grp[tempo], voce, tempo));
+        } else {
+          pane = nfList(Object.entries(V.ptc).filter(([k]) => { const vv = voiceOfKey(k); return vv === voce || vv === null; }).map(([k, c]) => [NF_LBL[k] || k, c]));
+        }
+      } else if (modo === 'inf') {
+        pane = V.inf_full
+          ? nfList(Object.keys(V.inf_full).filter(t => rk(V.inf_full[t], voce, t)).map(t => [TEMPI[t] || t, rk(V.inf_full[t], voce, t)]))
+          : nfList(Object.entries(V.inf).filter(([k]) => { const vv = voiceOfKey(k); return vv === voce || vv === null; }).map(([k, c]) => [NF_LBL[k] || k, c]));
       } else if (modo) {
         const grp = V[modo];
-        const tempi = Object.keys(grp).filter(t => grp[t][voce]);
-        const tempo = (sel.tempo && grp[sel.tempo] && grp[sel.tempo][voce]) ? sel.tempo : tempi[0];
+        const tempi = Object.keys(grp).filter(t => rk(grp[t], voce, t));
+        const tempo = (sel.tempo && grp[sel.tempo] && rk(grp[sel.tempo], voce, sel.tempo)) ? sel.tempo : tempi[0];
         // 3 · TEMPO
         const tempoTabs = `<div class="seg-tabrow"><span class="seg-tabrow-lbl">tempo</span>${tempi.map(t =>
           `<button type="button" class="seg-tab seg-tab-t ${t === tempo ? 'is-on' : ''}" data-seg-tempo="${t}">${TEMPI[t] || t}</button>`).join('')}</div>`;
-        const arr = (grp[tempo] && grp[tempo][voce]) || [];
+        const arr = (grp[tempo] && rk(grp[tempo], voce, tempo)) || [];
         const PERS = ['1ª sg.', '2ª sg.', '3ª sg.', '1ª pl.', '2ª pl.', '3ª pl.'];
         const head = `<div class="seg-row seg-head"><span>persona</span><span>${VOICE_LBL[voce] || voce}</span></div>`;
         const rows = PERS.map((p, i) => `<div class="seg-row"><span class="seg-case">${p}</span><span>${this._segCellHtml(arr[i], hitNorm, roles)}</span></div>`).join('');

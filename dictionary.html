@@ -1375,7 +1375,9 @@ body.poetrify-dark .clp-verb-table th, body.poetrify-dark .clp-verb-table td {
   color: var(--sepia);
   line-height: 1.5;
 }
-.dict-grammar { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 10px; }
+.dict-grammar { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0 6px; }
+/* genere per esteso, a capo, senza grassetto (convenzione da vocabolario) */
+.dict-gender { font-family: var(--font-body); font-size: 13.5px; font-style: italic; color: var(--ink-soft); margin: 0 0 10px; }
 .dict-gram-chip {
   font-family: var(--font-ui);
   font-size: 10px;
@@ -1975,6 +1977,11 @@ body.poetrify-dark .dict-prev-lemma, body.poetrify-dark .dict-next-lemma { backg
 .seg-list-row:first-of-type { border-top: none; }
 .seg-lists { border: 1px solid var(--rule-soft); border-radius: 12px; overflow: hidden; }
 .poetrify-dark .seg-table .seg-head { background: var(--cream); }
+/* Tabelle DECLINATE (participio/gerundivo come aggettivo: asse del numero × generi in colonne) */
+.seg-declwrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+.seg-declwrap .seg-decl { min-width: 300px; }
+.seg-declwrap .seg-decl + .seg-decl { margin-top: 8px; }
+.seg-decl .seg-row { gap: 10px; padding: 8px 14px; }
 .dict-entry-via { font-size: 12px; font-style: italic; color: #6b6660; margin: 4px 0; }
 .dict-entry-alts { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; font-size: 12px; color: #6b6660; margin: 6px 0; }
 .alt-lemma-chip { font-size: 13px; padding: 2px 10px; border: 1px solid #d5d2cb; border-radius: 999px; background: transparent; cursor: pointer; }
@@ -2128,11 +2135,16 @@ header.topbar { transition: background 0.25s ease; }
 /* ══ Parti principali accanto al lemma (come nei mockup) ══════════════════ */
 .dict-principal-parts {
   font-family: var(--font-body);
-  font-size: 14px;
-  color: var(--ink-soft);
-  margin: 4px 0 2px;
+  font-size: 15.5px;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--cream);
+  border: 1px solid var(--rule-soft);
+  border-radius: 10px;
+  padding: 8px 14px;
+  margin: 8px 0 4px;
 }
-.dict-principal-parts.greek { font-family: var(--font-classical); font-size: 15px; }
+.dict-principal-parts.greek { font-family: var(--font-classical); font-size: 16.5px; }
 .dict-pp-class { color: var(--sepia); font-style: italic; }
 
 /* ══ Flessione: controlli, toggle morfemi, righe di tab a livelli ═════════ */
