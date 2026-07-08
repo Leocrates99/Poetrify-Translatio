@@ -508,6 +508,21 @@ MI_MOOD = {
             'opt':  (['δεικνύοιμι','δεικνύοις','δεικνύοι','δεικνύοιμεν','δεικνύοιτε','δεικνύοιεν'], ['δεικνυοίμην','δεικνύοιο','δεικνύοιτο','δεικνυοίμεθα','δεικνύοισθε','δεικνύοιντο']),
             'imv':  (['δείκνυ','δεικνύτω','δείκνυτε','δεικνύντων'], ['δείκνυσο','δεικνύσθω','δείκνυσθε','δεικνύσθων'])},
 }
+# ── verbi ATEMATICI in -μι: presente RADDOPPIATO (radice lunga al sing., breve al
+# plur.), SENZA vocale tematica. Replicato dal segmentato (gen_paradigms.MI_PRES)
+# perché l'indice piatto usi le desinenze atematiche corrette invece delle tematiche
+# errate (τίθημι non τίθω/τίθεις). (red, radice_lunga, radice_breve) ──
+MI_PRES = {
+ 'δίδωμι':  ('δι', 'δω', 'δο'),
+ 'τίθημι':  ('τι', 'θη', 'θε'),
+ 'ἵστημι':  ('ἱ',  'στη', 'στα'),
+ 'δείκνυμι':('',   'δεικνυ', 'δεικνυ'),
+ 'ἵημι':    ('ἱ',  'η',  'ε'),
+}
+MI_ATT_END = ['μι', 'ς', 'σι', 'μεν', 'τε', 'ασι']          # att. sg -μι/-ς/-σι(ν) · pl -μεν/-τε/-ασι(ν)
+MI_MP_END  = ['μαι', 'σαι', 'ται', 'μεθα', 'σθε', 'νται']   # m.-p. sulla radice breve
+MI_ATT3PL  = {'ἵστημι':'ἱστᾶσι', 'ἵημι':'ἱᾶσι'}            # 3ª pl. att. per contrazione (accento forzato)
+MI_LEMMAS  = frozenset(MI_PRES)
 AOR1_ACT = { 'α':'1ª sg.', 'ας':'2ª sg.', 'ε':'3ª sg.', 'αμεν':'1ª pl.', 'ατε':'2ª pl.', 'αν':'3ª pl.' }
 AOR1_MID = { 'αμην':'1ª sg.', 'ω':'2ª sg.', 'ατο':'3ª sg.', 'αμεθα':'1ª pl.', 'ασθε':'2ª pl.', 'αντο':'3ª pl.' }
 AOR2_MID = { 'ομην':'1ª sg.', 'ου':'2ª sg.', 'ετο':'3ª sg.', 'ομεθα':'1ª pl.', 'εσθε':'2ª pl.', 'οντο':'3ª pl.' }
@@ -568,29 +583,56 @@ def gen_verb(lemma, v):
     contract = v['contract']
     dep = v['dep']
     # ── presente e imperfetto ──
-    pres_tables = ([] if dep else [(PRES_ACT, 'pres. ind. att.')]) + [(PRES_MP, 'pres. ind. m.-p.' if not dep else 'pres. ind.')]
-    for table, label in pres_tables:
-        for end, pers in table.items():
-            e2 = CONTR[contract].get(end, None) if contract else end
-            if contract and e2 is None: continue
-            form = ps[:-1] + e2 if contract else ps + end
-            add(form, f'{label} {pers} di {lemma}', rec=not contract, pre_accented=bool(contract))
-    # infiniti presenti
-    if contract:
-        if not dep: add(ps[:-1] + CONTR[contract]['ειν'], f'inf. pres. att. di {lemma}', pre_accented=True)
-        add(ps[:-1] + CONTR[contract]['εσθαι'], f'inf. pres. m.-p. di {lemma}', pre_accented=True)
+    mi = MI_PRES.get(lemma)
+    if mi:
+        # verbi atematici in -μι: presente raddoppiato SENZA vocale tematica
+        # (radice lunga al sing., breve al plur.); niente desinenze tematiche errate.
+        # Participi e infiniti presenti (τιθείς, τιθέναι…) arrivano corretti da
+        # _GKP/_GKM in coda; l'imperfetto atematico è irregolare → assente (mai errato).
+        red, rl, rs = mi
+        P6 = ['1ª sg.','2ª sg.','3ª sg.','1ª pl.','2ª pl.','3ª pl.']
+        long_u = N(red + rl).endswith('υ')   # -νυμι: υ lunga al sing. (δείκνῡμι, δείκνῡς…)
+        if not dep:
+            for i, end in enumerate(MI_ATT_END):
+                pers = P6[i]
+                if i == 5 and lemma in MI_ATT3PL:       # 3ª pl. contratta forzata (ἱστᾶσι, ἱᾶσι)
+                    base_f = MI_ATT3PL[lemma]
+                    add(base_f, f'pres. ind. att. {pers} di {lemma}', pre_accented=True)
+                    add(base_f + 'ν', f'pres. ind. att. {pers} (+ν efelc.) di {lemma}', pre_accented=True)
+                    continue
+                stem = red + (rl if i < 3 else rs)
+                if i == 1 and long_u:                    # 2ª sg. -ῡς: υ lunga → acuta (non properispomeno δεῖκνυς)
+                    add(accent_at(strip_acc(stem + end), 2), f'pres. ind. att. {pers} di {lemma}', pre_accented=True)
+                    continue
+                add(stem + end, f'pres. ind. att. {pers} di {lemma}')
+                if i in (2, 5):                          # 3ª sg. -σι(ν), 3ª pl. -ασι(ν): ν efelcistico
+                    add(stem + end + 'ν', f'pres. ind. att. {pers} (+ν efelc.) di {lemma}')
+        for i, end in enumerate(MI_MP_END):
+            add(red + rs + end, f'pres. ind. m.-p. {P6[i]} di {lemma}')
     else:
-        if not dep: add(accent_at(strip_acc(ps + 'ειν'), 2), f'inf. pres. att. di {lemma}', pre_accented=True)
-        add(ps + 'εσθαι', f'inf. pres. m.-p. di {lemma}')
-    # participi presenti (nom. e basi oblique principali)
-    if not dep and not contract:
-        add(accent_at(strip_acc(ps) + 'ων', 2), f'ptc. pres. att. nom. m. sg. di {lemma}', pre_accented=True)
-        for e, p in (('οντος','gen. m./n. sg.'), ('οντι','dat. sg.'), ('οντα','acc. sg.'), ('οντες','nom. pl.'), ('οντων','gen. pl.'), ('ουσι','dat. pl.'), ('ουσα','nom. f. sg.'), ('ουσης','gen. f. sg.'), ('ον','nom. n. sg.')):
-            add(ps + e, f'ptc. pres. att. {p} di {lemma}')
-    add(ps + ('ομενος' if not contract else ''), f'ptc. pres. m.-p. nom. m. sg. di {lemma}') if not contract else None
-    if not contract:
-        for e, p in (('ομενη','nom. f. sg.'), ('ομενον','nom./acc. n. sg.'), ('ομενου','gen. sg.'), ('ομενοι','nom. pl.'), ('ομενων','gen. pl.'), ('ομενους','acc. pl.')):
-            add(ps + e, f'ptc. pres. m.-p. {p} di {lemma}')
+        pres_tables = ([] if dep else [(PRES_ACT, 'pres. ind. att.')]) + [(PRES_MP, 'pres. ind. m.-p.' if not dep else 'pres. ind.')]
+        for table, label in pres_tables:
+            for end, pers in table.items():
+                e2 = CONTR[contract].get(end, None) if contract else end
+                if contract and e2 is None: continue
+                form = ps[:-1] + e2 if contract else ps + end
+                add(form, f'{label} {pers} di {lemma}', rec=not contract, pre_accented=bool(contract))
+        # infiniti presenti
+        if contract:
+            if not dep: add(ps[:-1] + CONTR[contract]['ειν'], f'inf. pres. att. di {lemma}', pre_accented=True)
+            add(ps[:-1] + CONTR[contract]['εσθαι'], f'inf. pres. m.-p. di {lemma}', pre_accented=True)
+        else:
+            if not dep: add(accent_at(strip_acc(ps + 'ειν'), 2), f'inf. pres. att. di {lemma}', pre_accented=True)
+            add(ps + 'εσθαι', f'inf. pres. m.-p. di {lemma}')
+        # participi presenti (nom. e basi oblique principali)
+        if not dep and not contract:
+            add(accent_at(strip_acc(ps) + 'ων', 2), f'ptc. pres. att. nom. m. sg. di {lemma}', pre_accented=True)
+            for e, p in (('οντος','gen. m./n. sg.'), ('οντι','dat. sg.'), ('οντα','acc. sg.'), ('οντες','nom. pl.'), ('οντων','gen. pl.'), ('ουσι','dat. pl.'), ('ουσα','nom. f. sg.'), ('ουσης','gen. f. sg.'), ('ον','nom. n. sg.')):
+                add(ps + e, f'ptc. pres. att. {p} di {lemma}')
+        add(ps + ('ομενος' if not contract else ''), f'ptc. pres. m.-p. nom. m. sg. di {lemma}') if not contract else None
+        if not contract:
+            for e, p in (('ομενη','nom. f. sg.'), ('ομενον','nom./acc. n. sg.'), ('ομενου','gen. sg.'), ('ομενοι','nom. pl.'), ('ομενων','gen. pl.'), ('ομενους','acc. pl.')):
+                add(ps + e, f'ptc. pres. m.-p. {p} di {lemma}')
     # ── congiuntivo, ottativo, imperativo (presente) ──
     SIX = ['1ª sg.','2ª sg.','3ª sg.','1ª pl.','2ª pl.','3ª pl.']
     FOUR = ['2ª sg.','3ª sg.','2ª pl.','3ª pl.']
@@ -634,7 +676,7 @@ def gen_verb(lemma, v):
         impf_stem = augment_stem(ps)
     for end, pers in IMPF_ACT.items():
         real = 'ον' if end == 'ον·pl' else end
-        if dep: break
+        if dep or mi: break   # -μι: imperfetto atematico irregolare → assente (mai errato)
         e2 = CONTR[contract].get(real, None) if contract else real
         if contract and e2 is None: continue
         form = impf_stem[:-1] + e2 if contract else impf_stem + real
@@ -642,6 +684,7 @@ def gen_verb(lemma, v):
             form = accent_at(form, 2)   # imperf. contratto att. sg./3ª pl.: penultima acuta
         add(form, f'impf. ind. att. {pers} di {lemma}', rec=not contract, pre_accented=bool(contract))
     for end, pers in IMPF_MP.items():
+        if mi: break
         e2 = CONTR[contract].get(end, None) if contract else end
         if contract and e2 is None: continue
         form = impf_stem[:-1] + e2 if contract else impf_stem + end
@@ -857,6 +900,40 @@ def dedup_atone(fdict):
         del fdict[k]
     return len(rm)
 
+def _mi_present_verbose(c):
+    """True se il candidato è una forma del SISTEMA DEL PRESENTE di un verbo in -μι
+    generata da QUESTO modulo (formato prolisso «… di <lemma>»): pres./impf. di
+    indicativo, infinito, participio, cong./ott./imv. Esclude le fonti a formato
+    COMPATTO («pres. att. ind. 3S», iterativi δόσκον…), prive di « di » e intatte."""
+    if c.get('lemma') not in MI_LEMMAS: return False
+    p = c.get('parsing', '')
+    return ' di ' in p and ('pres.' in p or 'impf.' in p)
+
+def purge_mi_present(base):
+    """Toglie dagli shard le forme del SISTEMA DEL PRESENTE dei verbi in -μι generate
+    da run PRECEDENTI di questo modulo con le desinenze TEMATICHE errate (τίθεις,
+    δίδουσι, ἵστον, ἱστεῖν…): il merge idempotente non le rimuove mai. Il presente
+    atematico corretto (ind. + inf. + ptc. + modi) è poi RIGENERATO dal merge; l'impf.
+    atematico irregolare resta assente (regola sacra: sbagliato vale meno di assente).
+    Le fonti a formato compatto restano intatte. Ritorna il n° di candidati tolti."""
+    purged = 0
+    for path in sorted(glob.glob(os.path.join(base, '*.json'))):
+        if os.sep + 'paradigms' + os.sep in path: continue
+        data = json.load(open(path, encoding='utf-8'))
+        fdict = data.get('forms')
+        if not fdict: continue
+        changed = False
+        for form in list(fdict):
+            kept = [c for c in fdict[form] if not _mi_present_verbose(c)]
+            if len(kept) != len(fdict[form]):
+                purged += len(fdict[form]) - len(kept); changed = True
+                if kept: fdict[form] = kept
+                else: del fdict[form]
+        if changed:
+            data.setdefault('meta', {})['forms_count'] = len(fdict)
+            json.dump(data, open(path, 'w', encoding='utf-8'), ensure_ascii=False)
+    return purged
+
 def main(write=True):
     base = 'data/greek'
     # nominali dal corpus
@@ -890,6 +967,9 @@ def main(write=True):
     print(f'verbi: {len(VERBS)} paradigmi → {len(gen_vrb)} forme')
     if not write:
         return gen_nom, gen_vrb
+    # pulizia: via i presenti/imperfetti tematici ERRATI dei -μι lasciati da run
+    # precedenti (il merge idempotente non rimuove mai) → poi rigenerati corretti
+    print(f'purge -μι tematici errati: -{purge_mi_present(base)} candidati pres./impf.')
     # fusione negli shard
     allgen = collections.defaultdict(list)
     for d in (gen_nom, gen_vrb):
