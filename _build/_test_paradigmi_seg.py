@@ -105,7 +105,9 @@ def crossval(lang, lemma):
         if isinstance(n, list) and n and isinstance(n[0], list) and len(n[0]) == 2 and isinstance(n[0][0], str):
             cells.append(n); return
         if isinstance(n, dict):
-            for v in n.values(): walk(v)
+            for k, v in n.items():
+                if k == 'ptc_decl': continue   # participi declinati (T1): il mirror nell'indice piatto arriva in T2/T5
+                walk(v)
         elif isinstance(n, list):
             for v in n:
                 if v is not None: walk(v)

@@ -26,6 +26,7 @@ from gen_greek_forms import (VERBS, classify_nominal, NOMINAL_EXTRA, strip_acc,
                              de_augment, CONTR, N as NG, NFC, lemma_accent_dist,
                              persistent, dat_pl_3, syllable_nuclei)
 from accentuation import accent_nominal, nominal_idx_start, accent_verb, long_dichra   # motore di accentazione
+from gk_participles import participles as gk_participles   # participi greci declinati (derivati dai principi)
 
 def seg(*pairs):
     return [[t, r] for t, r in pairs if t]
@@ -636,6 +637,13 @@ def gk_verb_table(lemma, v):
     if v['aor']: parts_head.append(v['aor'])
     if v['pf']: parts_head.append(v['pf'])
     if v['aorp']: parts_head.append(v['aorp'])
+    # participi DECLINATI (pres/fut/aor/pf × att/med/pass), derivati dai principi — campo nuovo,
+    # accanto a ptc (nominativo) per non rompere il renderer attuale; fallback se non derivabile
+    try:
+        pd = gk_participles(lemma, v)
+        if pd: verbo['ptc_decl'] = pd
+    except Exception:
+        pass
     return dict(classe=('verbo contratto in -' + contract + 'ω' if contract else 'verbo tematico') + (' · deponente' if dep else ''),
                 testa=', '.join(parts_head), verbo=verbo, nota=(' · '.join(dict.fromkeys(nota)) or None))
 
