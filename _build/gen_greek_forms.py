@@ -272,6 +272,7 @@ def classify_nominal(lemma, definition):
     return None
 
 from accentuation import accent_nominal, nominal_idx_start, accent_verb, long_dichra   # motore di accentazione
+import gk_participles as _GKP, gk_moods as _GKM   # participi declinati + modi/infiniti (per l'indice piatto)
 
 def gen_nominal(lemma, klass, stem):
     idx_start = nominal_idx_start(lemma)
@@ -754,6 +755,33 @@ def gen_verb(lemma, v):
         stem_mp = strip_acc(v['pfmp'])
         for form, pers in mp_perfect(stem_mp).items():
             add(form, f'pf. ind. m.-p. {pers} di {lemma}')
+    # ── T2/T1: appiattisci participi DECLINATI + modi (aor/pf/fut) + infiniti completi ──
+    try:
+        _TL = {'pres':'pres.','fut':'fut.','aor':'aor.','pf':'pf.'}
+        _VL = {'att':'att.','mid':'med.','pass':'pass.','mp':'m.-p.'}
+        _ML = {'cong':'cong.','opt':'ott.','imv':'imv.'}
+        _CL = {'nom':'nom.','gen':'gen.','dat':'dat.','acc':'acc.','voc':'voc.'}
+        _P6 = ['1ª sg.','2ª sg.','3ª sg.','1ª pl.','2ª pl.','3ª pl.']; _P4 = ['2ª sg.','3ª sg.','2ª pl.','3ª pl.']
+        def _sf(cell): return ''.join(s[0] for s in cell)
+        for t, dd in _GKP.participles(lemma, v).items():
+            for vc, flex in dd.items():
+                for g, nums in flex.items():
+                    for num, cases in nums.items():
+                        for case, cell in cases.items():
+                            add(_sf(cell), f'ptc. {_TL[t]} {_VL[vc]} {g}. {_CL[case]} {num}. di {lemma}', pre_accented=True)
+        for t, dd in _GKM.infinitives(lemma, v).items():
+            for vc, cell in dd.items():
+                add(_sf(cell), f'inf. {_TL[t]} {_VL[vc]} di {lemma}', pre_accented=True)
+        for mood, tenses in _GKM.moods(lemma, v).items():
+            for t, voices in tenses.items():
+                for vc, cells in voices.items():
+                    pers = _P4 if len(cells) == 4 else _P6
+                    for i, cell in enumerate(cells):
+                        w = _sf(cell)
+                        if ' ' in w: continue   # salta le perifrasi (participio + εἰμί)
+                        add(w, f'{_ML.get(mood, mood)} {_TL[t]} {_VL[vc]} {pers[i] if i < len(pers) else ""} di {lemma}', pre_accented=True)
+    except Exception:
+        pass
     return out
 
 def de_augment(stem_aug, lemma):

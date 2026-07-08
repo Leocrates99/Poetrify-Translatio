@@ -27,6 +27,7 @@ from gen_greek_forms import (VERBS, classify_nominal, NOMINAL_EXTRA, strip_acc,
                              persistent, dat_pl_3, syllable_nuclei)
 from accentuation import accent_nominal, nominal_idx_start, accent_verb, long_dichra   # motore di accentazione
 from gk_participles import participles as gk_participles   # participi greci declinati (derivati dai principi)
+from gk_moods import moods as gk_moods, infinitives as gk_infinitives   # modi aor/pf/fut + infiniti completi
 
 def seg(*pairs):
     return [[t, r] for t, r in pairs if t]
@@ -642,6 +643,19 @@ def gk_verb_table(lemma, v):
     try:
         pd = gk_participles(lemma, v)
         if pd: verbo['ptc_decl'] = pd
+    except Exception:
+        pass
+    # modi aoristo/perfetto + ottativo futuro: FUSI in cong/opt/imv (già nidificati) — non-breaking
+    try:
+        for mood, tenses in gk_moods(lemma, v).items():
+            for t, voices in tenses.items():
+                verbo.setdefault(mood, {}).setdefault(t, {}).update(voices)
+    except Exception:
+        pass
+    # infiniti completi (pres/fut/aor/pf × diatesi): campo NUOVO inf_full accanto a inf (nominativo)
+    try:
+        inf_full = gk_infinitives(lemma, v)
+        if inf_full: verbo['inf_full'] = inf_full
     except Exception:
         pass
     return dict(classe=('verbo contratto in -' + contract + 'ω' if contract else 'verbo tematico') + (' · deponente' if dep else ''),

@@ -71,6 +71,14 @@ T('greek','λείπω',['verbo','ind','aor','att',2], [('ἔ','a'),('λιπ','t'
 T('greek','γίγνομαι',['verbo','ind','aor','mp',2], [('ἐ','a'),('γέν','t'),('ε','v'),('το','d')], '(ἐγένετο)')
 T('greek','δίδωμι',['verbo','ind','aor','att',0], [('ἔ','a'),('δω','t'),('κ','s'),('α','d')], '(ἔδωκα)')
 T('greek','γράφω',['verbo','ind','pfmp','mp',2], [('γέ','a'),('γραπ','t'),('ται','d')], '(γέγραπται)')
+print('--- GRECO / modi + infiniti (T2) ---')
+T('greek','λύω',['verbo','cong','aor','att',0], [('λύ','t'),('σ','s'),('ω','d')], '(λύσω cong. aor.)')
+T('greek','λύω',['verbo','opt','fut','att',0], [('λύ','t'),('σ','s'),('οιμι','d')], '(λύσοιμι ott. fut.)')
+T('greek','λύω',['verbo','imv','aor','att',0], [('λῦ','t'),('σ','s'),('ον','d')], '(λῦσον imv. aor.)')
+T('greek','λύω',['verbo','cong','pf','att',0], [('λε','a'),('λύ','t'),('κ','s'),('ω','d')], '(λελύκω cong. pf.)')
+T('greek','λύω',['verbo','inf_full','aor','pass'], [('λυ','t'),('θ','s'),('ῆναι','d')], '(λυθῆναι inf. aor. pass.)')
+T('greek','λύω',['verbo','inf_full','pf','att'], [('λε','a'),('λυ','t'),('κ','s'),('έναι','d')], '(λελυκέναι inf. pf.)')
+T('greek','λείπω',['verbo','inf_full','aor','att'], [('λιπ','t'),('εῖν','d')], '(λιπεῖν inf. aor. II)')
 print('--- GRECO / nomi (accento persistente esatto) ---')
 def TX(lang, lemma, path, exp_form):
     global fail
@@ -106,7 +114,6 @@ def crossval(lang, lemma):
             cells.append(n); return
         if isinstance(n, dict):
             for k, v in n.items():
-                if k == 'ptc_decl': continue   # participi declinati (T1): il mirror nell'indice piatto arriva in T2/T5
                 walk(v)
         elif isinstance(n, list):
             for v in n:
