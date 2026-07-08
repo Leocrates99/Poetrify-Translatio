@@ -1129,6 +1129,10 @@ export class DictionaryApp {
        quando esiste, ha la precedenza; il modello ricostruito resta sotto,
        ripiegato. */
     const segPar = await this._loadSegParadigm(hit.lemma);
+    // PoS di DISPLAY: preferisci quello CORRETTO del paradigma (T4: Sostantivo/Aggettivo/
+    // Verbo/'nome') al pos grezzo della fonte, che può essere assente o mal taggato
+    // (es. deponenti senza pos; «res» taggato aggettivo). Fallback alla fonte piatta.
+    const displayPos = (segPar && segPar.pos) || hit.pos;
     const segHtml = segPar ? this._renderSegParadigm(segPar, hit) : '';
     /* «Tabella morfologica completa» (modello ricostruito) SOSPESA quando c'è
        la flessione segmentata: sarebbe ridondante. Resta solo come fallback. */
@@ -1138,7 +1142,7 @@ export class DictionaryApp {
     const ppText = (segPar && segPar.testa) || (built && built.citation) || '';
     const ppCat = (segPar && segPar.cat) || '';
     const ppClass = (segPar && segPar.classe) ? segPar.classe : '';
-    const ppCatCol = this._catColor(hit.pos, ppCat || ppClass);
+    const ppCatCol = this._catColor(displayPos, ppCat || ppClass);
     const catChip = ppCat
       ? `<span class="dict-cat"${ppCatCol ? ` style="--cat-c:${ppCatCol}"` : ''}>${escapeHtml(ppCat)}</span>`
       : (ppClass ? `<span class="dict-pp-class">· ${escapeHtml(ppClass)}</span>` : '');
@@ -1165,10 +1169,10 @@ export class DictionaryApp {
     /* [NEW 13] prev/next alfabetici */
     const navHtml = await this._renderSiblingNav(hit);
 
-    return `<article class="dict-entry-card${this._posClass(hit.pos)}">
+    return `<article class="dict-entry-card${this._posClass(displayPos)}">
       <header class="dict-entry-header">
         <span class="dict-entry-lemma${lemmaCls}">${escapeHtml(hit.lemma)}</span>
-        ${hit.pos ? `<span class="dict-entry-pos">${escapeHtml(hit.pos)}</span>` : ''}
+        ${displayPos ? `<span class="dict-entry-pos">${escapeHtml(displayPos)}</span>` : ''}
         ${freqHtml}
         ${navHtml}
       </header>
