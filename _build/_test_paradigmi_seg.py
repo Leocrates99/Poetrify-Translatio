@@ -104,6 +104,31 @@ T('greek','θάλασσα',['nome','sg','gen'], [('θαλάσσ','t'),('ης','d
 T('greek','πόλις',['nome','sg','gen'], [('πόλ','t'),('εως','d')])
 T('greek','σῶμα',['nome','pl','dat'], [('σώμ','t'),('ασι','d')])
 
+print('--- POS + CAT propagati dal dict piatto (T4) ---')
+def TP(lang, lemma, exp_pos, exp_cat):
+    global fail
+    e = out[lang][NG(lemma)[:1]].get(lemma)
+    if not e:
+        fail += 1; print(f'FAIL {lemma}: assente'); return
+    ok = e.get('pos') == exp_pos and e.get('cat') == exp_cat
+    if ok:
+        print(f'OK   {lemma}: pos={e["pos"]} · cat={e["cat"]}')
+    else:
+        fail += 1; print(f'FAIL {lemma}: pos={e.get("pos")} cat={e.get("cat")} (atteso {exp_pos}/{exp_cat})')
+TP('latin', 'rosa', 'Sostantivo', '1ª decl.')
+TP('latin', 'corpus', 'Sostantivo', '3ª decl.')
+TP('latin', 'amo', 'Verbo', '1ª con.')
+TP('latin', 'capio', 'Verbo', 'mista')
+TP('latin', 'conor', 'Verbo', '1ª con. dep.')
+TP('latin', 'Italicus', 'Aggettivo', '2ª classe')
+TP('latin', 'augustus', 'Aggettivo', '1ª classe')
+TP('latin', 'Achilles', 'nome', '3ª decl.')     # fonte muta → nominale generico + segnalazione (mai indovinare)
+TP('greek', 'θάλασσα', 'Sostantivo', '1ª decl.')
+TP('greek', 'σῶμα', 'Sostantivo', '3ª decl.')
+TP('greek', 'λύω', 'Verbo', 'tematico')
+TP('greek', 'τιμάω', 'Verbo', 'contr. -αω')
+TP('greek', 'γίγνομαι', 'Verbo', 'tematico dep.')
+
 print('--- cross-validazione con l\'indice piatto ---')
 def flat_forms(lang, letter):
     try:

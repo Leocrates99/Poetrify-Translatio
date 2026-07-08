@@ -762,6 +762,85 @@ def gk_noun_table(lemma, klass, stem):
     return dict(classe=cl, tab={'sg': sg, 'pl': pl})
 
 # ═══════════════════ MAIN ═══════════════════
+# ═══════════════════ T4 · PARTE DEL DISCORSO + CATEGORIA (targhetta) ═══════════════════
+# Il dict piatto (data/*/<lettera>.json → dict[lemma].pos) porta GIÀ il PoS ricco
+# dalle fonti (L&S / LSJ). Qui lo si PROPAGA ai paradigmi, mappato sulle etichette
+# capitalizzate del laboratorio (POS_CLASS/POS_LAB: Sostantivo/Aggettivo/Verbo/…),
+# e si aggiunge `cat` (targhetta breve: declinazione, coniugazione, classe, categoria).
+# REGOLA SACRA: dove la fonte non basta a distinguere (sost. vs agg.) si lascia il
+# nominale generico 'nome' e lo si SEGNALA — mai indovinare.
+POS_LAB = {'sostantivo': 'Sostantivo', 'aggettivo': 'Aggettivo', 'verbo': 'Verbo',
+           'pronome': 'Pronome', 'avverbio': 'Avverbio', 'preposizione': 'Preposizione',
+           'congiunzione': 'Congiunzione', 'articolo': 'Articolo', 'interiezione': 'Interiezione',
+           'numerale': 'Numerale', 'particella': 'Particella'}
+_NOMINAL_POS = {'sostantivo', 'aggettivo', 'pronome', 'numerale', 'articolo'}
+
+# Completamento delle closed-class DECLINABILI dove la fonte tace: mai un indovinello,
+# solo lemmi certi ed enumerabili (grammatica chiusa). Valore = (POS_LAB, categoria).
+CLOSED_CLASS = {
+    'latin': {
+        'qui': ('Pronome', 'relativo'), 'quis': ('Pronome', 'interrogativo'),
+        'hic': ('Pronome', 'dimostrativo'), 'ille': ('Pronome', 'dimostrativo'),
+        'iste': ('Pronome', 'dimostrativo'), 'is': ('Pronome', 'determinativo'),
+        'ipse': ('Pronome', 'determinativo'), 'idem': ('Pronome', 'determinativo'),
+        'ego': ('Pronome', 'personale'), 'tu': ('Pronome', 'personale'), 'sui': ('Pronome', 'riflessivo'),
+        'unus': ('Numerale', 'cardinale'), 'duo': ('Numerale', 'cardinale'), 'tres': ('Numerale', 'cardinale'),
+    },
+    'greek': {
+        'ὁ': ('Articolo', 'determinativo'),
+        'ὅς': ('Pronome', 'relativo'), 'ὅστις': ('Pronome', 'relativo indef.'),
+        'οὗτος': ('Pronome', 'dimostrativo'), 'ἐκεῖνος': ('Pronome', 'dimostrativo'), 'ὅδε': ('Pronome', 'dimostrativo'),
+        'αὐτός': ('Pronome', 'determinativo'), 'ἐγώ': ('Pronome', 'personale'), 'σύ': ('Pronome', 'personale'),
+        'τις': ('Pronome', 'indefinito'), 'τίς': ('Pronome', 'interrogativo'),
+        'εἷς': ('Numerale', 'cardinale'), 'δύο': ('Numerale', 'cardinale'),
+        'τρεῖς': ('Numerale', 'cardinale'), 'τέσσαρες': ('Numerale', 'cardinale'),
+    },
+}
+
+def _num_in(classe):
+    m = re.search(r'([1-5])ª', classe or '')
+    return m.group(1) if m else ''
+
+def _cat_nominale(classe):
+    n = _num_in(classe); neu = '(neutro)' in (classe or '')
+    return (f'{n}ª decl.' if n else 'decl.') + (' n.' if neu else '')
+
+def _cat_verbo(classe):
+    c = classe or ''; dep = 'deponente' in c
+    if 'mista' in c: base = 'mista'
+    elif 'tematico' in c: base = 'tematico'
+    elif 'contratto' in c:
+        m = re.search(r'-([αεο])ω', c); base = f'contr. -{m.group(1)}ω' if m else 'contratto'
+    elif '-μι' in c or 'atematico' in c: base = 'atem. -μι'
+    else:
+        n = _num_in(c); base = f'{n}ª con.' if n else 'con.'
+    return base + (' dep.' if dep else '')
+
+def _cat_aggettivo(classe):
+    n = _num_in(classe)          # 1ª/2ª decl. → 1ª classe (bonus, -a, -um);  3ª decl. → 2ª classe (fortis, felix)
+    if n in ('1', '2'): return '1ª classe'
+    if n == '3': return '2ª classe'
+    return 'agg.'
+
+def assign_nominal_pos(lang, lemma, flat_pos, classe):
+    """Per un NOMINALE (già declinato): → (pos_lab, cat, incerto).
+    Fonte sufficiente ⇒ etichetta certa. Fonte insufficiente ⇒ 'nome' + flag,
+    salvo che il lemma sia una closed-class declinabile nota (completamento)."""
+    fp = (flat_pos or '').strip().lower()
+    if fp == 'aggettivo':
+        if _num_in(classe) not in ('1', '2', '3'):   # agg. di 4ª/5ª decl. = impossibile ⇒ fonte inaffidabile
+            return 'nome', _cat_nominale(classe), True
+        return 'Aggettivo', _cat_aggettivo(classe), False
+    if fp in _NOMINAL_POS:                       # sostantivo/pronome/numerale/articolo dalla fonte
+        return POS_LAB[fp], _cat_nominale(classe), False
+    # fonte vuota o non-nominale in conflitto col fatto che declina: prova il completamento closed-class
+    cc = CLOSED_CLASS.get(lang, {})
+    if lemma in cc:
+        pl, categoria = cc[lemma]
+        return pl, categoria, False
+    # nessuna certezza sost. vs agg.: resta nominale generico + segnalazione
+    return 'nome', _cat_nominale(classe), True
+
 def main(write=True):
     out = {'latin': collections.defaultdict(dict), 'greek': collections.defaultdict(dict)}
     stats = collections.Counter()
@@ -779,26 +858,30 @@ def main(write=True):
                 if h:
                     t = lat_noun_table(lemma, h['gen_full'], h['gen_raw'], h['gender'])
                     if t:
-                        entry = dict(pos='nome', classe=t['classe'],
+                        P, CAT, unc = assign_nominal_pos('latin', lemma, pos, t['classe'])
+                        entry = dict(pos=P, cat=CAT, classe=t['classe'],
                                      testa=f"{lemma}, {h['gen_full']} {h['gender']}", nome=t['tab'])
                         stats['lat_nomi'] += 1
+                        stats['pos·' + ('nome (incerto)' if unc else P)] += 1
             if entry is None and pos in ('verbo', '') and (NL(lemma).endswith('o') or NL(lemma).endswith('or')):
                 h = parse_verb_head(lemma, dfn)
                 if h:
                     t = lat_verb_table(lemma, h['conj'], h['pstem'], h['pfstem'], h['supstem'], h['dep'])
-                    entry = dict(pos='verbo', classe=t['classe'], testa=t['testa'], verbo=t['verbo'])
+                    entry = dict(pos='Verbo', cat=_cat_verbo(t['classe']), classe=t['classe'], testa=t['testa'], verbo=t['verbo'])
                     if t.get('nota'): entry['nota'] = t['nota']
                     stats['lat_verbi'] += 1
+                    stats['pos·Verbo'] += 1
             if entry:
                 out['latin'][NL(lemma)[:1]][lemma] = entry
     # GRECO · verbi curati
     for lemma, v in VERBS.items():
         try:
             t = gk_verb_table(lemma, v)
-            entry = dict(pos='verbo', classe=t['classe'], testa=t['testa'], verbo=t['verbo'])
+            entry = dict(pos='Verbo', cat=_cat_verbo(t['classe']), classe=t['classe'], testa=t['testa'], verbo=t['verbo'])
             if t.get('nota'): entry['nota'] = t['nota']
             out['greek'][NG(lemma)[:1]][lemma] = entry
             stats['gr_verbi'] += 1
+            stats['pos·Verbo'] += 1
         except Exception as ex:
             print(f'  [!] {lemma}: {ex}')
     # GRECO · nominali
@@ -819,8 +902,10 @@ def main(write=True):
             if not t: continue
             m = re.match(r'^\s*(ὁ|ἡ|τό|ὁ/ἡ)\s+(\S+?),\s+(\S+?)(?:\s*·|\s*$|\s)', e.get('definition',''))
             testa = f"{m.group(1)} {lemma}, {m.group(3)}" if m else lemma
-            out['greek'][NG(lemma)[:1]][lemma] = dict(pos='nome', classe=t['classe'], testa=testa, nome=t['tab'])
+            P, CAT, unc = assign_nominal_pos('greek', lemma, e.get('pos'), t['classe'])
+            out['greek'][NG(lemma)[:1]][lemma] = dict(pos=P, cat=CAT, classe=t['classe'], testa=testa, nome=t['tab'])
             stats['gr_nomi'] += 1
+            stats['pos·' + ('nome (incerto)' if unc else P)] += 1
     print('paradigmi:', dict(stats))
     if not write:
         return out
