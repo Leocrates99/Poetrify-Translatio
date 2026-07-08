@@ -156,6 +156,35 @@ LV = {
 }
 CONJ_LABEL = {'1':'1ª coniugazione','2':'2ª coniugazione','3':'3ª coniugazione','3io':'coniugazione mista (-iō)','4':'4ª coniugazione'}
 
+# ── declinatori latini per i participi/gerundivo/gerundio (celle [[testo,ruolo],…]) ──
+CASES_LAT = ['nom', 'gen', 'dat', 'acc', 'voc', 'abl']
+LAT_ADJ12 = {   # aggettivo 1ª/2ª classe: (sg, pl) per caso
+ 'm': {'nom':('us','i'),'gen':('i','orum'),'dat':('o','is'),'acc':('um','os'),'voc':('e','i'),'abl':('o','is')},
+ 'f': {'nom':('a','ae'),'gen':('ae','arum'),'dat':('ae','is'),'acc':('am','as'),'voc':('a','ae'),'abl':('a','is')},
+ 'n': {'nom':('um','a'),'gen':('i','orum'),'dat':('o','is'),'acc':('um','a'),'voc':('um','a'),'abl':('o','is')},
+}
+def _lat_adj(prefix):   # prefix = [[testo,ruolo],…]; participio pf/fut + gerundivo (1ª/2ª classe)
+    flex = {}
+    for g in ('m', 'f', 'n'):
+        sg, pl = {}, {}
+        for case in CASES_LAT:
+            se, pe = LAT_ADJ12[g][case]
+            sg[case] = [list(x) for x in prefix] + [[se, 'd']]
+            pl[case] = [list(x) for x in prefix] + [[pe, 'd']]
+        flex[g] = {'sg': sg, 'pl': pl}
+    return flex
+def _lat_ptc_pres(pstem, ov, osx, ps):   # participio presente: 3ª decl. a una uscita (M/F comune)
+    nom = [[pstem,'t'],[ov,'v'],[ps,'s']]                       # laud-a-ns
+    def obl(end): return [[pstem,'t'],[ov,'v'],[osx,'s'],[end,'d']]   # laud-a-nt-…
+    mf = {'sg':{'nom':nom,'gen':obl('is'),'dat':obl('i'),'acc':obl('em'),'voc':nom,'abl':obl('e')},
+          'pl':{'nom':obl('es'),'gen':obl('ium'),'dat':obl('ibus'),'acc':obl('es'),'voc':obl('es'),'abl':obl('ibus')}}
+    n = {'sg':{'nom':nom,'gen':obl('is'),'dat':obl('i'),'acc':nom,'voc':nom,'abl':obl('e')},
+         'pl':{'nom':obl('ia'),'gen':obl('ium'),'dat':obl('ibus'),'acc':obl('ia'),'voc':obl('ia'),'abl':obl('ibus')}}
+    return {'m': mf, 'f': mf, 'n': n}
+def _lat_gerund(pstem, gv, gs):   # gerundio: nome neutro, solo gen/dat/acc/abl sg.
+    def c(end): return [[pstem,'t'],[gv,'v'],[gs,'s'],[end,'d']]
+    return {'sg': {'gen': c('i'), 'dat': c('o'), 'acc': c('um'), 'abl': c('o')}}
+
 def lat_verb_table(lemma, conj, pstem, pfstem, supstem, dep):
     T = LV[conj]
     def row6(triples):
@@ -206,7 +235,26 @@ def lat_verb_table(lemma, conj, pstem, pfstem, supstem, dep):
     if supstem:
         verbo['ptc']['pf'] = seg((supstem,'t'),('us','d'))
         verbo['ptc']['fut'] = seg((supstem,'t'),('ur','s'),('us','d'))
+    # ── participi DECLINATI + gerundivo + gerundio + cong. pf/ppf passivo perifrastico ──
+    pv, ps = T['ptc']; ov, osx = T['ptcob']; gv, gs = T['ger']
+    ptc_decl = {'pres': {'att': _lat_ptc_pres(pstem, ov, osx, ps)}}   # senso attivo (anche deponenti)
+    if supstem:
+        ptc_decl['pf'] = {('att' if dep else 'pass'): _lat_adj([[supstem,'t']])}   # deponente: participio pf. di senso attivo
+        ptc_decl['fut'] = {'att': _lat_adj([[supstem,'t'],['ur','s']])}
+    verbo['ptc_decl'] = ptc_decl
+    verbo['gerundivo'] = _lat_adj([[pstem,'t'],[gv,'v'],[gs,'s']])       # laud-a-nd-us (aggettivo)
+    verbo['gerundio'] = _lat_gerund(pstem, gv, gs)                        # laud-a-nd-i (nome neutro)
+    if supstem:                                                          # cong. pf/ppf passivo (o m.-p. deponente) perifrastico
+        vcp = 'mp' if dep else 'pass'
+        for tn, aux in (('pf', ['sim','sis','sit','simus','sitis','sint']),
+                        ('ppf', ['essem','esses','esset','essemus','essetis','essent'])):
+            verbo['cong'].setdefault(tn, {})[vcp] = \
+                [[[(supstem + ('us' if i < 3 else 'i')) + ' ' + aux[i], 't']] for i in range(6)]
+    # ── testa: 2ª sing. presente inserita dopo il lemma (laudo, laudas, laudavi…) ──
+    _prv = verbo['ind'].get('pres', {}).get('mp' if dep else 'att')
+    s2 = ''.join(t for t, _ in _prv[1]) if _prv and len(_prv) > 1 else ''
     testa = lemma
+    if s2 and s2 != lemma: testa += f', {s2}'
     if pfstem: testa += f', {pfstem}i'
     if supstem: testa += f', {supstem}um'
     testa += f', {pstem}{"" if dep else T["inf"][0] + T["inf"][1]}{(T["inf"][0] + "ri") if dep and conj != "3" else ""}'

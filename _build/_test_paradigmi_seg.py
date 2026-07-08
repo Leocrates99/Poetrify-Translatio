@@ -53,6 +53,13 @@ T('latin','capio',['verbo','ind','impf','att',2], [('cap','t'),('i','v'),('eba',
 T('latin','audio',['verbo','ind','fut','att',2], [('aud','t'),('i','v'),('e','s'),('t','d')])
 T('latin','moneo',['verbo','ind','ppf','att',2], [('monu','t'),('era','s'),('t','d')])
 T('latin','conor',['verbo','ind','pres','mp',2], [('con','t'),('a','v'),('tur','d')], '(deponente)')
+print('--- LATINO / participi declinati + gerundio/gerundivo + perifrastico (T3) ---')
+T('latin','amo',['verbo','ptc_decl','pres','att','m','sg','gen'], [('am','t'),('a','v'),('nt','s'),('is','d')], '(amantis)')
+T('latin','amo',['verbo','ptc_decl','pf','pass','m','sg','nom'], [('amat','t'),('us','d')], '(amatus)')
+T('latin','amo',['verbo','ptc_decl','fut','att','m','sg','nom'], [('amat','t'),('ur','s'),('us','d')], '(amaturus)')
+T('latin','amo',['verbo','gerundivo','f','sg','gen'], [('am','t'),('a','v'),('nd','s'),('ae','d')], '(amandae)')
+T('latin','amo',['verbo','gerundio','sg','gen'], [('am','t'),('a','v'),('nd','s'),('i','d')], '(amandi)')
+T('latin','amo',['verbo','cong','pf','pass',0], [('amatus sim','t')], '(amatus sim, perifr.)')
 print('--- LATINO / nomi ---')
 T('latin','rosa',['nome','sg','gen'], [('ros','t'),('ae','d')])
 T('latin','urbs',['nome','pl','gen'], [('urb','t'),('ium','d')])
@@ -111,9 +118,12 @@ def crossval(lang, lemma):
     cells = []
     def walk(n):
         if isinstance(n, list) and n and isinstance(n[0], list) and len(n[0]) == 2 and isinstance(n[0][0], str):
-            cells.append(n); return
+            if ' ' not in ''.join(t for t, _ in n):   # salta le perifrasi (participio + ausiliare)
+                cells.append(n)
+            return
         if isinstance(n, dict):
             for k, v in n.items():
+                if lang == 'latin' and k in ('ptc_decl', 'gerundivo', 'gerundio'): continue   # declinati latini: mirror piatto = T5
                 walk(v)
         elif isinstance(n, list):
             for v in n:
