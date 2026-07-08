@@ -31,7 +31,7 @@ ACCENTO — legge della recessività per le forme verbali finite (posizione
 Idempotente: le forme generate portano candidati {lemma, parsing} e vengono
 fuse negli shard senza duplicare (chiave forma+lemma).
 """
-import json, os, re, sys, unicodedata, collections
+import json, os, re, sys, unicodedata, collections, glob
 sys.stdout.reconfigure(encoding='utf-8')
 
 def N(s):  # normalizza (NFD senza diacritici, minuscolo)
@@ -833,6 +833,30 @@ NOMINAL_EXTRA = {
 }
 
 # ───────────────────────── MAIN ─────────────────────────
+def _skel(s):
+    return ''.join(c for c in unicodedata.normalize('NFD', s) if not unicodedata.combining(c))
+
+def dedup_atone(fdict):
+    """Nessun doppione senza accento: rimuove la chiave ATONA (priva di accenti/
+    spiriti) i cui candidati (lemma+parsing) sono già coperti da un gemello
+    ACCENTATO con lo stesso scheletro. Gli OMOGRAFI (parsing diverso, es.
+    φαμεν pres. vs φάμεν impf.) restano. Ritorna il n° di chiavi rimosse."""
+    acc_by_skel = collections.defaultdict(list)
+    for k in fdict:
+        s = _skel(k)
+        if s != k:                                   # k porta accento/spirito
+            acc_by_skel[s].append(k)
+    rm = []
+    for k in list(fdict):
+        if _skel(k) == k and k in acc_by_skel:       # k atona con gemello/i accentato/i
+            covered = {(c['lemma'], c.get('parsing', '')) for a in acc_by_skel[k] for c in fdict[a]}
+            mine = {(c['lemma'], c.get('parsing', '')) for c in fdict[k]}
+            if mine <= covered:
+                rm.append(k)
+    for k in rm:
+        del fdict[k]
+    return len(rm)
+
 def main(write=True):
     base = 'data/greek'
     # nominali dal corpus
@@ -900,6 +924,20 @@ def main(write=True):
             data.setdefault('meta', {})['forms_count'] = len(fdict)
             json.dump(data, open(path, 'w', encoding='utf-8'), ensure_ascii=False)
     print(f'fusione: +{added} candidati forma→lemma negli shard')
+    # passata finale su TUTTI gli shard: nessun doppione senza accento
+    if write:
+        deduped = 0
+        for path in sorted(glob.glob(os.path.join(base, '*.json'))):
+            if os.sep + 'paradigms' + os.sep in path: continue
+            data = json.load(open(path, encoding='utf-8'))
+            fdict = data.get('forms')
+            if not fdict: continue
+            rm = dedup_atone(fdict)
+            if rm:
+                deduped += rm
+                data.setdefault('meta', {})['forms_count'] = len(fdict)
+                json.dump(data, open(path, 'w', encoding='utf-8'), ensure_ascii=False)
+        print(f'dedup atone: -{deduped} doppioni senza accento')
 
 if __name__ == '__main__':
     main(write='--dry' not in sys.argv)

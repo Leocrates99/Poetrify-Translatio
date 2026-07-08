@@ -129,6 +129,25 @@ TP('greek', 'λύω', 'Verbo', 'tematico')
 TP('greek', 'τιμάω', 'Verbo', 'contr. -αω')
 TP('greek', 'γίγνομαι', 'Verbo', 'tematico dep.')
 
+print('--- CAMPIONE SCALATO per declinazione/classe/coniugazione/tipo (T5) ---')
+# nomi latini · una per declinazione
+T('latin', 'dominus', ['nome', 'sg', 'gen'], [('domin','t'),('i','d')], '(2ª decl. m.)')
+T('latin', 'rex', ['nome', 'sg', 'gen'], [('reg','t'),('is','d')], '(3ª decl., reg-)')
+T('latin', 'cornu', ['nome', 'sg', 'gen'], [('corn','t'),('us','d')], '(4ª decl. n.)')
+T('latin', 'res', ['nome', 'sg', 'gen'], [('r','t'),('ei','d')], '(5ª decl.)')
+# verbi latini · coniugazioni/tipi non ancora coperti sopra
+T('latin', 'moneo', ['verbo','ind','pres','att',0], [('mon','t'),('e','v'),('o','d')], '(2ª con.)')
+T('latin', 'audio', ['verbo','ind','pres','att',0], [('aud','t'),('i','v'),('o','d')], '(4ª con.)')
+T('latin', 'vereor', ['verbo','ind','pres','mp',0], [('ver','t'),('e','v'),('or','d')], '(2ª con. dep.)')
+# nomi greci · declinazioni + accento persistente esatto
+T('greek', 'τιμή', ['nome','sg','gen'], [('τιμ','t'),('ῆς','d')], '(1ª decl. -η, circonflesso)')
+T('greek', 'πολίτης', ['nome','sg','gen'], [('πολίτ','t'),('ου','d')], '(1ª decl. m. -ης)')
+T('greek', 'λόγος', ['nome','sg','gen'], [('λόγ','t'),('ου','d')], '(2ª decl.)')
+T('greek', 'δῶρον', ['nome','pl','nom'], [('δῶρ','t'),('α','d')], '(2ª decl. n.)')
+# verbi greci · contratti + atematico -μι
+T('greek', 'ποιέω', ['verbo','ind','pres','att',0], [('ποι','t'),('ῶ','v'),('','d')], '(contr. -εω)')
+T('greek', 'τίθημι', ['verbo','ind','pres','att',0], [('τί','a'),('θη','t'),('μι','d')], '(atematico -μι)')
+
 print('--- cross-validazione con l\'indice piatto ---')
 def flat_forms(lang, letter):
     try:
@@ -148,8 +167,7 @@ def crossval(lang, lemma):
             return
         if isinstance(n, dict):
             for k, v in n.items():
-                if lang == 'latin' and k in ('ptc_decl', 'gerundivo', 'gerundio'): continue   # declinati latini: mirror piatto = T5
-                walk(v)
+                walk(v)   # T5: declinati latini ora nel piatto → cross-validazione riattivata anche su ptc_decl/gerundivo/gerundio
         elif isinstance(n, list):
             for v in n:
                 if v is not None: walk(v)
@@ -177,9 +195,13 @@ def crossval(lang, lemma):
     extra = ('  mancanti: ' + ', '.join(missing[:6])) if missing else ''
     print(f'{status} {lemma}: {tot - miss}/{tot} celle presenti nell\'indice piatto{extra}')
 
-for l in ('amo', 'duco', 'rosa', 'urbs'):
+# campioni rappresentativi: ogni coniugazione/tipo verbale (con participi declinati)
+# e ogni declinazione nominale, per entrambe le lingue
+for l in ('amo', 'moneo', 'duco', 'capio', 'audio', 'conor', 'vereor',
+          'rosa', 'dominus', 'templum', 'rex', 'corpus', 'turris', 'manus', 'cornu', 'res', 'urbs'):
     crossval('latin', l)
-for l in ('λύω', 'τιμάω', 'θάλασσα', 'πόλις'):
+for l in ('λύω', 'τιμάω', 'ποιέω', 'δηλόω', 'δίδωμι', 'τίθημι', 'γίγνομαι',
+          'χώρα', 'τιμή', 'πολίτης', 'λόγος', 'δῶρον', 'σῶμα', 'πόλις', 'θάλασσα'):
     crossval('greek', l)
 print()
 print('TUTTO OK' if fail == 0 else f'{fail} FALLITI')

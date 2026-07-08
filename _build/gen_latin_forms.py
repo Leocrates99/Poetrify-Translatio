@@ -160,10 +160,12 @@ def gen_verb(lemma, conj, pstem, pfstem, supstem, dep=False):
             add(inf+('m','s','t','mus','tis','nt')[i], f'impf. cong. att. {pers}')
         add(pstem+T['imv'][0], 'imv. pres. 2ª sg.')
         add(pstem+T['imv'][1], 'imv. pres. 2ª pl.')
-        add(pstem+T['ptc'], 'ptc. pres. nom. sg.')
-        for e, p in (('is','gen. sg.'), ('i','dat. sg.'), ('em','acc. sg.'), ('e','abl. sg.'),
-                     ('es','nom./acc. pl.'), ('ium','gen. pl.'), ('ibus','dat./abl. pl.')):
-            add(pstem+T['ptcst']+e, f'ptc. pres. {p}')
+    # participio presente (3ª decl. a una uscita): ANCHE per le deponenti (forma attiva),
+    # neutro plurale -ia incluso → parità col segmentato
+    add(pstem+T['ptc'], 'ptc. pres. nom./voc. sg.')
+    for e, p in (('is','gen. sg.'), ('i','dat. sg.'), ('em','acc. m./f. sg.'), ('e','abl. sg.'),
+                 ('es','nom./acc. m./f. pl.'), ('ia','nom./acc. n. pl.'), ('ium','gen. pl.'), ('ibus','dat./abl. pl.')):
+        add(pstem+T['ptcst']+e, f'ptc. pres. {p}')
     # passivo (o deponente: stesse uscite)
     for e, pers in zip(PASS_PRES[conj], PERS): add(pstem+e, f'pres. ind. {"" if dep else "pass. "}{pers}{dl}')
     for i, pers in enumerate(PERS):
@@ -185,7 +187,7 @@ def gen_verb(lemma, conj, pstem, pfstem, supstem, dep=False):
     infp = pstem + (T['inf'][:-1] + 'i' if conj not in ('3', '3io') else 'i')
     add(infp, f'inf. pres. {"dep." if dep else "pass."}')
     add(pstem+T['ger']+'us', 'gerundivo nom. m. sg.')
-    for e in ('a','um','i','o','ae','am','os','as','orum','arum','is'):
+    for e in ('e','a','um','i','o','ae','am','os','as','orum','arum','is'):
         add(pstem+T['ger']+e, 'gerundivo/gerundio')
     # sistema del perfetto
     if pfstem:
@@ -197,12 +199,14 @@ def gen_verb(lemma, conj, pstem, pfstem, supstem, dep=False):
         for e, pers in zip(('issem','isses','isset','issemus','issetis','issent'), PERS): add(pfstem+e, f'ppf. cong. att. {pers}')
         add(pfstem+'isse', 'inf. pf. att.')
     if supstem:
-        for e, p in (('us','nom. m. sg.'), ('a','nom. f. sg.'), ('um','nom./acc. n. sg. · acc. m.'),
-                     ('i','gen. sg. · nom. pl.'), ('o','dat./abl. sg.'), ('ae','gen./dat. f. sg.'),
-                     ('am','acc. f. sg.'), ('is','dat./abl. pl.'), ('os','acc. m. pl.'), ('orum','gen. pl.'), ('arum','gen. f. pl.')):
-            add(supstem+e, f'ptc. pf. {p}')
-        add(supstem+'urus', 'ptc. fut. nom. m. sg.')
-        add(supstem+'uri', 'ptc. fut. gen. sg.')
+        # participio perfetto E futuro: 1ª/2ª classe declinati PIENI (voc. sg. m. e
+        # acc. f. pl. inclusi) → il piatto eguaglia il segmentato di gen_paradigms.
+        for e, p in (('us', 'nom. m. sg.'), ('e', 'voc. m. sg.'), ('um', 'nom./acc./voc. n. sg. · acc. m. sg.'),
+                     ('i', 'gen. m./n. sg. · nom. m. pl.'), ('o', 'dat./abl. m./n. sg.'), ('orum', 'gen. m./n. pl.'),
+                     ('is', 'dat./abl. pl.'), ('os', 'acc. m. pl.'), ('a', 'nom./voc. f. sg. · nom./acc. n. pl.'),
+                     ('ae', 'gen./dat. f. sg. · nom./voc. f. pl.'), ('am', 'acc. f. sg.'), ('arum', 'gen. f. pl.'), ('as', 'acc. f. pl.')):
+            add(supstem + e, f'ptc. pf. {p}')
+            add(supstem + 'ur' + e, f'ptc. fut. {p}')
     return out
 
 RE_NOUN = re.compile(r'^\s*\d?\)?\s*(\S+)\s+([^\s,]+)[\s,]+(m and f|f and m|[mfn])\b')
