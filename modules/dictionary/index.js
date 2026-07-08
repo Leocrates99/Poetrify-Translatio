@@ -412,6 +412,30 @@ export class DictionaryApp {
     return '';
   }
 
+  /* Colore della TARGHETTA di categoria (declinazione/classe/coniugazione/tipo),
+   * spettro ordinale del laboratorio. Ritorna un hex o null (→ ripiego su --pos-c). */
+  _catColor(pos, cat) {
+    const c = (cat || '').toLowerCase();
+    const p = (pos || '').toLowerCase();
+    const C_DECL = ['#DC2B2B', '#16357F', '#1FA24F', '#E9720C', '#7A3FB0'];   // 1ª–5ª decl.
+    const C_CONJ = ['#DC2B2B', '#2E9BD6', '#2158D8', '#1FA24F'];               // 1ª–4ª con. (rosso/azzurro/blu/verde)
+    const C_ADJ = ['#DC2B2B', '#16357F'];                                     // 1ª / 2ª classe
+    const C_PRON = { relativo: '#DC2B2B', dimostrativo: '#16357F', personale: '#1FA24F',
+                     possessivo: '#E9720C', interrogativo: '#7A3FB0', indefinito: '#D19A16',
+                     riflessivo: '#0FA3A3', determinativo: '#0FA3A3' };
+    const C_GVERB = { tem: '#DC2B2B', contr: '#16357F', mi: '#1FA24F' };      // greco: tematico/contratto/-μι
+    let m;
+    if (p.includes('aggettiv')) return /2ª classe/.test(c) ? C_ADJ[1] : /1ª classe/.test(c) ? C_ADJ[0] : null;
+    if (p.includes('pronom') || p.includes('articol')) { for (const k in C_PRON) if (c.includes(k)) return C_PRON[k]; return null; }
+    if ((m = c.match(/([1-5])ª\s*decl/))) return C_DECL[+m[1] - 1];
+    if (/mista/.test(c)) return C_CONJ[2];
+    if ((m = c.match(/([1-4])ª\s*con/))) return C_CONJ[+m[1] - 1];
+    if (/tematic/.test(c)) return C_GVERB.tem;
+    if (/contr/.test(c)) return C_GVERB.contr;
+    if (/atem|-μι/.test(c)) return C_GVERB.mi;
+    return null;
+  }
+
   _renderAutocomplete() {
     if (!this.$autocomplete) return;
     const isGreek = this.currentLang === 'greco';
@@ -601,7 +625,7 @@ export class DictionaryApp {
       this.browsePrefix = null;
       this.viewMode = 'search';
       this._syncUrl();
-      this.$results.innerHTML = this._renderEmpty();
+      this.$results.innerHTML = this._renderEmpty(); this._wireHomeButtons();
       if (this.$alphabet) this.$alphabet.querySelectorAll('.alphabet-btn').forEach(b => b.classList.remove('is-active'));
     });
     /* [B] barra di anteprima: ridisegna solo il corpo, mantenendo il focus */
@@ -726,7 +750,7 @@ export class DictionaryApp {
       return this._renderPasso();
     }
     if (!this.currentQuery) {
-      this.$results.innerHTML = this._renderEmpty();
+      this.$results.innerHTML = this._renderEmpty(); this._wireHomeButtons();
       return;
     }
     this.$results.innerHTML = this._renderLoading();
@@ -979,14 +1003,41 @@ export class DictionaryApp {
 
   _renderEmpty() {
     const langLabel = LANG_LABELS[this.currentLang];
+    const isGreek = this.currentLang === 'greco';
     const counts = countItalianGlosses();
-    return `<div class="dict-results-empty">
+    // esempi FORMA → lemma, cliccabili (cercano la forma, che risale al lemma)
+    const EX = isGreek
+      ? [['ἔβην', 'βαίνω'], ['λόγους', 'λόγος'], ['ἐλύθη', 'λύω'], ['πόλεως', 'πόλις'], ['ἐποίει', 'ποιέω']]
+      : [['fecerunt', 'facio'], ['rosae', 'rosa'], ['amaverat', 'amo'], ['urbium', 'urbs'], ['duxit', 'duco']];
+    const exHtml = EX.map(([f, l]) =>
+      `<button type="button" class="dz-example${isGreek ? ' greek' : ''}" data-ex="${escapeHtml(f)}" title="Cerca «${escapeHtml(f)}»">
+        <span class="dz-ex-form">${escapeHtml(f)}</span><span class="dz-ex-arrow">→</span><span class="dz-ex-lemma">${escapeHtml(l)}</span></button>`).join('');
+    // sfoglia per categoria (parte del discorso) — chip colorati dalla palette
+    const CATS = [['verbo', 'Verbi'], ['sostantivo', 'Sostantivi'], ['aggettivo', 'Aggettivi'],
+                  ['avverbio', 'Avverbi'], ['pronome', 'Pronomi'], ['preposizione', 'Preposizioni']];
+    const catHtml = CATS.map(([pos, lab]) =>
+      `<button type="button" class="dz-cat pos-${pos}" data-browse-pos="${pos}">${lab}</button>`).join('');
+    return `<div class="dict-results-empty dz-home">
       <h2>📖 Dizionario · pronto per la consultazione</h2>
-      <p>Cerca un <strong>lemma</strong> o una <strong>forma flessa</strong> (es. <code>fecerunt</code> → <code>facio</code>, <code>ἔβην</code> → <code>βαίνω</code>).</p>
-      <p>Lingua: <strong>${escapeHtml(langLabel)}</strong></p>
-      <p class="muted-text">Glosse italiane curate per ~${counts.latino + counts.greco} lemmi top · paradigma inline · lessico personale ⭐ · etimologia · cognati LAT↔GR · frequenza · cronologia · <kbd>/</kbd> per focus rapido.</p>
-      <p class="muted-text">🔤 Usa la barra delle lettere per esplorare per iniziale · 🔄 "ricerca inversa" per cercare un significato in italiano nelle definizioni.</p>
+      <p>Cerca un <strong>lemma</strong> o una <strong>forma flessa</strong>: la ricerca risale sempre al lemma.</p>
+      <div class="dz-block"><span class="dz-block-lbl">Prova una forma</span><div class="dz-examples">${exHtml}</div></div>
+      <div class="dz-block"><span class="dz-block-lbl">Sfoglia per categoria</span><div class="dz-cats">${catHtml}</div></div>
+      <p class="muted-text">Lingua: <strong>${escapeHtml(langLabel)}</strong> · glosse curate per ~${counts.latino + counts.greco} lemmi · paradigma inline · lessico ⭐ · etimologia · cognati LAT↔GR · <kbd>/</kbd> focus.</p>
+      <p class="muted-text">🔤 Barra delle lettere per iniziale · 🔄 ricerca inversa per un significato italiano.</p>
     </div>`;
+  }
+
+  _wireHomeButtons() {
+    this.$results.querySelectorAll('.dz-example').forEach(b => {
+      b.addEventListener('click', () => { if (this.$searchInput) this.$searchInput.value = b.dataset.ex; this.search(); });
+    });
+    this.$results.querySelectorAll('.dz-cat').forEach(b => {
+      b.addEventListener('click', () => {
+        this.posFilter = b.dataset.browsePos || '';
+        this._savePosFilter(); this._renderPosFilter();
+        this._enterBrowse(this.currentLang === 'greco' ? 'α' : 'a');
+      });
+    });
   }
 
   _renderLoading() {
@@ -1085,9 +1136,14 @@ export class DictionaryApp {
     /* Parti principali accanto al lemma (come nei mockup): laudo, laudavi,
        laudatum, laudare · 1ª coniugazione. */
     const ppText = (segPar && segPar.testa) || (built && built.citation) || '';
+    const ppCat = (segPar && segPar.cat) || '';
     const ppClass = (segPar && segPar.classe) ? segPar.classe : '';
+    const ppCatCol = this._catColor(hit.pos, ppCat || ppClass);
+    const catChip = ppCat
+      ? `<span class="dict-cat"${ppCatCol ? ` style="--cat-c:${ppCatCol}"` : ''}>${escapeHtml(ppCat)}</span>`
+      : (ppClass ? `<span class="dict-pp-class">· ${escapeHtml(ppClass)}</span>` : '');
     const ppHtml = ppText
-      ? `<div class="dict-principal-parts${isGreek ? ' greek' : ''}">${escapeHtml(ppText)}${ppClass ? ` <span class="dict-pp-class">· ${escapeHtml(ppClass)}</span>` : ''}</div>`
+      ? `<div class="dict-principal-parts${isGreek ? ' greek' : ''}">${escapeHtml(ppText)} ${catChip}</div>`
       : '';
     const grammarHtml = this._renderGrammarCategories(hit, built);
     const translationHtml = this._renderTranslationHero(hit);
@@ -1887,7 +1943,7 @@ export class DictionaryApp {
     if (!this.$results) return;
     const q = (this._reverseQuery || '').trim();
     if (!q) {
-      this.$results.innerHTML = this._renderEmpty();
+      this.$results.innerHTML = this._renderEmpty(); this._wireHomeButtons();
       return;
     }
     this.$results.innerHTML = this._renderLoading();

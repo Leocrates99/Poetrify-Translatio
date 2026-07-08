@@ -666,6 +666,18 @@ body.poetrify-dark .greek-kbd-key.greek-kbd-var { background: rgba(255,255,255,0
 }
 .dict-results-empty p { margin: 5px 0; }
 .dict-results-empty code { font-size: 12px; }
+/* Home: esempi forma→lemma cliccabili + sfoglia per categoria */
+.dz-home .dz-block { margin: 16px 0; }
+.dz-block-lbl { display: block; font-family: var(--font-ui); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--sepia); margin-bottom: 8px; }
+.dz-examples, .dz-cats { display: flex; flex-wrap: wrap; gap: 8px; }
+.dz-example { display: inline-flex; align-items: baseline; gap: 6px; cursor: pointer; padding: 6px 13px; border: 1px solid var(--rule-soft); border-radius: 999px; background: var(--paper); font-size: 13px; transition: border-color .15s ease, background .15s ease; }
+.dz-example:hover { border-color: var(--dacc); background: var(--dacc-pale); }
+.dz-ex-form { font-family: var(--font-classical); font-weight: 600; color: var(--ink); }
+.dz-example.greek .dz-ex-form, .dz-example.greek .dz-ex-lemma { font-size: 15px; }
+.dz-ex-arrow { color: var(--sepia); }
+.dz-ex-lemma { font-family: var(--font-classical); color: var(--dacc); }
+.dz-cat { cursor: pointer; padding: 6px 14px; border-radius: 999px; font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; color: #fff; border: none; background: var(--pos-c, var(--dacc)); transition: transform .12s ease, filter .15s ease; }
+.dz-cat:hover { filter: brightness(1.08); transform: translateY(-1px); }
 
 /* [NEW 1] "Did you mean?" */
 .dym-block {
@@ -1430,17 +1442,18 @@ body.poetrify-dark.clp-flag-on .mc-suffix { color: #6ee7a8; }
    Bordo sinistro colorato su anteprima (autocomplete + lista browse) e voce
    aperta → riconoscimento a colpo d'occhio della categoria. */
 /* palette categorie · ogni classe imposta --pos-c, ereditata dai figli */
-.pos-verbo        { --pos-c: #c0392b; }  /* verbo · rosso        */
-.pos-sostantivo   { --pos-c: #2563eb; }  /* sostantivo · blu     */
-.pos-aggettivo    { --pos-c: #15803d; }  /* aggettivo · verde    */
-.pos-pronome      { --pos-c: #7c3aed; }  /* pronome · viola      */
-.pos-avverbio     { --pos-c: #ea580c; }  /* avverbio · arancio   */
-.pos-preposizione { --pos-c: #0891b2; }  /* preposizione · ciano */
-.pos-congiunzione { --pos-c: #a16207; }  /* congiunzione · ambra */
-.pos-numerale     { --pos-c: #64748b; }  /* numerale · grigio    */
-.pos-interiezione { --pos-c: #db2777; }  /* interiezione · rosa  */
-.pos-articolo     { --pos-c: #4b5563; }  /* articolo · ardesia   */
-.pos-particella   { --pos-c: #9333ea; }  /* particella · porpora */
+/* palette del LABORATORIO (10 PoS + particella) — un colore stabile per categoria */
+.pos-sostantivo   { --pos-c: #1F63D6; }  /* sostantivo · blu         */
+.pos-verbo        { --pos-c: #DC2B2B; }  /* verbo · rosso            */
+.pos-aggettivo    { --pos-c: #0FA3A3; }  /* aggettivo · verde acqua  */
+.pos-pronome      { --pos-c: #D19A16; }  /* pronome · oro ocra       */
+.pos-avverbio     { --pos-c: #1FA24F; }  /* avverbio · verde         */
+.pos-preposizione { --pos-c: #9C2D8E; }  /* preposizione · murice    */
+.pos-congiunzione { --pos-c: #4A45C0; }  /* congiunzione · indaco    */
+.pos-numerale     { --pos-c: #E9720C; }  /* numerale · arancio       */
+.pos-interiezione { --pos-c: #E5389A; }  /* interiezione · rosa      */
+.pos-articolo     { --pos-c: #17B4CE; }  /* articolo · ciano         */
+.pos-particella   { --pos-c: #6B7280; }  /* particella · ardesia     */
 /* applicazione del bordo colorato */
 .ac-item, .browse-item { border-left: 4px solid var(--pos-c, transparent); }
 .dict-entry-card { border-left: 5px solid var(--pos-c, transparent); }
@@ -1897,8 +1910,8 @@ body.poetrify-dark .dict-prev-lemma, body.poetrify-dark .dict-next-lemma { backg
 .poetrify-dark .mseg-v { color: #fbbf24; }
 .poetrify-dark .mseg-s { color: #2dd4bf; }
 .poetrify-dark .mseg-d { color: var(--md-accent-dark, #e58a90); }
-.mseg-form { font-size: 16px; letter-spacing: 0.01em; white-space: nowrap; }
-.mseg-form.greek { font-family: 'Times New Roman', 'Palatino Linotype', serif; font-size: 17px; }
+.mseg-form { font-family: var(--font-classical); font-size: 16px; letter-spacing: 0.01em; white-space: nowrap; }
+.mseg-form.greek { font-size: 17px; }
 .mseg-hit { background: var(--dacc-pale); border-radius: 999px; padding: 2px 12px; outline: 1px solid var(--dacc-border); }
 
 /* La sezione flessione NON è un riquadro tinto: è una tabella pulita e ariosa
@@ -2019,7 +2032,7 @@ header.topbar { transition: background 0.25s ease; }
 .dict-entry-card {
   background: var(--paper) !important;
   border: 1px solid var(--rule-soft) !important;
-  border-top: 4px solid var(--dacc) !important;
+  border-left: 5px solid var(--pos-c, var(--dacc)) !important;   /* parte del discorso */
   border-radius: 14px !important;
   padding: 24px 28px !important;
   box-shadow: 0 4px 18px rgba(44,53,57,0.06);
@@ -2031,7 +2044,7 @@ header.topbar { transition: background 0.25s ease; }
   margin: 6px 0 2px;
 }
 .dict-source-label em { font-style: italic; }
-.poetrify-dark .dict-entry-card { background: #232730 !important; border-color: #3a3f49 !important; border-top-color: var(--dacc) !important; }
+.poetrify-dark .dict-entry-card { background: #232730 !important; border-color: #3a3f49 !important; border-left-color: var(--pos-c, var(--dacc)) !important; }
 .dict-entry-header { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .dict-entry-lemma {
   font-family: Georgia, 'Palatino Linotype', 'Times New Roman', serif !important;
@@ -2045,8 +2058,8 @@ header.topbar { transition: background 0.25s ease; }
   font-weight: 600;
   padding: 3px 12px !important;
   border-radius: 999px !important;
-  background: var(--dacc-pale) !important;
-  color: var(--dacc) !important;
+  background: color-mix(in srgb, var(--pos-c, var(--dacc)) 13%, transparent) !important;
+  color: var(--pos-c, var(--dacc)) !important;
   border: none !important;
   text-transform: lowercase;
 }
@@ -2146,6 +2159,12 @@ header.topbar { transition: background 0.25s ease; }
 }
 .dict-principal-parts.greek { font-family: var(--font-classical); font-size: 16.5px; }
 .dict-pp-class { color: var(--sepia); font-style: italic; }
+/* targhetta di CATEGORIA (declinazione/classe/coniugazione), colore = spettro ordinale */
+.dict-cat {
+  font-family: var(--font-ui); font-size: 11px; font-weight: 700;
+  padding: 2px 10px; border-radius: 999px; white-space: nowrap;
+  background: var(--cat-c, var(--pos-c, var(--dacc))); color: #fff;
+}
 
 /* ══ Flessione: controlli, toggle morfemi, righe di tab a livelli ═════════ */
 .seg-controls { margin-bottom: 12px; }
