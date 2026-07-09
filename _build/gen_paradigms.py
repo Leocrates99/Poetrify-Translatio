@@ -90,7 +90,8 @@ def lat_noun_table(lemma, gen_full, gen_raw, gender):
         neuter_ial = lem.endswith(('e', 'al', 'ar')) and gender == 'n'
         istem = parisyll or double_cons or neuter_ial
         gpl = 'ium' if istem else 'um'
-        cl = '3ª declinazione' + (' (tema in -i)' if istem else '')
+        quals = (['tema in -i'] if istem else []) + (['neutro'] if gender == 'n' else [])
+        cl = '3ª declinazione' + (' (' + ', '.join(quals) + ')' if quals else '')
         nomc = C((lem,'t'))
         if gender == 'n':
             sg = dict(nom=nomc, gen=C((st,'t'),('is','d')), dat=C((st,'t'),('i','d')),
@@ -706,7 +707,9 @@ def gk_verb_table(lemma, v):
         if inf_full: verbo['inf_full'] = inf_full
     except Exception:
         pass
-    return dict(classe=('verbo contratto in -' + contract + 'ω' if contract else 'verbo tematico') + (' · deponente' if dep else ''),
+    _atem = strip_acc(lemma).endswith('μι')   # δίδωμι/τίθημι/ἵστημι/δείκνυμι/ἵημι → atematici in -μι
+    _cl = ('verbo contratto in -' + contract + 'ω') if contract else ('verbo atematico (in -μι)' if _atem else 'verbo tematico')
+    return dict(classe=_cl + (' · deponente' if dep else ''),
                 testa=', '.join(parts_head), verbo=verbo, nota=(' · '.join(dict.fromkeys(nota)) or None))
 
 def gk_noun_table(lemma, klass, stem):
@@ -738,7 +741,7 @@ def gk_noun_table(lemma, klass, stem):
     elif klass == 'ma':
         sg = dict(nom=C('α'), gen=C('ατος', True), dat=C('ατι', True), acc=C('α'), voc=C('α'))
         pl = dict(nom=C('ατα'), gen=C('ατων', True), dat=C('ασι', True), acc=C('ατα'), voc=C('ατα'))
-        cl = '3ª declinazione (tema in -ματ)'
+        cl = '3ª declinazione (tema in -ματ, neutro)'
     elif klass == 'es':
         sg = dict(nom=C('ος'), gen=C('ους', True), dat=C('ει', True), acc=C('ος'), voc=C('ος'))
         pl = dict(nom=C('η'), gen=C('ων', True), dat=C('εσι', True), acc=C('η'), voc=C('η'))
@@ -802,16 +805,16 @@ def _num_in(classe):
     return m.group(1) if m else ''
 
 def _cat_nominale(classe):
-    n = _num_in(classe); neu = '(neutro)' in (classe or '')
+    n = _num_in(classe); neu = 'neutro' in (classe or '')   # 'neutro' robusto: anche «(tema in -i, neutro)»
     return (f'{n}ª decl.' if n else 'decl.') + (' n.' if neu else '')
 
 def _cat_verbo(classe):
     c = classe or ''; dep = 'deponente' in c
     if 'mista' in c: base = 'mista'
-    elif 'tematico' in c: base = 'tematico'
+    elif '-μι' in c or 'atematico' in c: base = 'atem. -μι'   # PRIMA di 'tematico' («atematico» lo contiene!)
     elif 'contratto' in c:
         m = re.search(r'-([αεο])ω', c); base = f'contr. -{m.group(1)}ω' if m else 'contratto'
-    elif '-μι' in c or 'atematico' in c: base = 'atem. -μι'
+    elif 'tematico' in c: base = 'tematico'
     else:
         n = _num_in(c); base = f'{n}ª con.' if n else 'con.'
     return base + (' dep.' if dep else '')

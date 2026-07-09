@@ -430,9 +430,9 @@ export class DictionaryApp {
     if ((m = c.match(/([1-5])ª\s*decl/))) return C_DECL[+m[1] - 1];
     if (/mista/.test(c)) return C_CONJ[2];
     if ((m = c.match(/([1-4])ª\s*con/))) return C_CONJ[+m[1] - 1];
-    if (/tematic/.test(c)) return C_GVERB.tem;
+    if (/atem|-μι/.test(c)) return C_GVERB.mi;   // PRIMA di /tematic/ («atematico» lo contiene)
     if (/contr/.test(c)) return C_GVERB.contr;
-    if (/atem|-μι/.test(c)) return C_GVERB.mi;
+    if (/tematic/.test(c)) return C_GVERB.tem;
     return null;
   }
 
