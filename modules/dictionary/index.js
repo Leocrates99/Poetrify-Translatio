@@ -437,6 +437,35 @@ export class DictionaryApp {
     return null;
   }
 
+  /* Abbreviazione della parte del discorso (per la targhetta di ripiego). */
+  _posShort(pos) {
+    const M = { sostantivo:'sost.', nome:'sost.', verbo:'vb.', aggettivo:'agg.', pronome:'pron.',
+      avverbio:'avv.', preposizione:'prep.', congiunzione:'cong.', numerale:'num.',
+      interiezione:'int.', articolo:'art.', particella:'part.' };
+    return M[(pos || '').toLowerCase()] || (pos || '');
+  }
+
+  /* Mappa dei paradigmi già in cache per la lettera del prefisso (per la categoria). */
+  _paradigmShardFor(prefix) {
+    const folder = this.currentLang === 'greco' ? 'greek' : 'latin';
+    const letter = normalizeText(prefix || '').charAt(0);
+    return (this._segCache && this._segCache.get(folder + ':' + letter)) || {};
+  }
+
+  /* PULSANTE-LEMMA stile laboratorio (card): bordo PoS + lemma serif + glossa +
+   * targhetta categoria colorata (o PoS di ripiego). Riusato da sfoglia e liste. */
+  _labLemmaCard(lemma, pos, cat, gloss) {
+    const isGreek = this.currentLang === 'greco';
+    const disp = String(lemma).replace(/\d+$/, '');   // omografi: malus1 → «malus» a video, chiave piena in nav
+    const catCol = cat ? this._catColor(pos, cat) : null;
+    const chipTxt = cat || this._posShort(pos);
+    const chip = chipTxt
+      ? `<span class="lx-catchip"${catCol ? ` style="--cat-c:${catCol}"` : ''}>${escapeHtml(chipTxt)}</span>` : '';
+    const g = (gloss || '').replace(/\s+/g, ' ').trim();
+    return `<button type="button" class="lx-item${this._posClass(pos)}${isGreek ? ' greek' : ''}" data-lemma="${escapeHtml(lemma)}">
+      <span class="itx"><span class="il">${escapeHtml(disp)}</span>${g ? `<span class="ig">${escapeHtml(g.slice(0, 58))}</span>` : ''}</span>${chip}</button>`;
+  }
+
   _renderAutocomplete() {
     if (!this.$autocomplete) return;
     const isGreek = this.currentLang === 'greco';
@@ -587,11 +616,13 @@ export class DictionaryApp {
   /** Render completo della vista drill-down (header + barra anteprima + corpo). */
   async _renderBrowse() {
     if (!this.$results || !this.browsePrefix) return;
+    document.body.classList.add('dict-has-entry');   // sfoglia: layout focalizzato a colonna singola
     this.$results.innerHTML = this._renderLoading();
     const shardLetter = normalizeText(this.browsePrefix).charAt(0);
     try {
       await this.engine._loadShard(this.currentLang, shardLetter);
       await this.engine._loadGlossesIt(this.currentLang, shardLetter).catch(() => {});
+      await this._loadSegParadigm(this.browsePrefix).catch(() => {});   // scalda lo shard paradigmi → categoria delle card
     } catch (err) {
       this.$results.innerHTML = this._renderError(err);
       return;
@@ -624,6 +655,7 @@ export class DictionaryApp {
     const resetBtn = this.$results.querySelector('.drill-reset');
     if (resetBtn) resetBtn.addEventListener('click', () => {
       this.browsePrefix = null;
+      document.body.classList.remove('dict-has-entry');
       this.viewMode = 'search';
       this._syncUrl();
       this.$results.innerHTML = this._renderEmpty(); this._wireHomeButtons();
@@ -680,17 +712,17 @@ export class DictionaryApp {
     /* lista lemmi — NESSUNA paginazione ([D]); tetto soft di rendering */
     const capped = filtered.length > BROWSE_RENDER_CAP;
     const shown = capped ? filtered.slice(0, BROWSE_RENDER_CAP) : filtered;
+    /* card stile laboratorio: lemma + glossa + targhetta categoria (dal paradigma
+       della lettera, già in cache) o PoS di ripiego · colore = PoS/categoria */
+    const parMap = this._paradigmShardFor(this.browsePrefix);
     const lemmasHtml = shown.map(l => {
       const entry = shard.dict[l] || {};
-      const pos = entry.pos ? `<span class="browse-pos">${escapeHtml(entry.pos)}</span>` : '';
-      const freq = getFrequency(l, this.currentLang);
-      const freqHtml = freq >= 2 ? `<span class="browse-freq" title="${describeFrequency(freq)}">${renderStars(freq)}</span>` : '';
-      /* Nella sfoglia: lemma + categoria (colore = PoS) + frequenza. Niente
-         glossa qui: l'aggancio semantico è il COLORE della parte del discorso. */
-      return `<li class="browse-item${this._posClass(entry.pos)}" data-lemma="${escapeHtml(l)}">
-        <span class="browse-lemma${isGreek ? ' greek' : ''}">${escapeHtml(l)}</span>
-        ${pos}${freqHtml}
-      </li>`;
+      const par = parMap[l];
+      const pos = (par && par.pos) || entry.pos || '';
+      const cat = par && par.cat;
+      const gloss = getItalianGloss(l, this.currentLang)
+        || ((this.engine.getAutoGloss && this.engine.getAutoGloss(this.currentLang, l) || {}).it) || '';
+      return this._labLemmaCard(l, pos, cat, gloss);
     }).join('');
 
     const filterInfo = this.posFilter ? ` · PoS: <strong>${escapeHtml(this.posFilter)}</strong>` : '';
@@ -703,7 +735,7 @@ export class DictionaryApp {
     if (filtered.length === 0) {
       listHtml = `<ul class="browse-list"><li class="muted-text">Nessun lemma corrisponde${(this.browseFilter || '').trim() ? ' alla ricerca in anteprima' : ''}${this.posFilter ? ' con questo filtro PoS' : ''}.</li></ul>`;
     } else {
-      listHtml = `<ul class="browse-list">${lemmasHtml}</ul>${capNote}`;
+      listHtml = `<div class="lx-grid browse-grid">${lemmasHtml}</div>${capNote}`;
     }
     body.innerHTML = bucketsHtml + countLine + listHtml;
 
@@ -711,7 +743,7 @@ export class DictionaryApp {
     body.querySelectorAll('.drill-bucket').forEach(btn => {
       btn.addEventListener('click', () => this._setBrowsePrefix(btn.dataset.prefix));
     });
-    body.querySelectorAll('.browse-item').forEach(li => {
+    body.querySelectorAll('.lx-item').forEach(li => {
       li.addEventListener('click', () => {
         const lemma = li.dataset.lemma;
         if (this.$searchInput) this.$searchInput.value = lemma;
@@ -804,8 +836,8 @@ export class DictionaryApp {
     this.$results.querySelectorAll('.alt-lemma-chip').forEach(b => {
       b.addEventListener('click', () => this._navigateTo(b.dataset.lemma, this.currentLang));
     });
-    /* lista multi-lemma → naviga al lemma */
-    this.$results.querySelectorAll('.lemma-row').forEach(b => {
+    /* lista multi-lemma (card stile laboratorio) → naviga al lemma */
+    this.$results.querySelectorAll('.lemma-list .lx-item').forEach(b => {
       b.addEventListener('click', () => this._navigateTo(b.dataset.lemma, this.currentLang));
     });
     /* tab della flessione segmentata: diatesi → modo → tempo (gerarchia) */
@@ -921,18 +953,17 @@ export class DictionaryApp {
     }
     if (!rows.length) return '';
     rows.sort((a, b) => (b.freq - a.freq) || (a.nk.length - b.nk.length) || a.nk.localeCompare(b.nk));
-    const isGreek = this.currentLang === 'greco';
-    const items = rows.slice(0, 10).map(r => `
-      <button type="button" class="lemma-row${this._posClass(r.pos)}" data-lemma="${escapeHtml(r.k)}">
-        <span class="lemma-row-l${isGreek ? ' greek' : ''}">${escapeHtml(r.k.replace(/\d+$/, ''))}</span>
-        ${r.pos ? `<span class="lemma-row-pos">${escapeHtml(r.pos)}</span>` : ''}
-        <span class="lemma-row-g">${escapeHtml((r.gloss || '').slice(0, 70))}</span>
-        ${r.freq > 0 ? `<span class="lemma-row-f">${renderStars(r.freq)}</span>` : ''}
-        <span class="lemma-row-go">›</span>
-      </button>`).join('');
+    await this._loadSegParadigm(q).catch(() => {});   // scalda lo shard paradigmi → categoria delle card
+    const parMap = this._paradigmShardFor(q);
+    const items = rows.slice(0, 10).map(r => {
+      const par = parMap[r.k] || parMap[r.k.replace(/\d+$/, '')];
+      const pos = (par && par.pos) || r.pos;
+      const cat = par && par.cat;
+      return this._labLemmaCard(r.k, pos, cat, r.gloss);
+    }).join('');
     return `<div class="lemma-list">
       <div class="lemma-list-head">${hit ? 'Altri lemmi' : 'Lemmi'} che iniziano per «${escapeHtml(query)}» <small>· ${rows.length > 10 ? 'primi 10 di ' + rows.length : rows.length}</small></div>
-      ${items}
+      <div class="lx-grid list-grid">${items}</div>
     </div>`;
   }
 
