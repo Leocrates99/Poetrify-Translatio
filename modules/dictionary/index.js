@@ -1028,34 +1028,64 @@ export class DictionaryApp {
     const EX = isGreek
       ? [['ἔβην', 'βαίνω'], ['λόγους', 'λόγος'], ['ἐλύθη', 'λύω'], ['πόλεως', 'πόλις'], ['ἐποίει', 'ποιέω']]
       : [['fecerunt', 'facio'], ['rosae', 'rosa'], ['amaverat', 'amo'], ['urbium', 'urbs'], ['duxit', 'duco']];
-    const exHtml = EX.map(([f, l]) =>
-      `<button type="button" class="dz-example${isGreek ? ' greek' : ''}" data-ex="${escapeHtml(f)}" title="Cerca «${escapeHtml(f)}»">
-        <span class="dz-ex-form">${escapeHtml(f)}</span><span class="dz-ex-arrow">→</span><span class="dz-ex-lemma">${escapeHtml(l)}</span></button>`).join('');
-    // sfoglia per categoria (parte del discorso) — chip colorati dalla palette
-    const CATS = [['verbo', 'Verbi'], ['sostantivo', 'Sostantivi'], ['aggettivo', 'Aggettivi'],
-                  ['avverbio', 'Avverbi'], ['pronome', 'Pronomi'], ['preposizione', 'Preposizioni']];
-    const catHtml = CATS.map(([pos, lab]) =>
-      `<button type="button" class="dz-cat pos-${pos}" data-browse-pos="${pos}">${lab}</button>`).join('');
-    return `<div class="dict-results-empty dz-home">
-      <h2>📖 Dizionario · pronto per la consultazione</h2>
-      <p>Cerca un <strong>lemma</strong> o una <strong>forma flessa</strong>: la ricerca risale sempre al lemma.</p>
-      <div class="dz-block"><span class="dz-block-lbl">Prova una forma</span><div class="dz-examples">${exHtml}</div></div>
-      <div class="dz-block"><span class="dz-block-lbl">Sfoglia per categoria</span><div class="dz-cats">${catHtml}</div></div>
-      <p class="muted-text">Lingua: <strong>${escapeHtml(langLabel)}</strong> · glosse curate per ~${counts.latino + counts.greco} lemmi · paradigma inline · lessico ⭐ · etimologia · cognati LAT↔GR · <kbd>/</kbd> focus.</p>
-      <p class="muted-text">🔤 Barra delle lettere per iniziale · 🔄 ricerca inversa per un significato italiano.</p>
+    const tryHtml = EX.map(([f]) =>
+      `<button type="button" class="lx-trychip${isGreek ? ' greek' : ''}" data-ex="${escapeHtml(f)}" title="Cerca «${escapeHtml(f)}»">${escapeHtml(f)}</button>`).join('');
+    // campione curato di lemmi per categoria → card stile laboratorio (colore = PoS/categoria)
+    const SAMPLE = isGreek ? [
+      { t: 'Sostantivi · declinazioni', items: [
+        { l: 'χώρα', g: 'la regione, la terra', pos: 'sostantivo', cat: '1ª decl.' },
+        { l: 'τιμή', g: 'l’onore, il prezzo', pos: 'sostantivo', cat: '1ª decl.' },
+        { l: 'πολίτης', g: 'il cittadino', pos: 'sostantivo', cat: '1ª decl.' },
+        { l: 'λόγος', g: 'la parola, il discorso', pos: 'sostantivo', cat: '2ª decl.' },
+        { l: 'δῶρον', g: 'il dono', pos: 'sostantivo', cat: '2ª decl. n.' },
+        { l: 'σῶμα', g: 'il corpo', pos: 'sostantivo', cat: '3ª decl. n.' },
+        { l: 'πόλις', g: 'la città', pos: 'sostantivo', cat: '3ª decl.' } ] },
+      { t: 'Verbi · tipi', items: [
+        { l: 'λύω', g: 'sciogliere, liberare', pos: 'verbo', cat: 'tematico' },
+        { l: 'τιμάω', g: 'onorare', pos: 'verbo', cat: 'contr. -αω' },
+        { l: 'ποιέω', g: 'fare, produrre', pos: 'verbo', cat: 'contr. -εω' },
+        { l: 'δίδωμι', g: 'dare', pos: 'verbo', cat: 'atem. -μι' },
+        { l: 'γίγνομαι', g: 'diventare, nascere', pos: 'verbo', cat: 'tematico dep.' } ] },
+    ] : [
+      { t: 'Sostantivi · declinazioni', items: [
+        { l: 'rosa', g: 'la rosa, il fiore', pos: 'sostantivo', cat: '1ª decl.' },
+        { l: 'dominus', g: 'padrone, signore', pos: 'sostantivo', cat: '2ª decl.' },
+        { l: 'bellum', g: 'la guerra', pos: 'sostantivo', cat: '2ª decl. n.' },
+        { l: 'rex', g: 'il re', pos: 'sostantivo', cat: '3ª decl.' },
+        { l: 'corpus', g: 'il corpo', pos: 'sostantivo', cat: '3ª decl. n.' },
+        { l: 'manus', g: 'la mano', pos: 'sostantivo', cat: '4ª decl.' },
+        { l: 'res', g: 'la cosa, il fatto', pos: 'sostantivo', cat: '5ª decl.' } ] },
+      { t: 'Verbi · coniugazioni', items: [
+        { l: 'laudo', g: 'lodare, elogiare', pos: 'verbo', cat: '1ª con.' },
+        { l: 'moneo', g: 'ammonire, avvertire', pos: 'verbo', cat: '2ª con.' },
+        { l: 'rego', g: 'reggere, guidare', pos: 'verbo', cat: '3ª con.' },
+        { l: 'capio', g: 'prendere, catturare', pos: 'verbo', cat: 'mista' },
+        { l: 'audio', g: 'udire, ascoltare', pos: 'verbo', cat: '4ª con.' } ] },
+    ];
+    const card = (it) => {
+      const cc = this._catColor(it.pos, it.cat);
+      return `<button type="button" class="lx-item${this._posClass(it.pos)}${isGreek ? ' greek' : ''}" data-name="${escapeHtml(it.l)}">
+        <span class="itx"><span class="il">${escapeHtml(it.l)}</span><span class="ig">${escapeHtml(it.g)}</span></span>
+        <span class="lx-catchip"${cc ? ` style="--cat-c:${cc}"` : ''}>${escapeHtml(it.cat)}</span></button>`;
+    };
+    const grid = SAMPLE.map(sec =>
+      `<section class="lx-cat"><h3>${escapeHtml(sec.t)}<span class="ct"></span></h3><div class="lx-grid">${sec.items.map(card).join('')}</div></section>`).join('');
+    return `<div class="lx-home">
+      <div class="lx-hero">
+        <h1>Lexi<span class="x">c</span>on</h1>
+        <p class="sub">Dizionario analitico di <b>${escapeHtml(langLabel.toLowerCase())}</b>: da una <b>forma flessa</b> al lemma, ai <b>significati</b>, alla <b>flessione scomposta in morfemi</b>. Cerca una parola o scegli dal lemmario.</p>
+        <div class="lx-try"><span class="tl">Prova una forma →</span>${tryHtml}</div>
+      </div>
+      ${grid}
     </div>`;
   }
 
   _wireHomeButtons() {
-    this.$results.querySelectorAll('.dz-example').forEach(b => {
+    this.$results.querySelectorAll('.lx-trychip').forEach(b => {
       b.addEventListener('click', () => { if (this.$searchInput) this.$searchInput.value = b.dataset.ex; this.search(); });
     });
-    this.$results.querySelectorAll('.dz-cat').forEach(b => {
-      b.addEventListener('click', () => {
-        this.posFilter = b.dataset.browsePos || '';
-        this._savePosFilter(); this._renderPosFilter();
-        this._enterBrowse(this.currentLang === 'greco' ? 'α' : 'a');
-      });
+    this.$results.querySelectorAll('.lx-item').forEach(b => {
+      b.addEventListener('click', () => this._navigateTo(b.dataset.name, this.currentLang));
     });
   }
 
