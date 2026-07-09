@@ -1186,39 +1186,50 @@ export class DictionaryApp {
     /* [NEW 13] prev/next alfabetici */
     const navHtml = await this._renderSiblingNav(hit);
 
-    return `<article class="dict-entry-card${this._posClass(displayPos)}">
-      <header class="dict-entry-header">
-        <span class="dict-entry-lemma${lemmaCls}">${escapeHtml(hit.lemma)}</span>
-        ${displayPos ? `<span class="dict-entry-pos">${escapeHtml(displayPos)}</span>` : ''}
+    // ════════ SCHEDA STILE LABORATORIO (.lx-*) ════════
+    const init = hit.lemma.charAt(0), rest = hit.lemma.slice(1);
+    const postagTxt = (displayPos || '').toLowerCase();
+    const catboxHtml = ppCat
+      ? `<span class="lx-catbox"${ppCatCol ? ` style="--cat-c:${ppCatCol}"` : ''}>${escapeHtml(ppCat)}</span>` : '';
+    // voce (parti principali) + genere per esteso a capo
+    const GENDER_LAB = { m: 'maschile', f: 'femminile', n: 'neutro' };
+    const GART = { 'ὁ': 'maschile', 'ἡ': 'femminile', 'τό': 'neutro' };
+    const splitGender = (t) => {
+      t = t || '';
+      const gs = t.match(/^(ὁ|ἡ|τό)\s+(.+)$/);            // greco: articolo iniziale
+      if (gs) return { parts: gs[2], gender: GART[gs[1]] };
+      const m = t.match(/(?:^|[\s,])([mfn])\.?$/);         // latino: sigla finale m/f/n
+      if (m) return { parts: t.slice(0, m.index).replace(/[,\s]+$/, ''), gender: GENDER_LAB[m[1]] };
+      return { parts: t, gender: null };
+    };
+    const sg = splitGender(ppText);
+    const principalHtml = ppText
+      ? `<div class="lx-principal"><span class="lx-parts${lemmaCls}">${escapeHtml(sg.parts)}</span></div>` : '';
+    const genderHtml = sg.gender ? `<div class="lx-gender">${escapeHtml(sg.gender)}</div>` : '';
+    // sensi numerati dalla glossa italiana (split su «;»)
+    const glossStr = italianGloss || (hit.src === 'curated' && hit.definition ? hit.definition : '')
+      || hit.italianGlossAuto || ((this.engine.getAutoGloss && this.engine.getAutoGloss(this.currentLang, hit.lemma) || {}).it) || '';
+    const senseParts = glossStr ? glossStr.split(/\s*;\s*/).map(s => s.trim()).filter(Boolean) : [];
+    const sensesHtml = senseParts.length
+      ? `<ol class="lx-senses">${senseParts.map(s =>
+          `<li><div class="lx-sense-line"><span class="lx-sense-mean">${escapeHtml(s)}</span></div></li>`).join('')}</ol>`
+      : `<ol class="lx-senses"><li><div class="lx-sense-line lx-sense-reg">Traduzione italiana in arrivo.</div></li></ol>`;
+    // funzioni secondarie preservate, sotto, sobrie
+    const secondary = [parsingHtml, viaHtml, altsHtml, translitHtml, etymHtml, cognateHtml, paradigmHtml]
+      .filter(Boolean).join('');
+
+    return `<article class="lx-entry${this._posClass(displayPos)}${lemmaCls}">
+      <div class="lx-lemma-row">
+        <span class="lx-lemma${lemmaCls}"><span class="lx-init">${escapeHtml(init)}</span>${escapeHtml(rest)}</span>
+        <span class="lx-meta">${displayPos ? `<span class="lx-postag">${escapeHtml(postagTxt)}</span>` : ''}${catboxHtml}</span>
         ${freqHtml}
         ${navHtml}
-      </header>
-      ${ppHtml}
-      <div class="dict-source-label"><em>${escapeHtml(sourceLabel)}</em></div>
-      ${translitHtml}
-      ${parsingHtml}
-      ${viaHtml}
-      ${altsHtml}
-      <!-- 1 · TRADUZIONE (risalto) -->
-      ${translationHtml}
-      <!-- definizione inglese (Lewis/LSJ): mostrata SOLO in modalità inglese;
-           in italiano la traduzione è la glossa IT qui sopra -->
-      ${this.glossLang === 'en'
-        ? (hit.definition
-            ? `<p class="dict-entry-definition">${escapeHtml(hit.definition)}</p>`
-            : '<p class="dict-entry-definition muted-text"><em>Definition unavailable.</em></p>')
-        : ''}
-      <!-- 2 · FLESSIONE COLORATA (protagonista, come nei mockup) -->
+      </div>
+      ${principalHtml}
+      ${genderHtml}
+      ${sensesHtml}
       ${segHtml}
-      <!-- 3 · CATEGORIE GRAMMATICALI -->
-      ${grammarHtml}
-      <!-- 4 · PARADIGMA (parti principali) -->
-      ${paradigmaLine}
-      <!-- 5 · ETIMOLOGIA (collassata) -->
-      ${etymHtml}
-      ${cognateHtml}
-      <!-- 6 · MODELLO RICOSTRUITO (fallback, ripiegato) -->
-      ${paradigmHtml}
+      ${secondary ? `<div class="lx-secondary">${secondary}</div>` : ''}
       <footer class="dict-entry-actions">
         <button class="dict-entry-save ${isSaved ? 'is-saved' : ''}" type="button">${saveBtnLabel}</button>
         <a class="dict-entry-link" href="translator.html?lang=${encodeURIComponent(this.currentLang)}&lemma=${encodeURIComponent(hit.lemma)}"
