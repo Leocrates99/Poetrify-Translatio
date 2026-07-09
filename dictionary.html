@@ -71,56 +71,72 @@ html, body {
 }
 
 /* ─── Header ────────────────────────────────────────────────────────────── */
+/* Testata LEGGERA stile laboratorio: pergamena traslucida, sticky, minimale.
+   Il pallino e gli accenti virano col net di lingua (--dacc). */
 header.topbar {
-  background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
-  color: #fff;
-  padding: 20px 28px;
-  box-shadow: 0 2px 12px rgba(44, 53, 57, 0.18);
+  background: color-mix(in srgb, var(--paper) 90%, transparent);
+  -webkit-backdrop-filter: blur(9px); backdrop-filter: blur(9px);
+  color: var(--ink);
+  padding: 10px clamp(16px, 4vw, 30px);
+  border-bottom: 1px solid var(--rule-soft);
+  position: sticky; top: 0; z-index: 60;
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 8px;
   flex-wrap: wrap;
 }
+header.topbar > div:first-child { display: inline-flex; align-items: baseline; gap: 9px; }
 header.topbar h1 {
-  font-size: 24px;
+  font-family: var(--font-body);
+  font-size: 19px;
   font-weight: 700;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+header.topbar h1::before {
+  content: ''; width: 10px; height: 10px; border-radius: 50%;
+  background: var(--dacc); box-shadow: 0 0 0 3px var(--dacc-pale);
+  transition: background 0.3s, box-shadow 0.3s; flex-shrink: 0;
 }
 header.topbar small {
-  display: block;
-  margin-top: 2px;
   font-family: var(--font-ui);
-  font-size: 11px;
+  font-size: 10px;
   text-transform: uppercase;
-  letter-spacing: 0.10em;
-  opacity: 0.85;
+  letter-spacing: 0.08em;
+  color: var(--sepia);
 }
 .topbar-spacer { flex: 1; }
 .topbar-link, .topbar-btn {
-  color: rgba(255, 255, 255, 0.90);
+  color: var(--ink-soft);
   font-family: var(--font-ui);
   font-size: 12px;
   font-weight: 600;
   text-decoration: none;
-  padding: 7px 12px;
-  border-radius: var(--radius-sm);
-  background: rgba(255, 255, 255, 0.10);
-  border: 1px solid rgba(255, 255, 255, 0.20);
+  padding: 6px 11px;
+  border-radius: 8px;
+  background: transparent;
+  border: 1px solid var(--rule);
   transition: all 0.15s ease;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  white-space: nowrap;
 }
 .topbar-link:hover, .topbar-btn:hover {
-  background: rgba(255, 255, 255, 0.22);
-  color: var(--paper);
+  border-color: var(--dacc);
+  color: var(--dacc);
+  background: var(--dacc-pale);
 }
 .topbar-btn.is-active {
-  background: var(--paper);
-  color: var(--primary);
-  border-color: var(--paper);
+  background: var(--dacc);
+  color: #fff;
+  border-color: var(--dacc);
 }
+@media (max-width: 640px){ header.topbar small { display: none; } }
 
 /* ─── Layout principale · 2 colonne su desktop, stack su mobile ─────────── */
 main {
@@ -1833,8 +1849,7 @@ body.poetrify-dark[data-lang="latino"] { --primary: #e58a90; --primary-dark: #b9
 body.poetrify-dark[data-lang="greco"]  { --primary: #8b7dff; --primary-dark: #6a5fd0; --primary-pale: rgba(139,125,255,0.16);
   --dacc: #8b7dff; --dacc-deep: #6a5fd0; --dacc-pale: rgba(139,125,255,0.16); --dacc-border: rgba(139,125,255,0.38); }
 /* La testata in scuro resta profonda ma TINTA della lingua (non un blu fisso) */
-body.poetrify-dark[data-lang="latino"] header.topbar { background: linear-gradient(180deg, #3a1418 0%, #220b0e 100%); }
-body.poetrify-dark[data-lang="greco"]  header.topbar { background: linear-gradient(180deg, #1a1f3a 0%, #0e1226 100%); }
+body.poetrify-dark header.topbar { background: color-mix(in srgb, var(--paper) 90%, transparent); border-bottom-color: var(--rule); }
 body.poetrify-dark code { background: rgba(99,102,241,0.18); color: #8fa0ff; }
 body.poetrify-dark .dict-entry-italian { background: rgba(47,133,90,0.16); }
 body.poetrify-dark .dict-entry-italian-label { background: var(--success); }
