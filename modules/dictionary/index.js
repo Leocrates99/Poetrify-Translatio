@@ -742,6 +742,7 @@ export class DictionaryApp {
     if (!this.$results) return;
     /* identità cromatica per lingua: rosso pompeiano LAT · blu Poetrify GR */
     document.body.dataset.lang = this.currentLang;
+    document.body.classList.remove('dict-has-entry');   // layout focalizzato: attivo solo su scheda
     if (this.viewMode === 'browse' && this.browsePrefix) {
       return this._renderBrowse();
     }
@@ -775,6 +776,7 @@ export class DictionaryApp {
         : (listHtml || await this._renderNotFound());
       this._wireEntryButtons();
       this._updateBackForwardButtons();
+      if (hit) document.body.classList.add('dict-has-entry');   // colonna singola focalizzata (stile lab)
       // dopo una RICERCA/navigazione porta la scheda in cima alla vista (era sepolta
       // sotto il pannello di ricerca); NON su re-render dei tab del paradigma.
       if (hit && this._scrollOnRender) { this._scrollOnRender = false; this._scrollToResult(); }

@@ -2298,6 +2298,17 @@ header.topbar { transition: background 0.25s ease; }
 /* funzioni secondarie sotto la scheda: sobrie, staccate */
 .lx-secondary{ margin-top:26px; padding-top:16px; border-top:1px dashed var(--lxrule); }
 .lx-entry .dict-entry-actions{ margin-top:20px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+/* LAYOUT FOCALIZZATO come il lab: quando c'è una scheda → colonna singola centrata,
+   aiuti di sfoglia e sidebar nascosti (restano richiamabili dalla home/ricerca). */
+body.dict-has-entry main{ grid-template-columns:1fr !important; max-width:900px; }
+body.dict-has-entry .main-right{ display:none; }
+body.dict-has-entry .dict-search-help,
+body.dict-has-entry #dict-pos-filter,
+body.dict-has-entry #dict-alphabet,
+body.dict-has-entry .reverse-search-row,
+body.dict-has-entry #dict-history-bar,
+body.dict-has-entry .main-left > section > h2{ display:none; }
+body.dict-has-entry .main-left > section:first-child{ margin-bottom:4px; }
 </style>
 </head>
 <body>
