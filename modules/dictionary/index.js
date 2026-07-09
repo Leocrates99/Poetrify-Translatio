@@ -189,6 +189,7 @@ export class DictionaryApp {
     const params = new URLSearchParams(window.location.search);
     this.currentLang = (params.get('lang') === 'greco') ? 'greco' : 'latino';
     this.currentQuery = (params.get('lemma') || '').trim();
+    if (this.currentQuery) this._scrollOnRender = true;   // ?lemma=… → scheda in vista al caricamento
     document.body.dataset.lang = this.currentLang;   // identità cromatica shell da subito
     this._applyDarkMode(this._isDark());
     this._applyLevel();
@@ -733,6 +734,7 @@ export class DictionaryApp {
     this.viewMode = 'search';
     this._hideAutocomplete();
     this._syncUrl();
+    if (q) this._scrollOnRender = true;
     await this.render();
   }
 
@@ -773,9 +775,24 @@ export class DictionaryApp {
         : (listHtml || await this._renderNotFound());
       this._wireEntryButtons();
       this._updateBackForwardButtons();
+      // dopo una RICERCA/navigazione porta la scheda in cima alla vista (era sepolta
+      // sotto il pannello di ricerca); NON su re-render dei tab del paradigma.
+      if (hit && this._scrollOnRender) { this._scrollOnRender = false; this._scrollToResult(); }
     } catch (err) {
       this.$results.innerHTML = this._renderError(err);
     }
+  }
+
+  /* Porta la sezione RISULTATO in cima alla vista (la testata è statica → nessun
+     offset). Chiamato solo dopo una ricerca/navigazione, non sui tab del paradigma. */
+  _scrollToResult() {
+    const el = (this.$results && this.$results.closest('section')) || this.$results;
+    if (!el) return;
+    // scrollIntoView({smooth}) e requestAnimationFrame sono inaffidabili qui →
+    // posizione calcolata + window.scrollTo ISTANTANEO (getBoundingClientRect forza
+    // il layout, quindi la posizione è corretta anche senza rAF).
+    const y = el.getBoundingClientRect().top + window.scrollY - 12;   // 12px di respiro
+    window.scrollTo(0, Math.max(0, Math.round(y)));
   }
 
   _wireEntryButtons() {
@@ -2143,6 +2160,7 @@ export class DictionaryApp {
     this.viewMode = 'search';
     this._updateClearButton();
     this._syncUrl();
+    this._scrollOnRender = true;
     this.render();
   }
 
