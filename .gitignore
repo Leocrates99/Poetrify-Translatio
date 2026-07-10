@@ -10,6 +10,11 @@ __pycache__/
 *.pyc
 _build/_unresolved_*.json
 
+# Record unificati (P1.1): output rigenerabile da _build/build_unified.py (~79 MB).
+# Deterministico dagli shard + _id_map + ledger; diventerà canonico dopo F2/F3.
+# Per ora si rigenera, non si versiona (come gli altri artefatti pesanti sopra).
+data/*/unified/
+
 # Cartella di staging creata dal workflow di deploy (solo in CI)
 _site/
 
