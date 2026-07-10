@@ -33,11 +33,11 @@ data/
       └─ …
 ```
 
-**Totale (nucleo scolastico, dopo la semplificazione)**: 23 shard latini
-(270k forme intatte · **11.746 lemmi** nel nucleo) + 25 shard greci (13k
-forme intatte · **10.500 lemmi** nel nucleo). Le forme flesse non sono mai
-toccate: la morfologia del translator resta completa. I lemmi archiviati
-(5.836 latini + 124.680 greci) vivono in `archive/<lettera>.json` e restano
+**Totale (conteggi reali · vedi il blocco «Conteggi reali» in fondo)**: 23 shard
+latini (**599.727 forme** intatte · **17.443 lemmi** nel nucleo) + 25 shard greci
+(**80.999 forme** intatte · **25.086 lemmi** nel nucleo). Le forme flesse non sono
+mai toccate: la morfologia del translator resta completa. I lemmi archiviati
+(**487 latini + 110.225 greci**) vivono in `archive/<lettera>.json` e restano
 consultabili (vedi *Semplificazione scolastica & archivio* più sotto).
 
 ## Schema di ciascun file `<lettera>.json`
@@ -72,8 +72,10 @@ con un secondo round trip e mantiene entrambi in cache.
 ```json
 {
   "meta": { "lang": "latino", "shard_count": 23,
-            "total_forms": 270227, "total_lemmas": 11746,
-            "archived_lemmas": 5836, "scholastic": true },
+            "total_lemmas": 17443, "total_forms": 599727,
+            "total_form_entries": 624724, "archived_lemmas": 487,
+            "total_paradigms": 9510, "total_glosses_it": 5260,
+            "scholastic": true },
   "letters": ["a","b","c","d","e","f","g","h","i","k","l","m","n",
               "o","p","q","r","s","t","u","v","x","z"],
   "archive_letters": ["a","b","c","d","e","f","g","h","i","l","m","n",
@@ -180,3 +182,12 @@ const hit = await lex.lookUpWord('fecerunt', 'latino');
 Tutti gli shard fetchati restano in cache (Map per lingua) per la durata
 della sessione; ricerche successive sulla stessa lettera sono O(1) in
 memoria.
+
+## Conteggi reali
+
+<!-- COUNTS:START (auto · _build/rebuild_index.py · non editare a mano) -->
+| lingua | lemmi core | forme | form-entries | archivio | paradigmi | glosse it |
+|---|--:|--:|--:|--:|--:|--:|
+| latino | 17.443 | 599.727 | 624.724 | 487 | 9.510 | 5.260 |
+| greco | 25.086 | 80.999 | 81.934 | 110.225 | 4.561 | 10.367 |
+<!-- COUNTS:END -->
