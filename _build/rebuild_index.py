@@ -63,9 +63,11 @@ def main():
             "total_forms": c["total_forms"],
             "total_form_entries": c["total_form_entries"],
             "archived_lemmas": c["archived_lemmas"],
+            "total_all_lemmas": c["total_lemmas"] + c["archived_lemmas"],  # P0.2: dizionario completo
             "total_paradigms": c["total_paradigms"],
             "total_glosses_it": c["total_glosses_it"],
-            "scholastic": before[lang].get("scholastic", True),
+            "complete": True,      # P0.2: nucleo+archivio unificati e consultabili
+            "scholastic": False,   # non è più un sottoinsieme scolastico
         }
         json.dump({"meta": meta, "letters": c["letters"], "archive_letters": c["archive_letters"]},
                   open(idx_path, "w", encoding="utf-8"), ensure_ascii=False)

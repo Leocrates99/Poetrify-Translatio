@@ -179,12 +179,23 @@ export class LexiconEngine {
     const promise = fetch(url).then(r => {
       if (!r.ok) throw new Error(`fetch ${url} → ${r.status}`);
       return r.json();
-    }).then(payload => {
+    }).then(async payload => {
       const shard = { forms: payload.forms || {}, dict: payload.dict || {} };
+      /* P0.2 · DIZIONARIO UNIFICATO: fondi nel dict le voci d'archivio di questa
+       * lettera, così browse / autocomplete / lista-lemmi / ricerca vedono TUTTI
+       * i lemmi. Nessuna esclusione per livello: la frequenza ordina, non nasconde.
+       * Il nucleo vince sulle collisioni; le voci d'archivio sono prive di forme
+       * flesse (restano cercabili come lemma). */
+      const arch = await this._loadArchiveShard(lang, letter);
+      if (arch && arch.dict) {
+        for (const lem in arch.dict) {
+          if (!(lem in shard.dict)) shard.dict[lem] = arch.dict[lem];
+        }
+      }
       this._shards[lang].set(letter, shard);
       delete this._inflight[key];
       if (this.verbose) {
-        console.log(`[LexiconEngine] shard '${letter}' loaded for ${lang}: ${Object.keys(shard.forms).length} forms, ${Object.keys(shard.dict).length} lemmas`);
+        console.log(`[LexiconEngine] shard '${letter}' loaded for ${lang}: ${Object.keys(shard.forms).length} forms, ${Object.keys(shard.dict).length} lemmas (nucleo+archivio)`);
       }
       return shard;
     }).catch(err => {
