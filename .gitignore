@@ -15,6 +15,11 @@ _build/_unresolved_*.json
 # Per ora si rigenera, non si versiona (come gli altri artefatti pesanti sopra).
 data/*/unified/
 
+# Fonti normalizzate (P1.2) + cache dei download esterni: rigenerabili dagli
+# script _build/sources/*.py. Versionati gli script, non gli output pesanti.
+_build/sources/normalized/
+_build/sources/cache/
+
 # Cartella di staging creata dal workflow di deploy (solo in CI)
 _site/
 
