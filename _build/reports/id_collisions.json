@@ -1,0 +1,1310 @@
+[
+  {
+    "slug": "lat:a",
+    "chiavi": [
+      "a2",
+      "a",
+      "A1"
+    ],
+    "pos": [
+      "pronome",
+      "preposizione",
+      ""
+    ],
+    "ids": [
+      "lat:a#3",
+      "lat:a#2",
+      "lat:a#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "lat:cum",
+    "chiavi": [
+      "cum1",
+      "cum2",
+      "cum"
+    ],
+    "pos": [
+      "pronome",
+      "congiunzione",
+      "preposizione"
+    ],
+    "ids": [
+      "lat:cum#pron",
+      "lat:cum#cong",
+      "lat:cum#prep"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "lat:dis",
+    "chiavi": [
+      "Dis",
+      "dis1",
+      "dis2"
+    ],
+    "pos": [
+      "sostantivo",
+      "aggettivo",
+      ""
+    ],
+    "ids": [
+      "lat:dis#1",
+      "lat:dis#2",
+      "lat:dis#3"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "lat:dum",
+    "chiavi": [
+      "dum2",
+      "dum",
+      "dum1"
+    ],
+    "pos": [
+      "congiunzione",
+      "congiunzione",
+      "avverbio"
+    ],
+    "ids": [
+      "lat:dum#3",
+      "lat:dum#1",
+      "lat:dum#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "lat:dira",
+    "chiavi": [
+      "Dira",
+      "dira1",
+      "dira2"
+    ],
+    "pos": [
+      "sostantivo",
+      "",
+      ""
+    ],
+    "ids": [
+      "lat:dira#1",
+      "lat:dira#2",
+      "lat:dira#3"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "lat:ius",
+    "chiavi": [
+      "ius",
+      "ius1",
+      "ius2"
+    ],
+    "pos": [
+      "",
+      "sostantivo",
+      ""
+    ],
+    "ids": [
+      "lat:ius#1",
+      "lat:ius#2",
+      "lat:ius#3"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "lat:liber",
+    "chiavi": [
+      "Liber",
+      "liber1",
+      "liber2"
+    ],
+    "pos": [
+      "sostantivo",
+      "aggettivo",
+      ""
+    ],
+    "ids": [
+      "lat:liber#1",
+      "lat:liber#2",
+      "lat:liber#3"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "lat:mento",
+    "chiavi": [
+      "mento",
+      "Mento"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "lat:mento#2",
+      "lat:mento#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "lat:ne",
+    "chiavi": [
+      "ne",
+      "ne1",
+      "ne2",
+      "ne3"
+    ],
+    "pos": [
+      "congiunzione",
+      "avverbio",
+      "avverbio",
+      "interiezione"
+    ],
+    "ids": [
+      "lat:ne#1",
+      "lat:ne#2",
+      "lat:ne#3",
+      "lat:ne#4"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "lat:pro",
+    "chiavi": [
+      "pro",
+      "pro1",
+      "pro2",
+      "pro3"
+    ],
+    "pos": [
+      "preposizione",
+      "avverbio",
+      "",
+      "interiezione"
+    ],
+    "ids": [
+      "lat:pro#1",
+      "lat:pro#2",
+      "lat:pro#3",
+      "lat:pro#4"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "lat:si",
+    "chiavi": [
+      "si1",
+      "si",
+      "si2",
+      "si3",
+      "si4",
+      "si5"
+    ],
+    "pos": [
+      "congiunzione",
+      "congiunzione",
+      "avverbio",
+      "",
+      "",
+      ""
+    ],
+    "ids": [
+      "lat:si#2",
+      "lat:si#1",
+      "lat:si#3",
+      "lat:si#4",
+      "lat:si#5",
+      "lat:si#6"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "lat:super",
+    "chiavi": [
+      "super",
+      "super1",
+      "super2"
+    ],
+    "pos": [
+      "",
+      "avverbio",
+      ""
+    ],
+    "ids": [
+      "lat:super#1",
+      "lat:super#2",
+      "lat:super#3"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "lat:ut",
+    "chiavi": [
+      "ut2",
+      "ut",
+      "ut1"
+    ],
+    "pos": [
+      "congiunzione",
+      "congiunzione",
+      "avverbio"
+    ],
+    "ids": [
+      "lat:ut#3",
+      "lat:ut#1",
+      "lat:ut#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "lat:vel",
+    "chiavi": [
+      "vel1",
+      "vel",
+      "vel2"
+    ],
+    "pos": [
+      "congiunzione",
+      "congiunzione",
+      "aggettivo"
+    ],
+    "ids": [
+      "lat:vel#2",
+      "lat:vel#1",
+      "lat:vel#3"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "lat:verum",
+    "chiavi": [
+      "verum",
+      "verum1",
+      "verum2"
+    ],
+    "pos": [
+      "",
+      "",
+      "avverbio"
+    ],
+    "ids": [
+      "lat:verum#1",
+      "lat:verum#2",
+      "lat:verum#3"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "lat:te",
+    "chiavi": [
+      "te",
+      "te1",
+      "te2"
+    ],
+    "pos": [
+      "",
+      "",
+      ""
+    ],
+    "ids": [
+      "lat:te#1",
+      "lat:te#2",
+      "lat:te#3"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:ἀμοργός",
+    "chiavi": [
+      "ἀμοργός",
+      "Ἀμοργός"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:ἀμοργός#1",
+      "grc:ἀμοργός#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:βούβαστις",
+    "chiavi": [
+      "βούβαστις",
+      "Βούβαστις"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:βούβαστις#2",
+      "grc:βούβαστις#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:βώμιος",
+    "chiavi": [
+      "βώμιος",
+      "Βώμιος"
+    ],
+    "pos": [
+      "aggettivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:βώμιος#agg",
+      "grc:βώμιος#nome"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:εὖρος",
+    "chiavi": [
+      "εὖρος",
+      "Εὖρος"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:εὖρος#2",
+      "grc:εὖρος#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:ἰώ",
+    "chiavi": [
+      "ἰώ",
+      "Ἰώ"
+    ],
+    "pos": [
+      "verbo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:ἰώ#verbo",
+      "grc:ἰώ#nome"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:κίρκη",
+    "chiavi": [
+      "κίρκη",
+      "Κίρκη"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:κίρκη#2",
+      "grc:κίρκη#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:κρήτη",
+    "chiavi": [
+      "κρήτη",
+      "Κρήτη"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:κρήτη#2",
+      "grc:κρήτη#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:κῦρος",
+    "chiavi": [
+      "κῦρος",
+      "Κῦρος"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:κῦρος#2",
+      "grc:κῦρος#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:κύπριος",
+    "chiavi": [
+      "κύπριος",
+      "Κύπριος"
+    ],
+    "pos": [
+      "aggettivo",
+      "aggettivo"
+    ],
+    "ids": [
+      "grc:κύπριος#2",
+      "grc:κύπριος#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:κάστωρ",
+    "chiavi": [
+      "κάστωρ",
+      "Κάστωρ"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:κάστωρ#2",
+      "grc:κάστωρ#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:λίνος",
+    "chiavi": [
+      "λίνος",
+      "Λίνος"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:λίνος#2",
+      "grc:λίνος#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:λίνδος",
+    "chiavi": [
+      "λίνδος",
+      "Λίνδος"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:λίνδος#2",
+      "grc:λίνδος#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:μηλίς",
+    "chiavi": [
+      "μηλίς",
+      "Μηλίς"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:μηλίς#2",
+      "grc:μηλίς#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:μαῖα",
+    "chiavi": [
+      "μαῖα",
+      "Μαῖα"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:μαῖα#2",
+      "grc:μαῖα#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:οἰόθεν",
+    "chiavi": [
+      "οἰόθεν",
+      "Οἰόθεν"
+    ],
+    "pos": [
+      "avverbio",
+      "avverbio"
+    ],
+    "ids": [
+      "grc:οἰόθεν#2",
+      "grc:οἰόθεν#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:ὀρφεύς",
+    "chiavi": [
+      "ὀρφεύς",
+      "Ὀρφεύς"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:ὀρφεύς#1",
+      "grc:ὀρφεύς#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:ὄσιρις",
+    "chiavi": [
+      "ὄσιρις",
+      "Ὄσιρις"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:ὄσιρις#1",
+      "grc:ὄσιρις#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:πολιάς",
+    "chiavi": [
+      "πολιάς",
+      "Πολιάς"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:πολιάς#2",
+      "grc:πολιάς#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:πάρος",
+    "chiavi": [
+      "πάρος",
+      "Πάρος"
+    ],
+    "pos": [
+      "particella",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:πάρος#part",
+      "grc:πάρος#nome"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:ῥώμη",
+    "chiavi": [
+      "ῥώμη",
+      "Ῥώμη"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:ῥώμη#1",
+      "grc:ῥώμη#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:ῥέα",
+    "chiavi": [
+      "ῥέα",
+      "Ῥέα"
+    ],
+    "pos": [
+      "avverbio",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:ῥέα#avv",
+      "grc:ῥέα#nome"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:σάραπις",
+    "chiavi": [
+      "σάραπις",
+      "Σάραπις"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:σάραπις#2",
+      "grc:σάραπις#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:σύρος",
+    "chiavi": [
+      "σύρος",
+      "Σύρος"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:σύρος#2",
+      "grc:σύρος#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:σκῖρον",
+    "chiavi": [
+      "σκῖρον",
+      "Σκῖρον"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:σκῖρον#2",
+      "grc:σκῖρον#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:ὑμήν",
+    "chiavi": [
+      "ὑμήν",
+      "Ὑμήν"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:ὑμήν#1",
+      "grc:ὑμήν#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:ἄναυρος",
+    "chiavi": [
+      "ἄναυρος",
+      "Ἄναυρος"
+    ],
+    "pos": [
+      "aggettivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:ἄναυρος#agg",
+      "grc:ἄναυρος#nome"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:ἄτλας",
+    "chiavi": [
+      "Ἄτλας",
+      "ἄτλας"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:ἄτλας#2",
+      "grc:ἄτλας#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:βύνη",
+    "chiavi": [
+      "βύνη",
+      "Βύνη"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:βύνη#2",
+      "grc:βύνη#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:δίς",
+    "chiavi": [
+      "Δίς",
+      "δίς"
+    ],
+    "pos": [
+      "sostantivo",
+      "avverbio"
+    ],
+    "ids": [
+      "grc:δίς#nome",
+      "grc:δίς#avv"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:ἑκάτη",
+    "chiavi": [
+      "Ἑκάτη",
+      "ἑκάτη"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:ἑκάτη#2",
+      "grc:ἑκάτη#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:θήρα",
+    "chiavi": [
+      "Θήρα",
+      "θήρα"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:θήρα#1",
+      "grc:θήρα#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:θρᾷττα",
+    "chiavi": [
+      "Θρᾷττα",
+      "θρᾷττα"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:θρᾷττα#1",
+      "grc:θρᾷττα#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:ἰταλός",
+    "chiavi": [
+      "ἰταλός",
+      "Ἰταλός"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:ἰταλός#1",
+      "grc:ἰταλός#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:ἴτυς",
+    "chiavi": [
+      "ἴτυς",
+      "Ἴτυς"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:ἴτυς#1",
+      "grc:ἴτυς#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:κόλχος",
+    "chiavi": [
+      "κόλχος",
+      "Κόλχος"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:κόλχος#2",
+      "grc:κόλχος#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:κρόνος",
+    "chiavi": [
+      "Κρόνος",
+      "κρόνος"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:κρόνος#1",
+      "grc:κρόνος#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:κυβέλη",
+    "chiavi": [
+      "κυβέλη",
+      "Κυβέλη"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:κυβέλη#2",
+      "grc:κυβέλη#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:κύπρος",
+    "chiavi": [
+      "Κύπρος",
+      "κύπρος"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:κύπρος#1",
+      "grc:κύπρος#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:κωρυκίς",
+    "chiavi": [
+      "Κωρυκίς",
+      "κωρυκίς"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:κωρυκίς#1",
+      "grc:κωρυκίς#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:κώρυκος",
+    "chiavi": [
+      "κώρυκος",
+      "Κώρυκος"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:κώρυκος#2",
+      "grc:κώρυκος#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:κῶς",
+    "chiavi": [
+      "Κῶς",
+      "κῶς"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:κῶς#1",
+      "grc:κῶς#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:λάρτιος",
+    "chiavi": [
+      "Λάρτιος",
+      "λάρτιος"
+    ],
+    "pos": [
+      "sostantivo",
+      "aggettivo"
+    ],
+    "ids": [
+      "grc:λάρτιος#nome",
+      "grc:λάρτιος#agg"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:λεῦκος",
+    "chiavi": [
+      "λεῦκος",
+      "Λεῦκος"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:λεῦκος#2",
+      "grc:λεῦκος#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:μῆδος",
+    "chiavi": [
+      "μῆδος",
+      "Μῆδος"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:μῆδος#2",
+      "grc:μῆδος#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:μίτρα",
+    "chiavi": [
+      "μίτρα",
+      "Μίτρα"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:μίτρα#2",
+      "grc:μίτρα#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:μόριος",
+    "chiavi": [
+      "Μόριος",
+      "μόριος"
+    ],
+    "pos": [
+      "sostantivo",
+      "aggettivo"
+    ],
+    "ids": [
+      "grc:μόριος#nome",
+      "grc:μόριος#agg"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:νάϊος",
+    "chiavi": [
+      "νάϊος",
+      "Νάϊος"
+    ],
+    "pos": [
+      "aggettivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:νάϊος#agg",
+      "grc:νάϊος#nome"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:νεμέσιον",
+    "chiavi": [
+      "νεμέσιον",
+      "Νεμέσιον"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:νεμέσιον#2",
+      "grc:νεμέσιον#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:ὅμηρος",
+    "chiavi": [
+      "Ὅμηρος",
+      "ὅμηρος"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:ὅμηρος#2",
+      "grc:ὅμηρος#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:ὀρθωσία",
+    "chiavi": [
+      "ὀρθωσία",
+      "Ὀρθωσία"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:ὀρθωσία#1",
+      "grc:ὀρθωσία#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:πάνιον",
+    "chiavi": [
+      "Πάνιον",
+      "πάνιον"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:πάνιον#1",
+      "grc:πάνιον#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:περσέπολις",
+    "chiavi": [
+      "περσέπολις",
+      "Περσέπολις"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:περσέπολις#2",
+      "grc:περσέπολις#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:πίσα",
+    "chiavi": [
+      "πίσα",
+      "Πίσα"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:πίσα#2",
+      "grc:πίσα#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:σήρ",
+    "chiavi": [
+      "Σήρ",
+      "σήρ"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:σήρ#1",
+      "grc:σήρ#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:σηστός",
+    "chiavi": [
+      "σηστός",
+      "Σηστός"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:σηστός#2",
+      "grc:σηστός#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:σκῦρος",
+    "chiavi": [
+      "Σκῦρος",
+      "σκῦρος"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:σκῦρος#1",
+      "grc:σκῦρος#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:σπάρτη",
+    "chiavi": [
+      "σπάρτη",
+      "Σπάρτη"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:σπάρτη#2",
+      "grc:σπάρτη#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:σαβάζω",
+    "chiavi": [
+      "Σαβάζω",
+      "σαβάζω"
+    ],
+    "pos": [
+      "verbo",
+      "verbo"
+    ],
+    "ids": [
+      "grc:σαβάζω#1",
+      "grc:σαβάζω#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:συβαρίζω",
+    "chiavi": [
+      "Συβαρίζω",
+      "συβαρίζω"
+    ],
+    "pos": [
+      "verbo",
+      "verbo"
+    ],
+    "ids": [
+      "grc:συβαρίζω#1",
+      "grc:συβαρίζω#2"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:συρίζω",
+    "chiavi": [
+      "συρίζω",
+      "Συρίζω"
+    ],
+    "pos": [
+      "verbo",
+      "verbo"
+    ],
+    "ids": [
+      "grc:συρίζω#2",
+      "grc:συρίζω#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:φάρος",
+    "chiavi": [
+      "φάρος",
+      "Φάρος"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:φάρος#2",
+      "grc:φάρος#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  },
+  {
+    "slug": "grc:χείρων",
+    "chiavi": [
+      "χείρων",
+      "Χείρων"
+    ],
+    "pos": [
+      "sostantivo",
+      "sostantivo"
+    ],
+    "ids": [
+      "grc:χείρων#2",
+      "grc:χείρων#1"
+    ],
+    "nota": "omografi non pre-numerati dal sorgente / PoS ambigua: verifica manuale"
+  }
+]
