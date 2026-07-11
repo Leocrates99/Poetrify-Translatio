@@ -25,6 +25,14 @@ _build/sources/cache/
 # JSON normalizzati (data/corpus/), NON i sorgenti grezzi.
 _build/corpus_cache/
 
+# Fusione (S.2): input/batch e output grezzi degli agenti = intermedi rigenerabili.
+# Versionato il PRODOTTO fuso data/*/fused/ (output LLM NON riproducibile) + gli script.
+_build/fusion_input/
+_build/fusion_output/
+
+# Indice inverso dell'analizzatore (S.2 c): rigenerabile da build_forms_index.py.
+data/*/forms/
+
 # Cartella di staging creata dal workflow di deploy (solo in CI)
 _site/
 
