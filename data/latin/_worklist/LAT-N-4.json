@@ -1,7 +1,19 @@
 {
 "segment": "LAT-N-4",
-"count": 113,
+"count": 230,
 "lemmi": [
+{
+"id": "lat:abitus",
+"lemma": "abitus",
+"uid": "poe-000135333",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
 {
 "id": "lat:abortus",
 "lemma": "abortus",
@@ -11,7 +23,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:abscessus",
@@ -22,7 +35,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:abusus",
+"lemma": "abusus",
+"uid": "poe-000135415",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:accessus",
@@ -33,7 +59,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:accursus",
@@ -44,7 +71,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:actus",
+"lemma": "actus",
+"uid": "poe-000135563",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:acus",
@@ -55,7 +95,92 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "f",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:adfatus",
+"lemma": "adfatus",
+"uid": "poe-000135636",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:adfectus#2",
+"lemma": "adfectus",
+"uid": "poe-000135641",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:adflatus",
+"lemma": "adflatus",
+"uid": "poe-000135654",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:adlapsus",
+"lemma": "adlapsus",
+"uid": "poe-000135716",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:adsessus",
+"lemma": "adsessus",
+"uid": "poe-000135859",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:adsultus",
+"lemma": "adsultus",
+"uid": "poe-000135887",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:advectus",
+"lemma": "advectus",
+"uid": "poe-000135934",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:adventus",
@@ -66,7 +191,32 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": "m",
 "segno": "paradigma"
+},
+{
+"id": "lat:advolatus",
+"lemma": "advolatus",
+"uid": "poe-000135959",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:aemulatus",
+"lemma": "aemulatus",
+"uid": "poe-000135992",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:aestus",
@@ -77,7 +227,32 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:affatus",
+"lemma": "affatus",
+"uid": "poe-000136071",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:afflatus",
+"lemma": "afflatus",
+"uid": "poe-000136084",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:aggestus",
@@ -88,7 +263,44 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:ambitus",
+"lemma": "ambitus",
+"uid": "poe-000136329",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:amictus",
+"lemma": "amictus",
+"uid": "poe-000136353",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:amplexus",
+"lemma": "amplexus",
+"uid": "poe-000136388",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:anfractus",
@@ -99,7 +311,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:anhelitus",
@@ -110,7 +323,32 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:appetitus",
+"lemma": "appetitus",
+"uid": "poe-000136595",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:appulsus",
+"lemma": "appulsus",
+"uid": "poe-000136623",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:arcus",
@@ -121,7 +359,68 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": "m",
 "segno": "paradigma"
+},
+{
+"id": "lat:armatus#2",
+"lemma": "armatus",
+"uid": "poe-000136756",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:ascensus",
+"lemma": "ascensus",
+"uid": "poe-000136809",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:assensus",
+"lemma": "assensus",
+"uid": "poe-000136855",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:assessus",
+"lemma": "assessus",
+"uid": "poe-000136869",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:assultus",
+"lemma": "assultus",
+"uid": "poe-000136888",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:astus",
@@ -132,7 +431,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:attrectatus",
@@ -143,7 +443,32 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": "m",
 "segno": "whitaker"
+},
+{
+"id": "lat:auditus",
+"lemma": "auditus",
+"uid": "poe-000137008",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:baculum",
+"lemma": "baculum",
+"uid": "poe-000137122",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:balatus",
@@ -154,7 +479,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:bos",
+"lemma": "bos",
+"uid": "poe-000137302",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis"
 },
 {
 "id": "lat:caestus",
@@ -165,7 +503,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:cantus",
@@ -176,7 +515,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:casus",
@@ -187,6 +527,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": "m",
 "segno": "paradigma"
 },
 {
@@ -197,7 +538,32 @@
 "lewis"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "f",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:census",
+"lemma": "census",
+"uid": "poe-000137721",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:centuriatus#2",
+"lemma": "centuriatus",
+"uid": "poe-000137739",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:centurionatus",
@@ -208,7 +574,44 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:cinctus",
+"lemma": "cinctus",
+"uid": "poe-000137862",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:circuitus",
+"lemma": "circuitus",
+"uid": "poe-000137881",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:circumspectus#2",
+"lemma": "circumspectus",
+"uid": "poe-000137955",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:clio",
@@ -218,7 +621,32 @@
 "lewis"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "f",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:coeptus",
+"lemma": "coeptus",
+"uid": "poe-000138120",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:coetus",
+"lemma": "coetus",
+"uid": "poe-000138124",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:coitus",
@@ -229,7 +657,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:comitiatus",
+"lemma": "comitiatus",
+"uid": "poe-000138248",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:commeatus",
@@ -240,7 +681,68 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:comperendinatus",
+"lemma": "comperendinatus",
+"uid": "poe-000138367",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:complexus",
+"lemma": "complexus",
+"uid": "poe-000138390",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:comploratus",
+"lemma": "comploratus",
+"uid": "poe-000138393",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:compressus",
+"lemma": "compressus",
+"uid": "poe-000138419",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:conatus",
+"lemma": "conatus",
+"uid": "poe-000138434",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:concentus",
@@ -251,7 +753,32 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:conceptus",
+"lemma": "conceptus",
+"uid": "poe-000138449",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:concessus#2",
+"lemma": "concessus",
+"uid": "poe-000138457",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:concubitus",
@@ -262,7 +789,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:concursus",
@@ -273,7 +801,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:condiscipulatus",
@@ -284,7 +813,44 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:conflictus",
+"lemma": "conflictus",
+"uid": "poe-000138602",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:congressus",
+"lemma": "congressus",
+"uid": "poe-000138647",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:consessus",
+"lemma": "consessus",
+"uid": "poe-000138850",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:consulatus",
@@ -295,7 +861,44 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:contuitus",
+"lemma": "contuitus",
+"uid": "poe-000139042",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:conventus",
+"lemma": "conventus",
+"uid": "poe-000139076",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:convictus",
+"lemma": "convictus",
+"uid": "poe-000139091",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:cornu",
@@ -306,6 +909,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": "n",
 "segno": "paradigma"
 },
 {
@@ -317,7 +921,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:currus",
@@ -328,6 +933,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": "m",
 "segno": "paradigma"
 },
 {
@@ -339,7 +945,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:decemviratus",
@@ -350,7 +957,164 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:decessus",
+"lemma": "decessus",
+"uid": "poe-000139526",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:decursus",
+"lemma": "decursus",
+"uid": "poe-000139574",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:deiectus#2",
+"lemma": "deiectus",
+"uid": "poe-000139666",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:derisus",
+"lemma": "derisus",
+"uid": "poe-000139865",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:descensus",
+"lemma": "descensus",
+"uid": "poe-000139876",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:digressus",
+"lemma": "digressus",
+"uid": "poe-000140104",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:discursus",
+"lemma": "discursus",
+"uid": "poe-000140231",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:dominatus",
+"lemma": "dominatus",
+"uid": "poe-000140441",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:domus",
+"lemma": "domus",
+"uid": "poe-000140453",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "f",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:ductus",
+"lemma": "ductus",
+"uid": "poe-000140489",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:effectus",
+"lemma": "effectus",
+"uid": "poe-000140619",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:egressus",
+"lemma": "egressus",
+"uid": "poe-000140678",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:eiulatus",
+"lemma": "eiulatus",
+"uid": "poe-000140695",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:eventus",
@@ -361,7 +1125,56 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:excessus",
+"lemma": "excessus",
+"uid": "poe-000141109",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:excursus",
+"lemma": "excursus",
+"uid": "poe-000141148",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:exitus",
+"lemma": "exitus",
+"uid": "poe-000141216",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:famulatus",
+"lemma": "famulatus",
+"uid": "poe-000141558",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:flatus",
@@ -372,7 +1185,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:fletus",
+"lemma": "fletus",
+"uid": "poe-000141827",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:flictus",
@@ -383,7 +1209,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "whitaker"
+"genere": "m",
+"segno": "lewis+whitaker"
 },
 {
 "id": "lat:fluctus",
@@ -394,7 +1221,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:fremitus",
@@ -405,7 +1233,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:gemitus",
@@ -416,7 +1245,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:genu",
@@ -427,7 +1257,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": "n",
 "segno": "paradigma"
+},
+{
+"id": "lat:gestus",
+"lemma": "gestus",
+"uid": "poe-000142267",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:gradus",
@@ -438,7 +1281,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:gressus",
+"lemma": "gressus",
+"uid": "poe-000142401",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:gustus",
@@ -449,7 +1305,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:habitus#2",
+"lemma": "habitus",
+"uid": "poe-000142448",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:halitus",
@@ -460,7 +1329,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:haustus",
+"lemma": "haustus",
+"uid": "poe-000142503",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:hiatus",
@@ -471,7 +1353,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:hinnitus",
@@ -482,7 +1365,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:hortatus",
@@ -492,7 +1376,32 @@
 "lewis"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:iactus",
+"lemma": "Iactus",
+"uid": "poe-000142747",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:ictus",
+"lemma": "ictus",
+"uid": "poe-000142775",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:idus",
@@ -503,7 +1412,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "whitaker"
+"genere": "f",
+"segno": "lewis+whitaker"
 },
 {
 "id": "lat:impetus",
@@ -514,7 +1424,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:impulsus",
+"lemma": "impulsus",
+"uid": "poe-000143105",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:incessus",
@@ -525,7 +1448,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:incursus",
@@ -536,7 +1460,32 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:ingressus",
+"lemma": "ingressus",
+"uid": "poe-000143590",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:intellectus",
+"lemma": "intellectus",
+"uid": "poe-000143988",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:intercursus",
@@ -547,7 +1496,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "whitaker"
+"genere": "m",
+"segno": "lewis+whitaker"
 },
 {
 "id": "lat:interductus",
@@ -558,7 +1508,56 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "whitaker"
+"genere": "m",
+"segno": "lewis+whitaker"
+},
+{
+"id": "lat:interitus",
+"lemma": "interitus",
+"uid": "poe-000144073",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:interventus",
+"lemma": "interventus",
+"uid": "poe-000144144",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:introitus",
+"lemma": "introitus",
+"uid": "poe-000144184",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:irrisus",
+"lemma": "irrisus",
+"uid": "poe-000144329",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:itus",
@@ -569,7 +1568,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:lacus",
@@ -579,7 +1579,20 @@
 "lewis"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:lapsus",
+"lemma": "lapsus",
+"uid": "poe-000144589",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:latratus",
@@ -590,7 +1603,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:luctus",
@@ -601,7 +1615,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:magistratus",
@@ -612,7 +1627,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:manus",
@@ -623,6 +1639,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": "f",
 "segno": "paradigma"
 },
 {
@@ -634,7 +1651,19 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:mensis",
+"lemma": "mensis",
+"uid": "poe-000145391",
+"fonti": [
+"lewis"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(corregge paradigma)"
 },
 {
 "id": "lat:mercatus",
@@ -645,7 +1674,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:metus",
@@ -656,6 +1686,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": "m",
 "segno": "paradigma"
 },
 {
@@ -667,7 +1698,32 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:nurus",
+"lemma": "nurus",
+"uid": "poe-000146223",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "f",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:obitus",
+"lemma": "obitus",
+"uid": "poe-000146277",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:obtutus",
@@ -678,7 +1734,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": null,
 "segno": "whitaker"
+},
+{
+"id": "lat:occasus",
+"lemma": "occasus",
+"uid": "poe-000146445",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:occursus",
@@ -689,7 +1758,68 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": null,
 "segno": "whitaker"
+},
+{
+"id": "lat:oppositus#2",
+"lemma": "oppositus",
+"uid": "poe-000146649",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:pastus",
+"lemma": "pastus",
+"uid": "poe-000146967",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:peccatus",
+"lemma": "peccatus",
+"uid": "poe-000147039",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:peculatus",
+"lemma": "peculatus",
+"uid": "poe-000147048",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:peditatus",
+"lemma": "peditatus",
+"uid": "poe-000147063",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:pelicatus",
@@ -700,7 +1830,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:permissus#1",
@@ -711,7 +1842,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": null,
 "segno": "whitaker"
+},
+{
+"id": "lat:piscatus",
+"lemma": "piscatus",
+"uid": "poe-000147812",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:planctus",
@@ -722,7 +1866,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:ploratus",
@@ -733,7 +1878,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:pontificatus",
@@ -744,7 +1890,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:porticus",
@@ -755,7 +1902,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "f",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:portus",
@@ -766,7 +1914,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:positus#2",
+"lemma": "positus",
+"uid": "poe-000148036",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:potentatus",
@@ -777,7 +1938,32 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:praemonitus",
+"lemma": "praemonitus",
+"uid": "poe-000148244",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:pressus#2",
+"lemma": "pressus",
+"uid": "poe-000148435",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:principatus",
@@ -788,7 +1974,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:processus",
+"lemma": "processus",
+"uid": "poe-000148510",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:proconsulatus",
@@ -799,7 +1998,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:procursus",
@@ -810,7 +2010,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "whitaker"
+"genere": "m",
+"segno": "lewis+whitaker"
+},
+{
+"id": "lat:progressus",
+"lemma": "progressus",
+"uid": "poe-000148616",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:pronurus",
@@ -820,7 +2033,43 @@
 "lewis"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "f",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:prospectus",
+"lemma": "prospectus",
+"uid": "poe-000148765",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:proventus",
+"lemma": "proventus",
+"uid": "poe-000148799",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:pugillatus",
+"lemma": "pugillatus",
+"uid": "poe-000148882",
+"fonti": [
+"lewis"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis"
 },
 {
 "id": "lat:quaestus",
@@ -831,6 +2080,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": "m",
 "segno": "paradigma"
 },
 {
@@ -842,7 +2092,32 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "f",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:questus",
+"lemma": "questus",
+"uid": "poe-000149125",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:quinquatrus",
+"lemma": "quinquatrus",
+"uid": "poe-000149160",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "f",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:quinqueviratus",
@@ -853,7 +2128,44 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "whitaker"
+"genere": "m",
+"segno": "lewis+whitaker"
+},
+{
+"id": "lat:raptus",
+"lemma": "raptus",
+"uid": "poe-000149279",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:receptus",
+"lemma": "receptus",
+"uid": "poe-000149328",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:recessus",
+"lemma": "recessus",
+"uid": "poe-000149329",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:recursus",
@@ -864,7 +2176,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:reditus",
@@ -875,7 +2188,32 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:regressus",
+"lemma": "regressus",
+"uid": "poe-000149494",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:respectus",
+"lemma": "respectus",
+"uid": "poe-000149693",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:respiratus",
@@ -886,7 +2224,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "whitaker"
+"genere": "m",
+"segno": "lewis+whitaker"
 },
 {
 "id": "lat:rictus",
@@ -897,7 +2236,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:risus",
@@ -908,7 +2248,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:ritus",
@@ -919,7 +2260,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:ructus",
@@ -930,7 +2272,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:saltatus",
@@ -941,7 +2284,32 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "whitaker"
+"genere": "m",
+"segno": "lewis+whitaker"
+},
+{
+"id": "lat:saltus",
+"lemma": "saltus",
+"uid": "poe-000150057",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:scitus#2",
+"lemma": "scitus",
+"uid": "poe-000150244",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:screatus",
@@ -952,7 +2320,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "whitaker"
+"genere": "m",
+"segno": "lewis+whitaker"
 },
 {
 "id": "lat:secessus",
@@ -963,7 +2332,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:secubitus",
@@ -974,7 +2344,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "whitaker"
+"genere": "m",
+"segno": "lewis+whitaker"
+},
+{
+"id": "lat:sensus",
+"lemma": "sensus",
+"uid": "poe-000150465",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:sexus",
@@ -985,7 +2368,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:singultus",
@@ -996,6 +2380,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": null,
 "segno": "whitaker"
 },
 {
@@ -1007,7 +2392,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:situs#2",
+"lemma": "situs",
+"uid": "poe-000150764",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:socrus",
@@ -1018,7 +2416,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:sonitus",
@@ -1029,7 +2428,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:specus",
@@ -1040,7 +2440,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:spiritus",
@@ -1051,7 +2452,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:stimulatio",
+"lemma": "stimulatio",
+"uid": "poe-000151065",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "f",
+"segno": "lewis"
 },
 {
 "id": "lat:strepitus",
@@ -1062,7 +2476,32 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
+},
+{
+"id": "lat:subvectus",
+"lemma": "subvectus",
+"uid": "poe-000151381",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:successus",
+"lemma": "successus",
+"uid": "poe-000151398",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:succussus",
@@ -1073,7 +2512,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": null,
 "segno": "whitaker"
+},
+{
+"id": "lat:suspectus#2",
+"lemma": "suspectus",
+"uid": "poe-000151633",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:suspiratus",
@@ -1084,6 +2536,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": null,
 "segno": "whitaker"
 },
 {
@@ -1095,6 +2548,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": null,
 "segno": "whitaker"
 },
 {
@@ -1106,7 +2560,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:tonitrus",
@@ -1117,7 +2572,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:tractatus",
@@ -1128,7 +2584,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": null,
 "segno": "whitaker"
+},
+{
+"id": "lat:traiectus",
+"lemma": "traiectus",
+"uid": "poe-000152108",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:tribunatus",
@@ -1139,7 +2608,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:tribus",
@@ -1150,6 +2620,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": "f",
 "segno": "paradigma"
 },
 {
@@ -1161,6 +2632,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": null,
 "segno": "whitaker"
 },
 {
@@ -1172,6 +2644,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": "m",
 "segno": "paradigma"
 },
 {
@@ -1183,7 +2656,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": null,
 "segno": "whitaker"
+},
+{
+"id": "lat:usus",
+"lemma": "usus",
+"uid": "poe-000152577",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:vagitus",
@@ -1194,7 +2680,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "whitaker"
+"genere": "m",
+"segno": "lewis+whitaker"
 },
 {
 "id": "lat:venatus",
@@ -1205,7 +2692,32 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": null,
 "segno": "whitaker"
+},
+{
+"id": "lat:vestitus",
+"lemma": "vestitus",
+"uid": "poe-000152906",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
+},
+{
+"id": "lat:victus",
+"lemma": "victus",
+"uid": "poe-000152957",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "gen. -us",
+"genere": "m",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:volatus",
@@ -1216,6 +2728,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": null,
 "segno": "whitaker"
 },
 {
@@ -1227,7 +2740,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
-"segno": "paradigma"
+"genere": "m",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:vultus",
@@ -1238,6 +2752,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -us",
+"genere": null,
 "segno": "whitaker"
 }
 ]

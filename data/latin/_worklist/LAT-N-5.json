@@ -1,29 +1,7 @@
 {
 "segment": "LAT-N-5",
-"count": 59,
+"count": 22,
 "lemmi": [
-{
-"id": "lat:aculeus",
-"lemma": "aculeus",
-"uid": "poe-000135566",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:alveus",
-"lemma": "alveus",
-"uid": "poe-000136289",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
 {
 "id": "lat:amarities",
 "lemma": "amarities",
@@ -33,6 +11,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
 },
 {
@@ -44,50 +23,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:araneus",
-"lemma": "araneus",
-"uid": "poe-000136656",
-"fonti": [
-"lewis"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:aulaeum",
-"lemma": "aulaeum",
-"uid": "poe-000137026",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:balteus",
-"lemma": "balteus",
-"uid": "poe-000137144",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:caduceus",
-"lemma": "caduceus",
-"uid": "poe-000137368",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
+"genere": "n",
+"segno": "paradigma+lewis"
 },
 {
 "id": "lat:caesaries",
@@ -98,18 +35,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
-},
-{
-"id": "lat:calceus",
-"lemma": "calceus",
-"uid": "poe-000137420",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
 },
 {
 "id": "lat:canities",
@@ -120,95 +47,20 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
 },
 {
-"id": "lat:caseus",
-"lemma": "caseus",
-"uid": "poe-000137607",
+"id": "lat:castoreum",
+"lemma": "castoreum",
+"uid": "poe-000137626",
 "fonti": [
 "lewis",
 "whitaker"
 ],
 "marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:centaureum",
-"lemma": "centaureum",
-"uid": "poe-000137722",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:choreus",
-"lemma": "choreus",
-"uid": "poe-000137835",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:clipeus",
-"lemma": "clipeus",
-"uid": "poe-000138062",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:coryphaeus",
-"lemma": "coryphaeus",
-"uid": "poe-000139195",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:culleus",
-"lemma": "culleus",
-"uid": "poe-000139336",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:cuneus",
-"lemma": "cuneus",
-"uid": "poe-000139377",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:dichoreus",
-"lemma": "dichoreus",
-"uid": "poe-000140044",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
+"genere": "n",
+"segno": "lewis(pos inferita)"
 },
 {
 "id": "lat:effigies",
@@ -219,18 +71,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
-},
-{
-"id": "lat:ganeum",
-"lemma": "ganeum",
-"uid": "poe-000142175",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
 },
 {
 "id": "lat:glacies",
@@ -241,62 +83,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
-},
-{
-"id": "lat:gnaeus",
-"lemma": "Gnaeus",
-"uid": "poe-000142313",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:gynaeceum",
-"lemma": "gynaeceum",
-"uid": "poe-000142429",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:hinnuleus",
-"lemma": "hinnuleus",
-"uid": "poe-000142600",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:hordeum",
-"lemma": "hordeum",
-"uid": "poe-000142654",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:horreum",
-"lemma": "horreum",
-"uid": "poe-000142663",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
 },
 {
 "id": "lat:ingluvies",
@@ -307,6 +95,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
 },
 {
@@ -318,28 +107,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
-},
-{
-"id": "lat:lageos",
-"lemma": "lageos",
-"uid": "poe-000144531",
-"fonti": [
-"lewis"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:laqueus",
-"lemma": "laqueus",
-"uid": "poe-000144592",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
 },
 {
 "id": "lat:luxuries",
@@ -350,6 +119,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
 },
 {
@@ -361,18 +131,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
-},
-{
-"id": "lat:malleus",
-"lemma": "malleus",
-"uid": "poe-000145172",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
 },
 {
 "id": "lat:meridies",
@@ -383,39 +143,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "m",
 "segno": "whitaker"
-},
-{
-"id": "lat:mustaceum",
-"lemma": "mustaceum",
-"uid": "poe-000145819",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:oleum",
-"lemma": "oleum",
-"uid": "poe-000146555",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:panomphaeus",
-"lemma": "Panomphaeus",
-"uid": "poe-000146880",
-"fonti": [
-"lewis"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
 },
 {
 "id": "lat:pauperies",
@@ -426,39 +155,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": null,
 "segno": "whitaker"
-},
-{
-"id": "lat:pilleum",
-"lemma": "pilleum",
-"uid": "poe-000147776",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:pilleus",
-"lemma": "pilleus",
-"uid": "poe-000147777",
-"fonti": [
-"lewis"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:pluteus",
-"lemma": "pluteus",
-"uid": "poe-000147909",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
 },
 {
 "id": "lat:progenies",
@@ -469,6 +167,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
 },
 {
@@ -480,29 +179,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
-},
-{
-"id": "lat:prytaneum",
-"lemma": "prytaneum",
-"uid": "poe-000148834",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:puteus",
-"lemma": "puteus",
-"uid": "poe-000148967",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
 },
 {
 "id": "lat:rabies",
@@ -513,6 +191,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
 },
 {
@@ -524,6 +203,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
 },
 {
@@ -535,18 +215,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
-},
-{
-"id": "lat:solliferreum",
-"lemma": "solliferreum",
-"uid": "poe-000150825",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
 },
 {
 "id": "lat:species",
@@ -557,18 +227,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
-},
-{
-"id": "lat:spelaeum",
-"lemma": "spelaeum",
-"uid": "poe-000150927",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
 },
 {
 "id": "lat:spes",
@@ -579,17 +239,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:spondeus",
-"lemma": "spondeus",
-"uid": "poe-000150972",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
+"genere": "f",
 "segno": "paradigma"
 },
 {
@@ -601,6 +251,7 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
 },
 {
@@ -612,40 +263,8 @@
 "whitaker"
 ],
 "marcatore": "gen. -ei",
+"genere": "f",
 "segno": "whitaker"
-},
-{
-"id": "lat:trochaeus",
-"lemma": "trochaeus",
-"uid": "poe-000152313",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:tropaeum",
-"lemma": "tropaeum",
-"uid": "poe-000152320",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
-},
-{
-"id": "lat:urceus",
-"lemma": "urceus",
-"uid": "poe-000152548",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"segno": "paradigma"
 }
 ]
 }
