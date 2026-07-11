@@ -1,0 +1,61 @@
+{
+"segment": "LAT-N-X",
+"count": 5,
+"lemmi": [
+{
+"id": "lat:alpha",
+"lemma": "alpha",
+"uid": "poe-000136258",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "indeclinabile/irregolare",
+"segno": "whitaker(indecl.)"
+},
+{
+"id": "lat:instar",
+"lemma": "instar",
+"uid": "poe-000143918",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "indeclinabile/irregolare",
+"segno": "whitaker(indecl.)"
+},
+{
+"id": "lat:iota",
+"lemma": "iota",
+"uid": "poe-000144293",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "indeclinabile/irregolare",
+"segno": "whitaker(indecl.)"
+},
+{
+"id": "lat:mane#1",
+"lemma": "mane",
+"uid": "poe-000145192",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "indeclinabile/irregolare",
+"segno": "whitaker(indecl.)"
+},
+{
+"id": "lat:nefas",
+"lemma": "nefas",
+"uid": "poe-000145959",
+"fonti": [
+"lewis",
+"whitaker"
+],
+"marcatore": "indeclinabile/irregolare",
+"segno": "whitaker(indecl.)"
+}
+]
+}

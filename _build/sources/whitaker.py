@@ -58,7 +58,7 @@ def main():
         senses = e.get("senses") or []
         wpos = C.POS_MAP_WHITAKER.get(e.get("pos"), "")
         rid, fallback = None, None
-        for cand in citation_candidates(e):        # preferisci match di STESSA PoS
+        for cand in sorted(citation_candidates(e)):  # sorted → deterministico (set = ordine casuale)
             for i, p in idx.get(C.norm_lat(C.base_lat(cand)), []):
                 if p == wpos:
                     rid = i
