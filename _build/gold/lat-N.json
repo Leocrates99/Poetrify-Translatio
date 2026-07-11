@@ -1,0 +1,80 @@
+{
+  "_meta": {
+    "scopo": "P2.1 · record d'oro di riferimento per la FUSIONE filologica dei sostantivi latini (S.2 a). Fatti a mano: la fusione a lotti (S.2/P2.2) DEVE conformarsi a questa qualità e a questo schema (campi[] per campo semantico, rank, tr en+it, registro, fonti, applicazione[], senses_raw verbatim, divergenze).",
+    "autorita_latino": "L&S (Lewis & Short)",
+    "nota_quantita": "quantita qui impostata a mano (target); F3 la strutturerà automaticamente"
+  },
+
+  "lat:amor": {
+    "id": "lat:amor", "uid": "poe-000136374", "uri": null,
+    "lemma": "amor", "lang": "lat", "pos": "sostantivo",
+    "morph": { "genere": "m", "flessione": "3ª decl.", "classe": "3ª declinazione", "testa": "amor, amōris m" },
+    "temi": null, "quantita": "amŏr, amōris", "reggenza": null,
+    "paradigma": "a#lat:amor", "freq": { "rank": null },
+    "gloss": { "en": ["love", "affection"], "it": ["amore", "affetto"] },
+    "campi": [
+      { "campo": "affetto / sentimento", "rank": 1, "sensi": [
+        { "tr": { "en": ["love", "affection"], "it": ["amore", "affetto"] }, "registro": "generale", "fonti": ["L&S", "Whitaker"] },
+        { "tr": { "en": ["strong friendly feeling", "fondness"], "it": ["affetto profondo", "attaccamento"] }, "registro": "generale", "fonti": ["L&S"] }
+      ] },
+      { "campo": "amore erotico / passione", "rank": 2, "sensi": [
+        { "tr": { "en": ["sexual love", "passion", "desire"], "it": ["amore (erotico)", "passione", "desiderio"] }, "registro": "anche spregiativo (passione illecita)", "fonti": ["L&S", "Whitaker"] },
+        { "tr": { "en": ["love affair", "amour"], "it": ["relazione amorosa"] }, "registro": "spec. al plurale (amōres)", "fonti": ["Whitaker", "L&S"] }
+      ] },
+      { "campo": "oggetto d'amore / personificazione", "rank": 3, "sensi": [
+        { "tr": { "en": ["the beloved", "darling"], "it": ["l'amato/a", "oggetto d'amore"] }, "registro": "spesso al plurale", "fonti": ["Whitaker", "L&S"] },
+        { "tr": { "en": ["Cupid", "Amor (the god)"], "it": ["Amore", "Cupido"] }, "registro": "mitologico / personificato", "fonti": ["Whitaker"] }
+      ] }
+    ],
+    "applicazione": [
+      "col genitivo l'ambiguità oggettiva/soggettiva va sciolta dal contesto: «amor patris» = amore per il padre (ogg.) o del padre (sogg.)",
+      "«amor ergā + acc.» = amore verso qualcuno (L&S: amor erga me)",
+      "al plurale «amōres» spesso = relazione amorosa o la persona amata, non «gli amori» generici"
+    ],
+    "senses_raw": {
+      "L&S": "amor ōris, m AM-, love, affection, strong friendly feeling: amor, ex quo amicitia nominata: amor erga me: amores hominum in te: patrius, for a son, V.: fraternus, for a brother, Cs.—Esp. of sexual love: in amore haec …",
+      "Whitaker": ["love", "affection", "the beloved", "Cupid", "affair", "sexual/illicit/homosexual passion"]
+    },
+    "divergenze": [
+      "L&S (elementary) tronca la trattazione dell'amore sessuale («in amore haec …»); Whitaker esplicita la passione illecita/omosessuale e la personificazione (Cupid): sensi da NON perdere → recuperati nei campi 2 e 3."
+    ],
+    "prov": { "autorita": "L&S", "src": ["Lewis1890·PD", "open_words/Whitaker·MIT"], "lic": "CC BY-SA 4.0" }
+  },
+
+  "lat:virtus": {
+    "id": "lat:virtus", "uid": "poe-000153072", "uri": null,
+    "lemma": "virtus", "lang": "lat", "pos": "sostantivo",
+    "morph": { "genere": "f", "flessione": "3ª decl.", "classe": "3ª declinazione", "testa": "virtus, virtūtis f" },
+    "temi": null, "quantita": "virtūs, virtūtis", "reggenza": null,
+    "paradigma": "v#lat:virtus", "freq": { "rank": null },
+    "gloss": { "en": ["virtue", "excellence", "courage"], "it": ["virtù", "valore", "coraggio"] },
+    "campi": [
+      { "campo": "valore morale / virtù", "rank": 1, "sensi": [
+        { "tr": { "en": ["virtue", "moral excellence", "worth"], "it": ["virtù", "valore morale", "eccellenza"] }, "registro": "etico / filosofico", "fonti": ["L&S", "Whitaker"] },
+        { "tr": { "en": ["a specific virtue"], "it": ["(singola) virtù"] }, "registro": "spec. al plurale (virtūtes: continentia, gravitas, iustitia, fides)", "fonti": ["L&S"] }
+      ] },
+      { "campo": "coraggio / valore militare", "rank": 2, "sensi": [
+        { "tr": { "en": ["courage", "bravery", "valor"], "it": ["coraggio", "valore (militare)", "prodezza"] }, "registro": "militare", "fonti": ["L&S", "Whitaker"] }
+      ] },
+      { "campo": "forza / vigore", "rank": 3, "sensi": [
+        { "tr": { "en": ["strength", "vigor", "power"], "it": ["forza", "vigore", "potenza"] }, "registro": "fisico", "fonti": ["L&S", "Whitaker"] }
+      ] },
+      { "campo": "virilità (etim. da vir)", "rank": 4, "sensi": [
+        { "tr": { "en": ["manliness", "manhood"], "it": ["virilità", "mascolinità"] }, "registro": "etimologico", "fonti": ["L&S", "Whitaker"] }
+      ] }
+    ],
+    "applicazione": [
+      "concetto-chiave romano: il campo (morale / militare / fisico) si sceglie dal contesto; reso pigramente «virtù» si perde spesso il valore militare",
+      "etimologia trasparente da «vir» → «la qualità propria dell'uomo»",
+      "al plurale «virtūtes» = le singole virtù (non «i valori» generici)"
+    ],
+    "senses_raw": {
+      "L&S": "virtūs ūtis, f vir, manliness, manhood, strength, vigor, bravery, courage, excellence: virtus clara aeternaque habetur, S.: animi . . . corporis: virtutes continentiae, gravitatis, iustitiae, fidei: oratoris vis divin…",
+      "Whitaker": ["strength/power", "courage/bravery", "worth/manliness/virtue/character/excellence"]
+    },
+    "divergenze": [
+      "L&S conserva l'etimologia (vir) e le virtù specifiche (continentia, gravitas, iustitia, fides), poi tronca; Whitaker comprime in 3 macro-sensi. Nessun senso scartato: ricomposti nei 4 campi."
+    ],
+    "prov": { "autorita": "L&S", "src": ["Lewis1890·PD", "open_words/Whitaker·MIT"], "lic": "CC BY-SA 4.0" }
+  }
+}
