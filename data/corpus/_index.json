@@ -1,0 +1,296 @@
+{
+  "schema": "poetrify-corpus/1",
+  "license": "CC BY-SA 3.0 (Perseus Digital Library)",
+  "counts": {
+    "works": 10,
+    "authors": 10,
+    "la": 5,
+    "grc": 5,
+    "units": 39766,
+    "words": 533167
+  },
+  "works": [
+    {
+      "id": "cesare-bello-gallico",
+      "lang": "la",
+      "authorId": "cesare",
+      "author": "Gaio Giulio Cesare",
+      "title": "De Bello Gallico",
+      "genre": "storiografia",
+      "epoch": "I sec. a.C.",
+      "kind": "prosa",
+      "citation": "libro.capitolo.paragrafo",
+      "units": 2150,
+      "words": 51298
+    },
+    {
+      "id": "cicerone-in-catilinam",
+      "lang": "la",
+      "authorId": "cicerone",
+      "author": "Marco Tullio Cicerone",
+      "title": "In Catilinam",
+      "genre": "oratoria",
+      "epoch": "I sec. a.C.",
+      "kind": "prosa",
+      "citation": "libro.capitolo",
+      "units": 115,
+      "words": 12574
+    },
+    {
+      "id": "sallustio-de-catilinae-coniuratione",
+      "lang": "la",
+      "authorId": "sallustio",
+      "author": "Gaio Sallustio Crispo",
+      "title": "De Catilinae coniuratione",
+      "genre": "storiografia",
+      "epoch": "I sec. a.C.",
+      "kind": "prosa",
+      "citation": "capitolo",
+      "units": 61,
+      "words": 10660
+    },
+    {
+      "id": "virgilio-aeneis",
+      "lang": "la",
+      "authorId": "virgilio",
+      "author": "Publio Virgilio Marone",
+      "title": "Aeneis",
+      "genre": "epica",
+      "epoch": "I sec. a.C.",
+      "kind": "versi",
+      "citation": "libro.verso",
+      "units": 9843,
+      "words": 63310
+    },
+    {
+      "id": "ovidio-metamorphoses",
+      "lang": "la",
+      "authorId": "ovidio",
+      "author": "Publio Ovidio Nasone",
+      "title": "Metamorphoses",
+      "genre": "epica",
+      "epoch": "I sec. a.C. – I sec. d.C.",
+      "kind": "versi",
+      "citation": "libro.verso",
+      "units": 11927,
+      "words": 77677
+    },
+    {
+      "id": "omero-ilias",
+      "lang": "grc",
+      "authorId": "omero",
+      "author": "Omero",
+      "title": "Ἰλιάς",
+      "genre": "epica",
+      "epoch": "VIII sec. a.C.",
+      "kind": "versi",
+      "citation": "libro.verso",
+      "units": 8589,
+      "words": 60477
+    },
+    {
+      "id": "senofonte-anabasis",
+      "lang": "grc",
+      "authorId": "senofonte",
+      "author": "Senofonte",
+      "title": "Ἀνάβασις",
+      "genre": "storiografia",
+      "epoch": "V–IV sec. a.C.",
+      "kind": "prosa",
+      "citation": "libro.capitolo.paragrafo",
+      "units": 1457,
+      "words": 56512
+    },
+    {
+      "id": "platone-apologia",
+      "lang": "grc",
+      "authorId": "platone",
+      "author": "Platone",
+      "title": "Ἀπολογία Σωκράτους",
+      "genre": "filosofia",
+      "epoch": "V–IV sec. a.C.",
+      "kind": "prosa",
+      "citation": "capitolo",
+      "units": 26,
+      "words": 8655
+    },
+    {
+      "id": "sofocle-antigone",
+      "lang": "grc",
+      "authorId": "sofocle",
+      "author": "Sofocle",
+      "title": "Ἀντιγόνη",
+      "genre": "tragedia",
+      "epoch": "V sec. a.C.",
+      "kind": "versi",
+      "citation": "libro.verso",
+      "units": 1257,
+      "words": 7360
+    },
+    {
+      "id": "erodoto-historiae",
+      "lang": "grc",
+      "authorId": "erodoto",
+      "author": "Erodoto",
+      "title": "Ἱστορίαι",
+      "genre": "storiografia",
+      "epoch": "V sec. a.C.",
+      "kind": "prosa",
+      "citation": "loci",
+      "units": 4341,
+      "words": 184644
+    }
+  ],
+  "authors": [
+    {
+      "id": "cesare",
+      "name": "Gaio Giulio Cesare",
+      "lang": "la",
+      "works": [
+        {
+          "id": "cesare-bello-gallico",
+          "title": "De Bello Gallico",
+          "genre": "storiografia",
+          "kind": "prosa",
+          "units": 2150,
+          "words": 51298
+        }
+      ]
+    },
+    {
+      "id": "sallustio",
+      "name": "Gaio Sallustio Crispo",
+      "lang": "la",
+      "works": [
+        {
+          "id": "sallustio-de-catilinae-coniuratione",
+          "title": "De Catilinae coniuratione",
+          "genre": "storiografia",
+          "kind": "prosa",
+          "units": 61,
+          "words": 10660
+        }
+      ]
+    },
+    {
+      "id": "cicerone",
+      "name": "Marco Tullio Cicerone",
+      "lang": "la",
+      "works": [
+        {
+          "id": "cicerone-in-catilinam",
+          "title": "In Catilinam",
+          "genre": "oratoria",
+          "kind": "prosa",
+          "units": 115,
+          "words": 12574
+        }
+      ]
+    },
+    {
+      "id": "ovidio",
+      "name": "Publio Ovidio Nasone",
+      "lang": "la",
+      "works": [
+        {
+          "id": "ovidio-metamorphoses",
+          "title": "Metamorphoses",
+          "genre": "epica",
+          "kind": "versi",
+          "units": 11927,
+          "words": 77677
+        }
+      ]
+    },
+    {
+      "id": "virgilio",
+      "name": "Publio Virgilio Marone",
+      "lang": "la",
+      "works": [
+        {
+          "id": "virgilio-aeneis",
+          "title": "Aeneis",
+          "genre": "epica",
+          "kind": "versi",
+          "units": 9843,
+          "words": 63310
+        }
+      ]
+    },
+    {
+      "id": "erodoto",
+      "name": "Erodoto",
+      "lang": "grc",
+      "works": [
+        {
+          "id": "erodoto-historiae",
+          "title": "Ἱστορίαι",
+          "genre": "storiografia",
+          "kind": "prosa",
+          "units": 4341,
+          "words": 184644
+        }
+      ]
+    },
+    {
+      "id": "omero",
+      "name": "Omero",
+      "lang": "grc",
+      "works": [
+        {
+          "id": "omero-ilias",
+          "title": "Ἰλιάς",
+          "genre": "epica",
+          "kind": "versi",
+          "units": 8589,
+          "words": 60477
+        }
+      ]
+    },
+    {
+      "id": "platone",
+      "name": "Platone",
+      "lang": "grc",
+      "works": [
+        {
+          "id": "platone-apologia",
+          "title": "Ἀπολογία Σωκράτους",
+          "genre": "filosofia",
+          "kind": "prosa",
+          "units": 26,
+          "words": 8655
+        }
+      ]
+    },
+    {
+      "id": "senofonte",
+      "name": "Senofonte",
+      "lang": "grc",
+      "works": [
+        {
+          "id": "senofonte-anabasis",
+          "title": "Ἀνάβασις",
+          "genre": "storiografia",
+          "kind": "prosa",
+          "units": 1457,
+          "words": 56512
+        }
+      ]
+    },
+    {
+      "id": "sofocle",
+      "name": "Sofocle",
+      "lang": "grc",
+      "works": [
+        {
+          "id": "sofocle-antigone",
+          "title": "Ἀντιγόνη",
+          "genre": "tragedia",
+          "kind": "versi",
+          "units": 1257,
+          "words": 7360
+        }
+      ]
+    }
+  ]
+}

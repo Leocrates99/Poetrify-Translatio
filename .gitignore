@@ -20,6 +20,11 @@ data/*/unified/
 _build/sources/normalized/
 _build/sources/cache/
 
+# Ramo CORPUS: cache dei TEI-XML scaricati da Perseus. Rigenerabile con
+# _build/import_corpus.py (ri-scarica ciò che manca). Versionati lo script e i
+# JSON normalizzati (data/corpus/), NON i sorgenti grezzi.
+_build/corpus_cache/
+
 # Cartella di staging creata dal workflow di deploy (solo in CI)
 _site/
 

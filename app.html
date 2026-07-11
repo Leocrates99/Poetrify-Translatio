@@ -75,10 +75,10 @@ body {
 /* ── Hub cards ────────────────────────────────────────────────── */
 .hub {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 20px;
   width: 100%;
-  max-width: 760px;
+  max-width: 1000px;
 }
 .hub-card {
   display: flex;
@@ -285,6 +285,18 @@ footer {
     </span>
     <span class="hub-card-cta">Apri →</span>
   </a>
+
+  <a class="hub-card" href="corpus.html">
+    <svg class="hub-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v18H6.5A2.5 2.5 0 0 0 4 22.5z"/><path d="M4 4.5v18"/><path d="M9 6.5h7M9 10h5"/>
+    </svg>
+    <span class="hub-card-title">Corpus</span>
+    <span class="hub-card-desc">La biblioteca dei testi originali, greci e latini. Sfoglia per autore e opera, cerca una parola in tutto il corpus (accenti e spiriti ignorati) e leggi il passo; da lì porti il brano nel Translator o cerchi una parola nel Dizionario.</span>
+    <span class="hub-card-feats">
+      <span>sfoglia per autore</span><span>ricerca full-text</span><span>lettura per libro</span><span>fonti open · CC BY-SA</span>
+    </span>
+    <span class="hub-card-cta">Apri →</span>
+  </a>
 </main>
 
 <footer>Poetrify · officina del greco e del latino</footer>
@@ -303,8 +315,10 @@ footer {
 ├─ app.html              ← questa home
 ├─ translator.html       ← Translator
 ├─ dictionary.html       ← Dizionario
+├─ corpus.html           ← Corpus (testi antichi)
 ├─ modules/{engine,translator,dictionary}/
-└─ data/{latin,greek}/</pre>
+├─ data/{latin,greek}/   ← lessico
+└─ data/corpus/{la,grc}/ ← testi (import da Perseus, CC BY-SA)</pre>
   </div>
 </details>
 

@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poetrify · Corpus dei testi antichi</title>
+<!-- Font self-hosted (vendor/fonts/) — GFS Didot copre il greco POLITONICO -->
+<link rel="stylesheet" href="vendor/fonts/fonts.css">
+<style>
+:root {
+  --primary: #1800AC;
+  --primary-dark: #0f0070;
+  --accent-lat: #A22E37;
+  --accent-gr: #1800AC;
+  --accent: var(--primary);          /* commuta per body[data-lang] in lettura */
+  --paper: #ffffff;
+  --ivory: #fcfbf8;
+  --cream: #f5f4f0;
+  --parchment: #f7f3e9;              /* pergamena CALDA: solo la colonna di lettura */
+  --parchment-edge: #efe8d6;
+  --ink: #2c3539;
+  --sepia: #6b6660;
+  --rule: #d5d2cb;
+  --rule-soft: #eae8e2;
+  --success: #2f855a;
+  --mark: #fbe38a;                   /* evidenziazione ricerca */
+  --font-ui: 'Source Sans 3', system-ui, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-read: 'Source Serif 4', Georgia, serif;
+  --font-read-gr: 'GFS Didot', 'Source Serif 4', Palatino, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  font-family: var(--font-read);
+  color: var(--ink);
+  background: var(--ivory);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+body { display: flex; flex-direction: column; }
+button { font-family: inherit; cursor: pointer; }
+::selection { background: rgba(24,0,172,.14); }
+/* Identità cromatica di LINGUA: in lettura l'accento del lettore commuta
+   (latino rosso pompeiano · greco blu Poetrify), coerente in chiaro e scuro. */
+body[data-lang="la"]  { --accent: var(--accent-lat); }
+body[data-lang="grc"] { --accent: var(--accent-gr); }
+
+/* ── Masthead ─────────────────────────────────────────────────── */
+.topbar {
+  display: flex; align-items: center; gap: 20px;
+  padding: 14px clamp(16px, 4vw, 40px);
+  border-bottom: 1px solid var(--rule-soft);
+  background: var(--paper);
+  position: sticky; top: 0; z-index: 20;
+}
+.home {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-ui); font-size: 13px; font-weight: 600;
+  color: var(--sepia); text-decoration: none; white-space: nowrap;
+  padding: 6px 10px; border-radius: 8px; transition: background .15s, color .15s;
+}
+.home:hover { background: var(--cream); color: var(--primary); }
+.brand { display: flex; flex-direction: column; line-height: 1.05; }
+.brand .mark {
+  font-family: var(--font-display); font-size: 24px; font-weight: 700;
+  color: var(--primary); letter-spacing: -.01em;
+}
+.brand .sub {
+  font-family: var(--font-ui); font-size: 10.5px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: .18em; color: var(--sepia); margin-top: 3px;
+}
+.langfilter { margin-left: auto; display: flex; gap: 8px; }
+.langfilter button {
+  font-family: var(--font-ui); font-size: 12px; font-weight: 700; letter-spacing: .02em;
+  padding: 7px 14px; border-radius: 999px; border: 1.5px solid var(--rule);
+  background: transparent; color: var(--sepia); transition: all .15s;
+}
+.langfilter button:hover { border-color: var(--sepia); }
+.langfilter button[aria-pressed="true"] { color: #fff; }
+.langfilter button.all[aria-pressed="true"]  { background: var(--primary); border-color: var(--primary); }
+.langfilter button.la[aria-pressed="true"]   { background: var(--accent-lat); border-color: var(--accent-lat); }
+.langfilter button.grc[aria-pressed="true"]  { background: var(--accent-gr); border-color: var(--accent-gr); }
+
+/* ── Barra di ricerca ─────────────────────────────────────────── */
+.searchwrap { padding: 18px clamp(16px, 4vw, 40px) 6px; background: var(--paper); }
+.searchbox {
+  position: relative; max-width: 760px; margin: 0 auto;
+}
+.searchbox svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 19px; height: 19px; color: var(--sepia); pointer-events: none; }
+#q {
+  width: 100%; font-family: var(--font-read); font-size: 17px; color: var(--ink);
+  padding: 13px 16px 13px 46px; border: 1.5px solid var(--rule);
+  border-radius: 12px; background: var(--ivory); transition: border-color .15s, box-shadow .15s;
+}
+#q:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(24,0,172,.08); }
+#q::placeholder { color: #a49f97; }
+.searchhint {
+  max-width: 760px; margin: 6px auto 0; text-align: center;
+  font-family: var(--font-ui); font-size: 11.5px; color: var(--sepia);
+}
+.searchhint b { color: var(--primary); font-weight: 700; }
+
+/* ── Layout a due pannelli ────────────────────────────────────── */
+.layout {
+  display: grid; grid-template-columns: 300px minmax(0, 1fr);
+  gap: 0; flex: 1; min-height: 0;
+}
+.browser {
+  border-right: 1px solid var(--rule-soft); background: var(--paper);
+  padding: 20px 16px 60px; overflow-y: auto; max-height: calc(100vh - 132px);
+  position: sticky; top: 132px;
+}
+.browser h2 {
+  font-family: var(--font-ui); font-size: 10.5px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .1em; color: var(--sepia);
+  margin: 0 6px 12px;
+}
+.author { margin-bottom: 4px; }
+.author > summary {
+  list-style: none; cursor: pointer; display: flex; align-items: baseline; gap: 8px;
+  padding: 8px 10px; border-radius: 8px; transition: background .12s;
+}
+.author > summary::-webkit-details-marker { display: none; }
+.author > summary:hover { background: var(--cream); }
+.author .aname { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--ink); }
+.author .alang {
+  margin-left: auto; font-family: var(--font-ui); font-size: 9px; font-weight: 700;
+  letter-spacing: .08em; padding: 2px 7px; border-radius: 999px; align-self: center;
+}
+.author.la  .aname { color: var(--accent-lat); }
+.author.grc .aname { color: var(--accent-gr); }
+.author.la  .alang { color: var(--accent-lat); background: rgba(162,46,55,.08); }
+.author.grc .alang { color: var(--accent-gr);  background: rgba(24,0,172,.07); }
+.worklist { padding: 2px 0 8px 12px; }
+.worklink {
+  display: block; width: 100%; text-align: left; background: none; border: none;
+  padding: 7px 10px 7px 14px; border-left: 2px solid var(--rule-soft);
+  color: var(--ink); border-radius: 0 6px 6px 0; transition: background .12s, border-color .12s;
+}
+.worklink:hover { background: var(--cream); border-left-color: var(--accent); }
+.worklink[aria-current="true"] { background: var(--cream); border-left-color: var(--accent); }
+.worklink .wtitle { font-family: var(--font-read); font-size: 15px; }
+.author.grc .worklink .wtitle { font-family: var(--font-read-gr); font-size: 16px; }
+.worklink .wmeta { display: block; font-family: var(--font-ui); font-size: 11px; color: var(--sepia); margin-top: 1px; }
+
+/* ── Stage (benvenuto / risultati / lettore) ──────────────────── */
+.stage { padding: clamp(20px, 3vw, 40px) clamp(16px, 4vw, 48px) 80px; overflow-x: hidden; }
+.stage-inner { max-width: 820px; margin: 0 auto; }
+
+/* Benvenuto */
+.welcome-hero { text-align: center; padding: 24px 0 8px; }
+.welcome-hero h1 { font-family: var(--font-display); font-size: clamp(30px, 5vw, 44px); font-weight: 700; color: var(--ink); letter-spacing: -.015em; }
+.welcome-hero p { max-width: 30rem; margin: 16px auto 0; font-size: 17px; line-height: 1.6; color: var(--sepia); }
+.stats-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 30px 0 40px; }
+.stat { background: var(--paper); border: 1px solid var(--rule-soft); border-radius: 10px; padding: 12px 20px; text-align: center; }
+.stat .n { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--primary); }
+.stat .l { font-family: var(--font-ui); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--sepia); margin-top: 2px; }
+.catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
+.catcard {
+  text-align: left; background: var(--paper); border: 1px solid var(--rule-soft);
+  border-radius: 12px; padding: 18px 18px 16px; border-left: 4px solid var(--rule);
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.catcard:hover { box-shadow: 0 10px 26px rgba(24,0,172,.08); transform: translateY(-2px); }
+.catcard.la  { border-left-color: var(--accent-lat); }
+.catcard.grc { border-left-color: var(--accent-gr); }
+.catcard .ctitle { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--ink); line-height: 1.15; }
+.catcard.grc .ctitle { font-family: var(--font-read-gr); }
+.catcard .cauthor { font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; color: var(--sepia); margin-top: 4px; }
+.catcard .cmeta { font-family: var(--font-ui); font-size: 11px; color: var(--sepia); margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
+.catcard .cmeta span { padding: 2px 8px; border-radius: 999px; background: var(--cream); }
+
+/* Risultati ricerca */
+.results-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; flex-wrap: wrap; }
+.results-head h1 { font-family: var(--font-display); font-size: 24px; font-weight: 700; }
+.results-head .count { font-family: var(--font-ui); font-size: 13px; color: var(--sepia); }
+.res {
+  width: 100%; text-align: left; background: var(--paper); border: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--rule); border-radius: 10px; padding: 13px 16px; margin: 10px 0;
+  transition: border-color .13s, box-shadow .13s;
+}
+.res:hover { box-shadow: 0 6px 18px rgba(0,0,0,.05); border-left-color: var(--accent); }
+.res.la  { --accent: var(--accent-lat); }
+.res.grc { --accent: var(--accent-gr); }
+.res .rref { font-family: var(--font-ui); font-size: 11.5px; font-weight: 600; color: var(--sepia); margin-bottom: 5px; }
+.res .rref b { color: var(--accent); }
+.res .rtext { font-family: var(--font-read); font-size: 16px; line-height: 1.5; color: var(--ink); }
+.res.grc .rtext { font-family: var(--font-read-gr); font-size: 17px; }
+mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 1px; }
+
+/* ── Lettore ──────────────────────────────────────────────────── */
+.reader-head { border-bottom: 2px solid var(--accent); padding-bottom: 16px; margin-bottom: 4px; }
+.reader-head .rk { font-family: var(--font-ui); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
+.reader-head h1 { font-family: var(--font-display); font-size: clamp(28px, 4vw, 38px); font-weight: 700; color: var(--ink); line-height: 1.1; margin-top: 6px; }
+body[data-lang="grc"] .reader-head h1 { font-family: var(--font-read-gr); font-weight: 700; }
+.reader-head .byline { font-family: var(--font-read); font-size: 17px; font-style: italic; color: var(--sepia); margin-top: 6px; }
+.reader-head .src { font-family: var(--font-mono); font-size: 10.5px; color: var(--sepia); margin-top: 10px; word-break: break-all; }
+.reader-head .src a { color: var(--accent); text-decoration: none; }
+.book-nav { display: flex; flex-wrap: wrap; gap: 6px; margin: 18px 0 8px; }
+.book-nav .blabel { font-family: var(--font-ui); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--sepia); align-self: center; margin-right: 4px; }
+.book-nav button {
+  font-family: var(--font-ui); font-size: 13px; font-weight: 600; min-width: 34px;
+  padding: 5px 11px; border-radius: 8px; border: 1.5px solid var(--rule); background: transparent; color: var(--ink); transition: all .13s;
+}
+.book-nav button:hover { border-color: var(--accent); }
+.book-nav button[aria-current="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.scroll {
+  background: var(--parchment); border: 1px solid var(--parchment-edge);
+  border-radius: 14px; padding: clamp(20px, 3vw, 40px) clamp(18px, 3vw, 44px);
+  margin-top: 12px; box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
+}
+/* Prosa */
+.para { position: relative; margin: 0 0 14px; padding-left: 8px; }
+.para .loc {
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--sepia);
+  user-select: none; margin-right: 8px; font-weight: 500;
+}
+.para .txt { font-family: var(--font-read); font-size: 18px; line-height: 1.72; color: var(--ink); }
+body[data-lang="grc"] .para .txt { font-family: var(--font-read-gr); font-size: 20px; line-height: 1.85; }
+/* Versi */
+.verse { display: flex; align-items: baseline; gap: 14px; padding: 1px 0; }
+.verse .ln { flex: 0 0 34px; text-align: right; font-family: var(--font-mono); font-size: 10.5px; color: var(--sepia); user-select: none; }
+.verse .vt { font-family: var(--font-read); font-size: 18px; line-height: 1.62; color: var(--ink); }
+body[data-lang="grc"] .verse .vt { font-family: var(--font-read-gr); font-size: 20px; line-height: 1.72; }
+.verse:target, .para:target { background: rgba(251,227,138,.4); border-radius: 6px; }
+.unit.flash { animation: flash 1.6s ease; }
+@keyframes flash { 0%,40% { background: rgba(251,227,138,.55); } 100% { background: transparent; } }
+
+/* azioni per unità (hover) */
+.unit { border-radius: 6px; }
+.unit .acts {
+  display: inline-flex; gap: 4px; margin-left: 8px; opacity: 0; transition: opacity .12s;
+  vertical-align: middle;
+}
+.unit:hover .acts { opacity: 1; }
+.acts button {
+  font-family: var(--font-ui); font-size: 10.5px; font-weight: 600; color: var(--sepia);
+  border: 1px solid var(--rule-soft); background: var(--paper); border-radius: 6px; padding: 2px 7px;
+  transition: all .12s;
+}
+.acts button:hover { color: var(--accent); border-color: var(--accent); }
+.wtok { cursor: pointer; }
+.wtok:hover { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
+
+.loading, .empty { text-align: center; color: var(--sepia); padding: 60px 20px; font-size: 15px; }
+.spinner { width: 26px; height: 26px; border: 3px solid var(--rule-soft); border-top-color: var(--accent); border-radius: 50%; margin: 0 auto 14px; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: #fff; font-family: var(--font-ui); font-size: 13px; padding: 9px 16px; border-radius: 999px; opacity: 0; transition: all .2s; pointer-events: none; z-index: 60; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+.mobtoggle { display: none; }
+
+/* ── Responsive ───────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+  .browser { position: static; max-height: none; border-right: none; border-bottom: 1px solid var(--rule-soft); display: none; }
+  .browser.open { display: block; }
+  .mobtoggle { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-size: 12px; font-weight: 700; color: var(--primary); background: var(--cream); border: 1px solid var(--rule-soft); border-radius: 8px; padding: 8px 14px; margin: 12px auto 0; }
+}
+@media (max-width: 560px) { .langfilter .lbl { display: none; } .brand .sub { display: none; } }
+
+/* ── Dark mode (armonizzata con app/translator/dizionario) ────── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary: #a99cff; --primary-dark: #8b7dff;
+    --accent-lat: #e58a90; --accent-gr: #8b7dff;
+    --paper: #232730; --ivory: #1c1f24; --cream: #2a2e38;
+    --parchment: #24242c; --parchment-edge: #34343f;
+    --ink: #e8e6e1; --sepia: #a8a39b; --rule: #3b3f4a; --rule-soft: #2c303a;
+    --mark: #6b5a1e;
+  }
+  #q:focus { box-shadow: 0 0 0 4px rgba(169,156,255,.14); }
+  .catcard:hover, .res:hover { box-shadow: 0 10px 26px rgba(0,0,0,.4); }
+  mark { color: #fff; }
+  .langfilter button[aria-pressed="true"], .book-nav button[aria-current="true"] { color: #1c1f24; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="home" href="app.html" title="Torna alla home di Poetrify">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Poetrify
+  </a>
+  <div class="brand"><span class="mark">Corpus</span><span class="sub">biblioteca dei testi antichi</span></div>
+  <nav class="langfilter" aria-label="Filtra per lingua">
+    <button class="all" data-lang="all" aria-pressed="true">Tutte</button>
+    <button class="la"  data-lang="la"  aria-pressed="false"><span class="lbl">Latino</span><span aria-hidden="true" style="display:none">LA</span></button>
+    <button class="grc" data-lang="grc" aria-pressed="false">Greco</button>
+  </nav>
+</header>
+
+<div class="searchwrap">
+  <div class="searchbox">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+    <input id="q" type="search" autocomplete="off" spellcheck="false"
+           placeholder="Cerca nel corpus — una parola, un sintagma…" aria-label="Cerca nel corpus">
+  </div>
+  <p class="searchhint">La ricerca ignora accenti e spiriti: cerca <b>μηνιν</b> e trovi <b>μῆνιν</b>; <b>vita</b> trova anche <b>uita</b>.</p>
+</div>
+
+<main class="layout">
+  <button class="mobtoggle" id="mobtoggle" aria-expanded="false">☰ Sfoglia autori e opere</button>
+  <aside class="browser" id="browser" aria-label="Classificazione per autore e opera">
+    <h2>Sfoglia per autore</h2>
+    <div id="authors"></div>
+  </aside>
+  <section class="stage"><div class="stage-inner" id="stage"><div class="loading"><div class="spinner"></div>Carico il catalogo…</div></div></section>
+</main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+'use strict';
+// ───────────────────────────────────────────────────────────────────────────
+// Poetrify · Corpus — lettore local-first (nessuna dipendenza, fetch dei JSON)
+// ───────────────────────────────────────────────────────────────────────────
+const BASE = 'data/corpus';
+const state = { lang: 'all', index: null, docs: {}, allLoaded: false, view: 'welcome', work: null, book: null };
+
+const el = (t, c, txt) => { const e = document.createElement(t); if (c) e.className = c; if (txt != null) e.textContent = txt; return e; };
+const $stage = document.getElementById('stage');
+const $authors = document.getElementById('authors');
+const langName = { la: 'Latino', grc: 'Greco' };
+const langTag  = { la: 'LAT', grc: 'ΕΛΛ' };
+
+// Folding accent/case-insensitive con MAPPA verso gli indici originali,
+// per evidenziare la porzione esatta anche saltando diacritici.
+function foldMap(s) {
+  const out = []; const map = [];
+  for (let i = 0; i < s.length; i++) {
+    let f = '';
+    for (const c of s[i].normalize('NFD')) { if (!/[̀-ͯ]/.test(c)) f += c; }
+    f = f.toLowerCase().replace(/ς/g, 'σ').replace(/v/g, 'u').replace(/j/g, 'i');
+    for (const c of f) { out.push(c); map.push(i); }
+  }
+  return { norm: out.join(''), map };
+}
+const fold = (s) => foldMap(s).norm;
+const escapeHtml = (s) => s.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
+
+let toastTimer;
+function toast(msg) {
+  const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 1600);
+}
+
+// ── Caricamento dati ───────────────────────────────────────────────────────
+async function loadIndex() {
+  const r = await fetch(`${BASE}/_index.json`);
+  if (!r.ok) throw new Error('indice non trovato');
+  state.index = await r.json();
+}
+async function loadWork(id) {
+  if (state.docs[id]) return state.docs[id];
+  const meta = state.index.works.find(w => w.id === id);
+  const r = await fetch(`${BASE}/${meta.lang}/${id}.json`);
+  const doc = await r.json();
+  state.docs[id] = doc;
+  return doc;
+}
+async function loadAll() {
+  if (state.allLoaded) return;
+  await Promise.all(state.index.works.map(w => loadWork(w.id)));
+  state.allLoaded = true;
+}
+
+// ── Sidebar: classificazione autore → opera ────────────────────────────────
+function renderAuthors() {
+  $authors.innerHTML = '';
+  const authors = state.index.authors.filter(a => state.lang === 'all' || a.lang === state.lang);
+  for (const a of authors) {
+    const det = el('details', `author ${a.lang}`); det.open = false;
+    const sum = el('summary');
+    sum.appendChild(el('span', 'aname', a.name));
+    sum.appendChild(el('span', 'alang', langTag[a.lang]));
+    det.appendChild(sum);
+    const list = el('div', 'worklist');
+    for (const w of a.works) {
+      const b = el('button', 'worklink'); b.dataset.id = w.id;
+      if (state.work && state.work.id === w.id) b.setAttribute('aria-current', 'true');
+      b.appendChild(el('span', 'wtitle', w.title));
+      b.appendChild(el('span', 'wmeta', `${w.genre} · ${w.kind === 'versi' ? w.units + ' versi' : w.units + ' passi'}`));
+      b.onclick = () => openWork(w.id);
+      list.appendChild(b);
+    }
+    det.appendChild(list);
+    if (state.work && a.works.some(w => w.id === state.work.id)) det.open = true;
+    $authors.appendChild(det);
+  }
+}
+
+// ── Benvenuto / catalogo ───────────────────────────────────────────────────
+function renderWelcome() {
+  state.view = 'welcome'; state.work = null; document.body.removeAttribute('data-lang');
+  const c = state.index.counts;
+  const wrap = el('div');
+  const hero = el('div', 'welcome-hero');
+  hero.appendChild(el('h1', null, 'La biblioteca dei classici'));
+  hero.appendChild(el('p', null, 'Il testo originale, greco e latino, da leggere e cercare. Un nucleo del canone scolastico — pronto a crescere.'));
+  wrap.appendChild(hero);
+
+  const stats = el('div', 'stats-row');
+  const mk = (n, l) => { const s = el('div', 'stat'); s.appendChild(el('div', 'n', n)); s.appendChild(el('div', 'l', l)); return s; };
+  const fmt = (x) => new Intl.NumberFormat('it-IT').format(x);
+  stats.appendChild(mk(fmt(c.works), 'opere'));
+  stats.appendChild(mk(fmt(c.authors), 'autori'));
+  stats.appendChild(mk(fmt(c.words), 'parole'));
+  wrap.appendChild(stats);
+
+  const cat = el('div', 'catalog');
+  const works = state.index.works.filter(w => state.lang === 'all' || w.lang === state.lang);
+  for (const w of works) {
+    const card = el('button', `catcard ${w.lang}`);
+    card.appendChild(el('div', 'ctitle', w.title));
+    card.appendChild(el('div', 'cauthor', w.author));
+    const meta = el('div', 'cmeta');
+    meta.appendChild(el('span', null, w.genre));
+    meta.appendChild(el('span', null, w.epoch));
+    meta.appendChild(el('span', null, w.kind === 'versi' ? `${new Intl.NumberFormat('it-IT').format(w.units)} versi` : `${w.units} passi`));
+    card.appendChild(meta);
+    card.onclick = () => openWork(w.id);
+    cat.appendChild(card);
+  }
+  wrap.appendChild(cat);
+  $stage.innerHTML = ''; $stage.appendChild(wrap);
+  renderAuthors();
+}
+
+// ── Lettore ────────────────────────────────────────────────────────────────
+function booksOf(doc) {
+  // raggruppa le unità per PRIMO segmento del locus (libro/orazione); se i loci
+  // sono a un solo livello, l'opera è "un libro solo".
+  const map = new Map();
+  for (const u of doc.units) {
+    const key = u.loc.includes('.') ? u.loc.split('.')[0] : '·';
+    if (!map.has(key)) map.set(key, []);
+    map.get(key).push(u);
+  }
+  return map;
+}
+function lastSeg(loc) { const p = loc.split('.'); return p[p.length - 1]; }
+
+async function openWork(id, targetLoc) {
+  document.getElementById('browser').classList.remove('open');
+  document.getElementById('mobtoggle').setAttribute('aria-expanded', 'false');
+  $stage.innerHTML = '<div class="loading"><div class="spinner"></div>Apro l\'opera…</div>';
+  const doc = await loadWork(id);
+  state.view = 'reader'; state.work = doc; document.body.dataset.lang = doc.lang;
+  const books = booksOf(doc);
+  const keys = [...books.keys()];
+  let book = state.book;
+  if (targetLoc) book = targetLoc.includes('.') ? targetLoc.split('.')[0] : '·';
+  if (!keys.includes(book)) book = keys[0];
+  state.book = book;
+  renderReader(doc, books, book, targetLoc);
+  renderAuthors();
+}
+
+function renderReader(doc, books, bookKey, targetLoc) {
+  const keys = [...books.keys()];
+  const wrap = el('div');
+
+  const head = el('div', 'reader-head');
+  head.appendChild(el('div', 'rk', `${langName[doc.lang]} · ${doc.genre} · ${doc.epoch}`));
+  head.appendChild(el('h1', null, doc.title));
+  head.appendChild(el('div', 'byline', doc.author));
+  const src = el('div', 'src');
+  src.innerHTML = `Fonte: <a href="https://scaife.perseus.org/library/${encodeURIComponent(doc.source.urn)}/" target="_blank" rel="noopener">${doc.source.urn}</a> · ${doc.source.license}`;
+  head.appendChild(src);
+  wrap.appendChild(head);
+
+  if (keys.length > 1) {
+    const nav = el('div', 'book-nav');
+    nav.appendChild(el('span', 'blabel', doc.kind === 'versi' ? 'Libro' : 'Libro'));
+    for (const k of keys) {
+      const b = el('button', null, k);
+      if (k === bookKey) b.setAttribute('aria-current', 'true');
+      b.onclick = () => { state.book = k; renderReader(doc, books, k); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+      nav.appendChild(b);
+    }
+    wrap.appendChild(nav);
+  }
+
+  const scroll = el('div', 'scroll');
+  const units = books.get(bookKey);
+  const byLoc = Object.create(null);
+  for (const u of units) { byLoc[u.loc] = u.t; scroll.appendChild(renderUnit(doc, u)); }
+
+  // DELEGA (un solo handler per l'intero libro, non uno per parola/bottone):
+  // doppio-click su una parola → dizionario; click sulle azioni copia/traduci.
+  scroll.addEventListener('dblclick', () => {
+    const w = (window.getSelection ? String(window.getSelection()) : '').trim();
+    if (w && !/\s/.test(w)) toDictionary(w, doc.lang);
+  });
+  scroll.addEventListener('click', (e) => {
+    const b = e.target.closest('button[data-act]'); if (!b) return;
+    const unit = b.closest('.unit'); const t = unit && byLoc[unit.dataset.loc];
+    if (!t) return;
+    if (b.dataset.act === 'copy') navigator.clipboard.writeText(t).then(() => toast('Passo copiato'));
+    else toTranslator(doc, unit.dataset.loc, t);
+  });
+  wrap.appendChild(scroll);
+  $stage.innerHTML = ''; $stage.appendChild(wrap);
+
+  if (targetLoc) {
+    const node = scroll.querySelector(`[data-loc="${CSS.escape(targetLoc)}"]`);
+    if (node) { node.scrollIntoView({ block: 'center' }); node.classList.add('flash'); }
+  }
+}
+
+function renderUnit(doc, u) {
+  const isVerse = doc.kind === 'versi';
+  const unit = el('div', 'unit'); unit.dataset.loc = u.loc; unit.id = 'l' + u.loc.replace(/\./g, '-');
+  if (isVerse) {
+    unit.classList.add('verse');
+    const n = lastSeg(u.loc);
+    const showN = (parseInt(n, 10) % 5 === 0) || n === '1';
+    unit.appendChild(el('span', 'ln', showN ? n : ''));
+    unit.appendChild(el('span', 'vt', u.t));           // testo semplice: lookup per delega
+  } else {
+    unit.classList.add('para');
+    unit.appendChild(el('span', 'loc', u.loc));
+    unit.appendChild(el('span', 'txt', u.t));
+  }
+  unit.appendChild(buildActs());
+  return unit;
+}
+
+function buildActs() {
+  const acts = el('span', 'acts');
+  const copy = el('button', null, 'copia'); copy.dataset.act = 'copy';
+  const tr = el('button', null, '→ traduci'); tr.dataset.act = 'tr'; tr.title = 'Porta il passo nel Translator';
+  acts.appendChild(copy); acts.appendChild(tr);
+  return acts;
+}
+
+// ── Cuciture verso gli altri rami (URL-seam; il lato ricevente le leggerà) ──
+function toTranslator(doc, loc, text) {
+  const src = `${doc.source.urn}:${loc}`;
+  const url = `translator.html?lang=${doc.lang}&src=${encodeURIComponent(src)}&text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank');
+}
+function toDictionary(word, lang) {
+  const clean = word.replace(/[.,;:···!?'"«»()\[\]—–]/g, '').replace(/[·;]/g, '').trim();
+  if (!clean) return;
+  window.open(`dictionary.html?lang=${lang}&lemma=${encodeURIComponent(clean)}`, '_blank');
+}
+
+// ── Ricerca ────────────────────────────────────────────────────────────────
+let searchSeq = 0;
+async function runSearch(raw) {
+  const q = raw.trim();
+  if (q.length < 2) { if (state.view === 'results') renderWelcome(); return; }
+  const seq = ++searchSeq;
+  state.view = 'results'; document.body.removeAttribute('data-lang');
+  $stage.innerHTML = '<div class="loading"><div class="spinner"></div>Cerco nell\'intero corpus…</div>';
+  await loadAll();
+  if (seq !== searchSeq) return;                       // query superata da una più recente
+
+  const nq = fold(q);
+  const results = [];
+  const CAP = 400;
+  let truncated = false;
+  for (const w of state.index.works) {
+    if (state.lang !== 'all' && w.lang !== state.lang) continue;
+    const doc = state.docs[w.id];
+    for (const u of doc.units) {
+      const fm = foldMap(u.t);
+      const at = fm.norm.indexOf(nq);
+      if (at < 0) continue;
+      if (results.length >= CAP) { truncated = true; break; }
+      const os = fm.map[at]; const oe = fm.map[Math.min(at + nq.length - 1, fm.map.length - 1)] + 1;
+      results.push({ doc, u, os, oe });
+    }
+    if (truncated) break;
+  }
+  renderResults(q, results, truncated);
+}
+
+function renderResults(q, results, truncated) {
+  const wrap = el('div');
+  const head = el('div', 'results-head');
+  head.appendChild(el('h1', null, '“' + q + '”'));
+  head.appendChild(el('span', 'count', results.length === 0 ? 'nessun passo trovato'
+    : `${results.length}${truncated ? '+' : ''} pass${results.length === 1 ? 'o' : 'i'}`));
+  wrap.appendChild(head);
+
+  if (results.length === 0) {
+    const e = el('div', 'empty'); e.textContent = 'Nessun passo contiene questa sequenza. Prova con una sola parola, o cambia il filtro di lingua.';
+    wrap.appendChild(e);
+  }
+  for (const r of results) {
+    const btn = el('button', `res ${r.doc.lang}`);
+    const ref = el('div', 'rref');
+    ref.innerHTML = `<b>${escapeHtml(r.doc.author)}</b> · ${escapeHtml(r.doc.title)} <span style="opacity:.7">${escapeHtml(r.u.loc)}</span>`;
+    btn.appendChild(ref);
+    const t = r.u.t;
+    const snippet = snip(t, r.os, r.oe);
+    const txt = el('div', 'rtext'); txt.innerHTML = snippet;
+    btn.appendChild(txt);
+    btn.onclick = () => openWork(r.doc.id, r.u.loc);
+    wrap.appendChild(btn);
+  }
+  $stage.innerHTML = ''; $stage.appendChild(wrap);
+}
+
+// estrae un frammento centrato sul match, con la porzione evidenziata
+function snip(text, os, oe, ctx = 90) {
+  let a = Math.max(0, os - ctx), b = Math.min(text.length, oe + ctx);
+  let pre = (a > 0 ? '… ' : '') + text.slice(a, os);
+  let hit = text.slice(os, oe);
+  let post = text.slice(oe, b) + (b < text.length ? ' …' : '');
+  return escapeHtml(pre) + '<mark>' + escapeHtml(hit) + '</mark>' + escapeHtml(post);
+}
+
+// ── Controlli ──────────────────────────────────────────────────────────────
+let debTimer;
+document.getElementById('q').addEventListener('input', (e) => {
+  clearTimeout(debTimer);
+  const v = e.target.value;
+  debTimer = setTimeout(() => runSearch(v), 220);
+});
+document.querySelectorAll('.langfilter button').forEach(b => {
+  b.onclick = () => {
+    state.lang = b.dataset.lang;
+    document.querySelectorAll('.langfilter button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    const qv = document.getElementById('q').value.trim();
+    if (state.view === 'results' && qv.length >= 2) runSearch(qv);
+    else if (state.view === 'reader') renderAuthors();
+    else renderWelcome();
+  };
+});
+document.getElementById('mobtoggle').onclick = (e) => {
+  const b = document.getElementById('browser'); const open = b.classList.toggle('open');
+  e.currentTarget.setAttribute('aria-expanded', String(open));
+};
+
+// ── Avvio ──────────────────────────────────────────────────────────────────
+(async function init() {
+  try {
+    await loadIndex();
+    renderWelcome();
+  } catch (err) {
+    $stage.innerHTML = `<div class="empty">Non riesco a caricare il catalogo del corpus.<br><small>${escapeHtml(String(err))}</small><br><br>Apri la pagina tramite un server locale (es. <code>python -m http.server</code>): i <code>fetch</code> dei dati non funzionano da <code>file://</code>.</div>`;
+    console.error(err);
+  }
+})();
+</script>
+</body>
+</html>
