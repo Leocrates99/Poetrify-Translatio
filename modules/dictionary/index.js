@@ -187,7 +187,11 @@ export class DictionaryApp {
 
     /* Stato iniziale persistito */
     const params = new URLSearchParams(window.location.search);
-    this.currentLang = (params.get('lang') === 'greco') ? 'greco' : 'latino';
+    // D6: accetta sia le chiavi ISO del Corpus (la/grc) sia quelle legacy
+    // (latino/greco), così le cuciture URL tra le superfici funzionano in
+    // entrambe le direzioni (prima ?lang=grc cadeva erroneamente su 'latino').
+    const _langParam = (params.get('lang') || '').toLowerCase();
+    this.currentLang = (_langParam === 'greco' || _langParam === 'grc') ? 'greco' : 'latino';
     this.currentQuery = (params.get('lemma') || '').trim();
     if (this.currentQuery) this._scrollOnRender = true;   // ?lemma=… → scheda in vista al caricamento
     document.body.dataset.lang = this.currentLang;   // identità cromatica shell da subito
