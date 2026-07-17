@@ -4,23 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Poetrify · Officina del greco e del latino</title>
+<!-- Anti-flash tema (D2): imposta [data-theme] prima del paint -->
+<script>(function(){try{var t=localStorage.getItem('poetrify-theme');if(t!=='dark'&&t!=='light'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <!-- Font self-hosted (vendor/fonts/) — nessuna dipendenza da Google Fonts -->
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
+<!-- Token condivisi (fonte unica del design system · shared/) -->
+<link rel="stylesheet" href="shared/poetrify-tokens.css">
 <style>
-:root {
-  --primary: #1800AC;
-  --primary-dark: #0f0070;
-  --accent-lat: #A22E37;
-  --accent-gr: #1800AC;
-  --paper: #ffffff;
-  --ivory: #fcfbf8;
-  --cream: #f5f4f0;
-  --ink: #2c3539;
-  --sepia: #6b6660;
-  --rule: #d5d2cb;
-  --rule-soft: #eae8e2;
-  --success: #2f855a;
-}
+/* I token vivono in shared/poetrify-tokens.css (armonizzazione strutturale). */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
   font-family: 'Source Serif 4', Georgia, serif;
@@ -94,7 +85,7 @@ body {
 }
 .hub-card:hover {
   border-color: var(--primary);
-  box-shadow: 0 10px 30px rgba(24, 0, 172, 0.10);
+  box-shadow: var(--shadow-lift);
   transform: translateY(-3px);
 }
 .hub-card-icon {
@@ -220,25 +211,10 @@ footer {
   border: 1px solid var(--rule-soft);
 }
 
-/* ── Dark mode (armonizzata con translator e dizionario) ── */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary: #a99cff;
-    --primary-dark: #8b7dff;
-    --accent-lat: #e58a90;
-    --accent-gr: #8b7dff;
-    --paper: #232730;
-    --ivory: #1c1f24;
-    --cream: #2a2e38;
-    --ink: #e8e6e1;
-    --sepia: #a8a39b;
-    --rule: #3b3f4a;
-    --rule-soft: #2c303a;
-  }
-  .hub-card:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.45); }
-  .lang-chip.lat { background: rgba(229,138,144,0.12); }
-  .lang-chip.gr  { background: rgba(139,125,255,0.12); }
-}
+/* ── Dark mode (D2): i token vivono in shared/poetrify-tokens.css [data-theme].
+   Qui solo le regole app-specifiche. ── */
+:root[data-theme="dark"] .lang-chip.lat { background: rgba(229,138,144,0.12); }
+:root[data-theme="dark"] .lang-chip.gr  { background: rgba(139,125,255,0.12); }
 
 @media (max-width: 560px) {
   .hub { grid-template-columns: 1fr; }
@@ -396,5 +372,7 @@ console.log('%c Poetrify engine caricato', 'background:#1800AC;color:white;paddi
 console.log('%c Poetrify translator-UI caricato', 'background:#2f855a;color:white;padding:4px 8px;border-radius:3px;', TRANSLATOR_UI_META);
 </script>
 
+<!-- Tema condiviso (D2): toggle flottante -->
+<script src="shared/poetrify-theme.js" data-inject-toggle></script>
 </body>
 </html>

@@ -4,32 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Poetrify · Corpus dei testi antichi</title>
+<!-- Anti-flash tema (D2): imposta [data-theme] prima del paint -->
+<script>(function(){try{var t=localStorage.getItem('poetrify-theme');if(t!=='dark'&&t!=='light'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <!-- Font self-hosted (vendor/fonts/) — GFS Didot copre il greco POLITONICO -->
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
+<!-- Token condivisi (fonte unica del design system · shared/) -->
+<link rel="stylesheet" href="shared/poetrify-tokens.css">
 <style>
-:root {
-  --primary: #1800AC;
-  --primary-dark: #0f0070;
-  --accent-lat: #A22E37;
-  --accent-gr: #1800AC;
-  --accent: var(--primary);          /* commuta per body[data-lang] in lettura */
-  --paper: #ffffff;
-  --ivory: #fcfbf8;
-  --cream: #f5f4f0;
-  --parchment: #f7f3e9;              /* pergamena CALDA: solo la colonna di lettura */
-  --parchment-edge: #efe8d6;
-  --ink: #2c3539;
-  --sepia: #6b6660;
-  --rule: #d5d2cb;
-  --rule-soft: #eae8e2;
-  --success: #2f855a;
-  --mark: #fbe38a;                   /* evidenziazione ricerca */
-  --font-ui: 'Source Sans 3', system-ui, sans-serif;
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-read: 'Source Serif 4', Georgia, serif;
-  --font-read-gr: 'GFS Didot', 'Source Serif 4', Palatino, serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
-}
+/* I token vivono in shared/poetrify-tokens.css (armonizzazione strutturale).
+   Qui restano solo le regole specifiche del Corpus. */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
   font-family: var(--font-read);
@@ -43,8 +26,7 @@ button { font-family: inherit; cursor: pointer; }
 ::selection { background: rgba(24,0,172,.14); }
 /* Identità cromatica di LINGUA: in lettura l'accento del lettore commuta
    (latino rosso pompeiano · greco blu Poetrify), coerente in chiaro e scuro. */
-body[data-lang="la"]  { --accent: var(--accent-lat); }
-body[data-lang="grc"] { --accent: var(--accent-gr); }
+/* colore=lingua del lettore: in shared/poetrify-tokens.css (body[data-lang]). */
 
 /* ── Masthead ─────────────────────────────────────────────────── */
 .topbar {
@@ -263,21 +245,14 @@ body[data-lang="grc"] .verse .vt { font-family: var(--font-read-gr); font-size: 
 @media (max-width: 560px) { .langfilter .lbl { display: none; } .brand .sub { display: none; } }
 
 /* ── Dark mode (armonizzata con app/translator/dizionario) ────── */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --primary: #a99cff; --primary-dark: #8b7dff;
-    --accent-lat: #e58a90; --accent-gr: #8b7dff;
-    --paper: #232730; --ivory: #1c1f24; --cream: #2a2e38;
-    --parchment: #24242c; --parchment-edge: #34343f;
-    --ink: #e8e6e1; --sepia: #a8a39b; --rule: #3b3f4a; --rule-soft: #2c303a;
-    --mark: #6b5a1e;
-  }
-  #q:focus { box-shadow: 0 0 0 4px rgba(169,156,255,.14); }
-  .catcard:hover, .res:hover { box-shadow: 0 10px 26px rgba(0,0,0,.4); }
-  mark { color: #fff; }
-  .langfilter button[aria-pressed="true"], .book-nav button[aria-current="true"] { color: #1c1f24; }
-}
-@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+/* Dark (D2): token in shared/ [data-theme]. Qui solo le regole del Corpus.
+   La colonna di lettura tiene una pergamena scura più calda + evidenziazione propria. */
+:root[data-theme="dark"] { --parchment: #24242c; --parchment-edge: #34343f; --mark: #6b5a1e; }
+:root[data-theme="dark"] #q:focus { box-shadow: 0 0 0 4px rgba(139,125,255,.16); }
+:root[data-theme="dark"] .catcard:hover, :root[data-theme="dark"] .res:hover { box-shadow: var(--shadow-lift); }
+:root[data-theme="dark"] mark { color: #fff; }
+:root[data-theme="dark"] .langfilter button[aria-pressed="true"],
+:root[data-theme="dark"] .book-nav button[aria-current="true"] { color: var(--on-primary); }
 </style>
 </head>
 <body>
@@ -652,5 +627,7 @@ document.getElementById('mobtoggle').onclick = (e) => {
   }
 })();
 </script>
+<!-- Tema condiviso (D2): toggle flottante -->
+<script src="shared/poetrify-theme.js" data-inject-toggle></script>
 </body>
 </html>

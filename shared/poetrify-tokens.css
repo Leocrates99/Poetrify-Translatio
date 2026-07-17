@@ -1,0 +1,138 @@
+/* ============================================================================
+   POETRIFY · TOKEN CONDIVISI — fonte unica del design system
+   ----------------------------------------------------------------------------
+   Linkato PRIMA dello <style> inline in app/dictionary/corpus/translator, così
+   una modifica appare ovunque da sola (armonizzazione totale strutturale).
+   Sana i debiti §8 del Protocollo UX/UI (03_Digital-Humanities/_Protocollo-UX-UI):
+     D1  prefers-reduced-motion (era assente)
+     D2  dark unificato su [data-theme] su <html>  (era 3 meccanismi)
+     D3  --on-primary scuro nel dark su ogni fondo pieno
+     D4  :root non più duplicato in 4 file → qui
+     D7  greco politonico = GFS Didot/EB Garamond (mai Source Serif 4 da solo)
+     D8  warning allineato (#b9791f + --warning-ink), raggi 8/12, ink #2c3539
+     D10 scala spacing 8pt tokenizzata
+   Le chiavi lingua sono a DOPPIO supporto (la/grc + latino/greco) durante la
+   migrazione D6, così nessuna superficie si rompe a metà strada.
+   ============================================================================ */
+
+:root {
+  /* Brand + accenti di LINGUA */
+  --primary: #1800AC;
+  --primary-dark: #0f0070;
+  --primary-pale: rgba(24, 0, 172, 0.08);
+  --on-primary: #ffffff;                 /* testo su fondo primario (light) */
+  --accent-lat: #A22E37;                 /* rosso pompeiano */
+  --accent-gr:  #1800AC;                 /* blu Poetrify */
+  --accent: var(--primary);              /* accento di lettura, commuta per body[data-lang] */
+
+  /* Accento caldo comune — ottone (dettagli/filetti, mai campiture) */
+  --brass: #9c6b3c;
+  --brass-light: #c79a5e;
+
+  /* Superfici — registro CALDO (avorio/pergamena) */
+  --paper: #ffffff;
+  --ivory: #fcfbf8;
+  --cream: #f5f4f0;
+  --parchment: #f7f3e9;
+  --parchment-edge: #efe8d6;
+  --ink: #2c3539;
+  --ink-soft: #4a525a;
+  --sepia: #6b6660;
+  --sepia-soft: #a8a39b;
+  --rule: #d5d2cb;
+  --rule-soft: #eae8e2;
+
+  /* Semantici — fill + testo (le *-ink per il testo, ≥4.5:1) */
+  --success: #2f855a; --success-ink: #276749;
+  --warning: #b9791f; --warning-ink: #8a5a15;   /* D8: era #d69e2e (~2.6:1 su bianco) */
+  --danger:  #c53030; --danger-ink:  #9b2c2c;
+  --mark: #fbe38a;
+
+  /* Forma — raggi (D8: 8/12) */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  /* Spazio — scala 8pt (D10) */
+  --sp-1: 4px; --sp-2: 8px; --sp-3: 16px; --sp-4: 24px; --sp-5: 32px; --sp-6: 48px; --sp-7: 64px;
+
+  /* Ombre TINTE (inchiostro; indaco sul lift, coerente col registro Poetrify) */
+  --shadow-sm: 0 1px 3px rgba(44, 53, 57, 0.07);
+  --shadow: 0 6px 22px rgba(44, 53, 57, 0.10);
+  --shadow-strong: 0 8px 28px rgba(44, 53, 57, 0.18);
+  --shadow-lift: 0 10px 30px rgba(24, 0, 172, 0.10);
+
+  /* Motion */
+  --transition: 150ms ease;
+
+  /* Tipografia */
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Source Serif 4', Georgia, serif;
+  --font-read: var(--font-body);
+  --font-ui: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', Consolas, monospace;
+  --font-code: var(--font-mono);
+  /* D7 · greco politonico: GFS Didot (copertura U+1F00–1FFF), poi EB Garamond.
+     MAI 'Source Serif 4' da solo: copre solo il monotonico. */
+  --font-classical: 'GFS Didot', 'EB Garamond', 'Palatino Linotype', serif;
+  --font-read-gr: var(--font-classical);
+  --font-classical-size-boost: 1.05;
+}
+
+/* ── colore = LINGUA · valori CONCRETI per-lingua ──────────────────────────
+   (un var() su :root erediterebbe l'indaco ovunque, ignorando body[data-lang]).
+   Doppio supporto ISO la/grc + legacy latino/greco durante la migrazione D6. */
+body[data-lang="la"], body[data-lang="latino"] {
+  --primary: #A22E37; --primary-dark: #7d232b; --primary-pale: rgba(162,46,55,0.09);
+  --accent: var(--accent-lat);
+  --dacc: #A22E37; --dacc-deep: #7d232b; --dacc-pale: rgba(162,46,55,0.10); --dacc-border: rgba(162,46,55,0.32);
+}
+body[data-lang="grc"], body[data-lang="greco"] {
+  --primary: #1800AC; --primary-dark: #0f0070; --primary-pale: rgba(24,0,172,0.08);
+  --accent: var(--accent-gr);
+  --dacc: #1800AC; --dacc-deep: #0f0070; --dacc-pale: rgba(24,0,172,0.10); --dacc-border: rgba(24,0,172,0.30);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   D2 · TEMA SCURO unificato su [data-theme="dark"] su <html>
+   (impostato dallo script anti-flash in <head>; toggle in poetrify-theme.js).
+   Regola aurea: l'accento SCHIARISCE e --on-primary diventa SCURO; separazione
+   via bordi+ombre; contrasti in AA. */
+:root[data-theme="dark"] {
+  --primary: #8b7dff; --primary-dark: #a99cff; --primary-pale: rgba(139,125,255,0.16);
+  --on-primary: #14121c;                  /* D3: scuro su accento chiaro */
+  --accent-lat: #e58a90; --accent-gr: #8b7dff; --brass: #d6a071;
+  --paper: #1c1f24; --ivory: #232730; --cream: #2a2e38; --parchment: #14121c; --parchment-edge: #2f3340;
+  --ink: #e8e6e1; --ink-soft: #c8c5be; --sepia: #a8a39b; --sepia-soft: #7d7873;
+  --rule: #5a6584; --rule-soft: #3a3f4d;
+  --success: #4ade80; --success-ink: #4ade80;
+  --warning: #f0c674; --warning-ink: #f0c674;
+  --danger:  #f2a3a3; --danger-ink:  #f2a3a3;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.35);
+  --shadow: 0 6px 22px rgba(0,0,0,0.45);
+  --shadow-strong: 0 8px 28px rgba(0,0,0,0.5);
+  --shadow-lift: 0 10px 30px rgba(0,0,0,0.5);
+}
+:root[data-theme="dark"] body[data-lang="la"],
+:root[data-theme="dark"] body[data-lang="latino"] {
+  --primary: #e58a90; --primary-dark: #efb0b4; --accent: var(--accent-lat); --dacc: #e58a90; --dacc-deep: #efb0b4;
+}
+:root[data-theme="dark"] body[data-lang="grc"],
+:root[data-theme="dark"] body[data-lang="greco"] {
+  --primary: #8b7dff; --primary-dark: #a99cff; --accent: var(--accent-gr); --dacc: #8b7dff; --dacc-deep: #a99cff;
+}
+/* D3 · contorni dei controlli nel dark ≥3:1 (WCAG 1.4.11) */
+:root[data-theme="dark"] input,
+:root[data-theme="dark"] select,
+:root[data-theme="dark"] textarea { border-color: #6b76a0; }
+
+/* ── D1 · moto ridotto (era assente in tutti i prodotti) ───────────────────*/
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+  }
+}
