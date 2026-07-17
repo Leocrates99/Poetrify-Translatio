@@ -4,40 +4,22 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Poetrify · Dizionario</title>
+<!-- Anti-flash tema (D2): imposta [data-theme] prima del paint -->
+<script>(function(){try{var t=localStorage.getItem('poetrify-theme');if(t!=='dark'&&t!=='light'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<!-- Font self-hosted (vendor/fonts/) — allineato ad app/corpus/translator (era assente) -->
+<link rel="stylesheet" href="vendor/fonts/fonts.css">
+<!-- Token condivisi (fonte unica del design system · shared/) -->
+<link rel="stylesheet" href="shared/poetrify-tokens.css">
+<!-- API tema condivisa (il toggle #dict-dark-toggle la usa) -->
+<script src="shared/poetrify-theme.js"></script>
 <style>
 /* ═══════════════════════════════════════════════════════════════════════════
-   POETRIFY · Dizionario (SPA modulare · prima + seconda ondata)
-   Allineato al design system di app.html: stesse variabili --primary/--ivory/
-   --cream/--ink, stessi font Source Serif 4 + Source Sans 3.
+   POETRIFY · Dizionario (SPA modulare). I token vivono in
+   shared/poetrify-tokens.css (armonizzazione strutturale). Qui resta solo la
+   scala font dinamica del dizionario.
    ═══════════════════════════════════════════════════════════════════════════ */
-
 :root {
-  --primary: #1800AC;
-  --primary-dark: #0f0070;
-  --primary-pale: rgba(24, 0, 172, 0.08);
-  --accent-lat: #A22E37;
-  --accent-gr: #1800AC;
-  --paper: #ffffff;
-  --ivory: #fcfbf8;
-  --cream: #f5f4f0;
-  --ink: #2c3539;
-  --ink-soft: #4a525a;
-  --sepia: #6b6660;
-  --rule: #d5d2cb;
-  --rule-soft: #eae8e2;
-  --success: #2f855a;
-  --warning: #d69e2e;
-  --danger: #c53030;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --font-ui: 'Source Sans 3', -apple-system, system-ui, sans-serif;
-  --font-body: 'Source Serif 4', Georgia, serif;
-  --font-classical: 'Times New Roman', 'Liberation Serif', serif;
-  --font-code: 'JetBrains Mono', Consolas, monospace;
-
-  /* [NEW 29] Scala font dinamica, controllata da data-dict-font-size sul body */
-  --dict-scale: 1.00;
+  --dict-scale: 1.00;   /* controllata da data-dict-font-size sul body */
 }
 body[data-dict-font-size="s"] { --dict-scale: 0.90; }
 body[data-dict-font-size="m"] { --dict-scale: 1.00; }
@@ -53,14 +35,8 @@ body[data-dict-font-size="l"] { --dict-scale: 1.15; }
 /* NB: --dacc* con VALORI CONCRETI per lingua (non alias di --primary su :root:
    una var() risolta su :root erediterebbe il valore di :root — blu — ovunque,
    ignorando body[data-lang]). Qui ogni lingua/modo porta i suoi valori. */
-body[data-lang="latino"] {
-  --primary: #A22E37; --primary-dark: #7d232b; --primary-pale: rgba(162,46,55,0.09);
-  --dacc: #A22E37; --dacc-deep: #7d232b; --dacc-pale: rgba(162,46,55,0.10); --dacc-border: rgba(162,46,55,0.32);
-}
-body[data-lang="greco"] {
-  --primary: #1800AC; --primary-dark: #0f0070; --primary-pale: rgba(24,0,172,0.08);
-  --dacc: #1800AC; --dacc-deep: #0f0070; --dacc-pale: rgba(24,0,172,0.10); --dacc-border: rgba(24,0,172,0.30);
-}
+/* colore=lingua (body[data-lang]) e le sue varianti dark vivono in
+   shared/poetrify-tokens.css, con doppio supporto la/grc + latino/greco. */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
@@ -476,7 +452,7 @@ kbd {
   margin-right: 4px;
 }
 .greek-kbd-key.greek-kbd-var { min-width: 30px; height: 30px; font-size: 16px; padding: 0 5px; }
-body.poetrify-dark .greek-kbd-key.greek-kbd-var { background: rgba(255,255,255,0.05); }
+:root[data-theme="dark"] body .greek-kbd-key.greek-kbd-var { background: rgba(255,255,255,0.05); }
 
 /* ─── Alphabet picker · barra orizzontale di lettere ─────────────────────── */
 .dict-alphabet {
@@ -1362,17 +1338,17 @@ body.poetrify-dark .greek-kbd-key.greek-kbd-var { background: rgba(255,255,255,0
    I colori basati su var() (--cream/--paper/--ink/--sepia/--rule-soft) si
    adattano già al tema scuro; restano da correggere solo gli sfondi con hex
    fisso degli header (numero/riga) e il contrasto dei bordi/testo. */
-body.poetrify-dark .clp-numhead {
+:root[data-theme="dark"] body .clp-numhead {
   background: rgba(99,102,241,0.22) !important;
   color: #c7caf7 !important;
   border-bottom-color: rgba(99,102,241,0.5) !important;
 }
-body.poetrify-dark .clp-rowh { background: rgba(99,102,241,0.14); color: #c7caf7; }
-body.poetrify-dark .clp-case-table thead th,
-body.poetrify-dark .clp-verb-table thead th { color: #aeb2e8; }
-body.poetrify-dark .clp-case-table,  body.poetrify-dark .clp-verb-table,
-body.poetrify-dark .clp-case-table th, body.poetrify-dark .clp-case-table td,
-body.poetrify-dark .clp-verb-table th, body.poetrify-dark .clp-verb-table td {
+:root[data-theme="dark"] body .clp-rowh { background: rgba(99,102,241,0.14); color: #c7caf7; }
+:root[data-theme="dark"] body .clp-case-table thead th,
+:root[data-theme="dark"] body .clp-verb-table thead th { color: #aeb2e8; }
+:root[data-theme="dark"] body .clp-case-table,  :root[data-theme="dark"] body .clp-verb-table,
+:root[data-theme="dark"] body .clp-case-table th, :root[data-theme="dark"] body .clp-case-table td,
+:root[data-theme="dark"] body .clp-verb-table th, :root[data-theme="dark"] body .clp-verb-table td {
   border-color: rgba(255,255,255,0.12);
 }
 
@@ -1419,7 +1395,7 @@ body.poetrify-dark .clp-verb-table th, body.poetrify-dark .clp-verb-table td {
   padding: 2px 10px;
   white-space: nowrap;
 }
-body.poetrify-dark .dict-gram-chip {
+:root[data-theme="dark"] body .dict-gram-chip {
   color: #c7caf7;
   background: rgba(99,102,241,0.18);
   border-color: rgba(99,102,241,0.38);
@@ -1442,7 +1418,7 @@ body.poetrify-dark .dict-gram-chip {
 }
 .dict-paradigma-text { font-size: 15px; font-weight: 600; color: var(--ink); }
 .dict-paradigma-text.greek { font-family: var(--font-classical); }
-body.poetrify-dark .dict-paradigma { background: rgba(255,255,255,0.04); }
+:root[data-theme="dark"] body .dict-paradigma { background: rgba(255,255,255,0.04); }
 
 /* ── [SCAFFOLD] flaggatura componenti morfologiche ───────────────────────
    Predisposizione: il renderer potrà avvolgere parti delle forme in questi
@@ -1452,7 +1428,7 @@ body.poetrify-dark .dict-paradigma { background: rgba(255,255,255,0.04); }
 body.clp-flag-on .mc-ending { color: var(--accent-lat); font-weight: 800; }   /* desinenza */
 body.clp-flag-on .mc-prefix { color: var(--primary); }                         /* prefisso  */
 body.clp-flag-on .mc-suffix { color: #2f855a; }                                /* suffisso  */
-body.poetrify-dark.clp-flag-on .mc-suffix { color: #6ee7a8; }
+:root[data-theme="dark"] body.clp-flag-on .mc-suffix { color: #6ee7a8; }
 
 /* ── BORDO PER PARTE DEL DISCORSO ────────────────────────────────────────
    Bordo sinistro colorato su anteprima (autocomplete + lista browse) e voce
@@ -1483,8 +1459,8 @@ body.poetrify-dark.clp-flag-on .mc-suffix { color: #6ee7a8; }
 .clp-verb-table th.clp-numsep, .clp-verb-table td.clp-numsep {
   border-left: 3px solid var(--primary) !important;
 }
-body.poetrify-dark .clp-case-table th.clp-numsep,
-body.poetrify-dark .clp-case-table td.clp-numsep {
+:root[data-theme="dark"] body .clp-case-table th.clp-numsep,
+:root[data-theme="dark"] body .clp-case-table td.clp-numsep {
   border-left-color: rgba(99,102,241,0.65) !important;
 }
 
@@ -1832,7 +1808,7 @@ footer {
 /* ─── Dark mode ─────────────────────────────────────────────────────────── */
 /* Palette scura "pergamena + inchiostro" ALLINEATA a translator e app.html
    (#232730 / #1c1f24 / #2a2e38), non più il grigio-freddo di prima. */
-body.poetrify-dark {
+:root[data-theme="dark"] body {
   --paper: #232730;
   --ivory: #1c1f24;
   --cream: #2a2e38;
@@ -1844,31 +1820,31 @@ body.poetrify-dark {
   background: #171a1f;
 }
 /* --primary schiarito PER LINGUA anche in scuro (leggibile su fondo scuro) */
-body.poetrify-dark[data-lang="latino"] { --primary: #e58a90; --primary-dark: #b95d63; --primary-pale: rgba(229,138,144,0.16);
+:root[data-theme="dark"] body[data-lang="latino"] { --primary: #e58a90; --primary-dark: #b95d63; --primary-pale: rgba(229,138,144,0.16);
   --dacc: #e58a90; --dacc-deep: #b95d63; --dacc-pale: rgba(229,138,144,0.16); --dacc-border: rgba(229,138,144,0.38); }
-body.poetrify-dark[data-lang="greco"]  { --primary: #8b7dff; --primary-dark: #6a5fd0; --primary-pale: rgba(139,125,255,0.16);
+:root[data-theme="dark"] body[data-lang="greco"]  { --primary: #8b7dff; --primary-dark: #6a5fd0; --primary-pale: rgba(139,125,255,0.16);
   --dacc: #8b7dff; --dacc-deep: #6a5fd0; --dacc-pale: rgba(139,125,255,0.16); --dacc-border: rgba(139,125,255,0.38); }
 /* La testata in scuro resta profonda ma TINTA della lingua (non un blu fisso) */
-body.poetrify-dark header.topbar { background: color-mix(in srgb, var(--paper) 90%, transparent); border-bottom-color: var(--rule); }
-body.poetrify-dark code { background: rgba(99,102,241,0.18); color: #8fa0ff; }
-body.poetrify-dark .dict-entry-italian { background: rgba(47,133,90,0.16); }
-body.poetrify-dark .dict-entry-italian-label { background: var(--success); }
-body.poetrify-dark .dict-entry-card { background: rgba(255,255,255,0.03); }
-body.poetrify-dark .par-cell { background: rgba(255,255,255,0.04); }
-body.poetrify-dark .browse-item { background: rgba(255,255,255,0.03); }
-body.poetrify-dark .reverse-item { background: rgba(255,255,255,0.03); }
-body.poetrify-dark .vocab-item:hover { background: rgba(255,255,255,0.04); }
-body.poetrify-dark .alphabet-btn { background: rgba(255,255,255,0.04); color: var(--ink); }
-body.poetrify-dark .pos-chip { background: rgba(255,255,255,0.04); color: var(--ink); }
-body.poetrify-dark .history-chip { background: rgba(255,255,255,0.04); color: var(--ink); }
-body.poetrify-dark #dict-autocomplete { background: rgba(20,23,26,0.98); }
-body.poetrify-dark .greek-kbd-panel { background: rgba(255,255,255,0.04); }
-body.poetrify-dark .greek-kbd-key { background: rgba(255,255,255,0.06); color: var(--ink); }
-body.poetrify-dark .greek-kbd-action { background: rgba(255,255,255,0.06); color: var(--ink); }
-body.poetrify-dark .dict-cognate { background: rgba(99,102,241,0.10); }
-body.poetrify-dark .dict-etymology { background: rgba(162,46,55,0.12); }
-body.poetrify-dark .dict-translit { background: rgba(255,255,255,0.04); }
-body.poetrify-dark .dict-prev-lemma, body.poetrify-dark .dict-next-lemma { background: rgba(255,255,255,0.06); color: var(--ink); }
+:root[data-theme="dark"] body header.topbar { background: color-mix(in srgb, var(--paper) 90%, transparent); border-bottom-color: var(--rule); }
+:root[data-theme="dark"] body code { background: rgba(99,102,241,0.18); color: #8fa0ff; }
+:root[data-theme="dark"] body .dict-entry-italian { background: rgba(47,133,90,0.16); }
+:root[data-theme="dark"] body .dict-entry-italian-label { background: var(--success); }
+:root[data-theme="dark"] body .dict-entry-card { background: rgba(255,255,255,0.03); }
+:root[data-theme="dark"] body .par-cell { background: rgba(255,255,255,0.04); }
+:root[data-theme="dark"] body .browse-item { background: rgba(255,255,255,0.03); }
+:root[data-theme="dark"] body .reverse-item { background: rgba(255,255,255,0.03); }
+:root[data-theme="dark"] body .vocab-item:hover { background: rgba(255,255,255,0.04); }
+:root[data-theme="dark"] body .alphabet-btn { background: rgba(255,255,255,0.04); color: var(--ink); }
+:root[data-theme="dark"] body .pos-chip { background: rgba(255,255,255,0.04); color: var(--ink); }
+:root[data-theme="dark"] body .history-chip { background: rgba(255,255,255,0.04); color: var(--ink); }
+:root[data-theme="dark"] body #dict-autocomplete { background: rgba(20,23,26,0.98); }
+:root[data-theme="dark"] body .greek-kbd-panel { background: rgba(255,255,255,0.04); }
+:root[data-theme="dark"] body .greek-kbd-key { background: rgba(255,255,255,0.06); color: var(--ink); }
+:root[data-theme="dark"] body .greek-kbd-action { background: rgba(255,255,255,0.06); color: var(--ink); }
+:root[data-theme="dark"] body .dict-cognate { background: rgba(99,102,241,0.10); }
+:root[data-theme="dark"] body .dict-etymology { background: rgba(162,46,55,0.12); }
+:root[data-theme="dark"] body .dict-translit { background: rgba(255,255,255,0.04); }
+:root[data-theme="dark"] body .dict-prev-lemma, :root[data-theme="dark"] body .dict-next-lemma { background: rgba(255,255,255,0.06); color: var(--ink); }
 
 /* ─── Mobile / landscape ────────────────────────────────────────────────── */
 @media (max-width: 720px) {
@@ -1920,11 +1896,11 @@ body.poetrify-dark .dict-prev-lemma, body.poetrify-dark .dict-next-lemma { backg
 .mseg-v { color: #b45309; }
 .mseg-s { color: #0f766e; }
 .mseg-d { color: var(--md-accent, #A22E37); font-weight: 700; }
-.poetrify-dark .mseg-a { color: #a78bfa; }
-.poetrify-dark .mseg-t { color: #e8e6e1; }
-.poetrify-dark .mseg-v { color: #fbbf24; }
-.poetrify-dark .mseg-s { color: #2dd4bf; }
-.poetrify-dark .mseg-d { color: var(--md-accent-dark, #e58a90); }
+:root[data-theme="dark"] .mseg-a { color: #a78bfa; }
+:root[data-theme="dark"] .mseg-t { color: #e8e6e1; }
+:root[data-theme="dark"] .mseg-v { color: #fbbf24; }
+:root[data-theme="dark"] .mseg-s { color: #2dd4bf; }
+:root[data-theme="dark"] .mseg-d { color: var(--md-accent-dark, #e58a90); }
 .mseg-form { font-family: var(--font-classical); font-size: 16px; letter-spacing: 0.01em; white-space: nowrap; }
 .mseg-form.greek { font-size: 17px; }
 .mseg-hit { background: var(--dacc-pale); border-radius: 999px; padding: 2px 12px; outline: 1px solid var(--dacc-border); }
@@ -1981,7 +1957,7 @@ body.poetrify-dark .dict-prev-lemma, body.poetrify-dark .dict-next-lemma { backg
 .seg-tab:hover { border-color: var(--primary); color: var(--primary); }
 .seg-tab.is-on { background: var(--primary); border-color: var(--primary); color: #fff; }
 .seg-tab-t { font-size: 11.5px; padding: 4px 12px; font-weight: 500; }
-.poetrify-dark .seg-tab.is-on { color: #1c1f24; }
+:root[data-theme="dark"] .seg-tab.is-on { color: #1c1f24; }
 .seg-table {
   margin-top: 4px; border: 1px solid var(--rule-soft);
   border-radius: 12px; overflow: hidden; background: var(--paper);
@@ -2004,7 +1980,7 @@ body.poetrify-dark .dict-prev-lemma, body.poetrify-dark .dict-next-lemma { backg
 }
 .seg-list-row:first-of-type { border-top: none; }
 .seg-lists { border: 1px solid var(--rule-soft); border-radius: 12px; overflow: hidden; }
-.poetrify-dark .seg-table .seg-head { background: var(--cream); }
+:root[data-theme="dark"] .seg-table .seg-head { background: var(--cream); }
 /* Tabelle DECLINATE (participio/gerundivo come aggettivo: asse del numero × generi in colonne) */
 .seg-declwrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .seg-declwrap .seg-decl { min-width: 300px; }
@@ -2033,11 +2009,11 @@ body.poetrify-dark .dict-prev-lemma, body.poetrify-dark .dict-next-lemma { backg
 .passo-w:hover { text-decoration: underline dotted; }
 .passo-l { font-size: 12px; color: #4a5568; }
 .passo-g { color: #2c3539; }
-.poetrify-dark .passo-input { background: #232730; border-color: #3a3f49; color: #e8e6e1; }
-.poetrify-dark .passo-grid { border-color: #3a3f49; }
-.poetrify-dark .passo-row { border-top-color: #2c303a; }
-.poetrify-dark .passo-l { color: #a8a39b; }
-.poetrify-dark .passo-g { color: #e8e6e1; }
+:root[data-theme="dark"] .passo-input { background: #232730; border-color: #3a3f49; color: #e8e6e1; }
+:root[data-theme="dark"] .passo-grid { border-color: #3a3f49; }
+:root[data-theme="dark"] .passo-row { border-top-color: #2c303a; }
+:root[data-theme="dark"] .passo-l { color: #a8a39b; }
+:root[data-theme="dark"] .passo-g { color: #e8e6e1; }
 
 /* ══ RESTYLING · estetica dei mockup (scheda lessicale unificata) ══════════
    --dacc deriva da --primary (definito per lingua più su): un solo sistema.
@@ -2059,7 +2035,7 @@ header.topbar { transition: background 0.25s ease; }
   margin: 6px 0 2px;
 }
 .dict-source-label em { font-style: italic; }
-.poetrify-dark .dict-entry-card { background: #232730 !important; border-color: #3a3f49 !important; border-left-color: var(--pos-c, var(--dacc)) !important; }
+:root[data-theme="dark"] .dict-entry-card { background: #232730 !important; border-color: #3a3f49 !important; border-left-color: var(--pos-c, var(--dacc)) !important; }
 .dict-entry-header { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
 .dict-entry-lemma {
   font-family: Georgia, 'Palatino Linotype', 'Times New Roman', serif !important;
@@ -2088,7 +2064,7 @@ header.topbar { transition: background 0.25s ease; }
   color: #4a5568 !important;
   margin: 8px 0 2px;
 }
-.poetrify-dark .dict-entry-parsing { background: #2a2e38; border-color: #3a3f49; color: #c8c5be !important; }
+:root[data-theme="dark"] .dict-entry-parsing { background: #2a2e38; border-color: #3a3f49; color: #c8c5be !important; }
 .dict-translation {
   font-family: Georgia, 'Palatino Linotype', serif !important;
   font-size: 19px !important;
@@ -2099,14 +2075,14 @@ header.topbar { transition: background 0.25s ease; }
   background: none !important;
   border: none !important;
 }
-.poetrify-dark .dict-translation { color: #e8e6e1 !important; }
+:root[data-theme="dark"] .dict-translation { color: #e8e6e1 !important; }
 .dict-query-info { font-size: 11.5px !important; color: #8a857d !important; margin-bottom: 10px; }
 .dict-entry-actions {
   display: flex; gap: 10px; align-items: center; flex-wrap: wrap;
   margin-top: 14px; padding-top: 12px;
   border-top: 1px dashed #e6e3dc;
 }
-.poetrify-dark .dict-entry-actions { border-top-color: #3a3f49; }
+:root[data-theme="dark"] .dict-entry-actions { border-top-color: #3a3f49; }
 .dict-entry-save {
   font-size: 13px !important;
   padding: 6px 16px !important;
@@ -2129,7 +2105,7 @@ header.topbar { transition: background 0.25s ease; }
   background: transparent !important;
 }
 .dict-entry-link:hover { border-color: var(--dacc); color: var(--dacc) !important; }
-.poetrify-dark .dict-entry-link { border-color: #3a3f49; color: #c8c5be !important; }
+:root[data-theme="dark"] .dict-entry-link { border-color: #3a3f49; color: #c8c5be !important; }
 #dict-search-input:focus {
   border-color: var(--dacc) !important;
   box-shadow: 0 0 0 3px var(--dacc-pale) !important;
@@ -2138,23 +2114,23 @@ header.topbar { transition: background 0.25s ease; }
 .alt-lemma-chip:hover { border-color: var(--dacc); color: var(--dacc); }
 .passo-w { color: var(--dacc); }
 .mseg-d { color: var(--dacc); }
-.poetrify-dark .mseg-d { color: var(--dacc); }
+:root[data-theme="dark"] .mseg-d { color: var(--dacc); }
 .seg-tab.is-on { background: var(--dacc); border-color: var(--dacc); color: #fff; }
-.poetrify-dark .seg-tab.is-on { color: #1c1f24; }
+:root[data-theme="dark"] .seg-tab.is-on { color: #1c1f24; }
 .mseg-hit { background: var(--dacc-pale); outline: 1px solid var(--dacc-border); }
 
 /* ── Lista multi-lemma (mockup 3) ── */
 .lemma-list { margin-top: 16px; border: 1px solid #e6e3dc; border-radius: 12px; overflow: hidden; background: #fff; }
-.poetrify-dark .lemma-list { background: #232730; border-color: #3a3f49; }
+:root[data-theme="dark"] .lemma-list { background: #232730; border-color: #3a3f49; }
 .lemma-list-head { padding: 9px 14px; background: #f6f4ef; font-size: 11px; letter-spacing: 0.04em; color: #6b6660; }
-.poetrify-dark .lemma-list-head { background: #2a2e38; color: #a8a39b; }
+:root[data-theme="dark"] .lemma-list-head { background: #2a2e38; color: #a8a39b; }
 .lemma-row {
   display: flex; align-items: baseline; gap: 10px; width: 100%;
   padding: 9px 14px; border: none; border-top: 1px solid #eeece6;
   background: transparent; cursor: pointer; text-align: left; font-family: inherit;
 }
 .lemma-row:hover { background: var(--dacc-pale); }
-.poetrify-dark .lemma-row { border-top-color: #2c303a; }
+:root[data-theme="dark"] .lemma-row { border-top-color: #2c303a; }
 .lemma-row { border-left: 4px solid var(--pos-c, transparent); }
 .lemma-row-l { font-family: Georgia, 'Palatino Linotype', serif; font-size: 17px; font-weight: 700; color: var(--pos-c, var(--dacc)); }
 .lemma-row-l.greek { font-family: 'Times New Roman', serif; font-size: 18px; }
@@ -2191,7 +2167,7 @@ header.topbar { transition: background 0.25s ease; }
 }
 .seg-morph-toggle:hover { border-color: var(--primary); color: var(--primary); }
 .seg-morph-toggle.is-on { background: var(--primary); border-color: var(--primary); color: #fff; }
-.poetrify-dark .seg-morph-toggle.is-on { color: #1c1f24; }
+:root[data-theme="dark"] .seg-morph-toggle.is-on { color: #1c1f24; }
 .seg-tabrow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 0 0 10px; }
 .seg-tabrow-lbl {
   font-family: var(--font-ui); font-size: 10px; font-weight: 700;
@@ -2203,7 +2179,7 @@ header.topbar { transition: background 0.25s ease; }
 .mseg-sep { color: var(--sepia); font-weight: 400; padding: 0 1px; opacity: 0.7; }
 .lemma-row-pos { font-size: 10.5px; padding: 1px 9px; border-radius: 999px; background: var(--dacc-pale); color: var(--dacc); text-transform: lowercase; white-space: nowrap; }
 .lemma-row-g { flex: 1; font-family: Georgia, serif; font-size: 13px; color: #4a5568; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.poetrify-dark .lemma-row-g { color: #c8c5be; }
+:root[data-theme="dark"] .lemma-row-g { color: #c8c5be; }
 .lemma-row-f { font-size: 10.5px; color: #b9791f; white-space: nowrap; }
 .lemma-row-go { color: #b3afa7; font-size: 15px; }
 
@@ -2229,7 +2205,7 @@ header.topbar { transition: background 0.25s ease; }
   color:var(--lxink); line-height:1.62;
   border-left:4px solid var(--pc); padding:2px 0 20px clamp(14px,3vw,22px);
 }
-.poetrify-dark .lx-entry{ --lxink:#e9e7e1; --lxink-soft:#b8b4ab; --lxink-faint:#9a958a; --lxrule:#3a3f49; --lxrule-soft:#333842; --lxpaper2:#2a2f38; --m-t:#e9e7e1; }
+:root[data-theme="dark"] .lx-entry{ --lxink:#e9e7e1; --lxink-soft:#b8b4ab; --lxink-faint:#9a958a; --lxrule:#3a3f49; --lxrule-soft:#333842; --lxpaper2:#2a2f38; --m-t:#e9e7e1; }
 .lx-back{ display:inline-flex; align-items:center; gap:6px; font-family:var(--font-ui); font-size:13px; font-weight:600; color:var(--lxink-soft); background:none; border:0; padding:4px 0 10px; cursor:pointer; }
 .lx-back:hover{ color:var(--accent); }
 .lx-lemma-row{ display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; }

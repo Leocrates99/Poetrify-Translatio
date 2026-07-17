@@ -2294,16 +2294,17 @@ export class DictionaryApp {
      DARK MODE · invariato
      ════════════════════════════════════════════════════════════════════ */
   _isDark() {
-    try { return localStorage.getItem(DARK_KEY) === 'yes'; } catch (_) { return false; }
+    // D2: tema unificato su [data-theme] su <html> (impostato dall'anti-flash).
+    return document.documentElement.getAttribute('data-theme') === 'dark';
   }
   _applyDarkMode(on) {
-    document.body.classList.toggle('poetrify-dark', on);
+    // Delega alla API condivisa (persiste su 'poetrify-theme'); fallback diretto.
+    if (window.PoetrifyTheme) window.PoetrifyTheme.set(on ? 'dark' : 'light');
+    else document.documentElement.setAttribute('data-theme', on ? 'dark' : 'light');
     if (this.$darkToggle) this.$darkToggle.textContent = on ? '☀ Chiaro' : '🌙 Scuro';
   }
   _toggleDark() {
-    const next = !this._isDark();
-    try { localStorage.setItem(DARK_KEY, next ? 'yes' : 'no'); } catch (_) {}
-    this._applyDarkMode(next);
+    this._applyDarkMode(!this._isDark());
   }
 
   /* ════════════════════════════════════════════════════════════════════
