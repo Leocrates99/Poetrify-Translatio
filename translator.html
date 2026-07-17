@@ -6,8 +6,15 @@
 <meta name="theme-color" content="#1800AC">
 <title>Poetrify Translator — Officina del greco e del latino</title>
 
+<!-- Anti-flash tema (D2): imposta [data-theme] prima del paint -->
+<script>(function(){try{var t=localStorage.getItem('poetrify-theme');if(t!=='dark'&&t!=='light'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+
 <!-- Font self-hosted (vendor/fonts/) — nessuna dipendenza da Google Fonts -->
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
+<!-- Token condivisi (fonte unica del design system · shared/) -->
+<link rel="stylesheet" href="shared/poetrify-tokens.css">
+<!-- API tema condivisa (il toggle #dark-mode-toggle la usa) -->
+<script src="shared/poetrify-theme.js"></script>
 
 <!-- Librerie export self-hosted (vendor/lib/) — nessuna dipendenza da cdnjs -->
 <script src="vendor/lib/html2canvas.min.js"></script>
@@ -54,14 +61,15 @@
   --tr-shadow-strong: rgba(44, 53, 57, 0.12);
 
   --success: #2f855a;
-  --warning: #d69e2e;
   --danger: #c53030;
+  /* --warning viene da shared: #b9791f + --warning-ink #8a5a15 (D8: il vecchio
+     #d69e2e faceva ~2.6:1 su bianco, inusabile come testo). */
 
   --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
   --font-body: 'Source Serif 4', Georgia, serif;
-  /* Font classico per il testo greco antico: SEMPRE Times New Roman come prima
-     scelta, con fallback solo per ambienti dove TNR non sia disponibile. */
-  --font-classical: 'Times New Roman', 'Liberation Serif', 'Nimbus Roman', 'GFS Didot', Georgia, serif;
+  /* D7 · greco politonico: --font-classical viene da shared/poetrify-tokens.css
+     (GFS Didot / EB Garamond, copertura U+1F00–1FFF verificata). Prima era
+     'Times New Roman' forzato come prima scelta. */
   --font-classical-size-boost: 1.05;
   --font-ui: 'Source Sans 3', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', Consolas, monospace;
@@ -71,8 +79,8 @@
    DARK MODE · variant cromatica scura del design system Poetrify
    Mantiene la palette identitaria (indaco primario) ma adatta sfondi, testi
    e tinte di servizio per la lettura prolungata in condizioni di luce bassa.
-   Attivata tramite body.dark-mode (persistita in localStorage). */
-body.dark-mode {
+   Attivata tramite :root[data-theme="dark"] body (persistita in localStorage). */
+:root[data-theme="dark"] body {
   --primary: #8b7dff;
   --primary-soft: #a99cff;
   --primary-pale: rgba(139, 125, 255, 0.16);
@@ -104,76 +112,76 @@ body.dark-mode {
   background: #0f1116;
   color: var(--ink);
 }
-body.dark-mode .modal-backdrop {
+:root[data-theme="dark"] body .modal-backdrop {
   background: rgba(0, 0, 0, 0.75);
 }
-body.dark-mode .modal,
-body.dark-mode .editor,
-body.dark-mode .sidebar,
-body.dark-mode .preview-pane {
+:root[data-theme="dark"] body .modal,
+:root[data-theme="dark"] body .editor,
+:root[data-theme="dark"] body .sidebar,
+:root[data-theme="dark"] body .preview-pane {
   background: var(--paper);
   color: var(--ink);
 }
-body.dark-mode .field-input,
-body.dark-mode .field-select,
-body.dark-mode select,
-body.dark-mode textarea,
-body.dark-mode input[type="text"],
-body.dark-mode input[type="search"] {
+:root[data-theme="dark"] body .field-input,
+:root[data-theme="dark"] body .field-select,
+:root[data-theme="dark"] body select,
+:root[data-theme="dark"] body textarea,
+:root[data-theme="dark"] body input[type="text"],
+:root[data-theme="dark"] body input[type="search"] {
   background: var(--ivory);
   color: var(--ink);
   border-color: var(--rule);
 }
-body.dark-mode .field-input::placeholder,
-body.dark-mode textarea::placeholder,
-body.dark-mode input::placeholder { color: var(--sepia-soft); }
-body.dark-mode .field-input:focus,
-body.dark-mode .field-select:focus,
-body.dark-mode select:focus,
-body.dark-mode textarea:focus {
+:root[data-theme="dark"] body .field-input::placeholder,
+:root[data-theme="dark"] body textarea::placeholder,
+:root[data-theme="dark"] body input::placeholder { color: var(--sepia-soft); }
+:root[data-theme="dark"] body .field-input:focus,
+:root[data-theme="dark"] body .field-select:focus,
+:root[data-theme="dark"] body select:focus,
+:root[data-theme="dark"] body textarea:focus {
   border-color: var(--primary);
   background: var(--cream);
 }
-body.dark-mode .token { color: var(--ink); }
-body.dark-mode .token-untagged { color: var(--ink-soft); }
-body.dark-mode kbd {
+:root[data-theme="dark"] body .token { color: var(--ink); }
+:root[data-theme="dark"] body .token-untagged { color: var(--ink-soft); }
+:root[data-theme="dark"] body kbd {
   background: var(--cream);
   color: var(--ink);
   border-color: var(--rule);
 }
-body.dark-mode code {
+:root[data-theme="dark"] body code {
   background: var(--ivory);
   color: var(--primary);
 }
 /* Inverte il filtro su loghi/icone scure se serve */
-body.dark-mode .integrale-hint,
-body.dark-mode .deduced-hint,
-body.dark-mode .sintagmi-flow-banner,
-body.dark-mode .approach-banner {
+:root[data-theme="dark"] body .integrale-hint,
+:root[data-theme="dark"] body .deduced-hint,
+:root[data-theme="dark"] body .sintagmi-flow-banner,
+:root[data-theme="dark"] body .approach-banner {
   background: var(--cream);
   color: var(--ink);
 }
-body.dark-mode .dict-bridge {
+:root[data-theme="dark"] body .dict-bridge {
   background: linear-gradient(180deg, var(--paper) 0%, var(--ivory) 100%);
 }
-body.dark-mode .dict-bridge code,
-body.dark-mode .dict-bridge-footer-body code {
+:root[data-theme="dark"] body .dict-bridge code,
+:root[data-theme="dark"] body .dict-bridge-footer-body code {
   background: var(--cream);
   color: var(--primary);
 }
-body.dark-mode .preview-result,
-body.dark-mode .bridge-result {
+:root[data-theme="dark"] body .preview-result,
+:root[data-theme="dark"] body .bridge-result {
   background: var(--ivory);
 }
-body.dark-mode .greek, body.dark-mode .greek-text {
+:root[data-theme="dark"] body .greek, :root[data-theme="dark"] body .greek-text {
   color: var(--ink);
 }
-body.dark-mode .dict-app-header {
+:root[data-theme="dark"] body .dict-app-header {
   background: linear-gradient(180deg, #2a2541 0%, #1a1530 100%);
 }
-body.dark-mode ::-webkit-scrollbar-track { background: var(--paper); }
-body.dark-mode ::-webkit-scrollbar-thumb { background: var(--rule); }
-body.dark-mode ::-webkit-scrollbar-thumb:hover { background: var(--sepia); }
+:root[data-theme="dark"] body ::-webkit-scrollbar-track { background: var(--paper); }
+:root[data-theme="dark"] body ::-webkit-scrollbar-thumb { background: var(--rule); }
+:root[data-theme="dark"] body ::-webkit-scrollbar-thumb:hover { background: var(--sepia); }
 
 /* dummy chiusura per :root in modo che le regole successive non si attacchino */
 :root {
@@ -210,7 +218,7 @@ body[data-lang="greco"] {
   --lang-name: 'Greco';
 }
 /* Adattamento dark mode per il latino pompeiano */
-body.dark-mode[data-lang="latino"] {
+:root[data-theme="dark"] body[data-lang="latino"] {
   --lang-accent: #e58a90;
   --lang-accent-soft: #d6747a;
   --lang-accent-pale: rgba(229, 138, 144, 0.16);
@@ -572,8 +580,8 @@ input, textarea, select { font-family: inherit; color: inherit; }
   color: #fff;
   box-shadow: 0 2px 6px var(--tr-shadow-strong);
 }
-body.dark-mode .lang-toggle button[data-lang="latino"] { color: #e58a90; }
-body.dark-mode .lang-toggle button[data-lang="greco"]  { color: #8b7dff; }
+:root[data-theme="dark"] body .lang-toggle button[data-lang="latino"] { color: #e58a90; }
+:root[data-theme="dark"] body .lang-toggle button[data-lang="greco"]  { color: #8b7dff; }
 .save-status {
   display: flex;
   align-items: center;
@@ -1815,13 +1823,13 @@ body.focus-mode::after {
 }
 
 /* Dark mode */
-body.poetrify-dark .modal-command-palette  { background: rgba(20,20,30,0.98); }
-body.poetrify-dark .cmdp-search-bar         { background: rgba(255,255,255,0.04); }
-body.poetrify-dark .cmdp-category-label    { background: rgba(255,255,255,0.03); }
-body.poetrify-dark .cmdp-item:hover         { background: rgba(255,255,255,0.05); }
-body.poetrify-dark .cmdp-item.is-selected   { background: rgba(99,102,241,0.20); }
-body.poetrify-dark .cmdp-footer             { background: rgba(255,255,255,0.03); }
-body.poetrify-dark .onboarding-card         { background: rgba(20,20,30,0.98); border-color: rgba(255,255,255,0.10); }
+:root[data-theme="dark"] body .modal-command-palette  { background: rgba(20,20,30,0.98); }
+:root[data-theme="dark"] body .cmdp-search-bar         { background: rgba(255,255,255,0.04); }
+:root[data-theme="dark"] body .cmdp-category-label    { background: rgba(255,255,255,0.03); }
+:root[data-theme="dark"] body .cmdp-item:hover         { background: rgba(255,255,255,0.05); }
+:root[data-theme="dark"] body .cmdp-item.is-selected   { background: rgba(99,102,241,0.20); }
+:root[data-theme="dark"] body .cmdp-footer             { background: rgba(255,255,255,0.03); }
+:root[data-theme="dark"] body .onboarding-card         { background: rgba(20,20,30,0.98); border-color: rgba(255,255,255,0.10); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    ALBERO SINTATTICO 2.0 · diagramma verticale per livelli con frecce
@@ -2110,9 +2118,9 @@ body.poetrify-dark .onboarding-card         { background: rgba(20,20,30,0.98); b
 }
 
 /* Dark mode */
-body.poetrify-dark .tree2-node-card { background: rgba(255,255,255,0.04); }
-body.poetrify-dark .tree2-footer-help { background: rgba(255,255,255,0.02); }
-body.poetrify-dark .periodo-ipot-col { background: rgba(255,255,255,0.04); }
+:root[data-theme="dark"] body .tree2-node-card { background: rgba(255,255,255,0.04); }
+:root[data-theme="dark"] body .tree2-footer-help { background: rgba(255,255,255,0.02); }
+:root[data-theme="dark"] body .periodo-ipot-col { background: rgba(255,255,255,0.04); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    INLINE TRANSLATION · pannello sticky sempre visibile in scheda C
@@ -2254,10 +2262,10 @@ body.poetrify-dark .periodo-ipot-col { background: rgba(255,255,255,0.04); }
 }
 
 /* Dark mode */
-body.poetrify-dark .inline-translation-panel { background: rgba(20,20,30,0.96); border-color: rgba(255,255,255,0.10); }
-body.poetrify-dark .inline-translation-textarea { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.92); border-color: rgba(255,255,255,0.10); }
-body.poetrify-dark .domino-banner { background: rgba(99,102,241,0.12); }
-body.poetrify-dark .domino-text strong { color: #8d90ee; }
+:root[data-theme="dark"] body .inline-translation-panel { background: rgba(20,20,30,0.96); border-color: rgba(255,255,255,0.10); }
+:root[data-theme="dark"] body .inline-translation-textarea { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.92); border-color: rgba(255,255,255,0.10); }
+:root[data-theme="dark"] body .domino-banner { background: rgba(99,102,241,0.12); }
+:root[data-theme="dark"] body .domino-text strong { color: #8d90ee; }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    AUTO-ANALISI "ALTA CONFIDENZA" · pulsante distintivo
@@ -2307,13 +2315,13 @@ body.poetrify-dark .domino-text strong { color: #8d90ee; }
 }
 
 /* Dark mode: il giallo "saetta" resta caldo ma più tenue su fondo scuro */
-body.poetrify-dark .auto-analyze-btn {
+:root[data-theme="dark"] body .auto-analyze-btn {
   background: linear-gradient(180deg, #c4831c 0%, #a36408 100%);
   color: #fff8e1;
   text-shadow: 0 1px 0 rgba(0,0,0,0.30);
   border-color: #7a4a05;
 }
-body.poetrify-dark .auto-analyze-btn:hover {
+:root[data-theme="dark"] body .auto-analyze-btn:hover {
   background: linear-gradient(180deg, #d99933 0%, #b87208 100%);
   color: #fff;
 }
@@ -2352,7 +2360,7 @@ body.poetrify-dark .auto-analyze-btn:hover {
 .usb-chip.is-active { background: var(--primary); color: #fff; border-color: var(--primary); }
 .usb-chip.is-active span { opacity: 0.85; }
 .action-block-banner-periodale { border-left: 4px solid #c026d3; }
-body.poetrify-dark .usb-chip { background: rgba(255,255,255,0.06); color: var(--ink); }
+:root[data-theme="dark"] body .usb-chip { background: rgba(255,255,255,0.06); color: var(--ink); }
 /* VISTA A LAYER · tre bande (grammatica · sintagmi · sintassi) coi rispettivi colori */
 .unified-layer-view {
   margin: 12px 0; padding: 10px 12px;
@@ -2379,7 +2387,7 @@ body.poetrify-dark .usb-chip { background: rgba(255,255,255,0.06); color: var(--
 .ulv-tag { font-family: var(--font-ui); font-size: 8px; text-transform: uppercase; letter-spacing: 0.03em; opacity: 0.8; }
 .ulv-cell.is-sel { outline: 2px solid var(--primary); outline-offset: 1px; }
 .ulv-cell.ulv-grouped { box-shadow: inset 0 -2px 0 currentColor; }
-body.poetrify-dark .unified-layer-view { background: rgba(255,255,255,0.03); }
+:root[data-theme="dark"] body .unified-layer-view { background: rgba(255,255,255,0.03); }
 /* ── BRANO STICKY ─────────────────────────────────────────────────────────
  * Il tokenizer (sinistra in desktop, in cima su mobile) si "incolla" al top
  * dell'editor mentre l'utente lavora nel focus card. Senza questo, lo
@@ -2619,7 +2627,7 @@ body.poetrify-dark .unified-layer-view { background: rgba(255,255,255,0.03); }
   border-bottom: 1px solid var(--rule-soft);
   box-shadow: 0 3px 8px var(--tr-shadow);
 }
-body.poetrify-dark .scheletro-bar { background: var(--paper); }
+:root[data-theme="dark"] body .scheletro-bar { background: var(--paper); }
 .scheletro-stepper {
   display: flex;
   align-items: center;
@@ -2819,8 +2827,8 @@ h1.scheletro-sentence-num,
   margin-left: 4px;
   line-height: 1;
 }
-body.poetrify-dark .scheletro-verb-tag,
-body.poetrify-dark .scheletro-role-tag { background: rgba(255,255,255,0.22); }
+:root[data-theme="dark"] body .scheletro-verb-tag,
+:root[data-theme="dark"] body .scheletro-role-tag { background: rgba(255,255,255,0.22); }
 /* verbo NON finito · RISALTATO come il finito (riempimento pieno) ma in rosso
    RAMATO (rame/bronzo), nettamente distinto dal ciliegia del finito. */
 .scheletro-verb-nonfin {
@@ -2936,7 +2944,7 @@ body.poetrify-dark .scheletro-role-tag { background: rgba(255,255,255,0.22); }
 .schel-conn-bar-word { font-weight: 800; color: #7a4f0a; font-size: 15px; }
 .schel-conn-bar-word.greek { font-family: var(--font-classical); }
 .schel-conn-bar .schel-conn-sel { flex: 0 1 240px; max-width: 280px; }
-body.poetrify-dark .schel-conn-bar { background: rgba(214,158,46,0.12); }
+:root[data-theme="dark"] body .schel-conn-bar { background: rgba(214,158,46,0.12); }
 /* barra «definisci come congiunzione» (singolo token, es. pronome relativo) */
 .schel-defconj-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin: 8px 0; padding: 6px 10px; background: var(--cream); border: 1px dashed var(--rule); border-radius: 9px; }
 .schel-defconj-word { font-weight: 800; color: var(--primary); font-size: 14px; }
@@ -2969,8 +2977,8 @@ body.poetrify-dark .schel-conn-bar { background: rgba(214,158,46,0.12); }
 .schel-conn-word.greek { font-family: var(--font-classical); }
 .schel-conn-sel { font-size: 11px; padding: 2px 4px; max-width: 210px; }
 .schel-bound { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; background: rgba(214,158,46,0.18); border: 1px solid rgba(214,158,46,0.5); border-radius: 4px; color: #7a4f0a; font-weight: 700; }
-body.poetrify-dark .schel-connettivi { background: rgba(255,255,255,0.04); }
-body.poetrify-dark .schel-conn-item { background: rgba(255,255,255,0.06); }
+:root[data-theme="dark"] body .schel-connettivi { background: rgba(255,255,255,0.04); }
+:root[data-theme="dark"] body .schel-conn-item { background: rgba(255,255,255,0.06); }
 .schel-connettivi-hint { font-size: 11px; color: var(--sepia); font-style: italic; margin-bottom: 2px; }
 /* conferma/rimozione congiunzioni */
 .schel-conn-item.is-candidate { border-style: dashed; opacity: 0.92; }
@@ -2985,7 +2993,7 @@ body.poetrify-dark .schel-conn-item { background: rgba(255,255,255,0.06); }
 .schel-vq-row { display: flex; align-items: flex-start; gap: 10px; padding: 4px 0; border-top: 1px solid var(--rule-soft); }
 .schel-vq-row:first-of-type { border-top: none; }
 .schel-vq-word { flex: 0 0 auto; min-width: 70px; font-weight: 800; color: #8b1f1f; font-size: 14px; padding-top: 4px; }
-body.poetrify-dark .schel-vq-word { color: #f1a3a3; }
+:root[data-theme="dark"] body .schel-vq-word { color: #f1a3a3; }
 .schel-vq-word.greek { font-family: var(--font-classical); }
 .schel-vq-fields { display: flex; flex-wrap: wrap; gap: 6px 10px; flex: 1; }
 .schel-vq-field { display: inline-flex; flex-direction: column; gap: 1px; }
@@ -3017,9 +3025,9 @@ body.poetrify-dark .schel-vq-word { color: #f1a3a3; }
 .schel-vq-forma-btn.active { background: rgba(197,48,48,0.9); border-color: rgba(197,48,48,0.9); color: #fff; }
 .schel-vq-forma-btn.active.nf { background: rgba(214,90,60,0.92); border-color: rgba(214,90,60,0.92); }
 .schel-vq-forma-btn.nf { border-color: rgba(214,90,60,0.5); color: #b1481f; }
-body.poetrify-dark .schel-vq-forma-btn { background: rgba(255,255,255,0.06); }
-body.poetrify-dark .schel-vq-wrap { background: transparent; }
-body.poetrify-dark .schel-vq-row.is-active { background: transparent; }
+:root[data-theme="dark"] body .schel-vq-forma-btn { background: rgba(255,255,255,0.06); }
+:root[data-theme="dark"] body .schel-vq-wrap { background: transparent; }
+:root[data-theme="dark"] body .schel-vq-row.is-active { background: transparent; }
 /* FASE 7 · Traduzione (ordo SVO + brutta) */
 .schel-trad-original { margin: 4px 0 8px; font-size: 14px; color: var(--ink); font-style: italic; }
 .schel-trad-original.greek { font-family: var(--font-classical); font-style: normal; }
@@ -3057,7 +3065,7 @@ body.poetrify-dark .schel-vq-row.is-active { background: transparent; }
 .schel-confirm-ok:hover { filter: brightness(1.08); }
 .schel-confirm-x { background: transparent; color: var(--sepia); border-color: var(--rule); }
 .schel-confirm-x:hover { color: var(--danger); border-color: var(--danger); }
-body.poetrify-dark .schel-confirm { background: rgba(255,255,255,0.05); }
+:root[data-theme="dark"] body .schel-confirm { background: rgba(255,255,255,0.05); }
 
 .scheletro-finish-text {
   padding: 8px 10px;
@@ -3086,13 +3094,13 @@ body.poetrify-dark .schel-confirm { background: rgba(255,255,255,0.05); }
 }
 
 /* Dark mode */
-body.poetrify-dark .unified-focus-empty { background: rgba(255,255,255,0.03); }
-body.poetrify-dark .unified-focus-card  { background: rgba(255,255,255,0.03); }
-body.poetrify-dark .unified-section-grammar   { background: rgba(24,0,172,0.10); }
-body.poetrify-dark .unified-section-logic     { background: rgba(56,178,172,0.10); }
-body.poetrify-dark .unified-section-periodale { background: rgba(192,38,211,0.10); }
-body.poetrify-dark .scheletro-step            { background: rgba(255,255,255,0.04); }
-body.poetrify-dark .scheletro-step.done       { background: rgba(47,133,90,0.18); }
+:root[data-theme="dark"] body .unified-focus-empty { background: rgba(255,255,255,0.03); }
+:root[data-theme="dark"] body .unified-focus-card  { background: rgba(255,255,255,0.03); }
+:root[data-theme="dark"] body .unified-section-grammar   { background: rgba(24,0,172,0.10); }
+:root[data-theme="dark"] body .unified-section-logic     { background: rgba(56,178,172,0.10); }
+:root[data-theme="dark"] body .unified-section-periodale { background: rgba(192,38,211,0.10); }
+:root[data-theme="dark"] body .scheletro-step            { background: rgba(255,255,255,0.04); }
+:root[data-theme="dark"] body .scheletro-step.done       { background: rgba(47,133,90,0.18); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
    AUTOMAZIONI LOGICHE · pairing, validatore caso-funzione, sintagma esteso,
@@ -3333,25 +3341,25 @@ body.poetrify-dark .scheletro-step.done       { background: rgba(47,133,90,0.18)
 }
 
 /* Dark mode */
-body.poetrify-dark .pairing-suggest      { background: rgba(56,178,172,0.12); color: #7ed5cd; }
-body.poetrify-dark .pairing-text strong  { color: #93dad3; }
-body.poetrify-dark .case-warning          { background: rgba(214,158,46,0.14); color: #e4be60; }
-body.poetrify-dark .case-warning-text strong { color: #efd58a; }
-body.poetrify-dark .auto-suggest-panel    { background: rgba(214,158,46,0.10); }
-body.poetrify-dark .auto-suggest-title    { color: #efc864; }
-body.poetrify-dark .auto-suggest-text strong { color: #f3d586; }
+:root[data-theme="dark"] body .pairing-suggest      { background: rgba(56,178,172,0.12); color: #7ed5cd; }
+:root[data-theme="dark"] body .pairing-text strong  { color: #93dad3; }
+:root[data-theme="dark"] body .case-warning          { background: rgba(214,158,46,0.14); color: #e4be60; }
+:root[data-theme="dark"] body .case-warning-text strong { color: #efd58a; }
+:root[data-theme="dark"] body .auto-suggest-panel    { background: rgba(214,158,46,0.10); }
+:root[data-theme="dark"] body .auto-suggest-title    { color: #efc864; }
+:root[data-theme="dark"] body .auto-suggest-text strong { color: #f3d586; }
 
 /* Dark mode adattamento (mantengono leggibilità con la palette scura) */
-body.poetrify-dark .agreement-badge.agreement-ok    { background: rgba(47,133,90,0.18);  color: #6cba8e; }
-body.poetrify-dark .agreement-badge.agreement-err   { background: rgba(197,48,48,0.18);  color: #d97a7a; }
-body.poetrify-dark .agreement-badge.agreement-partial { background: rgba(214,158,46,0.18); color: #e4be60; }
-body.poetrify-dark .agreement-badge.agreement-pending { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); }
-body.poetrify-dark .morph-flag                       { background: rgba(56,178,172,0.10); color: #6dd5cc; }
-body.poetrify-dark .morph-flag.morph-flag-reduplication { background: rgba(192,38,211,0.12); color: #cf6ad7; }
-body.poetrify-dark .morph-flag.morph-flag-prefix     { background: rgba(156,107,60,0.14); color: #d2a875; }
-body.poetrify-dark .alt-readings-panel               { background: rgba(99, 102, 241, 0.10); border-color: rgba(99, 102, 241, 0.40); }
-body.poetrify-dark .alt-reading                      { background: rgba(255,255,255,0.04); color: #8d90ee; border-color: rgba(99, 102, 241, 0.45); }
-body.poetrify-dark .alt-reading.active               { background: rgba(99, 102, 241, 0.35); color: #fff; }
+:root[data-theme="dark"] body .agreement-badge.agreement-ok    { background: rgba(47,133,90,0.18);  color: #6cba8e; }
+:root[data-theme="dark"] body .agreement-badge.agreement-err   { background: rgba(197,48,48,0.18);  color: #d97a7a; }
+:root[data-theme="dark"] body .agreement-badge.agreement-partial { background: rgba(214,158,46,0.18); color: #e4be60; }
+:root[data-theme="dark"] body .agreement-badge.agreement-pending { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.6); }
+:root[data-theme="dark"] body .morph-flag                       { background: rgba(56,178,172,0.10); color: #6dd5cc; }
+:root[data-theme="dark"] body .morph-flag.morph-flag-reduplication { background: rgba(192,38,211,0.12); color: #cf6ad7; }
+:root[data-theme="dark"] body .morph-flag.morph-flag-prefix     { background: rgba(156,107,60,0.14); color: #d2a875; }
+:root[data-theme="dark"] body .alt-readings-panel               { background: rgba(99, 102, 241, 0.10); border-color: rgba(99, 102, 241, 0.40); }
+:root[data-theme="dark"] body .alt-reading                      { background: rgba(255,255,255,0.04); color: #8d90ee; border-color: rgba(99, 102, 241, 0.45); }
+:root[data-theme="dark"] body .alt-reading.active               { background: rgba(99, 102, 241, 0.35); color: #fff; }
 
 /* Palette per parte del discorso (alta trasparenza, ~0.20) */
 .token.pos-sostantivo   { background: rgba(24, 0, 172, 0.15); border-color: rgba(24, 0, 172, 0.40); color: #0f0070; }
@@ -4468,7 +4476,7 @@ body[data-profile="medie"] .quick-seg-btn[data-mode="free"] { display: none; }
 }
 
 /* In dark mode, la barra si scurisce con la palette generale */
-body.poetrify-dark .quick-bar {
+:root[data-theme="dark"] body .quick-bar {
   background: linear-gradient(180deg, var(--paper) 0%, var(--ivory) 100%);
   border-bottom-color: rgba(255,255,255,0.06);
 }
@@ -6639,8 +6647,8 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: 'Times New Roman',
 .integrale-rect-text { font-size: 12px; color: var(--ink-soft); max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .integrale-rect-text.greek { font-family: 'Times New Roman', 'Liberation Serif', serif; }
 .integrale-rect[open] .integrale-rect-text { white-space: normal; max-width: none; font-style: italic; }
-body.poetrify-dark .integrale-rect.empty > summary { background: rgba(255,255,255,0.05); }
-body.poetrify-dark .integrale-rect.has > summary { background: rgba(47,133,90,0.18); }
+:root[data-theme="dark"] body .integrale-rect.empty > summary { background: rgba(255,255,255,0.05); }
+:root[data-theme="dark"] body .integrale-rect.has > summary { background: rgba(47,133,90,0.18); }
 .integrale-sentence-block-summary {
   display: flex;
   align-items: center;
@@ -8347,7 +8355,7 @@ button.dict-suggest-pill:hover { background: rgba(24, 0, 172, 0.16); }
 .dict-pop-actions { display: flex; gap: 8px; margin-top: 4px; }
 .dict-pop-star.on { color: var(--warning); }
 .bridge-engine { margin-top: 10px; }
-body.dark-mode .dict-popover { box-shadow: 0 10px 34px rgba(0,0,0,0.55); }
+:root[data-theme="dark"] body .dict-popover { box-shadow: 0 10px 34px rgba(0,0,0,0.55); }
 
 /* ── GLOSSARIO PROATTIVO (frase e brano) ─────────────────────────────────── */
 .ts-glossario {
@@ -9503,7 +9511,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 .ocr-cta-text small { font-size: 12px; font-style: italic; opacity: 0.85; line-height: 1.4; }
 .ocr-cta-arrow { font-size: 20px; flex-shrink: 0; opacity: 0.55; transition: all var(--transition-base); }
 .ocr-cta-btn:hover .ocr-cta-arrow { opacity: 1; transform: translateX(3px); }
-body.dark-mode .ocr-cta-btn { background: rgba(139,125,255,0.10); }
+:root[data-theme="dark"] body .ocr-cta-btn { background: rgba(139,125,255,0.10); }
 @media (max-width: 640px) {
   .ocr-cta-btn { padding: 12px 14px; gap: 11px; }
   .ocr-cta-icon { font-size: 23px; }
@@ -9589,8 +9597,8 @@ body.dark-mode .ocr-cta-btn { background: rgba(139,125,255,0.10); }
   font-family: var(--font-body); font-size: 12.5px; color: var(--sepia); line-height: 1.5;
 }
 .ocr-error { color: var(--danger, #c53030); font-weight: 600; }
-body.dark-mode .ocr-dropzone { background: rgba(255,255,255,0.03); }
-body.dark-mode .ocr-result-textarea { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.92); }
+:root[data-theme="dark"] body .ocr-dropzone { background: rgba(255,255,255,0.03); }
+:root[data-theme="dark"] body .ocr-result-textarea { background: rgba(255,255,255,0.04); color: rgba(255,255,255,0.92); }
 
 .preview-copy-row {
   display: flex;
@@ -14587,24 +14595,23 @@ function _refreshOpenParadigm() {
 
 /* ════════════════════════════════════════════════════════════════════════════
    DARK MODE · toggle persistito in localStorage.
-   La classe body.dark-mode attiva la variant cromatica scura del design system. */
+   La classe :root[data-theme="dark"] body attiva la variant cromatica scura del design system. */
 function getDarkMode() {
-  try { return localStorage.getItem('poetrify-dark-mode') === '1'; } catch (e) { return false; }
+  // D2: tema unificato su [data-theme] su <html> (impostato dall'anti-flash).
+  return document.documentElement.getAttribute('data-theme') === 'dark';
 }
-/* Le regole scure del design system usano DUE classi storiche (body.dark-mode e
-   body.poetrify-dark): le applichiamo in coppia, così TUTTI i componenti — non
-   solo quelli base — passano davvero al tema scuro (parità di token). */
 function _applyDarkClasses(on) {
-  document.body.classList.toggle('dark-mode', !!on);
-  document.body.classList.toggle('poetrify-dark', !!on);
+  // Delega alla API condivisa (persiste su 'poetrify-theme'); fallback diretto.
+  if (window.PoetrifyTheme) window.PoetrifyTheme.set(on ? 'dark' : 'light');
+  else document.documentElement.setAttribute('data-theme', on ? 'dark' : 'light');
 }
 function setDarkMode(on) {
-  try { localStorage.setItem('poetrify-dark-mode', on ? '1' : '0'); } catch (e) {}
   _applyDarkClasses(!!on);
   const btn = document.getElementById('dark-mode-toggle');
   if (btn) {
     btn.classList.toggle('active', !!on);
-    btn.querySelector('.dark-mode-label').textContent = on ? 'Tema chiaro' : 'Tema scuro';
+    const lbl = btn.querySelector('.dark-mode-label');
+    if (lbl) lbl.textContent = on ? 'Tema chiaro' : 'Tema scuro';
   }
 }
 function toggleDarkMode() { setDarkMode(!getDarkMode()); }
