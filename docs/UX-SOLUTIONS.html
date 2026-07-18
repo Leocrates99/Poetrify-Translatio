@@ -1,0 +1,474 @@
+<title>Poetrify · Soluzioni visive per l'armonizzazione</title>
+<style>
+  :root{
+    --paper:#f4efe4; --paper-2:#efe8d9; --card:#faf6ec; --card-2:#f2ebdc;
+    --ink:#2a2620; --ink-soft:#6d6456; --rule:#e0d7c4; --rule-soft:#eae2d2;
+    --lat:#a22e37; --grc:#1800ac; --ottone:#9c6b3c;
+    --warn-bg:#f6ecda; --warn-line:#e6cfa0;
+    --ok:#1f6b43; --amber:#8a5410; --ottone-text:#84551f; --alta:#b4271c;
+    --pos-sost:#1F63D6; --pos-verbo:#DC2B2B; --pos-agg:#0FA3A3; --pos-avv:#1FA24F;
+    --mono:ui-monospace,Menlo,Consolas,monospace; --serif:Georgia,"Times New Roman",serif;
+    --ui:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif; --classical:"Times New Roman",Georgia,serif;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --paper:#17130f; --paper-2:#1d1813; --card:#211b15; --card-2:#191410;
+    --ink:#ece5d7; --ink-soft:#a99e8b; --rule:#39301f; --rule-soft:#2b2419;
+    --lat:#e58a90; --grc:#8b7dff; --ottone:#c99a63;
+    --warn-bg:#241d12; --warn-line:#4a3c1e;
+    --ok:#7cc79b; --amber:#dcab5a; --ottone-text:#c99a63; --alta:#e8837a;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#17130f; --paper-2:#1d1813; --card:#211b15; --card-2:#191410;
+    --ink:#ece5d7; --ink-soft:#a99e8b; --rule:#39301f; --rule-soft:#2b2419;
+    --lat:#e58a90; --grc:#8b7dff; --ottone:#c99a63; --warn-bg:#241d12; --warn-line:#4a3c1e;
+    --ok:#7cc79b; --amber:#dcab5a; --ottone-text:#c99a63; --alta:#e8837a;
+  }
+  :root[data-theme="light"]{
+    --paper:#f4efe4; --paper-2:#efe8d9; --card:#faf6ec; --card-2:#f2ebdc;
+    --ink:#2a2620; --ink-soft:#6d6456; --rule:#e0d7c4; --rule-soft:#eae2d2;
+    --lat:#a22e37; --grc:#1800ac; --ottone:#9c6b3c; --warn-bg:#f6ecda; --warn-line:#e6cfa0;
+    --ok:#1f6b43; --amber:#8a5410; --ottone-text:#84551f; --alta:#b4271c;
+  }
+  /* fixed-scheme demo boxes (per il pannello dark-mode) */
+  .force-dark{--card:#211b15;--card-2:#191410;--ink:#ece5d7;--ink-soft:#a99e8b;--rule:#39301f;--rule-soft:#2b2419;--lat:#e58a90;--grc:#8b7dff;--paper-2:#1d1813;color:#ece5d7}
+  .force-light{--card:#faf6ec;--card-2:#f2ebdc;--ink:#2a2620;--ink-soft:#6d6456;--rule:#e0d7c4;--rule-soft:#eae2d2;--lat:#a22e37;--grc:#1800ac;--paper-2:#efe8d9;color:#2a2620}
+
+  *{box-sizing:border-box}
+  body{margin:0}
+  .wrap{font-family:var(--ui);color:var(--ink);line-height:1.55;padding:0 20px 90px;
+    background:radial-gradient(1100px 560px at 50% -8%,var(--paper-2),transparent 60%),var(--paper);-webkit-font-smoothing:antialiased}
+  .col{max-width:940px;margin:0 auto}
+  :focus-visible{outline:2px solid var(--ottone);outline-offset:2px;border-radius:6px}
+
+  header.mast{max-width:940px;margin:0 auto;padding:50px 0 20px;border-bottom:1px solid var(--rule)}
+  .kdot{display:inline-flex;gap:6px;align-items:center;vertical-align:middle}
+  .dot{width:10px;height:10px;border-radius:50%}
+  .dot.lat{background:var(--lat)} .dot.grc{background:var(--grc)}
+  .eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ottone-text);font-weight:700;margin:0 0 12px}
+  h1{font-family:var(--serif);font-weight:700;font-size:clamp(28px,5vw,46px);line-height:1.07;letter-spacing:-.015em;margin:.1em 0 .3em;text-wrap:balance}
+  h1 .lt{color:var(--lat)} h1 .gk{color:var(--grc)}
+  .lede{font-size:18px;color:var(--ink-soft);max-width:66ch;margin:0}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:20px;font-size:12.5px;color:var(--ink-soft);align-items:center}
+  .legend .k{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--rule);background:var(--card);border-radius:999px;padding:4px 10px}
+
+  section{max-width:940px;margin:0 auto;padding-top:34px}
+  h2.sevband{font-family:var(--serif);font-size:19px;font-weight:700;margin:28px 0 2px;display:flex;align-items:center;gap:10px}
+  .sevband .bar{height:1px;flex:1;background:var(--rule)}
+  .sevtag{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px}
+  .sevtag.alta{background:color-mix(in srgb,var(--alta) 15%,transparent);color:var(--alta)}
+  .sevtag.media{background:color-mix(in srgb,#b9791f 15%,transparent);color:var(--amber)}
+  .sevtag.bassa{background:color-mix(in srgb,#2f855a 15%,transparent);color:var(--ok)}
+
+  .panel{background:var(--card);border:1px solid var(--rule);border-radius:16px;padding:18px 20px;margin:14px 0}
+  .panel > .ph{display:flex;align-items:baseline;gap:10px;margin-bottom:4px}
+  .panel .num{font-family:var(--serif);font-weight:700;color:var(--ottone-text);font-size:15px}
+  .panel h3{font-size:17.5px;margin:0;font-weight:700;letter-spacing:-.01em}
+  .panel .goal{font-size:13.5px;color:var(--ink-soft);margin:4px 0 14px}
+  .ba{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:720px){.ba{grid-template-columns:1fr}}
+  .side{border-radius:12px;padding:13px 13px 15px;border:1px solid var(--rule)}
+  .side.before{background:var(--warn-bg);border-color:var(--warn-line)}
+  .side.after{background:var(--card-2)}
+  .slab{font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:7px}
+  .side.before .slab{color:var(--amber)}
+  .side.after .slab{color:var(--ok)}
+  .why{font-size:12.5px;color:var(--ink-soft);margin:12px 0 0;padding-top:10px;border-top:1px dashed var(--rule)}
+  .why b{color:var(--ink)}
+
+  /* ---------- mini-UI component library (riusata ovunque) ---------- */
+  .demo{font-size:12px}
+  .stack{display:flex;flex-direction:column;gap:8px}
+  .frame{background:var(--card);border:1px solid var(--rule);border-radius:9px;overflow:hidden}
+  .frame .cap{font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);padding:5px 9px;border-bottom:1px solid var(--rule-soft);background:var(--paper-2)}
+  /* header mock */
+  .w-head{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--card);border:1px solid var(--rule);border-radius:9px;flex-wrap:wrap}
+  .w-brand{display:flex;align-items:center;gap:7px;font-family:var(--serif);font-weight:700;font-size:13px}
+  .w-brand small{font-weight:400;color:var(--ink-soft);font-family:var(--ui);font-size:11px}
+  .spacer{flex:1;min-width:8px}
+  .w-btn{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;padding:4px 9px;border-radius:7px;border:1px solid var(--rule);background:var(--paper-2);color:var(--ink);white-space:nowrap}
+  .w-btn.ghost{background:transparent}
+  .w-btn.glyphonly{color:var(--ink-soft)}
+  .dense{gap:4px}
+  .dense .w-btn{padding:3px 6px;font-size:10.5px}
+  /* language pill (colore + SEMPRE etichetta) */
+  .langpill{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;padding:4px 10px;border-radius:999px;border:1px solid var(--rule);background:var(--paper-2)}
+  .langpill.on-lat{border-color:var(--lat);box-shadow:inset 0 0 0 1px var(--lat)}
+  .langpill.on-grc{border-color:var(--grc);box-shadow:inset 0 0 0 1px var(--grc)}
+  /* lemma card .lx-item */
+  .lx{display:flex;align-items:baseline;gap:9px;padding:9px 12px;border:1px solid var(--rule);border-left:4px solid var(--pc,var(--rule));border-radius:9px;background:var(--card)}
+  .lx .il{font-family:var(--serif);font-size:17px;color:var(--ink)}
+  .lx.gk .il{font-family:var(--classical)}
+  .lx .ig{display:block;font-size:11.5px;color:var(--ink-soft);font-style:italic;margin-top:1px}
+  .lx .catchip{margin-left:auto;align-self:center;font-size:11px;font-weight:800;color:#fff;border-radius:6px;padding:2px 8px;white-space:nowrap;background:var(--cc,var(--pc))}
+  /* section card (home) */
+  .seccard{border:1px solid var(--rule);border-left:4px solid var(--pc,var(--ottone));border-radius:9px;background:var(--card);padding:10px 12px}
+  .seccard .t{font-family:var(--serif);font-weight:700;font-size:14px;display:flex;align-items:center;gap:7px}
+  .seccard .d{font-size:11.5px;color:var(--ink-soft);margin:3px 0 8px}
+  /* gate cards */
+  .gate{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .gatecard{border:1.5px solid var(--gc,var(--rule));border-radius:10px;padding:10px;text-align:center;background:var(--card)}
+  .gatecard .gi{font-size:18px;line-height:1}
+  .gatecard .gl{font-weight:700;font-size:12.5px;margin-top:4px}
+  .gatecard .gs{font-size:11px;color:var(--ink-soft)}
+  /* segmented level control */
+  .seg{display:inline-flex;border:1px solid var(--rule);border-radius:8px;overflow:hidden;font-size:11.5px}
+  .seg span{padding:5px 10px;border-right:1px solid var(--rule);color:var(--ink-soft)}
+  .seg span:last-child{border-right:0}
+  .seg span.sel{background:var(--ink);color:var(--paper);font-weight:700}
+  /* search bar */
+  .search{display:flex;align-items:center;gap:7px;border:1px solid var(--rule);border-radius:9px;background:var(--card);padding:7px 10px;font-size:12px;color:var(--ink-soft)}
+  .note{font-size:11.5px;color:var(--ink-soft);margin-top:5px}
+  .note b{font-family:var(--classical);color:var(--ink)}
+  /* status row */
+  .srow{display:flex;align-items:center;gap:7px;font-size:12px;padding:3px 0;flex-wrap:wrap}
+  .tick{color:var(--ok);font-weight:800}
+  .cross{color:var(--amber);font-weight:800}
+  .muted{color:var(--ink-soft)}
+  .tag-glyph{font-family:var(--mono);font-size:10.5px;background:var(--paper-2);border:1px solid var(--rule-soft);border-radius:5px;padding:1px 5px}
+  .typescale > *{margin:0}
+  .ts-lemma{font-family:var(--serif);font-size:26px;line-height:1.1;color:var(--lat)}
+  .ts-tr{font-size:16px;color:var(--ink)}
+  .ts-cat{font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;color:#fff;background:var(--pos-sost);display:inline-block;padding:2px 7px;border-radius:5px}
+  .ts-form{font-family:var(--classical);font-size:14.5px;color:var(--ink)}
+  .chiprow{display:flex;flex-wrap:wrap;gap:6px}
+  .nchip{font-size:11.5px;font-weight:600;border:1px solid var(--rule);background:var(--paper-2);border-radius:999px;padding:3px 9px}
+  .nchip.good{border-color:var(--ok);color:var(--ok)}
+  .nchip.bad{border-color:var(--warn-line);color:var(--amber);text-decoration:line-through}
+
+  footer{max-width:940px;margin:50px auto 0;padding-top:20px;border-top:1px solid var(--rule);color:var(--ink-soft);font-size:13px}
+  footer .scope{background:var(--card);border:1px solid var(--rule);border-radius:12px;padding:12px 15px;margin:12px 0}
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <p class="eyebrow"><span class="kdot"><span class="dot lat"></span><span class="dot grc"></span></span>&nbsp; Proposta di soluzione · mockup vivi</p>
+    <h1>Ogni divergenza, <span class="lt">prima</span> → <span class="gk">dopo</span></h1>
+    <p class="lede">Per ciascun aspetto dell'audit: come si presenta oggi (frammentato tra i rami) e la forma canonica proposta — resa come <strong>mini-interfaccia reale</strong>, non descritta. Tutti i pannelli riusano lo stesso set di classi: il documento <em>è</em> la dimostrazione del principio «una fonte, tutte le superfici».</p>
+    <div class="legend">
+      <span class="k"><span class="dot lat"></span> Latino · <b style="color:var(--lat);margin-left:3px">#a22e37</b></span>
+      <span class="k"><span class="dot grc"></span> Greco · <b style="color:var(--grc);margin-left:3px">#1800ac</b></span>
+      <span class="k">colore <b>+ sempre etichetta</b> (a11y)</span>
+      <span class="k">pergamena · serif · Times sulle forme</span>
+    </div>
+  </header>
+
+  <!-- ================= ALTA ================= -->
+  <section>
+    <h2 class="sevband"><span class="sevtag alta">alta severità</span><span class="bar"></span></h2>
+
+    <!-- 1 HEADER -->
+    <div class="panel">
+      <div class="ph"><span class="num">01</span><h3>Header &amp; controlli globali</h3></div>
+      <p class="goal">Un'unica testata pergamena: pallino-lingua + brand a sinistra, azioni a destra con <strong>icona ED etichetta</strong>, raggruppate. Uguale su tutte le superfici.</p>
+      <div class="ba">
+        <div class="side before">
+          <div class="slab">◧ Prima · 4 testate diverse</div>
+          <div class="demo stack">
+            <div class="frame"><div class="cap">home</div><div style="padding:9px"><div class="w-brand" style="font-size:12px">Poetrify · Officina…</div><div class="muted" style="font-size:11px;margin-top:2px">nessun controllo</div></div></div>
+            <div class="w-head dense"><span class="w-brand" style="font-size:11px">Dizionario</span><span class="spacer"></span><span class="w-btn glyphonly">Σ↔S</span><span class="w-btn glyphonly">📖</span><span class="w-btn glyphonly">🌙</span><span class="w-btn">Interm.</span></div>
+            <div class="w-head dense"><span class="spacer"></span><span class="w-btn">Progetti</span><span class="w-btn">Salva</span><span class="w-btn">Nuovo</span><span class="w-btn">Esporta</span><span class="w-btn">Comandi</span><span class="w-btn">Focus</span><span class="w-btn">LAT ΕΛ</span></div>
+            <div class="w-head dense"><span class="w-brand" style="font-size:11px">Poetrify</span><span class="spacer"></span><span class="w-btn">☰ Sfoglia</span></div>
+          </div>
+        </div>
+        <div class="side after">
+          <div class="slab">✓ Dopo · un solo <code>.pf-header</code></div>
+          <div class="demo stack">
+            <div class="w-head">
+              <span class="dot lat" title="lingua attiva"></span>
+              <span class="w-brand">Poetrify <small>· Dizionario</small></span>
+              <span class="spacer"></span>
+              <span class="w-btn"><span class="dot lat"></span> Latino</span>
+              <span class="w-btn">🌙 Scuro</span>
+              <span class="w-btn">⚙ Intermedio</span>
+              <span class="w-btn ghost">← Home</span>
+            </div>
+            <div class="w-head">
+              <span class="dot grc"></span>
+              <span class="w-brand">Poetrify <small>· Corpus</small></span>
+              <span class="spacer"></span>
+              <span class="w-btn"><span class="dot grc"></span> Greco</span>
+              <span class="w-btn">🌙 Scuro</span>
+              <span class="w-btn ghost">← Home</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="why"><b>Come:</b> stessa struttura, stesse icone-con-etichetta, in <code>shared/poetrify-ui.css</code> → <code>.pf-header</code>. Il pallino a sinistra rende leggibile a colpo d'occhio la lingua attiva su ogni pagina.</p>
+    </div>
+
+    <!-- 2 RITORNO HOME -->
+    <div class="panel">
+      <div class="ph"><span class="num">02</span><h3>Etichetta di ritorno alla home</h3></div>
+      <p class="goal">Un solo gesto, una sola etichetta → <code>app.html</code>, visivamente distinta da «Indietro» (cronologia).</p>
+      <div class="ba">
+        <div class="side before">
+          <div class="slab">◧ Prima · 4 modi per lo stesso gesto</div>
+          <div class="demo stack">
+            <div class="srow"><span class="muted">Dizionario</span><span class="w-btn">← Dashboard</span></div>
+            <div class="srow"><span class="muted">Traduttore</span><span class="w-btn">Torna all'inizio</span><span class="w-btn">Torna alla home</span></div>
+            <div class="srow"><span class="muted">Corpus</span><span class="w-btn ghost">Poetrify</span><span class="muted" style="font-size:11px">(solo il brand)</span></div>
+          </div>
+        </div>
+        <div class="side after">
+          <div class="slab">✓ Dopo · un contratto unico</div>
+          <div class="demo stack">
+            <div class="srow"><span class="w-btn ghost">← Torna alla home</span><span class="muted">→ app.html · identico ovunque</span></div>
+            <div class="srow"><span class="w-btn">↶ Indietro</span><span class="muted">cronologia · segno diverso</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="why"><b>Chiave:</b> due azioni diverse non condividono più la freccia «←». «Torna alla home» è di sezione; «Indietro» è di cronologia.</p>
+    </div>
+
+    <!-- 3 DARK MODE -->
+    <div class="panel">
+      <div class="ph"><span class="num">03</span><h3>Dark mode</h3></div>
+      <p class="goal">Toggle in header su <em>tutte</em> le superfici, <strong>stateful</strong> (mostra lo stato) e persistente; varianti dark dei token-lingua identiche.</p>
+      <div class="ba">
+        <div class="side before">
+          <div class="slab">◧ Prima · disomogeneo</div>
+          <div class="demo stack">
+            <div class="srow"><span class="cross">✗</span> Home — assente</div>
+            <div class="srow"><span class="tick">✓</span> Dizionario — «🌙 Scuro»</div>
+            <div class="srow"><span class="cross">±</span> Traduttore — presente, <span class="muted">label statica «Tema scuro»</span></div>
+            <div class="srow"><span class="cross">✗</span> Corpus — assente</div>
+          </div>
+        </div>
+        <div class="side after">
+          <div class="slab">✓ Dopo · stesso toggle, due stati</div>
+          <div class="demo" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px">
+            <div class="frame force-light" style="background:var(--card)"><div class="cap">tema chiaro</div><div style="padding:9px">
+              <div class="srow" style="justify-content:flex-end"><span class="w-btn">🌙 Scuro</span></div>
+              <div class="lx" style="--pc:var(--pos-verbo);--cc:#DC2B2B;margin-top:6px"><span class="il gk">λέγω</span><span class="ig">dire</span><span class="catchip">tem.</span></div>
+            </div></div>
+            <div class="frame force-dark" style="background:var(--card)"><div class="cap">tema scuro</div><div style="padding:9px">
+              <div class="srow" style="justify-content:flex-end"><span class="w-btn">☀ Chiaro</span></div>
+              <div class="lx" style="--pc:var(--pos-verbo);--cc:#DC2B2B;margin-top:6px"><span class="il gk">λέγω</span><span class="ig">dire</span><span class="catchip">tem.</span></div>
+            </div></div>
+          </div>
+        </div>
+      </div>
+      <p class="why"><b>Stateful:</b> l'etichetta dice l'azione futura (in chiaro mostra «🌙 Scuro», in scuro «☀ Chiaro»). Lo stesso token <code>--grc</code> vira automaticamente (greco #1800ac → #8b7dff).</p>
+    </div>
+  </section>
+
+  <!-- ================= MEDIA ================= -->
+  <section>
+    <h2 class="sevband"><span class="sevtag media">media severità</span><span class="bar"></span></h2>
+
+    <!-- 4 GATE -->
+    <div class="panel">
+      <div class="ph"><span class="num">04</span><h3>Gate lingua</h3></div>
+      <p class="goal">Un solo componente a due card (identità-lingua), copy identico salvo il verbo. Il gate è <em>voluto</em> (anti-travaso lat/grc): si rende accessibile, non si toglie.</p>
+      <div class="ba">
+        <div class="side before">
+          <div class="slab">◧ Prima · tre varianti</div>
+          <div class="demo stack">
+            <div class="frame"><div class="cap">dizionario</div><div style="padding:8px;font-size:11.5px">«In che lingua vuoi <b>consultare</b>? … settore del dizionario»</div></div>
+            <div class="frame"><div class="cap">traduttore</div><div style="padding:8px;font-size:11.5px">«In che lingua vuoi <b>lavorare</b>? … ramo separato»</div></div>
+            <div class="frame"><div class="cap">corpus</div><div style="padding:8px"><span class="nchip">Tutte</span> <span class="nchip">Latino</span> <span class="nchip">Greco</span> <span class="muted" style="font-size:11px">(filtro, non gate)</span></div></div>
+          </div>
+        </div>
+        <div class="side after">
+          <div class="slab">✓ Dopo · una card, cambia il verbo</div>
+          <div class="demo">
+            <div style="font-size:12px;font-weight:600;margin-bottom:8px">In che lingua vuoi <u>consultare</u> / <u>lavorare</u>?</div>
+            <div class="gate">
+              <div class="gatecard" style="--gc:var(--lat)"><div class="gi">🏛</div><div class="gl" style="color:var(--lat)">Latino</div><div class="gs">rosso pompeiano</div></div>
+              <div class="gatecard" style="--gc:var(--grc)"><div class="gi">α</div><div class="gl" style="color:var(--grc)">Greco antico</div><div class="gs">blu Poetrify</div></div>
+            </div>
+            <p class="note">Corpus: mantiene il filtro (catalogo bilingue) ma con le <em>stesse</em> card d'identità.</p>
+          </div>
+        </div>
+      </div>
+      <p class="why"><b>Accessibile:</b> <code>role="dialog"</code>, focus-trap, Esc, ritorno-focus — assenti oggi.</p>
+    </div>
+
+    <!-- 5 CARD -->
+    <div class="panel">
+      <div class="ph"><span class="num">05</span><h3>Card &amp; pulsanti-lemma</h3></div>
+      <p class="goal">Il pattern <code>.lx-item</code> del dizionario (bordo-PoS, pannello cream, iniziale-lingua, targhetta) esteso a home, catalogo corpus e liste del traduttore.</p>
+      <div class="ba">
+        <div class="side before">
+          <div class="slab">◧ Prima · linguaggi diversi</div>
+          <div class="demo stack">
+            <div class="seccard" style="--pc:var(--ottone)"><div class="t">Dizionario</div><div class="d">flessione a colori…</div><span class="w-btn">Apri →</span></div>
+            <div class="lx" style="--pc:var(--pos-sost);--cc:#1F63D6"><span class="il">rex</span><span class="ig">re · sovrano</span><span class="catchip">3ª decl.</span></div>
+            <div class="muted" style="font-size:11px">↑ card generica vs card-lemma: due grammatiche visive</div>
+          </div>
+        </div>
+        <div class="side after">
+          <div class="slab">✓ Dopo · stessa card ovunque</div>
+          <div class="demo stack">
+            <div class="lx" style="--pc:var(--ottone);--cc:var(--ottone)"><span class="il">Traduttore</span><span class="ig">officina di traduzione</span><span class="catchip">sezione</span></div>
+            <div class="lx" style="--pc:var(--pos-sost);--cc:#1F63D6"><span class="il">rex</span><span class="ig">re · sovrano</span><span class="catchip">3ª decl.</span></div>
+            <div class="lx gk" style="--pc:var(--pos-verbo);--cc:#DC2B2B"><span class="il">λαμβάνω</span><span class="ig">prendere</span><span class="catchip">tematico</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="why"><b>Una classe, tre usi:</b> sezione (home), lemma (dizionario/corpus), voce (translator). Il bordo colorato è PoS (sostantivo, verbo…) o — per le sezioni — un accento neutro <code>--ottone</code>: <em>rosso e blu restano segnale univoco della lingua</em>, mai della sezione.</p>
+    </div>
+
+    <!-- 6 TIPOGRAFIA -->
+    <div class="panel">
+      <div class="ph"><span class="num">06</span><h3>Tipografia</h3></div>
+      <p class="goal">Token unici (<code>--ui</code> / <code>--serif</code> / <code>--classical</code>) e gerarchia fissa: lemma &gt; traduzione &gt; categoria; Times New Roman su tutte le forme flesse.</p>
+      <div class="ba">
+        <div class="side before">
+          <div class="slab">◧ Prima · da verificare, a rischio divergenza</div>
+          <div class="demo stack">
+            <div class="muted" style="font-size:11.5px">font non ispezionabili dal sito renderizzato; ogni pagina dichiara i propri <code>font-family</code> inline → rischio disallineo (Inter? Source Sans 3?)</div>
+            <div class="chiprow"><span class="nchip bad">font per-pagina</span><span class="nchip bad">gerarchia libera</span></div>
+          </div>
+        </div>
+        <div class="side after">
+          <div class="slab">✓ Dopo · una scala, un campione</div>
+          <div class="demo typescale stack">
+            <div class="ts-lemma" style="font-family:var(--serif)">rex, rēgis</div>
+            <div class="ts-tr">re, sovrano, monarca</div>
+            <div><span class="ts-cat">3ª declinazione</span></div>
+            <div class="ts-form" style="margin-top:4px">rēgem · rēgī · rēge <span class="muted" style="font-size:11px">— Times New Roman</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="why"><b>Regola:</b> la tipografia arriva dai token condivisi anche dove il markup è locale (paradigmi, lettore Didot).</p>
+    </div>
+
+    <!-- 7 LIVELLO -->
+    <div class="panel">
+      <div class="ph"><span class="num">07</span><h3>Selettore di livello</h3></div>
+      <p class="goal">Un solo componente, una sola tassonomia, in forma estesa.</p>
+      <div class="ba">
+        <div class="side before">
+          <div class="slab">◧ Prima · abbreviato &amp; doppio</div>
+          <div class="demo stack">
+            <div class="srow"><span class="muted">Dizionario</span><span class="w-btn">Livello: Interm.</span></div>
+            <div class="srow"><span class="muted">Traduttore</span><span class="nchip">Avvio A</span><span class="nchip">Intermedio B</span><span class="nchip">Avanzato C</span></div>
+            <div class="srow"><span class="muted">…profilo</span><span class="nchip">Principiante</span><span class="nchip">Intermedio</span><span class="nchip">Avanzato</span></div>
+          </div>
+        </div>
+        <div class="side after">
+          <div class="slab">✓ Dopo · un segmented, esteso</div>
+          <div class="demo">
+            <div class="seg"><span>Principiante</span><span class="sel">Intermedio</span><span>Avanzato</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="why"><b>Fine dei sinonimi:</b> «Avvio» = «Principiante». Una sola scala, ovunque.</p>
+    </div>
+
+    <!-- 8 NOTAZIONE LINGUA -->
+    <div class="panel">
+      <div class="ph"><span class="num">08</span><h3>Notazione &amp; controllo lingua</h3></div>
+      <p class="goal">Un unico controllo per pagina, etichette parallele, colore=lingua — mai lo stesso concetto in tre notazioni.</p>
+      <div class="ba">
+        <div class="side before">
+          <div class="slab">◧ Prima · fino a 3 notazioni/pagina</div>
+          <div class="demo stack">
+            <div class="srow"><span class="tag-glyph">Σ↔S</span><span class="muted">toggle glifo (dizionario)</span></div>
+            <div class="srow"><span class="nchip">Latino</span><span class="nchip">Greco antico</span><span class="muted">tab</span></div>
+            <div class="srow"><span class="nchip">🏛 Latino</span><span class="nchip">α Greco</span><span class="muted">chip del gate</span></div>
+            <div class="srow"><span class="tag-glyph">LAT&nbsp;ΕΛ</span><span class="muted">asimmetrico (translator)</span></div>
+          </div>
+        </div>
+        <div class="side after">
+          <div class="slab">✓ Dopo · un controllo simmetrico</div>
+          <div class="demo stack">
+            <div><span class="langpill on-lat"><span class="dot lat"></span> Latino</span> <span class="langpill"><span class="dot grc"></span> Greco antico</span></div>
+            <div class="muted" style="font-size:11px">stesso trattamento e stesso rango; il pallino colorato ha <b style="color:var(--ink)">sempre l'etichetta</b> accanto. Qui il Latino è lo stato attivo.</div>
+          </div>
+        </div>
+      </div>
+      <p class="why"><b>Anti-WCAG-1.4.1:</b> il colore non è mai l'unico segnale; l'etichetta lo accompagna sempre.</p>
+    </div>
+
+    <!-- 9 HOME -->
+    <div class="panel">
+      <div class="ph"><span class="num">09</span><h3>Home (app.html): contenuto &amp; tono</h3></div>
+      <p class="goal">Launcher pulito: card <code>.lx-item</code>, header canonico, naming italiano, zero materiale da sviluppatore.</p>
+      <div class="ba">
+        <div class="side before">
+          <div class="slab">◧ Prima · rumore da dev</div>
+          <div class="demo stack">
+            <div class="chiprow"><span class="nchip bad">Translator (EN)</span><span class="nchip bad">Architettura (albero file)</span><span class="nchip bad">Stato del motore → «0 ovunque»</span></div>
+            <div class="seccard" style="--pc:var(--ottone)"><div class="t">Translator</div><div class="d">panoramica…</div><span class="w-btn">Apri →</span></div>
+          </div>
+        </div>
+        <div class="side after">
+          <div class="slab">✓ Dopo · launcher curato</div>
+          <div class="demo stack">
+            <div class="w-head" style="padding:6px 8px"><span class="dot lat"></span><span class="dot grc"></span><span class="w-brand" style="font-size:12px;margin-left:4px">Poetrify</span><span class="spacer"></span><span class="w-btn">🌙 Scuro</span></div>
+            <div class="lx" style="--pc:var(--ottone);--cc:var(--ottone)"><span class="il">Traduttore</span><span class="ig">officina di traduzione</span><span class="catchip">apri</span></div>
+            <div class="lx" style="--pc:var(--ottone);--cc:var(--ottone)"><span class="il">Dizionario</span><span class="ig">consultazione lessicale</span><span class="catchip">apri</span></div>
+            <div class="lx" style="--pc:var(--ottone);--cc:var(--ottone)"><span class="il">Corpus</span><span class="ig">biblioteca dei testi</span><span class="catchip">apri</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="why"><b>Fuori dalla vista utente:</b> «Architettura» e diagnostica del motore (con fallback testuale se i moduli falliscono). Le sezioni usano l'accento neutro, non i colori-lingua.</p>
+    </div>
+  </section>
+
+  <!-- ================= BASSA ================= -->
+  <section>
+    <h2 class="sevband"><span class="sevtag bassa">bassa severità</span><span class="bar"></span></h2>
+
+    <!-- 10 NAMING -->
+    <div class="panel">
+      <div class="ph"><span class="num">10</span><h3>Naming &amp; collisioni terminologiche</h3></div>
+      <p class="goal">Italiano coerente, un termine per concetto; glossario condiviso.</p>
+      <div class="ba">
+        <div class="side before">
+          <div class="slab">◧ Prima · lessico misto</div>
+          <div class="demo chiprow">
+            <span class="nchip bad">Translator</span>
+            <span class="nchip bad">tab «Dizionario» (dentro il translator)</span>
+            <span class="nchip bad">«settore» vs «script»</span>
+            <span class="nchip bad">Corpus / «biblioteca»</span>
+          </div>
+        </div>
+        <div class="side after">
+          <div class="slab">✓ Dopo · glossario unico</div>
+          <div class="demo chiprow">
+            <span class="nchip good">Traduttore</span>
+            <span class="nchip good">Dizionario (sezione)</span>
+            <span class="nchip good">tab → «Lessico»</span>
+            <span class="nchip good">Corpus</span>
+            <span class="nchip good">«lingua» (un solo termine)</span>
+          </div>
+        </div>
+      </div>
+      <p class="why"><b>Anti-collisione:</b> la tab interna del traduttore diventa «Lessico», così «Dizionario» resta solo il ramo autonomo.</p>
+    </div>
+
+    <!-- 11 RICERCA -->
+    <div class="panel">
+      <div class="ph"><span class="num">11</span><h3>Ricerca</h3></div>
+      <p class="goal">Una barra condivisa dove ha senso (dizionario, corpus), con la nota accent/spirito-insensitive <em>accanto</em> al campo.</p>
+      <div class="ba">
+        <div class="side before">
+          <div class="slab">◧ Prima · nota senza campo</div>
+          <div class="demo stack">
+            <p class="note">«La ricerca ignora accenti e spiriti: cerca <b>μηνιν</b> e trovi <b>μῆνιν</b>…»</p>
+            <div class="muted" style="font-size:11px">↑ nel corpus la nota si legge, ma il campo è iniettato dopo, via JS</div>
+          </div>
+        </div>
+        <div class="side after">
+          <div class="slab">✓ Dopo · campo + nota, insieme</div>
+          <div class="demo stack">
+            <div class="search">🔍 <span>Cerca o esplora un lemma…</span></div>
+            <p class="note">accento- e spirito-insensitive: <b>μηνιν</b>→<b>μῆνιν</b> · <b>vita</b>→<b>uita</b></p>
+          </div>
+        </div>
+      </div>
+      <p class="why"><b>Componente unico:</b> stessa barra, stessa nota, tastiera greca opzionale — riusata da dizionario e corpus.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Questi sono <strong>mockup</strong> che incarnano il sistema condiviso proposto (<code>shared/poetrify-variables.css</code> + <code>poetrify-ui.css</code>). Ogni pannello riusa le stesse classi: è la prova visiva che «una fonte» basta per tutte le superfici. <span class="kdot"><span class="dot lat"></span><span class="dot grc"></span></span></p>
+    <div class="scope"><b>Fuori scope di questa dimostrazione visiva:</b> il peso del Traduttore (~2 MB) è una questione di <em>performance</em> (code-splitting / lazy-load dei dati, non blocco del preview), trasversale all'estetica → vive nella <em>roadmap</em> dell'audit, non in un pannello di armonizzazione grafica. Anche gli stati interattivi reali (focus da tastiera, <code>role="dialog"</code> del gate) si aggiungono in fase di implementazione: qui i controlli sono simulati.</div>
+    <p style="margin-top:8px;color:var(--ink-soft)">Passo successivo reale: il <b>passo zero</b> dell'audit (diff dei <code>:root</code> veri) → estrazione in <code>shared/</code> → applicazione, ramo per ramo. I valori-token vanno confermati sul sorgente.</p>
+  </footer>
+
+</div>

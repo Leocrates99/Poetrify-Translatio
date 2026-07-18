@@ -1,0 +1,514 @@
+<title>Audit UX/UI · I tre rami di Poetrify</title>
+<style>
+  :root{
+    --paper:#f4efe4; --paper-2:#efe8d9; --card:#faf6ec; --ink:#2a2620; --ink-soft:#6d6456;
+    --rule:#e0d7c4; --rule-soft:#eae2d2;
+    --lat:#a22e37; --grc:#1800ac; --ottone:#9c6b3c;
+    --sev-alta:#c0392b; --sev-media:#b9791f; --sev-bassa:#2f855a;
+    --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,monospace;
+    --serif:Georgia,"Times New Roman",serif;
+    --ui:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#17130f; --paper-2:#1d1813; --card:#211b15; --ink:#ece5d7; --ink-soft:#a99e8b;
+      --rule:#39301f; --rule-soft:#2b2419;
+      --lat:#e58a90; --grc:#8b7dff; --ottone:#c99a63;
+      --sev-alta:#e8837a; --sev-media:#dcab5a; --sev-bassa:#7cc79b;
+    }
+  }
+  :root[data-theme="dark"]{
+    --paper:#17130f; --paper-2:#1d1813; --card:#211b15; --ink:#ece5d7; --ink-soft:#a99e8b;
+    --rule:#39301f; --rule-soft:#2b2419; --lat:#e58a90; --grc:#8b7dff; --ottone:#c99a63;
+    --sev-alta:#e8837a; --sev-media:#dcab5a; --sev-bassa:#7cc79b;
+  }
+  :root[data-theme="light"]{
+    --paper:#f4efe4; --paper-2:#efe8d9; --card:#faf6ec; --ink:#2a2620; --ink-soft:#6d6456;
+    --rule:#e0d7c4; --rule-soft:#eae2d2; --lat:#a22e37; --grc:#1800ac; --ottone:#9c6b3c;
+    --sev-alta:#c0392b; --sev-media:#b9791f; --sev-bassa:#2f855a;
+  }
+  *{box-sizing:border-box}
+  body,.wrap{margin:0}
+  .wrap{
+    font-family:var(--ui); color:var(--ink); background:
+      radial-gradient(1200px 600px at 50% -10%, var(--paper-2), transparent 60%),
+      var(--paper);
+    line-height:1.6; padding:0 20px 96px; -webkit-font-smoothing:antialiased;
+  }
+  .col{max-width:880px; margin:0 auto}
+  a{color:inherit}
+
+  /* ---- masthead ---- */
+  header.mast{max-width:880px; margin:0 auto; padding:52px 0 22px; border-bottom:1px solid var(--rule)}
+  .kdot{display:inline-flex; gap:7px; align-items:center; vertical-align:middle}
+  .dot{width:11px;height:11px;border-radius:50%}
+  .dot.lat{background:var(--lat)} .dot.grc{background:var(--grc)}
+  .eyebrow{font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ottone); font-weight:700; margin:0 0 14px}
+  h1{font-family:var(--serif); font-weight:700; font-size:clamp(30px,5.4vw,50px); line-height:1.06; letter-spacing:-.015em; margin:.1em 0 .32em; text-wrap:balance}
+  h1 .a-lat{color:var(--lat)} h1 .a-grc{color:var(--grc)}
+  .lede{font-size:18.5px; color:var(--ink-soft); max-width:64ch; margin:0}
+  .meta-row{display:flex; flex-wrap:wrap; gap:8px 18px; margin-top:22px; font-size:13px; color:var(--ink-soft)}
+  .meta-row b{color:var(--ink); font-weight:650}
+
+  /* ---- toc ---- */
+  nav.toc{max-width:880px;margin:22px auto 0;display:flex;flex-wrap:wrap;gap:8px}
+  nav.toc a{font-size:12.5px;text-decoration:none;color:var(--ink-soft);border:1px solid var(--rule);
+    padding:5px 11px;border-radius:999px;background:var(--card);transition:.15s}
+  nav.toc a:hover{color:var(--ink);border-color:var(--ottone)}
+
+  section{max-width:880px;margin:0 auto;padding-top:46px}
+  h2{font-family:var(--serif);font-weight:700;font-size:clamp(21px,3.4vw,28px);letter-spacing:-.01em;margin:0 0 6px;scroll-margin-top:16px}
+  h2 .n{color:var(--ottone);font-size:.62em;font-weight:700;font-family:var(--ui);vertical-align:middle;margin-right:.5em;letter-spacing:.02em}
+  .sub{color:var(--ink-soft);margin:.1em 0 20px;font-size:15.5px;max-width:66ch}
+  h3{font-size:16px;font-weight:700;margin:26px 0 8px;letter-spacing:-.005em}
+  p{margin:0 0 12px}
+  strong{font-weight:670}
+
+  .callout{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:18px 20px;margin:8px 0 4px}
+  .callout.warn{border-color:color-mix(in srgb,var(--sev-alta) 45%,var(--rule))}
+  .callout .tag{font-size:11.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--sev-alta)}
+  .callout.brass .tag{color:var(--ottone)}
+  .callout h3{margin:6px 0 8px;font-size:17px}
+  .callout p:last-child{margin-bottom:0}
+
+  /* ---- state map ---- */
+  .grid{display:grid;gap:14px}
+  .grid.g2{grid-template-columns:repeat(2,1fr)}
+  .grid.g4{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:640px){.grid.g2,.grid.g4{grid-template-columns:1fr}}
+  .surf{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:16px 18px}
+  .surf .h{display:flex;align-items:baseline;gap:9px;justify-content:space-between;margin-bottom:6px}
+  .surf .nm{font-family:var(--serif);font-size:19px;font-weight:700}
+  .badge{font-size:10.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .badge.canon{background:color-mix(in srgb,var(--sev-bassa) 18%,transparent);color:var(--sev-bassa);border:1px solid color-mix(in srgb,var(--sev-bassa) 40%,transparent)}
+  .badge.behind{background:color-mix(in srgb,var(--sev-media) 16%,transparent);color:var(--sev-media);border:1px solid color-mix(in srgb,var(--sev-media) 38%,transparent)}
+  .badge.mixed{background:color-mix(in srgb,var(--sev-alta) 15%,transparent);color:var(--sev-alta);border:1px solid color-mix(in srgb,var(--sev-alta) 36%,transparent)}
+  .surf p{font-size:13.5px;color:var(--ink-soft);margin:0}
+  .surf .file{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft)}
+
+  /* ---- matrix table ---- */
+  .scroll{overflow-x:auto;border:1px solid var(--rule);border-radius:14px;background:var(--card)}
+  table{border-collapse:collapse;width:100%;min-width:720px;font-size:13px}
+  thead th{text-align:left;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);
+    font-weight:700;padding:12px 12px;border-bottom:1px solid var(--rule);white-space:nowrap;background:var(--paper-2)}
+  tbody td{padding:12px 12px;border-bottom:1px solid var(--rule-soft);vertical-align:top}
+  tbody tr:last-child td{border-bottom:0}
+  td.area{font-weight:700;white-space:nowrap}
+  td.canon{color:var(--ink-soft);min-width:180px}
+  td.fix{min-width:200px}
+  .sv{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;padding:2px 8px;border-radius:6px}
+  .sv.alta{background:color-mix(in srgb,var(--sev-alta) 16%,transparent);color:var(--sev-alta)}
+  .sv.media{background:color-mix(in srgb,var(--sev-media) 16%,transparent);color:var(--sev-media)}
+  .sv.bassa{background:color-mix(in srgb,var(--sev-bassa) 16%,transparent);color:var(--sev-bassa)}
+  .st{font-size:12px;line-height:1.45}
+  .st .lbl{font-weight:700;font-size:10.5px;letter-spacing:.03em;text-transform:uppercase;color:var(--ink-soft);display:block}
+
+  /* ---- token chips ---- */
+  .tok{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 2px}
+  .swatch{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--rule);background:var(--card);
+    border-radius:9px;padding:6px 10px;font-family:var(--mono);font-size:11.5px}
+  .chip{width:14px;height:14px;border-radius:4px;flex:none;border:1px solid rgba(0,0,0,.12)}
+  ul.clean{margin:6px 0 0;padding:0;list-style:none}
+  ul.clean li{position:relative;padding:5px 0 5px 20px;font-size:14.5px;border-bottom:1px solid var(--rule-soft)}
+  ul.clean li:last-child{border-bottom:0}
+  ul.clean li::before{content:"";position:absolute;left:2px;top:12px;width:7px;height:7px;border-radius:50%;background:var(--ottone)}
+  ul.clean li.lat::before{background:var(--lat)} ul.clean li.grc::before{background:var(--grc)}
+  code{font-family:var(--mono);font-size:.88em;background:var(--paper-2);padding:1px 6px;border-radius:5px;border:1px solid var(--rule-soft)}
+
+  /* per-branch gaps */
+  .gapcard{background:var(--card);border:1px solid var(--rule);border-radius:14px;padding:16px 18px}
+  .gapcard h3{margin:0 0 4px;font-family:var(--serif);font-size:18px;display:flex;align-items:center;gap:8px}
+  .gapcard ul{margin:8px 0 0;padding-left:18px}
+  .gapcard li{font-size:13.5px;margin:5px 0;color:var(--ink)}
+  .gapcard .role{font-size:12px;color:var(--ink-soft);margin:0 0 2px}
+
+  /* roadmap */
+  ol.road{list-style:none;counter-reset:step;margin:6px 0 0;padding:0}
+  ol.road li{counter-increment:step;position:relative;padding:14px 0 14px 54px;border-bottom:1px solid var(--rule-soft)}
+  ol.road li:last-child{border-bottom:0}
+  ol.road li::before{content:counter(step);position:absolute;left:0;top:12px;width:34px;height:34px;border-radius:50%;
+    display:grid;place-items:center;font-family:var(--serif);font-weight:700;font-size:16px;color:var(--paper);
+    background:var(--ink)}
+  ol.road li.zero::before{content:"0";background:var(--sev-alta)}
+  ol.road li h3{margin:0 0 3px;font-size:15.5px}
+  ol.road li p{margin:0;font-size:13.5px;color:var(--ink-soft)}
+  .pill{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    padding:2px 8px;border-radius:999px;border:1px solid var(--rule);color:var(--ink-soft);margin-left:6px;vertical-align:middle}
+
+  footer{max-width:880px;margin:56px auto 0;padding-top:22px;border-top:1px solid var(--rule);color:var(--ink-soft);font-size:13px}
+  .hr{max-width:880px;margin:0 auto;height:1px;background:var(--rule);border:0}
+</style>
+
+<div class="wrap">
+
+  <header class="mast">
+    <p class="eyebrow"><span class="kdot"><span class="dot lat"></span><span class="dot grc"></span></span>&nbsp; Audit di sistema · Poetrify</p>
+    <h1>Armonizzare i <span class="a-lat">tre&nbsp;rami</span> di <span class="a-grc">Poetrify</span></h1>
+    <p class="lede">Un solo linguaggio UX/UI per Dizionario, Traduttore e Corpus — e un'architettura che rende lo sviluppo <strong>parallelo per costruzione</strong>, non per disciplina. Niente più divergenze fra i rami.</p>
+    <div class="meta-row">
+      <span><b>Superfici</b> Home · Dizionario · Traduttore · Corpus</span>
+      <span><b>Metodo</b> inventario live + canone aisthesis + critica avversariale</span>
+      <span><b>Stato</b> analisi completa · attesa verifica sul sorgente</span>
+    </div>
+  </header>
+
+  <nav class="toc">
+    <a href="#tesi">La tesi</a>
+    <a href="#stato">Stato dei rami</a>
+    <a href="#matrice">Matrice di divergenza</a>
+    <a href="#canone">Sistema canonico</a>
+    <a href="#gap">Gap per ramo</a>
+    <a href="#correzioni">Correzioni critiche</a>
+    <a href="#governance">Sviluppo parallelo</a>
+    <a href="#roadmap">Roadmap</a>
+  </nav>
+
+  <!-- ============ TESI ============ -->
+  <section id="tesi">
+    <h2><span class="n">01</span>La tesi in una riga</h2>
+    <p class="sub">Il dizionario è stato appena portato a un linguaggio maturo (home «Lexicon», card-lemma, header pergamena, scheda a colori). Traduttore e Corpus non l'hanno seguito: è questa la divergenza che percepisci. L'audit non chiede di livellare al ribasso — chiede di eleggere quel linguaggio a <strong>canone unico</strong> e di renderlo impossibile da disattendere.</p>
+
+    <div class="callout brass">
+      <span class="tag">Principio non negoziabile</span>
+      <h3>Il colore = lingua è una <em>costante</em>, non una differenza fra rami</h3>
+      <p>Latino <strong style="color:var(--lat)">rosso pompeiano</strong> e greco <strong style="color:var(--grc)">blu Poetrify</strong> non sono «due stili» da appianare: sono la stessa regola applicata identica ovunque (header, gate, iniziale, bordi, card). Ciò che va appianato è tutto il resto: header, etichette di navigazione, dark mode, card, tipografia, gate, tassonomie, naming.</p>
+    </div>
+
+    <div class="callout warn" style="margin-top:14px">
+      <span class="tag">Passo zero · onestà metodologica</span>
+      <h3>Le divergenze <em>strutturali</em> sono osservate; i <em>valori esatti dei token</em> no</h3>
+      <p>Questa analisi è stata condotta sul sito pubblicato (le pagine renderizzate) e sul canone documentato: header diversi, etichette di ritorno diverse, dark mode assente su Home e Corpus, naming misto — tutto <strong>osservato dal vivo</strong>. Ma il repo non era montato in questa sessione: gli esatti <code>#hex</code> e il conteggio dei token vengono dalla memoria di progetto. <strong>Duplicato ≠ divergente</strong>: solo un diff dei blocchi <code>:root</code> reali dirà quanti valori differiscono davvero. Perciò il primo intervento è leggere il sorgente, non riscriverlo.</p>
+    </div>
+  </section>
+
+  <!-- ============ STATO ============ -->
+  <section id="stato">
+    <h2><span class="n">02</span>Stato dei quattro surface</h2>
+    <p class="sub">Come si presenta oggi ciascuna superficie e quanto dista dal canone.</p>
+    <div class="grid g4">
+      <div class="surf">
+        <div class="h"><span class="nm">Home</span><span class="badge behind">indietro</span></div>
+        <p class="file">app.html</p>
+        <p>Launcher a 3 card «Apri →». Nessun header con controlli, nessun dark mode, nessun pallino-lingua. Espone materiale da sviluppatore («Architettura», «Stato del motore»). «Translator» in inglese accanto a «Dizionario»/«Corpus».</p>
+      </div>
+      <div class="surf">
+        <div class="h"><span class="nm">Dizionario</span><span class="badge canon">canone</span></div>
+        <p class="file">dictionary.html</p>
+        <p>Il ramo più maturo: home «Lexicon», card-lemma, header pergamena sticky, dark mode, scheda a colori. Da ripulire al suo interno (tre notazioni di lingua, glifi non etichettati, «← Dashboard», «Interm.»).</p>
+      </div>
+      <div class="surf">
+        <div class="h"><span class="nm">Traduttore</span><span class="badge mixed">disallineato</span></div>
+        <p class="file">translator.html · ~2 MB</p>
+        <p>Officina a 6 schede, ricca ma con topbar densa (11+ voci), toggle lingua asimmetrico «LAT / ΕΛ», doppia etichetta home, doppia tassonomia di livello, tema non-stateful. Peso 2 MB = problema di performance.</p>
+      </div>
+      <div class="surf">
+        <div class="h"><span class="nm">Corpus</span><span class="badge mixed">disallineato</span></div>
+        <p class="file">corpus.html</p>
+        <p>Biblioteca sfogliabile. Ritorno home affidato al solo brand «Poetrify», lingua come filtro a chip «Tutte/Latino/Greco» (non gate), nessun dark mode nel guscio. Catalogo iniettato via JS: da verificare se usa le card canoniche.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MATRICE ============ -->
+  <section id="matrice">
+    <h2><span class="n">03</span>Matrice di divergenza</h2>
+    <p class="sub">Per ciascun aspetto: il bersaglio (canone), come sta ogni ramo, la severità e l'intervento. Ordinata per severità.</p>
+    <div class="scroll">
+      <table>
+        <thead>
+          <tr><th>Aspetto</th><th>Sev.</th><th>Canone (bersaglio)</th><th>Home</th><th>Dizionario</th><th>Traduttore</th><th>Corpus</th><th>Intervento</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="area">Header &amp; controlli</td>
+            <td><span class="sv alta">alta</span></td>
+            <td class="canon">Header pergamena sticky unico: pallino-lingua + brand a sx, azioni a dx con <em>icona ED etichetta</em>.</td>
+            <td class="st">assente</td>
+            <td class="st">completo, ma glifi non etichettati</td>
+            <td class="st">11+ voci non raggruppate</td>
+            <td class="st">minimo (brand + hamburger)</td>
+            <td class="fix">Estrarre <code>.pf-header</code> condiviso e trapiantarlo nelle 4 pagine.</td>
+          </tr>
+          <tr>
+            <td class="area">Ritorno alla home</td>
+            <td><span class="sv alta">alta</span></td>
+            <td class="canon">«Torna alla home» → <code>app.html</code>, identica ovunque, distinta da «← Indietro».</td>
+            <td class="st">—</td>
+            <td class="st">«← Dashboard» (freccia ambigua)</td>
+            <td class="st">doppia label divergente</td>
+            <td class="st">solo il brand cliccabile</td>
+            <td class="fix">Una sola etichetta+icona; sciogliere l'ambiguità della freccia.</td>
+          </tr>
+          <tr>
+            <td class="area">Dark mode</td>
+            <td><span class="sv alta">alta</span></td>
+            <td class="canon">Toggle tema in header su tutte le superfici, <em>stateful</em> + persistente.</td>
+            <td class="st">assente</td>
+            <td class="st">presente «🌙 Scuro»</td>
+            <td class="st">presente, label statica</td>
+            <td class="st">assente (nel guscio)</td>
+            <td class="fix">Riusare il toggle del dizionario; rendere l'etichetta stateful.</td>
+          </tr>
+          <tr>
+            <td class="area">Gate lingua</td>
+            <td><span class="sv media">media</span></td>
+            <td class="canon">Gate a due card (lat/grc), copy identico salvo il verbo (consultare/lavorare).</td>
+            <td class="st">nessuno (corretto)</td>
+            <td class="st">«…consultare?»</td>
+            <td class="st">«…lavorare?»</td>
+            <td class="st">filtro chip «Tutte/Lat/Grc»</td>
+            <td class="fix">Unificare copy e card; il corpus mantiene il filtro ma allineato allo stile.</td>
+          </tr>
+          <tr>
+            <td class="area">Card / pulsanti-lemma</td>
+            <td><span class="sv media">media</span></td>
+            <td class="canon"><code>.lx-item</code> ovunque: bordo-PoS, pannello cream, iniziale-lingua, targhetta.</td>
+            <td class="st">card generiche «Apri →»</td>
+            <td class="st">riferimento (.lx-item)</td>
+            <td class="st">stili propri</td>
+            <td class="st">via JS — da verificare</td>
+            <td class="fix">Portare <code>.lx-item</code> a home, catalogo corpus, tab lessico.</td>
+          </tr>
+          <tr>
+            <td class="area">Tipografia</td>
+            <td><span class="sv media">media</span></td>
+            <td class="canon"><code>--font-ui</code> / <code>-serif</code> / <code>-classical</code> + gerarchia lemma&gt;traduz.&gt;categoria.</td>
+            <td class="st">da verificare</td>
+            <td class="st">riferimento (da confermare)</td>
+            <td class="st">da verificare</td>
+            <td class="st">GFS Didot (greco)</td>
+            <td class="fix">Token tipografici condivisi, replicati identici.</td>
+          </tr>
+          <tr>
+            <td class="area">Selettore livello</td>
+            <td><span class="sv media">media</span></td>
+            <td class="canon">Componente e tassonomia unici, forma estesa (Principiante/Intermedio/Avanzato).</td>
+            <td class="st">assente</td>
+            <td class="st">«Interm.» (abbreviato)</td>
+            <td class="st">doppia tassonomia</td>
+            <td class="st">assente</td>
+            <td class="fix">Tassonomia unica estesa; un solo componente.</td>
+          </tr>
+          <tr>
+            <td class="area">Notazione lingua</td>
+            <td><span class="sv media">media</span></td>
+            <td class="canon">Un solo controllo per pagina, etichette parallele, colore=lingua.</td>
+            <td class="st">legenda non interattiva</td>
+            <td class="st">TRE notazioni (Σ↔S, tab, chip)</td>
+            <td class="st">«LAT / ΕΛ» asimmetrico</td>
+            <td class="st">chip «Tutte/Lat/Grc»</td>
+            <td class="fix">Un unico controllo canonico, simmetrico.</td>
+          </tr>
+          <tr>
+            <td class="area">Home: tono</td>
+            <td><span class="sv media">media</span></td>
+            <td class="canon">Launcher pulito, card <code>.lx-item</code>, naming italiano, zero materiale dev.</td>
+            <td class="st">«Architettura» + «Motore» esposti; naming misto</td>
+            <td class="st">—</td>
+            <td class="st">—</td>
+            <td class="st">—</td>
+            <td class="fix">Nascondere il tecnico; card canoniche; naming coerente.</td>
+          </tr>
+          <tr>
+            <td class="area">Naming / lessico</td>
+            <td><span class="sv bassa">bassa</span></td>
+            <td class="canon">Italiano coerente: «Traduttore», «Dizionario», «Corpus»; un termine per concetto.</td>
+            <td class="st">«Translator» (EN)</td>
+            <td class="st">«settore» vs «script»</td>
+            <td class="st">tab «Dizionario» in collisione</td>
+            <td class="st">tagline oscillante</td>
+            <td class="fix">Glossario di naming condiviso.</td>
+          </tr>
+          <tr>
+            <td class="area">Ricerca</td>
+            <td><span class="sv bassa">bassa</span></td>
+            <td class="canon">Barra condivisa + nota accent/spirito-insensitive accanto al campo.</td>
+            <td class="st">—</td>
+            <td class="st">pattern maturo</td>
+            <td class="st">interna alla tab F</td>
+            <td class="st">nota senza campo visibile</td>
+            <td class="fix">Componente search condiviso; nota accanto al campo reale.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ CANONE ============ -->
+  <section id="canone">
+    <h2><span class="n">04</span>Il sistema canonico</h2>
+    <p class="sub">L'unico linguaggio verso cui i tre rami convergono. I valori vanno confermati sul sorgente del dizionario (passo zero), poi promossi a legge condivisa.</p>
+
+    <h3>Identità di lingua (costante)</h3>
+    <div class="tok">
+      <span class="swatch"><span class="chip" style="background:#a22e37"></span>latino <b>#a22e37</b></span>
+      <span class="swatch"><span class="chip" style="background:#1800ac"></span>greco <b>#1800ac</b></span>
+      <span class="swatch"><span class="chip" style="background:#e58a90"></span>lat dark <b>#e58a90</b></span>
+      <span class="swatch"><span class="chip" style="background:#8b7dff"></span>grc dark <b>#8b7dff</b></span>
+    </div>
+    <p style="font-size:13.5px;color:var(--ink-soft);margin-top:8px">Pilotate da <code>--dacc</code>/<code>--md-accent</code> + <code>body[data-lang]</code>. Il colore va <strong>sempre accompagnato dall'etichetta</strong> (Latino/Greco) — mai da solo (WCAG 1.4.1).</p>
+
+    <h3>Palette delle parti del discorso &amp; categoria</h3>
+    <div class="tok">
+      <span class="swatch"><span class="chip" style="background:#1F63D6"></span>sost.</span>
+      <span class="swatch"><span class="chip" style="background:#DC2B2B"></span>verbo</span>
+      <span class="swatch"><span class="chip" style="background:#0FA3A3"></span>agg.</span>
+      <span class="swatch"><span class="chip" style="background:#D19A16"></span>pron.</span>
+      <span class="swatch"><span class="chip" style="background:#1FA24F"></span>avv.</span>
+      <span class="swatch"><span class="chip" style="background:#9C2D8E"></span>prep.</span>
+      <span class="swatch"><span class="chip" style="background:#4A45C0"></span>cong.</span>
+      <span class="swatch"><span class="chip" style="background:#E9720C"></span>num.</span>
+    </div>
+    <div class="tok">
+      <span class="swatch">decl. <span class="chip" style="background:#DC2B2B"></span><span class="chip" style="background:#16357F"></span><span class="chip" style="background:#1FA24F"></span><span class="chip" style="background:#E9720C"></span><span class="chip" style="background:#7A3FB0"></span> 1→5</span>
+      <span class="swatch">morfemi <span class="chip" style="background:#7c3aed"></span><span class="chip" style="background:#2c3539"></span><span class="chip" style="background:#b45309"></span><span class="chip" style="background:#0f766e"></span> a·t·v·s</span>
+    </div>
+
+    <h3>Componenti condivisi</h3>
+    <ul class="clean">
+      <li><strong>Header/topbar</strong> pergamena sticky: pallino-lingua + brand-link a sx, azioni a dx con icona <em>ed</em> etichetta (mai solo glifo).</li>
+      <li><strong>Gate lingua</strong> a due card, con copy unico.</li>
+      <li><strong>Card-lemma <code>.lx-item</code></strong>: bordo-PoS, pannello cream, iniziale colorata, pos-tag, targhetta categoria — in tutte le liste, launcher e cataloghi.</li>
+      <li><strong>Barra di ricerca</strong> con nota accent/spirito-insensitive (<code>μηνιν→μῆνιν</code>, <code>vita→uita</code>) uniforme.</li>
+      <li><strong>Toggle «Mostra i morfemi»</strong> e <strong>toggle tema stateful</strong> (chiaro↔scuro) persistente.</li>
+      <li><strong>Selettore livello</strong> unico, forma estesa.</li>
+    </ul>
+
+    <h3>Contratto di navigazione</h3>
+    <ul class="clean">
+      <li>«Torna alla home» → <code>app.html</code>: etichetta e icona <em>identiche</em> ovunque, distinte da «← Indietro» (cronologia).</li>
+      <li>Cross-link fra rami con label italiane uniformi: «Traduttore», «Dizionario», «Corpus».</li>
+      <li>Un solo controllo lingua per pagina; vietato esporre lo stesso concetto con tre notazioni.</li>
+      <li>Nessun materiale da sviluppatore nella navigazione utente.</li>
+    </ul>
+  </section>
+
+  <!-- ============ GAP ============ -->
+  <section id="gap">
+    <h2><span class="n">05</span>Gap per ramo</h2>
+    <p class="sub">Cosa serve a ciascuna superficie per raggiungere il canone.</p>
+    <div class="grid g2">
+      <div class="gapcard">
+        <h3><span class="dot lat"></span><span class="dot grc"></span> Home</h3>
+        <p class="role">app.html · launcher d'ecosistema</p>
+        <ul>
+          <li>Aggiungere l'header canonico (lingua, tema, ritorno).</li>
+          <li>Card-sezione al pattern <code>.lx-item</code>.</li>
+          <li>«Translator»→«Traduttore»; capitalizzazione «Officina» coerente; togliere la ridondanza titolo/tagline.</li>
+          <li>Nascondere «Architettura» e dare un fallback allo «Stato del motore».</li>
+        </ul>
+      </div>
+      <div class="gapcard">
+        <h3>Dizionario <span class="badge canon" style="font-size:9px">canone</span></h3>
+        <p class="role">dictionary.html · da ripulire internamente</p>
+        <ul>
+          <li>Ridurre a UNA le tre notazioni di lingua (Σ↔S, tab, chip).</li>
+          <li>Etichettare i glifi header (📖, Σ↔S) — accessibilità.</li>
+          <li>«← Dashboard» → «Torna alla home»; sciogliere «Interm.».</li>
+          <li>Copy del gate uniformato a quello del traduttore.</li>
+        </ul>
+      </div>
+      <div class="gapcard">
+        <h3>Traduttore</h3>
+        <p class="role">translator.html · ~2 MB</p>
+        <ul>
+          <li>Una sola etichetta di ritorno home (oggi doppia).</li>
+          <li>Raggruppare la topbar (11+ voci); toggle lingua simmetrico.</li>
+          <li>Tassonomia livello unica (Avvio = Principiante).</li>
+          <li>Tema stateful; rinominare la tab «Dizionario»→«Lessico».</li>
+          <li>Affrontare i 2 MB come <strong>performance</strong>, non solo fragilità.</li>
+        </ul>
+      </div>
+      <div class="gapcard">
+        <h3>Corpus</h3>
+        <p class="role">corpus.html · biblioteca</p>
+        <ul>
+          <li>Aggiungere il toggle dark mode.</li>
+          <li>Etichetta esplicita di ritorno home accanto al brand.</li>
+          <li>Allineare il filtro-lingua allo stile del gate.</li>
+          <li>Verificare che il catalogo (JS) usi <code>.lx-item</code> e i token.</li>
+          <li>Una sola tagline; nota-ricerca accanto al campo reale.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CORREZIONI ============ -->
+  <section id="correzioni">
+    <h2><span class="n">06</span>Correzioni dalla passata critica</h2>
+    <p class="sub">Un revisore avversariale ha attaccato la bozza. Le sue correzioni sono parte dell'audit.</p>
+    <ul class="clean">
+      <li><strong>Duplicato ≠ divergente.</strong> Se i valori copiati fra le pagine sono identici, c'è solo debito, non divergenza visiva. Il grado reale si misura solo diffando i <code>:root</code> — da fare prima di dimensionare gli interventi.</li>
+      <li><strong>Il gate lingua non è una frizione da rimuovere:</strong> è un pattern voluto (anti-travaso lat/grc). Va <em>reso accessibile</em> (<code>role="dialog"</code>, focus-trap, Esc, return-focus), non eliminato.</li>
+      <li><strong>Colore + etichetta, sempre.</strong> Il colore da solo (lingua, e anche il bordo-PoS) viola WCAG 1.4.1 per i daltonici: va sempre raddoppiato da testo.</li>
+      <li class="lat"><strong>Accessibilità e mobile sono cittadini di prima classe,</strong> non un ritocco finale: focus-visible, contrasti (anche in dark), <code>lang="grc"/"la"</code> sui passi, topbar responsive, target touch, <code>prefers-reduced-motion</code>. Vanno nel sistema condiviso <em>prima</em> di propagarlo.</li>
+      <li class="grc"><strong>La governance vale per la struttura, non per la cerimonia.</strong> Su un sito statico a push-diretto, Pages pubblica <em>prima</em> che la CI finisca: il vero argine è avere i CSS condivisi (drift quasi impossibile per costruzione) + un hook locale + cache-bust, non la branch-protection.</li>
+    </ul>
+  </section>
+
+  <!-- ============ GOVERNANCE ============ -->
+  <section id="governance">
+    <h2><span class="n">07</span>Sviluppo parallelo, per costruzione</h2>
+    <p class="sub">La tua richiesta — «sviluppi paralleli e progressivi, nessuna differenza» — non si ottiene con la disciplina, ma con l'architettura: se tutte le pagine leggono la stessa fonte, una modifica appare ovunque da sola.</p>
+
+    <div class="callout brass">
+      <span class="tag">Fonte unica di verità</span>
+      <h3>Una cartella <code>shared/</code> servita as-is da Pages</h3>
+      <p style="margin-bottom:10px"><strong><code>shared/poetrify-variables.css</code></strong> — tutti i token (<code>:root</code> + <code>[data-theme=dark]</code> + <code>body[data-lang]</code>).<br>
+      <strong><code>shared/poetrify-ui.css</code></strong> — tutte le classi-componente (<code>.pf-header</code>, <code>.pf-gate</code>, <code>.lx-item</code>, chip PoS, targhetta…).<br>
+      <strong><code>modules/ui/shell.js</code></strong> — lo shell interattivo (header, toggle tema/lingua, livello).</p>
+      <p>Le 4 pagine linkano gli stessi due CSS e importano lo stesso modulo. Nessun build step: è lo stesso meccanismo con cui il repo già serve i font. La propagazione diventa una <strong>proprietà dell'architettura</strong>.</p>
+    </div>
+
+    <h3>La regola che rende impossibile il ramo-solo</h3>
+    <ul class="clean">
+      <li><strong>Definition of Done:</strong> una modifica UX/UI è «fatta» solo se il token/classe vive in <code>shared/*</code> (o <code>shell.js</code>), mai in uno <code>&lt;style&gt;</code> di pagina. Se compare inline, è per definizione un bug di drift.</li>
+      <li><strong>Rilevatore di drift:</strong> uno script <code>_build/check_design_drift.py</code> boccia (a) token canonici ridefiniti inline, (b) pagine non agganciate ai <code>shared/*</code>. Gira come <em>hook locale pre-push</em> (l'argine reale, dato il push-diretto) e come allarme CI a posteriori.</li>
+      <li><strong>Cache-bust:</strong> siccome non c'è build, versionare i link (<code>poetrify-ui.css?v=N</code>) per non servire CSS stale dal CDN.</li>
+      <li><strong>Contenuto legittimamente locale</strong> (tabella paradigmi, lettore GFS Didot) resta nella pagina, ma prende colori/tipografia <em>solo</em> dai token condivisi.</li>
+    </ul>
+  </section>
+
+  <!-- ============ ROADMAP ============ -->
+  <section id="roadmap">
+    <h2><span class="n">08</span>Roadmap — la sequenza giusta</h2>
+    <p class="sub">Riordinata dalla critica: prima la verità del sorgente, poi la struttura, poi i fix a rischio zero, poi l'accessibilità, e il traduttore per ultimo.</p>
+    <ol class="road">
+      <li class="zero">
+        <h3>Verifica sul sorgente <span class="pill">bloccante</span></h3>
+        <p>Leggere i <code>:root</code>/<code>&lt;style&gt;</code> reali delle 4 pagine, diffare token divergenti vs duplicati-identici, sciogliere il dubbio font (Inter vs Source Sans 3). Tutto il resto si dimensiona qui.</p>
+      </li>
+      <li>
+        <h3>Estrazione strutturale</h3>
+        <p><code>shared/poetrify-variables.css</code> + <code>poetrify-ui.css</code> dal dizionario reale, linkati <em>prima</em> degli inline. È il vero motore dell'armonizzazione.</p>
+      </li>
+      <li>
+        <h3>Fix di testo &amp; naming <span class="pill">rischio zero</span></h3>
+        <p>Traduttore, doppia label home, «Interm.»→«Intermedio», tassonomia livello unica, copy gate, nascondere «Architettura», tagline corpus. Nessun CSS, coerenza immediata.</p>
+      </li>
+      <li>
+        <h3>Baseline accessibilità + mobile</h3>
+        <p>Focus-visible, contrasti (anche dark), gate accessibile, <code>lang</code> per-porzione, topbar responsive — <em>dentro</em> il sistema condiviso, prima di propagarlo.</p>
+      </li>
+      <li>
+        <h3>Shell ES + contratto di navigazione</h3>
+        <p>Un solo controllo lingua, ritorno-home unificato, tema stateful. Header come markup statico «idratato» per evitare il FOUC.</p>
+      </li>
+      <li>
+        <h3>Traduttore, per ultimo e con cautela</h3>
+        <p>Affrontare i 2 MB come performance (cosa è inlined? esternalizzare/lazy-load); migrare con <code>brace_check</code>/<code>balance</code>; sorvegliare il FOUC sulla pagina più pesante.</p>
+      </li>
+      <li>
+        <h3>Governance leggera</h3>
+        <p>Drift script pre-commit + condivisione strutturale + cache-bust. Niente branch-protection finché resta il push-diretto su main.</p>
+      </li>
+    </ol>
+  </section>
+
+  <hr class="hr">
+  <footer>
+    <p><strong>Prossimo passo concreto:</strong> quando il repo sarà di nuovo raggiungibile, eseguo il <strong>passo zero</strong> (diff reale dei <code>:root</code> delle 4 pagine) e da lì creo <code>shared/poetrify-variables.css</code> — l'audit stesso fa da specifica dell'estrazione. Questo documento va poi versionato in repo come <code>docs/UX-AUDIT.md</code>.</p>
+    <p style="margin-top:10px;color:var(--ink-soft)">Metodo: 7 agenti (inventario live delle 4 superfici · sistema canonico · governance · critica avversariale). I valori-token sono da confermare sul sorgente. <span class="kdot"><span class="dot lat"></span><span class="dot grc"></span></span></p>
+  </footer>
+
+</div>
