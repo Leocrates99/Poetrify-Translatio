@@ -65,13 +65,13 @@
   /* --warning viene da shared: #b9791f + --warning-ink #8a5a15 (D8: il vecchio
      #d69e2e faceva ~2.6:1 su bianco, inusabile come testo). */
 
-  --font-display: 'Playfair Display', Georgia, 'Times New Roman', serif;
-  --font-body: 'Source Serif 4', Georgia, serif;
+  --font-display: 'GreekTimes', 'Playfair Display', Georgia, serif;
+  --font-body: 'GreekTimes', 'Source Serif 4', Georgia, serif;
   /* D7 · greco politonico: --font-classical viene da shared/poetrify-tokens.css
      (GFS Didot / EB Garamond, copertura U+1F00–1FFF verificata). Prima era
      'Times New Roman' forzato come prima scelta. */
   --font-classical-size-boost: 1.05;
-  --font-ui: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+  --font-ui: 'GreekTimes', 'Source Sans 3', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', Consolas, monospace;
 }
 
@@ -4503,19 +4503,25 @@ body[data-profile="medie"] .quick-seg-btn[data-mode="free"] { display: none; }
   margin: 18px 0 8px;
 }
 @media (max-width: 820px) { .profile-grid { grid-template-columns: 1fr; } }
-/* GATE LINGUA · due grandi carte cromaticamente distinte */
-.langgate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0 4px; }
-@media (max-width: 560px) { .langgate-grid { grid-template-columns: 1fr; } }
+/* SCELTA DELLA LINGUA · banda IN FLUSSO (era un modale d'ingresso).
+   Stessa forma della banda del dizionario: le due superfici si somigliano. */
+.langgate { display: block; margin: 0 0 16px; padding: 16px 18px; background: var(--paper); border: 1px solid var(--rule-soft); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
+.langgate[hidden] { display: none; }
+.langgate-head h3 { margin: 0 0 4px; font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--ink); letter-spacing: normal; text-transform: none; }
+.langgate-head p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); }
+.langgate-grid { display: flex; flex-wrap: wrap; gap: 10px; margin: 12px 0 0; }
+@media (max-width: 560px) { .langgate-grid { flex-direction: column; } }
 .langgate-card {
-  display: flex; flex-direction: column; align-items: center; gap: 6px;
-  padding: 26px 18px; border-radius: var(--radius-md); cursor: pointer;
-  border: 2px solid var(--rule); background: var(--paper);
-  transition: all var(--transition-base);
+  flex: 1 1 210px; display: flex; flex-direction: row; align-items: center; gap: 10px;
+  padding: 11px 16px; border-radius: var(--radius-md); cursor: pointer;
+  border: 1px solid var(--rule); background: var(--paper);
+  transition: all var(--transition-base); text-align: left;
 }
-.langgate-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px var(--tr-shadow-strong); }
-.langgate-icon { font-size: 40px; line-height: 1; }
-.langgate-title { font-family: var(--font-display); font-size: 22px; font-weight: 800; }
-.langgate-sub { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.03em; opacity: 0.8; }
+.langgate-card:hover { box-shadow: var(--shadow-sm); }
+.langgate-text { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.25; }
+.langgate-icon { font-size: 20px; line-height: 1; flex: none; }
+.langgate-title { font-family: var(--font-ui); font-size: 14.5px; font-weight: 700; }
+.langgate-sub { font-family: var(--font-ui); font-size: 10.5px; letter-spacing: 0.03em; color: var(--ink-soft); }
 .langgate-lat { border-color: var(--accent-lat); }
 .langgate-lat .langgate-title, .langgate-lat .langgate-icon { color: var(--accent-lat); }
 .langgate-lat:hover { background: color-mix(in srgb, var(--accent-lat) 7%, var(--paper)); }
@@ -11362,6 +11368,25 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
     </aside>
 
     <section class="editor" id="editor">
+
+      <!-- SCELTA DELLA LINGUA · in flusso, in cima all'area di lavoro (non più modale).
+           Fratello di #editor-content, che viene ridisegnato dinamicamente. -->
+      <section id="langgate" class="langgate" aria-labelledby="langgate-title" hidden>
+        <div class="langgate-head">
+          <h3 id="langgate-title">In che lingua vuoi lavorare?</h3>
+          <p>Scegli il settore: tutto ciò che fai resta ancorato a quella lingua, nel suo ramo separato. Potrai cambiarlo dal selettore in alto.</p>
+        </div>
+        <div class="langgate-grid">
+          <button type="button" class="langgate-card langgate-lat" onclick="chooseGateLanguage('latino')">
+            <span class="langgate-icon" aria-hidden="true">🏛</span>
+            <span class="langgate-text"><span class="langgate-title">Latino</span><span class="langgate-sub">Ramo latino · rosso pompeiano</span></span>
+          </button>
+          <button type="button" class="langgate-card langgate-gr" onclick="chooseGateLanguage('greco')">
+            <span class="langgate-icon" aria-hidden="true">α</span>
+            <span class="langgate-text"><span class="langgate-title">Greco antico</span><span class="langgate-sub">Ramo greco · blu Poetrify</span></span>
+          </button>
+        </div>
+      </section>
       <div class="editor-content" id="editor-content"></div>
     </section>
 
@@ -11655,23 +11680,6 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 </div>
 
 <!-- GATE LINGUA · finestra d'ingresso che àncora il settore (latino/greco) -->
-<div class="modal-backdrop" id="modal-langgate">
-  <div class="modal" style="max-width: 600px;">
-    <h3 class="modal-title">In che lingua vuoi lavorare?</h3>
-    <p class="modal-subtitle">Scegli il settore: tutto ciò che fai resta ancorato a quella lingua, nel suo ramo separato — niente travasi accidentali. Potrai cambiarlo in qualsiasi momento dal toggle in alto a destra.</p>
-    <div class="langgate-grid">
-      <button class="langgate-card langgate-lat" onclick="chooseGateLanguage('latino')">
-        <span class="langgate-icon">🏛</span>
-        <span class="langgate-title">Latino</span>
-        <span class="langgate-sub">Ramo latino · rosso pompeiano</span>
-      </button>
-      <button class="langgate-card langgate-gr" onclick="chooseGateLanguage('greco')">
-        <span class="langgate-icon">α</span>
-        <span class="langgate-title">Greco antico</span>
-        <span class="langgate-sub">Ramo greco · blu Poetrify</span>
-      </button>
-    </div>
-  </div>
 </div>
 
 <!-- PROFILO STUDENTE · classe · livello · competenze · manuali -->
@@ -12320,8 +12328,8 @@ function closeProfileModal() {
    ramo latino, scelto il greco nel ramo greco. */
 const LANGGATE_SESSION_KEY = 'poetrify-langgate-session';
 function showLanguageGate() {
-  const m = document.getElementById('modal-langgate');
-  if (m) m.classList.add('open');
+  const m = document.getElementById('langgate');
+  if (m) m.hidden = false;
 }
 function maybeShowLanguageGate() {
   try { if (sessionStorage.getItem(LANGGATE_SESSION_KEY)) return; } catch (e) {}
@@ -12332,8 +12340,8 @@ function chooseGateLanguage(lang) {
   let l = (lang === 'greco') ? 'greco' : 'latino';
   if (getUserProfile() === 'medie') l = 'latino';   // le medie lavorano solo il latino
   try { sessionStorage.setItem(LANGGATE_SESSION_KEY, l); } catch (e) {}
-  const m = document.getElementById('modal-langgate');
-  if (m) m.classList.remove('open');
+  const m = document.getElementById('langgate');
+  if (m) m.hidden = true;
   if (l === state.meta.lingua) { syncTopbar(); return; }   // già nel settore scelto: resta sul lavoro
   if (typeof openLanguageBranch === 'function') openLanguageBranch(l);   // ancora al ramo scelto (suo archivio)
   else { if (typeof archiveFilters !== 'undefined') archiveFilters.lingua = l; if (typeof goToStep === 'function') goToStep(4); }
