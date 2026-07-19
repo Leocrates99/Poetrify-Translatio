@@ -15,6 +15,30 @@
    migrazione D6, così nessuna superficie si rompe a metà strada.
    ============================================================================ */
 
+/* ── D7-bis · TIMES NEW ROMAN PER I SOLI CARATTERI GRECI ─────────────────────
+   Font virtuale ristretto per unicode-range: i codepoint greci risolvono su
+   Times New Roman, TUTTI gli altri ricadono sul font successivo dello stack.
+   Sostituzione per CARATTERE, non per elemento → regge le stringhe MISTE
+   (metalinguaggio italiano con greco inline, paradigma + glossa, legende).
+   Anteposto a ogni --font-*: vale su app/dictionary/corpus/translator insieme.
+   Varianti italic/bold dichiarate a parte, altrimenti il browser sintetizza.
+   Degrado sicuro: se Times non è installato, lo stack prosegue (GFS Didot). */
+@font-face{
+  font-family:'GreekTimes';
+  src:local('Times New Roman'), local('TimesNewRomanPSMT'), local('Times');
+  unicode-range:U+0370-03FF, U+1F00-1FFF, U+2126;
+}
+@font-face{
+  font-family:'GreekTimes'; font-style:italic;
+  src:local('Times New Roman Italic'), local('TimesNewRomanPS-ItalicMT'), local('Times New Roman');
+  unicode-range:U+0370-03FF, U+1F00-1FFF, U+2126;
+}
+@font-face{
+  font-family:'GreekTimes'; font-weight:600 700;
+  src:local('Times New Roman Bold'), local('TimesNewRomanPS-BoldMT'), local('Times New Roman');
+  unicode-range:U+0370-03FF, U+1F00-1FFF, U+2126;
+}
+
 :root {
   /* Brand + accenti di LINGUA */
   --primary: #1800AC;
@@ -67,15 +91,17 @@
   --transition: 150ms ease;
 
   /* Tipografia */
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'Source Serif 4', Georgia, serif;
+  /* 'GreekTimes' in testa a OGNI stack: intercetta i soli codepoint greci (D7-bis) */
+  --font-display: 'GreekTimes', 'Playfair Display', Georgia, serif;
+  --font-body: 'GreekTimes', 'Source Serif 4', Georgia, serif;
   --font-read: var(--font-body);
-  --font-ui: 'Source Sans 3', system-ui, -apple-system, sans-serif;
+  --font-ui: 'GreekTimes', 'Source Sans 3', system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', Consolas, monospace;
   --font-code: var(--font-mono);
-  /* D7 · greco politonico: GFS Didot (copertura U+1F00–1FFF), poi EB Garamond.
-     MAI 'Source Serif 4' da solo: copre solo il monotonico. */
-  --font-classical: 'GFS Didot', 'EB Garamond', 'Palatino Linotype', serif;
+  /* D7 · greco politonico. DAL 2026-07: il politonico è reso da Times New Roman
+     via D7-bis (unicode-range) — GFS Didot resta come RIPIEGO se Times manca sul
+     dispositivo. MAI 'Source Serif 4' da solo: copre solo il monotonico. */
+  --font-classical: 'GreekTimes', 'GFS Didot', 'EB Garamond', 'Palatino Linotype', serif;
   --font-read-gr: var(--font-classical);
   --font-classical-size-boost: 1.05;
 }
