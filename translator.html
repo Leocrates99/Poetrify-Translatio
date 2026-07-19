@@ -607,7 +607,7 @@ input, textarea, select { font-family: inherit; color: inherit; }
   min-width: 0;
   transition: grid-template-columns var(--transition-base);
 }
-.main.preview-open { grid-template-columns: 230px 1fr minmax(360px, 0.85fr); }
+.main.preview-open, .main.analysis-open { grid-template-columns: 230px 1fr minmax(360px, 0.85fr); }
 
 /* SIDEBAR */
 .sidebar {
@@ -10181,6 +10181,28 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   display: flex;
   flex-direction: column;
 }
+
+/* DRAWER DI COMPILAZIONE · riusa la TERZA COLONNA della griglia (stesso
+   meccanismo e stesse transizioni della preview): il testo resta a sinistra
+   e non viene spinto in basso come faceva il pannello inline. */
+/* La transizione su grid-template-columns si blocca aprendo il drawer: 0fr e
+   minmax() non sono tipi di traccia interpolabili. Per il drawer la disattivo
+   (apertura istantanea, layout deterministico); la preview conserva la sua. */
+.main.analysis-open { transition: none; }
+.analysis-drawer { grid-column: 3; background: var(--paper); border-left: 1px solid var(--rule-soft);
+  overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+.analysis-drawer[hidden] { display: none; }
+.analysis-drawer-head { display: flex; align-items: baseline; gap: 8px; padding: 12px 16px;
+  border-bottom: 1px solid var(--rule-soft); flex: none; }
+.analysis-drawer-word { font-family: var(--font-classical); font-size: 18px; color: var(--ink); }
+.analysis-drawer-pos { font-size: 10.5px; padding: 2px 8px; border-radius: var(--radius-lg);
+  border: 1px solid currentColor; }
+.analysis-drawer-x { margin-left: auto; background: none; border: 0; cursor: pointer;
+  font-size: 20px; line-height: 1; color: var(--ink-soft); padding: 0 2px; }
+.analysis-drawer-x:hover { color: var(--lang-accent); }
+.analysis-drawer-body { flex: 1; overflow-y: auto; padding: 12px 16px 24px; }
+.analysis-drawer-body .entry-fields { display: block; }
+.entry-card.is-in-drawer { outline: 2px solid var(--lang-accent); outline-offset: -1px; }
 .preview-header {
   padding: 12px 20px;
   border-bottom: 1px solid var(--rule-soft);
@@ -10536,7 +10558,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 /* RESPONSIVE */
 @media (max-width: 1100px) {
   .main { grid-template-columns: 60px 1fr 0fr; }
-  .main.preview-open { grid-template-columns: 60px 1fr minmax(320px, 0.7fr); }
+  .main.preview-open, .main.analysis-open { grid-template-columns: 60px 1fr minmax(320px, 0.7fr); }
   .tab-title { display: none; }
   .tab-letter { font-size: 28px; }
   .tab-icon svg { width: 22px; height: 22px; }
@@ -10632,7 +10654,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
     overflow: hidden;
     min-height: 0;
   }
-  .main.preview-open {
+  .main.preview-open, .main.analysis-open {
     grid-template-columns: 1fr !important;
     grid-template-rows: auto 1fr;
   }
@@ -10786,7 +10808,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
     transition: transform 250ms ease;
     display: flex !important;
   }
-  .main.preview-open .preview { transform: translateX(0); }
+  .main.preview-open, .main.analysis-open .preview { transform: translateX(0); }
   .preview-content { padding: 18px 20px; }
 
   /* MODALI: full-width, scroll interno */
@@ -11140,7 +11162,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 /* ── DESKTOP (>900px): menù di sinistra FISSO e pieno (annulla il rail icone) ── */
 @media (min-width: 901px) {
   .main { grid-template-columns: 264px 1fr 0fr !important; }
-  .main.preview-open { grid-template-columns: 264px 1fr minmax(320px, 0.8fr) !important; }
+  .main.preview-open, .main.analysis-open { grid-template-columns: 264px 1fr minmax(320px, 0.8fr) !important; }
   .sidebar { padding: 18px 12px; }
   .sidebar-section-label { display: block !important; }
   .tab-title { display: inline !important; }
@@ -11406,6 +11428,14 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
       <div class="editor-content" id="editor-content"></div>
     </section>
 
+    <aside class="analysis-drawer" id="analysis-drawer" aria-labelledby="analysis-drawer-word" hidden>
+      <div class="analysis-drawer-head">
+        <span class="analysis-drawer-word" id="analysis-drawer-word"></span>
+        <span class="analysis-drawer-pos" id="analysis-drawer-pos"></span>
+        <button type="button" class="analysis-drawer-x" onclick="closeAnalysisDrawer()" aria-label="Chiudi la compilazione">&times;</button>
+      </div>
+      <div class="analysis-drawer-body" id="analysis-drawer-body"></div>
+    </aside>
     <section class="preview" id="preview" style="display:none;">
       <div class="preview-header">
         <span class="preview-title">Brano originale</span>
@@ -34342,7 +34372,7 @@ function renderGrammarEntry(sentenceId, entry, lang) {
        </div>`;
 
   return `
-    <div class="entry-card case-${caseGroup}${collapsed ? ' is-collapsed' : ''}${ellipticalCls}" ${entryDragAttrs(sentenceId, entry.id, 'grammar')}>
+    <div class="entry-card case-${caseGroup}${collapsed ? ' is-collapsed' : ''}${ellipticalCls}" data-sent="${sentenceId}" data-entry="${entry.id}" data-word="${escapeHtml(entry.word || '')}" data-pos="${escapeHtml(entry.partOfSpeech || '')}" ${entryDragAttrs(sentenceId, entry.id, 'grammar')}>
       <div class="entry-card-header">
         ${collapsed ? '' : entryDragHandle()}
         ${headerInner}
@@ -39867,6 +39897,97 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => { try { startOnboarding(false); } catch (_) {} }, 500);
 
   // close modals on backdrop click
+  /* DRAWER DI COMPILAZIONE · la voce in lavorazione si compila nella terza
+     colonna, non piu' in un pannello che spinge in basso la frase.
+     Non tocca il renderer: SPOSTA il nodo .entry-fields gia' costruito dentro
+     il drawer (i gestori inline e i gruppi di pulsanti si spostano con lui) e
+     lo riporta a casa quando si chiude. Dopo ogni re-render si risincronizza. */
+  window.__adrawer = null;
+  var adrHome = null;
+  function adrRestore(){
+    if (adrHome && adrHome.node && adrHome.parent && adrHome.node.parentElement !== adrHome.parent) {
+      adrHome.parent.insertBefore(adrHome.node, adrHome.next || null);
+    }
+    adrHome = null;
+  }
+  function adrCard(){
+    if (!window.__adrawer) return null;
+    var all = document.querySelectorAll('.entry-card[data-entry]');
+    for (var i=0;i<all.length;i++){
+      if (all[i].dataset.entry === window.__adrawer.e && all[i].dataset.sent === window.__adrawer.s) return all[i];
+    }
+    return null;
+  }
+  function adrShut(){
+    adrRestore();
+    var host=document.getElementById('analysis-drawer'), main=document.querySelector('.main');
+    if (host) host.hidden = true;
+    if (main) {
+      // Anche in CHIUSURA la transizione su grid-template-columns si blocca e
+      // lascerebbe l'editor stretto con una colonna vuota accanto: la spengo per
+      // il tempo del cambio, poi la restituisco (la preview continua ad animarsi).
+      main.style.transition = 'none';
+      main.classList.remove('analysis-open');
+      void main.offsetHeight;
+      setTimeout(function(){ main.style.removeProperty('transition'); }, 0);   // setTimeout, non rAF: a tab non renderizzato rAF non scatta e la transizione resterebbe spenta per sempre
+    }
+  }
+  window.syncAnalysisDrawer = function(){
+    var host=document.getElementById('analysis-drawer'),
+        body=document.getElementById('analysis-drawer-body'),
+        main=document.querySelector('.main');
+    if (!host || !body || !main) return;
+    Array.prototype.forEach.call(document.querySelectorAll('.entry-card.is-in-drawer'),
+      function(c){ c.classList.remove('is-in-drawer'); });
+    if (!window.__adrawer) { adrShut(); return; }
+    var card = adrCard();
+    if (!card) { window.__adrawer = null; adrShut(); return; }      // voce sparita
+    var fields = card.querySelector('.entry-fields');
+    if (!fields) {                                                  // voce richiusa
+      var inDrawer = body.querySelector('.entry-fields');
+      if (!inDrawer) { window.__adrawer = null; adrShut(); return; }
+      fields = inDrawer;
+    }
+    if (fields.parentElement !== body) {
+      adrRestore();
+      adrHome = { node: fields, parent: fields.parentElement, next: fields.nextElementSibling };
+      body.appendChild(fields);
+    }
+    var w=document.getElementById('analysis-drawer-word'), pos=document.getElementById('analysis-drawer-pos');
+    if (w) w.textContent = card.dataset.word || '';
+    if (pos) { pos.textContent = card.dataset.pos || ''; pos.style.display = card.dataset.pos ? '' : 'none'; }
+    card.classList.add('is-in-drawer');
+    // Il drawer deve entrare nel layout PRIMA che cambino le tracce della griglia:
+    // 'grid-template-columns' e' in transizione e 0fr -> minmax() non e'
+    // interpolabile, quindi partire da una colonna senza elemento la lascia bloccata.
+    host.hidden = false;
+    void host.offsetHeight;
+    main.classList.add('analysis-open');
+  };
+  window.openAnalysisDrawer = function(sentenceId, entryId){
+    window.__adrawer = { s: sentenceId, e: entryId };
+    window.syncAnalysisDrawer();
+  };
+  window.closeAnalysisDrawer = function(){
+    window.__adrawer = null;
+    window.syncAnalysisDrawer();
+  };
+  document.addEventListener('click', function(e){
+    var h = e.target.closest && e.target.closest('.entry-card-header');
+    if (!h) return;
+    if (e.target.closest('button, select, input, textarea, a, .entry-actions')) return;
+    var card = h.closest('.entry-card');
+    if (!card || !card.dataset.entry) return;
+    window.__adrawer = { s: card.dataset.sent, e: card.dataset.entry };
+    if (card.classList.contains('is-collapsed') && typeof toggleEntryExpanded === 'function') {
+      toggleEntryExpanded(card.dataset.sent, card.dataset.entry, 'grammar', e);  // espande, poi risincronizza il render
+    }
+    window.syncAnalysisDrawer();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && window.__adrawer) window.closeAnalysisDrawer();
+  });
+
   /* SEGMENTED · tendine brevi -> pulsanti, senza toccare i call-site.
      Regola: al massimo SEG_MAX_OPT valori E ogni etichetta abbreviata entro
      SEG_MAX_LEN caratteri. Sopra la soglia resta la tendina nativa. */
@@ -39952,7 +40073,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.__segRuns = 0;
   var segQueued = false;
   function segFlush(){
-    try { window.__segRuns++; window.segUpgradeAll(); }
+    try { window.__segRuns++; window.segUpgradeAll(); if (window.syncAnalysisDrawer) window.syncAnalysisDrawer(); }
     catch (err) { console.warn('[seg] upgrade fallito:', err); }
     finally { segQueued = false; }   // la spia si azzera SEMPRE: un errore non deve bloccare per sempre
   }
