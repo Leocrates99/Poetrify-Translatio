@@ -9832,6 +9832,22 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   background: white;
   box-shadow: 0 0 0 2px var(--primary-pale);
 }
+
+/* SEGMENTED · le tassonomie BREVI diventano pulsanti (le lunghe restano tendine).
+   Lo <select> resta in pagina come sorgente di verita', solo nascosto ai vedenti:
+   gli onchange esistenti continuano a valere. Stato "scelto" = --lang-accent
+   (registro dello STATO), distinto dal colore della parte del discorso (CATEGORIA). */
+.seg-host { position: absolute !important; width: 1px !important; height: 1px !important;
+  padding: 0 !important; margin: -1px !important; overflow: hidden !important;
+  clip: rect(0,0,0,0) !important; white-space: nowrap !important; border: 0 !important; }
+.seg-group { display: flex; flex-wrap: wrap; gap: 4px; flex: 1; min-width: 0; }
+.seg-btn { font-family: var(--font-ui); font-size: 11.5px; line-height: 1.2; padding: 4px 9px;
+  border: 1px solid var(--rule-soft); border-radius: var(--radius-md); background: var(--ivory);
+  color: var(--ink-soft); cursor: pointer; white-space: nowrap;
+  transition: background var(--transition-base), border-color var(--transition-base), color var(--transition-base); }
+.seg-btn:hover { border-color: var(--lang-accent-border); color: var(--lang-accent); }
+.seg-btn.on { background: var(--lang-accent); border-color: var(--lang-accent); color: #fff; }
+.seg-btn:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: 1px; }
 .toggle-mode-btn {
   padding: 4px 8px;
   background: var(--cream);
@@ -39851,6 +39867,103 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => { try { startOnboarding(false); } catch (_) {} }, 500);
 
   // close modals on backdrop click
+  /* SEGMENTED · tendine brevi -> pulsanti, senza toccare i call-site.
+     Regola: al massimo SEG_MAX_OPT valori E ogni etichetta abbreviata entro
+     SEG_MAX_LEN caratteri. Sopra la soglia resta la tendina nativa. */
+  window.SEG_MAX_OPT = 7; window.SEG_MAX_LEN = 12;
+  window.SEG_ABBR = {
+    'Nominativo':'Nom.','Genitivo':'Gen.','Dativo':'Dat.','Accusativo':'Acc.','Vocativo':'Voc.','Ablativo':'Abl.',
+    'Singolare':'Sing.','Plurale':'Plur.','Duale':'Duale',
+    'Maschile':'Masch.','Femminile':'Femm.','Neutro':'Neutro',
+    'Indicativo':'Indic.','Congiuntivo':'Cong.','Ottativo':'Ottat.','Imperativo':'Imper.',
+    'Presente':'Pres.','Imperfetto':'Imperf.','Futuro semplice':'Fut.','Futuro':'Fut.','Perfetto':'Perf.',
+    'Piuccheperfetto':'Ppf.','Futuro anteriore':'Fut. ant.','Aoristo':'Aor.',
+    'Attiva':'Att.','Passiva':'Pass.','Media':'Media','Medio-passiva':'M.-pass.',
+    'Deponente':'Depon.','Semideponente':'Semidep.','Difettivo':'Difett.',
+    'Positivo':'Pos.','Comparativo':'Compar.','Superlativo':'Superl.',
+    'Forma finita':'Finita','Infinito':'Infin.','Participio':'Partic.','Gerundio':'Gerund.',
+    'Accusativo o ablativo':'Acc. o abl.','Accusativo (con preposizione)':'Acc. + prep.'
+  };
+  function segLabel(v){
+    if (window.SEG_ABBR[v]) return window.SEG_ABBR[v];
+    var head = String(v).split('(')[0].trim();
+    return head || String(v);
+  }
+  function segReal(sel){
+    return Array.prototype.filter.call(sel.options, function(o){ return o.value !== ''; });
+  }
+  function segEligible(sel){
+    var o = segReal(sel);
+    if (!o.length || o.length > window.SEG_MAX_OPT) return false;
+    return o.every(function(x){ return segLabel(x.textContent.trim()).length <= window.SEG_MAX_LEN; });
+  }
+  function segUpgrade(sel){
+    if (sel.dataset.seg) return;
+    if (!segEligible(sel)) { sel.dataset.seg = 'skip'; return; }
+    sel.dataset.seg = 'on';
+    var group = document.createElement('div');
+    group.className = 'seg-group';
+    group.setAttribute('role','radiogroup');
+    var lab = sel.closest('label') && sel.closest('label').querySelector('span');
+    if (lab) group.setAttribute('aria-label', lab.textContent.trim());
+    segReal(sel).forEach(function(o){
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'seg-btn'; b.dataset.v = o.value;
+      b.textContent = segLabel(o.textContent.trim());
+      b.title = o.textContent.trim();
+      b.setAttribute('role','radio');
+      b.setAttribute('aria-label', o.textContent.trim());
+      group.appendChild(b);
+    });
+    function sync(){
+      var any = false;
+      Array.prototype.forEach.call(group.children, function(b){
+        var on = (b.dataset.v === sel.value);
+        if (on) any = true;
+        b.classList.toggle('on', on);
+        b.setAttribute('aria-checked', on ? 'true' : 'false');
+        b.tabIndex = on ? 0 : -1;
+      });
+      if (!any && group.firstChild) group.firstChild.tabIndex = 0;
+    }
+    group.addEventListener('click', function(e){
+      var b = e.target.closest('.seg-btn'); if (!b) return;
+      e.preventDefault(); e.stopPropagation();
+      sel.value = (sel.value === b.dataset.v) ? '' : b.dataset.v;   // ri-clic = deseleziona
+      sync();
+      sel.dispatchEvent(new Event('change', { bubbles: true }));
+    });
+    group.addEventListener('keydown', function(e){
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      var btns = Array.prototype.slice.call(group.children);
+      var i = btns.indexOf(document.activeElement); if (i < 0) i = 0;
+      var n = (e.key === 'ArrowRight') ? (i + 1) % btns.length : (i - 1 + btns.length) % btns.length;
+      btns[n].focus(); btns[n].click();
+    });
+    sel.addEventListener('change', sync);
+    sel.classList.add('seg-host');
+    sel.insertAdjacentElement('beforebegin', group);
+    sync();
+  }
+  window.segUpgradeAll = function(root){
+    (root || document).querySelectorAll('select.field-select:not([data-seg])').forEach(segUpgrade);
+  };
+  window.__segRuns = 0;
+  var segQueued = false;
+  function segFlush(){
+    try { window.__segRuns++; window.segUpgradeAll(); }
+    catch (err) { console.warn('[seg] upgrade fallito:', err); }
+    finally { segQueued = false; }   // la spia si azzera SEMPRE: un errore non deve bloccare per sempre
+  }
+  window.__segObserver = new MutationObserver(function(){
+    if (segQueued) return;
+    segQueued = true;
+    setTimeout(segFlush, 0);          // setTimeout, non rAF: scatta anche a tab non renderizzato
+  });
+  window.__segObserver.observe(document.body, { childList: true, subtree: true });
+  segFlush();
+
   document.querySelectorAll('.modal-backdrop').forEach(bd => {
     bd.addEventListener('click', e => { if (e.target === bd) bd.classList.remove('open'); });
   });
