@@ -4516,13 +4516,13 @@ body[data-profile="medie"] .quick-seg-btn[data-mode="free"] { display: none; }
 .langgate-icon { font-size: 40px; line-height: 1; }
 .langgate-title { font-family: var(--font-display); font-size: 22px; font-weight: 800; }
 .langgate-sub { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.03em; opacity: 0.8; }
-.langgate-lat { border-color: #A22E37; }
-.langgate-lat .langgate-title, .langgate-lat .langgate-icon { color: #A22E37; }
-.langgate-lat:hover { background: #fbecee; }
-.langgate-gr { border-color: #1800AC; }
-.langgate-gr .langgate-title, .langgate-gr .langgate-icon { color: #1800AC; }
-.langgate-gr .langgate-icon { font-family: 'Times New Roman', serif; font-style: italic; }
-.langgate-gr:hover { background: #ede9fc; }
+.langgate-lat { border-color: var(--accent-lat); }
+.langgate-lat .langgate-title, .langgate-lat .langgate-icon { color: var(--accent-lat); }
+.langgate-lat:hover { background: color-mix(in srgb, var(--accent-lat) 7%, var(--paper)); }
+.langgate-gr { border-color: var(--accent-gr); }
+.langgate-gr .langgate-title, .langgate-gr .langgate-icon { color: var(--accent-gr); }
+.langgate-gr .langgate-icon { font-family: 'GreekTimes', 'Times New Roman', serif; font-style: italic; }
+.langgate-gr:hover { background: color-mix(in srgb, var(--accent-gr) 7%, var(--paper)); }
 /* PROFILO STUDENTE · layout del modale */
 .sp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0 8px; }
 .sp-field { display: flex; flex-direction: column; gap: 4px; }
@@ -5813,7 +5813,7 @@ body.paradigm-morph-on .paradigm-ending {
 body.paradigm-morph-on .paradigm-morph-legend { display: flex; }
 .paradigm-morph-legend-item { display: inline-flex; gap: 4px; align-items: baseline; }
 .paradigm-morph-legend-color {
-  font-family: 'Times New Roman', serif;
+  font-family: 'GreekTimes', Georgia, 'Palatino Linotype', serif;
   font-weight: 700;
   font-size: 14px;
 }
@@ -9296,7 +9296,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   flex: 1;
   overflow-y: auto;
   padding: 16px 20px 20px;
-  font-family: 'Times New Roman', serif;
+  font-family: 'GreekTimes', Georgia, 'Palatino Linotype', serif;
 }
 
 .kbd-vowel-selector {
@@ -9308,7 +9308,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   flex-wrap: wrap;
 }
 .kbd-vowel-btn {
-  font-family: 'Times New Roman', serif;
+  font-family: 'GreekTimes', Georgia, 'Palatino Linotype', serif;
   font-size: 22px;
   font-weight: 600;
   width: 42px;
@@ -9360,7 +9360,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   gap: 4px;
 }
 .kbd-key {
-  font-family: 'Times New Roman', serif;
+  font-family: 'GreekTimes', Georgia, 'Palatino Linotype', serif;
   font-size: 22px;
   font-weight: 500;
   min-width: 36px;
@@ -9415,7 +9415,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   border-color: var(--primary);
 }
 .kbd-punct-key .ch {
-  font-family: 'Times New Roman', serif;
+  font-family: 'GreekTimes', Georgia, 'Palatino Linotype', serif;
   font-size: 20px;
   color: var(--ink);
   line-height: 1;
@@ -10046,7 +10046,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   justify-content: center;
   width: 22px;
   height: 22px;
-  font-family: 'Times New Roman', serif;
+  font-family: 'GreekTimes', Georgia, 'Palatino Linotype', serif;
   font-size: 14px;
   font-weight: 700;
   border-radius: 50%;

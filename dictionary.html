@@ -1873,19 +1873,21 @@ footer {
   header.topbar small { display: none; }
   section { padding: 12px 14px; }
 }
-/* GATE LINGUA del dizionario · àncora il settore all'ingresso */
-.dict-langgate { position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; padding: 20px; }
-.dict-langgate-box { background: #fff; border-radius: 12px; padding: 28px 32px; max-width: 560px; width: 100%; box-shadow: 0 20px 60px rgba(0,0,0,0.35); text-align: center; }
-.dict-langgate-box h2 { margin: 0 0 6px; font-size: 22px; }
-.dict-langgate-box p { margin: 0; font-size: 13px; opacity: 0.8; }
-.dict-langgate-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 20px; }
-@media (max-width: 520px) { .dict-langgate-grid { grid-template-columns: 1fr; } }
-.dict-langgate-card { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 26px 18px; border: 2px solid #ccc; border-radius: 10px; background: #fff; cursor: pointer; transition: all 0.15s ease; }
-.dict-langgate-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0,0,0,0.18); }
-.dict-langgate-card .ic { font-size: 40px; line-height: 1; }
-.dict-langgate-card .t { font-size: 21px; font-weight: 800; }
-.dict-langgate-card.lat { border-color: #A22E37; } .dict-langgate-card.lat .ic, .dict-langgate-card.lat .t { color: #A22E37; } .dict-langgate-card.lat:hover { background: #fbecee; }
-.dict-langgate-card.gr { border-color: #1800AC; } .dict-langgate-card.gr .ic, .dict-langgate-card.gr .t { color: #1800AC; } .dict-langgate-card.gr .ic { font-family: 'Times New Roman', serif; font-style: italic; } .dict-langgate-card.gr:hover { background: #ede9fc; }
+/* SCELTA DELLA LINGUA · banda IN FLUSSO (era un pop-up modale).
+   Armonizzata sui token condivisi: niente overlay, z-index o hex hardcoded. */
+.dict-langgate { display: block; margin: 0 0 16px; padding: 16px 18px; background: var(--paper); border: 1px solid var(--rule-soft); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
+.dict-langgate[hidden] { display: none; }
+.dict-langgate-box { display: block; text-align: left; }
+.dict-langgate-box h2 { margin: 0 0 4px; font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--ink); letter-spacing: normal; text-transform: none; }
+.dict-langgate-box p { margin: 0; font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); opacity: 1; }
+.dict-langgate-grid { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+@media (max-width: 520px) { .dict-langgate-grid { flex-direction: column; } }
+.dict-langgate-card { flex: 1 1 190px; display: flex; flex-direction: row; align-items: center; justify-content: center; gap: 9px; padding: 11px 16px; border: 1px solid var(--rule); border-radius: var(--radius-md); background: var(--paper); cursor: pointer; transition: var(--transition); }
+.dict-langgate-card:hover { box-shadow: var(--shadow-sm); }
+.dict-langgate-card .ic { font-size: 20px; line-height: 1; }
+.dict-langgate-card .t { font-family: var(--font-ui); font-size: 14.5px; font-weight: 700; }
+.dict-langgate-card.lat { border-color: var(--accent-lat); } .dict-langgate-card.lat .ic, .dict-langgate-card.lat .t { color: var(--accent-lat); } .dict-langgate-card.lat:hover { background: color-mix(in srgb, var(--accent-lat) 7%, var(--paper)); }
+.dict-langgate-card.gr { border-color: var(--accent-gr); } .dict-langgate-card.gr .ic, .dict-langgate-card.gr .t { color: var(--accent-gr); } .dict-langgate-card.gr .ic { font-family: 'GreekTimes', 'Times New Roman', serif; font-style: italic; } .dict-langgate-card.gr:hover { background: color-mix(in srgb, var(--accent-gr) 7%, var(--paper)); }
 
 /* ══ FLESSIONE SEGMENTATA · colorazione dei morfemi ═══════════════════════
    a=aumento/raddoppiamento · t=tema · v=vocale tematica/contratta ·
@@ -2357,6 +2359,18 @@ body.dict-has-entry .main-left > section:first-child{ margin-bottom:4px; }
 <main>
   <div class="main-left">
 
+    <!-- SCELTA DELLA LINGUA · in flusso, sopra il pannello di ricerca (non più pop-up) -->
+    <section id="dict-langgate" class="dict-langgate" aria-labelledby="dict-langgate-title" hidden>
+      <div class="dict-langgate-box">
+        <h2 id="dict-langgate-title">In che lingua vuoi consultare?</h2>
+        <p>Scegli il settore del dizionario: la consultazione resta ancorata a quella lingua. Potrai cambiarla dal selettore qui sotto.</p>
+        <div class="dict-langgate-grid">
+          <button type="button" class="dict-langgate-card lat" data-lang="latino"><span class="ic" aria-hidden="true">🏛</span><span class="t">Latino</span></button>
+          <button type="button" class="dict-langgate-card gr" data-lang="greco"><span class="ic" aria-hidden="true">α</span><span class="t">Greco antico</span></button>
+        </div>
+      </div>
+    </section>
+
     <!-- ════════════════════════════════════════════════════════════════
          SEARCH PANEL · lingua + input + autocomplete + tastiera + alphabet + PoS + reverse + history
          ════════════════════════════════════════════════════════════════ -->
@@ -2429,15 +2443,6 @@ body.dict-has-entry .main-left > section:first-child{ margin-bottom:4px; }
      BOOTSTRAP MODULARE
      ══════════════════════════════════════════════════════════════════════════ -->
 <!-- GATE LINGUA · finestra d'ingresso che àncora il settore (una volta per sessione) -->
-<div id="dict-langgate" class="dict-langgate" style="display:none;">
-  <div class="dict-langgate-box">
-    <h2>In che lingua vuoi consultare?</h2>
-    <p>Scegli il settore del dizionario: la consultazione resta ancorata a quella lingua. Potrai cambiarla dal selettore in alto.</p>
-    <div class="dict-langgate-grid">
-      <button class="dict-langgate-card lat" data-lang="latino"><span class="ic">🏛</span><span class="t">Latino</span></button>
-      <button class="dict-langgate-card gr" data-lang="greco"><span class="ic">α</span><span class="t">Greco antico</span></button>
-    </div>
-  </div>
 </div>
 
 <script type="module">
@@ -2458,14 +2463,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const KEY = 'poetrify-dict-langgate-session';
     const gate = document.getElementById('dict-langgate');
     if (gate && !sessionStorage.getItem(KEY)) {
-      gate.style.display = 'flex';
+      gate.hidden = false;
       gate.querySelectorAll('.dict-langgate-card').forEach(btn => {
         btn.addEventListener('click', () => {
           const lang = btn.dataset.lang === 'greco' ? 'greco' : 'latino';
           try { sessionStorage.setItem(KEY, lang); } catch (e) {}
           const sel = document.getElementById('dict-lang-select');
           if (sel) { sel.value = lang; sel.dispatchEvent(new Event('change', { bubbles: true })); }
-          gate.style.display = 'none';
+          gate.hidden = true;
         });
       });
     }
