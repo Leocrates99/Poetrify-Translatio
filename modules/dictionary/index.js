@@ -1193,7 +1193,13 @@ export class DictionaryApp {
     const viaHtml = viaMap[hit.via]
       ? `<div class="dict-entry-via">⚑ ${viaMap[hit.via]}</div>` : '';
     /* Letture alternative esplicite (legis = legō E lēx) */
-    let _alts = (hit.alternatives || []).filter(a => a.lemma && a.lemma !== hit.lemma);
+    /* dedup: l'indice delle forme puo' ripetere lo stesso lemma per una forma
+       (visto in greco: φάγε -> φαγεῖν / φαγεῖν / ἐσθίω) e la barra lo mostrerebbe due volte */
+    const _seen = new Set();
+    let _alts = (hit.alternatives || []).filter(a => {
+      if (!a.lemma || a.lemma === hit.lemma || _seen.has(a.lemma)) return false;
+      _seen.add(a.lemma); return true;
+    });
     /* Memoria delle letture della FORMA cercata. Senza, passando da 'lego' a 'lex'
        la barra sparirebbe (un lemma diretto non ha alternative) proprio quando
        serve per tornare indietro: le letture restano finche' resti fra i candidati. */
