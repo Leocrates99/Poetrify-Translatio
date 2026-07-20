@@ -1,0 +1,22 @@
+{
+ "autumnus1": {
+  "key": "autumnus",
+  "genitivo": "autumni",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "motivo": "L&S «autumnus (not auct-), ī, m»: 2ª regolare in -us/-i; il proposto «autumnusi» concatena il nominativo intero.",
+  "fonte": "solo_A"
+ },
+ "pinna1": {
+  "key": "pinna",
+  "genitivo": "pinnae",
+  "numero": "sg",
+  "declinazione": 1,
+  "genere": "f",
+  "confidenza": "alta",
+  "motivo": "L&S «pinna ae, f»: 1ª declinazione regolare, gen. pinnae.",
+  "fonte": "accordo_A_B"
+ }
+}

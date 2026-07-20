@@ -78,7 +78,7 @@ def gen_noun(lemma, gen_full, gen_raw, gender):
         for e, p in (('us','nom./voc. sg. · gen. sg. · nom./acc. pl.'), ('ui','dat. sg.'),
                      ('um','acc. sg.'), ('u','abl. sg.'), ('uum','gen. pl.'), ('ibus','dat./abl. pl.')):
             add(st+e, f'{p} (4ª decl.)')
-    elif g.endswith('ei'):
+    elif g.endswith('ei') and lem.endswith('es'):   # 5ª solo col nom. in -es (rēs/reī)
         st = g[:-2]
         for e, p in (('es','nom./voc. sg. · nom./acc. pl.'), ('ei','gen./dat. sg.'), ('em','acc. sg.'),
                      ('e','abl. sg.'), ('erum','gen. pl.'), ('ebus','dat./abl. pl.')):

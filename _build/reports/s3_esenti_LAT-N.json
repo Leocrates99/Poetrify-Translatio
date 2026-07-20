@@ -1,0 +1,98 @@
+{
+ "ador": {
+  "lemma": "ador",
+  "motivo": "L&S dà «ador (nom. and acc.), n» senza genitivo: la forma adoris è ricostruita per analogia coi neutri 3ª in -or (var. tarda adoreus/adoreum); l'indice forme_attestate è inquinato e non attesta il genitivo.",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 3
+ },
+ "amarities": {
+  "lemma": "amarities",
+  "motivo": "L&S «amāritiēs —, acc. em, f»: il trattino segnala genitivo NON attestato (solo acc. amaritiem in Catullo); la forma data è ricostruita per analogia con la 5ª.",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 5
+ },
+ "averso": {
+  "lemma": "averso",
+  "motivo": "Il L&S citato non ha alcun lemma nominale «averso»: dà il deponente āversor, ārī e il nome d'agente āversor, ōris; «averso» è verosimilmente una forma verbale/lemma corrotto, quindi il genitivo vale solo se si intende il nome d'agente.",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 3
+ },
+ "caepe": {
+  "lemma": "caepe",
+  "motivo": "L&S dichiara «only nom. and acc»: genitivo non attestato, il lemma neutro e' di fatto indeclinabile (la variante cepa, f, e' un altro lemma di 1a).",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 0
+ },
+ "caesaries": {
+  "lemma": "caesaries",
+  "motivo": "L&S segna il genitivo con trattino («caesariēs —, acc. em, f»): non attestato; caesariei e' solo la forma teorica di 5a, il sostantivo e' usato quasi solo in nom./acc./abl. sing.",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 5
+ },
+ "chrysophrys": {
+  "lemma": "chrysophrys",
+  "motivo": "L&S non dà il genitivo («chrȳsophrȳs —, acc. yn»): forma ricostruita sul grecismo di 3a χρύσοφρυς, -υος; non attestata, quindi incerta.",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 3
+ },
+ "commento": {
+  "lemma": "commento",
+  "motivo": "Lemma spurio: L&S non registra un sostantivo 'commento' — le voci sono il deponente commentor, -ārī (a cui appartengono tutte le forme attestate) e commentor, -ōris m; da 'commento' non si determina alcun genitivo nominale.",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 0
+ },
+ "Eos": {
+  "lemma": "Eos",
+  "motivo": "L&S «Ēōs (only nom.), f»: grecismo attestato solo al nominativo, nessun genitivo latino documentato; trattato come indeclinabile (le forme_attestate sono del pronome is, ea, id).",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 0
+ },
+ "grates": {
+  "lemma": "grates",
+  "motivo": "L&S annota esplicitamente «(no gen.)»: plurale tantum difettivo, genitivo non attestato; 'gratium' è solo ricostruzione analogica sul tipo di 3ª.",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 3
+ },
+ "lessus": {
+  "lemma": "lessus",
+  "motivo": "L&S segna «—» al posto del genitivo (non attestato): resta solo l'acc. lessum dalle XII Tavole; i lessici lo classificano come sostantivo in -u di 4ª (gen. lessus), ma la forma non è documentata.",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 4
+ },
+ "meridies": {
+  "lemma": "meridies",
+  "motivo": "L&S segna '—' dopo il lemma: genitivo non attestato in latino classico (solo acc. em, abl. ē); 'meridiei' è la sola forma regolare di 5ª ricostruibile.",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 5
+ },
+ "Nais": {
+  "lemma": "Nais",
+  "motivo": "L&S segna «Nāis —», cioè genitivo singolare non attestato; dal plurale Naides/Naidum si ricava il tema Naid-, donde naidis (gr. Ναΐδος, anche naidos): forma ricostruita, non documentata.",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 3
+ },
+ "obsidior": {
+  "lemma": "obsidior",
+  "motivo": "Disallineamento: il lemma 'obsidior' con la forma attestata 'obsidiantur' è un verbo deponente (nessun genitivo), mentre il testo L&S allegato è del sostantivo obsidiō, -ōnis f; il genitivo dato vale solo per quel sostantivo.",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 3
+ },
+ "popinor": {
+  "lemma": "popinor",
+  "motivo": "Disallineamento: il testo L&S è del sostantivo «popīnō ōnis, m» (gen. popinonis), mentre il lemma popinor e la forma attestata 'popinatur' indicano il verbo deponente popinor/popinari, privo di genitivo.",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 3
+ },
+ "venum": {
+  "lemma": "venum",
+  "motivo": "L&S registra «vēnum or vaenum n» senza uscita di genitivo e annota «Usu. acc.» (venum dare/ire, dat.-abl. veno/venui): nome difettivo, genitivo non attestato, quindi riporto la forma di citazione; il 'veni' dell'alternativa è una forma ricostruita per analogia con la 2ª e mai documentata, e il proposto 'venumvaenum' è un artefatto della doppia grafia del lemma.",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 0
+ },
+ "lexis": {
+  "lemma": "lexis",
+  "motivo": "genitivo greco 'lexeos' (λέξεως): flessione greca non riducibile alle 5 declinazioni latine.",
+  "confidenza": "bassa",
+  "declinazione_giudicata": 3
+ }
+}

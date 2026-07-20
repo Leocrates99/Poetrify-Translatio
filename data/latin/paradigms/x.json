@@ -1,1 +1,344 @@
-{"meta": {"lang": "latin", "letter": "x", "count": 2}, "paradigms": {"xiphias": {"pos": "Sostantivo", "cat": "1ª decl.", "classe": "1ª declinazione", "testa": "xiphias, xiphiaae m", "nome": {"sg": {"nom": [["xiphia", "t"], ["a", "d"]], "gen": [["xiphia", "t"], ["ae", "d"]], "dat": [["xiphia", "t"], ["ae", "d"]], "acc": [["xiphia", "t"], ["am", "d"]], "voc": [["xiphia", "t"], ["a", "d"]], "abl": [["xiphia", "t"], ["a", "d"]]}, "pl": {"nom": [["xiphia", "t"], ["ae", "d"]], "gen": [["xiphia", "t"], ["arum", "d"]], "dat": [["xiphia", "t"], ["is", "d"]], "acc": [["xiphia", "t"], ["as", "d"]], "voc": [["xiphia", "t"], ["ae", "d"]], "abl": [["xiphia", "t"], ["is", "d"]]}}}, "xystus": {"pos": "Sostantivo", "cat": "2ª decl.", "classe": "2ª declinazione", "testa": "xystus, xysti m", "nome": {"sg": {"nom": [["xyst", "t"], ["us", "d"]], "gen": [["xyst", "t"], ["i", "d"]], "dat": [["xyst", "t"], ["o", "d"]], "acc": [["xyst", "t"], ["um", "d"]], "voc": [["xyst", "t"], ["e", "d"]], "abl": [["xyst", "t"], ["o", "d"]]}, "pl": {"nom": [["xyst", "t"], ["i", "d"]], "gen": [["xyst", "t"], ["orum", "d"]], "dat": [["xyst", "t"], ["is", "d"]], "acc": [["xyst", "t"], ["os", "d"]], "voc": [["xyst", "t"], ["i", "d"]], "abl": [["xyst", "t"], ["is", "d"]]}}}}}
+{
+"meta": {
+"lang": "latin",
+"letter": "x",
+"count": 2
+},
+"paradigms": {
+"xiphias": {
+"pos": "Sostantivo",
+"cat": "1ª decl.",
+"classe": "1ª declinazione",
+"testa": "xiphias, xiphiaae m",
+"nome": {
+"sg": {
+"nom": [
+[
+"xiphia",
+"t"
+],
+[
+"a",
+"d"
+]
+],
+"gen": [
+[
+"xiphia",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"dat": [
+[
+"xiphia",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"acc": [
+[
+"xiphia",
+"t"
+],
+[
+"am",
+"d"
+]
+],
+"voc": [
+[
+"xiphia",
+"t"
+],
+[
+"a",
+"d"
+]
+],
+"abl": [
+[
+"xiphia",
+"t"
+],
+[
+"a",
+"d"
+]
+]
+},
+"pl": {
+"nom": [
+[
+"xiphia",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"gen": [
+[
+"xiphia",
+"t"
+],
+[
+"arum",
+"d"
+]
+],
+"dat": [
+[
+"xiphia",
+"t"
+],
+[
+"is",
+"d"
+]
+],
+"acc": [
+[
+"xiphia",
+"t"
+],
+[
+"as",
+"d"
+]
+],
+"voc": [
+[
+"xiphia",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"abl": [
+[
+"xiphia",
+"t"
+],
+[
+"is",
+"d"
+]
+]
+}
+}
+},
+"xystus": {
+"pos": "Sostantivo",
+"cat": "2ª decl.",
+"classe": "2ª declinazione",
+"testa": "xystus, xysti m",
+"nome": {
+"sg": {
+"nom": [
+[
+"xyst",
+"t"
+],
+[
+"us",
+"d"
+]
+],
+"gen": [
+[
+"xyst",
+"t"
+],
+[
+"i",
+"d"
+]
+],
+"dat": [
+[
+"xyst",
+"t"
+],
+[
+"o",
+"d"
+]
+],
+"acc": [
+[
+"xyst",
+"t"
+],
+[
+"um",
+"d"
+]
+],
+"voc": [
+[
+"xyst",
+"t"
+],
+[
+"e",
+"d"
+]
+],
+"abl": [
+[
+"xyst",
+"t"
+],
+[
+"o",
+"d"
+]
+]
+},
+"pl": {
+"nom": [
+[
+"xyst",
+"t"
+],
+[
+"i",
+"d"
+]
+],
+"gen": [
+[
+"xyst",
+"t"
+],
+[
+"orum",
+"d"
+]
+],
+"dat": [
+[
+"xyst",
+"t"
+],
+[
+"is",
+"d"
+]
+],
+"acc": [
+[
+"xyst",
+"t"
+],
+[
+"os",
+"d"
+]
+],
+"voc": [
+[
+"xyst",
+"t"
+],
+[
+"i",
+"d"
+]
+],
+"abl": [
+[
+"xyst",
+"t"
+],
+[
+"is",
+"d"
+]
+]
+}
+}
+},
+"xerampelinae": {
+"pos": "Sostantivo",
+"cat": "1ª decl.",
+"classe": "1ª declinazione (plurale tantum)",
+"testa": "xerampelinae, xerampelinarum f",
+"nome": {
+"pl": {
+"nom": [
+[
+"xerampelin",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"gen": [
+[
+"xerampelin",
+"t"
+],
+[
+"arum",
+"d"
+]
+],
+"dat": [
+[
+"xerampelin",
+"t"
+],
+[
+"is",
+"d"
+]
+],
+"acc": [
+[
+"xerampelin",
+"t"
+],
+[
+"as",
+"d"
+]
+],
+"voc": [
+[
+"xerampelin",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"abl": [
+[
+"xerampelin",
+"t"
+],
+[
+"is",
+"d"
+]
+]
+}
+},
+"nota": "plurale tantum: privo di singolare"
+}
+}
+}

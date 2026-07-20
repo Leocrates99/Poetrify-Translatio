@@ -1,1 +1,665 @@
-{"meta": {"lang": "latino", "letter": "x", "forms_count": 103, "lemmas_count": 3, "archived_count": 0}, "forms": {"Xanthippi": [{"lemma": "Xanthippus", "parsing": ""}], "Xerxi": [{"lemma": "Xerxes", "parsing": ""}], "xanthe": [{"lemma": "xanthos", "parsing": ""}], "Xenocrate": [{"lemma": "Xenocrates", "parsing": ""}], "Xanthumque": [{"lemma": "Xanthus", "parsing": ""}], "xerampelinas": [{"lemma": "xerampelinae", "parsing": ""}], "Xenophontem": [{"lemma": "Xenophon", "parsing": ""}], "Xenocles": [{"lemma": "Xenocles", "parsing": ""}], "xanthi": [{"lemma": "xanthos", "parsing": ""}], "xylobalsamo": [{"lemma": "xylobalsamum", "parsing": ""}], "xysticorum": [{"lemma": "xystici", "parsing": ""}], "xanthum": [{"lemma": "xanthos", "parsing": ""}], "Xanthoque": [{"lemma": "Xanthus", "parsing": ""}], "xanthumque": [{"lemma": "xanthos", "parsing": ""}], "Xenophonte": [{"lemma": "Xenophon", "parsing": ""}], "Xanthippo": [{"lemma": "Xanthippus", "parsing": ""}], "xystique": [{"lemma": "xystus", "parsing": ""}], "Xerxen": [{"lemma": "Xerxes", "parsing": ""}], "Xeno": [{"lemma": "Xeno", "parsing": ""}], "Xenophanen": [{"lemma": "Xenophanes", "parsing": ""}], "Xutho": [{"lemma": "Xuthus", "parsing": ""}], "xiphio": [{"lemma": "xiphion", "parsing": ""}], "xylinen": [{"lemma": "xylinum", "parsing": ""}], "Xanthe": [{"lemma": "Xanthus", "parsing": ""}], "Xenophon": [{"lemma": "Xenophon", "parsing": ""}], "Xenocrates": [{"lemma": "Xenocrates", "parsing": ""}], "Xenonis": [{"lemma": "Xeno", "parsing": ""}], "xylobalsamum": [{"lemma": "xylobalsamum", "parsing": ""}], "Xanthique": [{"lemma": "Xanthus", "parsing": ""}], "Xenophonti": [{"lemma": "Xenophon", "parsing": ""}], "Xanthippus": [{"lemma": "Xanthippus", "parsing": ""}], "Xyniae": [{"lemma": "Xyniae", "parsing": ""}], "Xantho": [{"lemma": "Xanthus", "parsing": ""}], "xeniis": [{"lemma": "xenium", "parsing": ""}], "xylocinnami": [{"lemma": "xylocinnamum", "parsing": ""}], "Xenocratem": [{"lemma": "Xenocrates", "parsing": ""}], "Xanthos": [{"lemma": "Xanthus", "parsing": ""}], "xysta": [{"lemma": "xystum", "parsing": ""}], "xanthique": [{"lemma": "xanthos", "parsing": ""}], "Xenone": [{"lemma": "Xeno", "parsing": ""}], "Xenoni": [{"lemma": "Xeno", "parsing": ""}], "xerophthalmiam": [{"lemma": "xerophthalmia", "parsing": ""}], "xystus": [{"lemma": "xystus", "parsing": "nom. sg. (2ª decl.)"}], "xiphian": [{"lemma": "xiphias", "parsing": ""}], "xylocassia": [{"lemma": "xylocassia", "parsing": ""}], "xysti": [{"lemma": "xystus", "parsing": "gen. sg. · nom. pl. (2ª decl.)"}], "xystici": [{"lemma": "xystici", "parsing": ""}], "Xenonem": [{"lemma": "Xeno", "parsing": ""}], "xanthos": [{"lemma": "xanthos", "parsing": ""}], "Xerxeque": [{"lemma": "Xerxes", "parsing": ""}], "Xanthippae": [{"lemma": "Xanthippe", "parsing": ""}], "xylina": [{"lemma": "xylinum", "parsing": ""}], "Xenophili": [{"lemma": "Xenophilus", "parsing": ""}], "xylocinnamo": [{"lemma": "xylocinnamum", "parsing": ""}], "Xylinen": [{"lemma": "Xyline", "parsing": ""}], "Xenophanes": [{"lemma": "Xenophanes", "parsing": ""}], "Xuthum": [{"lemma": "Xuthus", "parsing": ""}], "Xystiani": [{"lemma": "Xystiani", "parsing": ""}], "xeniorum": [{"lemma": "xenium", "parsing": ""}], "xiphi": [{"lemma": "xiphion", "parsing": ""}], "xylobalsami": [{"lemma": "xylobalsamum", "parsing": ""}], "Xenon": [{"lemma": "Xeno", "parsing": ""}], "Xynias": [{"lemma": "Xyniae", "parsing": ""}], "Xystilis": [{"lemma": "Xystilis", "parsing": ""}], "Xenocraten": [{"lemma": "Xenocrates", "parsing": ""}], "xystis": [{"lemma": "xystus", "parsing": "dat./abl. pl. (2ª decl.)"}], "Xanthum": [{"lemma": "Xanthus", "parsing": ""}], "xystum": [{"lemma": "xystus", "parsing": "acc. sg. (2ª decl.)"}], "Xanthi": [{"lemma": "Xanthus", "parsing": ""}], "Xenophontis": [{"lemma": "Xenophon", "parsing": ""}], "xenoparochi": [{"lemma": "xenoparochus", "parsing": ""}], "xylon": [{"lemma": "xylon", "parsing": ""}], "Xuthi": [{"lemma": "Xuthus", "parsing": ""}], "Xenocrati": [{"lemma": "Xenocrates", "parsing": ""}], "Xerxis": [{"lemma": "Xerxes", "parsing": ""}], "Xanthippe": [{"lemma": "Xanthippus", "parsing": ""}], "Xanthus": [{"lemma": "Xanthus", "parsing": ""}], "xiphias": [{"lemma": "xiphias", "parsing": ""}], "xenia": [{"lemma": "xenium", "parsing": ""}], "Xanthippum": [{"lemma": "Xanthippus", "parsing": ""}], "xantho": [{"lemma": "xanthos", "parsing": ""}], "xiphion": [{"lemma": "xiphion", "parsing": ""}], "xylocinnamomum": [{"lemma": "xylocinnamomum", "parsing": ""}], "xysto": [{"lemma": "xystus", "parsing": "dat./abl. sg. (2ª decl.)"}], "Xenocratis": [{"lemma": "Xenocrates", "parsing": ""}], "xeniola": [{"lemma": "xeniolum", "parsing": ""}], "Xenophilus": [{"lemma": "Xenophilus", "parsing": ""}], "Xerxes": [{"lemma": "Xerxes", "parsing": ""}], "xanthoque": [{"lemma": "xanthos", "parsing": ""}], "Xenophanem": [{"lemma": "Xenophanes", "parsing": ""}], "Xerxe": [{"lemma": "Xerxes", "parsing": ""}], "xerophagiae": [{"lemma": "xerophagia", "parsing": ""}], "Xenophonteo": [{"lemma": "Xenophonteus", "parsing": ""}], "Xenophilo": [{"lemma": "Xenophilus", "parsing": ""}], "xiphiaa": [{"lemma": "xiphias", "parsing": "nom./voc./abl. sg. (1ª decl.)"}], "xiphiaae": [{"lemma": "xiphias", "parsing": "gen./dat. sg. · nom. pl. (1ª decl.)"}], "xiphiaam": [{"lemma": "xiphias", "parsing": "acc. sg. (1ª decl.)"}], "xiphiaarum": [{"lemma": "xiphias", "parsing": "gen. pl. (1ª decl.)"}], "xiphiais": [{"lemma": "xiphias", "parsing": "dat./abl. pl. (1ª decl.)"}], "xiphiaas": [{"lemma": "xiphias", "parsing": "acc. pl. (1ª decl.)"}], "xyste": [{"lemma": "xystus", "parsing": "voc. sg. (2ª decl.)"}], "xystorum": [{"lemma": "xystus", "parsing": "gen. pl. (2ª decl.)"}], "xystos": [{"lemma": "xystus", "parsing": "acc. pl. (2ª decl.)"}]}, "dict": {"xerampelinae": {"pos": "sostantivo", "definition": "xērampelinae ārum, f, chrampe/linai (like dry vine-leaves; sc. vestes), dark-red clothes, dark dresses, Iu."}, "xiphias": {"pos": "sostantivo", "definition": "xiphiās ae, m, cifi/as, a sword-fish: durus, O."}, "xystus": {"pos": "sostantivo", "definition": "xystus ī, m, custo/s, a covered colonnade for winter exercise; hence, an open colonnade, garden-terrace, shaded walk: inambulare in xysto, C., Ph."}}}
+{
+"meta": {
+"lang": "latino",
+"letter": "x",
+"forms_count": 103,
+"lemmas_count": 3,
+"archived_count": 0
+},
+"forms": {
+"Xanthippi": [
+{
+"lemma": "Xanthippus",
+"parsing": ""
+}
+],
+"Xerxi": [
+{
+"lemma": "Xerxes",
+"parsing": ""
+}
+],
+"xanthe": [
+{
+"lemma": "xanthos",
+"parsing": ""
+}
+],
+"Xenocrate": [
+{
+"lemma": "Xenocrates",
+"parsing": ""
+}
+],
+"Xanthumque": [
+{
+"lemma": "Xanthus",
+"parsing": ""
+}
+],
+"xerampelinas": [
+{
+"lemma": "xerampelinae",
+"parsing": ""
+},
+{
+"lemma": "xerampelinae",
+"parsing": "acc. pl. (1ª decl.)"
+}
+],
+"Xenophontem": [
+{
+"lemma": "Xenophon",
+"parsing": ""
+}
+],
+"Xenocles": [
+{
+"lemma": "Xenocles",
+"parsing": ""
+}
+],
+"xanthi": [
+{
+"lemma": "xanthos",
+"parsing": ""
+}
+],
+"xylobalsamo": [
+{
+"lemma": "xylobalsamum",
+"parsing": ""
+}
+],
+"xysticorum": [
+{
+"lemma": "xystici",
+"parsing": ""
+}
+],
+"xanthum": [
+{
+"lemma": "xanthos",
+"parsing": ""
+}
+],
+"Xanthoque": [
+{
+"lemma": "Xanthus",
+"parsing": ""
+}
+],
+"xanthumque": [
+{
+"lemma": "xanthos",
+"parsing": ""
+}
+],
+"Xenophonte": [
+{
+"lemma": "Xenophon",
+"parsing": ""
+}
+],
+"Xanthippo": [
+{
+"lemma": "Xanthippus",
+"parsing": ""
+}
+],
+"xystique": [
+{
+"lemma": "xystus",
+"parsing": ""
+}
+],
+"Xerxen": [
+{
+"lemma": "Xerxes",
+"parsing": ""
+}
+],
+"Xeno": [
+{
+"lemma": "Xeno",
+"parsing": ""
+}
+],
+"Xenophanen": [
+{
+"lemma": "Xenophanes",
+"parsing": ""
+}
+],
+"Xutho": [
+{
+"lemma": "Xuthus",
+"parsing": ""
+}
+],
+"xiphio": [
+{
+"lemma": "xiphion",
+"parsing": ""
+}
+],
+"xylinen": [
+{
+"lemma": "xylinum",
+"parsing": ""
+}
+],
+"Xanthe": [
+{
+"lemma": "Xanthus",
+"parsing": ""
+}
+],
+"Xenophon": [
+{
+"lemma": "Xenophon",
+"parsing": ""
+}
+],
+"Xenocrates": [
+{
+"lemma": "Xenocrates",
+"parsing": ""
+}
+],
+"Xenonis": [
+{
+"lemma": "Xeno",
+"parsing": ""
+}
+],
+"xylobalsamum": [
+{
+"lemma": "xylobalsamum",
+"parsing": ""
+}
+],
+"Xanthique": [
+{
+"lemma": "Xanthus",
+"parsing": ""
+}
+],
+"Xenophonti": [
+{
+"lemma": "Xenophon",
+"parsing": ""
+}
+],
+"Xanthippus": [
+{
+"lemma": "Xanthippus",
+"parsing": ""
+}
+],
+"Xyniae": [
+{
+"lemma": "Xyniae",
+"parsing": ""
+}
+],
+"Xantho": [
+{
+"lemma": "Xanthus",
+"parsing": ""
+}
+],
+"xeniis": [
+{
+"lemma": "xenium",
+"parsing": ""
+}
+],
+"xylocinnami": [
+{
+"lemma": "xylocinnamum",
+"parsing": ""
+}
+],
+"Xenocratem": [
+{
+"lemma": "Xenocrates",
+"parsing": ""
+}
+],
+"Xanthos": [
+{
+"lemma": "Xanthus",
+"parsing": ""
+}
+],
+"xysta": [
+{
+"lemma": "xystum",
+"parsing": ""
+}
+],
+"xanthique": [
+{
+"lemma": "xanthos",
+"parsing": ""
+}
+],
+"Xenone": [
+{
+"lemma": "Xeno",
+"parsing": ""
+}
+],
+"Xenoni": [
+{
+"lemma": "Xeno",
+"parsing": ""
+}
+],
+"xerophthalmiam": [
+{
+"lemma": "xerophthalmia",
+"parsing": ""
+}
+],
+"xystus": [
+{
+"lemma": "xystus",
+"parsing": "nom. sg. (2ª decl.)"
+}
+],
+"xiphian": [
+{
+"lemma": "xiphias",
+"parsing": ""
+}
+],
+"xylocassia": [
+{
+"lemma": "xylocassia",
+"parsing": ""
+}
+],
+"xysti": [
+{
+"lemma": "xystus",
+"parsing": "gen. sg. · nom. pl. (2ª decl.)"
+}
+],
+"xystici": [
+{
+"lemma": "xystici",
+"parsing": ""
+}
+],
+"Xenonem": [
+{
+"lemma": "Xeno",
+"parsing": ""
+}
+],
+"xanthos": [
+{
+"lemma": "xanthos",
+"parsing": ""
+}
+],
+"Xerxeque": [
+{
+"lemma": "Xerxes",
+"parsing": ""
+}
+],
+"Xanthippae": [
+{
+"lemma": "Xanthippe",
+"parsing": ""
+}
+],
+"xylina": [
+{
+"lemma": "xylinum",
+"parsing": ""
+}
+],
+"Xenophili": [
+{
+"lemma": "Xenophilus",
+"parsing": ""
+}
+],
+"xylocinnamo": [
+{
+"lemma": "xylocinnamum",
+"parsing": ""
+}
+],
+"Xylinen": [
+{
+"lemma": "Xyline",
+"parsing": ""
+}
+],
+"Xenophanes": [
+{
+"lemma": "Xenophanes",
+"parsing": ""
+}
+],
+"Xuthum": [
+{
+"lemma": "Xuthus",
+"parsing": ""
+}
+],
+"Xystiani": [
+{
+"lemma": "Xystiani",
+"parsing": ""
+}
+],
+"xeniorum": [
+{
+"lemma": "xenium",
+"parsing": ""
+}
+],
+"xiphi": [
+{
+"lemma": "xiphion",
+"parsing": ""
+}
+],
+"xylobalsami": [
+{
+"lemma": "xylobalsamum",
+"parsing": ""
+}
+],
+"Xenon": [
+{
+"lemma": "Xeno",
+"parsing": ""
+}
+],
+"Xynias": [
+{
+"lemma": "Xyniae",
+"parsing": ""
+}
+],
+"Xystilis": [
+{
+"lemma": "Xystilis",
+"parsing": ""
+}
+],
+"Xenocraten": [
+{
+"lemma": "Xenocrates",
+"parsing": ""
+}
+],
+"xystis": [
+{
+"lemma": "xystus",
+"parsing": "dat./abl. pl. (2ª decl.)"
+}
+],
+"Xanthum": [
+{
+"lemma": "Xanthus",
+"parsing": ""
+}
+],
+"xystum": [
+{
+"lemma": "xystus",
+"parsing": "acc. sg. (2ª decl.)"
+}
+],
+"Xanthi": [
+{
+"lemma": "Xanthus",
+"parsing": ""
+}
+],
+"Xenophontis": [
+{
+"lemma": "Xenophon",
+"parsing": ""
+}
+],
+"xenoparochi": [
+{
+"lemma": "xenoparochus",
+"parsing": ""
+}
+],
+"xylon": [
+{
+"lemma": "xylon",
+"parsing": ""
+}
+],
+"Xuthi": [
+{
+"lemma": "Xuthus",
+"parsing": ""
+}
+],
+"Xenocrati": [
+{
+"lemma": "Xenocrates",
+"parsing": ""
+}
+],
+"Xerxis": [
+{
+"lemma": "Xerxes",
+"parsing": ""
+}
+],
+"Xanthippe": [
+{
+"lemma": "Xanthippus",
+"parsing": ""
+}
+],
+"Xanthus": [
+{
+"lemma": "Xanthus",
+"parsing": ""
+}
+],
+"xiphias": [
+{
+"lemma": "xiphias",
+"parsing": ""
+}
+],
+"xenia": [
+{
+"lemma": "xenium",
+"parsing": ""
+}
+],
+"Xanthippum": [
+{
+"lemma": "Xanthippus",
+"parsing": ""
+}
+],
+"xantho": [
+{
+"lemma": "xanthos",
+"parsing": ""
+}
+],
+"xiphion": [
+{
+"lemma": "xiphion",
+"parsing": ""
+}
+],
+"xylocinnamomum": [
+{
+"lemma": "xylocinnamomum",
+"parsing": ""
+}
+],
+"xysto": [
+{
+"lemma": "xystus",
+"parsing": "dat./abl. sg. (2ª decl.)"
+}
+],
+"Xenocratis": [
+{
+"lemma": "Xenocrates",
+"parsing": ""
+}
+],
+"xeniola": [
+{
+"lemma": "xeniolum",
+"parsing": ""
+}
+],
+"Xenophilus": [
+{
+"lemma": "Xenophilus",
+"parsing": ""
+}
+],
+"Xerxes": [
+{
+"lemma": "Xerxes",
+"parsing": ""
+}
+],
+"xanthoque": [
+{
+"lemma": "xanthos",
+"parsing": ""
+}
+],
+"Xenophanem": [
+{
+"lemma": "Xenophanes",
+"parsing": ""
+}
+],
+"Xerxe": [
+{
+"lemma": "Xerxes",
+"parsing": ""
+}
+],
+"xerophagiae": [
+{
+"lemma": "xerophagia",
+"parsing": ""
+}
+],
+"Xenophonteo": [
+{
+"lemma": "Xenophonteus",
+"parsing": ""
+}
+],
+"Xenophilo": [
+{
+"lemma": "Xenophilus",
+"parsing": ""
+}
+],
+"xiphiaa": [
+{
+"lemma": "xiphias",
+"parsing": "nom./voc./abl. sg. (1ª decl.)"
+}
+],
+"xiphiaae": [
+{
+"lemma": "xiphias",
+"parsing": "gen./dat. sg. · nom. pl. (1ª decl.)"
+}
+],
+"xiphiaam": [
+{
+"lemma": "xiphias",
+"parsing": "acc. sg. (1ª decl.)"
+}
+],
+"xiphiaarum": [
+{
+"lemma": "xiphias",
+"parsing": "gen. pl. (1ª decl.)"
+}
+],
+"xiphiais": [
+{
+"lemma": "xiphias",
+"parsing": "dat./abl. pl. (1ª decl.)"
+}
+],
+"xiphiaas": [
+{
+"lemma": "xiphias",
+"parsing": "acc. pl. (1ª decl.)"
+}
+],
+"xyste": [
+{
+"lemma": "xystus",
+"parsing": "voc. sg. (2ª decl.)"
+}
+],
+"xystorum": [
+{
+"lemma": "xystus",
+"parsing": "gen. pl. (2ª decl.)"
+}
+],
+"xystos": [
+{
+"lemma": "xystus",
+"parsing": "acc. pl. (2ª decl.)"
+}
+],
+"xerampelinae": [
+{
+"lemma": "xerampelinae",
+"parsing": "nom. pl. · voc. pl. (1ª decl.)"
+}
+],
+"xerampelinarum": [
+{
+"lemma": "xerampelinae",
+"parsing": "gen. pl. (1ª decl.)"
+}
+],
+"xerampelinis": [
+{
+"lemma": "xerampelinae",
+"parsing": "abl. pl. · dat. pl. (1ª decl.)"
+}
+]
+},
+"dict": {
+"xerampelinae": {
+"pos": "sostantivo",
+"definition": "xērampelinae ārum, f, chrampe/linai (like dry vine-leaves; sc. vestes), dark-red clothes, dark dresses, Iu."
+},
+"xiphias": {
+"pos": "sostantivo",
+"definition": "xiphiās ae, m, cifi/as, a sword-fish: durus, O."
+},
+"xystus": {
+"pos": "sostantivo",
+"definition": "xystus ī, m, custo/s, a covered colonnade for winter exercise; hence, an open colonnade, garden-terrace, shaded walk: inambulare in xysto, C., Ph."
+}
+}
+}

@@ -1,270 +1,318 @@
 {
-"segment": "LAT-N-5",
-"count": 22,
-"lemmi": [
-{
-"id": "lat:amarities",
-"lemma": "amarities",
-"uid": "poe-000136301",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:araneum",
-"lemma": "araneum",
-"uid": "poe-000136655",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "n",
-"segno": "paradigma+lewis"
-},
-{
-"id": "lat:caesaries",
-"lemma": "caesaries",
-"uid": "poe-000137399",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:canities",
-"lemma": "canities",
-"uid": "poe-000137495",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:castoreum",
-"lemma": "castoreum",
-"uid": "poe-000137626",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "n",
-"segno": "lewis(pos inferita)"
-},
-{
-"id": "lat:effigies",
-"lemma": "effigies",
-"uid": "poe-000140639",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:glacies",
-"lemma": "glacies",
-"uid": "poe-000142279",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:ingluvies",
-"lemma": "ingluvies",
-"uid": "poe-000143581",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:intemperies",
-"lemma": "intemperies",
-"uid": "poe-000144000",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:luxuries",
-"lemma": "luxuries",
-"uid": "poe-000145056",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:macies",
-"lemma": "macies",
-"uid": "poe-000145087",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:meridies",
-"lemma": "meridies",
-"uid": "poe-000145434",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "m",
-"segno": "whitaker"
-},
-{
-"id": "lat:pauperies",
-"lemma": "pauperies",
-"uid": "poe-000147020",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": null,
-"segno": "whitaker"
-},
-{
-"id": "lat:progenies",
-"lemma": "progenies",
-"uid": "poe-000148607",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:proluvies",
-"lemma": "proluvies",
-"uid": "poe-000148644",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:rabies",
-"lemma": "rabies",
-"uid": "poe-000149234",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:sanies",
-"lemma": "sanies",
-"uid": "poe-000150105",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:series",
-"lemma": "series",
-"uid": "poe-000150534",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:species",
-"lemma": "species",
-"uid": "poe-000150904",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:spes",
-"lemma": "spes",
-"uid": "poe-000150934",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "paradigma"
-},
-{
-"id": "lat:superficies",
-"lemma": "superficies",
-"uid": "poe-000151523",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-},
-{
-"id": "lat:temperies",
-"lemma": "temperies",
-"uid": "poe-000151801",
-"fonti": [
-"lewis",
-"whitaker"
-],
-"marcatore": "gen. -ei",
-"genere": "f",
-"segno": "whitaker"
-}
-]
+ "segment": "LAT-N-5",
+ "count": 22,
+ "lemmi": [
+  {
+   "id": "lat:amarities",
+   "lemma": "amarities",
+   "uid": "poe-000136301",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker"
+  },
+  {
+   "id": "lat:araneum",
+   "lemma": "araneum",
+   "uid": "poe-000136655",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "n",
+   "segno": "paradigma+lewis"
+  },
+  {
+   "id": "lat:caesaries",
+   "lemma": "caesaries",
+   "uid": "poe-000137399",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker"
+  },
+  {
+   "id": "lat:canities",
+   "lemma": "canities",
+   "uid": "poe-000137495",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "canitiei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  },
+  {
+   "id": "lat:castoreum",
+   "lemma": "castoreum",
+   "uid": "poe-000137626",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "n",
+   "segno": "lewis(pos inferita)"
+  },
+  {
+   "id": "lat:effigies",
+   "lemma": "effigies",
+   "uid": "poe-000140639",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "effigiei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  },
+  {
+   "id": "lat:glacies",
+   "lemma": "glacies",
+   "uid": "poe-000142279",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "glaciei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  },
+  {
+   "id": "lat:ingluvies",
+   "lemma": "ingluvies",
+   "uid": "poe-000143581",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "ingluviei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  },
+  {
+   "id": "lat:intemperies",
+   "lemma": "intemperies",
+   "uid": "poe-000144000",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "intemperiei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  },
+  {
+   "id": "lat:luxuries",
+   "lemma": "luxuries",
+   "uid": "poe-000145056",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "luxuriei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  },
+  {
+   "id": "lat:macies",
+   "lemma": "macies",
+   "uid": "poe-000145087",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "maciei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  },
+  {
+   "id": "lat:meridies",
+   "lemma": "meridies",
+   "uid": "poe-000145434",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "m",
+   "segno": "whitaker"
+  },
+  {
+   "id": "lat:pauperies",
+   "lemma": "pauperies",
+   "uid": "poe-000147020",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "pauperiei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  },
+  {
+   "id": "lat:progenies",
+   "lemma": "progenies",
+   "uid": "poe-000148607",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "progeniei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  },
+  {
+   "id": "lat:proluvies",
+   "lemma": "proluvies",
+   "uid": "poe-000148644",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "proluviei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  },
+  {
+   "id": "lat:rabies",
+   "lemma": "rabies",
+   "uid": "poe-000149234",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "rabiei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  },
+  {
+   "id": "lat:sanies",
+   "lemma": "sanies",
+   "uid": "poe-000150105",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "saniei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  },
+  {
+   "id": "lat:series",
+   "lemma": "series",
+   "uid": "poe-000150534",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "seriei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  },
+  {
+   "id": "lat:species",
+   "lemma": "species",
+   "uid": "poe-000150904",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "speciei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  },
+  {
+   "id": "lat:spes",
+   "lemma": "spes",
+   "uid": "poe-000150934",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "paradigma"
+  },
+  {
+   "id": "lat:superficies",
+   "lemma": "superficies",
+   "uid": "poe-000151523",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "superficiei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  },
+  {
+   "id": "lat:temperies",
+   "lemma": "temperies",
+   "uid": "poe-000151801",
+   "fonti": [
+    "lewis",
+    "whitaker"
+   ],
+   "marcatore": "gen. -ei",
+   "genere": "f",
+   "segno": "whitaker",
+   "genitivo": "temperiei",
+   "numero": "sg",
+   "fonte_genitivo": "L&S · giudizio A+B"
+  }
+ ]
 }

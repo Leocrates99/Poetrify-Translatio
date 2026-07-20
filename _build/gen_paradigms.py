@@ -57,7 +57,10 @@ def lat_noun_table(lemma, gen_full, gen_raw, gender):
                       acc=C((st,'t'),('um','d')), voc=C((st,'t'),('us','d')), abl=C((st,'t'),('u','d')))
             pl = dict(nom=C((st,'t'),('us','d')), gen=C((st,'t'),('uum','d')), dat=C((st,'t'),('ibus','d')),
                       acc=C((st,'t'),('us','d')), voc=C((st,'t'),('us','d')), abl=C((st,'t'),('ibus','d')))
-    elif g.endswith('ei'):
+    # 5ª SOLO col nominativo in -es (rēs/reī, diēs/diēī): senza questa guardia i
+    # nomi di 2ª in -eus/-eum (aculeus/aculeī, aulaeum/aulaeī) finivano qui per
+    # pura collisione di stringa e uscivano declinati «acules, aculem, aculebus».
+    elif g.endswith('ei') and lem.endswith('es'):
         st = g[:-2]; cl = '5ª declinazione'
         sg = dict(nom=C((st,'t'),('es','d')), gen=C((st,'t'),('ei','d')), dat=C((st,'t'),('ei','d')),
                   acc=C((st,'t'),('em','d')), voc=C((st,'t'),('es','d')), abl=C((st,'t'),('e','d')))

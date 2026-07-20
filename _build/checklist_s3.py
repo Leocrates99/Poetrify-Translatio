@@ -45,11 +45,13 @@ def load_all(subdir):
 
 
 def paradigma_completo(par):
-    """12 celle piene (sg+pl × 6 casi) e non vuote."""
+    """12 celle piene (sg+pl × 6 casi). I PLURALIA TANTUM sono completi con le
+    sole 6 celle plurali: il singolare non esiste e pretenderlo sarebbe un errore."""
     nome = par.get("nome")
     if not isinstance(nome, dict):
         return False
-    for num in ("sg", "pl"):
+    pl_tantum = "plurale tantum" in (par.get("nota") or "") or "sg" not in nome
+    for num in (("pl",) if pl_tantum else ("sg", "pl")):
         cel = nome.get(num)
         if not isinstance(cel, dict):
             return False
@@ -125,12 +127,20 @@ def main():
     # ④ paradigma completo e corretto per la suddivisione
     n_par = n_par_completi = n_par_cat_ok = 0
     senza_par, incompleti, cat_errata = [], [], []
-    esenti = 0
+    esenti = esenti_doc = 0
+    # esenzioni DOCUMENTATE: lemmi il cui genitivo non esiste nelle fonti
+    # (difettivi «only nom. and acc», genitivo segnato col trattino in L&S,
+    # flessioni greche irriducibili). Ognuna porta la sua motivazione.
+    p_es = os.path.join(BUILD, "reports", f"s3_esenti_{FAM}.json")
+    esenti_set = set(json.load(open(p_es, encoding="utf-8"))) if os.path.exists(p_es) else set()
     for r in seg:
         if r["sub"] == "X":          # indeclinabili: nessun paradigma atteso
             esenti += 1
             continue
         key = rev.get(r["id"])
+        if key in esenti_set:        # difettivo/indeclinabile accertato sulle fonti
+            esenti_doc += 1
+            continue
         par = paradigms.get(key) if key else None
         if not par:
             senza_par.append(r["lemma"]); continue
@@ -148,8 +158,8 @@ def main():
         + ([f"{len(incompleti)} paradigmi incompleti (<12 celle)"] if incompleti else []) \
         + ([f"{len(cat_errata)} paradigmi con declinazione discordante"] if cat_errata else []) \
         + [f"  es. {x}" for x in (senza_par[:5] + incompleti[:5] + cat_errata[:5])]
-    stat["④"] = {"attesi": len(seg) - esenti, "con_paradigma": n_par, "completi_12_celle": n_par_completi,
-                 "cat_coerente": n_par_cat_ok, "esenti_indeclinabili": esenti,
+    stat["④"] = {"attesi": len(seg) - esenti - esenti_doc, "con_paradigma": n_par, "completi_12_celle": n_par_completi,
+                 "cat_coerente": n_par_cat_ok, "esenti_indeclinabili": esenti, "esenti_documentati": esenti_doc,
                  "senza_paradigma": len(senza_par), "incompleti": len(incompleti), "cat_errata": len(cat_errata)}
 
     # ⑥ nessun «…» nelle definizioni consegnate
@@ -209,7 +219,10 @@ def main():
             lemmi_ok += 1
         else:
             lemmi_ko.append(rid)
-    senza_forme = len(segids) - len(per_lemma)
+    # indeclinabili (sub X) ed esenti documentati NON devono avere forme: escluderli
+    attesi_con_forme = {r["id"] for r in seg
+                        if r["sub"] != "X" and rev.get(r["id"]) not in esenti_set}
+    senza_forme = len(attesi_con_forme - set(per_lemma))
     pct_f = 100.0 * ok_f / max(tot_f, 1)
     fail["⑦"] = ([f"{len(lemmi_ko)} lemmi con forme che NON tornano all'id"] if lemmi_ko else []) \
         + ([f"{senza_forme} lemmi del segmento senza alcuna forma generata"] if senza_forme else [])

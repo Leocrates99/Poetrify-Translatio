@@ -1,0 +1,4478 @@
+[
+ {
+  "key": "aer",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "ambulatiuncula",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Amyclae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "angustia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "anthias",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "anthiaae",
+  "proposto": "anthiae"
+ },
+ {
+  "key": "argutiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "assa1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Athenae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Baiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "boreas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "boreaae",
+  "proposto": "boreae"
+ },
+ {
+  "key": "caulae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Chelae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "clitellae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "convenae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "cunae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "deliciae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "deliciolae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "dimachae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "ditiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "divitiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "epulae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "etesiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "excubiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "exsequiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "exuviae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "facetiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "feriae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "fidiculae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "fimbriae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "genae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "hillae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Hilotae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "hippotoxotae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "indutiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "infacetiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "inferiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "insidiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Kalendae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "lapicidinae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Latinae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "lautumiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "manicae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "manubiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "mariscae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Marsyas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "marsyaae",
+  "proposto": "marsyae"
+ },
+ {
+  "key": "materia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "maxilla",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "mentula",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "mollitia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Napaeae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "nequitia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "nugae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "nundinae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "nuptiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "palpebrae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Parca",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "parietinae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "parma",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "peltastae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Persae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "phalangae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "phalangitae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "phalerae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "pigritia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "pinna1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "pinnula",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "planitia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "praestigiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "preciae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "primitiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "quadrigae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "quadrigulae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "querela",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "quisquiliae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "reliquiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "repetundae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "ruta1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "salinae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "scalae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "scapulae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "scopae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Syria",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "tenebrae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "thermae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "togula",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "tricae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "valvae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "versutiae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "vindiciae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "xerampelinae",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Abdera",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "accensus1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Acroceraunia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Actaei",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "actum",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "acti",
+  "proposto": "actumi"
+ },
+ {
+  "key": "adversum2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "aesculetum",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "agrarii",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "alienum1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "aliquantum1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "altum1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Argi",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "arithmetica",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "arma",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "armamenta",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "autumnus1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "beneficiarii",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "cancelli",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "caprificus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "captus1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "castra",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "centumviri",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "certum1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "charistia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "chrysophrys",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "cichorium",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "cingula",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "clatra",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Claudius",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "claustra",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "claviger2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "codicilli",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "colus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "commodum1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "compactum",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "conductus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "constratus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "contagium",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "conubium",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "cornus",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "corni",
+  "proposto": "cornui"
+ },
+ {
+  "key": "crepundia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "cubicularius",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "culeus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "cunabula",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "diarium",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Dionysia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "divum",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "donarium",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "dumus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "edictum",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "elegi",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Eos",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "epimenia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "eremus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "eventura",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "expensum",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "exta",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Fabius",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "ferculum",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "flabra",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "flammeum",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "foruli",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "fragum",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "fusus2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "galbina",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Galli",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "granaria",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "gurgustium",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "hendecasyllabi",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "hibernacula",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "ilia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "imitamentum",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "incunabula",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "interamenta",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "intermundia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "lamenta",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "lamentum",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "lautia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Lemuria",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "lepusculus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "libita",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "lituus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Marcius",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "melimela",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "munia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "murrina",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Naevius",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "nervulus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "nubila",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Octavius",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Olympia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "onager",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "orsa",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Pelasgi",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "penus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Pergama",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "philitia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "pinus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "plantaria",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Poeni",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "praecordia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "praepositus2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "progener",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "prognostica",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "purgamentum",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "quartadecumani",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "quattuorviri",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "quinquevir",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "quintadecimani",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Quintius",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "repagula",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "repotia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "rorarii",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "ruta2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "sabbata",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "saepta",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Salii",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "salum",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "sata",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "satureia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "scruta",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "scutulata",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "septimani",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "serperastra",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "serta",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "serum1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Servius",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "servulus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "sextadecimani",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "sigilla",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "soldurii",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "specularia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "spiramentum",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Superi",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "suta",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "tectoriolum",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Topica",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "tresviri",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "triarii",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "trimeter",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "triscurrium",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "unetvicesimani",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Valerius",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "venum",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "vermiculus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "vicesimani",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "vigintiviratus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "vigintiviri",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "virgultus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "visenda",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "vulgus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "vulturius",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "abdomen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Aborigines",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "acerbitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "acerbitaatis",
+  "proposto": "acerbitatis"
+ },
+ {
+  "key": "Acheron",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "achertis",
+  "proposto": "acherontis"
+ },
+ {
+  "key": "Acheruns",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "acherununtis",
+  "proposto": "acheruntis"
+ },
+ {
+  "key": "Acragas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "acragaantis",
+  "proposto": "acragantis"
+ },
+ {
+  "key": "acumen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "adfinis2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "ador",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "aedilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "aedilitaatis",
+  "proposto": "aedilitatis"
+ },
+ {
+  "key": "aequabilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "aequabilitaatis",
+  "proposto": "aequabilitatis"
+ },
+ {
+  "key": "aequalitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "aequalitaatis",
+  "proposto": "aequalitatis"
+ },
+ {
+  "key": "aequanimitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "aequanimitaatis",
+  "proposto": "aequanimitatis"
+ },
+ {
+  "key": "aequitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "aequitaatis",
+  "proposto": "aequitatis"
+ },
+ {
+  "key": "aestas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "aestaatis",
+  "proposto": "aestatis"
+ },
+ {
+  "key": "aetas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "aetaatis",
+  "proposto": "aetatis"
+ },
+ {
+  "key": "aeternitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "aeternitaatis",
+  "proposto": "aeternitatis"
+ },
+ {
+  "key": "Aethiops",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "aethiopopis",
+  "proposto": "aethiopis"
+ },
+ {
+  "key": "aevitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "aevitaatis",
+  "proposto": "aevitatis"
+ },
+ {
+  "key": "affinitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "affinitaatis",
+  "proposto": "affinitatis"
+ },
+ {
+  "key": "agilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "agilitaatis",
+  "proposto": "agilitatis"
+ },
+ {
+  "key": "agmen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Agnalia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "alacritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "alacritaatis",
+  "proposto": "alacritatis"
+ },
+ {
+  "key": "altrix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "altriicis",
+  "proposto": "altricis"
+ },
+ {
+  "key": "ambages",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "ambiguitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "ambiguitaatis",
+  "proposto": "ambiguitatis"
+ },
+ {
+  "key": "amoenitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "amoenitaatis",
+  "proposto": "amoenitatis"
+ },
+ {
+  "key": "Amphictyones",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "antes",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "antiquitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "antiquitaatis",
+  "proposto": "antiquitatis"
+ },
+ {
+  "key": "aquator",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Arctophylax",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "aries",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "ariietis",
+  "proposto": "arietis"
+ },
+ {
+  "key": "asperitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "asperitaatis",
+  "proposto": "asperitatis"
+ },
+ {
+  "key": "assiduitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "assiduitaatis",
+  "proposto": "assiduitatis"
+ },
+ {
+  "key": "atrocitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "atrocitaatis",
+  "proposto": "atrocitatis"
+ },
+ {
+  "key": "auctoritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "auctoritaatis",
+  "proposto": "auctoritatis"
+ },
+ {
+  "key": "averso",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "aversor",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "aviditas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "aviditaatis",
+  "proposto": "aviditatis"
+ },
+ {
+  "key": "bacchantes",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "bellatrix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "bellatriicis",
+  "proposto": "bellatricis"
+ },
+ {
+  "key": "benignitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "benignitaatis",
+  "proposto": "benignitatis"
+ },
+ {
+  "key": "bilis",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "bitumen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "bombyx",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "bonitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "bonitaatis",
+  "proposto": "bonitatis"
+ },
+ {
+  "key": "brevitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "brevitaatis",
+  "proposto": "brevitatis"
+ },
+ {
+  "key": "buris",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "cacumen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "caecitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "caecitaatis",
+  "proposto": "caecitatis"
+ },
+ {
+  "key": "caelamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "caepe",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Caesar",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "calamitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "calamitaatis",
+  "proposto": "calamitatis"
+ },
+ {
+  "key": "calix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "caliicis",
+  "proposto": "calicis"
+ },
+ {
+  "key": "calliditas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "calliditaatis",
+  "proposto": "calliditatis"
+ },
+ {
+  "key": "calx1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "calx2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "cantamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "capacitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "capacitaatis",
+  "proposto": "capacitatis"
+ },
+ {
+  "key": "captivitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "captivitaatis",
+  "proposto": "captivitatis"
+ },
+ {
+  "key": "caput",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "caritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "caritaatis",
+  "proposto": "caritatis"
+ },
+ {
+  "key": "carmen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Carthago",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "castitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "castitaatis",
+  "proposto": "castitatis"
+ },
+ {
+  "key": "celebritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "celebritaatis",
+  "proposto": "celebritatis"
+ },
+ {
+  "key": "celeritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "celeritaatis",
+  "proposto": "celeritatis"
+ },
+ {
+  "key": "certamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "cervix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "cerviicis",
+  "proposto": "cervicis"
+ },
+ {
+  "key": "Charites",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "cicatrix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "cicatriicis",
+  "proposto": "cicatricis"
+ },
+ {
+  "key": "civis",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "civitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "civitaatis",
+  "proposto": "civitatis"
+ },
+ {
+  "key": "claritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "claritaatis",
+  "proposto": "claritatis"
+ },
+ {
+  "key": "cliens",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "clienentis",
+  "proposto": "clientis"
+ },
+ {
+  "key": "clunis",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Cocles",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "coclitis",
+  "proposto": "coclesitis"
+ },
+ {
+  "key": "cognomen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "columen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "commento",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "commentor2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "commoditas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "commoditaatis",
+  "proposto": "commoditatis"
+ },
+ {
+  "key": "compes",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "conamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "concaedes",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "conditio2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "consanguinitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "consanguinitaatis",
+  "proposto": "consanguinitatis"
+ },
+ {
+  "key": "Consualia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "continens2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "copo1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "copo2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "cordax",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "cordaacis",
+  "proposto": "cordacis"
+ },
+ {
+  "key": "cornix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "corniicis",
+  "proposto": "cornicis"
+ },
+ {
+  "key": "cors",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Corybantes",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "coturnix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "coturniicis",
+  "proposto": "coturnicis"
+ },
+ {
+  "key": "cratis",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "credulitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "credulitaatis",
+  "proposto": "credulitatis"
+ },
+ {
+  "key": "crimen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "crudelitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "crudelitaatis",
+  "proposto": "crudelitatis"
+ },
+ {
+  "key": "cruditas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "cruditaatis",
+  "proposto": "cruditatis"
+ },
+ {
+  "key": "crux",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "cruucis",
+  "proposto": "crucis"
+ },
+ {
+  "key": "culmen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "cultrix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "cultriicis",
+  "proposto": "cultricis"
+ },
+ {
+  "key": "cupiditas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "cupiditaatis",
+  "proposto": "cupiditatis"
+ },
+ {
+  "key": "Curetes",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "curiositas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "curiositaatis",
+  "proposto": "curiositatis"
+ },
+ {
+  "key": "curvamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "deformitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "deformitaatis",
+  "proposto": "deformitatis"
+ },
+ {
+  "key": "dentalia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "dicacitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "dicacitaatis",
+  "proposto": "dicacitatis"
+ },
+ {
+  "key": "difficultas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "difficultaatis",
+  "proposto": "difficultatis"
+ },
+ {
+  "key": "dignitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "dignitaatis",
+  "proposto": "dignitatis"
+ },
+ {
+  "key": "discrimen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "diuturnitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "diuturnitaatis",
+  "proposto": "diuturnitatis"
+ },
+ {
+  "key": "diversitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "diversitaatis",
+  "proposto": "diversitatis"
+ },
+ {
+  "key": "divinitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "divinitaatis",
+  "proposto": "divinitatis"
+ },
+ {
+  "key": "docilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "docilitaatis",
+  "proposto": "docilitatis"
+ },
+ {
+  "key": "dodrans",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "dodranantis",
+  "proposto": "dodrantis"
+ },
+ {
+  "key": "Dryades",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "ebrietas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "ebrietaatis",
+  "proposto": "ebrietatis"
+ },
+ {
+  "key": "ebur",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "edacitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "edacitaatis",
+  "proposto": "edacitatis"
+ },
+ {
+  "key": "efficacitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "efficacitaatis",
+  "proposto": "efficacitatis"
+ },
+ {
+  "key": "egestas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "egestaatis",
+  "proposto": "egestatis"
+ },
+ {
+  "key": "elephantus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Eumenides",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "examen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "exilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "exilitaatis",
+  "proposto": "exilitatis"
+ },
+ {
+  "key": "existimatio",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "existimatinis",
+  "proposto": "existimationis"
+ },
+ {
+  "key": "extremitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "extremitaatis",
+  "proposto": "extremitatis"
+ },
+ {
+  "key": "facilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "facilitaatis",
+  "proposto": "facilitatis"
+ },
+ {
+  "key": "facultas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "facultaatis",
+  "proposto": "facultatis"
+ },
+ {
+  "key": "faenilia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "familiaritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "familiaritaatis",
+  "proposto": "familiaritatis"
+ },
+ {
+  "key": "fauces",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "fecunditas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "fecunditaatis",
+  "proposto": "fecunditatis"
+ },
+ {
+  "key": "felicitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "felicitaatis",
+  "proposto": "felicitatis"
+ },
+ {
+  "key": "femur",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "feritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "feritaatis",
+  "proposto": "feritatis"
+ },
+ {
+  "key": "ferocitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "ferocitaatis",
+  "proposto": "ferocitatis"
+ },
+ {
+  "key": "fertilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "fertilitaatis",
+  "proposto": "fertilitatis"
+ },
+ {
+  "key": "festivitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "festivitaatis",
+  "proposto": "festivitatis"
+ },
+ {
+  "key": "fidelitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "fidelitaatis",
+  "proposto": "fidelitatis"
+ },
+ {
+  "key": "fidicen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "filix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "filiicis",
+  "proposto": "filicis"
+ },
+ {
+  "key": "firmamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "firmitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "firmitaatis",
+  "proposto": "firmitatis"
+ },
+ {
+  "key": "flamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "flumen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "foeditas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "foeditaatis",
+  "proposto": "foeditatis"
+ },
+ {
+  "key": "foramen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "fornix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "forniicis",
+  "proposto": "fornicis"
+ },
+ {
+  "key": "fragilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "fragilitaatis",
+  "proposto": "fragilitatis"
+ },
+ {
+  "key": "fragmen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "fraternitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "fraternitaatis",
+  "proposto": "fraternitatis"
+ },
+ {
+  "key": "frons",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "fronondis",
+  "proposto": "frondis"
+ },
+ {
+  "key": "fulcimen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "fulmen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "fundamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "furor",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "futtilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "futtilitaatis",
+  "proposto": "futtilitatis"
+ },
+ {
+  "key": "garrulitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "garrulitaatis",
+  "proposto": "garrulitatis"
+ },
+ {
+  "key": "genetrix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "genetriicis",
+  "proposto": "genetricis"
+ },
+ {
+  "key": "gentilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "gentilitaatis",
+  "proposto": "gentilitatis"
+ },
+ {
+  "key": "genualia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "germanitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "germanitaatis",
+  "proposto": "germanitatis"
+ },
+ {
+  "key": "germen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "gerro",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "gestamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "gluten",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "gracilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "gracilitaatis",
+  "proposto": "gracilitatis"
+ },
+ {
+  "key": "gramen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "grates",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "gravitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "gravitaatis",
+  "proposto": "gravitatis"
+ },
+ {
+  "key": "gryps",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Heliades",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "heros",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "hiems",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "hiememis",
+  "proposto": "hiemis"
+ },
+ {
+  "key": "hilaritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "hilaritaatis",
+  "proposto": "hilaritatis"
+ },
+ {
+  "key": "hortamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "hospitalitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "hospitalitaatis",
+  "proposto": "hospitalitatis"
+ },
+ {
+  "key": "humanitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "humanitaatis",
+  "proposto": "humanitatis"
+ },
+ {
+  "key": "humilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "humilitaatis",
+  "proposto": "humilitatis"
+ },
+ {
+  "key": "ignobilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "ignobilitaatis",
+  "proposto": "ignobilitatis"
+ },
+ {
+  "key": "ile",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "imbecillitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "imbecillitaatis",
+  "proposto": "imbecillitatis"
+ },
+ {
+  "key": "imber",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "imitamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "immanitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "immanitaatis",
+  "proposto": "immanitatis"
+ },
+ {
+  "key": "immortalitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "immortalitaatis",
+  "proposto": "immortalitatis"
+ },
+ {
+  "key": "immunitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "immunitaatis",
+  "proposto": "immunitatis"
+ },
+ {
+  "key": "impietas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "impietaatis",
+  "proposto": "impietatis"
+ },
+ {
+  "key": "importunitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "importunitaatis",
+  "proposto": "importunitatis"
+ },
+ {
+  "key": "improbitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "improbitaatis",
+  "proposto": "improbitatis"
+ },
+ {
+  "key": "impunitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "impunitaatis",
+  "proposto": "impunitatis"
+ },
+ {
+  "key": "inanitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "inanitaatis",
+  "proposto": "inanitatis"
+ },
+ {
+  "key": "incolumitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "incolumitaatis",
+  "proposto": "incolumitatis"
+ },
+ {
+  "key": "Indiges1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "indignitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "indignitaatis",
+  "proposto": "indignitatis"
+ },
+ {
+  "key": "infidelitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "infidelitaatis",
+  "proposto": "infidelitatis"
+ },
+ {
+  "key": "infinitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "infinitaatis",
+  "proposto": "infinitatis"
+ },
+ {
+  "key": "infirmitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "infirmitaatis",
+  "proposto": "infirmitatis"
+ },
+ {
+  "key": "ingenuitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "ingenuitaatis",
+  "proposto": "ingenuitatis"
+ },
+ {
+  "key": "inguen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "inhumanitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "inhumanitaatis",
+  "proposto": "inhumanitatis"
+ },
+ {
+  "key": "iniquitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "iniquitaatis",
+  "proposto": "iniquitatis"
+ },
+ {
+  "key": "insulsitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "insulsitaatis",
+  "proposto": "insulsitatis"
+ },
+ {
+  "key": "integritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "integritaatis",
+  "proposto": "integritatis"
+ },
+ {
+  "key": "irritamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Iuppiter",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "ius1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "labor",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "lampas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "lampaadis",
+  "proposto": "lampadis"
+ },
+ {
+  "key": "Larentalia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "laus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "laxitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "laxitaatis",
+  "proposto": "laxitatis"
+ },
+ {
+  "key": "legumen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "lenimen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "lenitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "lenitaatis",
+  "proposto": "lenitatis"
+ },
+ {
+  "key": "lessus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "levamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "levitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "levitaatis",
+  "proposto": "levitatis"
+ },
+ {
+  "key": "lexis",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "libamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Liberalia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "liberalitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "liberalitaatis",
+  "proposto": "liberalitatis"
+ },
+ {
+  "key": "libertas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "libertaatis",
+  "proposto": "libertatis"
+ },
+ {
+  "key": "ligamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "limen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "liquor",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "liticen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "longinquitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "longinquitaatis",
+  "proposto": "longinquitatis"
+ },
+ {
+  "key": "loquacitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "loquacitaatis",
+  "proposto": "loquacitatis"
+ },
+ {
+  "key": "Luceres",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "luctamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "lumen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Maecenas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "maecenaatis",
+  "proposto": "maecenatis"
+ },
+ {
+  "key": "Maenas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "maenaadis",
+  "proposto": "maenadis"
+ },
+ {
+  "key": "magalia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "magnanimitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "magnanimitaatis",
+  "proposto": "magnanimitatis"
+ },
+ {
+  "key": "malignitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "malignitaatis",
+  "proposto": "malignitatis"
+ },
+ {
+  "key": "mapalia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "maturitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "maturitaatis",
+  "proposto": "maturitatis"
+ },
+ {
+  "key": "medicamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "medietas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "medietaatis",
+  "proposto": "medietatis"
+ },
+ {
+  "key": "mediocritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "mediocritaatis",
+  "proposto": "mediocritatis"
+ },
+ {
+  "key": "megistanes",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "mendicitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "mendicitaatis",
+  "proposto": "mendicitatis"
+ },
+ {
+  "key": "meretrix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "meretriicis",
+  "proposto": "meretricis"
+ },
+ {
+  "key": "merops",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "meropopis",
+  "proposto": "meropis"
+ },
+ {
+  "key": "moderamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "moenia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "molimen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "mortalitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "mortalitaatis",
+  "proposto": "mortalitatis"
+ },
+ {
+  "key": "munimen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Nais",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "necessitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "necessitaatis",
+  "proposto": "necessitatis"
+ },
+ {
+  "key": "nitor",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "nomen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "novitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "novitaatis",
+  "proposto": "novitatis"
+ },
+ {
+  "key": "numen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "nutrimen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "nutrix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "nutriicis",
+  "proposto": "nutricis"
+ },
+ {
+  "key": "oblectamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "obscenitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "obscenitaatis",
+  "proposto": "obscenitatis"
+ },
+ {
+  "key": "obscuritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "obscuritaatis",
+  "proposto": "obscuritatis"
+ },
+ {
+  "key": "obsidior",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "obstetrix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "obstetriicis",
+  "proposto": "obstetricis"
+ },
+ {
+  "key": "octussis",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "odos1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Olympias",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "olympiaadis",
+  "proposto": "olympiadis"
+ },
+ {
+  "key": "omen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "opacitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "opacitaatis",
+  "proposto": "opacitatis"
+ },
+ {
+  "key": "opportunitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "opportunitaatis",
+  "proposto": "opportunitatis"
+ },
+ {
+  "key": "orbis",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "orbitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "orbitaatis",
+  "proposto": "orbitatis"
+ },
+ {
+  "key": "oryx",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "oscen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Pallas",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "parvitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "parvitaatis",
+  "proposto": "parvitatis"
+ },
+ {
+  "key": "paucitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "paucitaatis",
+  "proposto": "paucitatis"
+ },
+ {
+  "key": "paupertas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "paupertaatis",
+  "proposto": "paupertatis"
+ },
+ {
+  "key": "pecten",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Penates",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "perdix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "perdiicis",
+  "proposto": "perdicis"
+ },
+ {
+  "key": "peregrinitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "peregrinitaatis",
+  "proposto": "peregrinitatis"
+ },
+ {
+  "key": "perennitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "perennitaatis",
+  "proposto": "perennitatis"
+ },
+ {
+  "key": "peripetasmata",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "pernicitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "pernicitaatis",
+  "proposto": "pernicitatis"
+ },
+ {
+  "key": "perpetuitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "perpetuitaatis",
+  "proposto": "perpetuitatis"
+ },
+ {
+  "key": "perspicuitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "perspicuitaatis",
+  "proposto": "perspicuitatis"
+ },
+ {
+  "key": "phalanx",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "phalanangis",
+  "proposto": "phalangis"
+ },
+ {
+  "key": "phoenix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "phoeniicis",
+  "proposto": "phoenicis"
+ },
+ {
+  "key": "piamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "pietas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "pietaatis",
+  "proposto": "pietatis"
+ },
+ {
+  "key": "pistrix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "pistriicis",
+  "proposto": "pistricis"
+ },
+ {
+  "key": "placabilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "placabilitaatis",
+  "proposto": "placabilitatis"
+ },
+ {
+  "key": "placamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "pollen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "pontifex",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "popinor",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "popularitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "popularitaatis",
+  "proposto": "popularitatis"
+ },
+ {
+  "key": "posteritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "posteritaatis",
+  "proposto": "posteritatis"
+ },
+ {
+  "key": "potestas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "potestaatis",
+  "proposto": "potestatis"
+ },
+ {
+  "key": "praenomen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "pravitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "pravitaatis",
+  "proposto": "pravitatis"
+ },
+ {
+  "key": "prex",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "probitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "probitaatis",
+  "proposto": "probitatis"
+ },
+ {
+  "key": "procacitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "procacitaatis",
+  "proposto": "procacitatis"
+ },
+ {
+  "key": "proceres",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "proceritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "proceritaatis",
+  "proposto": "proceritatis"
+ },
+ {
+  "key": "proconsul",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "propinquitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "propinquitaatis",
+  "proposto": "propinquitatis"
+ },
+ {
+  "key": "proprietas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "proprietaatis",
+  "proposto": "proprietatis"
+ },
+ {
+  "key": "prosperitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "prosperitaatis",
+  "proposto": "prosperitatis"
+ },
+ {
+  "key": "protervitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "protervitaatis",
+  "proposto": "protervitatis"
+ },
+ {
+  "key": "proximitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "proximitaatis",
+  "proposto": "proximitatis"
+ },
+ {
+  "key": "pubertas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "pubertaatis",
+  "proposto": "pubertatis"
+ },
+ {
+  "key": "purgamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "putamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "qualitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "qualitaatis",
+  "proposto": "qualitatis"
+ },
+ {
+  "key": "Quiris",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "radix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "radiicis",
+  "proposto": "radicis"
+ },
+ {
+  "key": "rapacitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "rapacitaatis",
+  "proposto": "rapacitatis"
+ },
+ {
+  "key": "raritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "raritaatis",
+  "proposto": "raritatis"
+ },
+ {
+  "key": "regimen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "remoramen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "renovamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "respiramen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "restis",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "rete",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "revocamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "rivalitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "rivalitaatis",
+  "proposto": "rivalitatis"
+ },
+ {
+  "key": "robur",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "ros1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "rudus2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "rusticitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "rusticitaatis",
+  "proposto": "rusticitatis"
+ },
+ {
+  "key": "sagacitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "sagacitaatis",
+  "proposto": "sagacitatis"
+ },
+ {
+  "key": "sagmen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "salix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "saliicis",
+  "proposto": "salicis"
+ },
+ {
+  "key": "saltatrix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "saltatriicis",
+  "proposto": "saltatricis"
+ },
+ {
+  "key": "salubritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "salubritaatis",
+  "proposto": "salubritatis"
+ },
+ {
+  "key": "sanctitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "sanctitaatis",
+  "proposto": "sanctitatis"
+ },
+ {
+  "key": "sanguen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "sanitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "sanitaatis",
+  "proposto": "sanitatis"
+ },
+ {
+  "key": "satietas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "satietaatis",
+  "proposto": "satietatis"
+ },
+ {
+  "key": "saturitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "saturitaatis",
+  "proposto": "saturitatis"
+ },
+ {
+  "key": "scriptor",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "securitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "securitaatis",
+  "proposto": "securitatis"
+ },
+ {
+  "key": "sedulitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "sedulitaatis",
+  "proposto": "sedulitatis"
+ },
+ {
+  "key": "semen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "sementis",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "serenitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "serenitaatis",
+  "proposto": "serenitatis"
+ },
+ {
+  "key": "severitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "severitaatis",
+  "proposto": "severitatis"
+ },
+ {
+  "key": "siccitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "siccitaatis",
+  "proposto": "siccitatis"
+ },
+ {
+  "key": "simplicitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "simplicitaatis",
+  "proposto": "simplicitatis"
+ },
+ {
+  "key": "simulamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "simultas",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "sinceritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "sinceritaatis",
+  "proposto": "sinceritatis"
+ },
+ {
+  "key": "societas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "societaatis",
+  "proposto": "societatis"
+ },
+ {
+  "key": "sodalitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "sodalitaatis",
+  "proposto": "sodalitatis"
+ },
+ {
+  "key": "soliditas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "soliditaatis",
+  "proposto": "soliditatis"
+ },
+ {
+  "key": "sordes",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "specimen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "spectatrix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "spectatriicis",
+  "proposto": "spectatricis"
+ },
+ {
+  "key": "stabilimen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "stabilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "stabilitaatis",
+  "proposto": "stabilitatis"
+ },
+ {
+  "key": "stamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "statumen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "sterilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "sterilitaatis",
+  "proposto": "sterilitatis"
+ },
+ {
+  "key": "stramen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "suavitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "suavitaatis",
+  "proposto": "suavitatis"
+ },
+ {
+  "key": "subtemen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "subtilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "subtilitaatis",
+  "proposto": "subtilitatis"
+ },
+ {
+  "key": "succlamatio",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "suffimen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "sufflamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "sumen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "suovetaurilia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "taciturnitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "taciturnitaatis",
+  "proposto": "taciturnitatis"
+ },
+ {
+  "key": "tapes",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "tarditas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "tarditaatis",
+  "proposto": "tarditatis"
+ },
+ {
+  "key": "temeritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "temeritaatis",
+  "proposto": "temeritatis"
+ },
+ {
+  "key": "tempestas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "tempestaatis",
+  "proposto": "tempestatis"
+ },
+ {
+  "key": "temptamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "tenacitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "tenacitaatis",
+  "proposto": "tenacitatis"
+ },
+ {
+  "key": "tenuitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "tenuitaatis",
+  "proposto": "tenuitatis"
+ },
+ {
+  "key": "Terminalia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "tibicen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "tigris",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "timiditas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "timiditaatis",
+  "proposto": "timiditatis"
+ },
+ {
+  "key": "tormina",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "tranquillitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "tranquillitaatis",
+  "proposto": "tranquillitatis"
+ },
+ {
+  "key": "triennia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "triens",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "trienentis",
+  "proposto": "trientis"
+ },
+ {
+  "key": "Triones",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "tutamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "tyrannis",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "ubertas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "ubertaatis",
+  "proposto": "ubertatis"
+ },
+ {
+  "key": "unguen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "unguis",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "universitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "universitaatis",
+  "proposto": "universitatis"
+ },
+ {
+  "key": "urbanitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "urbanitaatis",
+  "proposto": "urbanitatis"
+ },
+ {
+  "key": "uter1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "utilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "utilitaatis",
+  "proposto": "utilitatis"
+ },
+ {
+  "key": "vacuitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "vacuitaatis",
+  "proposto": "vacuitatis"
+ },
+ {
+  "key": "vanitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "vanitaatis",
+  "proposto": "vanitatis"
+ },
+ {
+  "key": "varietas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "varietaatis",
+  "proposto": "varietatis"
+ },
+ {
+  "key": "vas1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "vas2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "vastitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "vastitaatis",
+  "proposto": "vastitatis"
+ },
+ {
+  "key": "velamen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "velocitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "velocitaatis",
+  "proposto": "velocitatis"
+ },
+ {
+  "key": "venatrix",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "venatriicis",
+  "proposto": "venatricis"
+ },
+ {
+  "key": "venustas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "venustaatis",
+  "proposto": "venustatis"
+ },
+ {
+  "key": "veritas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "veritaatis",
+  "proposto": "veritatis"
+ },
+ {
+  "key": "vetustas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "vetustaatis",
+  "proposto": "vetustatis"
+ },
+ {
+  "key": "vicinitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "vicinitaatis",
+  "proposto": "vicinitatis"
+ },
+ {
+  "key": "viduitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "viduitaatis",
+  "proposto": "viduitatis"
+ },
+ {
+  "key": "vimen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Vinalia",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "virginitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "virginitaatis",
+  "proposto": "virginitatis"
+ },
+ {
+  "key": "virilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "virilitaatis",
+  "proposto": "virilitatis"
+ },
+ {
+  "key": "vitiositas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "vitiositaatis",
+  "proposto": "vitiositatis"
+ },
+ {
+  "key": "volubilitas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "volubilitaatis",
+  "proposto": "volubilitatis"
+ },
+ {
+  "key": "volumen",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "voluntas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "voluntaatis",
+  "proposto": "voluntatis"
+ },
+ {
+  "key": "voluptas",
+  "tipo": "DIVERGENTE",
+  "memorizzato": "voluptaatis",
+  "proposto": "voluptatis"
+ },
+ {
+  "key": "adfectus2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "armatus2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "attrectatus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "bos",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "centuriatus2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "circuitus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "circumspectus2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "coeptus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "compressus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "concessus2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "conflictus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "contuitus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "deiectus2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "domus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "flictus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "habitus2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "Idus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "intercursus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "interductus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "obitus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "obtutus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "occursus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "oppositus2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "permissus1",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "piscatus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "positus2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "pressus2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "procursus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "pugillatus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "quinquatrus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "quinqueviratus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "raptus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "respiratus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "saltatus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "saltus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "scitus2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "screatus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "secubitus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "singultus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "situs2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "stimulatio",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "successus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "succussus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "suspectus2",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "suspiratus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "suspiritus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "tractatus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "triumviratus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "ululatus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "vagitus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "venatus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "volatus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "vultus",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "amarities",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "caesaries",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "canities",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "effigies",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "glacies",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "ingluvies",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "intemperies",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "luxuries",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "macies",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "meridies",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "pauperies",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "progenies",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "proluvies",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "rabies",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "sanies",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "series",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "species",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "superficies",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ },
+ {
+  "key": "temperies",
+  "tipo": "MANCANTE",
+  "memorizzato": null,
+  "proposto": null
+ }
+]

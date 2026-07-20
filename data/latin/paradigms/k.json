@@ -1,0 +1,76 @@
+{
+"meta": {},
+"paradigms": {
+"Kalendae": {
+"pos": "Sostantivo",
+"cat": "1ª decl.",
+"classe": "1ª declinazione (plurale tantum)",
+"testa": "Kalendae, kalendarum f",
+"nome": {
+"pl": {
+"nom": [
+[
+"kalend",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"gen": [
+[
+"kalend",
+"t"
+],
+[
+"arum",
+"d"
+]
+],
+"dat": [
+[
+"kalend",
+"t"
+],
+[
+"is",
+"d"
+]
+],
+"acc": [
+[
+"kalend",
+"t"
+],
+[
+"as",
+"d"
+]
+],
+"voc": [
+[
+"kalend",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"abl": [
+[
+"kalend",
+"t"
+],
+[
+"is",
+"d"
+]
+]
+}
+},
+"nota": "plurale tantum: privo di singolare"
+}
+}
+}

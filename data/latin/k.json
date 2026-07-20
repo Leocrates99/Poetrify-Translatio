@@ -1,1 +1,197 @@
-{"meta": {"lang": "latino", "letter": "k", "forms_count": 26, "lemmas_count": 1, "archived_count": 0}, "forms": {"Kalendas": [{"lemma": "Kalendae", "parsing": ""}], "Karthaginem": [{"lemma": "Carthago", "parsing": ""}], "Karthagini": [{"lemma": "Carthago", "parsing": ""}], "Karthaginiensem": [{"lemma": "Carthaginiensis", "parsing": ""}], "Kaesones": [{"lemma": "Caeso", "parsing": ""}], "Kartaginem": [{"lemma": "Carthago", "parsing": ""}], "Kalendis": [{"lemma": "Kalendae", "parsing": ""}], "Karthaginiensium": [{"lemma": "Carthaginiensis", "parsing": ""}], "Karthagine": [{"lemma": "Carthago", "parsing": ""}], "Karthaginienses": [{"lemma": "Carthaginiensis", "parsing": ""}], "Karthaginiensibus": [{"lemma": "Carthaginiensis", "parsing": ""}], "Kartago": [{"lemma": "Carthago", "parsing": ""}], "kari": [{"lemma": "carus", "parsing": ""}], "Kalendarum": [{"lemma": "Kalendae", "parsing": ""}], "karissime": [{"lemma": "carus", "parsing": ""}], "Kaesonem": [{"lemma": "Caeso", "parsing": ""}], "Karthaginiensis": [{"lemma": "Carthaginiensis", "parsing": ""}], "karine": [{"lemma": "carus", "parsing": ""}], "Kaeso": [{"lemma": "Caeso", "parsing": ""}], "kalumniam": [{"lemma": "calumnia", "parsing": ""}], "Kartaginis": [{"lemma": "Carthago", "parsing": ""}], "Kalendae": [{"lemma": "Kalendae", "parsing": ""}], "karus": [{"lemma": "carus", "parsing": ""}], "Karthaginis": [{"lemma": "Carthago", "parsing": ""}], "Karthago": [{"lemma": "Carthago", "parsing": ""}], "Kalendasque": [{"lemma": "Kalendae", "parsing": ""}]}, "dict": {"Kalendae": {"pos": "sostantivo", "definition": "Kalendae (Cal-; often written K), ārum, f 1 CAL-, the day of proclamation, Calends, first day of the month: Kalendis Decembribus, on December 1: pridie Kalendas Maias, the last day of April: tristes Kalendae, i. e. pa…"}}}
+{
+"meta": {
+"lang": "latino",
+"letter": "k",
+"forms_count": 26,
+"lemmas_count": 1,
+"archived_count": 0
+},
+"forms": {
+"Kalendas": [
+{
+"lemma": "Kalendae",
+"parsing": ""
+}
+],
+"Karthaginem": [
+{
+"lemma": "Carthago",
+"parsing": ""
+}
+],
+"Karthagini": [
+{
+"lemma": "Carthago",
+"parsing": ""
+}
+],
+"Karthaginiensem": [
+{
+"lemma": "Carthaginiensis",
+"parsing": ""
+}
+],
+"Kaesones": [
+{
+"lemma": "Caeso",
+"parsing": ""
+}
+],
+"Kartaginem": [
+{
+"lemma": "Carthago",
+"parsing": ""
+}
+],
+"Kalendis": [
+{
+"lemma": "Kalendae",
+"parsing": ""
+}
+],
+"Karthaginiensium": [
+{
+"lemma": "Carthaginiensis",
+"parsing": ""
+}
+],
+"Karthagine": [
+{
+"lemma": "Carthago",
+"parsing": ""
+}
+],
+"Karthaginienses": [
+{
+"lemma": "Carthaginiensis",
+"parsing": ""
+}
+],
+"Karthaginiensibus": [
+{
+"lemma": "Carthaginiensis",
+"parsing": ""
+}
+],
+"Kartago": [
+{
+"lemma": "Carthago",
+"parsing": ""
+}
+],
+"kari": [
+{
+"lemma": "carus",
+"parsing": ""
+}
+],
+"Kalendarum": [
+{
+"lemma": "Kalendae",
+"parsing": ""
+}
+],
+"karissime": [
+{
+"lemma": "carus",
+"parsing": ""
+}
+],
+"Kaesonem": [
+{
+"lemma": "Caeso",
+"parsing": ""
+}
+],
+"Karthaginiensis": [
+{
+"lemma": "Carthaginiensis",
+"parsing": ""
+}
+],
+"karine": [
+{
+"lemma": "carus",
+"parsing": ""
+}
+],
+"Kaeso": [
+{
+"lemma": "Caeso",
+"parsing": ""
+}
+],
+"kalumniam": [
+{
+"lemma": "calumnia",
+"parsing": ""
+}
+],
+"Kartaginis": [
+{
+"lemma": "Carthago",
+"parsing": ""
+}
+],
+"Kalendae": [
+{
+"lemma": "Kalendae",
+"parsing": ""
+}
+],
+"karus": [
+{
+"lemma": "carus",
+"parsing": ""
+}
+],
+"Karthaginis": [
+{
+"lemma": "Carthago",
+"parsing": ""
+}
+],
+"Karthago": [
+{
+"lemma": "Carthago",
+"parsing": ""
+}
+],
+"Kalendasque": [
+{
+"lemma": "Kalendae",
+"parsing": ""
+}
+],
+"kalendae": [
+{
+"lemma": "Kalendae",
+"parsing": "nom. pl. · voc. pl. (1ª decl.)"
+}
+],
+"kalendarum": [
+{
+"lemma": "Kalendae",
+"parsing": "gen. pl. (1ª decl.)"
+}
+],
+"kalendis": [
+{
+"lemma": "Kalendae",
+"parsing": "abl. pl. · dat. pl. (1ª decl.)"
+}
+],
+"kalendas": [
+{
+"lemma": "Kalendae",
+"parsing": "acc. pl. (1ª decl.)"
+}
+]
+},
+"dict": {
+"Kalendae": {
+"pos": "sostantivo",
+"definition": "Kalendae (Cal-; often written K), ārum, f 1 CAL-, the day of proclamation, Calends, first day of the month: Kalendis Decembribus, on December 1: pridie Kalendas Maias, the last day of April: tristes Kalendae, i. e. pa…"
+}
+}
+}

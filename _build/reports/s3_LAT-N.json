@@ -1,7 +1,7 @@
 {
  "segmento": "LAT-N",
  "lemmi": 6002,
- "verdi": 2,
+ "verdi": 4,
  "stat": {
   "①": {
    "lemmi": 6002,
@@ -23,14 +23,15 @@
    "prov_completa": 654
   },
   "④": {
-   "attesi": 5997,
-   "con_paradigma": 5495,
-   "completi_12_celle": 5495,
-   "cat_coerente": 5449,
+   "attesi": 5981,
+   "con_paradigma": 5981,
+   "completi_12_celle": 5981,
+   "cat_coerente": 5981,
    "esenti_indeclinabili": 5,
-   "senza_paradigma": 502,
+   "esenti_documentati": 16,
+   "senza_paradigma": 0,
    "incompleti": 0,
-   "cat_errata": 46
+   "cat_errata": 0
   },
   "⑥": {
    "troncate_nel_core": 1651,
@@ -38,18 +39,18 @@
    "residue": 1521
   },
   "⑦": {
-   "forme_testate": 52998,
-   "round_trip_ok": 52998,
+   "forme_testate": 55686,
+   "round_trip_ok": 55686,
    "pct": 100.0,
-   "lemmi_con_forme": 5881,
-   "lemmi_tutti_ok": 5881,
-   "lemmi_senza_forme": 121
+   "lemmi_con_forme": 5999,
+   "lemmi_tutti_ok": 5999,
+   "lemmi_senza_forme": 0
   },
   "⑧": {
-   "total_forms": 599727,
+   "total_forms": 599487,
    "total_lemmas": 17443,
    "archived_lemmas": 487,
-   "total_paradigms": 9510,
+   "total_paradigms": 9996,
    "total_all_lemmas": 17930
   }
  },
@@ -59,20 +60,6 @@
   ],
   "③": [
    "5348 lemmi senza record fuso → nessun tr"
-  ],
-  "④": [
-   "502 lemmi SENZA paradigma",
-   "46 paradigmi con declinazione discordante",
-   "  es. aer",
-   "  es. ambulatiuncula",
-   "  es. Amyclae",
-   "  es. angustia",
-   "  es. argutiae",
-   "  es. aculeus (par=5ª decl. ≠ 2ª decl.)",
-   "  es. alveus (par=5ª decl. ≠ 2ª decl.)",
-   "  es. araneus (par=5ª decl. ≠ 2ª decl.)",
-   "  es. aulaeum (par=5ª decl. ≠ 2ª decl.)",
-   "  es. balteus (par=5ª decl. ≠ 2ª decl.)"
   ],
   "⑤": [
    "5348 lemmi senza record fuso → nessuna prov"
@@ -84,9 +71,6 @@
    "  es. barbaria: barbaria ae (nom. also -iēs, acc. iem), f barbarus, a strange land, fo",
    "  es. basilica: 'basilica ae, f, basilikh/ (sc. stoa/), a portico, basilica; in Rome, ",
    "  es. belua: bēlua (not bellua), ae, f a beast, wild beast, monster: fera: saeva, H"
-  ],
-  "⑦": [
-   "121 lemmi del segmento senza alcuna forma generata"
   ]
  }
 }

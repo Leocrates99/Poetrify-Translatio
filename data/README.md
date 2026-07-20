@@ -188,6 +188,6 @@ memoria.
 <!-- COUNTS:START (auto · _build/rebuild_index.py · non editare a mano) -->
 | lingua | lemmi core | forme | form-entries | archivio | paradigmi | glosse it |
 |---|--:|--:|--:|--:|--:|--:|
-| latino | 17.443 | 599.727 | 624.724 | 487 | 9.510 | 5.260 |
+| latino | 17.443 | 599.487 | 627.412 | 487 | 9.996 | 5.260 |
 | greco | 25.086 | 80.999 | 81.934 | 110.225 | 4.561 | 10.367 |
 <!-- COUNTS:END -->

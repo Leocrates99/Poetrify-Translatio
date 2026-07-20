@@ -1,0 +1,370 @@
+{
+ "aculeus": {
+  "genitivo": "aculei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "alveus": {
+  "genitivo": "alvei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "araneus": {
+  "genitivo": "aranei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "aulaeum": {
+  "genitivo": "aulaei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "balteus": {
+  "genitivo": "baltei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "caduceus": {
+  "genitivo": "caducei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "calceus": {
+  "genitivo": "calcei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "caseus": {
+  "genitivo": "casei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "centaureum": {
+  "genitivo": "centaurei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "choreus": {
+  "genitivo": "chorei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "cichoreum": {
+  "genitivo": "cichorei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "clipeus": {
+  "genitivo": "clipei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "coryphaeus": {
+  "genitivo": "coryphaei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "culeus": {
+  "genitivo": "culei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "culleus": {
+  "genitivo": "cullei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "cuneus": {
+  "genitivo": "cunei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "dichoreus": {
+  "genitivo": "dichorei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "eculeus": {
+  "genitivo": "eculei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "flammeum": {
+  "genitivo": "flammei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "ganeum": {
+  "genitivo": "ganei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "Gnaeus": {
+  "genitivo": "gnaei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "gynaeceum": {
+  "genitivo": "gynaecei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "hinnuleus": {
+  "genitivo": "hinnulei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "hordeum": {
+  "genitivo": "hordei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "horreum": {
+  "genitivo": "horrei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "Hymenaeus": {
+  "genitivo": "hymenaei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "lageos": {
+  "genitivo": "lagei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "f",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "laqueus": {
+  "genitivo": "laquei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "linteum": {
+  "genitivo": "lintei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "Lyceum": {
+  "genitivo": "lycei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "malleus": {
+  "genitivo": "mallei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "mustaceum": {
+  "genitivo": "mustacei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "oleum": {
+  "genitivo": "olei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "Panomphaeus": {
+  "genitivo": "panomphaei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "pilleum": {
+  "genitivo": "pillei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "pilleus": {
+  "genitivo": "pillei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "pluteus": {
+  "genitivo": "plutei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "prytaneum": {
+  "genitivo": "prytanei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "puteus": {
+  "genitivo": "putei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "solliferreum": {
+  "genitivo": "solliferrei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "spelaeum": {
+  "genitivo": "spelaei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "spondeus": {
+  "genitivo": "spondei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "trochaeus": {
+  "genitivo": "trochaei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "tropaeum": {
+  "genitivo": "tropaei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "n",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "urceus": {
+  "genitivo": "urcei",
+  "numero": "sg",
+  "declinazione": 2,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ },
+ "deus": {
+  "genitivo": "dei",
+  "numero": "sg",
+  "declinazione": 3,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "dispatch_fix"
+ }
+}
