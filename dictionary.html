@@ -1990,8 +1990,24 @@ footer {
 .seg-declwrap .seg-decl + .seg-decl { margin-top: 8px; }
 .seg-decl .seg-row { gap: 10px; padding: 8px 14px; }
 .dict-entry-via { font-size: 12px; font-style: italic; color: #6b6660; margin: 4px 0; }
-.dict-entry-alts { display: flex; flex-wrap: wrap; gap: 6px; align-items: baseline; font-size: 12px; color: #6b6660; margin: 6px 0; }
-.alt-lemma-chip { font-size: 13px; padding: 2px 10px; border: 1px solid #d5d2cb; border-radius: 999px; background: transparent; cursor: pointer; }
+.dict-entry-alts {
+  /* Barra delle LETTURE ALTERNATIVE: appiccicata sotto la testata (52px) cosi'
+     resta visibile mentre scorri il paradigma. Prima viveva in .lx-secondary,
+     cioe' DOPO le tabelle di flessione: proprio l'informazione che serve quando
+     sei atterrato sul lemma sbagliato di una forma ambigua era la piu' sepolta. */
+  position: sticky; top: 52px; z-index: 40;
+  display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+  font-size: 12px; color: var(--sepia);
+  margin: 8px 0 12px; padding: 7px 10px;
+  background: var(--paper);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md, 8px);
+}
+.alts-lbl { font-family: var(--font-ui); font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em; color: var(--sepia); margin-right: 2px; }
+.alt-lemma-chip.is-current { background: var(--dacc); border-color: var(--dacc);
+  color: #fff; cursor: default; }
+.alt-lemma-chip { font-size: 13px; padding: 2px 10px; border: 1px solid var(--rule); border-radius: var(--radius-md, 8px); background: transparent; cursor: pointer; }
 .alt-lemma-chip small { color: #8a857d; }
 .alt-lemma-chip:hover { border-color: var(--md-accent, #A22E37); color: var(--md-accent, #A22E37); }
 

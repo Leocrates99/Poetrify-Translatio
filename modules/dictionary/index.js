@@ -837,7 +837,7 @@ export class DictionaryApp {
     const saveBtn = this.$results.querySelector('.dict-entry-save');
     if (saveBtn) saveBtn.addEventListener('click', () => this._toggleSaveVocab());
     /* letture alternative → naviga al lemma */
-    this.$results.querySelectorAll('.alt-lemma-chip').forEach(b => {
+    this.$results.querySelectorAll('.alt-lemma-chip[data-lemma]').forEach(b => {
       b.addEventListener('click', () => this._navigateTo(b.dataset.lemma, this.currentLang));
     });
     /* lista multi-lemma (card stile laboratorio) → naviga al lemma */
@@ -1193,9 +1193,23 @@ export class DictionaryApp {
     const viaHtml = viaMap[hit.via]
       ? `<div class="dict-entry-via">⚑ ${viaMap[hit.via]}</div>` : '';
     /* Letture alternative esplicite (legis = legō E lēx) */
-    const _alts = (hit.alternatives || []).filter(a => a.lemma && a.lemma !== hit.lemma);
+    let _alts = (hit.alternatives || []).filter(a => a.lemma && a.lemma !== hit.lemma);
+    /* Memoria delle letture della FORMA cercata. Senza, passando da 'lego' a 'lex'
+       la barra sparirebbe (un lemma diretto non ha alternative) proprio quando
+       serve per tornare indietro: le letture restano finche' resti fra i candidati. */
+    if (_alts.length) {
+      this._formReadings = { form: this.currentQuery,
+        items: [{ lemma: hit.lemma, parsing: hit.parsing || '' }].concat(_alts) };
+    } else if (this._formReadings && this._formReadings.items.some(x => x.lemma === hit.lemma)) {
+      _alts = this._formReadings.items.filter(x => x.lemma !== hit.lemma);
+    } else {
+      this._formReadings = null;
+    }
     const altsHtml = _alts.length
-      ? `<div class="dict-entry-alts">Altre letture: ${_alts.slice(0, 5).map(a =>
+      ? `<div class="dict-entry-alts" role="group" aria-label="Letture alternative della forma cercata">
+          <span class="alts-lbl">${_alts.length + 1} letture</span>
+          <span class="alt-lemma-chip is-current${lemmaCls}" aria-current="true">${escapeHtml(hit.lemma)}</span>
+          ${_alts.slice(0, 5).map(a =>
           `<button type="button" class="alt-lemma-chip${lemmaCls}" data-lemma="${escapeHtml(a.lemma)}">${escapeHtml(a.lemma)}${a.parsing ? ` <small>${escapeHtml(a.parsing)}</small>` : ''}</button>`).join('')}</div>`
       : '';
     const sourceLabel = {
@@ -1282,7 +1296,7 @@ export class DictionaryApp {
           `<li><div class="lx-sense-line"><span class="lx-sense-mean">${escapeHtml(s)}</span></div></li>`).join('')}</ol>`
       : `<ol class="lx-senses"><li><div class="lx-sense-line lx-sense-reg">Traduzione italiana in arrivo.</div></li></ol>`;
     // funzioni secondarie preservate, sotto, sobrie
-    const secondary = [parsingHtml, viaHtml, altsHtml, translitHtml, etymHtml, cognateHtml, paradigmHtml]
+    const secondary = [parsingHtml, viaHtml, translitHtml, etymHtml, cognateHtml, paradigmHtml]
       .filter(Boolean).join('');
 
     return `<article class="lx-entry${this._posClass(displayPos)}${lemmaCls}">
@@ -1292,6 +1306,7 @@ export class DictionaryApp {
         ${freqHtml}
         ${navHtml}
       </div>
+      ${altsHtml}
       ${principalHtml}
       ${genderHtml}
       ${sensesHtml}
