@@ -1168,15 +1168,16 @@ kbd {
   font-size: 12px;
   font-weight: 600;
   padding: 4px 10px;
-  border: 1px solid rgba(99,102,241,0.35);
-  border-radius: 999px;
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md, 8px);
   background: var(--paper);
-  color: #3a3eb0;
+  color: var(--ink-soft);
   cursor: pointer;
-  transition: background 0.12s ease, color 0.12s ease;
+  white-space: nowrap;
+  transition: background 0.12s ease, color 0.12s ease, border-color 0.12s ease;
 }
-.par-mode-btn:hover { background: rgba(99,102,241,0.1); }
-.par-mode-btn.is-active { background: #3a3eb0; color: var(--paper); border-color: #3a3eb0; }
+.par-mode-btn:hover { border-color: var(--dacc-border); color: var(--dacc); }
+.par-mode-btn.is-active { background: var(--dacc); color: #fff; border-color: var(--dacc); }
 .dict-paradigm-classic { margin-top: 0; }
 .dict-paradigm-classic + .dict-paradigm { margin-top: 10px; }
 .clp-wrap { margin-top: 8px; }
@@ -1388,17 +1389,17 @@ kbd {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--primary);
-  background: rgba(99,102,241,0.08);
-  border: 1px solid rgba(99,102,241,0.22);
+  color: var(--dacc);
+  background: var(--dacc-pale);
+  border: 1px solid var(--dacc-border);
   border-radius: 999px;
   padding: 2px 10px;
   white-space: nowrap;
 }
 :root[data-theme="dark"] body .dict-gram-chip {
-  color: #c7caf7;
-  background: rgba(99,102,241,0.18);
-  border-color: rgba(99,102,241,0.38);
+  color: var(--dacc);
+  background: var(--dacc-pale);
+  border-color: var(--dacc-border);
 }
 .dict-paradigma {
   margin: 8px 0 12px;
