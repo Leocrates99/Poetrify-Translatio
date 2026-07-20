@@ -40025,7 +40025,16 @@ document.addEventListener('DOMContentLoaded', () => {
     var group = document.createElement('div');
     group.className = 'seg-group';
     group.setAttribute('role','radiogroup');
-    var lab = sel.closest('label') && sel.closest('label').querySelector('span');
+    // L'etichetta vive in strutture diverse a seconda del pannello:
+    //   <label class="schel-vq-field"><span>Caso</span><select>   (scheletro verbi)
+    //   <div class="field-block"><label class="field-block-label">Caso</label>…  (voci analisi)
+    var lab = null;
+    var inLabel = sel.closest('label');
+    if (inLabel && inLabel.querySelector('span')) lab = inLabel.querySelector('span');
+    if (!lab) {
+      var blk = sel.closest('.field-block');
+      if (blk) lab = blk.querySelector('.field-block-label') || blk.querySelector('label');
+    }
     if (lab) group.setAttribute('aria-label', lab.textContent.trim());
     segReal(sel).forEach(function(o){
       var b = document.createElement('button');
