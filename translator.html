@@ -12873,21 +12873,48 @@ function makeSentence(text) {
    Qui non si ripara nulla d'ufficio: si RILEVA e si DICHIARA. La riparazione
    è una scelta con un prezzo, e il prezzo lo paga chi decide. */
 
-/* Confronto per CONTENUTO, non per formattazione: gli spazi bianchi vengono
-   collassati da entrambe le parti. Così dividere o unire frase a mano — che
-   cambia la segmentazione ma non il testo — non produce un falso allarme,
-   mentre cambiare anche una sola lettera lo produce. */
 function _testoPerConfronto(t) { return (t || '').replace(/\s+/g, ' ').trim(); }
+
+/* Il confronto è sulla SEQUENZA DEI TOKEN, non sulle stringhe.
+   Ricomporre le frasi con un separatore — qualunque separatore — significa
+   inventare una spaziatura che il brano può non avere, e ogni scarto di
+   spaziatura diventava un falso allarme su testo intonso. Misurati due casi
+   reali: «Prima frase.Seconda frase.» (punto senza spazio) e
+   ««Prima frase.» Seconda.» (la chiusura delle virgolette cade nella frase
+   dopo). Peggio: l'avviso non si spegneva nemmeno risegmentando, perché la
+   risegmentazione riproduce le stesse frasi — un ciclo senza uscita, in cui
+   l'unico bottone che avrebbe dovuto risolverlo lasciava tutto com'era.
+   La sequenza dei token ignora gli spazi per costruzione ed è sensibile a
+   ogni differenza che conta, perché è la stessa lente con cui il programma
+   legge il testo per ancorarci le analisi. */
+function _sequenzaToken(t) {
+  return tokenizeSentence(t || '').filter(x => x.kind !== 'space').map(x => x.text).join('');
+}
 
 /* Restituisce null se brano e frasi coincidono, altrimenti il quadro della
    divergenza (con quante analisi sono appese al testo delle frasi). */
 function branoFrasiDivergenza() {
   const frasi = (state.sentences || []);
   if (!frasi.length) return null;              // nessuna frase: nessun invariante da rompere
-  const brano = _testoPerConfronto(state.meta && state.meta.testoOriginale);
-  if (!brano) return null;                     // brano vuoto: lo dice già l'interfaccia
-  const ricomposto = _testoPerConfronto(frasi.map(s => s.original || '').join(' '));
-  if (ricomposto === brano) return null;
+  const testoBrano = state.meta && state.meta.testoOriginale;
+  if (!_testoPerConfronto(testoBrano)) return null;   // brano vuoto: lo dice già l'interfaccia
+  const seqBrano = _sequenzaToken(testoBrano);
+  const seqFrasi = frasi.map(s => _sequenzaToken(s.original)).join('');
+  let motivo = null;
+  if (seqBrano !== seqFrasi) {
+    motivo = 'testo';
+  } else if (state.meta.tipoTesto === 'poesia') {
+    /* In poesia l'unità è il VERSO, e il verso nasce dagli a capo del brano:
+       stesse parole ma un a capo in meno significa che il brano ha un verso
+       che le frasi non hanno. Sulla sola sequenza di token questo caso è
+       invisibile, ed è proprio quello che in poesia conta di più. */
+    const versi = String(testoBrano).split(/\r?\n/).filter(v => v.trim()).length;
+    if (versi !== frasi.length) motivo = 'versi';
+  }
+  if (!motivo) return null;
+  const paroleDi = (t) => tokenizeSentence(t || '').filter(x => x.kind === 'word').length;
+  const brano = { parole: paroleDi(testoBrano), versi: String(testoBrano).split(/\r?\n/).filter(v => v.trim()).length };
+  const ricomposto = { parole: frasi.reduce((n, s) => n + paroleDi(s.original), 0) };
   let ancore = 0;
   frasi.forEach(s => {
     ancore += (s.grammar || []).filter(e => e.tokenIndex != null).length;
@@ -12895,7 +12922,8 @@ function branoFrasiDivergenza() {
     ancore += (s.periodale || []).filter(e => (e.tokenIndices || []).length).length;
     ancore += (s.asindeti || []).length;
   });
-  return { frasi: frasi.length, ancore, paroleBrano: brano.split(' ').length, paroleFrasi: ricomposto.split(' ').length };
+  return { motivo, frasi: frasi.length, ancore,
+           paroleBrano: brano.parole, paroleFrasi: ricomposto.parole, versiBrano: brano.versi };
 }
 
 /* RIPARAZIONE 1 · il brano torna a dire quel che dicono le frasi.
@@ -12943,16 +12971,20 @@ function branoDesyncBannerHtml() {
       <span class="brano-desync-icon" aria-hidden="true">⚠</span>
       <strong>Il brano e le frasi non dicono più la stessa cosa.</strong>
     </div>
-    <p class="brano-desync-body">
-      Il testo del brano è stato modificato dopo la segmentazione: ${
-        d.frasi === 1 ? 'la frase conserva' : `le <strong>${d.frasi}</strong> frasi conservano`
-      } la versione precedente${
-        d.paroleFrasi === d.paroleBrano
-          ? ' (stesso numero di parole, grafia diversa)'
-          : `, ${d.paroleFrasi} parole contro ${d.paroleBrano}`
-      }. ${conteggio}
-      Finché le due versioni divergono, quello che leggi in alto e quello che stai analizzando sono testi diversi.
-    </p>
+    <p class="brano-desync-body">${d.motivo === 'versi'
+      ? `Le parole del brano e quelle delle ${d.frasi} unità d'analisi coincidono, ma il brano è andato a capo
+         in modo diverso: conta <strong>${d.versiBrano}</strong> ${d.versiBrano === 1 ? 'verso' : 'versi'}
+         contro <strong>${d.frasi}</strong>.
+         In poesia il verso è l'unità d'analisi, quindi le due letture del testo non si corrispondono più. ${conteggio}`
+      : `Il testo del brano è stato modificato dopo la segmentazione: ${
+          d.frasi === 1 ? 'la frase conserva' : `le <strong>${d.frasi}</strong> frasi conservano`
+        } la versione precedente${
+          d.paroleFrasi === d.paroleBrano
+            ? ' (stesso numero di parole, grafia diversa)'
+            : `, ${d.paroleFrasi} parole contro ${d.paroleBrano}`
+        }. ${conteggio}
+         Finché le due versioni divergono, quello che leggi in alto e quello che stai analizzando sono testi diversi.`
+    }</p>
     <div class="brano-desync-actions">
       <button class="btn btn-sm btn-brand-soft" onclick="allineaBranoAlleFrasi()">
         Riporta il brano al testo delle frasi
