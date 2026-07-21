@@ -11692,15 +11692,8 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
       <button class="mode-option" onclick="selectMode('guided')">
         <span class="mode-icon">↻</span>
         <span class="mode-title">Modalità guidata</span>
-        <span class="mode-desc">Sei accompagnato in sei tappe successive: prima l'ossatura del periodo (frasi, verbi, connettivi), poi la sintassi delle proposizioni e dei sintagmi, infine la morfologia. Ideale per chi vuole un metodo passo-passo.</span>
-        <span class="mode-steps">
-          <span>1. Frasi</span>
-          <span>2. Verbi</span>
-          <span>3. Connettivi</span>
-          <span>4. Sintagmi</span>
-          <span>5. Logica</span>
-          <span>6. Grammaticale</span>
-        </span>
+        <span class="mode-desc" id="mode-desc-guided">Sei accompagnato passo dopo passo: prima l'ossatura del periodo (frasi, verbi, connettivi), poi la sintassi delle proposizioni e dei sintagmi, infine la morfologia. Ideale per chi vuole un metodo passo-passo.</span>
+        <span class="mode-steps" id="mode-steps-list"></span>
       </button>
     </div>
     <div class="modal-actions">
@@ -11723,7 +11716,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
         <span class="profile-card-desc">Solo latino, modalità guidata passo-passo. Niente analisi sintattico-periodale, niente tantum né reggenze: ci concentriamo su frasi, verbi e prime declinazioni con un linguaggio amichevole.</span>
         <span class="profile-card-features">
           <span>solo latino</span>
-          <span>guidata 6 step</span>
+          <span id="profile-medie-steps">guidata</span>
           <span>vocabolario base</span>
         </span>
       </button>
@@ -26447,7 +26440,7 @@ function renderStep1Html() {
   const modeBanner = `
     <div class="method-note" style="margin-bottom:18px;">
       <strong>Modalità ${isGuided ? 'guidata' : 'libera'}</strong> ·
-      ${isGuided ? 'analisi a sei tappe successive (frasi → verbi → connettivi → sintagmi → logica → grammaticale)' : 'navighi liberamente fra le tre stanze di analisi'} ·
+      ${isGuided ? `analisi in ${getVisibleGuidedSteps().length} tappe successive (${getVisibleGuidedSteps().map(s => s.label.toLowerCase()).join(' → ')})` : 'navighi liberamente fra le tre stanze di analisi'} ·
       <em>cambi modalità dalla barra in alto.</em>
     </div>`;
   return sectionHeader('A', 'Brano originale', "il punto di partenza è il testo. L'analisi successiva dialogherà sempre con l'originale.")
@@ -36474,14 +36467,18 @@ function confirmSetup() {
 }
 
 function discardSetup() {
-  if (!confirm('Reimpostare il brano? Eventuali modifiche non salvate andranno perse.')) return;
+  /* Prima: «modifiche non salvate andranno perse» — falso. Il salvataggio e'
+     continuo e il progetto resta nell'archivio (verificato: dopo il reset e'
+     ancora in loadAllProjects() col suo titolo). */
+  if (!confirm('Reimpostare il brano?\n\nSi riparte da vuoto. Il lavoro corrente NON va perso: resta nell\'archivio, lo riapri da «I tuoi progetti».')) return;
   state = defaultState();
   renderAll();
 }
 
 function newProject() {
   if (state.meta.testoOriginale || state.sentences.length > 0) {
-    if (!confirm('Avviare un nuovo progetto? Salva prima il corrente se non l\'hai già fatto.')) return;
+    /* Prima invitava a «salvare prima»: non serve, il salvataggio e' continuo. */
+    if (!confirm('Avviare un nuovo progetto?\n\nQuello corrente resta nell\'archivio: lo riapri quando vuoi da «I tuoi progetti».')) return;
   }
   // Per gli studenti delle medie la modalità è già fissata su guidata + latino
   if (getUserProfile() === 'medie') {
@@ -36690,8 +36687,12 @@ function switchMode(mode) {
 }
 
 function saveProject() {
+  /* Il salvataggio e' gia' continuo (persistCurrent a ogni modifica): il
+     pulsante non aggiunge nulla, ma la sua presenza faceva credere il contrario
+     e contraddiceva l'indicazione «salvato automaticamente» in basso. Resta come
+     rassicurazione, con un messaggio che dice come stanno le cose. */
   persistCurrent();
-  showToast('Progetto salvato');
+  showToast('Salvato · il lavoro si salva da sé a ogni modifica');
 }
 
 function goToStep(num) {
@@ -39484,30 +39485,51 @@ function _snapshotState() {
   } catch (_) { return null; }
 }
 
+/* Stato com'era PRIMA della raffica di modifiche in corso. Serve perche'
+   pushUndoSnapshot() viene chiamata DOPO che lo stato e' gia' cambiato: prendere
+   lo snapshot in quel momento significava accodare lo stato POST-modifica, e il
+   primo Ctrl+Z «ripristinava» il punto in cui l'utente era gia' — schermo
+   identico e toast che dichiarava un annullamento mai avvenuto. */
+let _shadowSnap = null;
+
 function pushUndoSnapshot() {
   if (_undoInProgress) return;
-  // Debounce: pianifica push dopo 600ms; se arriva un altro push prima, resetta
+  // PRIMA modifica della raffica: nella pila va lo stato PRECEDENTE, non l'attuale.
+  if (!_undoPushTimer && _shadowSnap) {
+    /* Solo se qualcosa e' DAVVERO cambiato. Dopo un annullamento arriva un
+       persistCurrent asincrono con lo stato identico: registrarlo non aggiunge
+       nulla e, azzerando la pila del redo, rendeva impossibile il ripristino. */
+    var _ora = _snapshotState();
+    if (_ora && _ora !== _shadowSnap) {
+      if (_undoStack.length === 0 || _undoStack[_undoStack.length - 1] !== _shadowSnap) {
+        _undoStack.push(_shadowSnap);
+        if (_undoStack.length > _UNDO_STACK_LIMIT) _undoStack.shift();
+        _redoStack.length = 0; // una modifica VERA invalida il redo
+      }
+    }
+  }
+  // Debounce: a fine raffica lo stato attuale diventa il nuovo «prima»
   if (_undoPushTimer) clearTimeout(_undoPushTimer);
   _undoPushTimer = setTimeout(() => {
-    const snap = _snapshotState();
-    if (!snap) return;
-    // Evita di pushare se è identico all'ultimo snapshot
-    if (_undoStack.length > 0 && _undoStack[_undoStack.length - 1] === snap) return;
-    _undoStack.push(snap);
-    if (_undoStack.length > _UNDO_STACK_LIMIT) _undoStack.shift();
-    _redoStack.length = 0; // ogni nuova modifica invalida il redo
+    _shadowSnap = _snapshotState() || _shadowSnap;
     _undoPushTimer = null;
   }, 600);
 }
 
 function undoLastChange() {
   if (_undoStack.length === 0) { showToast('Niente da annullare'); return; }
-  // Snapshot corrente → redoStack
   const currentSnap = _snapshotState();
-  if (currentSnap) _redoStack.push(currentSnap);
-  // Pop l'ultimo undo e applicalo
   const target = _undoStack.pop();
+  // Se lo stato da ripristinare e' identico a quello corrente non e' successo
+  // nulla: dirlo, invece di annunciare un annullamento che l'utente non vede.
+  if (target === currentSnap) {
+    _shadowSnap = currentSnap;
+    showToast('Niente da annullare');
+    return;
+  }
+  if (currentSnap) _redoStack.push(currentSnap);
   _restoreFromSnapshot(target);
+  _shadowSnap = target;          // il nuovo «prima» e' lo stato ripristinato
   showToast('↶ Annullato · Ctrl+Shift+Z per ripristinare');
 }
 
@@ -39517,6 +39539,7 @@ function redoChange() {
   if (currentSnap) _undoStack.push(currentSnap);
   const target = _redoStack.pop();
   _restoreFromSnapshot(target);
+  _shadowSnap = target;
   showToast('↷ Ripristinato');
 }
 
@@ -39945,6 +39968,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Applica lo stato persistito del dark mode al toggle in sidebar
   try { setDarkMode(getDarkMode()); } catch (_) {}
 
+  // Baseline dell'annullamento: lo stato appena caricato e' il primo «prima».
+  try { if (!_shadowSnap) _shadowSnap = _snapshotState(); } catch (_) {}
+
   // Tour al primo avvio — SOSPESO: startOnboarding() esce subito se ONBOARDING_ENABLED e' false.
   setTimeout(() => { try { startOnboarding(false); } catch (_) {} }, 500);
 
@@ -40039,6 +40065,30 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('keydown', function(e){
     if (e.key === 'Escape' && window.__adrawer) window.closeAnalysisDrawer();
   });
+
+  /* PROMESSE SULLE TAPPE · l'app dichiarava «sei tappe» in tre punti mentre ne ha
+     NOVE (otto alle medie, che saltano la sintassi periodale): nessun numero fisso
+     puo' essere giusto, perche' dipende dal profilo. Qui le parti statiche del
+     markup vengono riempite dalla stessa fonte del wizard, getVisibleGuidedSteps(). */
+  window.syncGuidedStepPromises = function(){
+    try {
+      var steps = getVisibleGuidedSteps();
+      var lista = document.getElementById('mode-steps-list');
+      if (lista && lista.dataset.n !== String(steps.length)) {
+        lista.dataset.n = String(steps.length);
+        lista.innerHTML = steps.map(function(s, i){
+          return '<span>' + (i + 1) + '. ' + s.label + '</span>';
+        }).join('');
+      }
+      var medie = document.getElementById('profile-medie-steps');
+      if (medie) {
+        // per le MEDIE il conteggio e' il loro, non quello del profilo corrente
+        var nMedie = GUIDED_STEPS_META.filter(function(s){ return s.num !== 5; }).length;
+        var txt = 'guidata ' + nMedie + ' tappe';
+        if (medie.textContent !== txt) medie.textContent = txt;
+      }
+    } catch (e) { /* il wizard non e' ancora pronto: si riprova al prossimo render */ }
+  };
 
   /* PULSANTI A SOLA ICONA · un pulsante il cui contenuto e' un solo glifo prende
      il nome dall'EMOJI: «segno di spunta pulsante», o niente del tutto a seconda
@@ -40327,7 +40377,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.__segRuns = 0;
   var segQueued = false;
   function segFlush(){
-    try { window.__segRuns++; window.segUpgradeAll(); if (window.tokenA11yAll) window.tokenA11yAll(); if (window.iconBtnA11yAll) window.iconBtnA11yAll(); if (window.modalA11yAll) window.modalA11yAll(); if (window.syncAnalysisDrawer) window.syncAnalysisDrawer(); }
+    try { window.__segRuns++; window.segUpgradeAll(); if (window.tokenA11yAll) window.tokenA11yAll(); if (window.iconBtnA11yAll) window.iconBtnA11yAll(); if (window.syncGuidedStepPromises) window.syncGuidedStepPromises(); if (window.modalA11yAll) window.modalA11yAll(); if (window.syncAnalysisDrawer) window.syncAnalysisDrawer(); }
     catch (err) { console.warn('[seg] upgrade fallito:', err); }
     finally { segQueued = false; }   // la spia si azzera SEMPRE: un errore non deve bloccare per sempre
   }
