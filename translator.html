@@ -226,6 +226,18 @@ body[data-lang="greco"] {
   --lang-accent-border: rgba(229, 138, 144, 0.35);
 }
 
+/* Il greco mancava: senza, di notte l'accento restava #1800AC (blu SCURO) mentre
+   il latino schiariva. Due conseguenze: asimmetria fra i due rami, e — da quando
+   i fondi pieni usano --on-primary (che di notte diventa scuro) — testo scuro su
+   fondo scuro, misurato a 1.44. Valori allineati al foglio condiviso (#8b7dff). */
+:root[data-theme="dark"] body[data-lang="greco"] {
+  --lang-accent: #8b7dff;
+  --lang-accent-soft: #7a6ae8;
+  --lang-accent-pale: rgba(139, 125, 255, 0.16);
+  --lang-accent-dark: #a99cff;
+  --lang-accent-border: rgba(139, 125, 255, 0.35);
+}
+
 /* ─── Applicazione dell'accento linguistico nei punti chiave ───────────── */
 /* 1. Tab dell'analisi (sub-tab grammar/logica/periodale) */
 body[data-lang="latino"] .analysis-tab.active {
@@ -2855,7 +2867,7 @@ h1.scheletro-sentence-num,
   cursor: pointer; transition: background 120ms ease, color 120ms ease;
 }
 .schel-order-btn + .schel-order-btn { border-left: 1.5px solid var(--rule); }
-.schel-order-btn.is-on { background: var(--primary); color: #fff; }
+.schel-order-btn.is-on { background: var(--primary); color: var(--on-primary); }
 /* Gruppi della vista SVO per proposizione */
 .scheletro-svo-wrap { display: flex; flex-direction: column; gap: 14px; margin-top: 10px; }
 .schel-svo-group { border-left: 4px solid var(--rule); padding-left: 12px; }
@@ -2881,7 +2893,7 @@ h1.scheletro-sentence-num,
 .nucleus-miss { color: #c0142e; font-weight: 600; }
 .nucleus-note { color: var(--sepia); font-style: italic; }
 .nucleus-add { font-family: var(--font-ui); font-size: 12px; font-weight: 600; padding: 3px 10px; border: 1.5px dashed var(--primary); border-radius: 6px; background: transparent; color: var(--primary); cursor: pointer; }
-.nucleus-add:hover { background: var(--primary); color: #fff; }
+.nucleus-add:hover { background: var(--primary); color: var(--on-primary); }
 /* Verbo sottinteso nelle proposizioni (ellissi del nucleo) */
 .prop-vsott-toggle { display: flex; align-items: center; gap: 8px; cursor: pointer; text-transform: none; letter-spacing: 0; }
 .prop-vsott-toggle input { width: auto; margin: 0; }
@@ -3046,14 +3058,14 @@ h1.scheletro-sentence-num,
 .schel-confirm-count {
   display: inline-flex; align-items: center; justify-content: center;
   min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px;
-  background: var(--case-strong, var(--primary)); color: #fff;
+  background: var(--case-strong, var(--primary)); color: var(--on-primary);
   font-family: var(--font-ui); font-size: 11px; font-weight: 700; flex: 0 0 auto;
 }
 .schel-confirm-phrase { flex: 1 1 80px; min-width: 60px; font-weight: 600; color: var(--case-text, var(--ink)); font-size: 14px; }
 .schel-confirm-prep {
   flex: 0 0 auto; display: inline-flex; align-items: center; gap: 2px;
   padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 700;
-  background: var(--case-strong, var(--primary)); color: #fff; opacity: 0.92;
+  background: var(--case-strong, var(--primary)); color: var(--on-primary); opacity: 0.92;
   font-family: var(--font-ui);
 }
 .schel-confirm-sel { flex: 0 1 240px; max-width: 260px; font-size: 12px; }
@@ -4420,7 +4432,7 @@ body[data-level="avanzato"] .syntax-tree-legend {
 }
 .quick-seg-btn.active {
   background: var(--lang-accent);   /* rosso in latino · blu in greco (variabile definita) */
-  color: #fff;
+  color: var(--on-primary);
   box-shadow: 0 1px 3px var(--tr-shadow-strong);
 }
 .quick-seg-btn[disabled] {
@@ -9846,7 +9858,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   color: var(--ink-soft); cursor: pointer; white-space: nowrap;
   transition: background var(--transition-base), border-color var(--transition-base), color var(--transition-base); }
 .seg-btn:hover { border-color: var(--lang-accent-border); color: var(--lang-accent); }
-.seg-btn.on { background: var(--lang-accent); border-color: var(--lang-accent); color: #fff; }
+.seg-btn.on { background: var(--lang-accent); border-color: var(--lang-accent); color: var(--on-primary); }
 .seg-btn:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: 1px; }
 
 /* TOKEN DA TASTIERA · il gesto centrale dell'app (cliccare una parola del brano)
@@ -10263,7 +10275,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   border: 1px solid var(--rule-soft); border-radius: 4px;
   background: transparent; color: var(--sepia); cursor: pointer;
 }
-.verse-metr-toggle.is-on { background: var(--primary); color: #fff; border-color: var(--primary); }
+.verse-metr-toggle.is-on { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
 /* Pannello di scansione metrica */
 .metr-panel {
   grid-column: 1 / -1; margin: 4px 0 10px 34px; padding: 10px 12px;
@@ -10297,7 +10309,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 .metr-mode { display: inline-flex; align-items: center; gap: 4px; margin-left: auto; }
 .metr-mode-label { font-family: var(--font-ui); font-size: 10px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--sepia); }
 .metr-mode-btn { font-family: var(--font-ui); font-size: 11px; padding: 2px 8px; border: 1px solid var(--rule); border-radius: 5px; background: var(--paper); color: var(--ink); cursor: pointer; }
-.metr-mode-btn.is-on { background: var(--primary); color: #fff; border-color: var(--primary); }
+.metr-mode-btn.is-on { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
 /* badge del fenomeno fonetico sotto la sillaba */
 .metr-syll-fen { font-family: var(--font-ui); font-size: 9px; line-height: 1; text-transform: uppercase; letter-spacing: 0.03em; color: var(--primary); margin-top: 1px; }
 .metr-syll.fen-elisione .metr-syll-t { text-decoration: line-through; opacity: 0.55; }
@@ -10309,7 +10321,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 /* enjambement */
 .verse-tools { display: inline-flex; gap: 4px; margin-left: 6px; }
 .verse-enj-toggle { font-size: 13px; line-height: 1; padding: 1px 5px; border: 1px solid var(--rule-soft); border-radius: 4px; background: transparent; color: var(--sepia); cursor: pointer; }
-.verse-enj-toggle.is-on { background: var(--primary); color: #fff; border-color: var(--primary); }
+.verse-enj-toggle.is-on { background: var(--primary); color: var(--on-primary); border-color: var(--primary); }
 .verse-enj-mark { color: var(--primary); font-weight: 700; margin-left: 4px; }
 .verse-line.has-enj .verse-text { border-bottom: 1px dashed rgba(29,78,216,0.4); }
 .preview-meta {
