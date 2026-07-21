@@ -3158,6 +3158,25 @@ h1.scheletro-sentence-num,
 .pairing-btn-no  { color: var(--sepia); }
 
 /* Warning soft caso-funzione */
+/* AVVISO DI DIVERGENZA BRANO ↔ FRASI · registro ambra, come gli altri avvisi
+   «guarda qui» del file (.case-warning, .auto-suggest-panel), ma più marcato:
+   lì si segnala un dubbio d'analisi, qui un disallineamento dei dati. */
+.brano-desync {
+  margin: 12px 0;
+  padding: 12px 14px;
+  border: 1px solid rgba(214,158,46,0.55);
+  border-left: 4px solid var(--warning, #D69E2E);
+  border-radius: var(--radius-md);
+  background: rgba(214,158,46,0.10);
+  font-family: var(--font-ui);
+}
+.brano-desync-head { display: flex; align-items: center; gap: 8px; font-size: 13.5px; color: var(--ink); }
+.brano-desync-icon { font-size: 15px; line-height: 1; }
+.brano-desync-body { margin: 6px 0 0; font-size: 12.5px; line-height: 1.55; color: var(--ink-soft); }
+.brano-desync-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+.brano-desync-cost { margin: 8px 0 0; font-size: 11.5px; line-height: 1.5; color: var(--sepia); font-style: italic; }
+:root[data-theme="dark"] body .brano-desync { background: rgba(214,158,46,0.14); }
+
 .case-warning {
   display: flex;
   align-items: center;
@@ -12838,6 +12857,115 @@ function makeSentence(text) {
     grammar: [], logic: [], periodale: [],
     asindeti: [], // array di tokenIdx (negativi) per punteggiatura asindetica
   };
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   INVARIANTE BRANO ↔ FRASI
+   ══════════════════════════════════════════════════════════════════════════
+   Il testo del brano (state.meta.testoOriginale) e il testo delle frasi
+   (sentence.original) sono DUE COPIE della stessa stringa, e nulla nel
+   programma le tiene legate: onTestoChange scrive solo la prima ed è il
+   gestore di OGNI battuta nel campo del brano. Le analisi (grammaticale,
+   logica, del periodo, asindeti, ordo) sono ancorate alle PAROLE DELLE FRASI
+   per indice posizionale, quindi seguono la seconda copia.
+   Finché nessuno se ne accorge, il docente vede un brano e analizza un altro
+   testo — e alla prima risegmentazione perde tutto senza saperlo.
+   Qui non si ripara nulla d'ufficio: si RILEVA e si DICHIARA. La riparazione
+   è una scelta con un prezzo, e il prezzo lo paga chi decide. */
+
+/* Confronto per CONTENUTO, non per formattazione: gli spazi bianchi vengono
+   collassati da entrambe le parti. Così dividere o unire frase a mano — che
+   cambia la segmentazione ma non il testo — non produce un falso allarme,
+   mentre cambiare anche una sola lettera lo produce. */
+function _testoPerConfronto(t) { return (t || '').replace(/\s+/g, ' ').trim(); }
+
+/* Restituisce null se brano e frasi coincidono, altrimenti il quadro della
+   divergenza (con quante analisi sono appese al testo delle frasi). */
+function branoFrasiDivergenza() {
+  const frasi = (state.sentences || []);
+  if (!frasi.length) return null;              // nessuna frase: nessun invariante da rompere
+  const brano = _testoPerConfronto(state.meta && state.meta.testoOriginale);
+  if (!brano) return null;                     // brano vuoto: lo dice già l'interfaccia
+  const ricomposto = _testoPerConfronto(frasi.map(s => s.original || '').join(' '));
+  if (ricomposto === brano) return null;
+  let ancore = 0;
+  frasi.forEach(s => {
+    ancore += (s.grammar || []).filter(e => e.tokenIndex != null).length;
+    ancore += (s.logic || []).filter(e => (e.tokenIndices || []).length).length;
+    ancore += (s.periodale || []).filter(e => (e.tokenIndices || []).length).length;
+    ancore += (s.asindeti || []).length;
+  });
+  return { frasi: frasi.length, ancore, paroleBrano: brano.split(' ').length, paroleFrasi: ricomposto.split(' ').length };
+}
+
+/* RIPARAZIONE 1 · il brano torna a dire quel che dicono le frasi.
+   Conserva tutte le analisi (le frasi non si toccano) e perde le modifiche
+   fatte al brano dopo la segmentazione, compresa l'impaginazione. */
+function allineaBranoAlleFrasi() {
+  const d = branoFrasiDivergenza();
+  if (!d) { showToast('Brano e frasi già coincidono.'); return; }
+  const poesia = state.meta.tipoTesto === 'poesia';
+  const nuovo = (state.sentences || []).map(s => s.original || '').join(poesia ? '\n' : ' ');
+  /* In poesia il numero di VERSI è anche la chiave della scansione metrica
+     (metrica.perVerse è indicizzata per posizione del verso). Se il conto
+     cambia, la scansione già inserita finisce su versi diversi: va detto
+     prima, non scoperto dopo. */
+  let avvisoMetrica = '';
+  if (poesia) {
+    const versiPrima = String(state.meta.testoOriginale || '').split(/\r?\n/).filter(v => v.trim()).length;
+    const scansioni = Object.keys((state.meta.metrica && state.meta.metrica.perVerse) || {}).length;
+    if (scansioni > 0 && versiPrima !== state.sentences.length) {
+      avvisoMetrica = '\n\nAttenzione: i versi passano da ' + versiPrima + ' a ' + state.sentences.length +
+        ', e la scansione metrica è registrata per posizione del verso. Le ' + scansioni +
+        ' scansioni già inserite resteranno sui numeri di verso attuali, cioè su versi diversi da quelli di prima.';
+    }
+  }
+  if (!confirm('Il testo del brano verrà sostituito con il testo delle ' + d.frasi + ' frasi.\n\n' +
+      'Le analisi restano tutte (le frasi non si toccano). Si perdono le modifiche fatte al brano dopo la segmentazione' +
+      (poesia ? '' : ', compresi gli a capo') + '.' + avvisoMetrica + '\n\nProcedere?')) return;
+  state.meta.testoOriginale = nuovo;
+  persistCurrent();
+  renderAll();
+  showToast('Brano riallineato alle frasi · le analisi sono intatte');
+}
+
+/* Il banner della divergenza. Non è chiudibile di proposito: non è una
+   notifica di un evento passato, è la fotografia di uno STATO che dura finché
+   qualcuno non decide. Non blocca il lavoro — dichiara e propone. */
+function branoDesyncBannerHtml() {
+  const d = branoFrasiDivergenza();
+  if (!d) return '';
+  const conteggio = d.ancore > 0
+    ? `<strong>${d.ancore}</strong> analisi ${d.ancore === 1 ? 'è agganciata' : 'sono agganciate'} alle parole delle frasi, non a quelle del brano.`
+    : 'Nessuna analisi è ancora agganciata alle parole, quindi al momento non si perde nulla.';
+  return `<div class="brano-desync" role="status">
+    <div class="brano-desync-head">
+      <span class="brano-desync-icon" aria-hidden="true">⚠</span>
+      <strong>Il brano e le frasi non dicono più la stessa cosa.</strong>
+    </div>
+    <p class="brano-desync-body">
+      Il testo del brano è stato modificato dopo la segmentazione: ${
+        d.frasi === 1 ? 'la frase conserva' : `le <strong>${d.frasi}</strong> frasi conservano`
+      } la versione precedente${
+        d.paroleFrasi === d.paroleBrano
+          ? ' (stesso numero di parole, grafia diversa)'
+          : `, ${d.paroleFrasi} parole contro ${d.paroleBrano}`
+      }. ${conteggio}
+      Finché le due versioni divergono, quello che leggi in alto e quello che stai analizzando sono testi diversi.
+    </p>
+    <div class="brano-desync-actions">
+      <button class="btn btn-sm btn-brand-soft" onclick="allineaBranoAlleFrasi()">
+        Riporta il brano al testo delle frasi
+      </button>
+      <button class="btn btn-sm btn-ghost" onclick="resplitSentences()">
+        Rifai le frasi dal brano
+      </button>
+    </div>
+    <p class="brano-desync-cost">
+      La prima conserva le analisi e perde le modifiche fatte al brano. La seconda allinea al brano e
+      <strong>cancella le analisi</strong>. Puoi anche non fare nulla e continuare: l'avviso resta finché le due versioni divergono.
+    </p>
+  </div>`;
 }
 
 function makeOrdoElement(phrase, italian, sourceLogicId) {
@@ -26499,8 +26627,9 @@ function renderStep1Html() {
           <span class="subsection-title">Testo in lingua originale</span>
           <span class="subsection-hint">${isGreek ? 'greco antico' : 'latino'}</span>
         </div>
+        ${branoDesyncBannerHtml()}
         <div class="method-note">
-          <strong>Nota di metodo.</strong> La scomposizione automatica per punteggiatura sarà disponibile nella scheda <em>B</em>. Potrai correggerla a mano: aggiungere, separare, accorpare frasi.
+          <strong>Nota di metodo.</strong> La scomposizione automatica sarà disponibile nella scheda <em>B</em>: divide la prosa <em>sul punto fermo</em> e la poesia per versi. Potrai correggerla a mano: aggiungere, separare, accorpare frasi.
         </div>
         <div class="ocr-cta-row">
           <button class="ocr-cta-btn" type="button" onclick="openOcrModal('field-testo')">
@@ -26564,7 +26693,7 @@ function renderSentenceListInner() {
   if (state.sentences.length === 0) {
     return `<div class="entry-empty">Nessuna frase. Premi <strong>↻ Risegmenta</strong> per generarle dal testo originale, oppure <strong>+ Aggiungi frase</strong> per inserirne una manualmente.</div>`;
   }
-  return state.sentences.map((s, idx) => {
+  return branoDesyncBannerHtml() + state.sentences.map((s, idx) => {
     const grammarFilled = s.grammar.length > 0;
     const logicFilled = s.logic.length > 0;
     const periodaleFilled = s.periodale.length > 0;
