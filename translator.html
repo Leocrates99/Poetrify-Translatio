@@ -10808,7 +10808,21 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
     transition: transform 250ms ease;
     display: flex !important;
   }
-  .main.preview-open, .main.analysis-open .preview { transform: translateX(0); }
+  .main.preview-open .preview, .main.analysis-open .analysis-drawer { transform: translateX(0); }
+  /* Sotto i 720px la griglia e' a UNA colonna: il drawer, che vive in colonna 3,
+     diventerebbe una scheggia (80px). Come la preview, qui e' un FOGLIO fisso a
+     destra — altrimenti su tablet e telefono i campi di compilazione spariscono
+     dalla scheda (sono stati spostati nel drawer) e non si vedono da nessuna parte. */
+  .analysis-drawer {
+    position: fixed !important;
+    top: 0; right: 0; bottom: 0;
+    width: 92vw; max-width: 420px;
+    z-index: 150;
+    border-left: 1px solid var(--rule);
+    box-shadow: -8px 0 32px rgba(44, 53, 57, 0.25);
+    transform: translateX(100%);
+    transition: transform 250ms ease;
+  }
   .preview-content { padding: 18px 20px; }
 
   /* MODALI: full-width, scroll interno */
