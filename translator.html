@@ -39306,7 +39306,7 @@ function buildCommandPaletteIndex() {
   add('Salva il progetto',              'Strumenti', () => saveProject(),           '', '💾');
   add('Apri scheda Approccio (modal)',  'Strumenti', () => openApproachModal(),     'a', 'ℹ');
   add('Mostra scorciatoie tastiera',    'Strumenti', () => openShortcutsModal(),    '?', '⌨');
-  add('Tour onboarding · rivedi i passi', 'Strumenti', () => startOnboarding(true), '', '🎓');
+  if (ONBOARDING_ENABLED) add('Tour onboarding · rivedi i passi', 'Strumenti', () => startOnboarding(true), '', '🎓');
   add('Toggle dark mode (tema scuro)',  'Strumenti', () => toggleDarkMode(),        '', '🌗');
   add('Toggle modalità focus',          'Strumenti', () => toggleFocusMode(),       'Esc', '🎯');
   add('Annulla (undo) ultima modifica', 'Strumenti', () => undoLastChange(),        'Ctrl+Z', '↶');
@@ -39530,6 +39530,10 @@ persistCurrent = function() {
    TOUR ONBOARDING · overlay 6 step al primo avvio
    ════════════════════════════════════════════════════════════════════════════ */
 
+/* TOUR SOSPESO (lug 2026, richiesta del docente: «lo riprenderemo a versione
+   definitiva conclusa»). Un solo interruttore governa sia l'avvio automatico
+   sia la voce nella palette comandi: rimettere true per riattivarlo, nient'altro. */
+const ONBOARDING_ENABLED = false;
 const ONBOARDING_KEY = 'poetrify-onboarding-seen';
 let _onboardingStep = 0;
 let _onboardingForced = false; // true quando lanciato esplicitamente, ignora flag localStorage
@@ -39568,6 +39572,7 @@ const ONBOARDING_STEPS = [
 ];
 
 function startOnboarding(forced) {
+  if (!ONBOARDING_ENABLED) return;      // tour sospeso
   _onboardingForced = !!forced;
   if (!forced) {
     try { if (localStorage.getItem(ONBOARDING_KEY) === 'yes') return; } catch (_) {}
@@ -39918,7 +39923,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Applica lo stato persistito del dark mode al toggle in sidebar
   try { setDarkMode(getDarkMode()); } catch (_) {}
 
-  // Lancia il tour onboarding al primo avvio (se non già visto)
+  // Tour al primo avvio — SOSPESO: startOnboarding() esce subito se ONBOARDING_ENABLED e' false.
   setTimeout(() => { try { startOnboarding(false); } catch (_) {} }, 500);
 
   // close modals on backdrop click
@@ -40011,6 +40016,83 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   document.addEventListener('keydown', function(e){
     if (e.key === 'Escape' && window.__adrawer) window.closeAnalysisDrawer();
+  });
+
+  /* MODALI COME DIALOGHI · gli 11 .modal-backdrop erano <div> generici: niente
+     role/aria-modal, focus che restava sul fondo (con lo screen reader si continua
+     a tabulare nel brano mentre a schermo c'e' una finestra) e nessun Esc.
+     Qui NON si tocca l'apertura/chiusura esistente (classList 'open'): la si
+     OSSERVA e le si aggiunge la semantica. La palette comandi ha gia' il suo Esc:
+     ci si tira indietro con defaultPrevented, come per i token. */
+  var MOD_FOCUSABILI = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  var modAperturaDa = null;
+  function modDialogo(bd){ return bd.querySelector('.modal') || bd; }
+  function modVisibili(bd){
+    return Array.prototype.filter.call(modDialogo(bd).querySelectorAll(MOD_FOCUSABILI), function(el){
+      return el.getClientRects().length > 0;
+    });
+  }
+  function modApri(bd){
+    if (bd.dataset.a11y === 'on') return;
+    bd.dataset.a11y = 'on';
+    modAperturaDa = document.activeElement;
+    var d = modDialogo(bd);
+    d.setAttribute('role', 'dialog');
+    d.setAttribute('aria-modal', 'true');
+    var t = d.querySelector('.modal-title, h2, h3');
+    if (t) { if (!t.id) t.id = (bd.id || 'modal') + '-title'; d.setAttribute('aria-labelledby', t.id); }
+    else if (!d.getAttribute('aria-label')) {
+      /* Un dialogo senza NOME e' annunciato come «finestra di dialogo» e basta.
+         Alcuni (la palette comandi) non hanno titolo visibile: si ripiega sul
+         segnaposto del campo di ricerca, che quel nome ce l'ha gia'. */
+      var inp = d.querySelector('input[placeholder], input[aria-label]');
+      var nome = inp ? (inp.getAttribute('aria-label') || inp.getAttribute('placeholder')) : '';
+      d.setAttribute('aria-label', (nome || 'Finestra di dialogo').slice(0, 80));
+    }
+    var f = modVisibili(bd);
+    var target = d.querySelector('[autofocus]') || f[0];
+    if (!target) { d.tabIndex = -1; target = d; }
+    setTimeout(function(){ try { target.focus({ preventScroll: true }); } catch (e) { try { target.focus(); } catch (_) {} } }, 0);
+  }
+  function modChiudi(bd){
+    if (bd.dataset.a11y !== 'on') return;
+    bd.dataset.a11y = '';
+    var d = modDialogo(bd);
+    d.removeAttribute('aria-modal');
+    var back = modAperturaDa; modAperturaDa = null;
+    if (back && document.contains(back)) {
+      setTimeout(function(){ try { back.focus({ preventScroll: true }); } catch (e) {} }, 0);
+    }
+  }
+  function modApertoInCima(){
+    var aperti = document.querySelectorAll('.modal-backdrop.open');
+    return aperti.length ? aperti[aperti.length - 1] : null;
+  }
+  window.modalA11yAll = function(){
+    Array.prototype.forEach.call(document.querySelectorAll('.modal-backdrop'), function(bd){
+      if (bd.dataset.a11yObs === '1') return;
+      bd.dataset.a11yObs = '1';
+      new MutationObserver(function(){
+        if (bd.classList.contains('open')) modApri(bd); else modChiudi(bd);
+      }).observe(bd, { attributes: true, attributeFilter: ['class'] });
+      if (bd.classList.contains('open')) modApri(bd);
+    });
+  };
+  document.addEventListener('keydown', function(e){
+    if (e.defaultPrevented) return;                    // la palette comandi gestisce gia' il suo Esc
+    var bd = modApertoInCima(); if (!bd) return;
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      bd.classList.remove('open');                     // stessa via del clic sul fondo
+      return;
+    }
+    if (e.key !== 'Tab') return;
+    var f = modVisibili(bd); if (!f.length) return;
+    var primo = f[0], ultimo = f[f.length - 1];
+    // trappola del focus: senza, si esce dalla finestra e si continua a tabulare nel brano
+    if (e.shiftKey && document.activeElement === primo) { e.preventDefault(); ultimo.focus(); }
+    else if (!e.shiftKey && document.activeElement === ultimo) { e.preventDefault(); primo.focus(); }
+    else if (!modDialogo(bd).contains(document.activeElement)) { e.preventDefault(); primo.focus(); }
   });
 
   /* ACCESSIBILITA' DEI TOKEN · i sei renderer del brano producono tutti la stessa
@@ -40207,7 +40289,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.__segRuns = 0;
   var segQueued = false;
   function segFlush(){
-    try { window.__segRuns++; window.segUpgradeAll(); if (window.tokenA11yAll) window.tokenA11yAll(); if (window.syncAnalysisDrawer) window.syncAnalysisDrawer(); }
+    try { window.__segRuns++; window.segUpgradeAll(); if (window.tokenA11yAll) window.tokenA11yAll(); if (window.modalA11yAll) window.modalA11yAll(); if (window.syncAnalysisDrawer) window.syncAnalysisDrawer(); }
     catch (err) { console.warn('[seg] upgrade fallito:', err); }
     finally { segQueued = false; }   // la spia si azzera SEMPRE: un errore non deve bloccare per sempre
   }
