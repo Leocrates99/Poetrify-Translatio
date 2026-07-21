@@ -29429,7 +29429,10 @@ function renderGuidedFirstRun() {
   return `<div class="wizard-pane">
     <div class="wizard-eyebrow">Modalità guidata · pronto a cominciare</div>
     <h2 class="wizard-title">Avvia la prima tappa: isolamento delle frasi</h2>
-    <p class="muted-text" style="margin-top:10px;">Il sistema dividerà il testo per punteggiatura forte (. ! ? ;). Potrai poi modificare a mano la segmentazione, prima di passare alle tappe successive.</p>
+    <p class="muted-text" style="margin-top:10px;">${state.meta.tipoTesto === 'poesia'
+      ? 'Il sistema prenderà <strong>ogni verso</strong> come unità d\'analisi, rispettando gli a capo del testo così come l\'hai inserito.'
+      : 'Il sistema dividerà il testo <strong>sul punto fermo</strong>, lasciando interi i punti di abbreviazione (<em>M. Tullius</em> resta una cosa sola). Punto interrogativo, esclamativo e punto e virgola <strong>non</strong> separano: se ti servono come confine, dividi a mano.'
+    } Potrai comunque modificare la segmentazione prima di passare alle tappe successive.</p>
     <p class="muted-text" style="margin-top:6px;font-size:12px;font-style:italic;">Per uscire dalla modalità guidata: usa il segmented control «Modalità» nella barra in alto.</p>
     <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
       <button class="btn btn-primary" onclick="startGuidedSegmentation()">▶ Segmenta automaticamente e comincia</button>
@@ -29438,6 +29441,15 @@ function renderGuidedFirstRun() {
 }
 
 function startGuidedSegmentation() {
+  /* La guardia sta QUI dentro e non solo nel renderer. Il pulsante che chiama
+     questa funzione compare unicamente quando non ci sono ancora frasi, ma la
+     funzione è globale e cablata a un onclick: chi la raggiungesse per un'altra
+     via (palette, cronologia, una futura scorciatoia) rigenererebbe l'array
+     delle frasi buttando via ogni analisi, senza che nessuno glielo chieda.
+     Stessa protezione che resplitSentences ha già. */
+  if (state.sentences && state.sentences.length > 0) {
+    if (!confirm('Il brano è già segmentato in ' + state.sentences.length + ' frasi.\n\nRisegmentare ricostruisce le frasi da capo: le analisi già fatte (grammatica, logica, periodo) vanno perse.\n\nProcedere?')) return;
+  }
   const chunks = splitTextIntoSentences(state.meta.testoOriginale);
   state.sentences = chunks.map(makeSentence);
   maybeAutoClosedClass();
@@ -35289,7 +35301,14 @@ function expandPeriodaleBlockFromFocus(sentenceId, direction) {
   sentence.periodale.forEach(e => {
     if (e.id !== entry.id) e.tokenIndices = (e.tokenIndices || []).filter(i => i !== newIdx);
   });
-  sentence.periodale = sentence.periodale.filter(e => (e.tokenIndices && e.tokenIndices.length > 0));
+  // `|| e.isElliptical` come nelle due potature gemelle dei sintagmi logici:
+  // una proposizione a VERBO SOTTINTESO può legittimamente restare senza token
+  // propri, ed è comunque un'analisi (il docente ha dichiarato l'ellissi). Senza
+  // questa guardia, espandere un blocco rubandole l'ultimo token la cancellava
+  // in silenzio — e il gemello logico, nella stessa situazione, la conservava.
+  sentence.periodale = sentence.periodale.filter(e =>
+    (e.tokenIndices && e.tokenIndices.length > 0) || e.isElliptical
+  );
   entry.tokenIndices = [...new Set([...indices, newIdx])].sort((a, b) => a - b);
   entry.text = entry.tokenIndices.map(i => (toks.find(t => t.idx === i) || {}).text).filter(Boolean).join(' ');
   persistCurrent();
