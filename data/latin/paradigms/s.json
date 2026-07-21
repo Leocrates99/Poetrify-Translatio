@@ -1083016,11 +1083016,11 @@
 },
 "satureia": {
 "pos": "Sostantivo",
-"cat": "2ª decl. n.",
-"classe": "2ª declinazione (neutro, plurale tantum)",
-"testa": "satureia, satureiorum n",
+"cat": "1ª decl.",
+"classe": "1ª declinazione",
+"testa": "satureia, satureiae f",
 "nome": {
-"pl": {
+"sg": {
 "nom": [
 [
 "saturei",
@@ -1083037,7 +1083037,7 @@
 "t"
 ],
 [
-"orum",
+"ae",
 "d"
 ]
 ],
@@ -1083047,7 +1083047,7 @@
 "t"
 ],
 [
-"is",
+"ae",
 "d"
 ]
 ],
@@ -1083057,7 +1083057,7 @@
 "t"
 ],
 [
-"a",
+"am",
 "d"
 ]
 ],
@@ -1083077,13 +1083077,74 @@
 "t"
 ],
 [
+"a",
+"d"
+]
+]
+},
+"pl": {
+"nom": [
+[
+"saturei",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"gen": [
+[
+"saturei",
+"t"
+],
+[
+"arum",
+"d"
+]
+],
+"dat": [
+[
+"saturei",
+"t"
+],
+[
+"is",
+"d"
+]
+],
+"acc": [
+[
+"saturei",
+"t"
+],
+[
+"as",
+"d"
+]
+],
+"voc": [
+[
+"saturei",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"abl": [
+[
+"saturei",
+"t"
+],
+[
 "is",
 "d"
 ]
 ]
 }
-},
-"nota": "plurale tantum: privo di singolare"
+}
 },
 "scalae": {
 "pos": "Sostantivo",

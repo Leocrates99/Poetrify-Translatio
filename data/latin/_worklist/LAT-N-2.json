@@ -1448,21 +1448,6 @@
    "segno": "paradigma+lewis"
   },
   {
-   "id": "lat:arithmetica",
-   "lemma": "arithmetica",
-   "uid": "poe-000136748",
-   "fonti": [
-    "lewis",
-    "whitaker"
-   ],
-   "marcatore": "gen. -i",
-   "genere": "n",
-   "segno": "lewis",
-   "genitivo": "arithmeticorum",
-   "numero": "pl",
-   "fonte_genitivo": "L&S · giudizio A+B"
-  },
-  {
    "id": "lat:arma",
    "lemma": "arma",
    "uid": "poe-000136749",
@@ -3629,21 +3614,6 @@
    "marcatore": "gen. -i",
    "genere": "m",
    "segno": "paradigma+lewis"
-  },
-  {
-   "id": "lat:cingula",
-   "lemma": "cingula",
-   "uid": "poe-000137866",
-   "fonti": [
-    "lewis",
-    "whitaker"
-   ],
-   "marcatore": "gen. -i",
-   "genere": "n",
-   "segno": "lewis",
-   "genitivo": "cingulorum",
-   "numero": "pl",
-   "fonte_genitivo": "L&S · giudizio A+B"
   },
   {
    "id": "lat:cingulus",
@@ -8081,20 +8051,6 @@
    "segno": "paradigma+lewis"
   },
   {
-   "id": "lat:galbina",
-   "lemma": "galbina",
-   "uid": "poe-000142161",
-   "fonti": [
-    "lewis"
-   ],
-   "marcatore": "gen. -i",
-   "genere": "n",
-   "segno": "lewis",
-   "genitivo": "galbinorum",
-   "numero": "pl",
-   "fonte_genitivo": "L&S · giudizio A+B"
-  },
-  {
    "id": "lat:galerus",
    "lemma": "galerus",
    "uid": "poe-000142165",
@@ -9763,21 +9719,6 @@
    "marcatore": "gen. -i",
    "genere": "f",
    "segno": "lewis(corregge paradigma)"
-  },
-  {
-   "id": "lat:lamenta",
-   "lemma": "lamenta",
-   "uid": "poe-000144537",
-   "fonti": [
-    "lewis",
-    "whitaker"
-   ],
-   "marcatore": "gen. -i",
-   "genere": "n",
-   "segno": "lewis(pos inferita)",
-   "genitivo": "lamentorum",
-   "numero": "pl",
-   "fonte_genitivo": "L&S · giudizio A+B"
   },
   {
    "id": "lat:lamentum",
@@ -12431,21 +12372,6 @@
    "marcatore": "gen. -i",
    "genere": "n",
    "segno": "paradigma+lewis"
-  },
-  {
-   "id": "lat:olympia",
-   "lemma": "Olympia",
-   "uid": "poe-000146569",
-   "fonti": [
-    "lewis",
-    "whitaker"
-   ],
-   "marcatore": "gen. -i",
-   "genere": "n",
-   "segno": "lewis",
-   "genitivo": "olympiorum",
-   "numero": "pl",
-   "fonte_genitivo": "L&S · giudizio A+B"
   },
   {
    "id": "lat:olympus",
@@ -15929,20 +15855,6 @@
    "segno": "paradigma+lewis"
   },
   {
-   "id": "lat:ruta#2",
-   "lemma": "ruta",
-   "uid": "poe-000149954",
-   "fonti": [
-    "lewis"
-   ],
-   "marcatore": "gen. -i",
-   "genere": "n",
-   "segno": "lewis",
-   "genitivo": "rutorum",
-   "numero": "pl",
-   "fonte_genitivo": "L&S · giudizio A+B"
-  },
-  {
    "id": "lat:rutrum",
    "lemma": "rutrum",
    "uid": "poe-000149957",
@@ -16378,21 +16290,6 @@
    "genere": "n",
    "segno": "lewis",
    "genitivo": "satorum",
-   "numero": "pl",
-   "fonte_genitivo": "L&S · giudizio A+B"
-  },
-  {
-   "id": "lat:satureia",
-   "lemma": "satureia",
-   "uid": "poe-000150157",
-   "fonti": [
-    "lewis",
-    "whitaker"
-   ],
-   "marcatore": "gen. -i",
-   "genere": "n",
-   "segno": "lewis",
-   "genitivo": "satureiorum",
    "numero": "pl",
    "fonte_genitivo": "L&S · giudizio A+B"
   },

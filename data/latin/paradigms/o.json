@@ -532145,11 +532145,11 @@
 },
 "Olympia": {
 "pos": "Sostantivo",
-"cat": "2ª decl. n.",
-"classe": "2ª declinazione (neutro, plurale tantum)",
-"testa": "Olympia, olympiorum n",
+"cat": "1ª decl.",
+"classe": "1ª declinazione",
+"testa": "Olympia, olympiae f",
 "nome": {
-"pl": {
+"sg": {
 "nom": [
 [
 "olympi",
@@ -532166,7 +532166,7 @@
 "t"
 ],
 [
-"orum",
+"ae",
 "d"
 ]
 ],
@@ -532176,7 +532176,7 @@
 "t"
 ],
 [
-"is",
+"ae",
 "d"
 ]
 ],
@@ -532186,7 +532186,7 @@
 "t"
 ],
 [
-"a",
+"am",
 "d"
 ]
 ],
@@ -532206,13 +532206,74 @@
 "t"
 ],
 [
+"a",
+"d"
+]
+]
+},
+"pl": {
+"nom": [
+[
+"olympi",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"gen": [
+[
+"olympi",
+"t"
+],
+[
+"arum",
+"d"
+]
+],
+"dat": [
+[
+"olympi",
+"t"
+],
+[
+"is",
+"d"
+]
+],
+"acc": [
+[
+"olympi",
+"t"
+],
+[
+"as",
+"d"
+]
+],
+"voc": [
+[
+"olympi",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"abl": [
+[
+"olympi",
+"t"
+],
+[
 "is",
 "d"
 ]
 ]
 }
-},
-"nota": "plurale tantum: privo di singolare"
+}
 },
 "omen": {
 "pos": "Sostantivo",

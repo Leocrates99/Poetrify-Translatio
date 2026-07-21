@@ -138,11 +138,17 @@ def main():
         # forme vecchie (dal genitivo memorizzato) vs nuove
         old_forms = {}
         if old and "nome" in old:
-            gen_old = j(old["nome"]["sg"]["gen"])
-            try:
-                old_forms = gen_noun(lemma, gen_old, raw_for(gen_old, decl), genere)
-            except Exception:
-                old_forms = {}
+            nome_old = old["nome"]
+            if "sg" in nome_old:
+                gen_old = j(nome_old["sg"]["gen"])
+                try:
+                    old_forms = gen_noun(lemma, gen_old, raw_for(gen_old, decl), genere)
+                except Exception:
+                    old_forms = {}
+            elif "pl" in nome_old:
+                # il paradigma precedente era un plurale tantum: le forme vecchie
+                # sono le sue stesse celle (caso dei falsi plurali, es. lamenta)
+                old_forms = forme_da_tabella({"pl": nome_old["pl"]}, decl)
         new_forms = (forme_da_tabella(tab["tab"], decl) if pl_tantum
                      else gen_noun(lemma, gen_new, raw_for(gen_new, decl), genere))
 

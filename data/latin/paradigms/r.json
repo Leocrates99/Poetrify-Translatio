@@ -856967,11 +856967,11 @@
 },
 "ruta2": {
 "pos": "Sostantivo",
-"cat": "2ª decl. n.",
-"classe": "2ª declinazione (neutro, plurale tantum)",
-"testa": "ruta, rutorum n",
+"cat": "1ª decl.",
+"classe": "1ª declinazione",
+"testa": "ruta, rutae f",
 "nome": {
-"pl": {
+"sg": {
 "nom": [
 [
 "rut",
@@ -856988,7 +856988,7 @@
 "t"
 ],
 [
-"orum",
+"ae",
 "d"
 ]
 ],
@@ -856998,7 +856998,7 @@
 "t"
 ],
 [
-"is",
+"ae",
 "d"
 ]
 ],
@@ -857008,7 +857008,7 @@
 "t"
 ],
 [
-"a",
+"am",
 "d"
 ]
 ],
@@ -857028,13 +857028,74 @@
 "t"
 ],
 [
+"a",
+"d"
+]
+]
+},
+"pl": {
+"nom": [
+[
+"rut",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"gen": [
+[
+"rut",
+"t"
+],
+[
+"arum",
+"d"
+]
+],
+"dat": [
+[
+"rut",
+"t"
+],
+[
+"is",
+"d"
+]
+],
+"acc": [
+[
+"rut",
+"t"
+],
+[
+"as",
+"d"
+]
+],
+"voc": [
+[
+"rut",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"abl": [
+[
+"rut",
+"t"
+],
+[
 "is",
 "d"
 ]
 ]
 }
-},
-"nota": "plurale tantum: privo di singolare"
+}
 }
 }
 }

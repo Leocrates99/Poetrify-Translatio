@@ -1,0 +1,902 @@
+{
+ "curvor": {
+  "key_ls": "curvo",
+  "confidenza": "alta",
+  "motivo": "La nostra chiave è la forma passiva/mediale; il verbo attivo è curvo, avi, atus, are, presente tra i candidati e coincidente col testo troncato."
+ },
+ "debitus": {
+  "key_ls": "debeo",
+  "confidenza": "media",
+  "motivo": "Participio-aggettivo di debeo: L&S non ha lemma autonomo (assente dai candidati) e tratta debitus come P. a. dentro la voce del verbo."
+ },
+ "deceo": {
+  "key_ls": "decet",
+  "confidenza": "alta",
+  "motivo": "La stessa definizione segnala 'only 3d pers.': L&S lemmatizza l'impersonale decet, cuit, presente tra i candidati."
+ },
+ "deciens": {
+  "key_ls": "decies",
+  "confidenza": "alta",
+  "motivo": "Variante grafica -iens dell'avverbio numerale; L&S lemmatizza decies (-iens), candidato presente."
+ },
+ "delabo": {
+  "key_ls": "delabor",
+  "confidenza": "alta",
+  "motivo": "Deponente: la definizione stessa dà 'de-labor lapsus, i, dep.'; candidato delabor presente."
+ },
+ "delitisco": {
+  "key_ls": "delitesco",
+  "confidenza": "alta",
+  "motivo": "Variante grafica -isco/-esco dello stesso verbo incoativo (de+latesco); candidato delitesco presente."
+ },
+ "demissus": {
+  "key_ls": "demitto",
+  "confidenza": "media",
+  "motivo": "Participio-aggettivo di demitto: nessun lemma autonomo fra i candidati, L&S lo tratta come P. a. in coda alla voce del verbo."
+ },
+ "depopulo": {
+  "key_ls": "depopulor",
+  "confidenza": "alta",
+  "motivo": "Deponente: la definizione dà 'de-populor atus, ari, dep.'; candidato depopulor presente."
+ },
+ "depreco": {
+  "key_ls": "deprecor",
+  "confidenza": "alta",
+  "motivo": "Deponente: la definizione dà 'de-precor atus, ari, dep.'; candidato deprecor presente."
+ },
+ "derigo": {
+  "key_ls": "dirigo",
+  "confidenza": "media",
+  "motivo": "La definizione stessa allinea derigo/derego/dirigo (de+rego); L&S non ha headword deri- (assente dai candidati per prefisso) e lemmatizza dirigo."
+ },
+ "liberaliter": {
+  "key_ls": "liberalis1",
+  "confidenza": "alta",
+  "motivo": "Avverbio trattato da L&S in coda all'aggettivo (līberālĭter, adv., v. liberalis fin.); liberalis2 è il nome proprio, quindi vale liberalis1."
+ },
+ "loculi": {
+  "key_ls": "loculus",
+  "confidenza": "alta",
+  "motivo": "Noi abbiamo il plurale loculi (dim. di locus, 'cassetta, borsellino'), L&S lemmatizza il singolare loculus con l'uso al plurale."
+ },
+ "ludor": {
+  "key_ls": "ludo",
+  "confidenza": "alta",
+  "motivo": "La nostra chiave è una forma spuria/passiva: la definizione riportata è quella di lūdō, lusi, lusum, ere 'giocare'."
+ },
+ "luxuries": {
+  "key_ls": "luxuria",
+  "confidenza": "alta",
+  "motivo": "L&S raccoglie in un'unica voce le due forme 'luxuria, ae, e luxuries, ei, f.' (rigoglio, sfrenatezza), lemmatizzando su luxuria."
+ },
+ "memoriter": {
+  "key_ls": "memor1",
+  "confidenza": "alta",
+  "motivo": "Avverbio rinviato da L&S all'aggettivo (memŏrĭter, adv., v. memor fin.); memor2 non pertinente, la voce aggettivale è memor1."
+ },
+ "mercennarius": {
+  "key_ls": "mercenarius",
+  "confidenza": "alta",
+  "motivo": "Semplice variante grafica con geminata: L&S lemmatizza mercenarius (mercennarius) 'prezzolato, mercenario', stessa definizione."
+ },
+ "met": {
+  "key_ls": "met",
+  "confidenza": "alta",
+  "motivo": "Suffisso enclitico -met: la chiave L&S omonima è presente tra i candidati e corrisponde esattamente al testo troncato."
+ },
+ "metuendus": {
+  "key_ls": "metuo",
+  "confidenza": "alta",
+  "motivo": "Participio-aggettivo (P. a. di metuo): L&S lo tratta all'interno della voce verbale metuo, non come lemma autonomo."
+ },
+ "misero": {
+  "key_ls": "miseror",
+  "confidenza": "alta",
+  "motivo": "La definizione è quella del deponente miseror, ātus, ārī 'compiangere'; L&S lemmatizza la forma deponente, non l'attiva misero."
+ },
+ "inquaero": {
+  "key_ls": "inquiro",
+  "confidenza": "alta",
+  "motivo": "Nostra grafia non assimilata in+quaero; L&S lemmatizza il composto come inquiro, stessa definizione (to seek after, search into)."
+ },
+ "insecto": {
+  "key_ls": "insector",
+  "confidenza": "alta",
+  "motivo": "La definizione stessa cita «īnsector ātus, arī, dep. freq. insequor»: L&S lemmatizza la forma deponente insector."
+ },
+ "insolenter": {
+  "key_ls": "insolens",
+  "confidenza": "alta",
+  "motivo": "Avverbio trattato da L&S dentro l'aggettivo insolens (adv. insolenter)."
+ },
+ "instructus1": {
+  "key_ls": "instruo",
+  "confidenza": "alta",
+  "motivo": "Participio-aggettivo (P. of instruo); tra i candidati non compare alcun lemma instructus, quindi il testo sta come P. a. nella voce instruo."
+ },
+ "interfacio": {
+  "key_ls": "interficio",
+  "confidenza": "alta",
+  "motivo": "Nostra grafia non apofonica inter+facio; L&S lemmatizza interficio, stessa definizione (to kill, destroy)."
+ },
+ "intericio": {
+  "key_ls": "interjacio",
+  "confidenza": "media",
+  "motivo": "inter+iacio con i consonantica resa j in L&S; unico candidato compatibile col senso «to throw between» (interjaceo è invece 'giacere in mezzo')."
+ },
+ "irasco": {
+  "key_ls": "irascor",
+  "confidenza": "alta",
+  "motivo": "Deponente: L&S lemmatizza irascor, identico incipit della definizione."
+ },
+ "lactens": {
+  "key_ls": "lacteo",
+  "confidenza": "alta",
+  "motivo": "La definizione stessa dichiara «P. of *lacteo from lac»: il participio è trattato sotto il verbo lacteo."
+ },
+ "lamenta": {
+  "key_ls": "lamentum",
+  "confidenza": "alta",
+  "motivo": "Noi abbiamo il plurale (lamenta, ōrum, n.), L&S lemmatizza il singolare lamentum."
+ },
+ "devertor": {
+  "key_ls": "deverto",
+  "confidenza": "alta",
+  "motivo": "La definizione stessa dichiara «collat. form of deverto»: L&S tratta la forma deponente dentro la voce del verbo attivo, presente tra i candidati."
+ },
+ "dimidium": {
+  "key_ls": "dimidius",
+  "confidenza": "alta",
+  "motivo": "Sostantivo neutro sostantivato dall'aggettivo: la troncatura cita «dimidius, the half», e L&S colloca il neutro nella voce dell'aggettivo."
+ },
+ "disfluo": {
+  "key_ls": "diffluo",
+  "confidenza": "alta",
+  "motivo": "Grafia non assimilata di dis-+fluo: la definizione riporta esplicitamente il lemma L&S «diffluō ... dis- + fluo»."
+ },
+ "distans": {
+  "key_ls": "disto",
+  "confidenza": "alta",
+  "motivo": "Participio-aggettivo: la definizione dice «P. of disto» e L&S lo tratta sotto il verbo, presente fra i candidati."
+ },
+ "divolgo": {
+  "key_ls": "divulgo",
+  "confidenza": "alta",
+  "motivo": "Variante grafica o/u: la troncatura riporta il lemma L&S «dī-volgō or dī-vulgō», e L&S lemmatizza divulgo."
+ },
+ "ecquid": {
+  "key_ls": "ecquis",
+  "confidenza": "alta",
+  "motivo": "Avverbio-neutro interrogativo: la definizione stessa lo dichiara «neut. of ecquis», dove L&S ne tratta gli usi diretti e indiretti."
+ },
+ "effuse": {
+  "key_ls": "effundo",
+  "confidenza": "media",
+  "motivo": "Avverbio dal participio-aggettivo effusus, che L&S non ha come chiave autonoma nell'elenco: il testo (con l'avverbio effuse, effusius) sta nella voce del verbo effundo."
+ },
+ "eiero": {
+  "key_ls": "ejuro",
+  "confidenza": "media",
+  "motivo": "L&S usa la grafia con j e lemmatizza «ē-jūro (o ējĕro)»; l'aggancio è fallito perché la nostra chiave inizia per ei-, non per ej-."
+ },
+ "eleganter": {
+  "key_ls": "elegans",
+  "confidenza": "alta",
+  "motivo": "Avverbio trattato da L&S dentro l'aggettivo: la definizione stessa rimanda a «elegans» con i gradi elegantius/elegantissime."
+ },
+ "profundum": {
+  "key_ls": "profundus",
+  "confidenza": "alta",
+  "motivo": "Sostantivo neutro sostantivato dall'aggettivo profundus; L&S tratta prŏfundum, i, n. («the deep, the sea») dentro l'articolo dell'aggettivo, non come lemma autonomo (profundo in elenco è il verbo «versare», da escludere)."
+ },
+ "proiectus": {
+  "key_ls": "proicio",
+  "confidenza": "alta",
+  "motivo": "È il participio/aggettivo verbale P. a. di proicio («stretched out, projecting»), che L&S tratta in coda alla voce del verbo; nessun lemma autonomo projectus adj. nell'indice."
+ },
+ "propio": {
+  "key_ls": "propior",
+  "confidenza": "alta",
+  "motivo": "La nostra chiave è corrotta: la definizione è quella del comparativo propior, ius («nearer»), presente tra i candidati."
+ },
+ "prudenter": {
+  "key_ls": "prudens",
+  "confidenza": "alta",
+  "motivo": "Avverbio del participio-aggettivo prudens, che L&S tratta nella sezione Adv. dell'articolo prudens."
+ },
+ "quem": {
+  "key_ls": "quemadmodum",
+  "confidenza": "alta",
+  "motivo": "La definizione è integralmente quella della locuzione avverbiale quem ad modum, lemmatizzata da L&S come quemadmodum."
+ },
+ "querella": {
+  "key_ls": "querela",
+  "confidenza": "alta",
+  "motivo": "Semplice variante grafica: L&S lemmatizza querēla (querella) ae, f., «lamento, querela»."
+ },
+ "recupero": {
+  "key_ls": "recipero",
+  "confidenza": "media",
+  "motivo": "Stessa parola con la grafia alternativa che L&S registra come lemma (rĕcŭpĕro / rĕcĭpĕro, «riavere, ricuperare»); la nostra definizione stessa segnala la variante «(recip-)». Nessun rischio di parola diversa, solo di chiave inesistente."
+ },
+ "reminisco": {
+  "key_ls": "reminiscor",
+  "confidenza": "alta",
+  "motivo": "Verbo deponente: L&S lemmatizza reminiscor, i, dep. («ricordare»), esattamente la forma citata nella definizione."
+ },
+ "excaedo": {
+  "key_ls": "excido2",
+  "confidenza": "media",
+  "motivo": "La definizione stessa dichiara «excīdō ... ex + caedo, to cut out, hew out, raze»: e' il verbo excido secondo omografo di L&S (1 = ex+cado 'cadere', 2 = ex+caedo 'tagliare'); la grafia excaedo e' la forma non assimilata."
+ },
+ "excusor": {
+  "key_ls": "excuso",
+  "confidenza": "alta",
+  "motivo": "Il testo troncato riporta esattamente il lemma «excūsō āvī, ātus, āre ex+*causo, to excuse»: la nostra chiave excusor e' una forma spuria/passiva del verbo attivo excuso, presente fra i candidati."
+ },
+ "facetiae": {
+  "key_ls": "facetia",
+  "confidenza": "alta",
+  "motivo": "Noi lemmatizziamo il plurale facetiae (wit, witticisms); L&S ha il singolare facetia, ae, f., stessa radice facetus e stesso significato."
+ },
+ "ferramenta": {
+  "key_ls": "ferramentum",
+  "confidenza": "alta",
+  "motivo": "Nostro plurale neutro ferramenta (implements of iron, tools) contro il singolare ferramentum di L&S: stessa parola, stessa radice ferrum."
+ },
+ "frustro": {
+  "key_ls": "frustror",
+  "confidenza": "alta",
+  "motivo": "La definizione riporta «frūstror ātus, ārī, dep. frustra, to deceive, frustrate»: L&S lemmatizza la forma deponente frustror, presente fra i candidati; frustro e' la nostra normalizzazione attiva."
+ },
+ "gestio": {
+  "key_ls": "gestio2",
+  "confidenza": "alta",
+  "motivo": "il testo troncato è il verbo gestio, -ire (esultare); gestio1 è il sostantivo «gestione»."
+ },
+ "gravor": {
+  "key_ls": "gravo",
+  "confidenza": "alta",
+  "motivo": "La definizione stessa dice «dep. pass. of gravo»: L&S tratta l'uso deponente/passivo all'interno dell'articolo del verbo attivo gravo, presente fra i candidati (gravor non esiste come chiave autonoma)."
+ },
+ "hibernacula": {
+  "key_ls": "hibernaculum",
+  "confidenza": "alta",
+  "motivo": "Nostro plurale neutro hibernacula (tende per i quartieri d'inverno) contro il singolare hibernaculum di L&S, presente fra i candidati; stesso diminutivo di hiberna."
+ },
+ "horrendus": {
+  "key_ls": "horreo",
+  "confidenza": "alta",
+  "motivo": "La definizione stessa dice «P. of horreo»: L&S tratta l'aggettivo verbale sotto il verbo horreo (nessuna voce autonoma horrend- fra i candidati)."
+ },
+ "horto": {
+  "key_ls": "hortor",
+  "confidenza": "alta",
+  "motivo": "Il testo troncato è letteralmente la voce «hortor, ātus, ārī, dep.»: L&S lemmatizza il deponente, noi la forma attiva."
+ },
+ "ico": {
+  "key_ls": "icio",
+  "confidenza": "media",
+  "motivo": "Stesso verbo «īcī, īctus» (colpire); la ricerca per prefisso non trova «ico», quindi L&S lo lemmatizza nella forma alternativa icio (ĭcĭo, īci, ictum)."
+ },
+ "impensus": {
+  "key_ls": "impendo",
+  "confidenza": "alta",
+  "motivo": "La definizione dichiara «P. of impendo»: il participio-aggettivo è trattato dentro la voce del verbo, presente fra i candidati."
+ },
+ "inane": {
+  "key_ls": "inanis",
+  "confidenza": "alta",
+  "motivo": "Sostantivo neutro tratto dall'aggettivo: la definizione stessa rimanda «ināne, is, n. inanis», e L&S tratta il neutro sostantivato dentro inanis."
+ },
+ "inclinatus": {
+  "key_ls": "inclino",
+  "confidenza": "alta",
+  "motivo": "La definizione dichiara «P. of inclino»: il participio-aggettivo sta nella voce del verbo, presente fra i candidati."
+ },
+ "innatus": {
+  "key_ls": "innascor",
+  "confidenza": "alta",
+  "motivo": "La definizione dichiara «P. of innascor» (innato, congenito): L&S manda al deponente innascor, non a innato («nuotare dentro»)."
+ },
+ "inpremo": {
+  "key_ls": "imprimo",
+  "confidenza": "alta",
+  "motivo": "Grafia non assimilata: il testo troncato è la voce «imprimō (inpr-) pressī, pressus, ere, in+premo», quindi la chiave L&S è imprimo."
+ },
+ "comans": {
+  "key_ls": "como2",
+  "confidenza": "media",
+  "motivo": "La def. stessa rimanda a «P. of comō, āre, from coma»: L&S tratta il participio-aggettivo comans sotto il verbo denominativo comare (omografo 2 rispetto a como/comere, 3ª); il sostantivo coma sarebbe parola diversa."
+ },
+ "concado": {
+  "key_ls": "concido1",
+  "confidenza": "media",
+  "motivo": "conpremo-tipo: com+cado assimilato = concĭdo «cadere»; la def. troncata dà come sezione 2 «concīdō … com- + caedo», quindi il nostro lemma è l'omografo da cado, primo in L&S."
+ },
+ "conclaudo": {
+  "key_ls": "concludo",
+  "confidenza": "alta",
+  "motivo": "Grafia non assimilata di com+claudo; la def. troncata è letteralmente «conclūdō … com- + claudo, to shut up, close»."
+ },
+ "confacio": {
+  "key_ls": "conficio",
+  "confidenza": "alta",
+  "motivo": "Grafia non assimilata di com+facio; la def. troncata è «cōnficiō fēcī, fectus, ere com- + facio»."
+ },
+ "conflictor": {
+  "key_ls": "conflicto",
+  "confidenza": "alta",
+  "motivo": "L&S lemmatizza il frequentativo attivo conflicto e tratta la forma deponente conflictor come sezione interna della stessa voce (freq. di confligo)."
+ },
+ "coniunctus": {
+  "key_ls": "conjungo",
+  "confidenza": "alta",
+  "motivo": "Participio-aggettivo di coniungo; L&S usa la grafia con j e sviluppa conjunctus come P. a. dentro la voce del verbo (nessuna voce autonoma «conjunctus» tra le candidate)."
+ },
+ "conpremo": {
+  "key_ls": "comprimo",
+  "confidenza": "alta",
+  "motivo": "Grafia arcaica non assimilata di comprimo; la def. troncata riporta esplicitamente «com-primō (conp-) pressī, pressus»."
+ },
+ "conteneo": {
+  "key_ls": "contineo",
+  "confidenza": "alta",
+  "motivo": "Grafia non assimilata di com+teneo; la def. troncata è «contineō tinuī, tentus, ēre com-+teneo, to hold together»."
+ },
+ "contesto": {
+  "key_ls": "contestor",
+  "confidenza": "alta",
+  "motivo": "Verbo deponente: L&S lemmatizza con-testor, ātus, ārī (chiamare a testimone / contestare la lite), esattamente il contenuto della def. troncata."
+ },
+ "volgus": {
+  "key_ls": "vulgus",
+  "confidenza": "alta",
+  "motivo": "Grafia arcaica vol- per vul-: L&S lemmatizza «vulgus (volgus), i, n. (m.)» = la massa, il popolo, la folla, esattamente il senso della definizione troncata."
+ },
+ "volnero": {
+  "key_ls": "vulnero",
+  "confidenza": "alta",
+  "motivo": "Grafia arcaica vol- per vul-: L&S ha «vulnero (voln-), avi, atum, are» = ferire, denominativo di vulnus, coincidente con la definizione troncata."
+ },
+ "volnus": {
+  "key_ls": "vulnus",
+  "confidenza": "alta",
+  "motivo": "Grafia arcaica vol- per vul-: L&S ha «vulnus (voln-), eris, n.» = ferita, stessa radice e stesso significato della definizione troncata."
+ },
+ "severe": {
+  "key_ls": "severus1",
+  "confidenza": "alta",
+  "motivo": "L&S tratta l'avverbio sevērē dentro l'aggettivo sevērus (omografo 1, il nome proprio Severus2 è il generale/imperatore)."
+ },
+ "solitum": {
+  "key_ls": "soleo",
+  "confidenza": "media",
+  "motivo": "Il sostantivo neutro solitum è il participio sostantivato di soleo (la stessa definizione dice «P. n. of soleo»); L&S lo espone in coda alla voce del verbo, e non esiste chiave autonoma solitus nell'elenco per prefisso."
+ },
+ "sollemne": {
+  "key_ls": "sollemnis",
+  "confidenza": "alta",
+  "motivo": "Neutro sostantivato dell'aggettivo sollemnis (la definizione stessa rimanda a «sollemnis»)."
+ },
+ "solo": {
+  "key_ls": "solor",
+  "confidenza": "alta",
+  "motivo": "La definizione troncata è quella del deponente sōlor, ārī «consolare»; L&S lemmatizza la forma deponente solor (solo1 è invece «rendere deserto»)."
+ },
+ "stupens": {
+  "key_ls": "stupeo",
+  "confidenza": "alta",
+  "motivo": "Participio presente di stupeo, trattato da L&S dentro la voce del verbo."
+ },
+ "subago": {
+  "key_ls": "subigo",
+  "confidenza": "alta",
+  "motivo": "Grafia non apofonica di sub+ago: L&S lemmatizza subigō, ēgī, āctus, esattamente il testo della definizione troncata."
+ },
+ "subcaedo": {
+  "key_ls": "succido2",
+  "confidenza": "media",
+  "motivo": "Assimilazione sub+caedo → succīdō «tagliare sotto/abbattere», che in L&S è il secondo omografo (succido1 = sub+cado «cadere giù»); la stessa definizione lo numera «2)»."
+ },
+ "subcingo": {
+  "key_ls": "succingo",
+  "confidenza": "alta",
+  "motivo": "Assimilazione sub+cingo → succingō, forma sotto cui L&S lemmatizza (la definizione riporta «succingō or sub-cingō»)."
+ },
+ "subclamo": {
+  "key_ls": "succlamo",
+  "confidenza": "alta",
+  "motivo": "Assimilazione sub+clamo → succlāmō, lemma L&S (la definizione riporta «succlāmō or sub-clāmō»)."
+ },
+ "subfacio": {
+  "key_ls": "sufficio",
+  "confidenza": "alta",
+  "motivo": "Assimilazione e apofonia sub+facio → sufficiō, fēcī, fectus: è il lemma L&S del testo troncato."
+ },
+ "biduum": {
+  "key_ls": "biduus",
+  "confidenza": "alta",
+  "motivo": "L&S lemmatizza l'aggettivo biduus, a, um e tratta il neutro sostantivato bīduum ('period of two days') dentro quella voce: verificato nel file normalizzato."
+ },
+ "bipennis": {
+  "key_ls": "bipennis2",
+  "confidenza": "alta",
+  "motivo": "bipennis1 in L&S e' 'having two wings' (insetti), mentre bipennis2 e' 'two-edged / a two-edged axe' con gli stessi loci (Verg. A. 5,307; Ov.) della nostra definizione troncata."
+ },
+ "brevi": {
+  "key_ls": "brevis",
+  "confidenza": "alta",
+  "motivo": "avverbio = ablativo di brevis usato avverbialmente; L&S non ha voce autonoma 'brevi' e tratta l'uso dentro brevis (unica voce brevis, senza omografi)."
+ },
+ "caerulus": {
+  "key_ls": "caeruleus1",
+  "confidenza": "alta",
+  "motivo": "la voce L&S recita esplicitamente 'caeruleus, and in poetry equally common, caerulus, a, um': caerulus e' variante poetica registrata dentro caeruleus1."
+ },
+ "caro": {
+  "key_ls": "caro2",
+  "confidenza": "alta",
+  "motivo": "caro1 e' il verbo 'to card' e caro3 l'avverbio di carus; solo caro2 e' 'caro, carnis, f., flesh', identico alla nostra definizione troncata."
+ },
+ "casu": {
+  "key_ls": "casus1",
+  "confidenza": "alta",
+  "motivo": "avverbio = ablativo di casus ('by chance'); casus1 (da cado) e' l'unica voce casus in L&S e contiene l'uso avverbiale."
+ },
+ "centenus": {
+  "key_ls": "centeni",
+  "confidenza": "alta",
+  "motivo": "L&S lemmatizza il distributivo al plurale centeni, ae, a, notando l'uso poetico al singolare; la voce cita lo stesso locus 'illos centeni quemque sequuntur iuvenes'."
+ },
+ "circumcaedo": {
+  "key_ls": "circumcido",
+  "confidenza": "alta",
+  "motivo": "grafia assimilata: circum+caedo > circumcido; la voce L&S apre con 'to cut around, cut, clip, trim' e l'esempio 'ars agricolarum, quae circumcidat', identico al nostro."
+ },
+ "circumspector": {
+  "key_ls": "circumspecto",
+  "confidenza": "alta",
+  "motivo": "la nostra voce e' il verbo frequentativo circumspecto, -are ('to look about with attention'), non il sostantivo omografo circumspector 'watchman' che L&S ha come voce distinta e tarda: agganciare 'circumspector' iniettarebbe un'altra parola."
+ },
+ "clementer": {
+  "key_ls": "clemens1",
+  "confidenza": "alta",
+  "motivo": "L&S tratta l'avverbio clementer (con comp. clementius, gli stessi loci tacitiani) dentro l'aggettivo clemens1."
+ },
+ "molliter": {
+  "key_ls": "mollis",
+  "confidenza": "alta",
+  "motivo": "L&S non ha voce autonoma per l'avverbio: verificato che l'entrata «mollis» contiene «Hence, adv.: mollĭter … softly, gently, agreeably» con gli stessi esempi (aves nidos mollissime substernunt)."
+ },
+ "monito": {
+  "key_ls": "monitor",
+  "confidenza": "alta",
+  "motivo": "La definizione troncata è letteralmente l'articolo «monitor, ōris, m.»; chiave «monitor» presente e senza omografi (la nostra chiave «monito» è corrotta/troncata)."
+ },
+ "obcaeco": {
+  "key_ls": "occaeco",
+  "confidenza": "alta",
+  "motivo": "Grafia assimilata ob+caeco → occaeco; verificata l'entrata «occaeco, v. a. — to make blind, to blind, to deprive of sight», identica al testo troncato."
+ },
+ "obcapio": {
+  "key_ls": "occipio",
+  "confidenza": "alta",
+  "motivo": "ob+capio assimilato; l'entrata «occipio» riporta esplicitamente l'etimo ob-capio e «to begin, commence», con gli stessi esempi (occepso/occepsit)."
+ },
+ "obcurso": {
+  "key_ls": "occurso",
+  "confidenza": "alta",
+  "motivo": "ob+curso assimilato; entrata «occurso, v. freq. n. [occurro], to run, go, or come to meet», stessa parola del testo troncato."
+ },
+ "obpremo": {
+  "key_ls": "opprimo",
+  "confidenza": "alta",
+  "motivo": "ob+premo assimilato; entrata «opprimo, v. a. — to press against, press together; to press down», incipit coincidente con la definizione troncata."
+ },
+ "occupatus": {
+  "key_ls": "occupo",
+  "confidenza": "alta",
+  "motivo": "Participio/aggettivo verbale: il testo sostanziale sta dentro «occupo» («Hence, occŭpātus, a, um, P. a., taken up, occupied, employed, busy, engaged»); la chiave «occupatus1» esiste ma è solo un rimando di una riga («Part. and P. a., from occupo») e «occupatus2» è un sostantivo diverso (post-class., «an employment»)."
+ },
+ "ocius": {
+  "key_ls": "ocior",
+  "confidenza": "alta",
+  "motivo": "Comparativo avverbiale privo di lemma proprio: verificato che l'entrata «ocior» (swifter, fleeter) contiene la sezione avverbiale con comp. ocius e sup. ocissime."
+ },
+ "partior": {
+  "key_ls": "partio2",
+  "confidenza": "alta",
+  "motivo": "Verificato sui dati: «partio2, v. a. … 4, v. dep. pars, to share, part; to divide, distribute» = il nostro deponente; «partio1» è invece il sostantivo femminile «a bearing, bringing forth young» (da pario), da evitare."
+ },
+ "parvolus": {
+  "key_ls": "parvulus",
+  "confidenza": "alta",
+  "motivo": "Variante grafica arcaica: l'entrata «parvulus, adj. dim. [parvus], very small, little, petty, slight» cita anche la forma parvolus e lo stesso esempio oraziano (parvola magni formica laboris)."
+ },
+ "pertempto": {
+  "key_ls": "pertento",
+  "confidenza": "alta",
+  "motivo": "L&S lemmatizza la grafia -tento (la nostra def. dà già la variante «per-temptō (-tentō)»); la voce pertento cita «cum utrumque pugionem pertentasset, Tac. H.», identico al nostro «pugionem, Ta.»"
+ },
+ "pervago": {
+  "key_ls": "pervagor",
+  "confidenza": "alta",
+  "motivo": "verbo deponente: L&S lemmatizza la forma deponente per-vagor, stesse occorrenze (praedonum naviculae, natio pervagata bello orbem terrarum L.)"
+ },
+ "pila": {
+  "key_ls": "pila2",
+  "confidenza": "alta",
+  "motivo": "la parte troncata è il senso «pilastro/pila di ponte» (il nostro «iberim, L.» è «locavit pilas pontis in Tiberim, Liv. 40,51», citato in pila2); pila1 = mortaio, pila3 = palla (quest'ultimo già presente e non troncato)"
+ },
+ "placor": {
+  "key_ls": "placo",
+  "confidenza": "alta",
+  "motivo": "la definizione è quella del verbo plācō «to quiet, soothe, appease»; ATTENZIONE: in L&S esiste anche una chiave placor (plăcor, ōris, m. «contentment», eccl.) che è UN'ALTRA parola e non va usata"
+ },
+ "plurimum": {
+  "key_ls": "multus",
+  "confidenza": "media",
+  "motivo": "L&S ha la chiave plurimus ma è solo un rimando («plūrĭmus, a, um, v. multus, III.»): il testo reale del superlativo e dell'avverbio plurimum sta dentro multus, III — coerente con la nostra def. «sup. of multum, with comp. plus»"
+ },
+ "polliceo": {
+  "key_ls": "polliceor",
+  "confidenza": "alta",
+  "motivo": "deponente: L&S lemmatizza polliceor, itus, ērī, stessa voce e stesse citazioni"
+ },
+ "potissimum": {
+  "key_ls": "potis",
+  "confidenza": "alta",
+  "motivo": "avverbio trattato dentro l'aggettivo: in L&S la chiave potissime/potissimum è un rimando («v. potis fin. B.»), il testo integrale è nella voce potis (sup. potissimus)"
+ },
+ "praefectus": {
+  "key_ls": "praeficio",
+  "confidenza": "alta",
+  "motivo": "participio/sostantivo derivato: le chiavi praefectus2 e praefectus3 in L&S sono meri rimandi («Part., from praeficio»; «v. praeficio — I. fin.»), il testo del sostantivo «overseer, prefect» sta in fondo alla voce praeficio (praefectus1 è invece il participio di praefacio, da evitare)"
+ },
+ "praeveho": {
+  "key_ls": "praevehor",
+  "confidenza": "alta",
+  "motivo": "deponente: L&S lemmatizza prae-vehor, con le stesse citazioni (equites Romani praevecti L.; praevectus equo V.; missilia praevehuntur Ta.)"
+ },
+ "praevertor": {
+  "key_ls": "praeverto",
+  "confidenza": "alta",
+  "motivo": "la voce L&S prae-verto (-vorto) include esplicitamente il deponente praevertor/praevortor, che non ha lemma autonomo"
+ },
+ "'no'": {
+  "key_ls": "no1",
+  "confidenza": "alta",
+  "motivo": "Verificato nel file L&S: no1 = «no, nāvi, to swim, float», con nat lupus/piger ad nandum/nare sine cortice, identico al troncato; No2 è la città egiziana."
+ },
+ "Caeres": {
+  "key_ls": "caere",
+  "confidenza": "alta",
+  "motivo": "Verificato: la voce Caere, II. Derivv. A contiene «Caeres, itis and etis, adj., of Caere» con populus e la cittadinanza senza voto (tabulae Caerites)."
+ },
+ "Cannensis": {
+  "key_ls": "cannae",
+  "confidenza": "alta",
+  "motivo": "Verificato: Cannae, II. Deriv. contiene «Cannensis, e, adj., of Cannae» con pugna/acies/clades Cannensis."
+ },
+ "Eous": {
+  "key_ls": "eos",
+  "confidenza": "alta",
+  "motivo": "Nessuna chiave L&S inizia per «Eou»; verificato che eos, II. Derivv. contiene «ēōus, a, um» con Atlantides absconduntur e i sensi «morning-/eastern»."
+ },
+ "Latine": {
+  "key_ls": "latium",
+  "confidenza": "alta",
+  "motivo": "Latinus1 è solo uno stub «v. Latium, II. B.»; verificato che Latium contiene «Adv.: Lătīnē, in Latin» con Latine loqui/scire/reddere. Latinus2 è il re dei Laurenti, non c'entra."
+ },
+ "Ramnenses": {
+  "key_ls": "ramnes",
+  "confidenza": "alta",
+  "motivo": "Verificato: la voce è lemmatizzata «Ramnes and Ramnenses, ium, m.» — tribù primitiva e centuria di cavalieri, come nel troncato."
+ },
+ "Romanus": {
+  "key_ls": "roma",
+  "confidenza": "alta",
+  "motivo": "Nessuna chiave L&S «Roman*»; verificato che Roma, A. contiene «Rōmānus, a, um, adj.» con populus Romanus, Juno (opp. Argiva), lingua Romana."
+ },
+ "Sabinus": {
+  "key_ls": "sabini",
+  "confidenza": "alta",
+  "motivo": "Verificato: Sabini, A. contiene «Săbīnus, a, um, adj., Sabine» (ager, herba, vinum); Sabina e Sabine sono stub che rimandano qui."
+ },
+ "Tirynthius": {
+  "key_ls": "tiryns",
+  "confidenza": "alta",
+  "motivo": "Verificato: Tiryns contiene «Tīrynthĭus, a, um, adj.» con heros/tela e i sensi erculei del troncato."
+ },
+ "Venerius": {
+  "key_ls": "venus1",
+  "confidenza": "alta",
+  "motivo": "Venereus è uno stub «v. 1. Venus»; verificato che Venus1, II. Derivv. dà «Venereus o Venerius, a, um», i Venerii servi del tempio e il Venereus iactus ai dadi."
+ },
+ "accommodatus": {
+  "key_ls": "accommodo",
+  "confidenza": "alta",
+  "motivo": "participio-aggettivo di accommodo; la voce L&S «accommodatus» esiste ma e uno stub di rinvio (29 caratteri), mentre il testo integrale della P. a. con comparativo/superlativo/avverbio sta in coda ad ac-commodo"
+ },
+ "acer": {
+  "key_ls": "acer",
+  "confidenza": "alta",
+  "motivo": "omografo: acer1 (acero, n.) + acer2 (aguzzo, agg.); la voce nostra li unisce → entrambi."
+ },
+ "adcapio": {
+  "key_ls": "accipio",
+  "confidenza": "alta",
+  "motivo": "forma non assimilata di ac-cipio < ad+capio; la definizione troncata riporta gia il lemma L&S «accipio ... ad+capio, to receive, accept»"
+ },
+ "adflictus": {
+  "key_ls": "affligo",
+  "confidenza": "alta",
+  "motivo": "participio-aggettivo di af-fligo; afflictus1 e solo uno stub di rinvio (45 caratteri) e afflictus2 e un altro lemma (sostantivo, urto), mentre la P. a. «abbattuto, misero, depravato» sta in coda ad affligo"
+ },
+ "adiunctus": {
+  "key_ls": "adjungo",
+  "confidenza": "alta",
+  "motivo": "participio-aggettivo di ad-jungo (L&S scrive j per i consonantica); non esiste un lemma «adjunctus», e la coda di adjungo contiene sia adiunctior/adiunctissimus sia il sostantivo neutro adiuncta"
+ },
+ "admiro": {
+  "key_ls": "admiror",
+  "confidenza": "alta",
+  "motivo": "L&S lemmatizza il deponente ad-miror, che e esattamente il testo della definizione troncata («ad-miror, atus, ari, dep.»)"
+ },
+ "adtango": {
+  "key_ls": "attingo",
+  "confidenza": "alta",
+  "motivo": "grafia non assimilata di at-tingo < ad+tango; la definizione troncata riporta gia «attingo (adt-) ... ad + tango»"
+ },
+ "adteneo": {
+  "key_ls": "attineo",
+  "confidenza": "alta",
+  "motivo": "grafia non assimilata di at-tineo < ad+teneo; la definizione troncata riporta gia «attineo (adt-)»"
+ },
+ "subgero": {
+  "key_ls": "suggero",
+  "confidenza": "alta",
+  "motivo": "L&S lemmatizza sub+gero nella forma assimilata; la voce «suggero» esiste e apre con «to carry, bring, put or lay under», identica alla troncata."
+ },
+ "submergo": {
+  "key_ls": "summergo",
+  "confidenza": "alta",
+  "motivo": "L&S ha lo stub «subm-, v. summ-.»; «summergo» apre con «to dip or plunge under, to sink, overwhelm, submerge», stesso testo della troncata."
+ },
+ "submitto": {
+  "key_ls": "summitto",
+  "confidenza": "alta",
+  "motivo": "Forma assimilata attestata in L&S («subm-, v. summ-.»); la voce «summitto» tratta sub-mitto con la nota «With the force of sub predominating»."
+ },
+ "submoveo": {
+  "key_ls": "summoveo",
+  "confidenza": "alta",
+  "motivo": "«summoveo … to send or drive off or away, to remove» e riporta il perfetto sincopato summosses (Hor.), citato anche nella nostra troncata."
+ },
+ "subpremo": {
+  "key_ls": "supprimo",
+  "confidenza": "alta",
+  "motivo": "sub+premo assimilato; L&S ha lo stub «subp-, v. supp-.» e la voce «supprimo … to press down or under», corrispondente alla troncata."
+ },
+ "subripio": {
+  "key_ls": "surripio",
+  "confidenza": "alta",
+  "motivo": "L&S lemmatizza sub+rapio come «surripio», con le forme sincopate surpite/surpuit (Hor., Plaut.) che la troncata cita."
+ },
+ "subrogo": {
+  "key_ls": "surrogo",
+  "confidenza": "alta",
+  "motivo": "«sur-rogo (subr-), avi, atum, 1» — termine dei publicisti, sostituire per elezione nei comizi: stesso contenuto della troncata."
+ },
+ "subruo": {
+  "key_ls": "surruo",
+  "confidenza": "alta",
+  "motivo": "«surruo … to tear down below, to undermine, to dig under, dig out; to break down, overthrow, demolish», traduzione parallela alla nostra troncata."
+ },
+ "urgueo": {
+  "key_ls": "urgeo",
+  "confidenza": "alta",
+  "motivo": "L&S lemmatizza «urgeo (less correctly urgueo)»: urgueo è esplicitamente la variante grafica registrata nel lemma stesso; verificato nel file sorgente."
+ },
+ "valens": {
+  "key_ls": "valeo",
+  "confidenza": "alta",
+  "motivo": "La voce «valens2» in L&S è solo un rinvio («Part. and P. a. of valeo», 40 caratteri): il testo integrale dell'aggettivo sta dentro «valeo». «Valens1» è invece il nome proprio (padre di Mercurio, imperatore) e va evitato."
+ },
+ "vanum": {
+  "key_ls": "vanus",
+  "confidenza": "alta",
+  "motivo": "Sostantivo neutro tratto dall'aggettivo: in L&S non esiste chiave «vanum» (verificato: fra vanitudo e vanus non c'è), il senso «emptiness, groundless» è trattato dentro «vanus»."
+ },
+ "vero": {
+  "key_ls": "verus",
+  "confidenza": "alta",
+  "motivo": "Avverbio trattato dentro l'aggettivo: «vero1» è un rinvio di 33 caratteri («v. verus — I. fin. B.»). Da evitare «vero2» (verbo vero, are «dire il vero») e «vero3» (= veru, spiedo)."
+ },
+ "vesco": {
+  "key_ls": "vescor",
+  "confidenza": "alta",
+  "motivo": "La definizione troncata riporta «vēscor —, ī, dep.»: è il deponente, non l'attivo tardo «vesco, ere» (Tert., «to feed with»), che in L&S è voce distinta e sarebbe la parola sbagliata."
+ },
+ "vicensima": {
+  "key_ls": "vicesimus",
+  "confidenza": "alta",
+  "motivo": "«vicesima» in L&S è un rinvio («v. vicesimus, II.»): la ventesima parte / imposta del 5% è trattata nella sezione II di «vicesimus», che registra anche la variante vicensimus."
+ },
+ "viscera": {
+  "key_ls": "viscus1",
+  "confidenza": "alta",
+  "motivo": "Plurale del neneutro: «viscus1» (viscus, eris; plur. viscera) contiene esattamente «the inner parts of the animal body, the internal organs, the inwards». «viscus2» è invece il vischio (= viscum)."
+ },
+ "volgaris": {
+  "key_ls": "vulgaris",
+  "confidenza": "alta",
+  "motivo": "La chiave «volgaris» esiste in L&S ma è solo un rimando grafico («v. vulg-»); il testo integrale è sotto «vulgaris (volg-)», che registra la nostra stessa grafia."
+ },
+ "volgo1": {
+  "key_ls": "vulgus",
+  "confidenza": "alta",
+  "motivo": "Avverbio: «vulgo1» è un rinvio di 40 caratteri («v. vulgus — I. fin.»); il testo integrale dell'avverbio sta in fine alla voce «vulgus»."
+ },
+ "volgo2": {
+  "key_ls": "vulgo2",
+  "confidenza": "alta",
+  "motivo": "Verbo: «vulgo2 (volg-), avi, atum, 1, v. a.» è la voce piena (1739 caratteri) «to spread among the multitude, make general, publish», che coincide con la nostra definizione troncata."
+ },
+ "adversum2": {
+  "key_ls": "adverto",
+  "confidenza": "alta",
+  "motivo": "Verificato nel testo L&S: adverto, sezione P.a., contiene «Subst.: adversum, i, the opposite: hic ventus ... adversum tenet Athenis proficiscentibus» e l'uso figurato avverso/ostile; adversus1 e' solo un rimando a adverto e adversus3 (avv./prep.) non contiene il passo."
+ },
+ "aerarium": {
+  "key_ls": "aerarius",
+  "confidenza": "alta",
+  "motivo": "L&S non lemmatizza aerarium: sta in aerarius, C. «aerarium, i, n. (sc. stabulum), the place in the temple of Saturn ... the treasury», con referre pecuniam in aerarium e il senso di pubbliche finanze."
+ },
+ "alienum2": {
+  "key_ls": "alienus",
+  "confidenza": "alta",
+  "motivo": "Il neutro sostantivato e' dentro l'aggettivo: alienus, II.2 «alienum, i, n., the property of a stranger», con ex alieno largiri e il plurale aliena (aliis sua eripere, aliis dare aliena)."
+ },
+ "ambago": {
+  "key_ls": "ambigo",
+  "confidenza": "alta",
+  "motivo": "La definizione troncata e' quella del verbo ambigo (ambi+ago, «to go about ... to waver, hesitate, doubt»), non di ambages; la voce ambigo esiste in L&S e riporta gli stessi loci (Tac. A. 6,15; Cic. de Or. 2,26)."
+ },
+ "anguste": {
+  "key_ls": "angustus",
+  "confidenza": "alta",
+  "motivo": "L'avverbio e' trattato in coda all'aggettivo: angustus contiene «Adv.: anguste ... within narrow limits, closely» con nisi anguste sederem; la chiave anguste esiste ma e' solo uno stub di rinvio («v angustus»)."
+ },
+ "angustia": {
+  "key_ls": "angustiae",
+  "confidenza": "alta",
+  "motivo": "L&S lemmatizza al plurale: angustiae, arum, con menzione esplicita del singolare raro angustia, ae (Plin. 14,6,8) e i sensi di narrowness, defile, strait."
+ },
+ "aperte": {
+  "key_ls": "aperio",
+  "confidenza": "alta",
+  "motivo": "In L&S non esiste la chiave aperte e apertus e' un mero stub («P. a., from aperio»): il testo dell'avverbio sta in aperio, «Hence, aperte, adv., openly, clearly, plainly» con gli stessi esempi (tam aperte irridens)."
+ },
+ "baltea": {
+  "key_ls": "balteus",
+  "confidenza": "alta",
+  "motivo": "Plurale poetico: la voce balteus dichiara «more rare balteum, i, n. (in plur. baltea was generally used in the poets metri gr.)» e da' girdle, belt, sword-belt con gli stessi loci (O., V., Cs.)."
+ },
+ "bellicum": {
+  "key_ls": "bellicus",
+  "confidenza": "alta",
+  "motivo": "Il neutro sostantivato sta nell'aggettivo: bellicus contiene «Subst.: bellicum, i, n., a signal for march or for the beginning of an attack», sempre con bellicum canere, incluso l'uso traslato di stile."
+ },
+ "tapes": {
+  "key_ls": "tapete",
+  "confidenza": "alta",
+  "motivo": "L&S lemmatizza «tapete, is, n.» registrando tapes/tapetum come forme collaterali; voce verificata nel file L&S locale."
+ },
+ "tegula": {
+  "key_ls": "tegulae",
+  "confidenza": "alta",
+  "motivo": "L&S sta al plurale «tegulae, arum» e dichiara esplicitamente «also in sing.: tegula, ae»."
+ },
+ "tempore": {
+  "key_ls": "tempus",
+  "confidenza": "alta",
+  "motivo": "L&S ha solo rinvii-stub «tempori»/«temperi, v. tempus II.A»; il testo dell'avverbio sta dentro la voce «tempus» (abl. tempori/temperi citato in incipit)."
+ },
+ "tempto": {
+  "key_ls": "tento",
+  "confidenza": "alta",
+  "motivo": "L&S lemmatizza «tento or tempto, avi, atum, 1, v. freq. a. tendo»; la voce «tempto» non esiste (solo temptabundus → v. tent-)."
+ },
+ "tendor": {
+  "key_ls": "tendo",
+  "confidenza": "alta",
+  "motivo": "La definizione troncata è quella del verbo tendo; la voce L&S «tendor, oris, m.» è un'ALTRA parola (sostantivo «a stretching», hapax apuleiano) e non va usata."
+ },
+ "testo": {
+  "key_ls": "testor",
+  "confidenza": "alta",
+  "motivo": "La definizione è quella del deponente testor, atus, ari (chiamare a testimone); chiave L&S «testor» presente e coincidente."
+ },
+ "tonor": {
+  "key_ls": "tono",
+  "confidenza": "alta",
+  "motivo": "La definizione troncata è del verbo tono, ui, are (tuonare); la voce L&S «tonor, oris, m.» è parola diversa (forma antica di tenor, Quint. 1,5,23)."
+ },
+ "traduoo": {
+  "key_ls": "traduco",
+  "confidenza": "alta",
+  "motivo": "La nostra chiave è un OCR guasto (c→o) di traduco/transduco; definizione e incipit L&S «traduco (TRANSDVCO…)» coincidono."
+ },
+ "turbor": {
+  "key_ls": "turbo1",
+  "confidenza": "alta",
+  "motivo": "La voce è il verbo (pos verbo, testo «turbant trepida ostia Nili… to distu…») = L&S turbo1 «turbare»; turbo2 è il turbine e «turbor, oris, m.» (tardo, «restlessness») è parola diversa."
+ },
+ "unctus": {
+  "key_ls": "ungo",
+  "confidenza": "alta",
+  "motivo": "L&S «unctus1» è solo lo stub «Part. and P. a. of ungo»: il testo reale dell'aggettivo (unctior splendidiorque, subst. unctum) sta in fondo alla voce «ungo»."
+ },
+ "requaero": {
+  "key_ls": "requiro",
+  "confidenza": "alta",
+  "motivo": "grafia non assimilata di re-+quaero; la voce L&S «requiro» esiste e corrisponde al testo troncato (requīrō, sīvī, sītus)."
+ },
+ "responsor": {
+  "key_ls": "responso",
+  "confidenza": "alta",
+  "motivo": "la definizione è il frequentativo respōnsō di respondeo (ripaeque Responsant, gallina malum responset); la chiave omografa «responsor» in L&S è invece il sostantivo \"one that answers\" e va evitata."
+ },
+ "revertor": {
+  "key_ls": "reverto",
+  "confidenza": "alta",
+  "motivo": "L&S lemmatizza l'attivo «rĕ-verto» includendo il deponente revertor; la chiave «revorto» è solo rimando incrociato."
+ },
+ "saepta": {
+  "key_ls": "saeptum",
+  "confidenza": "alta",
+  "motivo": "nostro plurale saepta ōrum n.; L&S sta sul singolare saeptum (fence, enclosure) con gli stessi loci (quibus saeptis tam immanes beluas continebimus)."
+ },
+ "salvos": {
+  "key_ls": "salvus",
+  "confidenza": "alta",
+  "motivo": "salvos è la grafia arcaica; L&S lemmatizza «salvus» (saved, unharmed, safe)."
+ },
+ "sapo": {
+  "key_ls": "sapor",
+  "confidenza": "alta",
+  "motivo": "la definizione troncata è quella di săpor ōris m. (taste, flavor); la chiave omografa «sapo» in L&S è \"soap\" (Plin.) e sarebbe una parola diversa."
+ },
+ "selago": {
+  "key_ls": "seligo",
+  "confidenza": "alta",
+  "motivo": "la definizione è sēligō lēgī lēctus (se-+lego, to choose out: omnia expendet et seliget); attenzione: la chiave omografa «selago» in L&S è una pianta (Lycopodium) e non va usata."
+ },
+ "semenstris": {
+  "key_ls": "semestris1",
+  "confidenza": "alta",
+  "motivo": "variante grafica di semestris da sex+mensis: semestris1 è \"of six months, half-yearly\" con gli stessi loci (regnum, imperium, dux, semestri vatum auro), mentre semestris2 è \"semi-monthly\"."
+ },
+ "culmen": {
+  "key_ls": "columen",
+  "confidenza": "alta",
+  "motivo": "culmen è forma contratta di columen (L&S «contr. form of columen, q.v.»): la voce piena è columen."
+ },
+ "lutum": {
+  "key_ls": "lutum2",
+  "confidenza": "alta",
+  "motivo": "il testo troncato parla di FANGO (in luto haesitas): lutum2 «mud»; lutum1 è la pianta tintoria."
+ },
+ "rectum": {
+  "key_ls": "rego",
+  "confidenza": "alta",
+  "motivo": "rectus è stub (42c, «P.a. from rego»); il sostantivo neutro rectum (il retto morale) è dentro rego."
+ },
+ "secretum": {
+  "key_ls": "secerno",
+  "confidenza": "alta",
+  "motivo": "secretus è stub (47c, «P.a. from secerno»); il sostantivo neutro secretum (il segreto) è dentro secerno."
+ }
+}

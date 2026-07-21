@@ -44,3 +44,6 @@ desktop.ini
 # Lotti d'ingresso del giudizio sui genitivi (S.3/④): intermedi rigenerabili
 # da genitivi_prep.py. Versionati gli script e i GIUDIZI (_build/reports/).
 _build/genitivi_input/
+
+# Lotti d'ingresso della lemmatizzazione L&S (S.3/⑥): intermedi rigenerabili.
+_build/ls_input/

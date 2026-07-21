@@ -300106,11 +300106,11 @@
 },
 "lamenta": {
 "pos": "Sostantivo",
-"cat": "2ª decl. n.",
-"classe": "2ª declinazione (neutro, plurale tantum)",
-"testa": "lamenta, lamentorum n",
+"cat": "1ª decl.",
+"classe": "1ª declinazione",
+"testa": "lamenta, lamentae f",
 "nome": {
-"pl": {
+"sg": {
 "nom": [
 [
 "lament",
@@ -300127,7 +300127,7 @@
 "t"
 ],
 [
-"orum",
+"ae",
 "d"
 ]
 ],
@@ -300137,7 +300137,7 @@
 "t"
 ],
 [
-"is",
+"ae",
 "d"
 ]
 ],
@@ -300147,7 +300147,7 @@
 "t"
 ],
 [
-"a",
+"am",
 "d"
 ]
 ],
@@ -300167,13 +300167,74 @@
 "t"
 ],
 [
+"a",
+"d"
+]
+]
+},
+"pl": {
+"nom": [
+[
+"lament",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"gen": [
+[
+"lament",
+"t"
+],
+[
+"arum",
+"d"
+]
+],
+"dat": [
+[
+"lament",
+"t"
+],
+[
+"is",
+"d"
+]
+],
+"acc": [
+[
+"lament",
+"t"
+],
+[
+"as",
+"d"
+]
+],
+"voc": [
+[
+"lament",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"abl": [
+[
+"lament",
+"t"
+],
+[
 "is",
 "d"
 ]
 ]
 }
-},
-"nota": "plurale tantum: privo di singolare"
+}
 },
 "lamentum": {
 "pos": "Sostantivo",
@@ -302234,8 +302295,8 @@
 "Luceres": {
 "pos": "Sostantivo",
 "cat": "3ª decl.",
-"classe": "3ª declinazione (plurale tantum)",
-"testa": "Luceres, lucerum m",
+"classe": "3ª declinazione (tema in -i) (plurale tantum)",
+"testa": "Luceres, lucerium m",
 "nome": {
 "pl": {
 "nom": [
@@ -302254,7 +302315,7 @@
 "t"
 ],
 [
-"um",
+"ium",
 "d"
 ]
 ],

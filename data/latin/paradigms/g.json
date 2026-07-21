@@ -107465,11 +107465,11 @@
 },
 "galbina": {
 "pos": "Sostantivo",
-"cat": "2ª decl. n.",
-"classe": "2ª declinazione (neutro, plurale tantum)",
-"testa": "galbina, galbinorum n",
+"cat": "1ª decl.",
+"classe": "1ª declinazione",
+"testa": "galbina, galbinae f",
 "nome": {
-"pl": {
+"sg": {
 "nom": [
 [
 "galbin",
@@ -107486,7 +107486,7 @@
 "t"
 ],
 [
-"orum",
+"ae",
 "d"
 ]
 ],
@@ -107496,7 +107496,7 @@
 "t"
 ],
 [
-"is",
+"ae",
 "d"
 ]
 ],
@@ -107506,7 +107506,7 @@
 "t"
 ],
 [
-"a",
+"am",
 "d"
 ]
 ],
@@ -107526,13 +107526,74 @@
 "t"
 ],
 [
+"a",
+"d"
+]
+]
+},
+"pl": {
+"nom": [
+[
+"galbin",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"gen": [
+[
+"galbin",
+"t"
+],
+[
+"arum",
+"d"
+]
+],
+"dat": [
+[
+"galbin",
+"t"
+],
+[
+"is",
+"d"
+]
+],
+"acc": [
+[
+"galbin",
+"t"
+],
+[
+"as",
+"d"
+]
+],
+"voc": [
+[
+"galbin",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"abl": [
+[
+"galbin",
+"t"
+],
+[
 "is",
 "d"
 ]
 ]
 }
-},
-"nota": "plurale tantum: privo di singolare"
+}
 },
 "Galli": {
 "pos": "Sostantivo",
@@ -108558,7 +108619,7 @@
 "pos": "Sostantivo",
 "cat": "3ª decl.",
 "classe": "3ª declinazione (tema in -i)",
-"testa": "gryps, grypis m",
+"testa": "gryps, gryphis m",
 "nome": {
 "sg": {
 "nom": [
@@ -108569,7 +108630,7 @@
 ],
 "gen": [
 [
-"gryp",
+"gryph",
 "t"
 ],
 [
@@ -108579,7 +108640,7 @@
 ],
 "dat": [
 [
-"gryp",
+"gryph",
 "t"
 ],
 [
@@ -108589,7 +108650,7 @@
 ],
 "acc": [
 [
-"gryp",
+"gryph",
 "t"
 ],
 [
@@ -108605,7 +108666,7 @@
 ],
 "abl": [
 [
-"gryp",
+"gryph",
 "t"
 ],
 [
@@ -108617,7 +108678,7 @@
 "pl": {
 "nom": [
 [
-"gryp",
+"gryph",
 "t"
 ],
 [
@@ -108627,7 +108688,7 @@
 ],
 "gen": [
 [
-"gryp",
+"gryph",
 "t"
 ],
 [
@@ -108637,7 +108698,7 @@
 ],
 "dat": [
 [
-"gryp",
+"gryph",
 "t"
 ],
 [
@@ -108647,7 +108708,7 @@
 ],
 "acc": [
 [
-"gryp",
+"gryph",
 "t"
 ],
 [
@@ -108657,7 +108718,7 @@
 ],
 "voc": [
 [
-"gryp",
+"gryph",
 "t"
 ],
 [
@@ -108667,7 +108728,7 @@
 ],
 "abl": [
 [
-"gryp",
+"gryph",
 "t"
 ],
 [

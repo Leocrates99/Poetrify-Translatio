@@ -1776553,11 +1776553,11 @@
 },
 "cingula": {
 "pos": "Sostantivo",
-"cat": "2ª decl. n.",
-"classe": "2ª declinazione (neutro, plurale tantum)",
-"testa": "cingula, cingulorum n",
+"cat": "1ª decl.",
+"classe": "1ª declinazione",
+"testa": "cingula, cingulae f",
 "nome": {
-"pl": {
+"sg": {
 "nom": [
 [
 "cingul",
@@ -1776574,7 +1776574,7 @@
 "t"
 ],
 [
-"orum",
+"ae",
 "d"
 ]
 ],
@@ -1776584,7 +1776584,7 @@
 "t"
 ],
 [
-"is",
+"ae",
 "d"
 ]
 ],
@@ -1776594,7 +1776594,7 @@
 "t"
 ],
 [
-"a",
+"am",
 "d"
 ]
 ],
@@ -1776614,13 +1776614,74 @@
 "t"
 ],
 [
+"a",
+"d"
+]
+]
+},
+"pl": {
+"nom": [
+[
+"cingul",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"gen": [
+[
+"cingul",
+"t"
+],
+[
+"arum",
+"d"
+]
+],
+"dat": [
+[
+"cingul",
+"t"
+],
+[
+"is",
+"d"
+]
+],
+"acc": [
+[
+"cingul",
+"t"
+],
+[
+"as",
+"d"
+]
+],
+"voc": [
+[
+"cingul",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"abl": [
+[
+"cingul",
+"t"
+],
+[
 "is",
 "d"
 ]
 ]
 }
-},
-"nota": "plurale tantum: privo di singolare"
+}
 },
 "circuitus": {
 "pos": "Sostantivo",

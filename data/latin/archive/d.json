@@ -1,1 +1,122 @@
-{"meta": {"lang": "latino", "letter": "d", "archived_count": 27}, "dict": {"deiectus1": {"pos": "aggettivo", "definition": "dēiectus adj. P. of deicio, thrown down ; hence, of places, low, sunken, depressed : loca, Cs. —Fig., cast down, dejected, dispirited : haud deiectus, V."}, "deiectus2": {"pos": "", "definition": "dēiectus ūs, m deicio, a throwing down, felling, fall : arborum, L.: gravis undarum, O.— A declivity, descent : collis, Cs.—Plur: collis deiectūs habebat, Cs."}, "di-": {"pos": "", "definition": "dī- see 3 dis-."}, "dimissus1": {"pos": "", "definition": "dīmissus P. of dimitto."}, "dimissus2": {"pos": "", "definition": "(dīmissus ūs), m a deliverance. — Only dat: hanc quaestionem dimissui sperant futuram (dub.)."}, "dira1": {"pos": "", "definition": "(dīra ae), f dirus, a bad omen (only plur.): dirae, sicut cetera auspicia, etc.— A curse, execration : Diris agam vos, H.: compositae, Ta."}, "dira2": {"pos": "", "definition": "dīra ōrum, n , see dirus."}, "diremptus1": {"pos": "", "definition": "dīrēmptus P. of dirimo."}, "diremptus2": {"pos": "", "definition": "dīrēmptus ūs, m dirimo, a separation ."}, "dis1": {"pos": "aggettivo", "definition": "dīs dītis, neut. dīte, adj. with comp. dītior and sup. dītissimus DIV-, rich, wealthy, opulent, provided, abounding : dis quidem esses, T.: Cratini huius ditis aedes, T.: domus, H.: patre diti, N.: Mycenae, H.: delubr…"}, "dis2": {"pos": "", "definition": "dīs see deus."}, "discessus1": {"pos": "", "definition": "'discessus P. of discedo.'"}, "discessus2": {"pos": "", "definition": "discessus ūs, m dis- + 1 CAD-, a going asunder, parting : non longinquus inter nos: caeli, i. e. lightning.—A going away, departure, removal , withdrawal : tuus:. ab urbe: e vitā: latronis: meus, banishment : discessu…"}, "dispositus1": {"pos": "", "definition": "'dispositus P. of dispono.'"}, "dispositus2": {"pos": "", "definition": "(dispositus ūs), m a disposition, arrangement.—Only abl sing.: civilium rerum, Ta."}, "dissensus1": {"pos": "", "definition": "dissēnsus P. of dissentio."}, "dissensus2": {"pos": "", "definition": "(dissēnsus ūs), m dissentio, dissension, disagreement .—Only abl sing. : vario, V."}, "distentus1": {"pos": "aggettivo", "definition": "distentus adj. with comp. P. of distendo, distended, full : lacte capellae, V.: distentius uber, H."}, "distentus2": {"pos": "aggettivo", "definition": "distentus adj. with sup. P. of distineo, engaged, busied, occupied : negotiis: distentissimus de Buthrotiis: mens."}, "distinctus1": {"pos": "aggettivo", "definition": "dīstinctus adj. with comp. P. of distinguo, separated, separate, distinct : genera delictorum: acies distinctior, ex pluribus partibus constans, L.: concentus ex distinctis sonis. — Decorated, adorned, studded, impres…"}, "distinctus2": {"pos": "", "definition": "(dīstinctus ūs), m STIG-. — Only abl. sing., variety : pinnarum, Ta."}, "divisus1": {"pos": "", "definition": "dīvīsus P. of divido."}, "divisus2": {"pos": "", "definition": "(dīvīsus, ūs) m divido, a division, distribution . — Only dat sing. : bona divisui fuere, L.: divisui facilis Macedonia, easily divided , L."}, "domitus1": {"pos": "", "definition": "'domitus P. of domo.'"}, "domitus2": {"pos": "", "definition": "(domitus, ūs) m domo, a taming ; only abl sing. : quadrupedum."}, "dum1": {"pos": "avverbio", "definition": "dum adv. of time, the while, a while, now, yet .—Only as enclitic; see etiamdum, nondum, nihildum, etc.—With imper. (colloq.): Sosia Adesdum, paucis te volo, stop a moment, T.: abidum, T.: facitodum, T.: age dum, T.: …"}, "duo2": {"pos": "", "definition": "duo virī, duovirī or II virī (less correctly duūmvirī) ōrum, m a board of two persons, an extraordinary criminal court, duumviri (selected by Tullus Hostilius to try Horatius), L.; (by the people to try Manlius), L.; …"}}}
+{
+"meta": {
+"lang": "latino",
+"letter": "d",
+"archived_count": 27
+},
+"dict": {
+"deiectus1": {
+"pos": "aggettivo",
+"definition": "dēiectus adj. P. of deicio, thrown down ; hence, of places, low, sunken, depressed : loca, Cs. —Fig., cast down, dejected, dispirited : haud deiectus, V."
+},
+"deiectus2": {
+"pos": "",
+"definition": "dēiectus ūs, m deicio, a throwing down, felling, fall : arborum, L.: gravis undarum, O.— A declivity, descent : collis, Cs.—Plur: collis deiectūs habebat, Cs."
+},
+"di-": {
+"pos": "",
+"definition": "dī- see 3 dis-."
+},
+"dimissus1": {
+"pos": "",
+"definition": "dīmissus P. of dimitto."
+},
+"dimissus2": {
+"pos": "",
+"definition": "(dīmissus ūs), m a deliverance. — Only dat: hanc quaestionem dimissui sperant futuram (dub.)."
+},
+"dira1": {
+"pos": "",
+"definition": "(dīra ae), f dirus, a bad omen (only plur.): dirae, sicut cetera auspicia, etc.— A curse, execration : Diris agam vos, H.: compositae, Ta."
+},
+"dira2": {
+"pos": "",
+"definition": "dīra ōrum, n , see dirus."
+},
+"diremptus1": {
+"pos": "",
+"definition": "dīrēmptus P. of dirimo."
+},
+"diremptus2": {
+"pos": "",
+"definition": "dīrēmptus ūs, m dirimo, a separation ."
+},
+"dis1": {
+"pos": "aggettivo",
+"definition": "dīs, dītis, — I. adj., rich, v. dives. → dīs, — I. neutr. dite (mostly poet.; in prose very rare before the Aug. per.): dis quidem esses, (Ter. Ad. 5, 1, 8): dite solum, (Val. Fl. 2, 296): hujus ditis aedes, (Ter. Ad. 4, 2, 42); so, ditis domus, (Hor. Epod. 2, 65): diti placitura magistro, (Tib. 2, 5, 35): ditem hostem, (Liv. 9, 40): ditem, (Ter. Heaut. 3, 3, 48); id. Phorm. 4, 3, 48; Suet. Galb. 3: diti de pectore, (Lucr. 1, 414): in diti domo, (Liv. 42, 34, 3): patre diti, (Nep. Att. 1, 2): quam estis maxume potentes, dites, fortunati, etc., (Ter. Ad. 3, 4, 57); so, dites, (Tib. 1, 1, 78); 3, 6, 13; Hor. C. 1, 7, 9; Sil. 3, 673: Persarum campi, (Curt. 3, 25, 10): terrae, (Tac. A. 4, 55): delubra ditia donis, (Ov. M. 2, 77); so, opulenta ac ditia stipendia, (Liv. 21, 43): pectora ditum, (Sen. Herc. Oet. 649); for which: regem ditium Mycenarum, (Aus. Grat. Act. 59): ditibus indulgent epulis, (Stat. Th. 5, 187): ditibus promissis, (Sil. 3, 512).— · b. Comp. · (a). dīvĭ-tior (most freq. in prose and poetry, except Hor., v. seq. b), Plaut. Aul. 5, 2; id. Ps. 5, 2, 24; Ter. Ph. 1, 1, 8; Lucr. 5, 1114; Cic. Rep. 1, 17, 28; 1, 32; id. Lael. 16, 58; id. de Or. 3, 48, 185; id. Par. 6, 3, 49; Ov. H. 16, 34; id. M. 6, 452 al.— · (b). dītior, Liv. Praef. § 11; Hor. S. 1, 1, 40; 1, 5, 91; 1, 9, 51; 2, 7, 52; Sil. 13, 684; Stat. Th. 3, 481; Gell. 4, 1, 1.— · c. Sup. · (a). dīvĭtissi-mus (good prose), Cic. Off. 2, 17; id. Div. 1, 36; id. Par. 6, 2, 48; Nep. Alcib. 2; id. Phoc. 1, 2; Sen. Contr. 2, 9, 7; Curt. 4, 4, 24.— · (b). dītissimus (mostly poet. and in post-Aug. prose), Verg. G. 2, 136; id. A. 1, 343; 7, 537; 9, 360; 10, 563; Ov. M. 5, 129; Val. Fl. 5, 123; Sil. 3, 397; Aus. Epigr. 54 (twice); * Caes. B. G. 1, 2, 1; Nep. Alcib. 2, 1; Liv. 9, 31; 17, 14; 10, 46; Suet. Ner. 9. —Adv.: dītĭus, more richly or splendidly (post-Aug. and very rare): ditius habitare, (Stat. S. 1, 5, 31).—Sup.: ditissime domos exornare, (App. de Deo Socr. p. 54, 14).",
+"src": "L&S"
+},
+"dis2": {
+"pos": "",
+"definition": "dīs see deus."
+},
+"discessus1": {
+"pos": "",
+"definition": "'discessus P. of discedo.'"
+},
+"discessus2": {
+"pos": "",
+"definition": "discessus, ūs, m. discedo. — I. A going asunder, separation, opening (very rare): caeli, (Cic. Div. 2, 28, 60): est interitus quasi discessus et secretio ac diremptus earum partium, quae ante interitum junctione aliqua tenebantur, (id. Tusc. 1, 29, 71).— — II. A going away, departure, removal. · A. In gen. (class.): ut me levarat tuus adventus, sic discessus afflixit, (Cic. Att. 12, 50): subitus (with praeceps profectio), Att. ap. Cic. Att. 9, 10, 6: ab urbe, (Cic. ib. 8, 3, 3): praeclarus e vita, (id. Div. 1, 23, 47); cf. id. de Sen. 23: latronis, (id. Phil. 5, 11, 30); cf. ceterorum, (id. Cat. 1, 3, 7): legatorum, (Caes. B. G. 7, 5 fin.): discessu mugire boves, (Verg. A. 8, 215 al.)—In plur.: solis accessus discessusque, (Cic. N. D. 2, 7, 19).— · B. In partic. · 1. In milit. lang., a marching away, marching off, decamping, Caes. B. G. 2, 14, 1; 4, 4, 6; 7, 20, 1 et saep.; Tac. A. 2, 44; Front. Strat. 1, 1, 9; 1, 5, 25 al.— · 2. In Cic. applied to his banishment from Rome: cum, discessu meo, religionum jura polluta sunt, (Cic. Leg. 2, 17, 42) (cf. absum); so id. de domo 32, 85.",
+"src": "L&S"
+},
+"dispositus1": {
+"pos": "",
+"definition": "'dispositus P. of dispono.'"
+},
+"dispositus2": {
+"pos": "",
+"definition": "(dispositus ūs), m a disposition, arrangement.—Only abl sing.: civilium rerum, Ta."
+},
+"dissensus1": {
+"pos": "",
+"definition": "dissēnsus P. of dissentio."
+},
+"dissensus2": {
+"pos": "",
+"definition": "(dissēnsus ūs), m dissentio, dissension, disagreement .—Only abl sing. : vario, V."
+},
+"distentus1": {
+"pos": "aggettivo",
+"definition": "distentus adj. with comp. P. of distendo, distended, full : lacte capellae, V.: distentius uber, H."
+},
+"distentus2": {
+"pos": "aggettivo",
+"definition": "distentus adj. with sup. P. of distineo, engaged, busied, occupied : negotiis: distentissimus de Buthrotiis: mens."
+},
+"distinctus1": {
+"pos": "aggettivo",
+"definition": "distinctus, a, um, Part. and P. a., from distinguo. → distinctus, ūs, m. distinguo, — I. a distinguishing, distinction; object., a difference (post-Aug. and very rare): distinctu pinnarum, * Tac. A. 6, 28; cf. Stat. S. 1, 5, 41.",
+"src": "L&S"
+},
+"distinctus2": {
+"pos": "",
+"definition": "(dīstinctus ūs), m STIG-. — Only abl. sing., variety : pinnarum, Ta."
+},
+"divisus1": {
+"pos": "",
+"definition": "dīvīsus P. of divido."
+},
+"divisus2": {
+"pos": "",
+"definition": "(dīvīsus, ūs) m divido, a division, distribution . — Only dat sing. : bona divisui fuere, L.: divisui facilis Macedonia, easily divided , L."
+},
+"domitus1": {
+"pos": "",
+"definition": "'domitus P. of domo.'"
+},
+"domitus2": {
+"pos": "",
+"definition": "(domitus, ūs) m domo, a taming ; only abl sing. : quadrupedum."
+},
+"dum1": {
+"pos": "avverbio",
+"definition": "dum, — I. conj. [for dium, acc. from dius; cf. diu, Corss. Ausspr. 2, 856], denotes the temporal relation of two actions to cach other, — I. As contemporaneous, or, — II. As in immediate succession, so that with the commencement of one action the other ceases. — I. As contemporaneous. · A. Without respect to the limits of the two actions, while, whilst, during the time in which. · 1. In gen., construed with the indicative, except in oratio obliqua, where the subjunctive was sometimes used. In Aug. poets and late prose the subjunctive often stands in oratio directa, v. the following). · (a). Indic. praes.: dum cum hac usuraria Uxore mihi nunc morigero, haec curata sint Fac sis, (Plaut. Am. 3, 3, 25); so id. Aul. 4, 2, 14; id. Bacch. 4, 7, 19; Ter. Heaut. 2, 2, 11; Cic. Clu. 32 fin.; Verg. E. 3, 75; Hor. Ep. 2, 1, 190 et saep.— In the praes. histor.: dum haec loquimur, interea loci ad macellum ubi advenimus, etc., (Ter. Eun. 2, 2, 24); id. Phorm. 5, 9, 18; Cic. de Or. 2, 4, 15; id. Div. in Caec. 17, 56: dum haec geruntur, Caesari nuntiatum est, etc., (Caes. B. G. 1, 46, 1); cf. these forms of transition, (id. ib. 3, 17, 1); 4, 32, 1; 4, 34, 3; 5, 22, 1; 6, 7, 1; 7, 57, 1; id. B. C. 1, 56, 1; 2, 1, 1 et saep. dum ea conquiruntur et conferuntur, nocte intermissa circiter hominum milia VI ad Rhenum contenderunt, Caes. B. G. 1, 27, 4; cf. id. B. C. 1, 37, 1; id. ib. 1, 36, 1; Liv. 21, 7, 1; Verg. G. 4, 559.—In the imperf.: dum haec in Appulia gerebantur, Samnites... urbem non tenuerunt, (Liv. 10, 36 fin.); 21, 53; 41, 14; Nep. Hann. 2, 4; Tac. Agr. 41; cf.: dum is in aliis rebus erat occupatus, (Cic. Rosc. Am. 32, 91)—In the fut.; nunc animum advortite Dum argumentum hujus eloquar comoediae, Plaut. Am. prol. 96.—In the perf.: dum Cyri et Alexandri similis esse voluit, Crassorum inventus est dissimillimus, (Cic. Brut. 81, 292); so id. Mur. 27, 55; id. Fin. 2, 13; id. Phil. 14, 12, 33; id. Att. 1, 16, 2; Nep. Reg. 2, 2 al.—In the pluperf.: dum in unam partem oculos animosque hostium certamen averterat, pluribus locis scalis capitur murus, (Liv. 32, 24).—In the fut. perf.: bellum ingens geret Italia... Tertia dum Latio regnantem viderit aestas, (Verg. A. 1, 265).—Prov.: dum loqueris, (Petr. 99).—In the oratio obliqua: dic, hospes, Spartae, nos te hic vidisse jacentes, Dum sanctis patriae legibus obsequimur, Poëta ap. Cic. Tusc. 1, 42, 101; Liv. 2, 57; 26, 16; Tac. A. 15, 59; id. H. 1, 33; Ov. M. 4, 776 et saep.— · (b). Subj. In oratio obliqua: dixisti, dum Planci in me meritum verbis extollerem, me arcem facere e cloaca, (Cic. Planc. 40); so id. de Or. 1, 41 fin.; id. Mur. 24; id. Att. 5, 17, 3; Sall. C. 7, 6; Tac. H. 4, 17 fin. al.—In oratio recta: o quotiens ausae, caneret dum valle sub alta, Rumpere mugitu carmina docta boves, (Tib. 2, 3, 19): dum intentus in eum se rex totus averteret, etc., (Liv. 1, 40, 7): dum ea in Samnio gererentur, (id. 10, 18, 1); Ov. Pont. 3, 3, 2; Verg. G. 4, 457; Mart. 1, 22, 1; Hirt. B. Hisp. 23; Aur. Vict. Vir. Ill. 35; id. Caes. 39; Hyg. Fab. 12 al.— · b. When the principal action is an immediate and sudden sequence of that described in the clause with dum, subito or repente is often used in the principal clause: dum tempus teritur, repente milites, etc., (Liv. 29, 9, 5): dum advenientes filia interrogat, repente in osculis, etc. Suet. Aug. 99: dum Appium orno, subito sum factus accusatoris ejus socer, (Cic. Att. 6, 6, 1); Hirt. B. Afr. 61.— · c. When the actions are simply presented as contemporaneous, interea, jam or interea jam is often used in the principal clause: dum haec mecum reputo, accersitur lavatum interea virgo, (Ter. Eun. 3, 5, 44); Cic. Quint. 6, 28: dum ea Romani parant, jam Saguntum oppugnabatur, (Liv. 21, 7, 1); cf. also: dum... interim, (Plaut. Trin. 1, 1, 8); id. Men. 1, 3, 31; Liv. 21, 47, 7 al.— · 2. Esp., of duration in the present, now, yet. · a. In combination with etiam primum, and esp. freq. with the negations non, nec, ne, haud, nihil, nullus, nemo, v. h vv.— · b. Colloq., as an enclitic with imperatives and interjections (by some separately written ades dum, abi dum, etc, but v. Ritschl, Opusc Phil p. 567 sq.), orig, acc of time, a moment, a second, a little Sosia adesdum, paucis te volo, Ter. And 1, 1, 2 abidum, id. Heaut. 2, 3, 8 circumspicedum, Plaut Trin. 1, 2, 109: dicdum, (Ter. Hec 5, 3, 5) facitodum, id. Heaut 3, 2, 39 iteradum, Poëta ap. Cic. Att. 14, 14 jubedum, Plaut. Rud. 3, 5, 7: manedum, (id. Bacch. 4, 6, 24); Ter. Hec. 5, 4, 4: memoradum, (Plaut. Poen. 5, 2, 103): tacedum, (id. Men. 2, 2, 73): tangedum, (id. Rud. 3, 5, 5 al.): agedum (most freq.), (id. Am. 2, 2, 151); 5, 1, 29; id. As. 4, 1, 1; 5, 1, 1 et saep. (for which, agidum, id. Trin. 2, 2, 89 Ritschl ad loc.); Ter. Eun. 4, 4, 27; id. Heaut. 2, 3, 69; id. Hec. 3, 1, 35; id. Phorm. 5, 3, 1; Cic. Sull. 26; Liv. 7, 9; 9, 16 al.; Cat. 63, 78; Stat. Th. 7, 126 al.: agitedum, (Liv. 3, 62) Drak.; 5, 52; 7, 34 fin.: cedodum, (Ter. Phorm. 2, 2, 15): ehodum, (id. And. 1, 2, 13); 2, 1, 24; 3, 5, 10; id. Eun. 2, 3, 68; also in Plaut. in enumerations: primumdum (= Gr. πρῶτον μέν), Plaut. Mil. 2, 3, 26; id. Most. 2, 1, 53; id. Trin. 1, 2, 61 al.— · B. With respect to the temporal limit of both actions, i. q. tamdiu quam or usque eo, as long as, while. · 1. Lit. (with indic. when the duration of the action in the principal clause is alone implied, except in the oratio obliqua).—In praes.: bene factum a vobis, dum vivitis, non abscedet, Cato ap. Gell. 16, 1 fin.; so Cic. Lael. 4, 14; id. de Sen. 23, 86; id. Fin. 3, 2, 9; Caes. B. G. 7, 50 fin. al.—In fut.: quid illos opinamini animi habuisse atque habituros, dum vivent? Cato ap. Gell. 10, 13, 17; Plaut. Ps. 1, 3, 103; Cic. Rosc. Am. 32 fin.; id. Leg. 1, 1, 2; Verg. A. 1, 607 sq. et saep.— · (b). Subj., often, when the clause with dum expresses a desired end, or refers to an indefinite future: non tibi venit in mentem, Si, dum vivas, tibi bene facias, etc., (Plaut. Bacch. 5, 2, 76): pars, dum vires suppeterent, eruptionem censebant, (Caes. B. G. 7, 77, 2): ut sua sponte, dum sine periculo liceret, excederet Gadibus, (id. B. C. 2, 20, 3): hoc unum esse tempus de pace agendi, dum sibi uterque confideret ut pares ambo viderentur, (id. ib. 3, 10, 7): de quo (sc. animo) dum disputarem, tuam mihi dari vellem, Cotta, eloquentiam, (Cic. N. D. 2, 59, 147) Bait. (v. Roby, Gram. 2, 284 sq.). — · b. With tamdiu, tantum, tantummodo, tantisper, usque; or opp. postea, postquam, deinde, ubi, nunc, etc.—With tamdiu, Cic. Verr. 2, 4, 3; id. Cat. 3, 7; id. de Sen. 12, 41; id. Tusc. 5, 33 fin.; id. Att. 9, 6, 5 al.—With tantum, Liv. 27, 42.—With tantummodo, Sall. J. 53, 3.—With tantisper, Plaut. Truc. prol. 11; Ter. Ad. 1, 1, 44; id. Heaut. 1, 1, 54.—With usque, Cic. Verr. 2, 1, 5: dum... postea, id. Mur. 12, 26—dum... postea quam, Caes. B. G. 7, 82, 1; Cic. Rosc. Am. 43 fin.—dum... postquam, Sall. J. 53, 3; Liv. 21, 13; cf. Ter. And. 1, 1, 27—dum... deinde, Cic. Att. 9, 6, 5; Liv. 27, 42, 13—dum... sed ubi, Plaut. Capt. 2, 1, 37; Caes. B. C. 1, 51, 5—dum... nunc, Ter. And. 1, 2, 17; Cic. Ac. 1, 4, 11.—For tamdiu... dum, less freq. dum... dum, as long as... so long: sic virgo dum intacta manet, dum cara suis, (Cat. 62, 45) and 56; cf. Quint. 9, 3, 16: dum habeat, dum amet, (Plaut. Truc. 2, 1, 23) (al. tum).— · c. In Plautus repeatedly with an emphatic quidem, Plaut. As. 2, 4, 57; 5, 2, 20; id. Bacch. 2, 2, 48; id. Merc. 2, 3, 53; id. Ps. 1, 5, 92.— · 2. Transf. · a. In conditional relations as a restrictive particle, like quatenus and duntaxat, so long as, if so be that, provided that, if only (so regularly connected with the subjunctive; freq. in prose and poetry): dum pereas, nihil interduo aiant vivere, (Plaut. Capt. 3, 5, 36): Ly. Concede, inspiciam quid sit scriptum. Cu. Maxime, Tuo arbitratu, dum auferam abs te id quod peto, id. Curc. 3, 58; cf.: dum res maneant, verba fingant arbitratu suo, (Cic. Fin. 5, 29 fin.): oderint, dum metuant, Att. ap. Cic. Off. 1, 28, 97: licet lascivire, dum nihil metuas, (Cic. Rep. 1, 40) et saep.; in the imperf.: qui sese in cruciatum dari cuperet, dum de patris morte quaereretur, (id. Rosc. Am. 41, 119); Sall. C. 40, 4; id. J. 68, 3; Quint. 10, 1, 33: An. Non pudet vanitatis? Do. Minime, dum ob rem, Ter. Phorm. 3, 2, 41; so without a verb, (Cic. Fam. 7, 9); id. Ac. 2, 32, 104; Quint. 4, 1, 70; 9, 4, 58; 10, 3, 5; cf.: dum eatenus, (id. 1, 11, 1).— · (b). With an emphatic modo, and often in one word, dummodo: aeque istuc facio dummodo Eam des, quae sit quaestuosa, etc., (Plaut. Mil. 3, 1, 189); id. Aul. 2, 2, 62; id. Mil. 2, 2, 98; Cic. Rep. 3, 3; id. Off. 3, 21; id. Cat. 1, 5; 9; Prop. 3, 17, 17 (4, 16, 17 M.); Ov. F. 5, 242 al.; cf.: sin autem jejunitatem... dummodo sit polita, dum urbana, dum elegans, in Attico genere ponit, etc., (Cic. Brut. 82, 285): dummodo sit dives, barbarus ille placet, (Ov. A. A. 2, 276).—Separated by other words: mea nil refert, dum patiar modo, (Ter. Eun. 2, 3, 28): certumst pati, dum illum modo habeam mecum, (id. Heaut. 3, 1, 57); Val. Fl. 5, 265.— · (g). With tamen, and, in Plautus (cf. above, 1. c.), with quidem.—With tamen, Cic. de Or. 2, 77, 314; Cels. 3, 4; Quint. 1, 1, 11; 2, 12, 7; 8 prooem. § 32; Dig. 39, 22, 4.—With quidem, Plaut. Trin. 1, 2, 20; id. Aul. 2, 2, 34; cf. the foll. number.— · (d). In negative conditional clauses, with ne, so long as not, provided that not, if only not: VTEI. SENATVS. NOSTER. DECERNERET. DVM. NE. MINVS. SENATORIBVS. C. ADESENT., S. C. de Bac. (thrice): id faciat saepe, dum ne lassus fiat, (Cato, R. R. 5, 4); Plaut. Trin. 4, 2, 137; cf. id. Bacch. 4, 8, 26; id. Curc. 1, 1, 36; Ter. Hec. 4, 4, 12; Cic. Att. 6, 1, 4; 8, 11, B fin.; Liv. 3, 21 Drak.; 28, 40; Ov. H. 3, 81.—So too, dummodo ne, Cic. de Or. 3, 48, 185; id. Fam. 10, 25, 2; id. Q. Fr. 1, 1, 7; id. Att. 12, 45 al.: dum quidem ne, (Plaut. Merc. 2, 3, 89).— · b. With a causal accessory notion, until, long enough for, etc (very rare, only with subjunctive) obsidio deinde per paucos dies magis quam oppugnatio fuit, dum vulnus ducis curaretur, Liv 21, 8; cf. id. 24, 40; Suet Aug. 78 fin. nam se quoque moveri finget, dum aditum sibi ad aures faciat, Quint. 4, 1, 46. — II. In immediate suceession, until, until that (with the subjunctive or the indicative, as the idea of aim or simply of time predominates; cf. e.g.: quid dicam, quantus amor bestiarum sit in educandis custodiendisque iis, quae procreaverunt, usque ad eum finem, dum possint se ipsa defendere? (Cic. N. D. 2, 51 fin.): ea mansit in condicione atque pacto usque ad eum finem, dum judices rejecti sunt, (Cic. Verr. 1, 6, 16); cf. Ter. Heaut. 3, 2, 32; id. Eun. 1, 2, 126; Liv. 4, 21 fin.; 27, 42. Cicero generally, Caesar always employs the subjunctive). · (a). Subj.: is dum veniat, sedens ibi opperibere, (Plaut. Bacch. 1, 1, 14); cf.: paulisper mane, dum edormiscat unum somnum, (id. Am. 2, 2, 64); cf. also Cic. Att. 7, 1, 4; so with exspectare, (id. Lael. 13); Caes. B. G. 1, 11 fin.; 4, 13, 2; Liv. 3, 11 fin.: Tac. Or. 19 fin.; Hor. Ep. 1, 2, 42; Luc. 5, 303 et saep.; with morari, (Hirt. B. G. 8, 28); Liv. 4, 21 fin.; 22, 38 al.; cf. infra, b: sic deinceps omne opus contexitur, dum justa muri altitudo expleatur, (Caes. B. G. 7, 23, 4); id. B. C. 1, 58, 4; cf.: multa quoque et bello passus, dum conderet urbem Inferretque deos Latio, (Verg. A. 1, 5): ut spatium intercedere posset, dum milites convenirent, legatis respondit, etc., (Caes. B. G. 1, 7 fin.): Caesar ex eo tempore, dum ad flumen Varum veniatur, se frumentum daturum pollicetur, from that time until, etc., id. B. C. 1, 87, 1: differant in tempus aliud, dum defervescat ira, (Cic. Tusc. 4, 36, 78) (cf. ib.: dum se ipsi colligant): quippe qui moram temporis quaererent, dum Hannibal in Africam traiceret, (Liv. 30, 16 fin.) et saep.— · (b). Indic.: tu hic nos, dum eximus, interea opperibere, (Ter. Heaut. 4, 7, 5); so with opperiri, (Cic. Att. 10, 3); with manere aliquem, (Ter. Phorm. 3, 2, 28); with exspectare, (id. Eun. 1, 2, 126); with morari, (Liv. 27, 42); cf.: causas innecte morandi, Dum pelago desaevit hiems, (Verg. A. 4, 52): retine, dum ego huc servos evoco, (Ter. Phorm. 5, 7, 89); cf.: Tityre, dum redeo, pasce capellas, (Verg. E. 9, 23): struppis, quibus lectica deligata erat, usque adeo verberari jussit, dum animam efflavit, Gracch. ap. Gell. 10, 3, 5; cf. in the perf., Prop. 1, 3, 45; in the fut., id. 1, 14, 14. See Hand, Turs. II. pp. 303-330.",
+"src": "L&S"
+},
+"duo2": {
+"pos": "",
+"definition": "dŭŏ, ae, ŏ (— I. acc. masc. duo as freq. as duos; cf. ambo. Passages with duo, Att. ap. Charis. p. 101 P.; Plaut. Ep. 2, 2, 4; 3, 2, 37; id. Most. 3, 2, 89; 147; 148; id. Ps. 1, 3, 99; 4, 2, 43; Varr. R. R. 1, 18, 5; 3, 1, 9; Cic. Rep. 1, 10; 1, 13; 2, 14; 2, 19; Cic. Verr. 2, 2, 9; id. Tull. § 19 Beier N. cr.; id. Fam. 3, 4, 2; 7, 25, 2; id. Att. 9, 11, A, 2; Caes. B. G. 7, 69, 2; Liv. 6, 42 fin.; 35, 21; Suet. Calig. 41; id. Oth. 1, 5; Verg. A. 11, 285; Hor. S. 1, 7, 15 al.—Gen. duūm, Naev. ap. Charis. p. 102 P.; Att. ap. Cic. Or. 46 fin.; Lentul. ap. Cic. Fam. 12, 15, 2; Sall. J. 106, 5; Liv. 3, 25; Plin. 12, 19, 42, § 89; 15, 17, 18, § 63 et saep.—Neutr. dua, Att. ap. Cic. Or. 46 fin.; and connected with pondo, also duapondo, (Vitr. 10, 17); Scrib. Comp. 45; cf. Quint. 1, 5, 15.—The metre dŭō occurs only in Aus. Ep. 19, 13), card. num. [Sanscr. dva; Gr. δύο, δύω; Goth. tvai; Germ. zwei; Engl. two; cf.: bis (for dvis), dubius, duplex, etc.]. — I. Two: hi ambo et servus et hera frustra sunt duo, (Plaut. Am. 3, 3, 19): angues duo maxumi, (id. ib. 5, 1, 56): duo talenta argenti, (id. As. 1, 3, 41) et saep.— — II. = Gr. οἱ δύο, the two, both: subito edicunt duo consules, (Cic. Sest. 14, 32): duo sapientia praestantes, pater et socer, (Nep. Tim. 3, 2): nocuit sua culpa duobus, (Ov. M. 15, 115); cf.: vos inter duos, (Plaut. Am. 3, 2, 2): qui duo populi, (Liv. 8, 17, 9).",
+"src": "L&S"
+}
+}
+}

@@ -1,1 +1,80 @@
-{"meta": {"lang": "latino", "letter": "r", "archived_count": 17}, "dict": {"reciper-": {"pos": "", "definition": "reciper- see recuper-."}, "red-": {"pos": "", "definition": "red- see re-."}, "relatus1": {"pos": "", "definition": "relātus P. of refero."}, "relatus2": {"pos": "", "definition": "relātus ūs, m re-+STER-, a report, recital : virtutem, Ta.: carminum, declamation , Ta."}, "repens1": {"pos": "", "definition": "rēpēns entis, P. of repo."}, "repens2": {"pos": "aggettivo", "definition": "repēns entis, adj., sudden, hasty, unexpected, unlooked for: cura, C. poët.: adventus consulis, L.: defectio, L.: cum fama repens alio avertit bellum, L.: discordia, V.: consternatio, Cu.—New, fresh, recent: quid repe…"}, "repercussus1": {"pos": "", "definition": "'repercussus P. of repercutio.'"}, "repercussus2": {"pos": "", "definition": "(repercussus ūs), m repercutio, a reverberation, echo .—Only abl sing. : quo gravior vox repercussu intumescat, Ta."}, "repulsus1": {"pos": "", "definition": "'repulsus P. of repello.'"}, "repulsus2": {"pos": "", "definition": "(repulsus, ūs) m re-+1 PAL-, a reverberation, echo.— Plur. : scopulorum, C. poët."}, "revor-": {"pos": "", "definition": "revor- see rever-."}, "ros1": {"pos": "sostantivo", "definition": "rōs rōris, m dew: nocturnum excipere rorem, Cs.: Rore mero ieiunia pavit, O.: pecori gratissimus, V.: vitreus, O.: gelidos rores.—A trickling liquid, drops, moisture: Arabus, i. e. perfume, O.: Spargens rore levi, i. …"}, "ros2": {"pos": "", "definition": "rōs marīnus see ros."}, "rudus1": {"pos": "", "definition": "rūdus (raudus) eris cf. rudis, a bit of copper (used as money, uncoined): rudera iacere, L."}, "rudus2": {"pos": "sostantivo", "definition": "rūdus eris, n broken stone, rubbish, debris: Ruderi accipiendo, Ta.: acutum silicis, Ct."}, "ruta1": {"pos": "sostantivo", "definition": "rūta ae, f , r(uth/, a bitter herb, rue, C., O. —Fig., bitterness, unpleasantness: alcuius."}, "ruta2": {"pos": "sostantivo", "definition": "rūta ōrum, n P. plur. n. of ruo, things dug up, mining products, minerals , only in the phrase, ruta et caesa or ruta caesa, the crude products of an estate, timber and minerals : fundum vendere rutis caesis receptis,…"}}}
+{
+"meta": {
+"lang": "latino",
+"letter": "r",
+"archived_count": 17
+},
+"dict": {
+"reciper-": {
+"pos": "",
+"definition": "reciper- see recuper-."
+},
+"red-": {
+"pos": "",
+"definition": "red- see re-."
+},
+"relatus1": {
+"pos": "",
+"definition": "relātus P. of refero."
+},
+"relatus2": {
+"pos": "",
+"definition": "relātus ūs, m re-+STER-, a report, recital : virtutem, Ta.: carminum, declamation , Ta."
+},
+"repens1": {
+"pos": "",
+"definition": "rēpēns entis, P. of repo."
+},
+"repens2": {
+"pos": "aggettivo",
+"definition": "rĕpens, entis, adj. etymology unknown. — I. Lit., sudden, hasty, unexpected, unlooked for (class., but less freq. than the deriv. repentinus; for the most part only in nom. sing.; a favorite word with Liv.; cf. Drak. ad Liv. 8, 29, 1): ne me inparatum cura laceraret repens, Cic. poët. Tusc. 3, 14, 29: hostium adventus (opp. exspectatus, and with maris subita tempestas), (id. Tusc. 3, 22, 52): adventus consulis, (Liv. 9, 41): bellum, (id. 4, 14); 10, 7: casus Attali, (id. 33, 2): clades, (id. 22, 7); 8: defectio, (id. 8, 29): fama belli, (id. 6, 42): cum fama repens alio avertit bellum, (id. 22, 21, 6): religio, (id. 29, 10): terror, (id. 21, 30); 33, 15: tumultus, (id. 1, 14); 10, 18; 21, 26: discordia, (Verg. A. 12, 313): seditio, (Ov. M. 12, 61): clamor, (Sil. 3, 220): singultus vocis, (Stat. Th. 7, 360): sonus, (Sen. Med. 971): vox, (Val. Fl. 2, 91): consternatio, (Curt. 10, 2, 15). — In abl.: repenti fulminis ictu, (Lucr. 5, 400).— — II. Transf. (in Tac.), opp. to earlier, more ancient, i. e. for recens, new, fresh, recent: neque discerneres, quid repens aut vetustate obscurum, (Tac. A. 6, 7); 11, 24: causa, (id. ib. 15, 68): cogitatio, (id. H. 1, 23); 2, 49: perfidia, (id. ib. 4, 25).—Adv., in two forms, suddenly, unexpectedly. · a. rĕpens: (Janus) Bina repens oculis obtulit ora meis, (Ov. F. 1, 96).— · b. rĕpentē (class. and freq.): abripuit repente sese subito, (Plaut. Mil. 2, 2, 21); so (corresp. to subito) Cic. de Or. 1, 59, 252: repente exortus sum, repentino occidi, Plaut. Ps. 1, 1, 37: repente celeriterque, (Caes. B. G. 1, 52): repente e vestigio, (Cic. Div. in Caecil. 17, 57): repente a tergo signa canere, (Sall. J. 94, 5): repente praeter spem, (Cic. Fam. 4, 4, 3): repente ex inopinato, (Suet. Galb. 10); cf.: cunctisque repente Improvisus ait, (Verg. A. 1, 594): lapsa repente (turris), (id. ib. 2, 465): amicitias repente praecidere (opp. sensim dissuere), (Cic. Off. 1, 33, 120): repente collectam auctoritatem tenebant, (Caes. B. G. 6, 12 fin.); cf.: modo egens, repente dives, (Cic. Phil. 2, 27, 65): an dolor repente invasit? (Ter. Hec. 3, 2, 21): me repente horum aspectus repressit, (Cic. Sest. 39, 144): abjectus conscientiā repente conticuit, (id. Cat. 3, 5, 10); id. Rep. 1, 16, 25: cum circumfusa repente Scindit se nubes, (Verg. A. 1, 586) et saep.",
+"src": "L&S"
+},
+"repercussus1": {
+"pos": "",
+"definition": "'repercussus P. of repercutio.'"
+},
+"repercussus2": {
+"pos": "",
+"definition": "(repercussus ūs), m repercutio, a reverberation, echo .—Only abl sing. : quo gravior vox repercussu intumescat, Ta."
+},
+"repulsus1": {
+"pos": "",
+"definition": "'repulsus P. of repello.'"
+},
+"repulsus2": {
+"pos": "",
+"definition": "(repulsus, ūs) m re-+1 PAL-, a reverberation, echo.— Plur. : scopulorum, C. poët."
+},
+"revor-": {
+"pos": "",
+"definition": "revor- see rever-."
+},
+"ros1": {
+"pos": "sostantivo",
+"definition": "rōs, rōris, m. (n., ros nocturnum, Marc. Emp. 8; cf. infra, II. B.) [perh. kindr. with the Gr. ἔρση, dew; Sanscr. varshas, rain]. — I. Lit., dew: herbae gemmantes rore recenti, (Lucr. 2, 319); cf. id. 5, 461: ros si non cadit, (Plaut. Capt. 1, 1, 13): nocturnum excipere rorem, (Caes. B. C. 3, 15); cf.: rore mero jejunia pavit, (Ov. M. 4, 263): gelidus, (Verg. G. 2, 202): pecori gratissimus, (id. E. 8, 15); id. G. 3, 326: caelestis, (Ov. F. 1, 312): vitreus, (id. Am. 1, 6, 55) et saep.— Plur.: gelidos rores, Cic. poët. Div. 1, 8, 14: cadunt rores, (Plin. 18, 29, 69, § 292): roribus, (id. 16, 26, 46, § 109); 17, 24, 37, § 225: quod inter aquam et rorem interest, (Sen. Q. N. 4, 3, 6). — — II. Transf. · A. Of any liquid falling in drops, moisture (poet.): infuso lympharum rore superne, (Lucr. 1, 496), cf. liquoris, id. 1, 777: salis, (id. 4, 438); and simply ros, of water, Prop. 3, 21, 2; Verg. A. 6, 230; Hor. C. 3, 4, 61; Ov. M. 3, 164; 5, 635; 11, 57 al. —In plur.: pluvii, i. e. rain clouds, Hor C. 3, 3, 56.—Of tears: lacrimarum, (Ov. M. 14, 708); and simply ros, (id. ib. 10, 360); Hor. A. P. 430; plur., Stat. S. 5, 1, 36.—Of breastmilk: natos vitali rore rigabat, Cic. poët. Div. 1, 12, 20.— Of blood; plur.: sanguineos, (Verg. A. 12, 339); cf. cruentis, (Stat. Th. 2, 673).—Of perfumes: Syrius, (Tib. 3, 4, 28): Arabus, (Ov. H. 15, 76).— · B. Ros marinus, marinus ros, or in one word, rosmarinus, and in a neutr. collat. form, rosmarinum (post-Aug.), rosemary: rosmarinus, (Col. 9, 4, 2); Pall. Mart. 15, 1: marinus ros, (Col. 9, 4, 6): rorismarini, (id. 12, 36) (twice): marino rore, (Hor. C. 3, 23, 16): rosmarinum, nom., Plin. 24, 11, 59, § 99; acc., id. 19, 12, 62, § 187; App. Herb. 79; cf. Isid. Orig. 17, 9, 81; in Ovid also: ros maris, (Ov. M. 12, 410); id. A. A. 3, 690; and in Vergil simply ros, (Verg. G. 2, 213) Serv.; cf. Plin. 24, 11, 60, § 101.",
+"src": "L&S"
+},
+"ros2": {
+"pos": "",
+"definition": "rōs marīnus see ros."
+},
+"rudus1": {
+"pos": "",
+"definition": "rūdus (raudus) eris cf. rudis, a bit of copper (used as money, uncoined): rudera iacere, L."
+},
+"rudus2": {
+"pos": "sostantivo",
+"definition": "rūdus eris, n broken stone, rubbish, debris: Ruderi accipiendo, Ta.: acutum silicis, Ct."
+},
+"ruta1": {
+"pos": "sostantivo",
+"definition": "rūta ae, f , r(uth/, a bitter herb, rue, C., O. —Fig., bitterness, unpleasantness: alcuius."
+},
+"ruta2": {
+"pos": "sostantivo",
+"definition": "rūta, ae, f., = ῥυτή (cf. Varr. L. L. 5, § 103 Müll.), — I. a bitter herb, rue. — I. Lit., Cic. Fam. 9, 22, 3; Col. 11, 3, 38; 12, 7, 5; Plin. 19, 8, 45, § 156; 20, 13, 51, § 131; Ov. R. Am. 801; Mart. 11, 31, 17; 52, 8.—* — II. Trop., bitterness, unpleasantness: cras exspecto Leptam, ad cujus rutam pulegio mihi tui sermonis utendum est, (Cic. Fam. 16, 23, 2).",
+"src": "L&S"
+}
+}
+}

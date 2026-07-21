@@ -1,1 +1,66 @@
-{"meta": {"lang": "latino", "letter": "e", "archived_count": 14}, "dict": {"ea1": {"pos": "", "definition": "ea see is."}, "ea2": {"pos": "avverbio", "definition": "eā adv. abl f. of is; sc. viā, on that side, that way, there : eā proxime accedi poterat: eā introrumpere, Cs.: transitum eā non esse, L."}, "ec-": {"pos": "", "definition": "ec- an indef part., only in compounds."}, "ei2": {"pos": "", "definition": "ei interj, oh! alas!: Ei, vereor nequid, etc., T.: Ei mihi, quod, etc., O., V., Ct., Tb."}, "electus1": {"pos": "aggettivo", "definition": "ēlēctus adj. with comp. and sup. P. of eligo, picked, select, choice, excellent : sexaginta (milia armata), picked troops , Cs.: milites, Cs.: exercitūs, Ta.: electissima verba: scripta, Ct.— As subst m. : cum electo …"}, "electus2": {"pos": "", "definition": "(ēlēctus, ūs) m eligo, a choice .—Only abl sing. : necis, O."}, "elisus": {"pos": "", "definition": "ēlīsus P. of ēlīdō."}, "esse1": {"pos": "", "definition": "'esse inf. of sum.'"}, "esse2": {"pos": "", "definition": "ēsse inf. of 1 edo."}, "est1": {"pos": "", "definition": "est see sum."}, "est2": {"pos": "", "definition": "ēst, ēstur see 1 edo."}, "exec-": {"pos": "", "definition": "exec- see exsec-."}, "exorsus1": {"pos": "", "definition": "exōrsus P. of exordior."}, "exorsus2": {"pos": "", "definition": "exōrsus ūs, m 1 OL-, a beginning, commencement : orationis."}}}
+{
+"meta": {
+"lang": "latino",
+"letter": "e",
+"archived_count": 14
+},
+"dict": {
+"ea1": {
+"pos": "",
+"definition": "ea see is."
+},
+"ea2": {
+"pos": "avverbio",
+"definition": "eā adv. abl f. of is; sc. viā, on that side, that way, there : eā proxime accedi poterat: eā introrumpere, Cs.: transitum eā non esse, L."
+},
+"ec-": {
+"pos": "",
+"definition": "ec- an indef part., only in compounds."
+},
+"ei2": {
+"pos": "",
+"definition": "ei interj, oh! alas!: Ei, vereor nequid, etc., T.: Ei mihi, quod, etc., O., V., Ct., Tb."
+},
+"electus1": {
+"pos": "aggettivo",
+"definition": "ēlectus, a, um, Part. and P. a., — I. choice, excellent; v. eligo. → ēlectus, ūs, m. eligo, — I. a choice: necis, (Ov. H. 2, 144) Loers. N. cr. → ē-lĭgo, lēgi, lectum, 3, v. a. lĕgo, — I. to pick out, choose, elect (class.; esp. in the trop. sense; cf.: coöpto, designo, deligo, seligo): pedes e capite et e collo pullorum, (Varr. R. R. 3, 9, 14): uvam ad edendum (with legere), (id. ib. 1, 54, 2): herbas, (id. ib. 1, 47); Col. 4, 5; cf. trop., (Cic. Tusc. 3, 34, 83) and 84: ex malis minima, (Cic. Off. 3, 1, 3): ut de tribus Antoniis eligas quem velis, id. Phil. 10, 2, 5: a multis commodissimum quodque, (id. Inv. 2, 2, 5): ut in comparando difficile ad eligendum sit, quid maxime velis, (id. Rep. 1, 35 fin.) et saep.—Absol., to choose correctly, make a proper selection: haud semper errat fama; aliquando et elegit, (Tac. Agr. 9 fin.)—Hence, ēlectus, a, um, P. a. — I. In gen., picked, selected; select, choice, excellent: par columbarum, (Petr. 85, 6): viri electissimi civitatis, (Cic. Quint. 2): pugiles, (Suet. Calig. 18): quisque, (id. ib. 49): electissima verba, (Cic. Fin. 3, 7 fin.) Madv. N. cr.; Auct. Her. 4, 26, 36; cf.: electius verbum, (id. ib.); scripta, (Cat. 36, 6): res, (Petr. 36, 4) et saep.—In the neutr. subst.: ēlecta, ōrum, selections, Plin. Ep. 3, 5, 17.—Adv.: ēlecte choicely, Cic. Inv. 1, 30, 49.—Comp., Gell. 18, 7, 2.— — II. In eccl. Lat., chosen of God, elected to be saved, Vulg. Col. 3, 12 et saep.",
+"src": "L&S"
+},
+"electus2": {
+"pos": "",
+"definition": "(ēlēctus, ūs) m eligo, a choice .—Only abl sing. : necis, O."
+},
+"elisus": {
+"pos": "",
+"definition": "ēlīsus P. of ēlīdō."
+},
+"esse1": {
+"pos": "",
+"definition": "'esse inf. of sum.'"
+},
+"esse2": {
+"pos": "",
+"definition": "ēsse inf. of 1 edo."
+},
+"est1": {
+"pos": "",
+"definition": "est see sum."
+},
+"est2": {
+"pos": "",
+"definition": "ēst, ēstur see 1 edo."
+},
+"exec-": {
+"pos": "",
+"definition": "exec- see exsec-."
+},
+"exorsus1": {
+"pos": "",
+"definition": "exōrsus P. of exordior."
+},
+"exorsus2": {
+"pos": "",
+"definition": "exōrsus ūs, m 1 OL-, a beginning, commencement : orationis."
+}
+}
+}

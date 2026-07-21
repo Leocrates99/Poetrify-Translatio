@@ -1,7 +1,7 @@
 {
  "segmento": "LAT-N",
  "lemmi": 6002,
- "verdi": 4,
+ "verdi": 5,
  "stat": {
   "①": {
    "lemmi": 6002,
@@ -34,20 +34,20 @@
    "cat_errata": 0
   },
   "⑥": {
-   "troncate_nel_core": 1651,
-   "risolte_dalla_fusione": 130,
-   "residue": 1521
+   "troncate_nel_core": 0,
+   "risolte_dalla_fusione": 0,
+   "residue": 0
   },
   "⑦": {
-   "forme_testate": 55686,
-   "round_trip_ok": 55686,
+   "forme_testate": 55721,
+   "round_trip_ok": 55721,
    "pct": 100.0,
    "lemmi_con_forme": 5999,
    "lemmi_tutti_ok": 5999,
    "lemmi_senza_forme": 0
   },
   "⑧": {
-   "total_forms": 599487,
+   "total_forms": 599504,
    "total_lemmas": 17443,
    "archived_lemmas": 487,
    "total_paradigms": 9996,
@@ -63,14 +63,6 @@
   ],
   "⑤": [
    "5348 lemmi senza record fuso → nessuna prov"
-  ],
-  "⑥": [
-   "1521 definizioni ancora troncate (non coperte da fusione)",
-   "  es. baca: bāca (not bacca), ae, f a small round fruit, berry: bicolores, O.: lau",
-   "  es. barba: barba ae, f Engl. beard, the beard: promissa, long, L.: inpexae barbae",
-   "  es. barbaria: barbaria ae (nom. also -iēs, acc. iem), f barbarus, a strange land, fo",
-   "  es. basilica: 'basilica ae, f, basilikh/ (sc. stoa/), a portico, basilica; in Rome, ",
-   "  es. belua: bēlua (not bellua), ae, f a beast, wild beast, monster: fera: saeva, H"
   ]
  }
 }

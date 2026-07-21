@@ -1,0 +1,74 @@
+{
+ "arithmetica": {
+  "genitivo": "arithmeticae",
+  "numero": "sg",
+  "declinazione": 1,
+  "genere": "f",
+  "confidenza": "alta",
+  "fonte": "L&S integrale (Perseus) · verifica incrociata itype"
+ },
+ "cingula": {
+  "genitivo": "cingulae",
+  "numero": "sg",
+  "declinazione": 1,
+  "genere": "f",
+  "confidenza": "alta",
+  "fonte": "L&S integrale (Perseus) · verifica incrociata itype"
+ },
+ "galbina": {
+  "genitivo": "galbinae",
+  "numero": "sg",
+  "declinazione": 1,
+  "genere": "f",
+  "confidenza": "alta",
+  "fonte": "L&S integrale (Perseus) · verifica incrociata itype"
+ },
+ "lamenta": {
+  "genitivo": "lamentae",
+  "numero": "sg",
+  "declinazione": 1,
+  "genere": "f",
+  "confidenza": "alta",
+  "fonte": "L&S integrale (Perseus) · verifica incrociata itype"
+ },
+ "Olympia": {
+  "genitivo": "olympiae",
+  "numero": "sg",
+  "declinazione": 1,
+  "genere": "f",
+  "confidenza": "alta",
+  "fonte": "L&S integrale (Perseus) · verifica incrociata itype"
+ },
+ "ruta2": {
+  "genitivo": "rutae",
+  "numero": "sg",
+  "declinazione": 1,
+  "genere": "f",
+  "confidenza": "alta",
+  "fonte": "L&S integrale (Perseus) · verifica incrociata itype"
+ },
+ "satureia": {
+  "genitivo": "satureiae",
+  "numero": "sg",
+  "declinazione": 1,
+  "genere": "f",
+  "confidenza": "alta",
+  "fonte": "L&S integrale (Perseus) · verifica incrociata itype"
+ },
+ "Luceres": {
+  "genitivo": "lucerium",
+  "numero": "pl",
+  "declinazione": 3,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "L&S integrale (Perseus) · verifica incrociata itype"
+ },
+ "gryps": {
+  "genitivo": "gryphis",
+  "numero": "sg",
+  "declinazione": 3,
+  "genere": "m",
+  "confidenza": "alta",
+  "fonte": "L&S integrale (Perseus) · verifica incrociata itype"
+ }
+}

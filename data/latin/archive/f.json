@@ -1,1 +1,30 @@
-{"meta": {"lang": "latino", "letter": "f", "archived_count": 5}, "dict": {"fener-": {"pos": "", "definition": "fēner- see faener-."}, "foen": {"pos": "", "definition": "(foen-) see fēn."}, "foet": {"pos": "", "definition": "(foet-) see fēt."}, "fusus1": {"pos": "aggettivo", "definition": "fūsus adj. P. of fundo, stretched out, lying, recumbent, prostrate : in herbā, O.: humi, O. — Spread out, extended, broad, large, ample : (aër) fusus: Gallorum fusa corpora, full , L.: crines, flowing , V.: fusus in p…"}, "fusus2": {"pos": "", "definition": "fūsus ī, m a spindle, V., Ct., Tb., O., Iu.— Of the Fates, V., O."}}}
+{
+"meta": {
+"lang": "latino",
+"letter": "f",
+"archived_count": 5
+},
+"dict": {
+"fener-": {
+"pos": "",
+"definition": "fēner- see faener-."
+},
+"foen": {
+"pos": "",
+"definition": "(foen-) see fēn."
+},
+"foet": {
+"pos": "",
+"definition": "(foet-) see fēt."
+},
+"fusus1": {
+"pos": "aggettivo",
+"definition": "fūsus, a, um, Part. and P. a., from fundo. → fūsus, i, m., — I. a spindle. — I. Lit., Plin. 8, 48, 74, § 194; 11, 23, 27, § 78; 28, 2, 5, § 28; Verg. G. 4, 348; Tib. 2, 1, 64; Ov. M. 4, 221; 229; 6, 22; Prud. stef. 10, 239; Vulg. Prov. 31, 19.—An attribute of the Fates, Verg. E. 4, 46; Ov. H. 12, 4.— — II. Transf., in mechanics, a cross-bar, rundle connecting two wheels near the circumference, Vitr. 10, 6 fin.",
+"src": "L&S"
+},
+"fusus2": {
+"pos": "",
+"definition": "fūsus ī, m a spindle, V., Ct., Tb., O., Iu.— Of the Fates, V., O."
+}
+}
+}

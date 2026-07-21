@@ -1571986,11 +1571986,11 @@
 },
 "arithmetica": {
 "pos": "Sostantivo",
-"cat": "2ª decl. n.",
-"classe": "2ª declinazione (neutro, plurale tantum)",
-"testa": "arithmetica, arithmeticorum n",
+"cat": "1ª decl.",
+"classe": "1ª declinazione",
+"testa": "arithmetica, arithmeticae f",
 "nome": {
-"pl": {
+"sg": {
 "nom": [
 [
 "arithmetic",
@@ -1572007,7 +1572007,7 @@
 "t"
 ],
 [
-"orum",
+"ae",
 "d"
 ]
 ],
@@ -1572017,7 +1572017,7 @@
 "t"
 ],
 [
-"is",
+"ae",
 "d"
 ]
 ],
@@ -1572027,7 +1572027,7 @@
 "t"
 ],
 [
-"a",
+"am",
 "d"
 ]
 ],
@@ -1572047,13 +1572047,74 @@
 "t"
 ],
 [
+"a",
+"d"
+]
+]
+},
+"pl": {
+"nom": [
+[
+"arithmetic",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"gen": [
+[
+"arithmetic",
+"t"
+],
+[
+"arum",
+"d"
+]
+],
+"dat": [
+[
+"arithmetic",
+"t"
+],
+[
+"is",
+"d"
+]
+],
+"acc": [
+[
+"arithmetic",
+"t"
+],
+[
+"as",
+"d"
+]
+],
+"voc": [
+[
+"arithmetic",
+"t"
+],
+[
+"ae",
+"d"
+]
+],
+"abl": [
+[
+"arithmetic",
+"t"
+],
+[
 "is",
 "d"
 ]
 ]
 }
-},
-"nota": "plurale tantum: privo di singolare"
+}
 },
 "arma": {
 "pos": "Sostantivo",

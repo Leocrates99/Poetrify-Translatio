@@ -63,7 +63,10 @@ def paradigma_completo(par):
 
 
 def ha_troncatura(txt):
-    return any(t in (txt or "") for t in TRONCO)
+    """Troncatura = il testo FINISCE coi puntini (taglio meccanico di Lewis
+    Elementary). I puntini INTERNI non sono troncature: Lewis & Short elide il
+    testo dentro le citazioni d'autore («sed ... tamen») e sono legittimi."""
+    return (txt or "").rstrip().endswith(TRONCO)
 
 
 def main():
