@@ -9848,6 +9848,17 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 .seg-btn:hover { border-color: var(--lang-accent-border); color: var(--lang-accent); }
 .seg-btn.on { background: var(--lang-accent); border-color: var(--lang-accent); color: #fff; }
 .seg-btn:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: 1px; }
+
+/* TOKEN DA TASTIERA · il gesto centrale dell'app (cliccare una parola del brano)
+   dev'essere raggiungibile senza mouse. Widget composito: UNA sola fermata di Tab
+   per frase, frecce per scorrere le parole — con 178 parole, rendere tabulabile
+   ogni token renderebbe impossibile uscire dal brano. */
+.token[tabindex]:focus { outline: none; }
+.token[tabindex]:focus-visible {
+  outline: 2px solid var(--lang-accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
 .toggle-mode-btn {
   padding: 4px 8px;
   background: var(--cream);
@@ -40002,6 +40013,106 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && window.__adrawer) window.closeAnalysisDrawer();
   });
 
+  /* ACCESSIBILITA' DEI TOKEN · i sei renderer del brano producono tutti la stessa
+     forma (<span class="token" data-token-idx> oppure onclick="...TokenClick").
+     Invece di toccarli uno per uno, li si arricchisce dopo il render.
+     Pattern: widget composito con ROVING TABINDEX — una fermata di Tab per frase,
+     frecce per scorrere, Invio/Spazio per attivare (stesso idioma dei .seg-btn). */
+  var TOK_SEL = '.token[data-token-idx], .token[onclick]';
+  window.__tokLast = null;      // ultimo token attivato da TASTIERA (per ridare il focus dopo il re-render)
+  function tokClickable(t){
+    if (!t) return false;
+    if (t.classList.contains('token-punct') && !t.classList.contains('clickable-punct')) return false;
+    return t.hasAttribute('data-token-idx') || t.hasAttribute('onclick');
+  }
+  function tokSiblings(t){
+    var p = t.parentElement; if (!p) return [t];
+    return Array.prototype.filter.call(p.querySelectorAll(TOK_SEL), tokClickable);
+  }
+  window.tokenA11yAll = function(root){
+    var all = (root || document).querySelectorAll(TOK_SEL);
+    var gruppi = new Map();
+    Array.prototype.forEach.call(all, function(t){
+      if (!tokClickable(t)) return;
+      var p = t.parentElement; if (!p) return;
+      if (!gruppi.has(p)) gruppi.set(p, []);
+      gruppi.get(p).push(t);
+    });
+    gruppi.forEach(function(toks, group){
+      if (toks.length < 2) return;
+      if (group.getAttribute('role') !== 'group') {
+        group.setAttribute('role', 'group');
+        group.setAttribute('aria-label', 'Parole della frase: frecce per scorrere, Invio per selezionare');
+      }
+      // la fermata di Tab e' il token in focus d'analisi, altrimenti il primo
+      var att = null;
+      var kf2 = (typeof state !== 'undefined') && state.kbdFocusToken;
+      for (var i = 0; i < toks.length; i++) {
+        if (toks[i].classList.contains('token-kbd-focus')) { att = toks[i]; break; }
+        if (kf2 && toks[i].getAttribute('data-token-idx') == kf2.tokenIdx
+                && toks[i].getAttribute('data-sentence-id') === kf2.sentenceId) { att = toks[i]; break; }
+        if (toks[i].classList.contains('unified-focus') || toks[i].classList.contains('token-selected')) { att = toks[i]; break; }
+      }
+      if (!att) att = toks[0];
+      toks.forEach(function(t){
+        if (!t.hasAttribute('role')) t.setAttribute('role', 'button');
+        if (!t.hasAttribute('aria-label')) {
+          var w = (t.textContent || '').replace(/\s+/g, ' ').trim();
+          if (w) t.setAttribute('aria-label', w);
+        }
+        t.tabIndex = (t === att) ? 0 : -1;
+      });
+    });
+    /* PONTE fra il focus di STATO dell'app (state.kbdFocusToken, spostato dalle
+       frecce) e il focus REALE del DOM. Senza, chi usa uno screen reader preme le
+       frecce, vede cambiare l'evidenziazione... e non sente nulla: il focus resta
+       fermo. Si sposta solo dopo una navigazione DA TASTIERA, per non rubare il
+       fuoco a chi sta scrivendo altrove. */
+    if (window.__tokKbdNav) {
+      window.__tokKbdNav = false;
+      var kf = (typeof state !== 'undefined') && state.kbdFocusToken;
+      if (kf) {
+        /* .token-kbd-focus e' la classe che l'app stessa applica al token in focus
+           (r.~32792) ed e' l'unico aggancio valido per TUTTI i tokenizzatori: quello
+           grammaticale non emette data-token-idx, passa gli indici nell'onclick. */
+        var q = document.querySelector('#editor-content .token.token-kbd-focus')
+             || document.querySelector('.token[data-token-idx="' + kf.tokenIdx + '"][data-sentence-id="' + kf.sentenceId + '"]');
+        if (q && document.activeElement !== q) {
+          q.tabIndex = 0;
+          try { q.focus({ preventScroll: true }); } catch (err) { q.focus(); }
+        }
+      }
+    }
+  };
+  document.addEventListener('keydown', function(e){
+    /* L'APP HA GIA' la sua navigazione da tastiera nella scheda Analisi (r.~39690:
+       frecce -> _kbdMoveFocus, Invio -> attiva) e chiama preventDefault.
+       Qui NON la si duplica: se l'ha gia' gestita, ci si tira indietro. Questo
+       modulo serve agli ALTRI tokenizzatori (verbi, connettivi, periodale), dove
+       quel sistema non arriva. */
+    if (e.defaultPrevented) { window.__tokKbdNav = true; return; }
+    var t = e.target;
+    if (!t || !t.classList || !t.classList.contains('token')) return;
+    if (t.tabIndex !== 0 && t.tabIndex !== -1) return;
+    var k = e.key;
+    if (k === 'Enter' || k === ' ' || k === 'Spacebar') {
+      e.preventDefault();
+      window.__tokKbdNav = true;
+      t.click();
+      return;
+    }
+    if (k !== 'ArrowRight' && k !== 'ArrowLeft' && k !== 'Home' && k !== 'End') return;
+    var sib = tokSiblings(t); if (sib.length < 2) return;
+    e.preventDefault();
+    var i = sib.indexOf(t); if (i < 0) i = 0;
+    var n = (k === 'ArrowRight') ? Math.min(i + 1, sib.length - 1)
+          : (k === 'ArrowLeft')  ? Math.max(i - 1, 0)
+          : (k === 'Home')       ? 0 : sib.length - 1;
+    sib.forEach(function(x){ x.tabIndex = -1; });
+    sib[n].tabIndex = 0;
+    sib[n].focus();
+  });
+
   /* SEGMENTED · tendine brevi -> pulsanti, senza toccare i call-site.
      Regola: al massimo SEG_MAX_OPT valori E ogni etichetta abbreviata entro
      SEG_MAX_LEN caratteri. Sopra la soglia resta la tendina nativa. */
@@ -40096,7 +40207,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.__segRuns = 0;
   var segQueued = false;
   function segFlush(){
-    try { window.__segRuns++; window.segUpgradeAll(); if (window.syncAnalysisDrawer) window.syncAnalysisDrawer(); }
+    try { window.__segRuns++; window.segUpgradeAll(); if (window.tokenA11yAll) window.tokenA11yAll(); if (window.syncAnalysisDrawer) window.syncAnalysisDrawer(); }
     catch (err) { console.warn('[seg] upgrade fallito:', err); }
     finally { segQueued = false; }   // la spia si azzera SEMPRE: un errore non deve bloccare per sempre
   }
