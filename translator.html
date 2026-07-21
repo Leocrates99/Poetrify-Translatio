@@ -11892,7 +11892,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 <div id="export-render-target" style="position: absolute; left: -10000px; top: 0; width: 800px;"></div>
 
 <!-- TASTIERA GRECA ANTICA -->
@@ -26240,14 +26240,19 @@ function renderQuickBar() {
       const disabled = (extraAttr && extraAttr.disabledFor && extraAttr.disabledFor(b)) ? 'disabled' : '';
       return `<button class="quick-seg-btn ${active}" ${disabled}
                 data-mode="${b.value}"
+                role="radio" aria-checked="${b.value === currentValue ? 'true' : 'false'}"
                 onclick="${onclickFn}('${b.value}')"
                 title="${escapeHtml(b.title)}">
-                <span class="quick-seg-icon">${b.icon}</span>${escapeHtml(b.label)}
+                <span class="quick-seg-icon" aria-hidden="true">${b.icon}</span>${escapeHtml(b.label)}
               </button>`;
     }).join('');
+    /* Il gruppo dichiara il proprio NOME e ogni pulsante la propria scelta: senza,
+       con lo screen reader si sentono quattro file di pulsanti indistinguibili e
+       non si sa quale sia attivo (i .seg-btn accanto lo dicevano gia'). */
+    const gid = 'quickbar-' + label.toLowerCase().replace(/[^a-z]+/g, '');
     return `<div class="quick-bar-group">
-              <span class="quick-bar-label">${label}</span>
-              <div class="quick-seg">${buttons}</div>
+              <span class="quick-bar-label" id="${gid}">${label}</span>
+              <div class="quick-seg" role="radiogroup" aria-labelledby="${gid}">${buttons}</div>
             </div>`;
   };
 
@@ -26558,10 +26563,10 @@ function renderStep3HtmlAttuale() {
         ${sentence.translation ? `<div style="margin-top:8px; font-size: 13px; font-style: italic; color: var(--sepia);">Resa di lavoro: ${escapeHtml(sentence.translation)}</div>` : ''}
       </div>
       <div class="analysis-tabs">
-        <button class="analysis-tab ${state.currentAnalysisTab === 'unificato' ? 'active' : ''}" onclick="switchAnalysisTab('unificato')" title="Click su un token → vedi grammatica + sintagma logico + proposizione in un unico pannello">⚡ Unificato</button>
-        <button class="analysis-tab ${state.currentAnalysisTab === 'grammaticale' ? 'active' : ''}" onclick="switchAnalysisTab('grammaticale')">Grammaticale</button>
-        <button class="analysis-tab ${state.currentAnalysisTab === 'logica' ? 'active' : ''}" onclick="switchAnalysisTab('logica')">Logica</button>
-        <button class="analysis-tab profile-biennio-plus ${state.currentAnalysisTab === 'periodale' ? 'active' : ''}" onclick="switchAnalysisTab('periodale')">Sintattico-periodale</button>
+        <button class="analysis-tab ${state.currentAnalysisTab === 'unificato' ? 'active' : ''}" ${state.currentAnalysisTab === 'unificato' ? 'aria-current="true"' : ''} onclick="switchAnalysisTab('unificato')" title="Click su un token → vedi grammatica + sintagma logico + proposizione in un unico pannello">⚡ Unificato</button>
+        <button class="analysis-tab ${state.currentAnalysisTab === 'grammaticale' ? 'active' : ''}" ${state.currentAnalysisTab === 'grammaticale' ? 'aria-current="true"' : ''} onclick="switchAnalysisTab('grammaticale')">Grammaticale</button>
+        <button class="analysis-tab ${state.currentAnalysisTab === 'logica' ? 'active' : ''}" ${state.currentAnalysisTab === 'logica' ? 'aria-current="true"' : ''} onclick="switchAnalysisTab('logica')">Logica</button>
+        <button class="analysis-tab profile-biennio-plus ${state.currentAnalysisTab === 'periodale' ? 'active' : ''}" ${state.currentAnalysisTab === 'periodale' ? 'aria-current="true"' : ''} onclick="switchAnalysisTab('periodale')">Sintattico-periodale</button>
       </div>
       <div id="analysis-content">${renderAnalysisContent(sentence)}</div>
       <div class="flex-between" style="margin-top: 24px;">
@@ -29284,8 +29289,13 @@ function renderGuidedWizard() {
       const isActive = s.num === currentStep;
       const isDone = isGuidedStepCompleteAllSentences(s.num);
       const visPos = visibleSteps.findIndex(v => v.num === s.num) + 1;
-      return `<button class="wizard-step phase-${g.key} ${isActive ? 'active' : ''} ${isDone ? 'completed' : ''}" onclick="goToGuidedStep(${s.num})">
-        <span class="wizard-step-num">${visPos}</span>
+      /* aria-current dice DOVE SI E'; il completamento entra nel nome accessibile
+         perche' finora viveva solo nel colore e in uno ::after. */
+      return `<button class="wizard-step phase-${g.key} ${isActive ? 'active' : ''} ${isDone ? 'completed' : ''}"
+        ${isActive ? 'aria-current="step"' : ''}
+        aria-label="Tappa ${visPos} di ${totalSteps}: ${escapeHtml(s.label)}${isDone ? ' — completata' : ''}${isActive ? ' — sei qui' : ''}"
+        onclick="goToGuidedStep(${s.num})">
+        <span class="wizard-step-num" aria-hidden="true">${visPos}</span>
         <span class="wizard-step-label">${s.label}</span>
       </button>`;
     }).join('');
@@ -40018,6 +40028,22 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape' && window.__adrawer) window.closeAnalysisDrawer();
   });
 
+  /* PULSANTI A SOLA ICONA · un pulsante il cui contenuto e' un solo glifo prende
+     il nome dall'EMOJI: «segno di spunta pulsante», o niente del tutto a seconda
+     del motore. Il ✓/✕ che conferma o annulla l'analisi di un sintagma diventava
+     cosi' indovinello. Il title c'e' gia' quasi sempre: lo si promuove a nome
+     accessibile, lasciandolo come suggerimento per il mouse. */
+  window.iconBtnA11yAll = function(root){
+    var b = (root || document).querySelectorAll('button[title]:not([aria-label]), [role="button"][title]:not([aria-label])');
+    Array.prototype.forEach.call(b, function(el){
+      var testo = (el.textContent || '').replace(/\s+/g, '').trim();
+      // Array.from conta le emoji come UN carattere (le coppie surrogate no)
+      if (testo && Array.from(testo).length > 2) return;   // ha gia' un'etichetta testuale sua
+      var t = (el.getAttribute('title') || '').trim();
+      if (t) el.setAttribute('aria-label', t);
+    });
+  };
+
   /* MODALI COME DIALOGHI · gli 11 .modal-backdrop erano <div> generici: niente
      role/aria-modal, focus che restava sul fondo (con lo screen reader si continua
      a tabulare nel brano mentre a schermo c'e' una finestra) e nessun Esc.
@@ -40289,7 +40315,7 @@ document.addEventListener('DOMContentLoaded', () => {
   window.__segRuns = 0;
   var segQueued = false;
   function segFlush(){
-    try { window.__segRuns++; window.segUpgradeAll(); if (window.tokenA11yAll) window.tokenA11yAll(); if (window.modalA11yAll) window.modalA11yAll(); if (window.syncAnalysisDrawer) window.syncAnalysisDrawer(); }
+    try { window.__segRuns++; window.segUpgradeAll(); if (window.tokenA11yAll) window.tokenA11yAll(); if (window.iconBtnA11yAll) window.iconBtnA11yAll(); if (window.modalA11yAll) window.modalA11yAll(); if (window.syncAnalysisDrawer) window.syncAnalysisDrawer(); }
     catch (err) { console.warn('[seg] upgrade fallito:', err); }
     finally { segQueued = false; }   // la spia si azzera SEMPRE: un errore non deve bloccare per sempre
   }
