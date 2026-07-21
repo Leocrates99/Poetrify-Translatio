@@ -36446,11 +36446,32 @@ function _isGreekLetter(ch) {
   const c = ch.codePointAt(0);
   return (c >= 0x0370 && c <= 0x03FF) || (c >= 0x1F00 && c <= 0x1FFF);
 }
+/* Un sigma NON è a fine parola se dopo di lui c'è un apostrofo di ELISIONE.
+   «σ᾽» è σε elisa (καί σ᾽ ἐγὼ λύσω): il sigma è iniziale, non finale, e
+   scriverlo «ς᾽» produce una forma che in greco non esiste. Gli apostrofi sono
+   gli stessi quattro che tokenizeSentence dichiara come caratteri-parola
+   proprio perché κατ᾽ e σ᾽ restino un token solo — ma _isGreekLetter li
+   respinge tutti alla guardia \p{L} (koronis e right-quote non sono lettere,
+   e U+02BC cade fuori dagli intervalli greci). Le due funzioni si
+   contraddicevano nello stesso file. */
+const _APOSTROFI_ELISIONE = new Set([
+  String.fromCharCode(0x0027), String.fromCharCode(0x2019),
+  String.fromCharCode(0x02BC), String.fromCharCode(0x1FBD),
+]);
+const _KERAIA = String.fromCharCode(0x0374);   // ʹ · marca i numerali alfabetici
+
 function normalizeGreekSigma(text) {
   const orig = text;
   const SYMS = { 'ϲ':'σ','Ϲ':'Σ','ϐ':'β','ϑ':'θ','ϕ':'φ','ϖ':'π','ϰ':'κ','ϱ':'ρ','ϵ':'ε','ϴ':'Θ','ϒ':'Υ' };
   text = text.replace(/[ϲϹϐϑϕϖϰϱϵϴϒ]/g, (m) => SYMS[m]);       // varianti-simbolo → lettere (incl. sigma lunato)
-  text = text.replace(/[σς]/g, (m, idx, str) => _isGreekLetter(str[idx + 1]) ? 'σ' : 'ς');  // sigma mediale/finale
+  text = text.replace(/[σς]/g, (m, idx, str) => {
+    const dopo = str[idx + 1];
+    /* NUMERALE: ςʹ vale 6 (stigma), σʹ vale 200. Convertirlo cambia il numero:
+       si lascia esattamente com'è. */
+    if (dopo === _KERAIA) return m;
+    if (_APOSTROFI_ELISIONE.has(dopo)) return 'σ';             // parola elisa: mediale
+    return _isGreekLetter(dopo) ? 'σ' : 'ς';                    // mediale / finale
+  });
   let count = 0;
   for (let i = 0; i < text.length; i++) if (text[i] !== orig[i]) count++;   // tutte sostituzioni 1:1
   return { text, count };
@@ -36474,37 +36495,32 @@ function normalizeOrthography(text, lang) {
   const uv = normalizeLatinUV(text);
   return { text: uv.text, count: count + uv.count };
 }
-/* I CAMPI DI UNA FRASE CHE SONO COPIE DEL TESTO DEL BRANO.
-   Solo questi: sono trascrizioni di parole antiche, e vanno normalizzate
-   insieme al brano. Restano fuori — deliberatamente — tutti i campi in
-   ITALIANO (note, traduzioni, funzione, ruolo) e i campi di analisi come il
-   lemma: normalizzare l'italiano con le regole latine sarebbe un disastro
-   silenzioso (la u consonantica trasformerebbe «uomo» in «vomo»). */
-function _normalizzaCopieDiFrase(sentence, lang) {
-  let n = 0;
-  const N = (v) => { if (typeof v !== 'string' || !v) return v;
-    const r = normalizeOrthography(v, lang); n += r.count; return r.text; };
-  sentence.original = N(sentence.original);
-  (sentence.grammar || []).forEach(e => { e.word = N(e.word); });
-  (sentence.logic || []).forEach(e => { e.phrase = N(e.phrase); });
-  (sentence.periodale || []).forEach(e => { e.text = N(e.text); e.connettivo = N(e.connettivo); });
-  (sentence.ordoVerborum || []).forEach(o => { o.phrase = N(o.phrase); });
-  return n;
-}
+/* ═══ PROPAGAZIONE ALLE FRASI · RITIRATA il 21 lug 2026 ═══════════════════════
+   Qui stava `_normalizzaCopieDiFrase`, che riscriveva anche sentence.original e
+   le copie di testo nelle voci d'analisi. La tesi di sicurezza era: «la
+   normalizzazione sostituisce caratteri DENTRO le parole, quindi nessun
+   tokenIndex si sposta». La tesi sugli INDICI è vera e resta vera. Il guaio è
+   che gli indici non erano l'unica cosa in gioco, e una revisione avversariale
+   ha trovato tre modi di corrompere il CONTENUTO — tutti verificati eseguendo
+   il codice:
+   · logic[].phrase NON è per costruzione testo antico: l'app stessa ci scrive
+     etichette italiane (i preset delle ellissi, per es. «est (3ª sing. pres.
+     ind. att.)»), e la regola latina u→v trasforma «uomo» in «vomo».
+   · la scansione metrica è ancorata all'indice di SILLABA, e sciogliere un
+     digramma cambia il conto delle vocali: «Cæsar» ha 2 vocali, «Caesar» ne ha 3.
+   · il bug σ᾽→ς᾽ (corretto qui accanto) sarebbe stato scritto in modo
+     PERMANENTE dentro il dato analizzato, mentre finché tocca solo la textarea
+     resta visibile e annullabile.
+   La verifica che avevo dichiarato — «elisioni greche κατ᾽» — era proprio il
+   caso che non poteva fallire: κατ᾽ non contiene sigma.
+   Il divorzio brano/frasi che la propagazione voleva evitare NON è tornato
+   invisibile: lo dichiara l'avviso di divergenza (branoFrasiDivergenza), che è
+   il presidio giusto perché mostra il problema senza riscrivere nulla d'ufficio.
+   Chi volesse riprovarci: serve una lista dei campi provata campo per campo, e
+   un invariante anche per le ancore NON basate su token (le sillabe della
+   metrica). ══════════════════════════════════════════════════════════════════ */
 
-/* Bottone della toolbar del testo (scheda A): normalizza la grafia del campo.
-   PROPAGA ALLE FRASI. Prima non lo faceva: il brano diventava «Caesar» e le
-   frasi restavano «Cæsar», con le analisi appese al testo vecchio e nessun
-   avviso. Il divorzio era a un clic di distanza e non si vedeva da nessuna
-   parte (verificato: brano e frasi divergenti, zero segnalazioni a schermo).
-   La propagazione è sicura PER COSTRUZIONE, non per euristica: la
-   normalizzazione sostituisce caratteri dentro le parole e non ne aggiunge né
-   toglie, quindi il numero e l'ordine dei token restano identici e nessun
-   tokenIndex si sposta. Verificato su sette casi, compresi i limite
-   (abbreviazioni «M. Tullius», elisioni greche «κατ᾽», sigma finale, stringa
-   vuota, spazi multipli): parole e punteggiatura invariate, e la funzione è
-   idempotente. Se un giorno normalizeOrthography imparasse a separare o unire
-   parole, questa garanzia cadrebbe e servirebbe un riallineamento vero. */
+/* Bottone della toolbar del testo (scheda A): normalizza la grafia del campo. */
 function applyOrthographyNormalization() {
   const ta = document.getElementById('field-testo');
   if (!ta) return;
@@ -36519,17 +36535,15 @@ function applyOrthographyNormalization() {
   } catch (e) { applied = false; }
   if (!applied) ta.value = res.text;
   onTestoChange(ta.value);
+  if ((state.sentences || []).length) renderEditor();   // fa comparire subito l'avviso di divergenza
 
-  let frasiToccate = 0;
-  (state.sentences || []).forEach(s => { if (_normalizzaCopieDiFrase(s, state.meta.lingua) > 0) frasiToccate++; });
-  if (frasiToccate > 0) { persistCurrent(); renderEditor(); renderSidebarTabs(); }
-
-  /* Il messaggio dice il vero su DUE cose. Prima prometteva «Ctrl+Z per
-     annullare»: quella scorciatoia annulla il campo di testo (undo nativo
-     della textarea), non le frasi già segmentate. */
-  showToast(frasiToccate > 0
-    ? `Grafia normalizzata · ${res.count} sostituzion${res.count === 1 ? 'e' : 'i'} nel brano e in ${frasiToccate} fras${frasiToccate === 1 ? 'e' : 'i'} già segmentate`
-    : `Grafia normalizzata · ${res.count} sostituzion${res.count === 1 ? 'e' : 'i'}`);
+  /* Il messaggio dice il vero su due cose che prima taceva: che le frasi già
+     segmentate NON sono state toccate, e che Ctrl+Z riguarda il campo di testo
+     (undo nativo della textarea) e non arriva alle frasi. */
+  const quante = `${res.count} sostituzion${res.count === 1 ? 'e' : 'i'}`;
+  showToast((state.sentences || []).length
+    ? `Grafia normalizzata nel brano · ${quante} · le frasi già segmentate restano sul testo precedente`
+    : `Grafia normalizzata · ${quante} (Ctrl+Z per annullare)`);
 }
 function onTraduzioneChange(v) { state.meta.traduzione = v; persistCurrent(); renderPreview(); }
 function onMetaChange(field, v) { state.meta[field] = v; persistCurrent(); renderPreview(); }
@@ -39127,6 +39141,16 @@ function ocrInsertResult(mode) {
   if (!text) { showToast('Niente testo da inserire'); return; }
   const el = document.getElementById(ocrState.targetField);
   if (!el) { showToast('Campo di destinazione non trovato'); return; }
+  /* Sostituire il brano quando le frasi sono già segmentate le lascia sul testo
+     PRECEDENTE: non è un errore del programma, è una conseguenza che va detta
+     prima, non scoperta dopo dall'avviso di divergenza. Solo per il campo del
+     brano — negli altri campi non c'è nessun invariante da rompere. */
+  if (mode !== 'append' && ocrState.targetField === 'field-testo' && (state.sentences || []).length) {
+    const n = state.sentences.length;
+    const quante = (n === 1) ? 'La frase già segmentata non viene toccata: resterà'
+                             : 'Le ' + n + ' frasi già segmentate non vengono toccate: resteranno';
+    if (!confirm('Il testo riconosciuto sostituirà l\'intero brano.\n\n' + quante + ' sul testo precedente, e l\'avviso di disallineamento comparirà in cima alle schede A e B finché non decidi come riallinearle.\n\nProcedere?')) return;
+  }
   if (mode === 'append' && el.value.trim()) {
     el.value = el.value.replace(/\s+$/, '') + '\n' + text;
   } else {
