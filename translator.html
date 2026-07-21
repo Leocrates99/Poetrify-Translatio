@@ -36329,12 +36329,53 @@ function normalizeGreekSigma(text) {
 function normalizeOrthography(text, lang) {
   if (lang === 'greco') return normalizeGreekSigma(text);
   let count = 0;
-  text = text.replace(/[æÆœŒ]/g, (m) => { count++; return { 'æ':'ae','Æ':'Ae','œ':'oe','Œ':'Oe' }[m]; });
+  /* Il digramma sciolto segue la CASSA del contesto: in una parola tutta
+     maiuscola «CÆSAR» deve dare CAESAR, non CAeSAR. Si guardano i due vicini:
+     se almeno uno è una lettera maiuscola, il digramma è tutto maiuscolo;
+     altrimenti è la sola iniziale (Æneas → Aeneas). */
+  text = text.replace(/[æÆœŒ]/g, (m, idx, str) => {
+    count++;
+    if (m === 'æ') return 'ae';
+    if (m === 'œ') return 'oe';
+    const su = (c) => !!c && /\p{Lu}/u.test(c);
+    const tutto = su(str[idx - 1]) || su(str[idx + 1]);
+    return m === 'Æ' ? (tutto ? 'AE' : 'Ae') : (tutto ? 'OE' : 'Oe');
+  });
   text = text.replace(/[jJ]/g, (m) => { count++; return m === 'J' ? 'I' : 'i'; });
   const uv = normalizeLatinUV(text);
   return { text: uv.text, count: count + uv.count };
 }
-/* Bottone della toolbar del testo (scheda A): normalizza la grafia del campo. */
+/* I CAMPI DI UNA FRASE CHE SONO COPIE DEL TESTO DEL BRANO.
+   Solo questi: sono trascrizioni di parole antiche, e vanno normalizzate
+   insieme al brano. Restano fuori — deliberatamente — tutti i campi in
+   ITALIANO (note, traduzioni, funzione, ruolo) e i campi di analisi come il
+   lemma: normalizzare l'italiano con le regole latine sarebbe un disastro
+   silenzioso (la u consonantica trasformerebbe «uomo» in «vomo»). */
+function _normalizzaCopieDiFrase(sentence, lang) {
+  let n = 0;
+  const N = (v) => { if (typeof v !== 'string' || !v) return v;
+    const r = normalizeOrthography(v, lang); n += r.count; return r.text; };
+  sentence.original = N(sentence.original);
+  (sentence.grammar || []).forEach(e => { e.word = N(e.word); });
+  (sentence.logic || []).forEach(e => { e.phrase = N(e.phrase); });
+  (sentence.periodale || []).forEach(e => { e.text = N(e.text); e.connettivo = N(e.connettivo); });
+  (sentence.ordoVerborum || []).forEach(o => { o.phrase = N(o.phrase); });
+  return n;
+}
+
+/* Bottone della toolbar del testo (scheda A): normalizza la grafia del campo.
+   PROPAGA ALLE FRASI. Prima non lo faceva: il brano diventava «Caesar» e le
+   frasi restavano «Cæsar», con le analisi appese al testo vecchio e nessun
+   avviso. Il divorzio era a un clic di distanza e non si vedeva da nessuna
+   parte (verificato: brano e frasi divergenti, zero segnalazioni a schermo).
+   La propagazione è sicura PER COSTRUZIONE, non per euristica: la
+   normalizzazione sostituisce caratteri dentro le parole e non ne aggiunge né
+   toglie, quindi il numero e l'ordine dei token restano identici e nessun
+   tokenIndex si sposta. Verificato su sette casi, compresi i limite
+   (abbreviazioni «M. Tullius», elisioni greche «κατ᾽», sigma finale, stringa
+   vuota, spazi multipli): parole e punteggiatura invariate, e la funzione è
+   idempotente. Se un giorno normalizeOrthography imparasse a separare o unire
+   parole, questa garanzia cadrebbe e servirebbe un riallineamento vero. */
 function applyOrthographyNormalization() {
   const ta = document.getElementById('field-testo');
   if (!ta) return;
@@ -36349,7 +36390,17 @@ function applyOrthographyNormalization() {
   } catch (e) { applied = false; }
   if (!applied) ta.value = res.text;
   onTestoChange(ta.value);
-  showToast(`Grafia normalizzata · ${res.count} sostituzion${res.count === 1 ? 'e' : 'i'} (Ctrl+Z per annullare)`);
+
+  let frasiToccate = 0;
+  (state.sentences || []).forEach(s => { if (_normalizzaCopieDiFrase(s, state.meta.lingua) > 0) frasiToccate++; });
+  if (frasiToccate > 0) { persistCurrent(); renderEditor(); renderSidebarTabs(); }
+
+  /* Il messaggio dice il vero su DUE cose. Prima prometteva «Ctrl+Z per
+     annullare»: quella scorciatoia annulla il campo di testo (undo nativo
+     della textarea), non le frasi già segmentate. */
+  showToast(frasiToccate > 0
+    ? `Grafia normalizzata · ${res.count} sostituzion${res.count === 1 ? 'e' : 'i'} nel brano e in ${frasiToccate} fras${frasiToccate === 1 ? 'e' : 'i'} già segmentate`
+    : `Grafia normalizzata · ${res.count} sostituzion${res.count === 1 ? 'e' : 'i'}`);
 }
 function onTraduzioneChange(v) { state.meta.traduzione = v; persistCurrent(); renderPreview(); }
 function onMetaChange(field, v) { state.meta[field] = v; persistCurrent(); renderPreview(); }
