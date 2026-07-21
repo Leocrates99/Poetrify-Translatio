@@ -275,16 +275,20 @@ body[data-lang="latino"] .section-letter {
   background: none;
 }
 
-/* 6. Wizard guidato — header */
-body[data-lang="latino"] .wizard-eyebrow,
-body[data-lang="latino"] .wizard-title {
-  /* Nelle Faste B/C/D del wizard mantieni il colore della fase, ma il titolo
-     si sintonizza con l'accento linguistico per coerenza. */
-}
-body[data-lang="latino"] .wizard-step.active {
-  background: var(--lang-accent);
-  border-color: var(--lang-accent);
-}
+/* 6. Wizard guidato — header
+   Qui vivevano due regole rimosse il 21 lug 2026.
+   (a) Una regola VUOTA su .wizard-eyebrow/.wizard-title: solo un commento che
+       dichiarava un'intenzione mai scritta in dichiarazioni. Il codice non
+       deve promettere quel che non fa.
+   (b) `.wizard-step.active { background: var(--lang-accent) }` per il solo
+       latino: metteva un fondo PIENO d'accento senza ridefinire il testo
+       sopra, che resta var(--primary) — e --primary È l'accento di lingua
+       (lo definisce shared/poetrify-tokens.css su body[data-lang]). Rosso su
+       rosso: contrasto misurato 1,00 in chiaro e in scuro, cioè numero ed
+       etichetta della tappa corrente INVISIBILI in latino. Il greco si
+       salvava solo perché la regola non lo toccava.
+       Lo stato attivo è ora definito una volta sola, per entrambi i rami,
+       accanto agli altri stati della tappa (cerca «.wizard-step.active»). */
 
 /* 7. Approach banner della scheda C */
 body[data-lang="latino"] .approach-banner {
@@ -7146,14 +7150,20 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   gap: 4px;
   flex-wrap: wrap;
 }
-.wizard-step.phase-lettura.active,
-.wizard-step.phase-lettura.completed { box-shadow: inset 0 -2px 0 #1800AC; }
-.wizard-step.phase-analisi.active,
-.wizard-step.phase-analisi.completed { box-shadow: inset 0 -2px 0 #2F855A; }
-.wizard-step.phase-traduzione.active,
-.wizard-step.phase-traduzione.completed { box-shadow: inset 0 -2px 0 #D69E2E; }
-.wizard-step.phase-versione.active,
-.wizard-step.phase-versione.completed { box-shadow: inset 0 -2px 0 #9C6B3C; }
+/* BARRETTA DI FASE · una regola sola, il colore viene dalla fase.
+   Prima c'erano quattro regole con i quattro colori riscritti a mano — una
+   SECONDA fonte di verità accanto a GUIDED_PHASES (cerca «lettura:    { letter»),
+   destinata a divergere al primo ritocco. Il colore arriva invece da
+   --phase-color, che il render inietta inline sul .wizard-phase-group e che le
+   tappe ereditano: c'è un unico punto di render dei .wizard-step ed è sempre
+   dentro un gruppo, quindi la variabile è sempre presente.
+   ATTENZIONE: box-shadow NON è additivo fra regole diverse — l'ultima regola
+   vincente sostituisce l'intera proprietà. Le quattro regole di prima, vincendo
+   sulla regola di stato attivo, ne cancellavano l'anello. Per questo la tappa
+   ATTIVA ridichiara la propria barretta per conto suo (in .wizard-step.active) e
+   qui resta il solo caso «completata ma non attiva». Chi aggiungesse una terza
+   regola con box-shadow su .wizard-step deve rimetterci dentro anche la barretta. */
+.wizard-step.completed { box-shadow: inset 0 -2px 0 var(--phase-color, transparent); }
 
 /* ─── FASE A · PRE-LETTURA · campi e griglia generi ─────────────────────── */
 .guided-lettura {
@@ -7540,15 +7550,32 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   position: relative;
 }
 .wizard-step:hover { background: var(--primary-pale); border-color: var(--primary-border); }
-.wizard-step.active {
-  background: var(--primary-tint);
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-pale);
-}
 .wizard-step.completed {
   background: rgba(47,133,90,0.06);
   border-color: rgba(47,133,90,0.4);
 }
+/* «SEI QUI» viene DOPO «l'hai fatta»: a parità di specificità vince l'ultima, e
+   fra i due stati quello che orienta è la posizione corrente, non il compiuto.
+   (Prima era il contrario: su una tappa attiva E completata spariva l'attivo.)
+   Lo stato non è affidato al solo colore — bordo ispessito + barretta di fase —
+   perché il colore da solo non è un segnale accessibile.
+   L'ANELLO che stava qui (0 0 0 3px var(--primary-pale)) non è stato
+   ripristinato di proposito: misurato contro la superficie che lo circonda dava
+   1,15 di contrasto, cioè non si è mai visto. Il bordo pieno d'accento sta fra
+   6,8 e 12,4 e soddisfa WCAG 1.4.11 per gli indicatori non testuali.
+   box-sizing è border-box: ispessire il bordo non muove il layout (verificato). */
+.wizard-step.active {
+  background: var(--lang-accent-pale);
+  border-color: var(--lang-accent);
+  border-width: 2px;
+  box-shadow: inset 0 -2px 0 var(--phase-color, transparent);
+}
+/* Il testo sul velo d'accento usa la variante SCURA dell'accento, che di notte
+   schiarisce: la stessa legge di --on-primary applicata al velo invece che al
+   fondo pieno. Misurato 9,72 / 14,08 / 7,26 / 5,56 nelle quattro combinazioni
+   lingua × tema (prima: 1,00 in latino, cioè invisibile). */
+.wizard-step.active .wizard-step-num,
+.wizard-step.active .wizard-step-label { color: var(--lang-accent-dark); }
 .wizard-step.completed::after {
   content: '✓';
   position: absolute;
@@ -7574,7 +7601,9 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
-.wizard-step.active .wizard-step-label { color: var(--primary); }
+/* (il colore di numero ed etichetta sulla tappa attiva è dichiarato sopra,
+   insieme allo stato: qui c'era un secondo `color: var(--primary)` che, avendo
+   specificità maggiore, avrebbe vinto sull'unico punto che tiene il contrasto) */
 
 .wizard-instructions {
   background: var(--primary-tint);
