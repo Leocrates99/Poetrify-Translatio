@@ -264,6 +264,19 @@ def classify_nominal(lemma, definition):
         return ('ma', base[:-2] + 'μ')
     if base.endswith('της') and len(base) > 4:
         return ('1m', base[:-2])
+    # Astratti deverbali col suffisso *-ti-/-si-, che in attico fanno SEMPRE
+    # gen. -εως (i-stem). Il suffisso e' lo stesso, realizzato secondo il suono
+    # che precede: -σις (φύσις, ἀνάβασις), -ξις dopo velare (πρᾶξις, τάξις,
+    # λέξις), -ψις dopo labiale (ὄψις, λῆψις).
+    # NON si estende a -ις generico ne' a -τις: la' convivono i-stem e temi in
+    # dentale (ἐλπίς/-ίδος, χάρις/-ιτος, ὄρνις/-ιθος, Θέτις/-ιδος, μῆτις/-ιος)
+    # e l'inferenza cieca genererebbe forme false in massa. Quei lemmi vanno
+    # aggiunti a mano in NOMINAL_EXTRA (πίστις, πόλις, δύναμις…).
+    # Esclusi i nomi propri (Ἶσις → Ἴσιδος) e i lemmi con trattino (artefatti LSJ).
+    if (base.endswith(('σις', 'ξις', 'ψις')) and len(base) > 3
+            and not lemma[:1].isupper()
+            and '-' not in lemma):
+        return ('is', base[:-2])
     if base.endswith('η') and len(base) > 2:
         return ('1h', base[:-1])
     if base.endswith('α') and len(base) > 2:
@@ -873,6 +886,11 @@ NOMINAL_EXTRA = {
  'ἔργον': '2n', 'ὅπλον': '2n', 'δῶρον': '2n', 'τέκνον': '2n', 'πλοῖον': '2n',
  'στρατόπεδον': '2n', 'χωρίον': '2n', 'σημεῖον': '2n', 'δένδρον': '2n',
  'ζῷον': '2n', 'ἱερόν': '2n', 'ἆθλον': '2n', 'μέτρον': '2n',
+ # i-stem attici (gen. -εως) SENZA il suffisso -σις/-ξις/-ψις: la regola
+ # automatica non li prende e vanno confermati a mano, uno per uno, perche'
+ # le uscite -ις/-τις ospitano anche temi in dentale.
+ 'πόλις': 'is', 'πίστις': 'is', 'δύναμις': 'is', 'μάντις': 'is',
+ 'ὄφις': 'is', 'φρόνησις': 'is', 'ὕβρις': 'is',
 }
 
 # ───────────────────────── MAIN ─────────────────────────
@@ -934,8 +952,44 @@ def purge_mi_present(base):
             json.dump(data, open(path, 'w', encoding='utf-8'), ensure_ascii=False)
     return purged
 
+# Parole d'ALTA FREQUENZA finite in archivio (import LSJ grezzo, senza testa
+# morfologica) e percio' mai flesse: il dizionario le trovava come voce ma
+# nessuna forma vi puntava (φύσει dava solo φυσάω, non φύσις). Le si recupera
+# nel nucleo UNA A UNA — elenco curato, niente promozione di massa: l'archivio
+# e' pieno di rarita' lessicografiche (glosse di Esichio, frammenti) che
+# allagherebbero un dizionario scolastico.
+PROMOTE = [
+ 'φύσις', 'δύναμις', 'πίστις', 'ὄψις', 'ὕβρις', 'ὄφις', 'ἕξις',
+ 'ποίησις', 'λέξις', 'φρόνησις', 'σκέψις',
+]
+
+def promote_from_archive(base):
+    """Copia i lemmi curati da data/greek/archive/<lettera>.json al dict attivo
+    dello shard. Idempotente: se il lemma c'e' gia', non tocca nulla."""
+    done = []
+    for lemma in PROMOTE:
+        letter = N(lemma)[:1]
+        core_p = os.path.join(base, f'{letter}.json')
+        arch_p = os.path.join(base, 'archive', f'{letter}.json')
+        if not (os.path.exists(core_p) and os.path.exists(arch_p)): continue
+        core = json.load(open(core_p, encoding='utf-8'))
+        if lemma in (core.get('dict') or {}): continue
+        arch = json.load(open(arch_p, encoding='utf-8'))
+        adict = arch.get('dict') if isinstance(arch, dict) and 'dict' in arch else arch
+        entry = (adict or {}).get(lemma)
+        if not isinstance(entry, dict): continue
+        e = dict(entry)
+        e.setdefault('pos', 'sostantivo')
+        core.setdefault('dict', {})[lemma] = e
+        core.setdefault('meta', {})['lemmas_count'] = len(core['dict'])
+        json.dump(core, open(core_p, 'w', encoding='utf-8'), ensure_ascii=False)
+        done.append(lemma)
+    if done: print('promossi dall archivio: ' + str(len(done)) + ' -> ' + ' '.join(done))
+    return done
+
 def main(write=True):
     base = 'data/greek'
+    if write: promote_from_archive(base)
     # nominali dal corpus
     gen_nom = {}
     parsed = skipped = 0
@@ -949,7 +1003,14 @@ def main(write=True):
             if not cl and lemma in NOMINAL_EXTRA:
                 lem_base = strip_acc(lemma)
                 k = NOMINAL_EXTRA[lemma]
-                cl = (k, lem_base[:-2] if k in ('2', '2n') else lem_base[:-1])
+                # quante lettere togliere per ottenere il TEMA, per classe:
+                # 2/2n (-ος/-ον), is (-ις), ma (-μα→μ), 1m (-ης) tolgono 2;
+                # 1h/1a/1am (-η/-α) tolgono 1. Prima era cablato a mano e una
+                # voce 'is' avrebbe prodotto un tema errato (φυσι- → φυσιεως).
+                _cut = {'2': 2, '2n': 2, 'is': 2, '1m': 2, 'ma': 2, 'es': 2}.get(k, 1)
+                _stem = lem_base[:-_cut]
+                if k == 'ma': _stem += 'μ'
+                cl = (k, _stem)
             if not cl: skipped += 1; continue
             parsed += 1
             for form, parsing in gen_nominal(lemma, cl[0], cl[1]).items():
@@ -989,7 +1050,15 @@ def main(write=True):
         for form, cands in forms.items():
             existing = fdict.get(form)
             if existing is None:
-                fdict[form] = [ {'lemma': l, 'parsing': p} for l, p in cands[:3] ]
+                # dedup per LEMMA anche al primo write: celle grammaticali diverse
+                # dello stesso lemma possono collassare sulla stessa forma
+                # (φάγε = aor. 3S e pres. 2S di φαγεῖν) e comparivano due volte.
+                # Il ramo di merge qui sotto deduplicava gia'; questo no.
+                _seen, _new = set(), []
+                for l, pp in cands[:3]:
+                    if l in _seen: continue
+                    _seen.add(l); _new.append({'lemma': l, 'parsing': pp})
+                fdict[form] = _new
                 added += len(fdict[form]); changed = True
             else:
                 have = { c['lemma'] for c in existing }
