@@ -189,5 +189,5 @@ memoria.
 | lingua | lemmi core | forme | form-entries | archivio | paradigmi | glosse it |
 |---|--:|--:|--:|--:|--:|--:|
 | latino | 17.443 | 599.504 | 627.447 | 487 | 9.996 | 5.260 |
-| greco | 25.086 | 80.999 | 81.934 | 110.225 | 4.561 | 10.367 |
+| greco | 25.097 | 90.499 | 91.510 | 110.225 | 4.561 | 10.367 |
 <!-- COUNTS:END -->

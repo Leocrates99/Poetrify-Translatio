@@ -1,0 +1,8136 @@
+{
+"lat:babylo": {
+"campi": [
+{
+"campo": "individuo orientale ricco; nome proprio",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a Babylonian, a foreigner",
+"the name of a slave (in Terence)",
+"a man of Oriental wealth and luxury, a nabob"
+],
+"it": [
+"Babilonese, straniero orientale",
+"nome di uno schiavo (in Terenzio)",
+"uomo di ricchezza e lusso orientali, nababbo"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"a Babylonian/Oriental",
+"nabob"
+],
+"it": [
+"orientale ricco",
+"nababbo"
+]
+},
+"applicazione": [
+"Attestato come nome proprio in Terenzio (Ad. 5, 7, 17)."
+],
+"divergenze": [
+"Gli interpreti di L&S divergono: alcuni vi vedono il nome di uno schiavo, altri l'appellativo di un ricco orientale (nababbo)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:baca": {
+"campi": [
+{
+"campo": "bacca, piccolo frutto tondeggiante",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a small round fruit, a berry"
+],
+"it": [
+"bacca, piccolo frutto tondo"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"the olive, the olive-berry"
+],
+"it": [
+"oliva, bacca d'olivo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "frutto d'albero (in genere)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"any fruit of a tree"
+],
+"it": [
+"frutto d'albero (in genere)"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "oggetto a forma di bacca",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"a pearl"
+],
+"it": [
+"perla"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"the dung of sheep or goats (in pellets)"
+],
+"it": [
+"sterco di pecore o capre (in pallottole)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"a link of a chain shaped like a berry"
+],
+"it": [
+"anello di catena a forma di bacca"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"berry",
+"olive",
+"pearl",
+"fruit"
+],
+"it": [
+"bacca",
+"oliva",
+"perla",
+"frutto"
+]
+},
+"applicazione": [
+"Spesso al plurale per le bacche o i frutti degli alberi; nei poeti baca assoluta vale 'oliva'.",
+"Sacra a Minerva (l'olivo); talora la bacca dell'olivo selvatico."
+],
+"divergenze": [
+"Whitaker registra anche 'grano/perla di corallo' (piece/bead of coral), sfumatura non esplicitata nella voce L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:baccaris": {
+"campi": [
+{
+"campo": "pianta dalla radice profumata",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a plant whose root yielded a fragrant oil",
+"an unidentified plant (perhaps cyclamen / sowbread)"
+],
+"it": [
+"pianta la cui radice dava un olio profumato",
+"pianta non identificata (forse ciclamino)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"baccaris (a fragrant-rooted plant)"
+],
+"it": [
+"baccaride (pianta dalla radice profumata)"
+]
+},
+"applicazione": [
+"Voce documentata solo dalla nota breve di Lewis (ls integrale assente); attestata in Virgilio."
+],
+"divergenze": [
+"L&S (voce breve) la descrive genericamente come 'pianta dalla radice profumata'; Whitaker propone identificazioni incerte (ciclamino/sowbread) e ipotizza più piante."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:baccha": {
+"campi": [
+{
+"campo": "Baccante, seguace di Bacco",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a Bacchante, a female attendant/worshipper of Bacchus"
+],
+"it": [
+"Baccante, seguace femminile di Bacco"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"a Bacchante",
+"female follower of Bacchus"
+],
+"it": [
+"Baccante",
+"seguace di Bacco"
+]
+},
+"applicazione": [
+"Spesso al plurale, Bacchae, 'le Baccanti'; talora assimilate alle Menadi (Μαινάς) o alle Tiadi (Θυϊάς).",
+"Le Baccanti di Tracia sono dette Matres Edonides."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bacchanal": {
+"campi": [
+{
+"campo": "luogo consacrato a Bacco",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a place devoted to Bacchus, where his festivals were celebrated",
+"a shrine/site of Bacchus"
+],
+"it": [
+"luogo consacrato a Bacco",
+"santuario dove si celebravano le feste di Bacco"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "Baccanali, feste orgiastiche di Bacco",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"(usu. plur. Bacchanalia) a feast of Bacchus, the orgies of Bacchus",
+"a Bacchanalian orgy"
+],
+"it": [
+"(spec. al plur. Bacchanalia) i Baccanali, le feste orgiastiche di Bacco",
+"orgia bacchica"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"shrine of Bacchus",
+"the Bacchanalia, orgies of Bacchus"
+],
+"it": [
+"santuario di Bacco",
+"i Baccanali"
+]
+},
+"applicazione": [
+"Al plurale (Bacchanalia) indica la festa, distinta dai Liberalia romani; al singolare più spesso il luogo.",
+"Locuzione poetica Bacchanalia vivere (Giovenale) = vivere nella dissolutezza."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bacchantes": {
+"campi": [
+{
+"campo": "Baccanti, sacerdotesse di Bacco",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"(participle of bacchor used as noun) Bacchantes, priestesses/female worshippers of Bacchus"
+],
+"it": [
+"(participio di bacchor sostantivato) Baccanti, sacerdotesse/seguaci di Bacco"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Bacchantes",
+"priestesses of Bacchus"
+],
+"it": [
+"Baccanti",
+"sacerdotesse di Bacco"
+]
+},
+"applicazione": [
+"Forma participiale di bacchor usata come sostantivo; locuzione Bacchantum ritu (Ovidio) = al modo delle Baccanti."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bacchatio": {
+"campi": [
+{
+"campo": "celebrazione delle orge di Bacco",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a celebrating of the orgies of Bacchus"
+],
+"it": [
+"celebrazione delle orge/riti di Bacco"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "baldoria, delirio orgiastico",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a revelling, a raving in the manner of the Bacchae"
+],
+"it": [
+"baldoria, delirio orgiastico alla maniera delle Baccanti"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"celebration of Bacchic rites",
+"revelling, orgy"
+],
+"it": [
+"celebrazione dei riti bacchici",
+"baldoria, orgia"
+]
+},
+"applicazione": [],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bacchus": {
+"campi": [
+{
+"campo": "Bacco, dio del vino",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"Bacchus, son of Jupiter and Semele, the god of wine (also of poetic inspiration)"
+],
+"it": [
+"Bacco, figlio di Giove e Semele, dio del vino (e dell'ispirazione poetica)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "vino (metonimia)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"(meton.) wine"
+],
+"it": [
+"(metonimia) vino"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "vite (metonimia)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"(meton.) the vine"
+],
+"it": [
+"(metonimia) la vite"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "grido / invocazione a Bacco (metonimia)",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"(meton.) the cry or invocation to Bacchus (Io Bacche!)"
+],
+"it": [
+"(metonimia) il grido o l'invocazione a Bacco (Io Bacche!)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Bacchus, god of wine",
+"wine",
+"the vine"
+],
+"it": [
+"Bacco, dio del vino",
+"vino",
+"vite"
+]
+},
+"applicazione": [
+"Metonimia frequentissima Bacchus = vino (multo Baccho, generoso Baccho)."
+],
+"divergenze": [
+"Whitaker registra anche 'kind of sea-fish (myxon)', senso non presente nella voce L&S qui riportata."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bacillum": {
+"campi": [
+{
+"campo": "bastoncello, bacchetta",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a small staff, a wand, a little walking-stick"
+],
+"it": [
+"bastoncello, bacchetta, piccolo bastone da passeggio"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "verga del littore",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"the wand or staff of the lictor"
+],
+"it": [
+"la verga o bastone del littore"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"small staff, wand",
+"lictor's staff"
+],
+"it": [
+"bastoncello, bacchetta",
+"verga del littore"
+]
+},
+"applicazione": [
+"Diminutivo di baculus."
+],
+"divergenze": [
+"Whitaker aggiunge 'bacillus' (uso scientifico moderno) e 'shaft/handle' (asta/manico di arma o attrezzo), sensi assenti in L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:baculum": {
+"campi": [
+{
+"campo": "bastone (da appoggio nel camminare)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a stick, staff, walking-stick (a support in walking)"
+],
+"it": [
+"bastone, bastone da passeggio (sostegno nel camminare)"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "insegna di autorità o di rito (scettro, lituo, verga del littore)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a sceptre"
+],
+"it": [
+"scettro"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"the augural staff, the lituus"
+],
+"it": [
+"il bastone augurale, il lituo"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"the lictor's rod/staff"
+],
+"it": [
+"la verga del littore"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "verga come strumento (di percossa o d'ira); pertica",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"a rod, as instrument of wrath or beating; a pole for knocking down"
+],
+"it": [
+"verga, come strumento di percossa o d'ira; pertica per abbacchiare"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "sostegno, appoggio (figurato, latino ecclesiastico)",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"(eccl., trop.) a support, a stay",
+"the pastoral staff, crozier"
+],
+"it": [
+"(eccl., fig.) sostegno, appoggio",
+"il pastorale, il bastone vescovile"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"stick, staff",
+"sceptre",
+"rod"
+],
+"it": [
+"bastone",
+"scettro",
+"verga"
+]
+},
+"applicazione": [
+"Distinto in origine da scipio (bastone d'ornamento) e fustis (bastone per percuotere), poi usato in tutti questi sensi.",
+"Locuzione baculum senectutis = sostegno della vecchiaia."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:baiae": {
+"campi": [
+{
+"campo": "Baie (cittadina della Campania)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"Baiae, a small town on the Campanian coast between Cumae and Puteoli",
+"fashionable Roman resort famed for its warm baths"
+],
+"it": [
+"Baie (cittadina costiera della Campania, tra Cuma e Pozzuoli)",
+"rinomata località termale e di villeggiatura dei Romani"
+]
+},
+"registro": "geografico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "stazione termale, luogo di villeggiatura (in genere)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"any watering-place, any resort"
+],
+"it": [
+"stazione termale, luogo di villeggiatura in genere"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Baiae (Campanian resort)",
+"watering-place"
+],
+"it": [
+"Baie",
+"stazione termale"
+]
+},
+"applicazione": [
+"Toponimo usato di norma al plurale (Baiae, -arum).",
+"Per metonimia (attestata in Cicerone) vale una qualsiasi localita di cure termali."
+],
+"divergenze": [
+"Whitaker registra anche le glosse «palm branch» e «the Palms», assenti in L&S per questa voce (verosimile confusione con un omonimo); L&S limita la voce alla localita campana e al suo traslato metonimico."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:baiulus": {
+"campi": [
+{
+"campo": "portatore di pesi, facchino",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"one who bears burdens for pay, a porter, carrier",
+"day-laborer"
+],
+"it": [
+"portatore di pesi (a pagamento), facchino",
+"operaio a giornata, bracciante"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "portatore funebre, becchino",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a bearer at a funeral, pall-bearer"
+],
+"it": [
+"portatore funebre, becchino"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "portalettere, messaggero",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"a letter-carrier, bearer of a message"
+],
+"it": [
+"portalettere, latore di messaggi"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"porter, carrier",
+"pall-bearer",
+"letter-carrier"
+],
+"it": [
+"facchino, portatore",
+"portatore funebre",
+"portalettere"
+]
+},
+"applicazione": [
+"I sensi di «portatore funebre» e «portalettere» sono propri del latino tardo."
+],
+"divergenze": [
+"Whitaker aggiunge la glossa «steward» (amministratore), che non trova riscontro nella voce di L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:balaena": {
+"campi": [
+{
+"campo": "balena",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a whale"
+],
+"it": [
+"balena"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"whale"
+],
+"it": [
+"balena"
+]
+},
+"applicazione": [
+"Attestata anche nella variante grafica balena (balena)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:balans": {
+"campi": [
+{
+"campo": "pecora (l'animale che bela)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a bleater, a sheep"
+],
+"it": [
+"il/la belante, la pecora"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"bleater, sheep"
+],
+"it": [
+"belante, pecora"
+]
+},
+"applicazione": [
+"Participio di balo sostantivato; usato quasi solo al plurale (balantes) e poeticamente in luogo di oves."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:balanus": {
+"campi": [
+{
+"campo": "ghianda",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"an acorn"
+],
+"it": [
+"ghianda"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "frutti di forma simile alla ghianda",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a kind of large chestnut"
+],
+"it": [
+"una specie di grossa castagna"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"the Phoenician and Cilician date"
+],
+"it": [
+"il dattero fenicio e cilicio"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"the ben- or behen-nut, yielding a balsam (myrobalanus)"
+],
+"it": [
+"la noce di ben, da cui si ricava un balsamo (mirobalano)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "oggetti a forma di ghianda",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"a suppository"
+],
+"it": [
+"supposta"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a shell-fish, a species of sea-mussel"
+],
+"it": [
+"un mollusco, specie di dattero/cozza di mare"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"acorn",
+"acorn-shaped fruit",
+"suppository",
+"shellfish"
+],
+"it": [
+"ghianda",
+"frutto a forma di ghianda",
+"supposta",
+"mollusco"
+]
+},
+"applicazione": [
+"Di norma femminile, raramente maschile.",
+"La glossa «balsamo» di Whitaker va intesa per metonimia: e la noce di ben da cui il balsamo si estrae."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:balatro": {
+"campi": [
+{
+"campo": "buffone, pagliaccio",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a jester, buffoon, one who makes sport",
+"harlequin"
+],
+"it": [
+"buffone, pagliaccio, giullare"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "chiacchierone, ciarlone",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a babbler, prattler"
+],
+"it": [
+"chiacchierone, ciarlone"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"buffoon, jester",
+"babbler"
+],
+"it": [
+"buffone",
+"chiacchierone"
+]
+},
+"applicazione": [
+"Sembra designare una categoria di attori comici (una sorta di arlecchino).",
+"In Varrone e usato scherzosamente come appellativo degli amici durante una disputa."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:balatus": {
+"campi": [
+{
+"campo": "belato",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the bleating of sheep (also of goats)"
+],
+"it": [
+"il belato (delle pecore, anche delle capre)"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"bleating"
+],
+"it": [
+"belato"
+]
+},
+"applicazione": [
+"Attestato anche al plurale (balatus) con senso proprio."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:ballista": {
+"campi": [
+{
+"campo": "balista (macchina da guerra)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a large military engine for hurling stones and missiles, the ballista"
+],
+"it": [
+"balista, grande macchina da guerra per lanciare pietre e proiettili a grande distanza"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "il proiettile lanciato",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"the weapon thrown, a missile"
+],
+"it": [
+"il proiettile lanciato, il dardo"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "colpo, minaccia (figurato)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"figuratively, a bolt/engine of misfortune"
+],
+"it": [
+"figuratamente, la macchina/il colpo della sventura"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"ballista, military engine",
+"missile"
+],
+"it": [
+"balista",
+"proiettile"
+]
+},
+"applicazione": [
+"In origine distinta dalla catapulta (che scagliava frecce), ma in seguito spesso confusa con essa."
+],
+"divergenze": [
+"Whitaker registra il solo senso della macchina; L&S documenta anche il proiettile scagliato (metonimia) e l'uso figurato in Plauto."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:balneator": {
+"campi": [
+{
+"campo": "custode dei bagni, bagnino",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"one who has the care of a bath, a bath-keeper, bath-attendant"
+],
+"it": [
+"custode dei bagni, gestore di uno stabilimento termale, bagnino"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"bath-keeper",
+"bath-attendant"
+],
+"it": [
+"custode dei bagni",
+"bagnino"
+]
+},
+"applicazione": [],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:balneolum": {
+"campi": [
+{
+"campo": "piccolo bagno, bagnetto",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a small bath, a little bathroom"
+],
+"it": [
+"piccolo bagno, bagnetto, stanzino da bagno"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"small bath"
+],
+"it": [
+"piccolo bagno"
+]
+},
+"applicazione": [
+"Diminutivo di balneum; attestato anche al plurale femminile balneolae."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:balsamum": {
+"campi": [
+{
+"campo": "resina balsamica, balsamo",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"balsam",
+"fragrant gum of the balsam-tree",
+"balm"
+],
+"it": [
+"balsamo",
+"resina aromatica del balsamo",
+"gomma profumata"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "albero del balsamo",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"the balsam-tree"
+],
+"it": [
+"albero del balsamo",
+"balsamo (pianta)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"balsam",
+"balm",
+"balsam-tree"
+],
+"it": [
+"balsamo",
+"balsamo (resina)",
+"albero del balsamo"
+]
+},
+"applicazione": [
+"Il plurale «balsama» compare spesso nei poeti per indicare il profumo o l'unguento (es. «balsama olet», Mart.)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:balteus": {
+"campi": [
+{
+"campo": "cintura, balteo (spec. portaspada)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"girdle",
+"belt",
+"sword-belt",
+"baldric",
+"shoulder-band"
+],
+"it": [
+"cintura",
+"balteo",
+"cinturone (della spada)",
+"tracolla portaspada"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a woman's girdle"
+],
+"it": [
+"cintura femminile",
+"cinto"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"belly-band of a horse",
+"girth"
+],
+"it": [
+"sottopancia (del cavallo)",
+"cinghia"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "bordo, cerchio, fascia (uso traslato)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"the belt of the heavens",
+"the zodiac"
+],
+"it": [
+"fascia celeste",
+"zodiaco"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"border",
+"rim",
+"edge",
+"circle",
+"band"
+],
+"it": [
+"bordo",
+"orlo",
+"cerchio",
+"fascia"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "colpo di cintura",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"a strapping",
+"a blow with a belt"
+],
+"it": [
+"colpo di cintura",
+"cinghiata"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"belt",
+"sword-belt",
+"baldric",
+"border/circle"
+],
+"it": [
+"cintura",
+"balteo",
+"tracolla portaspada",
+"bordo/cerchio"
+]
+},
+"applicazione": [
+"Esiste la forma neutra «balteum, -i», più antica e prosastica; il plurale «baltea» è preferito dai poeti per ragioni metriche.",
+"In senso traslato indica ciò che circonda a mo' di cintura: l'orlo di una focaccia, la corteccia del salice, la «praecinctio» dell'anfiteatro, le fasce dei capitelli ionici."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:barathrum": {
+"campi": [
+{
+"campo": "abisso, voragine, baratro",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"abyss",
+"chasm",
+"deep pit",
+"gulf"
+],
+"it": [
+"abisso",
+"voragine",
+"baratro",
+"fossa profonda"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"the Lower World",
+"the infernal regions",
+"the underworld"
+],
+"it": [
+"gli inferi",
+"il mondo sotterraneo",
+"l'oltretomba"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a pit made by art",
+"a deep dungeon"
+],
+"it": [
+"sotterraneo profondo",
+"segreta"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "gola vorace, ingordigia (uso figurato)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a maw (as insatiable)",
+"an insatiable gulf"
+],
+"it": [
+"ventre insaziabile",
+"gola vorace",
+"abisso di ingordigia"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"abyss",
+"chasm",
+"pit",
+"underworld"
+],
+"it": [
+"abisso",
+"voragine",
+"baratro",
+"inferi"
+]
+},
+"applicazione": [
+"In senso figurato «in barathrum dare» = gettare nell'abisso, cioè sperperare (Hor.); «barathrum macelli» = voragine del mercato, detto di un uomo ingordo."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:barba": {
+"campi": [
+{
+"campo": "barba (dell'uomo)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"beard",
+"whiskers"
+],
+"it": [
+"barba"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a heavy, long beard (in plural)"
+],
+"it": [
+"barba folta e lunga (al plurale)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "barba, pelo degli animali",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"beard (of animals, e.g. goats, wolves)"
+],
+"it": [
+"barba (di animali, p. es. capre, lupi)",
+"bargiglio"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "lanugine, barba delle piante",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"the wool/down (of plants)",
+"barba Jovis, a shrub"
+],
+"it": [
+"lanugine, peluria (delle piante)",
+"barba di Giove (arbusto Anthyllis)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"beard",
+"whiskers"
+],
+"it": [
+"barba"
+]
+},
+"applicazione": [
+"«barbam ponere / tondere» = radersi, tagliarsi la barba; «barbam submittere» = lasciarsi crescere la barba (in segno di lutto); «barbam vellere alicui» = strappare la barba a qualcuno (offesa)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:barbaria": {
+"campi": [
+{
+"campo": "terra straniera, paese barbaro",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a foreign country",
+"a barbarian land (opp. to Greece or Rome)"
+],
+"it": [
+"terra straniera",
+"paese barbaro",
+"regione straniera"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "barbarie, rozzezza (morale e culturale)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"rudeness",
+"rusticity",
+"stupidity"
+],
+"it": [
+"rozzezza",
+"grossolanità",
+"incultura"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"savageness",
+"barbarousness",
+"uncivilized manners"
+],
+"it": [
+"ferocia",
+"barbarie",
+"brutalità",
+"inciviltà"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"barbarism in language",
+"faulty speech"
+],
+"it": [
+"barbarismo (nel linguaggio)",
+"scorrettezza di lingua"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "i barbari (collettivo)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"the barbarians (collectively)"
+],
+"it": [
+"i barbari (nel loro insieme)",
+"le genti barbare"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"foreign land",
+"barbarism",
+"savageness"
+],
+"it": [
+"terra straniera",
+"barbarie",
+"rozzezza"
+]
+},
+"applicazione": [
+"Nella poesia e nella prosa postclassica ricorre la forma «barbaries, -ei» (acc. -em)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:barbarismus": {
+"campi": [
+{
+"campo": "barbarismo (scorrettezza linguistica)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a barbarism",
+"an impropriety of speech (esp. of pronunciation)"
+],
+"it": [
+"barbarismo",
+"scorrettezza di linguaggio (spec. di pronuncia)"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"barbarism",
+"impropriety of speech"
+],
+"it": [
+"barbarismo",
+"scorrettezza di lingua"
+]
+},
+"applicazione": [],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:barbula": {
+"campi": [
+{
+"campo": "barbetta, piccola barba",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a little beard (as worn by young Romans)"
+],
+"it": [
+"barbetta",
+"piccola barba (portata dai giovani Romani)"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "lanugine, barbetta delle piante",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a little beard/down (of plants)"
+],
+"it": [
+"peluria, barbetta (delle piante)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"little beard"
+],
+"it": [
+"barbetta",
+"piccola barba"
+]
+},
+"applicazione": [
+"Diminutivo di «barba»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:barditus": {
+"campi": [
+{
+"campo": "canto di guerra dei Germani",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the war-song of the Germans",
+"war-cry, battle-cry"
+],
+"it": [
+"canto di guerra dei Germani",
+"grido di battaglia"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "barrito (dell'elefante)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"trumpeting (of an elephant)"
+],
+"it": [
+"barrito (dell'elefante)"
+]
+},
+"registro": "raro",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"war-song of the Germans",
+"war-cry"
+],
+"it": [
+"canto di guerra (dei Germani)",
+"grido di battaglia"
+]
+},
+"applicazione": [],
+"divergenze": [
+"L&S registra solo il canto/grido di guerra dei Germani (Tac. Germ. 3); Whitaker aggiunge il senso «barrito dell'elefante», nato dalla confusione con «barritus» (da «barrus», elefante)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:baro": {
+"campi": [
+{
+"campo": "sciocco, zoticone, stolto",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a simpleton",
+"blockhead",
+"dunce",
+"lout"
+],
+"it": [
+"sciocco",
+"zoticone",
+"stolto",
+"balordo"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "barone, nobile (latino medievale)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"baron",
+"magnate",
+"tenant-in-chief",
+"official",
+"husband"
+],
+"it": [
+"barone",
+"magnate",
+"feudatario",
+"funzionario"
+]
+},
+"registro": "raro",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"simpleton",
+"blockhead",
+"dunce"
+],
+"it": [
+"sciocco",
+"zoticone",
+"stolto"
+]
+},
+"applicazione": [],
+"divergenze": [
+"Il senso classico attestato in L&S (quattro volte in Cicerone) è «sciocco, zoticone»; i significati «barone, magnate, feudatario» dati da Whitaker appartengono al latino medievale e sono estranei all'uso classico."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:barrus": {
+"campi": [
+{
+"campo": "elefante",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"elephant"
+],
+"it": [
+"elefante"
+]
+},
+"registro": "poetico",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"elephant"
+],
+"it": [
+"elefante"
+]
+},
+"applicazione": [],
+"divergenze": [
+"La voce «ls» registra solo il cognomen proprio «Barrus» (T. Betucius Barrus, Cic. Brut.); il nome comune «barrus» = elefante (parola di origine indiana, cfr. Hor.) è dato solo da Whitaker."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bascauda": {
+"campi": [
+{
+"campo": "recipiente da tavola in vimini",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a woven mat or dish-holder of basket-work (article of table furniture)",
+"basin (of British origin)"
+],
+"it": [
+"stuoia intrecciata o portavivande di vimini (suppellettile da tavola)",
+"catino, bacinella (di origine britannica)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"basket-work dish-holder",
+"basin"
+],
+"it": [
+"portavivande di vimini",
+"catino"
+]
+},
+"applicazione": [],
+"divergenze": [
+"L&S descrive con cautela una stuoia finemente intrecciata o un portavivande in vimini; Whitaker aggiunge la resa 'basin' (catino), sfumatura piu concreta di contenitore."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:basiatio": {
+"campi": [
+{
+"campo": "il baciare / bacio",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a kissing",
+"(concrete) a kiss"
+],
+"it": [
+"il baciare",
+"bacio"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"a kissing",
+"kiss"
+],
+"it": [
+"il baciare",
+"bacio"
+]
+},
+"applicazione": [
+"Nomen actionis astratto ('il baciare') usato per metonimia (astratto per concreto) nel senso di 'bacio'; parola rara, cfr. il piu comune osculum."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:basilica": {
+"campi": [
+{
+"campo": "basilica (edificio)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"basilica, oblong colonnaded hall used as law court and exchange"
+],
+"it": [
+"basilica (ampia sala oblunga porticata, sede di tribunale e di scambi commerciali)"
+]
+},
+"registro": "generale",
+"fonti": [
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"church (medieval)"
+],
+"it": [
+"chiesa, basilica cristiana (uso medievale)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "preparato medicinale",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"black plaster",
+"an eye salve"
+],
+"it": [
+"impiastro nero",
+"collirio, unguento per gli occhi"
+]
+},
+"registro": "medico",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"basilica, colonnaded hall",
+"church",
+"medicinal plaster/salve"
+],
+"it": [
+"basilica, sala porticata",
+"chiesa",
+"impiastro/collirio"
+]
+},
+"applicazione": [],
+"divergenze": [
+"In L&S il lemma e solo un rinvio (v. basilicus, II. B.), privo di voce autonoma: i sensi qui elencati derivano da Whitaker."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:basis": {
+"campi": [
+{
+"campo": "base, piedistallo, fondamento",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a pedestal, foot, base (of a statue, building)"
+],
+"it": [
+"piedistallo, base, basamento (di statua, edificio)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"foundation, support, basis (figurative)"
+],
+"it": [
+"fondamento, base, sostegno (senso figurato)"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "base geometrica",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"base (of a triangle)",
+"chord (of an arc)"
+],
+"it": [
+"base (di un triangolo)",
+"corda (di un arco)"
+]
+},
+"registro": "matematico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "base della colonna (architettura)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"the lowest part of the shaft of a column, base"
+],
+"it": [
+"base della colonna (parte inferiore del fusto)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "radice (grammatica)",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"the primitive word, the root"
+],
+"it": [
+"parola primitiva, radice"
+]
+},
+"registro": "grammaticale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "orma, traccia",
+"rank": 5,
+"sensi": [
+{
+"tr": {
+"en": [
+"a track, footprint (of cattle)"
+],
+"it": [
+"orma, traccia, impronta (del bestiame)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"pedestal, base",
+"foundation",
+"base (geometry)",
+"root (grammar)"
+],
+"it": [
+"piedistallo, base",
+"fondamento",
+"base (geometria)",
+"radice (grammatica)"
+]
+},
+"applicazione": [
+"Grecismo (= basis), con declinazione mista: acc. basim (talora basem, basidem), abl. basi (talora base).",
+"Proverbiale: 'aliquem cum basi sua metiri' (misurare un pilastro insieme al piedistallo), cioe dare una misura falsa, sopravvalutare."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:basium": {
+"campi": [
+{
+"campo": "bacio",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a kiss"
+],
+"it": [
+"bacio"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a kiss of the hand (blown kiss)"
+],
+"it": [
+"bacio della mano, bacio mandato con la mano"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"kiss",
+"kiss of the hand"
+],
+"it": [
+"bacio",
+"bacio della mano"
+]
+},
+"applicazione": [
+"Parola rara e per lo piu poetica (frequentissima in Catullo: 'da mi basia mille'), assente in Plauto e Terenzio; sinonimo affettivo di osculum/savium.",
+"Costrutti: 'basia jactare' (mandare baci con la mano), 'basium impingere alicui' (schioccare un bacio a qualcuno)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:batillum": {
+"campi": [
+{
+"campo": "paletta, badile",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a shovel, fire-shovel, coal-shovel, dirt- or dung-shovel"
+],
+"it": [
+"paletta, badile (per il fuoco, il carbone, lo sterco)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "braciere, scaldino, turibolo",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a fire-pan, chafing-dish, fumigating-pan, incense-pan"
+],
+"it": [
+"braciere, scaldino, padella per le braci, turibolo (per l'incenso)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"shovel",
+"fire-pan, chafing-dish"
+],
+"it": [
+"paletta, badile",
+"braciere, turibolo"
+]
+},
+"applicazione": [
+"Attestata anche nella grafia 'vatillum' (nei manoscritti e in alcune edizioni, es. Orazio); forma maschile 'batillus' in Marcello Empirico."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:beatum": {
+"campi": [
+{
+"campo": "i beati, i fortunati (sostantivato)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"happy/fortunate men, the fortunate (pl.)",
+"the rich"
+],
+"it": [
+"gli uomini felici, i fortunati (plurale)",
+"i ricchi"
+]
+},
+"registro": "generale",
+"fonti": [
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"the Blessed, the Saints"
+],
+"it": [
+"i Beati, i Santi"
+]
+},
+"registro": "religioso",
+"fonti": [
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "felicita, beatitudine",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"happiness, blessedness, good fortune, prosperous circumstances"
+],
+"it": [
+"felicita, beatitudine, buona sorte, condizione prospera"
+]
+},
+"registro": "astratto",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"the blessed/fortunate (pl.)",
+"happiness, blessedness"
+],
+"it": [
+"i beati, i fortunati",
+"felicita, beatitudine"
+]
+},
+"applicazione": [
+"Uso sostantivato del participio/aggettivo beatus: al plurale (beati) indica le persone felici, i ricchi o i Beati; al neutro singolare astratto (beatum) la felicita, la condizione beata."
+],
+"divergenze": [
+"In L&S il lemma e solo un rinvio (v. beo, P. a. A. 3. b.), privo di voce autonoma: i sensi qui elencati derivano da Whitaker."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bellans": {
+"campi": [
+{
+"campo": "combattente, guerriero",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"one waging war, a combatant, warrior, fighter"
+],
+"it": [
+"combattente, guerriero (chi fa la guerra, chi combatte)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"combatant",
+"warrior"
+],
+"it": [
+"combattente",
+"guerriero"
+]
+},
+"applicazione": [
+"Participio presente di bello (fare la guerra) usato come sostantivo, per lo piu al plurale (bellantes) = i combattenti."
+],
+"divergenze": [
+"L&S non offre voce piena ma solo il rimando (bellans, ntis, m., see bello); Whitaker non registra il lemma. Il senso e ricavato dal verbo bello."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bellator": {
+"campi": [
+{
+"campo": "guerriero, combattente",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a warrior, fighter (one able and valiant in combat)",
+"soldier"
+],
+"it": [
+"guerriero, combattente (capace e valente in battaglia)",
+"soldato"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"warrior",
+"fighter",
+"soldier"
+],
+"it": [
+"guerriero",
+"combattente",
+"soldato"
+]
+},
+"applicazione": [
+"Si distingue da miles: bellator indica il combattente in quanto capace e valente in armi, mentre miles designa il soldato di professione.",
+"Uso appositivo/attributivo (in funzione di aggettivo) = 'bellicoso, marziale, valoroso'; frequentissimo 'equus bellator' (cavallo focoso, da guerra), e detto anche di cose inanimate (campus, ensis).",
+"Talora scherzoso, riferito ai campioni del bere (Plauto).",
+"Forma antica: duellator."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bellatrix": {
+"campi": [
+{
+"campo": "guerriera",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a female warrior"
+],
+"it": [
+"guerriera, combattente (donna)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"female warrior"
+],
+"it": [
+"guerriera"
+]
+},
+"applicazione": [
+"Femminile di bellator; usato spesso in apposizione (in funzione di aggettivo) = 'bellicosa, guerriera, esperta d'armi' (Penthesilea, Minerva, Roma bellatrix), e riferito anche a cose inanimate (carinae, aquilae = insegne militari).",
+"Uso traslato: 'bellatrix iracundia' = ira bellicosa, battagliera."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bellicum": {
+"campi": [
+{
+"campo": "segnale di guerra",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"war-signal",
+"war-trumpet",
+"signal (on trumpet) for march/attack"
+],
+"it": [
+"segnale di guerra (con la tromba)",
+"squillo di tromba militare",
+"chiamata alle armi, segnale d'attacco"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "tono veemente (dello stile)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"(of style) a martial, impassioned tone"
+],
+"it": [
+"(dello stile) tono guerresco, veemente"
+]
+},
+"registro": "retorico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"war-signal",
+"war-trumpet"
+],
+"it": [
+"segnale di guerra",
+"squillo di tromba di guerra"
+]
+},
+"applicazione": [
+"Usato quasi solo con 'canere': bellicum canere = suonare il segnale di guerra, dare il segnale d'attacco, e per estensione 'dare inizio alle ostilità'.",
+"Sostantivo neutro dell'aggettivo bellicus (sottintende signum/classicum)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bellona": {
+"campi": [
+{
+"campo": "divinità della guerra",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"Bellona, the goddess of war (sister of Mars)"
+],
+"it": [
+"Bellona, dea della guerra (sorella di Marte)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "tempio di Bellona (luogo di adunanza)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"the temple of Bellona, meeting-place of the Senate for those not admitted into the city"
+],
+"it": [
+"il tempio di Bellona, luogo di adunanza del Senato per chi non poteva entrare in citta"
+]
+},
+"registro": "storico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Bellona",
+"goddess of war"
+],
+"it": [
+"Bellona",
+"dea della guerra"
+]
+},
+"applicazione": [
+"Nome proprio femminile; forma antica Duellona (da duellum), cfr. bellum.",
+"Per metonimia designa il suo tempio presso il Circo Massimo, dove il Senato riceveva ambasciatori e generali non ammessi in citta."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bellum": {
+"campi": [
+{
+"campo": "guerra",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"war",
+"warfare"
+],
+"it": [
+"guerra",
+"conflitto armato",
+"stato di guerra"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "battaglia, combattimento",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"battle",
+"combat",
+"fight"
+],
+"it": [
+"battaglia",
+"combattimento",
+"scontro"
+]
+},
+"registro": "militare",
+"fonti": [
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "forze militari",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"military force",
+"arms"
+],
+"it": [
+"forze militari",
+"armi"
+]
+},
+"registro": "concreto",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"war",
+"warfare",
+"battle"
+],
+"it": [
+"guerra",
+"conflitto",
+"battaglia"
+]
+},
+"applicazione": [
+"Costruzioni fondamentali: bellum gerere (cum + abl.) = fare/condurre la guerra (contro); bellum inferre alicui = muovere guerra a qcn.; bellum indicere = dichiarare guerra; bellum suscipere/parare = intraprendere/preparare la guerra.",
+"Il nemico si esprime con aggettivo (bellum Gallicum), con genitivo (bellum Helvetiorum), o con cum/adversus/contra + nome del popolo o del capo.",
+"Locuzione domi bellique (= domi militiaeque) = in pace e in guerra.",
+"Forma arcaica e poetica duellum (Ennio, Plauto, Orazio)."
+],
+"divergenze": [
+"L&S documenta soprattutto il senso di 'guerra' e le sue costruzioni; Whitaker esplicita gli usi estesi di 'battaglia/combattimento' e, per metonimia, 'forze militari, armi'."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:belua": {
+"campi": [
+{
+"campo": "bestia enorme o feroce, mostro",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a beast distinguished for size or ferocity",
+"monster",
+"wild animal (incl. sea creature)"
+],
+"it": [
+"bestia enorme o feroce",
+"belva",
+"mostro"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"esp. the elephant"
+],
+"it": [
+"spec. l'elefante"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "animale (in genere)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a beast, an animal (even a small or tame one)",
+"the lower animals, as distinguished from man"
+],
+"it": [
+"bestia, animale (anche piccolo o domestico)",
+"gli animali (in contrapposizione all'uomo)"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "bruto, bestia (ingiuria)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"beast, brute (as a term of reproach for a person)"
+],
+"it": [
+"bestia, bruto (ingiuria rivolta a persona)"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"(of abstract things) a monstrous thing (e.g. of greed, of power)"
+],
+"it": [
+"(di cose astratte) cosa mostruosa (es. dell'avarizia, del potere)"
+]
+},
+"registro": "figurato",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"beast",
+"wild animal",
+"monster",
+"brute"
+],
+"it": [
+"belva",
+"bestia",
+"mostro",
+"bruto"
+]
+},
+"applicazione": [
+"Per antonomasia (kat' exochen) indica spesso l'elefante.",
+"In senso figurato e ingiuria violenta rivolta a persone e si applica anche ad astratti (avaritia, belua fera = l'avidita, bestia feroce)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:beneficentia": {
+"campi": [
+{
+"campo": "beneficenza, benevolenza operosa",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"kindness",
+"beneficence",
+"honorable and kind treatment of others"
+],
+"it": [
+"beneficenza",
+"benevolenza (nel fare del bene)",
+"trattamento benevolo e onorevole verso gli altri"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"beneficence",
+"kindness"
+],
+"it": [
+"beneficenza",
+"benevolenza"
+]
+},
+"applicazione": [
+"Astratto di beneficus; Cicerone la equipara a benignitas e liberalitas (Off. 1,7,20).",
+"Opposto: maleficentia."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:beneficiarii": {
+"campi": [
+{
+"campo": "soldati beneficiari, esentati dai servizi comuni",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"soldiers exempt from common labor",
+"a body-guard"
+],
+"it": [
+"soldati esentati dai servizi/lavori comuni",
+"beneficiari (soldati promossi per favore)",
+"guardia del corpo"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"soldiers exempt from common labor",
+"body-guard"
+],
+"it": [
+"beneficiari (soldati)",
+"soldati esentati dai servizi comuni"
+]
+},
+"applicazione": [
+"Termine tecnico militare (da beneficium): soldati che godevano di un favore o promozione e per questo esentati dai compiti gravosi; attestato in Cesare.",
+"Usato al plurale."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:beneficium": {
+"campi": [
+{
+"campo": "beneficio, favore, servizio",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a benefaction",
+"kindness",
+"favor",
+"benefit",
+"service",
+"help"
+],
+"it": [
+"beneficio",
+"favore",
+"atto di gentilezza",
+"servizio reso",
+"aiuto"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "onorificenza, promozione (vita pubblica)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a distinction, support, favor, promotion (in public life)",
+"military promotion"
+],
+"it": [
+"onorificenza, favore, promozione (nella vita pubblica)",
+"promozione militare",
+"concessione, incarico"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "privilegio, diritto",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"a privilege, a right (post-Augustan legal use)"
+],
+"it": [
+"privilegio",
+"diritto concesso",
+"esenzione (es. beneficium liberorum)"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"kindness",
+"favor",
+"benefit",
+"service"
+],
+"it": [
+"beneficio",
+"favore",
+"servizio"
+]
+},
+"applicazione": [
+"Locuzione idiomatica beneficio + genitivo = per merito di, grazie a, per opera di (beneficio tuo = grazie a te; sortium beneficio = grazie al sorteggio).",
+"Costruzioni: beneficium dare/conferre/tribuere alicui = fare un favore a; beneficium accipere = ricevere un favore; pro maleficio beneficium reddere = rendere bene per male; immemor beneficii = ingrato.",
+"alicuius beneficii facere/habere = rendere qcs. dipendente dal proprio favore.",
+"beneficium liberorum = esenzione dall'ufficio di giudice concessa a chi ha un certo numero di figli."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:benevolentia": {
+"campi": [
+{
+"campo": "benevolenza, buona disposizione",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"good-will",
+"benevolence",
+"kindness",
+"favor",
+"friendship"
+],
+"it": [
+"benevolenza",
+"buona disposizione d'animo",
+"simpatia",
+"favore",
+"affetto"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "mitezza, indulgenza",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"mildness",
+"benignity",
+"indulgence (in the jurists)"
+],
+"it": [
+"mitezza",
+"clemenza",
+"indulgenza"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "gentilezze, servigi amichevoli (plurale)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"kind conduct, friendly services",
+"endearments"
+],
+"it": [
+"gentilezze",
+"cortesie",
+"attenzioni affettuose"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"benevolence",
+"good-will",
+"kindness"
+],
+"it": [
+"benevolenza",
+"buona disposizione",
+"favore"
+]
+},
+"applicazione": [
+"Distinta da amor (Cic. Lael.): la benevolenza e disposizione ragionata, non passione.",
+"Costruzioni: benevolentiam capere/movere/conciliare; benevolentia erga aliquem = benevolenza verso qcn.",
+"Il plurale benevolentiae (post-classico) vale 'gentilezze, servigi amichevoli'."
+],
+"divergenze": [
+"Whitaker registra anche 'endearments', che in L&S corrisponde al senso tardo del plurale (kind conduct, friendly services)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:benignitas": {
+"campi": [
+{
+"campo": "bonta d'animo, cortesia, affabilita",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"kindness",
+"friendliness",
+"courtesy",
+"benevolence (of feeling or conduct)"
+],
+"it": [
+"bonta d'animo",
+"cortesia",
+"affabilita",
+"benevolenza"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "liberalita, generosita (negli atti)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"kindness, liberality, bounty, favor (of deeds)"
+],
+"it": [
+"liberalita",
+"generosita",
+"munificenza",
+"larghezza"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "clemenza, indulgenza",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"lenity",
+"mercy"
+],
+"it": [
+"clemenza",
+"indulgenza",
+"mitezza (delle leggi)"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"kindness",
+"courtesy",
+"liberality"
+],
+"it": [
+"bonta",
+"cortesia",
+"liberalita"
+]
+},
+"applicazione": [
+"Astratto di benignus; Cicerone la accosta a liberalitas e comitas.",
+"benignitas naturae = la generosita/prodigalita della natura.",
+"Il plurale benignitates vale atti di cortesia o di generosita."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bes": {
+"campi": [
+{
+"campo": "i due terzi dell'unita (dell'asse)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"two thirds of a unit (the as)",
+"eight unciae (twelfths)",
+"two thirds of any whole"
+],
+"it": [
+"i due terzi dell'unita (dell'asse)",
+"otto once (dodicesimi), pari a 2/3",
+"i due terzi di un tutto qualsiasi"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "il numero otto (metonimia)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"(by metonymy) eight"
+],
+"it": [
+"(per metonimia) otto"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "quattro (in matematica, base sei)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"(in mathematics, where the base is six) four"
+],
+"it": [
+"(in matematica, con base sei) quattro"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"two thirds (of the as)",
+"eight unciae"
+],
+"it": [
+"due terzi (dell'asse)",
+"otto once"
+]
+},
+"applicazione": [
+"Termine dei pesi, delle misure e del computo: bes = 2/3 di qualunque intero (quota di societa, somma di denaro, appezzamento, iugero, misura di capacita, eredita).",
+"Di peso vale 8 once (2/3 di libbra); come tasso d'interesse, bessibus = all'8% annuo.",
+"bes alter = 1 e 2/3.",
+"In matematica, quando l'unita di base e sei, bes = 4."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bestia": {
+"campi": [
+{
+"campo": "animale, bestia (essere privo di ragione)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"beast",
+"animal",
+"creature (any living thing except man)"
+],
+"it": [
+"bestia",
+"animale",
+"creatura (ogni vivente tranne l'uomo)"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"beast (as a term of reproach)",
+"brute"
+],
+"it": [
+"bestia (come ingiuria)",
+"bruto"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "belva da arena (per gli spettacoli)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"wild beast (destined to fight gladiators or criminals in the arena)",
+"beast of prey"
+],
+"it": [
+"belva (destinata a combattere gladiatori o condannati nell'arena)",
+"fiera"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "costellazione (il Lupo)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"the Wolf (a constellation)"
+],
+"it": [
+"il Lupo (costellazione)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"beast",
+"animal",
+"creature",
+"wild beast"
+],
+"it": [
+"bestia",
+"animale",
+"creatura",
+"belva"
+]
+},
+"applicazione": [
+"muta bestia = animale privo di parola/ragione",
+"spesso in coppia con fera per indicare l'animale selvatico",
+"locuzioni penali: ad bestias mittere/dare/condemnare aliquem = gettare/condannare qualcuno alle belve (pena capitale nell'anfiteatro)"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bestiarius": {
+"campi": [
+{
+"campo": "bestiario (combattente con le belve)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"one who fights with wild beasts in the public spectacles",
+"beast-fighter"
+],
+"it": [
+"bestiario",
+"gladiatore che combatte con le belve negli spettacoli pubblici"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"beast-fighter",
+"one who fights wild beasts"
+],
+"it": [
+"bestiario",
+"combattente con le belve"
+]
+},
+"applicazione": [
+"distinzione: i bestiari mercenari combattevano armati ed erano premiati se vittoriosi, i condannati venivano esposti disarmati (talora legati)",
+"ludus bestiariorum = spettacolo/scuola dei bestiari",
+"come aggettivo (bestiarius, a, um) vale 'relativo alle belve', p. es. ludus bestiarius"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bestiola": {
+"campi": [
+{
+"campo": "animaletto (diminutivo di bestia)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a small animal",
+"a little beast",
+"little creature",
+"insect"
+],
+"it": [
+"animaletto",
+"bestiola",
+"piccola creatura",
+"insetto"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"small animal",
+"little creature",
+"insect"
+],
+"it": [
+"animaletto",
+"bestiola",
+"piccola creatura"
+]
+},
+"applicazione": [
+"diminutivo di bestia: sottolinea la piccolezza dell'animale"
+],
+"divergenze": [
+"L&S definisce genericamente 'piccolo animale'; Whitaker precisa anche la sfumatura 'insetto', non esplicita in L&S"
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:beta": {
+"campi": [
+{
+"campo": "bietola (ortaggio)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a vegetable, the beet (Beta vulgaris)",
+"beetroot"
+],
+"it": [
+"bietola",
+"barbabietola"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "beta (lettera greca) / il secondo",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"beta (second letter of the Greek alphabet)",
+"the second of anything, the second item"
+],
+"it": [
+"beta (seconda lettera dell'alfabeto greco)",
+"il secondo (di una serie)"
+]
+},
+"registro": "raro",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"beet",
+"beetroot",
+"beta (Greek letter)"
+],
+"it": [
+"bietola",
+"barbabietola",
+"beta (lettera greca)"
+]
+},
+"applicazione": [],
+"divergenze": [
+"L&S registra solo l'ortaggio (la bietola); Whitaker aggiunge, di diversa etimologia (dal gr. βῆτα), il senso di 'beta', seconda lettera dell'alfabeto greco, e per estensione 'il secondo di qualcosa' — sensi assenti dalla voce di L&S"
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bibliotheca": {
+"campi": [
+{
+"campo": "biblioteca",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a library-room, the building where books are kept"
+],
+"it": [
+"biblioteca (il locale, l'edificio in cui si conservano i libri)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a library, a collection of books"
+],
+"it": [
+"biblioteca (la raccolta di libri)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"library (building)",
+"library (collection of books)"
+],
+"it": [
+"biblioteca (edificio)",
+"biblioteca (raccolta di libri)"
+]
+},
+"applicazione": [
+"grecismo (= βιβλιοθήκη), attestato anche nella forma bibliothece",
+"l'addetto ai libri era detto a bibliotheca o bibliothecarius (bibliotecario)"
+],
+"divergenze": [
+"Whitaker aggiunge, tra i valori del termine, la persona addetta (il bibliotecario); in L&S questa è resa piuttosto come titolo tecnico (a bibliotheca / bibliothecarius) che come senso pieno di bibliotheca"
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bicorniger": {
+"campi": [
+{
+"campo": "Bicornígero (epiteto di Bacco)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"two-horned, the two-horned one (an epithet of Bacchus)"
+],
+"it": [
+"il Bicornuto, il Bicornígero (epiteto di Bacco/Dioniso)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"two-horned (epithet of Bacchus)"
+],
+"it": [
+"il Bicornuto (epiteto di Bacco)"
+]
+},
+"applicazione": [
+"usato come appellativo divino di Bacco, con riferimento alle corna del dio"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bidental": {
+"campi": [
+{
+"campo": "luogo colpito dal fulmine (consacrato)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a place struck by lightning, consecrated by the haruspices and enclosed (where treading was forbidden)"
+],
+"it": [
+"bidental, luogo colpito dal fulmine, consacrato dagli aruspici e recintato (in cui era vietato mettere piede)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "sacrificio espiatorio del luogo del fulmine",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"the sacrifice offered there (to propitiate the lightning)"
+],
+"it": [
+"il sacrificio (la bidente) ivi offerto per propiziare il fulmine"
+]
+},
+"registro": "religioso",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"place struck by lightning",
+"consecrated lightning-site"
+],
+"it": [
+"luogo colpito dal fulmine",
+"bidental"
+]
+},
+"applicazione": [
+"termine del linguaggio religioso; il nome deriva dalla bidens (vittima di due anni) offerta in espiazione",
+"il sacerdote del bidental era detto bidentalis"
+],
+"divergenze": [
+"L&S definisce il bidental come il luogo colpito e consacrato; Whitaker registra come secondo senso anche il sacrificio ivi offerto"
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:biduum": {
+"campi": [
+{
+"campo": "spazio di due giorni",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a period of two days, two days"
+],
+"it": [
+"biduo, spazio di due giorni, due giorni"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"a period of two days",
+"two days"
+],
+"it": [
+"biduo",
+"spazio di due giorni"
+]
+},
+"applicazione": [
+"spesso all'accusativo di durata (biduum = per due giorni) o all'ablativo di tempo (biduo = nel giro di due giorni)",
+"biduum supererat = restavano due giorni; eximere biduum ex mense = togliere due giorni dal mese"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:biennium": {
+"campi": [
+{
+"campo": "spazio di due anni",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a period or space of two years, two years"
+],
+"it": [
+"biennio, spazio di due anni, due anni"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"a period of two years",
+"two years"
+],
+"it": [
+"biennio",
+"spazio di due anni"
+]
+},
+"applicazione": [
+"all'ablativo con valore temporale: biennio post = due anni dopo; biennio habita = tenuti a distanza di due anni",
+"intra biennium / intra tempus biennii = entro un biennio; ultra biennium = oltre due anni"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bilibra": {
+"campi": [
+{
+"campo": "due libbre (peso)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"two pounds (a weight of two Roman pounds)"
+],
+"it": [
+"due libbre",
+"il peso di due libbre (romane)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"two pounds"
+],
+"it": [
+"due libbre"
+]
+},
+"applicazione": [
+"bilibrae farris = due libbre di farro (Liv. 4, 15, 6)",
+"due libbre romane equivalgono a ca. 654 g (circa una libbra e mezza statunitense)"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bilis": {
+"campi": [
+{
+"campo": "bile (umore fisiologico)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"bile",
+"gall",
+"the bilious fluid"
+],
+"it": [
+"bile",
+"fiele"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"overflowing of bile",
+"jaundice"
+],
+"it": [
+"itterizia",
+"trabocco della bile"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "ira, collera",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"anger",
+"wrath",
+"choler",
+"ire",
+"displeasure",
+"indignation"
+],
+"it": [
+"collera",
+"ira",
+"stizza",
+"indignazione",
+"sdegno"
+]
+},
+"registro": "figurato",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "malinconia, follia (bile nera)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"black bile",
+"melancholy",
+"sadness",
+"dejection"
+],
+"it": [
+"bile nera",
+"malinconia",
+"tristezza",
+"abbattimento"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"rage",
+"fury",
+"madness",
+"folly"
+],
+"it": [
+"furore",
+"furia",
+"pazzia",
+"follia"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"bile",
+"anger",
+"melancholy"
+],
+"it": [
+"bile",
+"collera",
+"malinconia"
+]
+},
+"applicazione": [
+"bilem alicui movere / commovere = suscitare l'ira di qualcuno",
+"atra (nigra) bilis = bile nera, greco μελαγχολία, la malinconia",
+"bilis suffusa = l'itterizia; bile suffusus = itterico",
+"il plurale biles indica i diversi tipi di bile (gialla e nera)"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bimaritus": {
+"campi": [
+{
+"campo": "marito di due mogli",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"husband of two wives",
+"bigamist"
+],
+"it": [
+"marito di due mogli",
+"bigamo"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"bigamist",
+"husband of two wives"
+],
+"it": [
+"bigamo",
+"marito di due mogli"
+]
+},
+"applicazione": [
+"Termine coniato da Laterense, accusatore di Plancio (Cic. Planc.); attestazione rarissima"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:binoctium": {
+"campi": [
+{
+"campo": "spazio di due notti",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a period of two nights",
+"space of two nights",
+"two nights"
+],
+"it": [
+"periodo di due notti",
+"spazio di due notti"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"period of two nights"
+],
+"it": [
+"periodo di due notti"
+]
+},
+"applicazione": [
+"Termine post-augusteo e rarissimo (Tac. Ann.; Amm.); cfr. biduum et binoctium"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bitumen": {
+"campi": [
+{
+"campo": "bitume, pece minerale",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"bitumen",
+"mineral pitch",
+"asphalt"
+],
+"it": [
+"bitume",
+"pece minerale",
+"asfalto"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"bitumen",
+"pitch",
+"asphalt"
+],
+"it": [
+"bitume",
+"pece minerale",
+"asfalto"
+]
+},
+"applicazione": [
+"Specie di pece minerale (greco ἄσφαλτος) diffusa in Palestina e Babilonia; impiegata anche per usi magici o religiosi (Verg., Hor.)"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:blandiens": {
+"campi": [
+{
+"campo": "adulatore",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"flatterer",
+"sweet talker"
+],
+"it": [
+"adulatore",
+"lusingatore"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"flatterer",
+"sweet talker"
+],
+"it": [
+"adulatore",
+"lusingatore"
+]
+},
+"applicazione": [
+"Participio presente di blandior usato come sostantivo (Tac.)"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:blandiloquentia": {
+"campi": [
+{
+"campo": "parlare lusinghiero",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"coaxing language",
+"softness of expression",
+"persuasive speech",
+"smooth talking"
+],
+"it": [
+"linguaggio lusinghiero",
+"eloquio suadente",
+"parlare adulatorio",
+"dolcezza di parola"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"coaxing language",
+"smooth talking"
+],
+"it": [
+"linguaggio lusinghiero",
+"eloquio suadente"
+]
+},
+"applicazione": [
+"Parola rara, di conio arcaico: attestazione enniana (ap. Cic. N. D.)"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:blandimentum": {
+"campi": [
+{
+"campo": "lusinga, blandizia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"flattering words",
+"blandishment",
+"complimentary speech",
+"flattery",
+"cajolery"
+],
+"it": [
+"lusinga",
+"blandizia",
+"adulazione",
+"moina"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"favors",
+"concessions (to win over)"
+],
+"it": [
+"favori",
+"concessioni (per accattivarsi)"
+]
+},
+"registro": "generale",
+"fonti": [
+"Whitaker",
+"L&S"
+]
+}
+]
+},
+{
+"campo": "attrattiva, diletto",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"allurement",
+"charm",
+"delight",
+"pleasure"
+],
+"it": [
+"attrattiva",
+"incanto",
+"diletto",
+"piacere"
+]
+},
+"registro": "figurato",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"seasoning",
+"condiment (that pleases the palate)"
+],
+"it": [
+"condimento",
+"insaporitore"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "cura sollecita, rimedio",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"healing application",
+"remedy",
+"cure"
+],
+"it": [
+"rimedio",
+"applicazione curativa"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"careful culture",
+"tender cultivation"
+],
+"it": [
+"coltura sollecita",
+"cure premurose (alle piante)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"blandishment",
+"flattery",
+"allurement",
+"charm"
+],
+"it": [
+"lusinga",
+"blandizia",
+"attrattiva",
+"diletto"
+]
+},
+"applicazione": [
+"Più frequente al plurale (blandimenta) e assai usato in Tacito",
+"blandimenta vitae = le cose che rendono piacevole la vita",
+"Riferito ai condimenti e alle spezie del cibo (Petr., Tac. Germ.)"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:blanditia": {
+"campi": [
+{
+"campo": "lusinga, carezza",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"flattery",
+"caress",
+"caressing",
+"compliment",
+"blandishment"
+],
+"it": [
+"lusinga",
+"carezza",
+"moina",
+"complimento"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"allurements",
+"courtship",
+"amorous blandishments"
+],
+"it": [
+"moine amorose",
+"corteggiamento",
+"lusinghe (spec. al plurale)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "attrattiva, incanto",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"pleasure",
+"delight",
+"enticement",
+"charm",
+"allurement"
+],
+"it": [
+"attrattiva",
+"incanto",
+"diletto",
+"fascino"
+]
+},
+"registro": "figurato",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"flattery",
+"caress",
+"charm",
+"enticement"
+],
+"it": [
+"lusinga",
+"carezza",
+"attrattiva",
+"incanto"
+]
+},
+"applicazione": [
+"Più frequente al plurale (blanditiae) per moine e lusinghe amorose",
+"Di norma con valore positivo, in opposizione ad adulatio e assentatio"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:blatta": {
+"campi": [
+{
+"campo": "insetto lucifugo (blatta, tarma)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"cockroach",
+"moth",
+"chafer",
+"book-worm",
+"insect that shuns the light"
+],
+"it": [
+"blatta",
+"scarafaggio",
+"tarma",
+"insetto lucifugo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"cockroach",
+"moth",
+"insect"
+],
+"it": [
+"blatta",
+"scarafaggio",
+"tarma"
+]
+},
+"applicazione": [
+"Nome applicato a vari insetti che fuggono la luce (lucifuga)"
+],
+"divergenze": [
+"Whitaker aggiunge il senso «blood clot» (grumo di sangue), assente dalla voce L&S qui riportata: verosimilmente un omonimo (blatta = porpora / sangue rappreso)"
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:boletus": {
+"campi": [
+{
+"campo": "fungo pregiato",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the best kind of mushroom",
+"mushroom",
+"boletus"
+],
+"it": [
+"fungo (della specie migliore)",
+"porcino",
+"boleto"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"mushroom",
+"boletus"
+],
+"it": [
+"fungo pregiato",
+"boleto"
+]
+},
+"applicazione": [
+"Fungo molto apprezzato dai Romani (dal greco βωλίτης); secondo la tradizione l'imperatore Claudio ne fu avvelenato"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bolus": {
+"campi": [
+{
+"campo": "lancio, getto (di dadi, di rete)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a throw or cast",
+"throw of dice"
+],
+"it": [
+"lancio",
+"getto",
+"tiro di dadi"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a cast of the net",
+"draught of fishes",
+"haul",
+"catch"
+],
+"it": [
+"gettata della rete",
+"retata",
+"pescata",
+"cattura"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "guadagno, colpo di fortuna",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"gain",
+"profit",
+"advantage",
+"winning",
+"piece of fortune"
+],
+"it": [
+"guadagno",
+"profitto",
+"vantaggio",
+"colpo di fortuna"
+]
+},
+"registro": "figurato",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"hard piece of luck"
+],
+"it": [
+"brutto colpo di sorte"
+]
+},
+"registro": "raro",
+"fonti": [
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "boccone prelibato",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"a choice bit",
+"nice morsel"
+],
+"it": [
+"boccone prelibato",
+"leccornia"
+]
+},
+"registro": "figurato",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"throw (of dice)",
+"haul, catch",
+"gain, windfall",
+"choice morsel"
+],
+"it": [
+"tiro (di dadi)",
+"retata",
+"guadagno, colpo di fortuna",
+"boccone prelibato"
+]
+},
+"applicazione": [
+"Locuz. «aliquem tangere bolo» = raggirare qcn. per trarne guadagno, spillare denaro con l'inganno (Plaut.)."
+],
+"divergenze": [
+"Whitaker aggiunge «precious stone» (pietra preziosa), senso assente da L&S: deriva dalla confusione con il gr. βῶλος «zolla, frammento» (cfr. la nota di Donato: βόλος con o = getto della rete, βῶλος con ω = zolla di terra).",
+"Whitaker legge «hard piece of luck» (brutto colpo di sorte), mentre L&S intende in genere «piece of fortune» in senso favorevole."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bombus": {
+"campi": [
+{
+"campo": "suono cupo, rimbombo, ronzio",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a hollow, deep sound",
+"booming",
+"rumble"
+],
+"it": [
+"suono cupo",
+"rimbombo",
+"brontolio"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"humming",
+"buzzing (esp. of bees)"
+],
+"it": [
+"ronzio (spec. delle api)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"deep booming sound, rumble",
+"buzzing, humming"
+],
+"it": [
+"suono cupo, rimbombo",
+"ronzio"
+]
+},
+"applicazione": [
+"Riferito a suoni gravi e risonanti: il rombo di trombe e corni, il ronzio delle api, il battito ritmato delle mani."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bombyx": {
+"campi": [
+{
+"campo": "baco da seta",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the silk-worm",
+"silk-moth"
+],
+"it": [
+"baco da seta",
+"bombice"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "seta, veste di seta",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"silk",
+"a silken garment"
+],
+"it": [
+"seta",
+"veste di seta"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "fibra fine",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"any fine fibre",
+"cotton"
+],
+"it": [
+"fibra sottile",
+"cotone"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"silkworm",
+"silk, silk garment",
+"fine fibre (cotton)"
+],
+"it": [
+"baco da seta",
+"seta, veste di seta",
+"fibra fine (cotone)"
+]
+},
+"applicazione": [
+"Il senso metonimico «seta / veste di seta» presuppone un materiale pregiato (spec. Assyria o Arabius bombyx)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bonitas": {
+"campi": [
+{
+"campo": "buona qualità, eccellenza (di cose)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"good quality",
+"goodness",
+"excellence"
+],
+"it": [
+"buona qualità",
+"pregio",
+"eccellenza"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "onestà, integrità morale, virtù",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"goodness",
+"virtue",
+"integrity",
+"honesty",
+"blamelessness"
+],
+"it": [
+"onestà",
+"integrità",
+"virtù",
+"rettitudine"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "bontà d'animo, benevolenza, gentilezza",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"kindness",
+"benevolence",
+"benignity",
+"affability"
+],
+"it": [
+"bontà d'animo",
+"benevolenza",
+"gentilezza",
+"affabilità"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"parental love",
+"tenderness"
+],
+"it": [
+"amore paterno",
+"tenerezza"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"good quality, excellence",
+"integrity, moral goodness",
+"kindness, benevolence"
+],
+"it": [
+"buona qualità",
+"onestà, integrità morale",
+"bontà, benevolenza"
+]
+},
+"applicazione": [
+"Con il genitivo della cosa di cui si predica il pregio: «bonitas agrorum» la fertilità dei campi, «bonitas vocis» la bellezza della voce.",
+"In riferimento al carattere, ricorre spesso in coppia con altre virtù (fides, iustitia, humanitas)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:boreas": {
+"campi": [
+{
+"campo": "vento del nord, borea",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the north wind"
+],
+"it": [
+"vento del nord",
+"borea",
+"aquilone"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "il nord, settentrione",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"the north"
+],
+"it": [
+"il nord",
+"il settentrione"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "Borea (il dio personificato)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"Boreas, the personified north wind (son of Strymon, father of Calais and Zetes)"
+],
+"it": [
+"Borea (il dio del vento del nord)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"north wind",
+"the north",
+"Boreas (god)"
+],
+"it": [
+"vento del nord, borea",
+"il settentrione",
+"Borea (dio)"
+]
+},
+"applicazione": [
+"Equivalente latino puro: «aquilo». Ha accusativo greco «Borean» accanto al latino «Boream»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bos": {
+"campi": [
+{
+"campo": "bovino (bue, toro, vacca)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"ox",
+"bull",
+"cow"
+],
+"it": [
+"bue",
+"toro",
+"vacca"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"cattle",
+"oxen (pl.)"
+],
+"it": [
+"bestiame",
+"buoi (pl.)",
+"armento"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "pesce di mare (specie di rombo)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a kind of sea-fish of the turbot genus",
+"ox-ray"
+],
+"it": [
+"pesce di mare affine al rombo"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"ox, bull, cow",
+"cattle",
+"sea-fish (turbot-like)"
+],
+"it": [
+"bue, toro, vacca",
+"bestiame",
+"pesce di mare"
+]
+},
+"applicazione": [
+"Genere comune: di norma masch. in prosa; per la vacca si specifica «femina bos».",
+"Locuz. «bos Luca(s)» = l'elefante.",
+"Prov. «bovi clitellas imponere» (mettere il basto a un bue) = affidare a qcn. un compito per cui non è tagliato."
+],
+"divergenze": [
+"Whitaker identifica il pesce come «ox-ray» (una razza), L&S come pesce affine al rombo (turbot): entrambi indicano un pesce marino, con identificazione lievemente diversa."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bosporus": {
+"campi": [
+{
+"campo": "il Bosforo (stretto di mare)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the Bosporus (name of several straits, esp. the Thracian, near Constantinople, and the Cimmerian)"
+],
+"it": [
+"il Bosforo (nome di più stretti, spec. il Tracio, presso Costantinopoli, e il Cimmerio)"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"the Bosporus (strait)"
+],
+"it": [
+"il Bosforo (stretto)"
+]
+},
+"applicazione": [
+"Nome proprio geografico; il gr. Βόσπορος vale «guado della giovenca» (dal passaggio di Io mutata in giovenca). Da esso i derivati Bosporius/Bosporanus (relativo al Bosforo; abitante del Bosforo)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:braca": {
+"campi": [
+{
+"campo": "brache, calzoni",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"trousers",
+"breeches",
+"pants"
+],
+"it": [
+"brache",
+"calzoni",
+"pantaloni"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "varietà di grano bianco (gallico)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a particularly white grain (Gallic name)"
+],
+"it": [
+"nome gallico di una varietà di grano bianco"
+]
+},
+"registro": "raro",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"trousers, breeches (usu. pl.)"
+],
+"it": [
+"brache, calzoni (di norma pl.)"
+]
+},
+"applicazione": [
+"Usato per lo più al plurale «bracae, -arum»; indumento tipico dei Galli e di altri popoli settentrionali. La forma singolare «braca» è molto rara."
+],
+"divergenze": [
+"L&S (voce breve) registra solo «calzoni, brache»; Whitaker aggiunge due sensi assenti da L&S: il nome gallico di un grano bianco e un uso riferito a «sandala»."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bracchiolum": {
+"campi": [
+{
+"campo": "piccolo braccio, braccino delicato",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a small, delicate arm",
+"little arm"
+],
+"it": [
+"piccolo braccio",
+"braccino delicato"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "muscolo della zampa del cavallo",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a muscle in a horse's leg"
+],
+"it": [
+"muscolo della zampa del cavallo"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "bracciolo (di sedia)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"the arm of a chair or seat"
+],
+"it": [
+"bracciolo di sedia o di seggio"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"little arm",
+"muscle of a horse's leg",
+"arm of a chair"
+],
+"it": [
+"braccino",
+"muscolo della zampa equina",
+"bracciolo di sedia"
+]
+},
+"applicazione": [
+"Diminutivo di «bracchium»: il senso proprio ha valore affettivo/vezzeggiativo (il braccino della fanciulla, Catullo)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bracchium": {
+"campi": [
+{
+"campo": "braccio (umano)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the forearm (from the hand to the elbow)"
+],
+"it": [
+"avambraccio (dalla mano al gomito)"
+]
+},
+"registro": "anatomico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"the arm, the whole arm (from the shoulder to the fingers)"
+],
+"it": [
+"braccio (l'intero braccio, dalla spalla alle dita)"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "appendici di animali (chele, tentacoli)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"claw (of crustaceans; of the signs Cancer and Scorpio)",
+"tentacle (of the nautilus)"
+],
+"it": [
+"chela (di crostacei; dei segni del Cancro e dello Scorpione)",
+"tentacolo (del nautilo)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "ramo, ramoscello (di albero)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"branch, shoot (of trees, of the vine)"
+],
+"it": [
+"ramo",
+"ramoscello",
+"tralcio (della vite)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "opera di trinceramento (militare)",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"earthwork connecting forts",
+"siege-line, line of communication"
+],
+"it": [
+"opera di trinceramento che collega due fortini",
+"braccio di fortificazione"
+]
+},
+"registro": "militare",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"arm (forearm)",
+"claw",
+"branch",
+"earthwork connecting forts"
+],
+"it": [
+"braccio (avambraccio)",
+"chela",
+"ramo",
+"braccio di trinceramento"
+]
+},
+"applicazione": [
+"Distinzione tecnica: «bracchium» = avambraccio, «lacertus» = braccio superiore (dal gomito alla spalla).",
+"Idiom. «levi/molli bracchio agere aliquid» = fare qcs. con negligenza, alla leggera; «molli bracchio obiurgare» = rimproverare fiaccamente.",
+"Nel gesto oratorio e nella danza indica il movimento delle braccia; con «dare/circumdare bracchia collo» = abbracciare."
+],
+"divergenze": [
+"Il senso militare «earthwork connecting forts» (opera che collega i fortini, cfr. Cesare) è esplicitato da Whitaker; in L&S rientra tra gli usi traslati di «oggetti simili a braccia» (di cui il testo, qui troncato, riporta i rami degli alberi)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bractea": {
+"campi": [
+{
+"campo": "lamina metallica sottile, foglia d'oro",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"thin plate of metal",
+"gold-leaf",
+"gold foil"
+],
+"it": [
+"lamina metallica sottile",
+"foglia d'oro",
+"laminetta d'oro"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"thin layer of wood",
+"veneer"
+],
+"it": [
+"impiallacciatura",
+"sottile strato di legno"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "splendore, apparenza vistosa",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"show",
+"glitter",
+"outward brilliance"
+],
+"it": [
+"splendore esteriore",
+"luccichio",
+"apparenza vistosa"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"gold-leaf",
+"thin metal plate",
+"veneer",
+"show"
+],
+"it": [
+"foglia d'oro",
+"lamina sottile",
+"impiallacciatura",
+"splendore"
+]
+},
+"applicazione": [
+"La lamina (bractea) è più sottile della lamina propriamente detta (Isid.: bractea = tenuissima lamina).",
+"Il senso traslato di 'splendore' della parola (eloquentiae bractea) è raro e tardo (Solino)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bracteola": {
+"campi": [
+{
+"campo": "foglia d'oro (diminutivo)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"thin leaf of gold",
+"small gold-leaf"
+],
+"it": [
+"sottile foglia d'oro",
+"laminetta d'oro"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"gold-leaf",
+"thin gold leaf"
+],
+"it": [
+"foglia d'oro",
+"laminetta d'oro"
+]
+},
+"applicazione": [
+"Diminutivo di bractea; attestato in autori tardi e poetici (Giovenale, Prudenzio, Arnobio)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:brassica": {
+"campi": [
+{
+"campo": "cavolo (ortaggio)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"cabbage"
+],
+"it": [
+"cavolo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"cabbage"
+],
+"it": [
+"cavolo"
+]
+},
+"applicazione": [
+"Al plurale (brassicae) indica le diverse varietà di cavolo.",
+"Molto apprezzato dagli antichi e spesso impiegato in medicina; frequente negli scrittori di agricoltura (Catone, Columella, Plinio)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:brevitas": {
+"campi": [
+{
+"campo": "concisione del discorso",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"brevity",
+"conciseness",
+"terseness"
+],
+"it": [
+"concisione",
+"brevità (dello stile)",
+"stringatezza"
+]
+},
+"registro": "retorico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "brevità di tempo, breve durata",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"shortness (of time)",
+"brevity",
+"brief duration"
+],
+"it": [
+"brevità (del tempo)",
+"breve durata",
+"fugacità"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "brevità nello spazio, piccolezza",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"shortness (in space)",
+"smallness",
+"littleness"
+],
+"it": [
+"brevità (di estensione)",
+"piccolezza",
+"esiguità"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "brevità delle sillabe (prosodia)",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"shortness of syllables"
+],
+"it": [
+"brevità delle sillabe"
+]
+},
+"registro": "grammaticale",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"shortness",
+"brevity",
+"conciseness",
+"smallness"
+],
+"it": [
+"brevità",
+"concisione",
+"piccolezza"
+]
+},
+"applicazione": [
+"Locuzione brevitatis causā / gratiā = 'per brevità'.",
+"Al plurale (brevitates) indica le quantità brevi delle sillabe."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bromius": {
+"campi": [
+{
+"campo": "epiteto di Bacco",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"Bromius (surname of Bacchus, 'the roaring/noisy one')",
+"Bacchus"
+],
+"it": [
+"Bromio (epiteto di Bacco, 'il fragoroso')",
+"Bacco"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Bromius (epithet of Bacchus)",
+"Bacchus"
+],
+"it": [
+"Bromio (epiteto di Bacco)",
+"Bacco"
+]
+},
+"applicazione": [
+"Grecismo (Βρόμιος), riferito al carattere tumultuoso e chiassoso delle feste bacchiche.",
+"Da questo nome derivano gli aggettivi Bromialis ('bacchico') e Bromius, a, um ('di Bacco')."
+],
+"divergenze": [
+"Whitaker glossa 'oats' (avena), confondendo il lemma con il greco βρόμος (una graminacea foraggera); L&S registra soltanto Bromius come epiteto di Bacco, senza alcun senso botanico. Si segue L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bruma": {
+"campi": [
+{
+"campo": "solstizio d'inverno, giorno più breve dell'anno",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"winter solstice",
+"the shortest day of the year"
+],
+"it": [
+"solstizio d'inverno",
+"giorno più breve dell'anno"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "inverno, stagione invernale",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"winter",
+"winter time",
+"winter cold"
+],
+"it": [
+"inverno",
+"stagione invernale",
+"freddo invernale"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "anno",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"year"
+],
+"it": [
+"anno"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"winter solstice",
+"shortest day",
+"winter"
+],
+"it": [
+"solstizio d'inverno",
+"giorno più breve",
+"inverno"
+]
+},
+"applicazione": [
+"Etimologicamente da *brevima (brevissima, sc. dies), 'il giorno più breve'.",
+"Il senso 'inverno' è per lo più poetico; quello di 'anno' è raro, poetico e per sineddoche (pars pro toto)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bubile": {
+"campi": [
+{
+"campo": "stalla per buoi",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"stall for oxen",
+"cattle-shed",
+"cow-house"
+],
+"it": [
+"stalla per buoi",
+"stalla",
+"bovile"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"ox-stall",
+"cattle-shed"
+],
+"it": [
+"stalla per buoi",
+"bovile"
+]
+},
+"applicazione": [
+"Forma collaterale bovile.",
+"Termine dell'ambito rustico-agricolo (Catone, Varrone, Columella)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bubo": {
+"campi": [
+{
+"campo": "gufo reale",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"horned owl",
+"eagle owl",
+"owl"
+],
+"it": [
+"gufo reale",
+"gufo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"horned owl",
+"eagle owl"
+],
+"it": [
+"gufo reale",
+"gufo"
+]
+},
+"applicazione": [
+"Il suo verso era ritenuto di cattivo augurio: spesso in contesto poetico come uccello funesto (ignavus, profanus, funereus, Stygius, infaustus).",
+"Di norma maschile; femminile solo eccezionalmente (Verg. A. 4, 462)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bubulcus": {
+"campi": [
+{
+"campo": "bifolco, aratore con i buoi",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"ploughman",
+"one who ploughs with oxen",
+"ox-driver"
+],
+"it": [
+"bifolco",
+"aratore (con i buoi)",
+"bovaro che ara"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "mandriano, bovaro",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"herdsman",
+"cattle-tender"
+],
+"it": [
+"mandriano",
+"bovaro"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"ploughman",
+"ox-driver",
+"herdsman"
+],
+"it": [
+"bifolco",
+"aratore",
+"bovaro"
+]
+},
+"applicazione": [
+"In senso proprio è l'aratore con i buoi (= arator), distinto da pastor e armentarius (mandriani).",
+"Il senso generico di 'mandriano' è raro e non anteriore all'età post-augustea."
+],
+"divergenze": [
+"Whitaker aggiunge le rese figurate 'teamster' (carrettiere) e 'rustic' (contadino, zotico), non esplicitate in L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bucca": {
+"campi": [
+{
+"campo": "guancia (gonfiata nel parlare o nel mangiare)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"cheek"
+],
+"it": [
+"guancia",
+"gota"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "boccone, boccata",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"mouthful"
+],
+"it": [
+"boccone",
+"boccata"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "chi gonfia le guance: declamatore, parassita",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"declaimer",
+"bawler",
+"ranter"
+],
+"it": [
+"declamatore",
+"sbraitone",
+"chiacchierone vuoto"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"parasite"
+],
+"it": [
+"parassita",
+"scroccone"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "cavità",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"cavity (of the knee-joint)"
+],
+"it": [
+"cavità (dell'articolazione del ginocchio)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"cheek",
+"mouthful",
+"mouth"
+],
+"it": [
+"guancia",
+"boccone",
+"bocca"
+]
+},
+"applicazione": [
+"Distinta da genae (i lati del viso) e da mala (parte alta della guancia, sotto gli occhi); per lo più al plurale.",
+"Locuzione colloquiale (dicere/scribere) quod / quidquid in buccam venit = 'dire (scrivere) ciò che viene in mente, ciò che capita'."
+],
+"divergenze": [
+"Whitaker glossa anche 'jaw, mouth' (mascella, bocca), estendendo il senso; L&S insiste invece sulla distinzione precisa fra bucca (la guancia) e la bocca vera e propria."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:buccula": {
+"campi": [
+{
+"campo": "guancia, boccuccia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"little cheek",
+"little mouth"
+],
+"it": [
+"guanciotta, guancia",
+"boccuccia"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "buccola (uso militare e tecnico)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"beaver, cheek-piece of a helmet covering mouth and cheeks"
+],
+"it": [
+"buccola dell'elmo (parte che copre bocca e guance)",
+"paraguance dell'elmo"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"the two side-pieces (cheeks) on each side of the catapult channel"
+],
+"it": [
+"le due guance ai lati del canale della catapulta"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"little cheek",
+"helmet cheek-piece",
+"catapult side-piece"
+],
+"it": [
+"guanciotta, boccuccia",
+"buccola dell'elmo",
+"guancia della catapulta"
+]
+},
+"applicazione": [
+"Diminutivo di bucca; il senso anatomico e raro e per lo piu tardo (Svetonio, Apuleio, Arnobio)",
+"In ambito militare: bucculas tergere = lucidare le buccole dell'elmo (Liv. 44,34,8)"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bucina": {
+"campi": [
+{
+"campo": "corno, tromba ricurva (strumento a fiato)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"shepherd's horn",
+"crooked horn"
+],
+"it": [
+"corno pastorale",
+"corno ricurvo"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"war-trumpet",
+"trumpet"
+],
+"it": [
+"tromba di guerra",
+"buccina"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "segnale sonoro (veglie notturne, adunanze)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"signal for changing the night-watches, for rousing the soldiers"
+],
+"it": [
+"segnale per il cambio delle veglie notturne, per svegliare i soldati"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"(by metonymy) the night-watch itself (ad primam bucinam = at the first watch)"
+],
+"it": [
+"(per metonimia) la veglia notturna, il turno di guardia (ad primam bucinam = alla prima veglia)"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"signal to summon the popular assembly"
+],
+"it": [
+"segnale per convocare l'assemblea del popolo"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "conchiglia di Tritone",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"a winding shell on which Triton blew, Triton's shell"
+],
+"it": [
+"conchiglia a spirale su cui soffia Tritone, conchiglia di Tritone"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "tromba della fama (figurato)",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"(figuratively) the trumpet of rumour, that which spreads report"
+],
+"it": [
+"(figurato) la tromba della fama, cio che divulga la diceria"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"curved horn, trumpet",
+"war-trumpet",
+"watch-signal",
+"Triton's shell"
+],
+"it": [
+"corno, tromba ricurva",
+"tromba di guerra",
+"segnale della veglia",
+"conchiglia di Tritone"
+]
+},
+"applicazione": [
+"= gr. βυκάνη; distinta da tuba, che designa di norma la tromba diritta",
+"bucina data / bucina signum dare = dare il segnale con la buccina",
+"Locuzione temporale: ad primam (secundam...) bucinam = alla prima (seconda...) veglia della notte"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bucinator": {
+"campi": [
+{
+"campo": "trombettiere, suonatore di buccina",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"one who blew the bucina, a trumpeter"
+],
+"it": [
+"chi suona la buccina, trombettiere"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "chi strombazza, divulgatore (figurato)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"one who trumpets forth, who blazes abroad, proclaimer"
+],
+"it": [
+"chi strombazza, chi divulga, banditore"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"trumpeter",
+"proclaimer"
+],
+"it": [
+"trombettiere",
+"divulgatore, chi strombazza"
+]
+},
+"applicazione": [
+"Nomen agentis da bucino; il senso figurato ricalca bucina II.D (bucinator existimationis meae, Cic.)"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bucula": {
+"campi": [
+{
+"campo": "giovenca, vitella",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"heifer, young cow"
+],
+"it": [
+"giovenca, vitella"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"heifer, young cow"
+],
+"it": [
+"giovenca, vitella"
+]
+},
+"applicazione": [
+"Diminutivo di bos; ex aere Myronis: allude alla celebre giovenca di bronzo di Mirone"
+],
+"divergenze": [
+"Whitaker attribuisce a bucula anche i sensi propri di buccula (guancia, buccola dell'elmo, parte del canale della catapulta), per sovrapposizione grafica; Lewis registra per bucula il solo significato di 'giovenca'."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bufo": {
+"campi": [
+{
+"campo": "rospo",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"toad"
+],
+"it": [
+"rospo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"toad"
+],
+"it": [
+"rospo"
+]
+},
+"applicazione": [],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bulbus": {
+"campi": [
+{
+"campo": "bulbo, radice bulbosa",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"bulb, bulbous root (of tulips, hyacinths, lilies, etc.)"
+],
+"it": [
+"bulbo, radice bulbosa (di tulipani, giacinti, gigli, ecc.)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "cipolla (ortaggio bulboso)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"onion, edible bulb, a garden vegetable of several kinds"
+],
+"it": [
+"cipolla, bulbo commestibile, ortaggio da orto di piu varieta"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"bulb, bulbous root",
+"onion"
+],
+"it": [
+"bulbo",
+"cipolla"
+]
+},
+"applicazione": [
+"= gr. βολβός; la varieta megarese era la piu apprezzata; bulbus fabrilis in Apicio e nell'Editto di Diocleziano"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bulla": {
+"campi": [
+{
+"campo": "bolla, bolla d'acqua",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"water-bubble, bubble"
+],
+"it": [
+"bolla d'acqua, bolla"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"(figuratively) a bubble, trifle, vanity (si est homo bulla)"
+],
+"it": [
+"(figurato) inezia, cosa effimera, vanita (l'uomo e una bolla)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "bulla (amuleto d'oro portato al collo dai fanciulli)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"bulla, an amulet (mostly of gold) worn on the neck by noble youths, laid aside at maturity and consecrated to the Lares"
+],
+"it": [
+"bulla, amuleto (per lo piu d'oro) portato al collo dai giovani nobili, deposto alla maggiore eta e consacrato ai Lari"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "borchia, bottone, capocchia (oggetto tondeggiante)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"boss, knob, ornamental stud (upon a door)"
+],
+"it": [
+"borchia, chiodo ornamentale, bottone (di una porta)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a stud upon a girdle or belt"
+],
+"it": [
+"borchia di un cinturone"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"the head of a pin in the water-clock"
+],
+"it": [
+"la capocchia dello spillo dell'orologio ad acqua"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"bubble",
+"bulla (gold amulet of boys)",
+"boss, knob, stud"
+],
+"it": [
+"bolla",
+"bulla (amuleto d'oro)",
+"borchia, bottone"
+]
+},
+"applicazione": [
+"Locuzione: bulla dignus = degno del bavaglino, cioe puerile, infantile (senior bulla dignissime, Iuv.)",
+"bulla aurea / Etruscum aurum: le borchie e la bulla d'oro d'uso etrusco"
+],
+"divergenze": [
+"Whitaker aggiunge i sensi medievali 'bolla papale', 'documento papale', 'sigillo di piombo della bolla papale', assenti in Lewis & Short (di ambito classico)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bumastus": {
+"campi": [
+{
+"campo": "vite bumasto (dai grossi acini) e la sua uva",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a vine bearing large swelling grapes, and its grapes (bumastus)"
+],
+"it": [
+"vite dai grossi acini rigonfi (bumasto) e la sua uva"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"bumastus vine",
+"vine with large grapes, its grapes"
+],
+"it": [
+"vite bumasto",
+"uva a grossi acini"
+]
+},
+"applicazione": [
+"= gr. βούμαστος (sc. ἄμπελος, 'vite dalle grosse mammelle'), cosi detta per la forma dei grappoli; gli acini si gonfiano a mo' di mammelle (Plin.)"
+],
+"divergenze": [
+"Whitaker segnala che e propriamente un aggettivo a due uscite: la forma femminile (sott. 'vite') e usata come sostantivo."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:buris": {
+"campi": [
+{
+"campo": "bure, parte curva posteriore dell'aratro",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the curved hinder part of the ancient plough, the plough-beam"
+],
+"it": [
+"la parte curva posteriore dell'aratro antico, la bure, il timone dell'aratro"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"plough-beam, curved rear of the plough"
+],
+"it": [
+"bure, timone dell'aratro"
+]
+},
+"applicazione": [
+"Accusativo singolare arcaico burim (Verg. G. 1,170); esiste la variante femminile bura, -ae (Varr.)"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:bustum": {
+"campi": [
+{
+"campo": "rogo funebre; luogo di cremazione e sepoltura",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the place where the dead were burned and buried; the funeral-pyre after the burning of the body"
+],
+"it": [
+"il luogo dove i morti erano arsi e sepolti; il rogo funebre dopo la cremazione del corpo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "tomba, tumulo, sepolcro",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a mound, tomb, grave-mound"
+],
+"it": [
+"tumulo, tomba, sepolcro"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "(figurato) cio che distrugge o inghiotte; rovina, sfacelo",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"(figuratively) that which, like a tomb, consumes a body (a devouring maw); ruin, destruction (of the laws, of the state); a battle-field; the ruins of a destroyed city"
+],
+"it": [
+"(figurato) cio che, come una tomba, inghiotte un corpo (fauci voraci); rovina, sfacelo (delle leggi, dello Stato); campo di battaglia; le rovine di una citta distrutta"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "(metonimia) ceneri, corpo arso",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"(by metonymy) the burned body itself, the ashes"
+],
+"it": [
+"(per metonimia) il corpo arso stesso, le ceneri"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"funeral pyre",
+"tomb, grave-mound",
+"ashes, burned body"
+],
+"it": [
+"rogo funebre",
+"tomba, tumulo",
+"ceneri"
+]
+},
+"applicazione": [
+"In senso proprio bustum e il luogo insieme arso e sepolto; se il corpo e solo arso il luogo si dice ustrina (Paul. ex Fest.)",
+"bustum + genitivo in senso figurato = rovina di qc.: bustum legum omnium ac religionum (Cic. Pis. 5,11), bustum rei publicae",
+"Toponimo: Busta Gallica, luogo in Roma cosi detto dai Galli ivi arsi e sepolti (Liv. 5,48,3)"
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:buxum": {
+"campi": [
+{
+"campo": "legno di bosso",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the wood of the box-tree",
+"boxwood"
+],
+"it": [
+"legno di bosso",
+"bosso (come materiale)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "oggetti di bosso (metonimia)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a flute, a pipe"
+],
+"it": [
+"flauto, piffero (di bosso)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a spinning-top"
+],
+"it": [
+"trottola"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"a comb"
+],
+"it": [
+"pettine"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"a writing-tablet"
+],
+"it": [
+"tavoletta per scrivere"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "il bosso (albero)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"the box-tree"
+],
+"it": [
+"il bosso (albero)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"boxwood",
+"flute/pipe (of boxwood)",
+"box-tree"
+],
+"it": [
+"legno di bosso",
+"flauto di bosso",
+"bosso"
+]
+},
+"applicazione": [
+"Nel senso di 'flauto/piffero' compare spesso al plurale (cava buxa, buxa Berecyntia).",
+"Come nome dell'albero e obiettivo poetico coincide con buxus, -i (f.)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:buxus": {
+"campi": [
+{
+"campo": "il bosso (albero)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the box-tree",
+"the pale, evergreen box-tree"
+],
+"it": [
+"il bosso (albero sempreverde)"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "oggetti di bosso (metonimia)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a pipe, a flute (of boxwood)"
+],
+"it": [
+"flauto, piffero (di bosso)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"box-tree",
+"boxwood flute/pipe"
+],
+"it": [
+"bosso (albero)",
+"flauto di bosso"
+]
+},
+"applicazione": [
+"Nel senso poetico di 'flauto' compare al plurale (buxas Berecyntia)."
+],
+"divergenze": [
+"Whitaker non riporta la voce; la fusione poggia sulla sola L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+}
+}
