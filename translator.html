@@ -12937,20 +12937,30 @@ function allineaBranoAlleFrasi() {
   /* In poesia il numero di VERSI è anche la chiave della scansione metrica
      (metrica.perVerse è indicizzata per posizione del verso). Se il conto
      cambia, la scansione già inserita finisce su versi diversi: va detto
-     prima, non scoperto dopo. */
+     prima, non scoperto dopo. Il conteggio DEVE seguire la stessa regola con
+     cui l'app conta i versi — split su a capo, scartando le righe vuote — se
+     no una frase svuotata (che diventa una riga bianca) falsa il numero. */
   let avvisoMetrica = '';
   if (poesia) {
     const versiPrima = String(state.meta.testoOriginale || '').split(/\r?\n/).filter(v => v.trim()).length;
+    const versiDopo = nuovo.split(/\r?\n/).filter(v => v.trim()).length;
     const scansioni = Object.keys((state.meta.metrica && state.meta.metrica.perVerse) || {}).length;
-    if (scansioni > 0 && versiPrima !== state.sentences.length) {
-      avvisoMetrica = '\n\nAttenzione: i versi passano da ' + versiPrima + ' a ' + state.sentences.length +
+    if (scansioni > 0 && versiPrima !== versiDopo) {
+      avvisoMetrica = '\n\nAttenzione: i versi passano da ' + versiPrima + ' a ' + versiDopo +
         ', e la scansione metrica è registrata per posizione del verso. Le ' + scansioni +
         ' scansioni già inserite resteranno sui numeri di verso attuali, cioè su versi diversi da quelli di prima.';
     }
   }
-  if (!confirm('Il testo del brano verrà sostituito con il testo delle ' + d.frasi + ' frasi.\n\n' +
-      'Le analisi restano tutte (le frasi non si toccano). Si perdono le modifiche fatte al brano dopo la segmentazione' +
-      (poesia ? '' : ', compresi gli a capo') + '.' + avvisoMetrica + '\n\nProcedere?')) return;
+  /* Se nel brano ci sono parole che nelle frasi non compaiono (perché una frase
+     è stata eliminata, o perché il brano è stato allungato a mano), l'allineamento
+     le cancella. Va detto in chiaro: «sostituito con le frasi» è vero ma può non
+     bastare a far capire che del testo scompare. */
+  const paroleDi = (t) => tokenizeSentence(t || '').filter(x => x.kind === 'word').length;
+  const perde = paroleDi(state.meta.testoOriginale) > (state.sentences || []).reduce((n, s) => n + paroleDi(s.original), 0);
+  if (!confirm('Il brano diventerà esattamente la concatenazione delle ' + d.frasi + ' frasi.\n\n' +
+      'Le analisi restano tutte (le frasi non si toccano). Sparisce tutto ciò che ora è nel brano ma non nelle frasi: ' +
+      'le modifiche fatte al testo del brano' + (poesia ? ', gli a capo diversi' : ', gli a capo') +
+      (perde ? ', e il testo delle frasi che hai eliminato' : '') + '.' + avvisoMetrica + '\n\nProcedere?')) return;
   state.meta.testoOriginale = nuovo;
   persistCurrent();
   renderAll();
@@ -12976,14 +12986,14 @@ function branoDesyncBannerHtml() {
          in modo diverso: conta <strong>${d.versiBrano}</strong> ${d.versiBrano === 1 ? 'verso' : 'versi'}
          contro <strong>${d.frasi}</strong>.
          In poesia il verso è l'unità d'analisi, quindi le due letture del testo non si corrispondono più. ${conteggio}`
-      : `Il testo del brano è stato modificato dopo la segmentazione: ${
-          d.frasi === 1 ? 'la frase conserva' : `le <strong>${d.frasi}</strong> frasi conservano`
-        } la versione precedente${
+      : `Dopo la segmentazione il testo in alto (il brano) e quello ${
+          d.frasi === 1 ? 'della frase' : `delle <strong>${d.frasi}</strong> frasi`
+        } hanno preso strade diverse${
           d.paroleFrasi === d.paroleBrano
             ? ' (stesso numero di parole, grafia diversa)'
-            : `, ${d.paroleFrasi} parole contro ${d.paroleBrano}`
+            : `: ${d.paroleBrano} parole nel brano contro ${d.paroleFrasi} nelle frasi`
         }. ${conteggio}
-         Finché le due versioni divergono, quello che leggi in alto e quello che stai analizzando sono testi diversi.`
+         Che sia cambiato il brano o una frase, quello che leggi in alto e quello che stai analizzando ora sono testi diversi.`
     }</p>
     <div class="brano-desync-actions">
       <button class="btn btn-sm btn-brand-soft" onclick="allineaBranoAlleFrasi()">
