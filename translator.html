@@ -4592,6 +4592,16 @@ body[data-profile="medie"] .quick-seg-btn[data-mode="free"] { display: none; }
 .gp-warn { margin: 8px 0 0; font-size: 12.5px; line-height: 1.5; color: var(--danger); }
 .gp-warn:empty { display: none; }
 .gp-restructure-link { background: none; border: none; padding: 0; font: inherit; color: var(--lang-accent); cursor: pointer; text-decoration: underline; }
+/* PORTA RISTRUTTURAZIONE · textarea del testo libero + referto di distacco */
+.mef-textarea { width: 100%; box-sizing: border-box; font-family: var(--font-classical); font-size: 16px; line-height: 1.5; padding: 10px 12px; border: 1.5px solid var(--rule); border-radius: var(--radius-md); background: var(--paper); color: var(--ink); resize: vertical; margin-top: 14px; }
+.mef-textarea:focus { outline: none; border-color: var(--lang-accent); box-shadow: 0 0 0 3px var(--lang-accent-pale); }
+.mef-referto { margin-top: 12px; font-family: var(--font-ui); font-size: 12.5px; line-height: 1.55; }
+.mef-referto-riga { display: flex; align-items: baseline; gap: 8px; padding: 3px 0; }
+.mef-referto-seguono { color: var(--success); font-weight: 600; }
+.mef-referto-staccate { color: var(--danger); font-weight: 600; }
+.mef-referto-parole { color: var(--sepia); font-style: italic; }
+.mef-referto-nulla { color: var(--sepia); font-style: italic; }
+:root[data-theme="dark"] body .mef-textarea { background: rgba(255,255,255,0.05); }
 :root[data-theme="dark"] body .gp-grid { background: rgba(255,255,255,0.03); }
 :root[data-theme="dark"] body .gp-field { background: rgba(255,255,255,0.05); }
 .sp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0 8px; }
@@ -11905,14 +11915,47 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
      (window.modalA11yAll) e chiusura-sul-fondo (forEach al DOMContentLoaded). -->
 <div class="modal-backdrop" id="modal-edit-frase">
   <div class="modal" style="max-width: 640px;">
-    <h3 class="modal-title">Correggi il testo della frase</h3>
-    <p class="modal-subtitle" id="mef-subtitle">Correggi la grafia parola per parola — accenti, desinenze, refusi. Il numero delle parole non cambia, così le analisi restano agganciate.</p>
-    <div id="mef-grid" class="gp-grid" aria-label="Parole della frase"></div>
-    <p id="mef-warn" class="gp-warn"></p>
-    <p class="muted-text" style="font-size:12px; margin-top:10px;">Serve <strong>aggiungere, togliere o spostare</strong> parole? <button type="button" class="gp-restructure-link" onclick="restructureSentencePrompt()">Riscrivi la frase da capo →</button></p>
+    <!-- PORTA GRAFIA · la griglia sicura per costruzione (predefinita) -->
+    <div id="mef-pane-grafia">
+      <h3 class="modal-title">Correggi il testo della frase</h3>
+      <p class="modal-subtitle" id="mef-subtitle">Correggi la grafia parola per parola — accenti, desinenze, refusi. Il numero delle parole non cambia, così le analisi restano agganciate.</p>
+      <div id="mef-grid" class="gp-grid" aria-label="Parole della frase"></div>
+      <p id="mef-warn" class="gp-warn"></p>
+      <p class="muted-text" style="font-size:12px; margin-top:10px;">Serve <strong>aggiungere, togliere o spostare</strong> parole? <button type="button" class="gp-restructure-link" onclick="switchToRestructure()">Riscrivi la frase da capo →</button></p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="document.getElementById('modal-edit-frase').classList.remove('open')">Annulla</button>
+        <button class="btn btn-primary" id="mef-save" onclick="saveGrafiaEdit()">Salva le correzioni</button>
+      </div>
+    </div>
+    <!-- PORTA RISTRUTTURAZIONE · testo libero + referto di distacco (atto esplicito) -->
+    <div id="mef-pane-ristruttura" style="display:none;">
+      <h3 class="modal-title">Riscrivi la frase</h3>
+      <p class="modal-subtitle">Cambia le parole liberamente. Le analisi le cui parole restano identiche seguono; quelle che perdono la loro parola si staccano — te lo dico prima di applicare.</p>
+      <textarea id="mef-textarea" class="mef-textarea classical" rows="3" oninput="_mefRestructureLive()" spellcheck="false" aria-label="Testo della frase riscritto"></textarea>
+      <div id="mef-referto" class="mef-referto"></div>
+      <p class="muted-text" style="font-size:12px; margin-top:10px;">Ti basta correggere un accento o una desinenza? <button type="button" class="gp-restructure-link" onclick="switchToGrafia()">← Torna alla griglia</button></p>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" onclick="document.getElementById('modal-edit-frase').classList.remove('open')">Annulla</button>
+        <button class="btn btn-primary" id="mef-apply" onclick="applyRestructure()">Applica</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AGGIUNGI UNA FRASE · con scelta della POSIZIONE (splice, non append cieco):
+     disinnesca il riordino che nasceva accodando sempre in fondo (audit 9). -->
+<div class="modal-backdrop" id="modal-add-frase">
+  <div class="modal" style="max-width: 560px;">
+    <h3 class="modal-title">Aggiungi una frase</h3>
+    <p class="modal-subtitle">Scrivi il testo e scegli dove inserirla. Le altre frasi e le loro analisi non si toccano.</p>
+    <textarea id="maf-textarea" class="mef-textarea classical" rows="2" placeholder="Testo della nuova frase…" spellcheck="false" aria-label="Testo della nuova frase"></textarea>
+    <div class="sp-field" style="margin-top:12px;">
+      <label for="maf-pos">Posizione</label>
+      <select id="maf-pos"></select>
+    </div>
     <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="document.getElementById('modal-edit-frase').classList.remove('open')">Annulla</button>
-      <button class="btn btn-primary" id="mef-save" onclick="saveGrafiaEdit()">Salva le correzioni</button>
+      <button class="btn btn-ghost" onclick="document.getElementById('modal-add-frase').classList.remove('open')">Annulla</button>
+      <button class="btn btn-primary" onclick="confirmAddSentence()">Aggiungi la frase</button>
     </div>
   </div>
 </div>
@@ -37116,15 +37159,35 @@ function resplitSentences() {
   renderStats();
 }
 
+/* Aggiungi una frase con SCELTA della posizione (inserimento via splice) invece
+   dell'append cieco in fondo: era l'append a fabbricare il riordino brano↔frasi
+   quando il docente divideva una frase a mano (audit 9). */
 function addSentence() {
-  const text = prompt('Testo della frase:');
-  if (!text || !text.trim()) return;
-  state.sentences.push(makeSentence(text.trim()));
+  const sel = document.getElementById('maf-pos');
+  const ta = document.getElementById('maf-textarea');
+  if (!sel || !ta) return;
+  ta.value = '';
+  const n = state.sentences.length;
+  let opts = '<option value="0">All\'inizio</option>';
+  for (let i = 0; i < n; i++) opts += `<option value="${i + 1}"${i === n - 1 ? ' selected' : ''}>Dopo ${unitLabel(i)}</option>`;
+  sel.innerHTML = opts;
+  document.getElementById('modal-add-frase').classList.add('open');
+}
+
+function confirmAddSentence() {
+  const ta = document.getElementById('maf-textarea'), sel = document.getElementById('maf-pos');
+  const text = (ta.value || '').trim();
+  if (!text) { showToast('Scrivi il testo della frase'); return; }
+  const pos = Math.max(0, Math.min(state.sentences.length, parseInt(sel.value, 10) || state.sentences.length));
+  _undoCheckpoint();
+  state.sentences.splice(pos, 0, makeSentence(text));
   maybeAutoClosedClass();
+  document.getElementById('modal-add-frase').classList.remove('open');
   persistCurrent();
   renderEditor();
   renderSidebarTabs();
   renderStats();
+  refreshDesyncBanners();
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
@@ -37173,6 +37236,10 @@ function _contaAncoreFuoriRange(sentence, nWords) {
 function editSentenceText(sentenceId) {
   const sentence = state.sentences.find(s => s.id === sentenceId);
   if (!sentence) return;
+  // Riparti SEMPRE dalla porta grafia: un uso precedente della ristrutturazione
+  // avrebbe lasciato in vista il pannello sbagliato.
+  const pg = document.getElementById('mef-pane-grafia'), pr = document.getElementById('mef-pane-ristruttura');
+  if (pg) pg.style.display = ''; if (pr) pr.style.display = 'none';
   const tokens = tokenizeSentence(sentence.original);
   const nWords = tokens.filter(t => t.kind === 'word').length;
   _mefState = { sentenceId, tokens };
@@ -37240,27 +37307,195 @@ function saveGrafiaEdit() {
   showToast('Correzioni salvate · le analisi restano agganciate');
 }
 
-/* Porta ESPLICITA · riscrivere la frase da capo. Cambia numero/ordine di parole,
-   quindi oggi (prima della rimappatura dello Stadio 2) SCOLLEGA le analisi: lo
-   dice a chiare lettere, ed è una scelta dichiarata, non il comportamento
-   predefinito. Il vecchio editSentenceText faceva questo SEMPRE e in silenzio. */
-function restructureSentencePrompt() {
+/* ══════════════════════════════════════════════════════════════════════════
+   PORTA RISTRUTTURAZIONE (Stadio 2) · testo libero + rimappatura provabile
+   ══════════════════════════════════════════════════════════════════════════
+   Cambiare numero/ordine di parole non scollega più tutto in silenzio. Un motore
+   di sola PROVA (nucleo di Heckel) rimappa le ancore FORZATE — parole la cui
+   identità di stringa è certa — e DICHIARA le altre in un referto prima di
+   eseguire. Nessuna somiglianza fuzzy: un dato falso (un caso o un lemma
+   sbagliato) insegnerebbe l'errore allo studente, ed è peggio di uno mancante. */
+
+/* Mappa vecchioIndice→nuovoIndice delle sole parole FORZATE, su uguaglianza di
+   stringa ESATTA (tokenizeSentence non normalizza maiuscole né accenti):
+   (1) ancora unica di Heckel — la stringa compare una volta sola in entrambi →
+       partner obbligato, regge anche al riordino;
+   (2) intervallo blindato — le parole fra due ancore uniche consecutive (ordine
+       preservato) il cui interno è identico posizione-per-posizione → scarto
+       costante. Tutto il resto NON è nella mappa: è indecidibile, va staccato. */
+function _heckelMap(O, N) {
+  const cnt = arr => { const m = new Map(); arr.forEach(w => m.set(w, (m.get(w) || 0) + 1)); return m; };
+  const cO = cnt(O), cN = cnt(N);
+  const posN = new Map(); N.forEach((w, j) => { if (cN.get(w) === 1) posN.set(w, j); });
+  const map = new Map(), anchors = [];
+  O.forEach((w, i) => { if (cO.get(w) === 1 && cN.get(w) === 1) { const j = posN.get(w); map.set(i, j); anchors.push({ oi: i, nj: j }); } });
+  const spine = anchors.slice().sort((a, b) => a.oi - b.oi).filter((a, k, arr) => k === 0 || a.nj > arr[k - 1].nj);
+  const ends = [{ oi: -1, nj: -1 }, ...spine, { oi: O.length, nj: N.length }];
+  for (let k = 0; k < ends.length - 1; k++) {
+    const a = ends[k], b = ends[k + 1];
+    const oInt = O.slice(a.oi + 1, b.oi), nInt = N.slice(a.nj + 1, b.nj);
+    if (oInt.length === nInt.length && oInt.every((w, x) => w === nInt[x])) {
+      for (let x = 0; x < oInt.length; x++) { const oi = a.oi + 1 + x; if (!map.has(oi)) map.set(oi, a.nj + 1 + x); }
+    }
+  }
+  return map;
+}
+
+/* Piano PURO: quali analisi seguono (tutte le loro parole sono forzate) e quali
+   si staccano. Nessuna mutazione — lo stesso oggetto si mostra nel referto e si
+   esegue, così l'anteprima non può divergere dall'esecuzione. */
+function computeRemapPlan(sentence, newText) {
+  const wordsOf = t => tokenizeSentence(t || '').filter(x => x.kind === 'word').map(x => x.text);
+  const O = wordsOf(sentence.original), N = wordsOf(newText);
+  const map = _heckelMap(O, N);
+  const survivors = [], detached = [];
+  (sentence.grammar || []).forEach(e => {
+    if (e.tokenIndex == null) return;              // ellittica / senza ancora: non si tocca
+    if (map.has(e.tokenIndex)) survivors.push({ e, kind: 'grammar' });
+    else detached.push({ e, kind: 'grammar', parola: e.word || O[e.tokenIndex] || '?' });
+  });
+  const valutaArray = (e, kind, testo) => {
+    if (e.isElliptical) return;                    // ellittica: nessuna ancora di posizione
+    const idxs = e.tokenIndices || []; if (!idxs.length) return;
+    // sopravvive solo se OGNI indice è forzato: un sintagma che perde una parola
+    // è ambiguo, e va dichiarato — non troncato in silenzio.
+    if (idxs.every(i => map.has(i))) survivors.push({ e, kind });
+    else detached.push({ e, kind, parola: testo(e) || idxs.map(i => O[i]).filter(Boolean).join(' ') });
+  };
+  (sentence.logic || []).forEach(e => valutaArray(e, 'logic', x => x.phrase));
+  (sentence.periodale || []).forEach(e => valutaArray(e, 'periodale', x => x.text));
+  const punctSeq = t => tokenizeSentence(t || '').filter(x => x.kind === 'punct').map(x => x.text).join('|');
+  const nAsindeti = (sentence.asindeti || []).length;
+  const asindetiPersi = nAsindeti > 0 && punctSeq(sentence.original) !== punctSeq(newText);
+  return { map, O, N, survivors, detached, asindetiPersi, nAsindeti, newText };
+}
+
+const _KIND_LABEL = { grammar: 'grammaticale', logic: 'logica', periodale: 'del periodo' };
+
+function renderRemapReferto(plan) {
+  if (plan.newText === '' ) return '<span class="mef-referto-nulla">Scrivi il testo della frase.</span>';
+  const nSurv = plan.survivors.length;
+  const det = plan.detached.slice();
+  let html = '';
+  if (nSurv > 0) html += `<div class="mef-referto-riga"><span class="mef-referto-seguono">✓ ${nSurv} analisi ${nSurv === 1 ? 'segue la sua parola' : 'seguono le loro parole'}</span></div>`;
+  if (det.length > 0) {
+    const voci = det.map(d => `«${escapeHtml(d.parola)}» (${_KIND_LABEL[d.kind]})`).join(', ');
+    html += `<div class="mef-referto-riga"><span class="mef-referto-staccate">✕ ${det.length} si stacca${det.length === 1 ? '' : 'no'}:</span> <span class="mef-referto-parole">${voci}</span></div>`;
+  }
+  if (plan.asindetiPersi) html += `<div class="mef-referto-riga"><span class="mef-referto-staccate">✕ ${plan.nAsindeti} asindet${plan.nAsindeti === 1 ? 'o' : 'i'}</span> <span class="mef-referto-parole">— la punteggiatura è cambiata, vanno riconfermati</span></div>`;
+  if (!html) html = '<span class="mef-referto-nulla">Nessuna analisi si stacca: tutte seguono le parole.</span>';
+  else if (det.length || plan.asindetiPersi) html += `<div class="mef-referto-riga mef-referto-parole" style="margin-top:4px;">Le analisi staccate vanno rifatte a mano dopo l'applicazione.</div>`;
+  return html;
+}
+
+let _mefLiveTimer = null;
+function _mefRestructureLive() {
+  if (_mefLiveTimer) clearTimeout(_mefLiveTimer);
+  _mefLiveTimer = setTimeout(() => {
+    _mefLiveTimer = null;
+    if (!_mefState) return;
+    const sentence = state.sentences.find(s => s.id === _mefState.sentenceId);
+    const ta = document.getElementById('mef-textarea'), ref = document.getElementById('mef-referto'), apply = document.getElementById('mef-apply');
+    if (!sentence || !ta || !ref) return;
+    const nuovo = ta.value.trim();
+    if (nuovo === '' || nuovo === sentence.original) {
+      ref.innerHTML = nuovo === '' ? '<span class="mef-referto-nulla">Scrivi il testo della frase.</span>' : '<span class="mef-referto-nulla">Il testo non è cambiato.</span>';
+      if (apply) apply.disabled = true;
+      return;
+    }
+    ref.innerHTML = renderRemapReferto(computeRemapPlan(sentence, nuovo));
+    if (apply) apply.disabled = false;
+  }, 200);
+}
+
+function switchToRestructure() {
   if (!_mefState) return;
   const sentence = state.sentences.find(s => s.id === _mefState.sentenceId);
-  document.getElementById('modal-edit-frase').classList.remove('open');
-  const id = _mefState.sentenceId; _mefState = null;
   if (!sentence) return;
-  const newText = prompt('Riscrivi la frase da capo.\n\nAttenzione: cambiare il numero o l\'ordine delle parole scollega le analisi già fatte su questa frase (grammatica, logica, periodo), che andranno rifatte. Per correggere solo la grafia, usa la griglia.', sentence.original);
-  if (newText === null) return;
-  const t = newText.trim();
-  if (!t || t === sentence.original) return;
+  document.getElementById('mef-pane-grafia').style.display = 'none';
+  document.getElementById('mef-pane-ristruttura').style.display = '';
+  const ta = document.getElementById('mef-textarea');
+  ta.value = sentence.original;
+  document.getElementById('mef-referto').innerHTML = '<span class="mef-referto-nulla">Il testo non è cambiato.</span>';
+  document.getElementById('mef-apply').disabled = true;
+  ta.focus();
+}
+
+function switchToGrafia() {
+  if (!_mefState) return;
+  document.getElementById('mef-pane-ristruttura').style.display = 'none';
+  document.getElementById('mef-pane-grafia').style.display = '';
+  // ricostruisci la griglia dal testo CORRENTE (l'edit libero non applicato si scarta)
+  editSentenceText(_mefState.sentenceId);
+}
+
+function applyRestructure() {
+  if (!_mefState) return;
+  const sentence = state.sentences.find(s => s.id === _mefState.sentenceId);
+  const close = () => { document.getElementById('modal-edit-frase').classList.remove('open'); _mefState = null; };
+  if (!sentence) { close(); return; }
+  const newText = (document.getElementById('mef-textarea').value || '').trim();
+  if (!newText || newText === sentence.original) { close(); return; }
+  const plan = computeRemapPlan(sentence, newText);
   _undoCheckpoint();
-  sentence.original = t;
+  const staccate = new Set(plan.detached.map(d => d.e));
+  // GRAMMATICA · rimappa i sopravvissuti (indice + copia di testo), rimuovi gli staccati
+  sentence.grammar = (sentence.grammar || []).filter(e => {
+    if (staccate.has(e)) return false;
+    if (e.tokenIndex != null && plan.map.has(e.tokenIndex)) {
+      e.tokenIndex = plan.map.get(e.tokenIndex);
+      e.word = plan.N[e.tokenIndex];
+      if (e.lemmaCustom) e._rivedere = true;
+    }
+    return true;
+  });
+  // LOGICA e PERIODO · rimappa gli array interi (tutti gli indici forzati), ricostruisci il testo
+  const rimappaArray = (arr, campoTesto) => (arr || []).filter(e => {
+    if (staccate.has(e)) return false;
+    if (!e.isElliptical && (e.tokenIndices || []).length) {
+      e.tokenIndices = e.tokenIndices.map(i => plan.map.get(i)).sort((a, b) => a - b);
+      e[campoTesto] = e.tokenIndices.map(i => plan.N[i]).join(' ');
+    }
+    return true;
+  });
+  sentence.logic = rimappaArray(sentence.logic, 'phrase');
+  sentence.periodale = rimappaArray(sentence.periodale, 'text');
+  // dipendeDa orfani: se il capo di una catena è stato staccato, sgancia i figli
+  const vivi = new Set(sentence.periodale.map(e => e.id));
+  sentence.periodale.forEach(e => { if (e.dipendeDa && !vivi.has(e.dipendeDa)) e.dipendeDa = ''; });
+  // ASINDETI · si tengono solo se la punteggiatura è identica (l'indice negativo
+  // -100-k punta ancora allo stesso segno); altrimenti si azzerano (dichiarato).
+  if (plan.asindetiPersi) sentence.asindeti = [];
+  // ORDO · sourceTokenIdx è DERIVATO: rimappa o ricalcola, droppa gli orfani.
+  sentence.ordoVerborum = (sentence.ordoVerborum || []).filter(o => {
+    if (typeof o.sourceLogicId === 'string' && o.sourceLogicId.indexOf('V:') === 0) {
+      const oldIdx = parseInt(o.sourceLogicId.slice(2), 10);
+      if (plan.map.has(oldIdx)) { const nj = plan.map.get(oldIdx); o.sourceLogicId = 'V:' + nj; o.sourceTokenIdx = nj; return true; }
+      return false;                                 // il verbo è sparito
+    }
+    if (o.sourceLogicId) {
+      const lg = sentence.logic.find(e => e.id === o.sourceLogicId);  // solo fra i sopravvissuti
+      if (lg && (lg.tokenIndices || []).length) { o.sourceTokenIdx = Math.min.apply(null, lg.tokenIndices); return true; }
+      return false;                                 // il sintagma è stato staccato
+    }
+    if (typeof o.sourceTokenIdx === 'number') {
+      if (plan.map.has(o.sourceTokenIdx)) { o.sourceTokenIdx = plan.map.get(o.sourceTokenIdx); return true; }
+      return false;
+    }
+    return true;                                    // chip manuale senza ancora
+  });
+  sentence.original = newText;
+  close();
   persistCurrent();
   renderEditor();
   renderSidebarTabs();
   renderStats();
   refreshDesyncBanners();
+  const nStacc = plan.detached.length + (plan.asindetiPersi ? plan.nAsindeti : 0);
+  const nSurv = plan.survivors.length;
+  showToast(nStacc > 0
+    ? `Frase riscritta · ${nSurv} ${nSurv === 1 ? 'analisi segue' : 'analisi seguono'}, ${nStacc} staccat${nStacc === 1 ? 'a' : 'e'} (da rifare)`
+    : 'Frase riscritta · tutte le analisi seguono le parole');
 }
 
 /* Un checkpoint ESPLICITO nella pila di undo, prima di una modifica: un solo
