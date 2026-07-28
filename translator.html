@@ -37419,13 +37419,16 @@ function computeRemapPlan(sentence, newText) {
     }
     if (!vive) detached.push({ e: o, kind: 'ordo', parola: o.italian || o.phrase || '(tessera d\'ordine)' });
   });
-  // ASINDETI · gli indici negativi sono ORDINALI: reggono SOLO se ogni parola
-  // resta al suo posto (nessuno spostamento strutturale). Basta un riordino, anche
-  // a punteggiatura identica, perché un asindeto marchi un confine diverso.
+  // ASINDETI · gli indici negativi -100-k sono ORDINALI (il k-esimo segno). Reggono
+  // SOLO se NULLA si sposta: ogni parola al suo posto E la sequenza dei segni di
+  // punteggiatura identica. Confrontare le sole parole era falso — il commento
+  // prometteva «punteggiatura identica» ma togliere una virgola lascia gli indici
+  // stantii che puntano al segno sbagliato.
+  const punctSeq = t => tokenizeSentence(t || '').filter(x => x.kind === 'punct').map(x => x.text).join('|');
+  const strutturaCambiata = !(O.length === N.length && O.every((w, i) => map.get(i) === i) && punctSeq(sentence.original) === punctSeq(newText));
   const nAsindeti = (sentence.asindeti || []).length;
-  const identitaParole = O.length === N.length && O.every((w, i) => map.get(i) === i);
-  const asindetiPersi = nAsindeti > 0 && !identitaParole;
-  return { map, O, N, survivors, detached, asindetiPersi, nAsindeti, newText };
+  const asindetiPersi = nAsindeti > 0 && strutturaCambiata;
+  return { map, O, N, survivors, detached, asindetiPersi, strutturaCambiata, nAsindeti, newText };
 }
 
 const _KIND_LABEL = { grammar: 'grammaticale', logic: 'logica', periodale: 'del periodo', ordo: 'traduzione' };
@@ -37534,9 +37537,12 @@ function applyRestructure() {
   sentence.logic.forEach(e => { if (e.attribuitoA && !logicVivi.has(e.attribuitoA)) { e.attribuitoA = ''; e.isAttributivo = false; } });
   const perVivi = new Set(sentence.periodale.map(e => e.id));
   sentence.periodale.forEach(e => { if (e.dipendeDa && !perVivi.has(e.dipendeDa)) e.dipendeDa = ''; });
-  // ASINDETI · si tengono solo se la punteggiatura è identica (l'indice negativo
-  // -100-k punta ancora allo stesso segno); altrimenti si azzerano (dichiarato).
-  if (plan.asindetiPersi) sentence.asindeti = [];
+  // ASINDETI · su cambio strutturale si azzerano ENTRAMBI gli store paralleli
+  // dei confini asindetici: `asindeti` (scheda B/periodo) e `_asyndeta` (guidato,
+  // fase Proposizioni). Il motore prima toccava solo il primo, lasciando nel
+  // guidato un indice stantio che marcava un confine sintattico falso allo
+  // studente. `delete _asyndeta` lo fa ri-seminare col terminatore giusto.
+  if (plan.strutturaCambiata) { sentence.asindeti = []; delete sentence._asyndeta; }
   // ORDO · il piano ha già deciso quali tessere si staccano (e le ha contate nel
   // referto): qui si RIMUOVONO esattamente quelle, e si rimappa il resto. Così
   // ciò che si esegue coincide con ciò che il referto ha mostrato.
@@ -37602,9 +37608,12 @@ function renderStaccateList() {
     return;
   }
   const words = tokenizeSentence(sentence.original).filter(t => t.kind === 'word');
-  const opts = words.map((t, k) => `<option value="${k}">${escapeHtml(t.text)}</option>`).join('');
+  // Placeholder in testa: senza, il <select> parte sulla prima parola e un clic su
+  // «Riaggancia» aggancerebbe LÌ in silenzio. Con «— scegli —» la scelta è esplicita
+  // e la guardia di riaggancia (idx NaN) diventa viva.
+  const opts = '<option value="">— scegli la parola —</option>' + words.map((t, k) => `<option value="${k}">${escapeHtml(t.text)}</option>`).join('');
   cont.innerHTML = sentence._analisiArchiviate.map((a, i) => {
-    const ctrl = (a.kind !== 'ordo' && words.length)
+    const ctrl = words.length
       ? `<div class="staccata-ctrl"><select id="staccata-sel-${i}" aria-label="parola a cui riagganciare">${opts}</select><button class="btn btn-brand-soft btn-sm" onclick="riaggancia(${i})">Riaggancia</button></div>`
       : '';
     return `<div class="staccata-riga">
@@ -37619,16 +37628,28 @@ function riaggancia(archiveIdx) {
   const sentence = state.sentences.find(s => s.id === _mefStaccateId);
   if (!sentence) return;
   const a = (sentence._analisiArchiviate || [])[archiveIdx];
-  if (!a || a.kind === 'ordo') return;
+  if (!a) return;
   const sel = document.getElementById('staccata-sel-' + archiveIdx);
   const idx = parseInt(sel && sel.value, 10);
   const words = tokenizeSentence(sentence.original).filter(t => t.kind === 'word');
   if (isNaN(idx) || idx < 0 || idx >= words.length) { showToast('Scegli una parola a cui riagganciare'); return; }
   _undoCheckpoint();
   const e = a.entry, w = words[idx].text;
+  let piuParole = false;
   if (a.kind === 'grammar') { e.tokenIndex = idx; e.word = w; if (e.lemmaCustom) e._rivedere = true; sentence.grammar.push(e); }
-  else if (a.kind === 'logic') { e.tokenIndices = [idx]; e.phrase = w; sentence.logic.push(e); }
-  else if (a.kind === 'periodale') { e.tokenIndices = [idx]; e.text = w; sentence.periodale.push(e); }
+  else if (a.kind === 'logic' || a.kind === 'periodale') {
+    piuParole = (e.tokenIndices || []).length > 1;   // copriva più parole: il ri-aggancio a UNA sola va esteso
+    e.tokenIndices = [idx];
+    if (a.kind === 'logic') { e.phrase = w; sentence.logic.push(e); }
+    else { e.text = w; sentence.periodale.push(e); }
+  }
+  else if (a.kind === 'ordo') { e.sourceTokenIdx = idx; e.sourceLogicId = ''; sentence.ordoVerborum.push(e); }
+  // Legami per ID che potevano puntare a un'entry mai riagganciata: sganciali, o
+  // resterebbero penzolanti (il capo «senza capo», il figlio a un id inesistente).
+  const idsLogic = new Set(sentence.logic.map(x => x.id));
+  sentence.logic.forEach(x => { if (x.attribuitoA && !idsLogic.has(x.attribuitoA)) { x.attribuitoA = ''; x.isAttributivo = false; } });
+  const idsPer = new Set(sentence.periodale.map(x => x.id));
+  sentence.periodale.forEach(x => { if (x.dipendeDa && !idsPer.has(x.dipendeDa)) x.dipendeDa = ''; });
   sentence._analisiArchiviate.splice(archiveIdx, 1);
   persistCurrent();
   renderStaccateList();
@@ -37636,7 +37657,7 @@ function riaggancia(archiveIdx) {
   renderSidebarTabs();
   renderStats();
   if (!(sentence._analisiArchiviate || []).length) document.getElementById('modal-staccate').classList.remove('open');
-  showToast(`Analisi riagganciata a «${w}»`);
+  showToast(piuParole ? `Riagganciata a «${w}» · copriva più parole, estendila se serve` : `Analisi riagganciata a «${w}»`);
 }
 
 function eliminaStaccata(archiveIdx) {
