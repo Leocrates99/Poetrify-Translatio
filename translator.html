@@ -12904,9 +12904,17 @@ function branoFrasiDivergenza() {
   if (!_testoPerConfronto(testoBrano)) return null;   // brano vuoto: lo dice già l'interfaccia
   const seqBrano = _sequenzaToken(testoBrano);
   const seqFrasi = frasi.map(s => _sequenzaToken(s.original)).join('');
+  /* Multiset ORDINATO delle parole: distingue un RIORDINO da un cambio di testo.
+     Se le parole sono le stesse ma la sequenza no, il docente ha spostato o
+     riordinato le frasi (tipico: dividere a mano una frase con «+ Aggiungi»,
+     che però accoda in fondo → l'ordine si sfasa). Chiamarlo «grafia diversa»
+     sarebbe falso: le parole sono identiche, è l'ordine a divergere. */
+  const _multiset = (t) => tokenizeSentence(t || '').filter(x => x.kind === 'word').map(x => x.text).sort();
   let motivo = null;
   if (seqBrano !== seqFrasi) {
-    motivo = 'testo';
+    const msBrano = _multiset(testoBrano);
+    const msFrasi = frasi.flatMap(s => _multiset(s.original)).sort();
+    motivo = (msBrano.length === msFrasi.length && msBrano.every((w, k) => w === msFrasi[k])) ? 'ordine' : 'testo';
   } else if (state.meta.tipoTesto === 'poesia') {
     /* In poesia l'unità è il VERSO, e il verso nasce dagli a capo del brano:
        stesse parole ma un a capo in meno significa che il brano ha un verso
@@ -12985,7 +12993,11 @@ function branoDesyncBannerHtml() {
       <span class="brano-desync-icon" aria-hidden="true">⚠</span>
       <strong>Il brano e le frasi non dicono più la stessa cosa.</strong>
     </div>
-    <p class="brano-desync-body">${d.motivo === 'versi'
+    <p class="brano-desync-body">${d.motivo === 'ordine'
+      ? `Il brano e le frasi contengono <strong>le stesse parole, ma in ordine diverso</strong>: di solito succede
+         dividendo una frase a mano, perché «+ Aggiungi frase» mette la nuova in fondo. ${conteggio}
+         Riportare il brano al testo delle frasi adotta il nuovo ordine e spegne l'avviso.`
+      : d.motivo === 'versi'
       ? `Le parole del brano e quelle delle ${d.frasi} unità d'analisi coincidono, ma il brano è andato a capo
          in modo diverso: conta <strong>${d.versiBrano}</strong> ${d.versiBrano === 1 ? 'verso' : 'versi'}
          contro <strong>${d.frasi}</strong>.
