@@ -4582,6 +4582,18 @@ body[data-profile="medie"] .quick-seg-btn[data-mode="free"] { display: none; }
 .langgate-gr .langgate-icon { font-family: 'GreekTimes', 'Times New Roman', serif; font-style: italic; }
 .langgate-gr:hover { background: color-mix(in srgb, var(--accent-gr) 7%, var(--paper)); }
 /* PROFILO STUDENTE · layout del modale */
+/* GRIGLIA PER PAROLE (#modal-edit-frase) · un campo per parola, punteggiatura
+   come chip inerti. Il testo colto è serif; i campi seguono la lingua. */
+.gp-grid { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; margin: 18px 0 4px; padding: 14px; background: var(--cream); border: 1px solid var(--rule-soft); border-radius: var(--radius-md); max-height: 46vh; overflow-y: auto; }
+.gp-field { font-family: var(--font-classical); font-size: 16px; line-height: 1.3; padding: 5px 8px; min-width: 3ch; width: auto; border: 1.5px solid var(--rule); border-radius: var(--radius-sm); background: var(--paper); color: var(--ink); }
+.gp-field:focus { outline: none; border-color: var(--lang-accent); box-shadow: 0 0 0 3px var(--lang-accent-pale); }
+.gp-field.gp-invalid { border-color: var(--danger); background: rgba(197,48,48,0.06); }
+.gp-chip { font-family: var(--font-classical); font-size: 16px; color: var(--sepia); user-select: none; padding: 0 1px; }
+.gp-warn { margin: 8px 0 0; font-size: 12.5px; line-height: 1.5; color: var(--danger); }
+.gp-warn:empty { display: none; }
+.gp-restructure-link { background: none; border: none; padding: 0; font: inherit; color: var(--lang-accent); cursor: pointer; text-decoration: underline; }
+:root[data-theme="dark"] body .gp-grid { background: rgba(255,255,255,0.03); }
+:root[data-theme="dark"] body .gp-field { background: rgba(255,255,255,0.05); }
 .sp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0 8px; }
 .sp-field { display: flex; flex-direction: column; gap: 4px; }
 .sp-field-full { grid-column: 1 / -1; }
@@ -11884,6 +11896,23 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="document.getElementById('modal-student-profile').classList.remove('open')">Annulla</button>
       <button class="btn btn-primary" onclick="saveStudentProfileFromModal()">Salva profilo</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODIFICA DEL TESTO DI UNA FRASE · griglia sicura per costruzione (una parola
+     per campo). STATICO nel markup, mai iniettato a runtime: eredita così a11y
+     (window.modalA11yAll) e chiusura-sul-fondo (forEach al DOMContentLoaded). -->
+<div class="modal-backdrop" id="modal-edit-frase">
+  <div class="modal" style="max-width: 640px;">
+    <h3 class="modal-title">Correggi il testo della frase</h3>
+    <p class="modal-subtitle" id="mef-subtitle">Correggi la grafia parola per parola — accenti, desinenze, refusi. Il numero delle parole non cambia, così le analisi restano agganciate.</p>
+    <div id="mef-grid" class="gp-grid" aria-label="Parole della frase"></div>
+    <p id="mef-warn" class="gp-warn"></p>
+    <p class="muted-text" style="font-size:12px; margin-top:10px;">Serve <strong>aggiungere, togliere o spostare</strong> parole? <button type="button" class="gp-restructure-link" onclick="restructureSentencePrompt()">Riscrivi la frase da capo →</button></p>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="document.getElementById('modal-edit-frase').classList.remove('open')">Annulla</button>
+      <button class="btn btn-primary" id="mef-save" onclick="saveGrafiaEdit()">Salva le correzioni</button>
     </div>
   </div>
 </div>
@@ -37098,24 +37127,158 @@ function addSentence() {
   renderStats();
 }
 
+/* ══════════════════════════════════════════════════════════════════════════
+   MODIFICA DEL TESTO DI UNA FRASE · porta GRAFIA (griglia sicura per costruzione)
+   ══════════════════════════════════════════════════════════════════════════
+   Il gesto quotidiano non è ristrutturare una frase: è correggerne la grafia (un
+   accento, una desinenza, un refuso). La griglia dà UN campo per parola e la
+   punteggiatura come chip inerti; il numero di parole NON può cambiare, quindi
+   nessun indice-parola scivola e nessuna delle cinque famiglie di ancore si
+   sfasa. La sicurezza è del PREDICATO di validazione (ogni campo deve tokenizzare
+   in esattamente una parola) + della ricomposizione dal FLUSSO DI TOKEN originale
+   (che ripristina byte per byte la punteggiatura e gli spazi): NON è una proprietà
+   astratta del tokenizer, e se un domani si tocca la classe di caratteri-parola
+   in tokenizeSentence questa garanzia va riverificata.
+   La RISTRUTTURAZIONE (cambiare numero/ordine delle parole) resta un atto
+   ESPLICITO e dichiarato (restructureSentencePrompt), non il comportamento
+   predefinito: lì gli indici possono scivolare, e finché non c'è la rimappatura
+   (Stadio 2) il docente viene avvisato che le analisi si scollegano. */
+
+let _mefState = null;   // { sentenceId, tokens } · transiente, non persistito
+
+/* Un campo è una parola valida ⟺ tokenizza in esattamente un token di tipo word. */
+function _gpFieldValido(v) { const t = tokenizeSentence((v || '').trim()); return t.length === 1 && t[0].kind === 'word'; }
+
+function _gpValidate() {
+  const fields = document.querySelectorAll('#mef-grid .gp-field');
+  let tuttiOk = true;
+  fields.forEach(f => { const ok = _gpFieldValido(f.value); f.classList.toggle('gp-invalid', !ok); if (!ok) tuttiOk = false; });
+  const save = document.getElementById('mef-save');
+  if (save) save.disabled = !tuttiOk;
+}
+
+/* Quante analisi di QUESTA frase puntano a un indice-parola fuori range: è il
+   segnale PROVABILE che la frase è già disallineata (una parola annotata è
+   sparita in una modifica precedente col vecchio prompt). Non copre lo
+   scivolamento in-range (indice valido ma parola sbagliata), che è indecidibile
+   per la sola frase — ma è onesto su ciò che può accertare. */
+function _contaAncoreFuoriRange(sentence, nWords) {
+  let n = 0;
+  (sentence.grammar || []).forEach(e => { if (e.tokenIndex != null && (e.tokenIndex < 0 || e.tokenIndex >= nWords)) n++; });
+  (sentence.logic || []).forEach(e => { if ((e.tokenIndices || []).some(i => i < 0 || i >= nWords)) n++; });
+  (sentence.periodale || []).forEach(e => { if ((e.tokenIndices || []).some(i => i < 0 || i >= nWords)) n++; });
+  return n;
+}
+
 function editSentenceText(sentenceId) {
   const sentence = state.sentences.find(s => s.id === sentenceId);
   if (!sentence) return;
-  const newText = prompt('Modifica il testo della frase:', sentence.original);
-  if (newText === null) return;
-  sentence.original = newText.trim();
-  /* NODO APERTO (audit 6/14). Questo assegnamento NON ri-mappa gli indici delle
-     analisi della frase: se la modifica aggiunge/toglie/sposta una parola, tutti
-     i tokenIndex successivi scivolano e le analisi restano appese a parole
-     diverse, in silenzio. L'avviso di divergenza brano↔frasi copre i casi in cui
-     il RISULTATO complessivo diverge dal brano, ma NON lo spostamento di una
-     parola da una frase all'altra (accusa 14: la concatenazione torna identica).
-     La chiusura vera richiede una decisione d'architettura — rimappare gli indici
-     con un allineamento, oppure tenere le frasi come offset dentro il brano — non
-     una toppa qui. Finché resta aperto, editSentenceText va usato per correzioni
-     di grafia, non per riscrivere la struttura della frase. */
+  const tokens = tokenizeSentence(sentence.original);
+  const nWords = tokens.filter(t => t.kind === 'word').length;
+  _mefState = { sentenceId, tokens };
+  const grid = document.getElementById('mef-grid');
+  let wi = 0;
+  grid.innerHTML = tokens.map(t => {
+    if (t.kind === 'word') {
+      const k = wi++;
+      return `<input class="gp-field" type="text" data-widx="${k}" value="${escapeHtml(t.text)}" oninput="_gpValidate()" spellcheck="false" autocomplete="off" size="${Math.max(2, [...t.text].length)}" aria-label="parola ${k + 1}">`;
+    }
+    if (t.kind === 'punct') return `<span class="gp-chip" aria-hidden="true">${escapeHtml(t.text)}</span>`;
+    return `<span class="gp-chip" aria-hidden="true">&nbsp;</span>`; // spazio
+  }).join('');
+  const fuori = _contaAncoreFuoriRange(sentence, nWords);
+  const warn = document.getElementById('mef-warn');
+  warn.innerHTML = fuori > 0
+    ? `⚠ ${fuori} analisi ${fuori === 1 ? 'è già staccata' : 'sono già staccate'} dal testo: una parola annotata è sparita in una modifica precedente. Correggere la grafia qui non le riaggancia — vanno rifatte.`
+    : '';
+  _gpValidate();
+  document.getElementById('modal-edit-frase').classList.add('open');   // ULTIMA istruzione: l'observer a11y mette il focus
+}
+
+function saveGrafiaEdit() {
+  if (!_mefState) return;
+  const sentence = state.sentences.find(s => s.id === _mefState.sentenceId);
+  const chiudi = () => { document.getElementById('modal-edit-frase').classList.remove('open'); _mefState = null; };
+  if (!sentence) { chiudi(); return; }
+  const fields = Array.from(document.querySelectorAll('#mef-grid .gp-field'));
+  if (fields.some(f => !_gpFieldValido(f.value))) { showToast('Ogni campo deve contenere una sola parola'); return; }
+  const newWords = fields.map(f => f.value.trim());
+  const tokens = _mefState.tokens;
+  // Ricomposizione FEDELE: dal flusso di token, sostituisco solo il testo delle
+  // parole; punteggiatura e spazi originali tornano identici → nessun indice si muove.
+  let wi = 0;
+  const nuovoOriginale = tokens.map(t => t.kind === 'word' ? (newWords[wi++] ?? t.text) : t.text).join('');
+  if (nuovoOriginale === sentence.original) { chiudi(); return; }
+  // Indici delle parole realmente cambiate (per risincronizzare solo quelle).
+  const changed = new Set();
+  { let j = 0; tokens.forEach(t => { if (t.kind === 'word') { if (newWords[j] !== t.text) changed.add(j); j++; } }); }
+  _undoCheckpoint();
+  sentence.original = nuovoOriginale;
+  const nWords = newWords.length;
+  // Risincronizza SOLO le copie di TESTO alle posizioni cambiate. MAI gli indici,
+  // gli asindeti, gli id (attribuitoA/dipendeDa), le phrase ellittiche (italiano
+  // dei preset), il connettivo (provenienza ambigua).
+  (sentence.grammar || []).forEach(e => {
+    if (e.tokenIndex != null && changed.has(e.tokenIndex) && e.tokenIndex < nWords) {
+      e.word = newWords[e.tokenIndex];
+      if (e.lemmaCustom) e._rivedere = true;   // override congelati: si marcano, non si ricalcolano
+    }
+  });
+  const ricomponi = idxs => idxs.slice().sort((a, b) => a - b).map(i => newWords[i]).filter(w => w != null).join(' ');
+  (sentence.logic || []).forEach(e => {
+    if (!e.isElliptical && (e.tokenIndices || []).some(i => changed.has(i))) e.phrase = ricomponi(e.tokenIndices);
+  });
+  (sentence.periodale || []).forEach(e => {
+    if ((e.tokenIndices || []).some(i => changed.has(i))) e.text = ricomponi(e.tokenIndices);
+  });
+  chiudi();
   persistCurrent();
   renderEditor();
+  renderSidebarTabs();
+  renderStats();
+  refreshDesyncBanners();   // ULTIMO: il brano ora diverge dalla frase corretta → l'avviso compare a ragione
+  showToast('Correzioni salvate · le analisi restano agganciate');
+}
+
+/* Porta ESPLICITA · riscrivere la frase da capo. Cambia numero/ordine di parole,
+   quindi oggi (prima della rimappatura dello Stadio 2) SCOLLEGA le analisi: lo
+   dice a chiare lettere, ed è una scelta dichiarata, non il comportamento
+   predefinito. Il vecchio editSentenceText faceva questo SEMPRE e in silenzio. */
+function restructureSentencePrompt() {
+  if (!_mefState) return;
+  const sentence = state.sentences.find(s => s.id === _mefState.sentenceId);
+  document.getElementById('modal-edit-frase').classList.remove('open');
+  const id = _mefState.sentenceId; _mefState = null;
+  if (!sentence) return;
+  const newText = prompt('Riscrivi la frase da capo.\n\nAttenzione: cambiare il numero o l\'ordine delle parole scollega le analisi già fatte su questa frase (grammatica, logica, periodo), che andranno rifatte. Per correggere solo la grafia, usa la griglia.', sentence.original);
+  if (newText === null) return;
+  const t = newText.trim();
+  if (!t || t === sentence.original) return;
+  _undoCheckpoint();
+  sentence.original = t;
+  persistCurrent();
+  renderEditor();
+  renderSidebarTabs();
+  renderStats();
+  refreshDesyncBanners();
+}
+
+/* Un checkpoint ESPLICITO nella pila di undo, prima di una modifica: un solo
+   Ctrl+Z annulla l'intera operazione. Composto dalle primitive esistenti — il
+   debounce di 600ms di pushUndoSnapshot farebbe sì che un push immediato non
+   registri nulla, quindi qui si spinge lo stato PRECEDENTE a mano e si allinea
+   _shadowSnap così che la persistCurrent successiva non registri un doppione. */
+function _undoCheckpoint() {
+  if (_undoInProgress) return;
+  const pre = _snapshotState();
+  if (!pre) return;
+  if (_undoPushTimer) { clearTimeout(_undoPushTimer); _undoPushTimer = null; }
+  if (_undoStack.length === 0 || _undoStack[_undoStack.length - 1] !== pre) {
+    _undoStack.push(pre);
+    if (_undoStack.length > _UNDO_STACK_LIMIT) _undoStack.shift();
+    _redoStack.length = 0;
+  }
+  _shadowSnap = pre;
 }
 
 function deleteSentence(sentenceId) {
@@ -37233,7 +37396,7 @@ function updateGrammarField(sentenceId, entryId, key, value) {
     // Campi sempre protetti: dati identificativi, lemma, attributi extra (tantum, reggenza, ellisi)
     const validKeys = new Set([
       'word','partOfSpeech','note','id','tokenIndex',
-      'lemma','lemmaCustom','tema','desinenza',
+      'lemma','lemmaCustom','tema','desinenza','_rivedere',
       'tantum','reggenza','isElliptical','_expanded','_autoFilled','transitivo'
     ].concat(schema.map(f => f.key)).concat(schema.map(f => f.key + '__mode')));
     Object.keys(entry).forEach(k => {
@@ -38213,7 +38376,10 @@ function projectMd(d) {
         const schema = getMorphSchema(d.meta.lingua, e);
         const morph = schema.map(f => e[f.key] ? `${f.label}: ${e[f.key]}` : null).filter(Boolean).join('; ');
         // Lemma: usa quello salvato (eccezione) o quello predetto
-        let lemma = e.lemma || '';
+        // _rivedere: dopo una correzione di grafia, un lemma personalizzato
+        // congelato descrive la forma VECCHIA. Non fidarsene: ripredire dalla
+        // parola (già risincronizzata) invece di esportare in silenzio lo stantìo.
+        let lemma = (e.lemma && !e._rivedere) ? e.lemma : '';
         if (!lemma) {
           const pred = predictLemma(e, d.meta.lingua);
           lemma = (pred && pred.lemma) ? pred.lemma : '';
@@ -38350,7 +38516,10 @@ function buildPrintHtml(includeTokenGrid) {
         const morph = schema.map(f => e[f.key] ? `<strong>${f.label}:</strong> ${escapeHtml(e[f.key])}` : null).filter(Boolean).join(' · ');
         const caseGroup = caseGroupForGrammarEntry(e);
         const chipStyle = caseExportStyle(caseGroup, 'padding:2pt 7pt;border-radius:3px;display:inline-block;font-size:9.5pt;white-space:nowrap;');
-        let lemma = e.lemma || '';
+        // _rivedere: dopo una correzione di grafia, un lemma personalizzato
+        // congelato descrive la forma VECCHIA. Non fidarsene: ripredire dalla
+        // parola (già risincronizzata) invece di esportare in silenzio lo stantìo.
+        let lemma = (e.lemma && !e._rivedere) ? e.lemma : '';
         if (!lemma) {
           const pred = predictLemma(e, d.meta.lingua);
           lemma = (pred && pred.lemma) ? pred.lemma : '';
