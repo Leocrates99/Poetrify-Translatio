@@ -4602,6 +4602,17 @@ body[data-profile="medie"] .quick-seg-btn[data-mode="free"] { display: none; }
 .mef-referto-parole { color: var(--sepia); font-style: italic; }
 .mef-referto-nulla { color: var(--sepia); font-style: italic; }
 :root[data-theme="dark"] body .mef-textarea { background: rgba(255,255,255,0.05); }
+/* ANALISI STACCATE · affordance nella card frase + lista nel modale */
+.sentence-staccate-btn { margin-top: 8px; background: rgba(214,158,46,0.12); border: 1px solid rgba(214,158,46,0.45); border-radius: var(--radius-sm); color: var(--sepia); font-family: var(--font-ui); font-size: 11.5px; font-weight: 600; padding: 4px 9px; cursor: pointer; }
+.sentence-staccate-btn:hover { background: rgba(214,158,46,0.2); }
+.staccata-riga { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding: 10px 0; border-top: 1px solid var(--rule-soft); }
+.staccata-riga:first-child { border-top: none; }
+.staccata-info { flex: 1 1 200px; min-width: 0; font-family: var(--font-ui); font-size: 13px; color: var(--ink); }
+.staccata-info em { color: var(--sepia); font-style: normal; font-size: 11.5px; }
+.staccata-parola { font-family: var(--font-classical); font-weight: 700; }
+.staccata-ctrl { display: flex; align-items: center; gap: 6px; }
+.staccata-ctrl select { font-family: var(--font-ui); font-size: 12px; padding: 5px 7px; border: 1px solid var(--rule); border-radius: var(--radius-sm); background: var(--paper); color: var(--ink); }
+.staccate-vuoto { font-family: var(--font-ui); font-size: 13px; color: var(--sepia); font-style: italic; padding: 8px 0; }
 :root[data-theme="dark"] body .gp-grid { background: rgba(255,255,255,0.03); }
 :root[data-theme="dark"] body .gp-field { background: rgba(255,255,255,0.05); }
 .sp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0 8px; }
@@ -11960,6 +11971,19 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   </div>
 </div>
 
+<!-- ANALISI STACCATE · quelle che una riscrittura ha sganciato dalle parole, con
+     il loro contenuto intatto: si riagganciano a una parola o si eliminano. -->
+<div class="modal-backdrop" id="modal-staccate">
+  <div class="modal" style="max-width: 620px;">
+    <h3 class="modal-title">Analisi staccate</h3>
+    <p class="modal-subtitle">Una riscrittura le ha sganciate dalla loro parola, ma il lavoro è intatto: riagganciale alla parola giusta, o eliminale.</p>
+    <div id="staccate-list"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="document.getElementById('modal-staccate').classList.remove('open')">Chiudi</button>
+    </div>
+  </div>
+</div>
+
 <!-- PASSAGGIO D'ANNO · compare al 1° settembre finché non si conferma -->
 <div class="modal-backdrop" id="modal-year-rollover">
   <div class="modal" style="max-width: 560px;">
@@ -12932,6 +12956,7 @@ function makeSentence(text) {
     ordoVerborum: [],           // [{id, phrase, italian, sourceLogicId}]
     grammar: [], logic: [], periodale: [],
     asindeti: [], // array di tokenIdx (negativi) per punteggiatura asindetica
+    _analisiArchiviate: [], // analisi staccate da una riscrittura, da riagganciare a mano
   };
 }
 
@@ -26858,6 +26883,7 @@ function renderSentenceListInner() {
         <span class="progress-tag ${logicFilled ? 'filled' : ''}">Logica${logicFilled ? ' ✓' : ''}</span>
         <span class="progress-tag ${periodaleFilled ? 'filled' : ''}">Periodale${periodaleFilled ? ' ✓' : ''}</span>
       </div>
+      ${(s._analisiArchiviate || []).length ? `<button class="sentence-staccate-btn" onclick="openStaccateModal('${s.id}')">🔖 ${s._analisiArchiviate.length} ${s._analisiArchiviate.length === 1 ? 'analisi staccata' : 'analisi staccate'} · riaggancia</button>` : ''}
     </div>`;
   }).join('');
 }
@@ -37416,7 +37442,7 @@ function renderRemapReferto(plan) {
   if (plan.asindetiPersi) html += `<div class="mef-referto-riga"><span class="mef-referto-staccate">✕ ${plan.nAsindeti} asindet${plan.nAsindeti === 1 ? 'o' : 'i'}</span> <span class="mef-referto-parole">— l'ordine delle parole è cambiato, vanno riconfermati</span></div>`;
   if (gia.length > 0) html += `<div class="mef-referto-riga mef-referto-parole">${gia.length} ${gia.length === 1 ? 'era già staccata' : 'erano già staccate'} da una modifica precedente: ${voci(gia)}.</div>`;
   if (!html) html = '<span class="mef-referto-nulla">Nessuna analisi si stacca: tutte seguono le parole.</span>';
-  else if (nuove.length || plan.asindetiPersi) html += `<div class="mef-referto-riga mef-referto-parole" style="margin-top:4px;">Le analisi staccate vanno rifatte a mano dopo l'applicazione.</div>`;
+  else if (nuove.length || plan.asindetiPersi) html += `<div class="mef-referto-riga mef-referto-parole" style="margin-top:4px;">Le analisi staccate non vanno perse: restano da <strong>riagganciare</strong> a una parola (le trovi nel riquadro «staccate» della frase).</div>`;
   return html;
 }
 
@@ -37471,6 +37497,14 @@ function applyRestructure() {
   const plan = computeRemapPlan(sentence, newText);
   _undoCheckpoint();
   const staccate = new Set(plan.detached.map(d => d.e));
+  // ARCHIVIA le analisi staccate invece di buttarle: portano il lavoro del docente
+  // (morfologia, funzione, resa italiana) e potranno essere riagganciate a mano.
+  // «Staccare e archiviare», non «staccare e rimuovere».
+  if (plan.detached.length) {
+    sentence._analisiArchiviate = (sentence._analisiArchiviate || []).concat(
+      plan.detached.map(d => ({ kind: d.kind, parola: d.parola, entry: d.e }))
+    );
+  }
   // GRAMMATICA · rimappa i sopravvissuti (indice + copia di testo), rimuovi gli staccati
   sentence.grammar = (sentence.grammar || []).filter(e => {
     if (staccate.has(e)) return false;
@@ -37530,9 +37564,90 @@ function applyRestructure() {
   // (che vanno RICONFERMATI, non «rifatti») sono due cose distinte.
   const nDet = plan.detached.length, nSurv = plan.survivors.length;
   const pezzi = [`${nSurv} ${nSurv === 1 ? 'analisi segue' : 'analisi seguono'}`];
-  if (nDet > 0) pezzi.push(`${nDet} staccat${nDet === 1 ? 'a' : 'e'}`);
+  if (nDet > 0) pezzi.push(`${nDet} da riagganciare`);
   if (plan.asindetiPersi) pezzi.push(`${plan.nAsindeti} asindet${plan.nAsindeti === 1 ? 'o' : 'i'} da riconfermare`);
   showToast('Frase riscritta · ' + (nDet || plan.asindetiPersi ? pezzi.join(', ') : 'tutte le analisi seguono le parole'));
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ANALISI STACCATE · archivio e ri-aggancio (Stadio 3)
+   ══════════════════════════════════════════════════════════════════════════
+   Una riscrittura che stacca un'analisi non ne butta più il contenuto: lo mette
+   in sentence._analisiArchiviate. Qui il docente la riaggancia a una parola (il
+   lavoro di morfologia/funzione è intatto) o la elimina. Copre il caso gemello
+   14 (parola spostata FRA le frasi): l'analisi si stacca dalla frase d'origine
+   ma resta a portata di mano, da riappendere dov'è finita la parola. */
+let _mefStaccateId = null;
+
+function openStaccateModal(sentenceId) {
+  _mefStaccateId = sentenceId;
+  renderStaccateList();
+  document.getElementById('modal-staccate').classList.add('open');
+}
+
+function _staccataLabel(a) {
+  const e = a.entry || {};
+  if (a.kind === 'grammar')   return `<span class="staccata-parola">${escapeHtml(e.word || a.parola || '?')}</span> <em>· ${escapeHtml(e.partOfSpeech || 'grammaticale')}</em>`;
+  if (a.kind === 'logic')     return `<span class="staccata-parola">${escapeHtml(e.phrase || a.parola || '?')}</span> <em>· ${escapeHtml(e.funzione || 'logica')}</em>`;
+  if (a.kind === 'periodale') return `<span class="staccata-parola">${escapeHtml(e.text || a.parola || '?')}</span> <em>· ${escapeHtml(e.ruolo || 'del periodo')}</em>`;
+  return `<span class="staccata-parola">«${escapeHtml(e.italian || a.parola || '?')}»</span> <em>· traduzione</em>`;
+}
+
+function renderStaccateList() {
+  const cont = document.getElementById('staccate-list');
+  const sentence = state.sentences.find(s => s.id === _mefStaccateId);
+  if (!cont) return;
+  if (!sentence || !(sentence._analisiArchiviate || []).length) {
+    cont.innerHTML = '<p class="staccate-vuoto">Nessuna analisi staccata: sono state tutte riagganciate o eliminate.</p>';
+    return;
+  }
+  const words = tokenizeSentence(sentence.original).filter(t => t.kind === 'word');
+  const opts = words.map((t, k) => `<option value="${k}">${escapeHtml(t.text)}</option>`).join('');
+  cont.innerHTML = sentence._analisiArchiviate.map((a, i) => {
+    const ctrl = (a.kind !== 'ordo' && words.length)
+      ? `<div class="staccata-ctrl"><select id="staccata-sel-${i}" aria-label="parola a cui riagganciare">${opts}</select><button class="btn btn-brand-soft btn-sm" onclick="riaggancia(${i})">Riaggancia</button></div>`
+      : '';
+    return `<div class="staccata-riga">
+      <div class="staccata-info">${_staccataLabel(a)}</div>
+      ${ctrl}
+      <button class="btn btn-danger-soft btn-sm" onclick="eliminaStaccata(${i})" title="Elimina definitivamente">Elimina</button>
+    </div>`;
+  }).join('');
+}
+
+function riaggancia(archiveIdx) {
+  const sentence = state.sentences.find(s => s.id === _mefStaccateId);
+  if (!sentence) return;
+  const a = (sentence._analisiArchiviate || [])[archiveIdx];
+  if (!a || a.kind === 'ordo') return;
+  const sel = document.getElementById('staccata-sel-' + archiveIdx);
+  const idx = parseInt(sel && sel.value, 10);
+  const words = tokenizeSentence(sentence.original).filter(t => t.kind === 'word');
+  if (isNaN(idx) || idx < 0 || idx >= words.length) { showToast('Scegli una parola a cui riagganciare'); return; }
+  _undoCheckpoint();
+  const e = a.entry, w = words[idx].text;
+  if (a.kind === 'grammar') { e.tokenIndex = idx; e.word = w; if (e.lemmaCustom) e._rivedere = true; sentence.grammar.push(e); }
+  else if (a.kind === 'logic') { e.tokenIndices = [idx]; e.phrase = w; sentence.logic.push(e); }
+  else if (a.kind === 'periodale') { e.tokenIndices = [idx]; e.text = w; sentence.periodale.push(e); }
+  sentence._analisiArchiviate.splice(archiveIdx, 1);
+  persistCurrent();
+  renderStaccateList();
+  renderEditor();
+  renderSidebarTabs();
+  renderStats();
+  if (!(sentence._analisiArchiviate || []).length) document.getElementById('modal-staccate').classList.remove('open');
+  showToast(`Analisi riagganciata a «${w}»`);
+}
+
+function eliminaStaccata(archiveIdx) {
+  const sentence = state.sentences.find(s => s.id === _mefStaccateId);
+  if (!sentence) return;
+  _undoCheckpoint();
+  (sentence._analisiArchiviate || []).splice(archiveIdx, 1);
+  persistCurrent();
+  renderStaccateList();
+  renderEditor();
+  if (!(sentence._analisiArchiviate || []).length) document.getElementById('modal-staccate').classList.remove('open');
 }
 
 /* Un checkpoint ESPLICITO nella pila di undo, prima di una modifica: un solo
