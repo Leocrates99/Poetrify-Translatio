@@ -13067,7 +13067,7 @@ function branoDesyncBannerHtml() {
     </div>
     <p class="brano-desync-body">${d.motivo === 'ordine'
       ? `Il brano e le frasi contengono <strong>le stesse parole, ma in ordine diverso</strong>: di solito succede
-         dividendo una frase a mano, perché «+ Aggiungi frase» mette la nuova in fondo. ${conteggio}
+         riordinando o spostando parole fra le frasi. ${conteggio}
          Riportare il brano al testo delle frasi adotta il nuovo ordine e spegne l'avviso.`
       : d.motivo === 'versi'
       ? `Le parole del brano e quelle delle ${d.frasi} unità d'analisi coincidono, ma il brano è andato a capo
@@ -37178,9 +37178,16 @@ function confirmAddSentence() {
   const ta = document.getElementById('maf-textarea'), sel = document.getElementById('maf-pos');
   const text = (ta.value || '').trim();
   if (!text) { showToast('Scrivi il testo della frase'); return; }
-  const pos = Math.max(0, Math.min(state.sentences.length, parseInt(sel.value, 10) || state.sentences.length));
+  // NB: NON `parseInt(...) || length` — la posizione 0 («All'inizio») è falsy e
+  // ripiegherebbe in fondo. Serve un controllo esplicito di NaN.
+  const raw = parseInt(sel.value, 10);
+  const pos = Math.max(0, Math.min(state.sentences.length, isNaN(raw) ? state.sentences.length : raw));
   _undoCheckpoint();
   state.sentences.splice(pos, 0, makeSentence(text));
+  // inserendo NON in fondo, le frasi seguenti scalano di +1: tieni allineati gli
+  // indici di «frase corrente» o evidenzieresti/analizzeresti la frase sbagliata.
+  if (typeof state.currentSentenceIdx === 'number' && pos <= state.currentSentenceIdx) state.currentSentenceIdx++;
+  if (typeof state.guidedSentenceIdx === 'number' && pos <= state.guidedSentenceIdx) state.guidedSentenceIdx++;
   maybeAutoClosedClass();
   document.getElementById('modal-add-frase').classList.remove('open');
   persistCurrent();
@@ -37329,7 +37336,12 @@ function _heckelMap(O, N) {
   const posN = new Map(); N.forEach((w, j) => { if (cN.get(w) === 1) posN.set(w, j); });
   const map = new Map(), anchors = [];
   O.forEach((w, i) => { if (cO.get(w) === 1 && cN.get(w) === 1) { const j = posN.get(w); map.set(i, j); anchors.push({ oi: i, nj: j }); } });
-  const spine = anchors.slice().sort((a, b) => a.oi - b.oi).filter((a, k, arr) => k === 0 || a.nj > arr[k - 1].nj);
+  // Spina monotòna in nj: greedy sull'ULTIMA ancora TENUTA (non su arr[k-1], che
+  // in Array.filter è il predecessore nell'array ORDINATO — magari già scartato:
+  // darebbe una spina non crescente e salterebbe intervalli blindati validi).
+  const sorted = anchors.slice().sort((a, b) => a.oi - b.oi);
+  const spine = []; let _lastNj = -1;
+  for (const a of sorted) { if (a.nj > _lastNj) { spine.push(a); _lastNj = a.nj; } }
   const ends = [{ oi: -1, nj: -1 }, ...spine, { oi: O.length, nj: N.length }];
   for (let k = 0; k < ends.length - 1; k++) {
     const a = ends[k], b = ends[k + 1];
@@ -37349,63 +37361,83 @@ function computeRemapPlan(sentence, newText) {
   const O = wordsOf(sentence.original), N = wordsOf(newText);
   const map = _heckelMap(O, N);
   const survivors = [], detached = [];
+  const giaRottoIdx = i => i < 0 || i >= O.length;   // ancora già fuori range PRIMA della riscrittura
   (sentence.grammar || []).forEach(e => {
-    if (e.tokenIndex == null) return;              // ellittica / senza ancora: non si tocca
+    if (e.tokenIndex == null) return;              // senza ancora di posizione (soggetto sottinteso): non si tocca
     if (map.has(e.tokenIndex)) survivors.push({ e, kind: 'grammar' });
-    else detached.push({ e, kind: 'grammar', parola: e.word || O[e.tokenIndex] || '?' });
+    else detached.push({ e, kind: 'grammar', parola: e.word || O[e.tokenIndex] || '?', giaRotta: giaRottoIdx(e.tokenIndex) });
   });
+  // La guardia è su tokenIndices.length, NON su isElliptical: una proposizione a
+  // VERBO SOTTINTESO è ellittica ma OCCUPA parole reali (ha tokenIndices) e va
+  // rimappata come le altre — saltarla la lascerebbe appesa agli indici vecchi,
+  // proprio il bug che stiamo chiudendo. Solo chi non ha ancora (tokenIndices=[])
+  // si salta: lì non c'è posizione da seguire.
   const valutaArray = (e, kind, testo) => {
-    if (e.isElliptical) return;                    // ellittica: nessuna ancora di posizione
     const idxs = e.tokenIndices || []; if (!idxs.length) return;
-    // sopravvive solo se OGNI indice è forzato: un sintagma che perde una parola
-    // è ambiguo, e va dichiarato — non troncato in silenzio.
     if (idxs.every(i => map.has(i))) survivors.push({ e, kind });
-    else detached.push({ e, kind, parola: testo(e) || idxs.map(i => O[i]).filter(Boolean).join(' ') });
+    else detached.push({ e, kind, parola: testo(e) || idxs.map(i => O[i]).filter(Boolean).join(' '), giaRotta: idxs.some(giaRottoIdx) });
   };
   (sentence.logic || []).forEach(e => valutaArray(e, 'logic', x => x.phrase));
   (sentence.periodale || []).forEach(e => valutaArray(e, 'periodale', x => x.text));
-  const punctSeq = t => tokenizeSentence(t || '').filter(x => x.kind === 'punct').map(x => x.text).join('|');
+  // ORDO · un chip di traduzione perde l'ancora se il suo verbo/sintagma sparisce.
+  // Va CONTATO nel referto (porta il lavoro del docente: la resa italiana).
+  const logicVivi = new Set(sentence.logic.filter(e => !((e.tokenIndices || []).length) || (e.tokenIndices || []).every(i => map.has(i))).map(e => e.id));
+  (sentence.ordoVerborum || []).forEach(o => {
+    let vive = true;
+    if (typeof o.sourceLogicId === 'string' && o.sourceLogicId.indexOf('V:') === 0) {
+      vive = map.has(parseInt(o.sourceLogicId.slice(2), 10));
+    } else if (o.sourceLogicId) {
+      vive = logicVivi.has(o.sourceLogicId);
+    } else if (typeof o.sourceTokenIdx === 'number') {
+      vive = map.has(o.sourceTokenIdx);
+    }
+    if (!vive) detached.push({ e: o, kind: 'ordo', parola: o.italian || o.phrase || '(tessera d\'ordine)' });
+  });
+  // ASINDETI · gli indici negativi sono ORDINALI: reggono SOLO se ogni parola
+  // resta al suo posto (nessuno spostamento strutturale). Basta un riordino, anche
+  // a punteggiatura identica, perché un asindeto marchi un confine diverso.
   const nAsindeti = (sentence.asindeti || []).length;
-  const asindetiPersi = nAsindeti > 0 && punctSeq(sentence.original) !== punctSeq(newText);
+  const identitaParole = O.length === N.length && O.every((w, i) => map.get(i) === i);
+  const asindetiPersi = nAsindeti > 0 && !identitaParole;
   return { map, O, N, survivors, detached, asindetiPersi, nAsindeti, newText };
 }
 
-const _KIND_LABEL = { grammar: 'grammaticale', logic: 'logica', periodale: 'del periodo' };
+const _KIND_LABEL = { grammar: 'grammaticale', logic: 'logica', periodale: 'del periodo', ordo: 'traduzione' };
 
 function renderRemapReferto(plan) {
   if (plan.newText === '' ) return '<span class="mef-referto-nulla">Scrivi il testo della frase.</span>';
   const nSurv = plan.survivors.length;
-  const det = plan.detached.slice();
+  const nuove = plan.detached.filter(d => !d.giaRotta);   // staccate DALLA riscrittura
+  const gia = plan.detached.filter(d => d.giaRotta);      // già staccate da un edit precedente
+  const voci = arr => arr.map(d => `«${escapeHtml(d.parola)}» (${_KIND_LABEL[d.kind]})`).join(', ');
   let html = '';
   if (nSurv > 0) html += `<div class="mef-referto-riga"><span class="mef-referto-seguono">✓ ${nSurv} analisi ${nSurv === 1 ? 'segue la sua parola' : 'seguono le loro parole'}</span></div>`;
-  if (det.length > 0) {
-    const voci = det.map(d => `«${escapeHtml(d.parola)}» (${_KIND_LABEL[d.kind]})`).join(', ');
-    html += `<div class="mef-referto-riga"><span class="mef-referto-staccate">✕ ${det.length} si stacca${det.length === 1 ? '' : 'no'}:</span> <span class="mef-referto-parole">${voci}</span></div>`;
-  }
-  if (plan.asindetiPersi) html += `<div class="mef-referto-riga"><span class="mef-referto-staccate">✕ ${plan.nAsindeti} asindet${plan.nAsindeti === 1 ? 'o' : 'i'}</span> <span class="mef-referto-parole">— la punteggiatura è cambiata, vanno riconfermati</span></div>`;
+  if (nuove.length > 0) html += `<div class="mef-referto-riga"><span class="mef-referto-staccate">✕ ${nuove.length} si stacca${nuove.length === 1 ? '' : 'no'}:</span> <span class="mef-referto-parole">${voci(nuove)}</span></div>`;
+  if (plan.asindetiPersi) html += `<div class="mef-referto-riga"><span class="mef-referto-staccate">✕ ${plan.nAsindeti} asindet${plan.nAsindeti === 1 ? 'o' : 'i'}</span> <span class="mef-referto-parole">— l'ordine delle parole è cambiato, vanno riconfermati</span></div>`;
+  if (gia.length > 0) html += `<div class="mef-referto-riga mef-referto-parole">${gia.length} ${gia.length === 1 ? 'era già staccata' : 'erano già staccate'} da una modifica precedente: ${voci(gia)}.</div>`;
   if (!html) html = '<span class="mef-referto-nulla">Nessuna analisi si stacca: tutte seguono le parole.</span>';
-  else if (det.length || plan.asindetiPersi) html += `<div class="mef-referto-riga mef-referto-parole" style="margin-top:4px;">Le analisi staccate vanno rifatte a mano dopo l'applicazione.</div>`;
+  else if (nuove.length || plan.asindetiPersi) html += `<div class="mef-referto-riga mef-referto-parole" style="margin-top:4px;">Le analisi staccate vanno rifatte a mano dopo l'applicazione.</div>`;
   return html;
 }
 
-let _mefLiveTimer = null;
+/* SINCRONO, non in debounce: computeRemapPlan è O(n) su una sola frase corta.
+   Se fosse ritardato, cliccando Applica entro la finestra il referto mostrerebbe
+   un piano e applyRestructure ne eseguirebbe un altro (ricalcolato sul testo
+   corrente): l'anteprima divergerebbe dall'esecuzione. Così invece il referto
+   riflette sempre il testo esatto che verrà applicato. */
 function _mefRestructureLive() {
-  if (_mefLiveTimer) clearTimeout(_mefLiveTimer);
-  _mefLiveTimer = setTimeout(() => {
-    _mefLiveTimer = null;
-    if (!_mefState) return;
-    const sentence = state.sentences.find(s => s.id === _mefState.sentenceId);
-    const ta = document.getElementById('mef-textarea'), ref = document.getElementById('mef-referto'), apply = document.getElementById('mef-apply');
-    if (!sentence || !ta || !ref) return;
-    const nuovo = ta.value.trim();
-    if (nuovo === '' || nuovo === sentence.original) {
-      ref.innerHTML = nuovo === '' ? '<span class="mef-referto-nulla">Scrivi il testo della frase.</span>' : '<span class="mef-referto-nulla">Il testo non è cambiato.</span>';
-      if (apply) apply.disabled = true;
-      return;
-    }
-    ref.innerHTML = renderRemapReferto(computeRemapPlan(sentence, nuovo));
-    if (apply) apply.disabled = false;
-  }, 200);
+  if (!_mefState) return;
+  const sentence = state.sentences.find(s => s.id === _mefState.sentenceId);
+  const ta = document.getElementById('mef-textarea'), ref = document.getElementById('mef-referto'), apply = document.getElementById('mef-apply');
+  if (!sentence || !ta || !ref) return;
+  const nuovo = ta.value.trim();
+  if (nuovo === '' || nuovo === sentence.original) {
+    ref.innerHTML = nuovo === '' ? '<span class="mef-referto-nulla">Scrivi il testo della frase.</span>' : '<span class="mef-referto-nulla">Il testo non è cambiato.</span>';
+    if (apply) apply.disabled = true;
+    return;
+  }
+  ref.innerHTML = renderRemapReferto(computeRemapPlan(sentence, nuovo));
+  if (apply) apply.disabled = false;
 }
 
 function switchToRestructure() {
@@ -37449,10 +37481,12 @@ function applyRestructure() {
     }
     return true;
   });
-  // LOGICA e PERIODO · rimappa gli array interi (tutti gli indici forzati), ricostruisci il testo
+  // LOGICA e PERIODO · rimappa gli array interi. La guardia è su tokenIndices.length,
+  // NON su isElliptical: una proposizione a verbo sottinteso ha posizione reale e va
+  // rimappata (chi non ha ancora — tokenIndices=[] — salta il blocco da sé).
   const rimappaArray = (arr, campoTesto) => (arr || []).filter(e => {
     if (staccate.has(e)) return false;
-    if (!e.isElliptical && (e.tokenIndices || []).length) {
+    if ((e.tokenIndices || []).length) {
       e.tokenIndices = e.tokenIndices.map(i => plan.map.get(i)).sort((a, b) => a - b);
       e[campoTesto] = e.tokenIndices.map(i => plan.N[i]).join(' ');
     }
@@ -37460,29 +37494,30 @@ function applyRestructure() {
   });
   sentence.logic = rimappaArray(sentence.logic, 'phrase');
   sentence.periodale = rimappaArray(sentence.periodale, 'text');
-  // dipendeDa orfani: se il capo di una catena è stato staccato, sgancia i figli
-  const vivi = new Set(sentence.periodale.map(e => e.id));
-  sentence.periodale.forEach(e => { if (e.dipendeDa && !vivi.has(e.dipendeDa)) e.dipendeDa = ''; });
+  // Riferimenti per ID a entry staccate: sganciali, o restano penzolanti (il capo
+  // mostrerebbe «senza capo», il figlio punterebbe a un id morto).
+  const logicVivi = new Set(sentence.logic.map(e => e.id));
+  sentence.logic.forEach(e => { if (e.attribuitoA && !logicVivi.has(e.attribuitoA)) { e.attribuitoA = ''; e.isAttributivo = false; } });
+  const perVivi = new Set(sentence.periodale.map(e => e.id));
+  sentence.periodale.forEach(e => { if (e.dipendeDa && !perVivi.has(e.dipendeDa)) e.dipendeDa = ''; });
   // ASINDETI · si tengono solo se la punteggiatura è identica (l'indice negativo
   // -100-k punta ancora allo stesso segno); altrimenti si azzerano (dichiarato).
   if (plan.asindetiPersi) sentence.asindeti = [];
-  // ORDO · sourceTokenIdx è DERIVATO: rimappa o ricalcola, droppa gli orfani.
+  // ORDO · il piano ha già deciso quali tessere si staccano (e le ha contate nel
+  // referto): qui si RIMUOVONO esattamente quelle, e si rimappa il resto. Così
+  // ciò che si esegue coincide con ciò che il referto ha mostrato.
   sentence.ordoVerborum = (sentence.ordoVerborum || []).filter(o => {
+    if (staccate.has(o)) return false;
     if (typeof o.sourceLogicId === 'string' && o.sourceLogicId.indexOf('V:') === 0) {
-      const oldIdx = parseInt(o.sourceLogicId.slice(2), 10);
-      if (plan.map.has(oldIdx)) { const nj = plan.map.get(oldIdx); o.sourceLogicId = 'V:' + nj; o.sourceTokenIdx = nj; return true; }
-      return false;                                 // il verbo è sparito
+      const nj = plan.map.get(parseInt(o.sourceLogicId.slice(2), 10));
+      if (nj != null) { o.sourceLogicId = 'V:' + nj; o.sourceTokenIdx = nj; }
+    } else if (o.sourceLogicId) {
+      const lg = sentence.logic.find(e => e.id === o.sourceLogicId);   // sopravvissuto (o ellittico)
+      if (lg && (lg.tokenIndices || []).length) o.sourceTokenIdx = Math.min.apply(null, lg.tokenIndices);
+    } else if (typeof o.sourceTokenIdx === 'number' && plan.map.has(o.sourceTokenIdx)) {
+      o.sourceTokenIdx = plan.map.get(o.sourceTokenIdx);
     }
-    if (o.sourceLogicId) {
-      const lg = sentence.logic.find(e => e.id === o.sourceLogicId);  // solo fra i sopravvissuti
-      if (lg && (lg.tokenIndices || []).length) { o.sourceTokenIdx = Math.min.apply(null, lg.tokenIndices); return true; }
-      return false;                                 // il sintagma è stato staccato
-    }
-    if (typeof o.sourceTokenIdx === 'number') {
-      if (plan.map.has(o.sourceTokenIdx)) { o.sourceTokenIdx = plan.map.get(o.sourceTokenIdx); return true; }
-      return false;
-    }
-    return true;                                    // chip manuale senza ancora
+    return true;
   });
   sentence.original = newText;
   close();
@@ -37491,11 +37526,13 @@ function applyRestructure() {
   renderSidebarTabs();
   renderStats();
   refreshDesyncBanners();
-  const nStacc = plan.detached.length + (plan.asindetiPersi ? plan.nAsindeti : 0);
-  const nSurv = plan.survivors.length;
-  showToast(nStacc > 0
-    ? `Frase riscritta · ${nSurv} ${nSurv === 1 ? 'analisi segue' : 'analisi seguono'}, ${nStacc} staccat${nStacc === 1 ? 'a' : 'e'} (da rifare)`
-    : 'Frase riscritta · tutte le analisi seguono le parole');
+  // Conteggi coerenti col referto: le analisi/tessere staccate e gli asindeti
+  // (che vanno RICONFERMATI, non «rifatti») sono due cose distinte.
+  const nDet = plan.detached.length, nSurv = plan.survivors.length;
+  const pezzi = [`${nSurv} ${nSurv === 1 ? 'analisi segue' : 'analisi seguono'}`];
+  if (nDet > 0) pezzi.push(`${nDet} staccat${nDet === 1 ? 'a' : 'e'}`);
+  if (plan.asindetiPersi) pezzi.push(`${plan.nAsindeti} asindet${plan.nAsindeti === 1 ? 'o' : 'i'} da riconfermare`);
+  showToast('Frase riscritta · ' + (nDet || plan.asindetiPersi ? pezzi.join(', ') : 'tutte le analisi seguono le parole'));
 }
 
 /* Un checkpoint ESPLICITO nella pila di undo, prima di una modifica: un solo
