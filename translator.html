@@ -3176,6 +3176,10 @@ h1.scheletro-sentence-num,
 .brano-desync-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
 .brano-desync-cost { margin: 8px 0 0; font-size: 11.5px; line-height: 1.5; color: var(--sepia); font-style: italic; }
 :root[data-theme="dark"] body .brano-desync { background: rgba(214,158,46,0.14); }
+/* lo slot vive sempre nel markup ma non deve occupare spazio quando è vuoto */
+.brano-desync-slot:empty { display: none; }
+/* nell'anteprima laterale, più stretta, il banner si compatta un filo */
+.preview-content .brano-desync { margin: 0 0 10px; font-size: 12px; }
 
 .case-warning {
   display: flex;
@@ -13008,6 +13012,22 @@ function branoDesyncBannerHtml() {
       <strong>cancella le analisi</strong>. Puoi anche non fare nulla e continuare: l'avviso resta finché le due versioni divergono.
     </p>
   </div>`;
+}
+
+/* Uno SLOT stabile per il banner: un contenitore sempre presente nel markup —
+   anche quando il banner è vuoto — così può essere riempito in loco senza
+   ridisegnare l'intera scheda. È il perno di due cose:
+   · COPERTURA — lo slot vive in ogni superficie dove la divergenza è visibile
+     o provocabile (scheda A, lista frasi, anteprima laterale, modalità
+     guidata), non più solo in due schede su sette.
+   · TEMPESTIVITÀ — quando il brano cambia (una battuta nella textarea, un
+     inserimento OCR) l'avviso deve comparire SUBITO. onTestoChange non
+     ridisegna l'editor, quindi il banner nella scheda in cui ti trovi non si
+     aggiornava: poteva restare invisibile mentre correggevi venti parole.
+     refreshDesyncBanners aggiorna ogni slot già in pagina, in loco. */
+function branoDesyncSlotHtml() { return `<div class="brano-desync-slot">${branoDesyncBannerHtml()}</div>`; }
+function refreshDesyncBanners() {
+  document.querySelectorAll('.brano-desync-slot').forEach(el => { el.innerHTML = branoDesyncBannerHtml(); });
 }
 
 function makeOrdoElement(phrase, italian, sourceLogicId) {
@@ -26669,7 +26689,7 @@ function renderStep1Html() {
           <span class="subsection-title">Testo in lingua originale</span>
           <span class="subsection-hint">${isGreek ? 'greco antico' : 'latino'}</span>
         </div>
-        ${branoDesyncBannerHtml()}
+        ${branoDesyncSlotHtml()}
         <div class="method-note">
           <strong>Nota di metodo.</strong> La scomposizione automatica sarà disponibile nella scheda <em>B</em>: divide la prosa <em>sul punto fermo</em> e la poesia per versi. Potrai correggerla a mano: aggiungere, separare, accorpare frasi.
         </div>
@@ -26735,7 +26755,7 @@ function renderSentenceListInner() {
   if (state.sentences.length === 0) {
     return `<div class="entry-empty">Nessuna frase. Premi <strong>↻ Risegmenta</strong> per generarle dal testo originale, oppure <strong>+ Aggiungi frase</strong> per inserirne una manualmente.</div>`;
   }
-  return branoDesyncBannerHtml() + state.sentences.map((s, idx) => {
+  return branoDesyncSlotHtml() + state.sentences.map((s, idx) => {
     const grammarFilled = s.grammar.length > 0;
     const logicFilled = s.logic.length > 0;
     const periodaleFilled = s.periodale.length > 0;
@@ -29584,7 +29604,7 @@ function renderGuidedWizard() {
       </div>
     </div>`;
 
-  return header + body + nav;
+  return header + branoDesyncSlotHtml() + body + nav;
 }
 
 function renderGuidedFirstRun() {
@@ -36127,6 +36147,7 @@ function renderPreview() {
     : '';
 
   content.innerHTML = `
+    ${branoDesyncSlotHtml()}
     <div class="preview-meta">
       <span class="preview-title-block">${escapeHtml(title)}</span>
       ${author}${author && opera ? ' · ' : ''}${escapeHtml(opera)}
@@ -36426,7 +36447,7 @@ function togglePreview() {
 }
 
 /* 6. ACTIONS */
-function onTestoChange(v) { state.meta.testoOriginale = v; persistCurrent(); renderPreview(); renderSidebarTabs(); renderStats(); }
+function onTestoChange(v) { state.meta.testoOriginale = v; persistCurrent(); renderPreview(); renderSidebarTabs(); renderStats(); refreshDesyncBanners(); }
 
 /* ════════════════════════════════════════════════════════════════════════════
    NORMALIZZAZIONE DELLA GRAFIA (latino) · restituta → scolastica
@@ -39196,15 +39217,19 @@ function ocrInsertResult(mode) {
   if (!text) { showToast('Niente testo da inserire'); return; }
   const el = document.getElementById(ocrState.targetField);
   if (!el) { showToast('Campo di destinazione non trovato'); return; }
-  /* Sostituire il brano quando le frasi sono già segmentate le lascia sul testo
+  /* Toccare il brano quando le frasi sono già segmentate le lascia sul testo
      PRECEDENTE: non è un errore del programma, è una conseguenza che va detta
-     prima, non scoperta dopo dall'avviso di divergenza. Solo per il campo del
-     brano — negli altri campi non c'è nessun invariante da rompere. */
-  if (mode !== 'append' && ocrState.targetField === 'field-testo' && (state.sentences || []).length) {
+     prima, non scoperta dopo dall'avviso di divergenza. Vale per ENTRAMBI i
+     modi — sostituzione E aggiunta: anche «+ Aggiungi al testo» allunga il
+     brano oltre la copertura delle frasi. Solo per il campo del brano: negli
+     altri campi non c'è nessun invariante da rompere. */
+  if (ocrState.targetField === 'field-testo' && (state.sentences || []).length) {
     const n = state.sentences.length;
-    const quante = (n === 1) ? 'La frase già segmentata non viene toccata: resterà'
-                             : 'Le ' + n + ' frasi già segmentate non vengono toccate: resteranno';
-    if (!confirm('Il testo riconosciuto sostituirà l\'intero brano.\n\n' + quante + ' sul testo precedente, e l\'avviso di disallineamento comparirà in cima alle schede A e B finché non decidi come riallinearle.\n\nProcedere?')) return;
+    const frasi = (n === 1) ? 'La frase già segmentata resta' : 'Le ' + n + ' frasi già segmentate restano';
+    const azione = (mode === 'append')
+      ? 'Il testo riconosciuto verrà aggiunto in coda al brano.\n\n' + frasi + ' sul testo precedente: la parte aggiunta non ne farà parte'
+      : 'Il testo riconosciuto sostituirà l\'intero brano.\n\n' + frasi + ' sul testo precedente';
+    if (!confirm(azione + ', e l\'avviso di disallineamento comparirà finché non decidi come riallineare.\n\nProcedere?')) return;
   }
   if (mode === 'append' && el.value.trim()) {
     el.value = el.value.replace(/\s+$/, '') + '\n' + text;
