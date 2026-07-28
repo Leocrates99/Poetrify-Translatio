@@ -36570,7 +36570,13 @@ function normalizeOrthography(text, lang) {
   /* Il digramma sciolto segue la CASSA del contesto: in una parola tutta
      maiuscola «CÆSAR» deve dare CAESAR, non CAeSAR. Si guardano i due vicini:
      se almeno uno è una lettera maiuscola, il digramma è tutto maiuscolo;
-     altrimenti è la sola iniziale (Æneas → Aeneas). */
+     altrimenti è la sola iniziale (Æneas → Aeneas).
+     LIMITE NOTO (audit 22, cosmetico): con un digramma ACCENTATO in forma
+     decomposta (Æ + U+0301) il vicino letto è il segno combinante, non una
+     lettera, e l'accento resta appeso alla seconda vocale (Aé invece di Áe).
+     Non corretto di proposito: Ǽ non compare nei testi latini/greci scolastici,
+     e una riposizionatura dell'accento in questo punto — che gira su TUTTO il
+     testo a ogni normalizzazione — non vale il rischio sul percorso comune. */
   text = text.replace(/[æÆœŒ]/g, (m, idx, str) => {
     count++;
     if (m === 'æ') return 'ae';
@@ -37098,6 +37104,16 @@ function editSentenceText(sentenceId) {
   const newText = prompt('Modifica il testo della frase:', sentence.original);
   if (newText === null) return;
   sentence.original = newText.trim();
+  /* NODO APERTO (audit 6/14). Questo assegnamento NON ri-mappa gli indici delle
+     analisi della frase: se la modifica aggiunge/toglie/sposta una parola, tutti
+     i tokenIndex successivi scivolano e le analisi restano appese a parole
+     diverse, in silenzio. L'avviso di divergenza brano↔frasi copre i casi in cui
+     il RISULTATO complessivo diverge dal brano, ma NON lo spostamento di una
+     parola da una frase all'altra (accusa 14: la concatenazione torna identica).
+     La chiusura vera richiede una decisione d'architettura — rimappare gli indici
+     con un allineamento, oppure tenere le frasi come offset dentro il brano — non
+     una toppa qui. Finché resta aperto, editSentenceText va usato per correzioni
+     di grafia, non per riscrivere la struttura della frase. */
   persistCurrent();
   renderEditor();
 }
