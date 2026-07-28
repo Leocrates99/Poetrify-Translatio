@@ -35462,18 +35462,31 @@ function expandPeriodaleBlockFromFocus(sentenceId, direction) {
   sentence.periodale.forEach(e => {
     if (e.id !== entry.id) e.tokenIndices = (e.tokenIndices || []).filter(i => i !== newIdx);
   });
-  // `|| e.isElliptical` come nelle due potature gemelle dei sintagmi logici:
-  // una proposizione a VERBO SOTTINTESO può legittimamente restare senza token
-  // propri, ed è comunque un'analisi (il docente ha dichiarato l'ellissi). Senza
-  // questa guardia, espandere un blocco rubandole l'ultimo token la cancellava
-  // in silenzio — e il gemello logico, nella stessa situazione, la conservava.
+  /* NIENTE guardia `|| e.isElliptical` qui — ed è l'OPPOSTO dei sintagmi logici.
+     Attenzione a non "uniformare": nei due casi l'ellissi significa cose diverse.
+     · Nel PERIODO una proposizione è ellittica quando il suo VERBO è sottinteso,
+       ma la proposizione occupa comunque parole reali (isElliptical + verboSottinteso
+       su una proposizione nata da token). A zero token non ha più posizione: resta
+       un fantasma che annotatePeriodaleSiglas conta lo stesso, spostando le sigle
+       e i colori delle proposizioni-sorelle. Va rimossa.
+     · Nella LOGICA/GRAMMATICA un'entry ellittica (soggetto/oggetto sottinteso) ha
+       tokenIndex = null PER NATURA — rappresenta un elemento che nel testo non c'è
+       (vedi addEllipticalEntry, applySoggettoSottinteso). Lì zero token è legittimo
+       e la guardia va tenuta.
+     Una guardia precedente (mia, commit 642f184) uniformava i due casi per falso
+     parallelo: teneva in vita la proposizione fantasma. La rimozione però non deve
+     essere SILENZIOSA — era la lagnanza originale: se a sparire è una proposizione
+     che il docente aveva marcato ellittica, glielo si dice. */
+  const _svuotate = sentence.periodale.filter(e => e.id !== entry.id && !(e.tokenIndices && e.tokenIndices.length > 0));
   sentence.periodale = sentence.periodale.filter(e =>
-    (e.tokenIndices && e.tokenIndices.length > 0) || e.isElliptical
+    e.id === entry.id || (e.tokenIndices && e.tokenIndices.length > 0)
   );
+  const _ellitticaTolta = _svuotate.some(e => e.isElliptical);
   entry.tokenIndices = [...new Set([...indices, newIdx])].sort((a, b) => a - b);
   entry.text = entry.tokenIndices.map(i => (toks.find(t => t.idx === i) || {}).text).filter(Boolean).join(' ');
   persistCurrent();
   renderEditor();
+  if (_ellitticaTolta) showToast('La proposizione a verbo sottinteso ha perso la sua ultima parola ed è stata rimossa');
 }
 
 function shrinkPeriodaleBlockFromFocus(sentenceId, removeIdx) {
