@@ -11,75 +11,56 @@
 <!-- Token condivisi (fonte unica del design system · shared/) -->
 <link rel="stylesheet" href="shared/poetrify-tokens.css">
 <style>
+/* Stessa impalcatura di app.html: la pagina-lingua è l'hub con due sole card.
+   Nessuno stile proprio inventato — riuso i componenti già in produzione. */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
   font-family: 'Source Serif 4', Georgia, serif;
   color: var(--ink);
-  background:
-    radial-gradient(1100px 560px at 50% -12%, color-mix(in srgb, var(--brass) 6%, transparent), transparent 60%),
-    var(--parchment);
+  background: var(--ivory);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
 }
 body { display: flex; flex-direction: column; align-items: center; padding: 0 20px 64px; }
 
-/* ── Testata ── */
-.lg-top { text-align: center; margin-top: clamp(52px, 11vh, 120px); }
+/* ── Testata (identica ad app.html) ───────────────────────────── */
+.lg-top { text-align: center; margin-top: clamp(56px, 12vh, 130px); }
 .brand-mark {
   display: block; font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(30px, 5vw, 42px); font-weight: 700; letter-spacing: -0.015em;
+  font-size: clamp(40px, 8vw, 60px); font-weight: 700; letter-spacing: -0.015em;
   color: var(--primary); line-height: 1;
 }
-.lg-eyebrow {
-  display: block; margin-top: 16px; font-family: 'Source Sans 3', sans-serif;
-  font-size: 11.5px; font-weight: 700; text-transform: uppercase;
-  letter-spacing: 0.18em; color: var(--brass);
+.brand-sub {
+  display: block; margin-top: 14px; font-family: 'Source Sans 3', sans-serif;
+  font-size: 12px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 0.22em; color: var(--sepia);
 }
-.lg-title {
-  font-family: 'Playfair Display', Georgia, serif; font-weight: 700;
-  font-size: clamp(26px, 4.4vw, 38px); line-height: 1.12; margin: 14px 0 6px;
-  color: var(--ink); text-wrap: balance;
-}
-.lg-sub {
-  max-width: 40rem; margin: 0 auto; font-family: 'Source Sans 3', sans-serif;
-  font-size: 14px; line-height: 1.55; color: var(--sepia);
+.lg-intro {
+  max-width: 30rem; text-align: center; margin: 24px auto 0;
+  font-size: 17px; line-height: 1.6; color: var(--ink);
 }
 
-/* ── Dittico ── */
-.diptych {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
-  width: 100%; max-width: 940px; margin: 44px auto 0;
+/* ── Due card (componente .hub-card di app.html) ──────────────── */
+.hub {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px; width: 100%; max-width: 660px; margin: 44px auto 0;
 }
-@media (max-width: 620px) { .diptych { grid-template-columns: 1fr; } }
-
-.lg-card {
-  position: relative; overflow: hidden; text-decoration: none; text-align: left;
-  border-radius: var(--radius-lg); padding: 34px 30px 26px;
-  border: 1.5px solid var(--accent);
-  background: linear-gradient(180deg, var(--accent-pale), transparent 70%), var(--paper);
-  box-shadow: var(--shadow-sm);
-  transition: transform var(--transition), box-shadow var(--transition);
-  display: flex; flex-direction: column; min-height: 232px; color: inherit;
+.hub-card {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 16px; padding: 42px 30px; min-height: 190px;
+  background: var(--paper); border: 1px solid var(--rule-soft); border-radius: 12px;
+  text-decoration: none; color: inherit; text-align: center;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
 }
-.lg-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
-.lg-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
-.lg-card .rule-top { height: 4px; width: 56px; border-radius: 999px; background: var(--accent); margin-bottom: 18px; }
-.lg-word { font-family: var(--font-classical); font-size: clamp(38px, 6vw, 52px); line-height: 1; font-weight: 700; color: var(--accent); }
-.lg-name { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-deep); margin-top: 16px; }
-.lg-desc { font-family: 'Source Serif 4', Georgia, serif; font-size: 15px; line-height: 1.5; color: var(--ink-soft); margin-top: 9px; flex-grow: 1; }
-.lg-go { font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 700; color: var(--accent); margin-top: 16px; }
-.lg-card:hover .lg-go { text-decoration: underline; }
-.lg-watermark { position: absolute; right: -8px; bottom: -34px; font-family: var(--font-classical); font-size: 168px; line-height: 1; color: var(--accent); opacity: 0.06; font-weight: 700; pointer-events: none; user-select: none; }
+.hub-card:hover { border-color: var(--accent); box-shadow: var(--shadow-lift); transform: translateY(-3px); }
+.hub-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.hub-card-icon { color: var(--accent); width: 46px; height: 46px; }
+.hub-card-title { font-family: 'Playfair Display', Georgia, serif; font-size: 28px; font-weight: 700; color: var(--ink); line-height: 1.1; }
+.hub-card.lat { --accent: var(--accent-lat); }
+.hub-card.gr  { --accent: var(--accent-gr); }
 
-/* accenti per ramo (scoping locale: la pagina mostra ENTRAMBE le lingue,
-   quindi non si usa body[data-lang]; ogni card porta il suo accento) */
-.lg-card.lat { --accent: var(--accent-lat); --accent-deep: #7d232b; --accent-pale: rgba(162,46,55,0.09); }
-.lg-card.gr  { --accent: var(--accent-gr);  --accent-deep: #0f0070; --accent-pale: rgba(24,0,172,0.07); }
-:root[data-theme="dark"] .lg-card.lat { --accent-deep: #efb0b4; --accent-pale: rgba(229,138,144,0.12); }
-:root[data-theme="dark"] .lg-card.gr  { --accent-deep: #a99cff; --accent-pale: rgba(139,125,255,0.14); }
-
-/* ── Torna indietro ── */
-.lg-back { margin: 26px auto 0; font-family: 'Source Sans 3', sans-serif; font-size: 12.5px; color: var(--sepia); text-decoration: none; }
+/* ── Torna indietro ───────────────────────────────────────────── */
+.lg-back { margin: 30px auto 0; font-family: 'Source Sans 3', sans-serif; font-size: 12.5px; color: var(--sepia); text-decoration: none; }
 .lg-back:hover { color: var(--primary); }
 </style>
 </head>
@@ -87,27 +68,28 @@ body { display: flex; flex-direction: column; align-items: center; padding: 0 20
 
 <header class="lg-top">
   <a href="app.html" style="text-decoration:none"><span class="brand-mark">Poetrify</span></a>
-  <span class="lg-eyebrow" id="lg-eyebrow">Scegli la lingua</span>
-  <h1 class="lg-title">In che lingua vuoi lavorare?</h1>
-  <p class="lg-sub">Il ramo resta scelto per questa sessione — potrai cambiarlo quando vuoi dall'interno dello strumento.</p>
+  <span class="brand-sub" id="lg-sub">Scegli la lingua</span>
+  <p class="lg-intro">In che lingua vuoi lavorare?</p>
 </header>
 
-<main class="diptych">
-  <a class="lg-card lat" id="card-lat" data-lang="la" href="translator.html?lang=la" aria-label="Entra nel ramo latino">
-    <span class="rule-top" aria-hidden="true"></span>
-    <span class="lg-word">Latīnē</span>
-    <span class="lg-name">Latino · rosso pompeiano</span>
-    <span class="lg-desc">Cicerone, Virgilio, Cesare. Analisi e traduzione del testo latino.</span>
-    <span class="lg-go">Entra nel ramo latino →</span>
-    <span class="lg-watermark" aria-hidden="true">L</span>
+<main class="hub">
+  <a class="hub-card lat" id="card-lat" data-lang="la" href="translator.html?lang=la" aria-label="Entra nel ramo latino">
+    <!-- Arco romano (arco a tutto sesto entro il monumento): l'innovazione di Roma -->
+    <svg class="hub-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M3 20.5V7h18v13.5"/>
+      <path d="M3 11h18"/>
+      <path d="M8 20.5v-6a4 4 0 0 1 8 0v6"/>
+    </svg>
+    <span class="hub-card-title">Latino</span>
   </a>
-  <a class="lg-card gr" id="card-gr" data-lang="grc" href="translator.html?lang=grc" aria-label="Entra nel ramo greco antico">
-    <span class="rule-top" aria-hidden="true"></span>
-    <span class="lg-word">Ἑλληνικά</span>
-    <span class="lg-name">Greco antico · blu Poetrify</span>
-    <span class="lg-desc">Platone, Omero, Erodoto. Il politonico reso con la faccia da edizione.</span>
-    <span class="lg-go">Entra nel ramo greco →</span>
-    <span class="lg-watermark" aria-hidden="true">Α</span>
+  <a class="hub-card gr" id="card-gr" data-lang="grc" href="translator.html?lang=grc" aria-label="Entra nel ramo greco antico">
+    <!-- Tempio greco (colonne + timpano): la Partenone -->
+    <svg class="hub-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M2.5 9 12 3.5 21.5 9Z"/>
+      <path d="M5 9v9M9.5 9v9M14.5 9v9M19 9v9"/>
+      <path d="M3 18.5h18"/>
+    </svg>
+    <span class="hub-card-title">Greco antico</span>
   </a>
 </main>
 
@@ -117,7 +99,7 @@ body { display: flex; flex-direction: column; align-items: center; padding: 0 20
 <script src="shared/poetrify-theme.js" data-inject-toggle></script>
 
 <script>
-/* Routing: ?to=<scopo> decide la destinazione e la testata.
+/* Routing: ?to=<scopo> decide destinazione e sottotitolo.
    Al clic su una card apre <destinazione>.html?lang=<la|grc>. */
 (function () {
   var DEST  = { translator: 'translator.html', dizionario: 'dictionary.html', corpus: 'corpus.html', grammatica: 'grammatica.html' };
@@ -125,7 +107,7 @@ body { display: flex; flex-direction: column; align-items: center; padding: 0 20
   var to = (new URLSearchParams(location.search).get('to') || 'translator').toLowerCase();
   if (!DEST[to]) to = 'translator';
   var dest = DEST[to];
-  document.getElementById('lg-eyebrow').textContent = LABEL[to] + ' · scegli la lingua';
+  document.getElementById('lg-sub').textContent = LABEL[to] + ' · scegli la lingua';
   document.title = 'Poetrify · ' + LABEL[to] + ' · scegli la lingua';
   ['card-lat', 'card-gr'].forEach(function (id) {
     var el = document.getElementById(id);
