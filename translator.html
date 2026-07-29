@@ -11509,10 +11509,6 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
           <span>Nuovo</span>
         </button>
-        <button class="sidebar-btn" onclick="openStudentProfileModal()" title="Profilo studente: classe, livello, competenze, manuali">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          <span>Profilo</span>
-        </button>
         <button class="sidebar-btn sidebar-btn-export" onclick="openExportModal()" title="Esporta il lavoro · Markdown, Word, PNG, PDF, JSON">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
           <span>Esporta</span>
@@ -11806,120 +11802,10 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   </div>
 </div>
 
-<!-- MODALE PROFILO UTENTE — benvenuto + ri-selezione -->
-<div class="modal-backdrop" id="modal-profile">
-  <div class="modal" style="max-width: 880px;">
-    <h3 class="modal-title">A chi si rivolge Poetrify?</h3>
-    <p class="modal-subtitle">Scegli il tuo profilo: l'officina si adatterà al tuo livello mostrando solo gli strumenti che ti servono davvero. Potrai cambiare profilo in qualsiasi momento dal segnale in alto a destra.</p>
-    <div class="profile-grid">
-      <button class="profile-card" data-profile="medie" onclick="selectProfile('medie')">
-        <span class="profile-card-badge">Avvio</span>
-        <span class="profile-card-icon">A</span>
-        <span class="profile-card-title">Studente delle medie</span>
-        <span class="profile-card-sub">Primo incontro con il latino</span>
-        <span class="profile-card-desc">Solo latino, modalità guidata passo-passo. Niente analisi sintattico-periodale, niente tantum né reggenze: ci concentriamo su frasi, verbi e prime declinazioni con un linguaggio amichevole.</span>
-        <span class="profile-card-features">
-          <span>solo latino</span>
-          <span id="profile-medie-steps">guidata</span>
-          <span>vocabolario base</span>
-        </span>
-      </button>
-      <button class="profile-card" data-profile="biennio" onclick="selectProfile('biennio')">
-        <span class="profile-card-badge">Intermedio</span>
-        <span class="profile-card-icon">B</span>
-        <span class="profile-card-title">Biennio del liceo</span>
-        <span class="profile-card-sub">Latino e primi passi col greco</span>
-        <span class="profile-card-desc">Latino e greco a disposizione, libera scelta tra modalità libera e guidata. Lemma, analisi logica completa e traduzione con ordo verborum. Filtriamo gli strumenti più specialistici.</span>
-        <span class="profile-card-features">
-          <span>latino + greco</span>
-          <span>libera o guidata</span>
-          <span>analisi logica</span>
-          <span>traduzione</span>
-        </span>
-      </button>
-      <button class="profile-card" data-profile="triennio" onclick="selectProfile('triennio')">
-        <span class="profile-card-badge">Avanzato</span>
-        <span class="profile-card-icon">C</span>
-        <span class="profile-card-title">Triennio liceo classico · Università</span>
-        <span class="profile-card-sub">Filologia classica completa</span>
-        <span class="profile-card-desc">Tutti gli strumenti dell'officina: sintattico-periodale con albero a cluster, tantum (singularia / pluralia), reggenze nelle concordanze, batch mode, lemma con eccezioni e ordo verborum espanso.</span>
-        <span class="profile-card-features">
-          <span>tutto</span>
-          <span>batch mode</span>
-          <span>tantum + reggenze</span>
-          <span>sintattico-periodale</span>
-          <span>ordo verborum</span>
-        </span>
-      </button>
-    </div>
-    <p class="profile-modal-foot">La scelta resta salvata sul tuo dispositivo — potrai aggiornarla cliccando sulla pastiglia del profilo accanto al titolo.</p>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeProfileModal()" id="profile-modal-skip">Decido dopo</button>
-    </div>
-  </div>
-</div>
 
 <!-- GATE LINGUA · finestra d'ingresso che àncora il settore (latino/greco) -->
 </div>
 
-<!-- PROFILO STUDENTE · classe · livello · competenze · manuali -->
-<div class="modal-backdrop" id="modal-student-profile">
-  <div class="modal" style="max-width: 740px;">
-    <h3 class="modal-title">Profilo studente</h3>
-    <p class="modal-subtitle">Delinea il tuo profilo: la <strong>classe</strong> determina la fascia (medie/biennio/triennio) e l'interfaccia si adegua. I <strong>manuali</strong> si legano alla provenienza delle versioni «📖 dal libro».</p>
-    <div class="sp-grid">
-      <div class="sp-field">
-        <label for="sp-classe">Classe</label>
-        <select id="sp-classe">
-          <option value="">— scegli —</option>
-          <optgroup label="Scuole medie">
-            <option value="medie-1">1ª media</option>
-            <option value="medie-2">2ª media</option>
-            <option value="medie-3">3ª media</option>
-          </optgroup>
-          <optgroup label="Biennio (superiori)">
-            <option value="sup-1">1ª superiore</option>
-            <option value="sup-2">2ª superiore</option>
-          </optgroup>
-          <optgroup label="Triennio (superiori)">
-            <option value="sup-3">3ª superiore</option>
-            <option value="sup-4">4ª superiore</option>
-            <option value="sup-5">5ª superiore</option>
-          </optgroup>
-          <optgroup label="Oltre">
-            <option value="univ">Università</option>
-          </optgroup>
-        </select>
-      </div>
-      <div class="sp-field">
-        <label for="sp-abilita">Livello di abilità</label>
-        <select id="sp-abilita">
-          <option value="principiante">Principiante</option>
-          <option value="intermedio">Intermedio</option>
-          <option value="avanzato">Avanzato</option>
-        </select>
-      </div>
-      <div class="sp-field sp-field-full">
-        <label for="sp-competenze">Competenze e note (libero)</label>
-        <textarea id="sp-competenze" rows="2" placeholder="Es. morfologia solida, sintassi dei casi in corso, debole sul periodo ipotetico…"></textarea>
-      </div>
-      <div class="sp-field sp-field-full">
-        <label>Manuali · Latino</label>
-        <div id="sp-manuali-lat" class="sp-manuali"></div>
-        <input type="text" id="sp-manuali-lat-altro" placeholder="Altro manuale di latino (digita)">
-      </div>
-      <div class="sp-field sp-field-full">
-        <label>Manuali · Greco</label>
-        <div id="sp-manuali-gr" class="sp-manuali"></div>
-        <input type="text" id="sp-manuali-gr-altro" placeholder="Altro manuale di greco (digita)">
-      </div>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="document.getElementById('modal-student-profile').classList.remove('open')">Annulla</button>
-      <button class="btn btn-primary" onclick="saveStudentProfileFromModal()">Salva profilo</button>
-    </div>
-  </div>
-</div>
 
 <!-- MODIFICA DEL TESTO DI UNA FRASE · griglia sicura per costruzione (una parola
      per campo). STATICO nel markup, mai iniettato a runtime: eredita così a11y
@@ -11984,18 +11870,6 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   </div>
 </div>
 
-<!-- PASSAGGIO D'ANNO · compare al 1° settembre finché non si conferma -->
-<div class="modal-backdrop" id="modal-year-rollover">
-  <div class="modal" style="max-width: 560px;">
-    <h3 class="modal-title">È iniziato un nuovo anno scolastico</h3>
-    <p class="modal-subtitle">Anno <strong id="yr-label">—</strong>. Sei stato ammesso all'anno successivo?</p>
-    <p id="yr-detail" class="muted-text" style="font-size:13px; text-align:center; margin: 8px 0 4px;"></p>
-    <div class="modal-actions" style="justify-content:center; gap:12px;">
-      <button class="btn btn-ghost" onclick="confirmYearRollover(false)">No, ripeto l'anno</button>
-      <button class="btn btn-primary" onclick="confirmYearRollover(true)">Sì, sono promosso →</button>
-    </div>
-  </div>
-</div>
 
 <!-- COMMAND PALETTE — Ctrl+K → barra di ricerca azioni rapide -->
 <div class="modal-backdrop" id="modal-command-palette">
@@ -12497,74 +12371,27 @@ const defaultState = () => ({
 let state = defaultState();
 
 /* ============================================
-   PROFILO UTENTE — gestione tier didattici
-   ============================================ */
-const PROFILE_STORAGE_KEY = 'poetrify-user-profile';
-const PROFILE_LABELS = {
-  medie:    'Medie',
-  biennio:  'Biennio',
-  triennio: 'Triennio/Univ.'
-};
-const PROFILE_FULL_LABELS = {
-  medie:    'Studente delle medie',
-  biennio:  'Studente del biennio',
-  triennio: 'Triennio / Università'
-};
+   SERVIZIO COMPLETO — un unico profilo, avanzato
+   ============================================
+   La distinzione fra livelli di competenza (medie/biennio/triennio) è stata
+   RIMOSSA: tutti hanno il servizio completo al livello avanzato. getUserProfile()
+   è il predicato di molte diramazioni — tenendolo fisso a 'triennio' ognuna
+   risolve al percorso pieno (latino+greco, libera/guidata a scelta, tutti gli
+   step, dizionario intero). data-level='avanzato' spegne gli aiuti verbosi e le
+   legende: è l'interfaccia esperta. */
+function getUserProfile() { return 'triennio'; }
+function applyProfileToBody() { document.body.dataset.level = 'avanzato'; }
 
-function getUserProfile() {
+/* Pulizia one-shot delle chiavi orfane del vecchio sistema a livelli: senza,
+   un utente di ritorno con 'poetrify-level'='base' vedrebbe ancora il dizionario
+   ridotto, e i vincoli 'medie' resterebbero latenti nel translator. */
+(function _cleanupLegacyLevelKeys() {
   try {
-    const v = localStorage.getItem(PROFILE_STORAGE_KEY);
-    if (v === 'medie' || v === 'biennio' || v === 'triennio') return v;
+    localStorage.removeItem('poetrify-user-profile');
+    localStorage.removeItem('poetrify-student-profile');
+    localStorage.removeItem('poetrify-level');
   } catch (e) {}
-  return null;
-}
-
-/* Mappa profilo scolastico → densità d'interfaccia (data-level). Il vecchio asse
-   «Livello» è stato assorbito qui: medie→base, biennio→intermedio, triennio→
-   avanzato. Le regole CSS su body[data-level] continuano così a funzionare. */
-const PROFILE_TO_LEVEL = { medie: 'base', biennio: 'intermedio', triennio: 'avanzato' };
-function applyProfileToBody() {
-  const profile = getUserProfile();
-  if (profile) {
-    document.body.dataset.profile = profile;
-  } else {
-    delete document.body.dataset.profile;
-  }
-  document.body.dataset.level = PROFILE_TO_LEVEL[profile] || 'intermedio';
-  updateProfileChip();
-}
-
-function updateProfileChip() {
-  const chip = document.getElementById('profile-chip');
-  if (!chip) return;
-  const profile = getUserProfile();
-  if (!profile) {
-    chip.style.display = 'none';
-    return;
-  }
-  chip.style.display = 'inline-flex';
-  chip.dataset.profile = profile;
-  const label = document.getElementById('profile-chip-label');
-  if (label) label.textContent = PROFILE_LABELS[profile] || profile;
-}
-
-function openProfileModal() {
-  const modal = document.getElementById('modal-profile');
-  if (!modal) return;
-  // Se nessun profilo è ancora scelto, "Decido dopo" rimane visibile ma comportamento sicuro
-  modal.classList.add('open');
-}
-
-function closeProfileModal() {
-  const modal = document.getElementById('modal-profile');
-  if (!modal) return;
-  modal.classList.remove('open');
-  // Se l'utente skippa al primo avvio, applichiamo un fallback prudente: triennio (tutto visibile)
-  if (!getUserProfile()) {
-    try { localStorage.setItem(PROFILE_STORAGE_KEY, 'triennio'); } catch (e) {}
-    applyProfileToBody();
-  }
-}
+})();
 
 /* ── GATE LINGUA · àncora il settore (latino/greco) all'ingresso ──────────────
    Compare una volta per SESSIONE (sessionStorage): scelto il latino si entra nel
@@ -12576,12 +12403,10 @@ function showLanguageGate() {
 }
 function maybeShowLanguageGate() {
   try { if (sessionStorage.getItem(LANGGATE_SESSION_KEY)) return; } catch (e) {}
-  if (!getUserProfile()) return;   // al primissimo avvio precede il modale Profilo
   showLanguageGate();
 }
 function chooseGateLanguage(lang) {
-  let l = (lang === 'greco') ? 'greco' : 'latino';
-  if (getUserProfile() === 'medie') l = 'latino';   // le medie lavorano solo il latino
+  const l = (lang === 'greco') ? 'greco' : 'latino';
   try { sessionStorage.setItem(LANGGATE_SESSION_KEY, l); } catch (e) {}
   const m = document.getElementById('langgate');
   if (m) m.hidden = true;
@@ -12590,143 +12415,8 @@ function chooseGateLanguage(lang) {
   else { if (typeof archiveFilters !== 'undefined') archiveFilters.lingua = l; if (typeof goToStep === 'function') goToStep(4); }
 }
 
-/* ── PROFILO STUDENTE · classe · abilità · competenze · manuali ───────────────
-   La classe determina la fascia (medie/biennio/triennio) usata dal gating CSS.
-   Manuali: lista curata + «Altro» libero, per lingua, legati alla provenienza
-   «dal libro» delle versioni. Salvato su localStorage (device-level). */
-const STUDENT_PROFILE_KEY = 'poetrify-student-profile';
-const MANUALI = {
-  latino: ['Il nuovo Tantucci', 'Cotidie discere (Flocchini)', 'Lingua Latina per se illustrata (Ørberg)', 'Nuovo Expedite (Flocchini)', 'Ad astra (Diotti)', 'Lingua Mater (Bettini)', 'Latina lectio'],
-  greco: ['Il nuovo Greco di Campanini', 'Klimax', 'Hellenistì', 'Greco. Lingua, civiltà, lessico', 'Meltemi', 'Kata logon', 'Triakonta'],
-};
-function classeToTier(classe) {
-  if (!classe) return 'triennio';
-  if (classe.indexOf('medie') === 0) return 'medie';
-  if (classe === 'sup-1' || classe === 'sup-2') return 'biennio';
-  return 'triennio';   // sup-3/4/5 · università
-}
-function getStudentProfile() {
-  try { const v = JSON.parse(localStorage.getItem(STUDENT_PROFILE_KEY) || 'null'); if (v && typeof v === 'object') return v; } catch (e) {}
-  return { classe: '', abilita: 'intermedio', competenze: '', manuali: { latino: [], greco: [] }, manualiAltro: { latino: '', greco: '' } };
-}
-function saveStudentProfile(p) {
-  if (!p.annoConfermato) p.annoConfermato = currentSchoolYear();   // primo salvataggio: conferma l'anno corrente
-  try { localStorage.setItem(STUDENT_PROFILE_KEY, JSON.stringify(p)); } catch (e) {}
-  if (p.classe) {   // deriva e applica la fascia (mantiene il gating dell'interfaccia)
-    const tier = classeToTier(p.classe);
-    try { localStorage.setItem(PROFILE_STORAGE_KEY, tier); } catch (e) {}
-    applyProfileToBody();
-    if (typeof renderQuickBar === 'function') renderQuickBar();
-  }
-}
-function _renderManualiChecklist(lang, selected) {
-  return (MANUALI[lang] || []).map(m =>
-    `<label class="sp-manuale"><input type="checkbox" value="${escapeHtml(m)}" ${selected.includes(m) ? 'checked' : ''}> ${escapeHtml(m)}</label>`
-  ).join('');
-}
-function openStudentProfileModal() {
-  const p = getStudentProfile();
-  const m = document.getElementById('modal-student-profile');
-  if (!m) return;
-  const setVal = (id, v) => { const el = document.getElementById(id); if (el) el.value = v; };
-  setVal('sp-classe', p.classe || '');
-  setVal('sp-abilita', p.abilita || 'intermedio');
-  setVal('sp-competenze', p.competenze || '');
-  setVal('sp-manuali-lat-altro', (p.manualiAltro && p.manualiAltro.latino) || '');
-  setVal('sp-manuali-gr-altro', (p.manualiAltro && p.manualiAltro.greco) || '');
-  const lat = document.getElementById('sp-manuali-lat'); if (lat) lat.innerHTML = _renderManualiChecklist('latino', (p.manuali && p.manuali.latino) || []);
-  const gr = document.getElementById('sp-manuali-gr'); if (gr) gr.innerHTML = _renderManualiChecklist('greco', (p.manuali && p.manuali.greco) || []);
-  m.classList.add('open');
-}
-function saveStudentProfileFromModal() {
-  const getVal = id => { const el = document.getElementById(id); return el ? el.value : ''; };
-  const checks = cid => [].slice.call(document.querySelectorAll('#' + cid + ' input[type=checkbox]:checked')).map(c => c.value);
-  const p = {
-    classe: getVal('sp-classe'),
-    abilita: getVal('sp-abilita') || 'intermedio',
-    competenze: getVal('sp-competenze'),
-    manuali: { latino: checks('sp-manuali-lat'), greco: checks('sp-manuali-gr') },
-    manualiAltro: { latino: getVal('sp-manuali-lat-altro'), greco: getVal('sp-manuali-gr-altro') },
-  };
-  saveStudentProfile(p);
-  const m = document.getElementById('modal-student-profile'); if (m) m.classList.remove('open');
-  if (typeof showToast === 'function') showToast('Profilo studente salvato');
-}
-
-/* ── PASSAGGIO D'ANNO (1° settembre) ──────────────────────────────────────────
-   L'anno scolastico inizia il 1° settembre. Finché l'utente non conferma il
-   nuovo anno, all'avvio compare il modale promosso/ripeti, e la classe (quindi
-   la fascia) si adegua. */
-const CLASSE_SEQ = ['medie-1', 'medie-2', 'medie-3', 'sup-1', 'sup-2', 'sup-3', 'sup-4', 'sup-5', 'univ'];
-const CLASSE_LABELS = { 'medie-1': '1ª media', 'medie-2': '2ª media', 'medie-3': '3ª media', 'sup-1': '1ª superiore', 'sup-2': '2ª superiore', 'sup-3': '3ª superiore', 'sup-4': '4ª superiore', 'sup-5': '5ª superiore', 'univ': 'Università' };
-function classeLabel(c) { return CLASSE_LABELS[c] || '—'; }
-function currentSchoolYear() {
-  const now = new Date();
-  const start = (now.getMonth() >= 8) ? now.getFullYear() : now.getFullYear() - 1;   // mese 8 = settembre (0-based)
-  return start + '/' + (start + 1);
-}
-function advanceClasse(classe) {
-  const i = CLASSE_SEQ.indexOf(classe);
-  if (i < 0 || i >= CLASSE_SEQ.length - 1) return classe;   // università → resta
-  return CLASSE_SEQ[i + 1];
-}
-function showYearRollover() {
-  const p = getStudentProfile();
-  const m = document.getElementById('modal-year-rollover');
-  if (!m) return;
-  const lbl = document.getElementById('yr-label'); if (lbl) lbl.textContent = currentSchoolYear();
-  const det = document.getElementById('yr-detail');
-  if (det) {
-    const next = advanceClasse(p.classe);
-    const fasciaCambia = classeToTier(p.classe) !== classeToTier(next);
-    det.innerHTML = `Classe attuale: <strong>${escapeHtml(classeLabel(p.classe))}</strong>. Se promosso passi a <strong>${escapeHtml(classeLabel(next))}</strong>`
-      + (fasciaCambia ? ` <em>(nuova fascia: ${escapeHtml(classeToTier(next))})</em>` : '') + '.';
-  }
-  m.classList.add('open');
-}
-function maybeShowYearRollover() {
-  const p = getStudentProfile();
-  if (!p.classe) return false;                                   // nessuna classe impostata → niente rollover
-  if (p.annoConfermato === currentSchoolYear()) return false;    // già confermato per quest'anno
-  showYearRollover();
-  return true;
-}
-function confirmYearRollover(promosso) {
-  const p = getStudentProfile();
-  if (promosso) p.classe = advanceClasse(p.classe);
-  p.annoConfermato = currentSchoolYear();
-  saveStudentProfile(p);
-  const m = document.getElementById('modal-year-rollover'); if (m) m.classList.remove('open');
-  if (typeof showToast === 'function') showToast(promosso ? `Promosso · ora ${classeLabel(p.classe)}` : `Confermato · resti in ${classeLabel(p.classe)}`);
-}
-
-function selectProfile(profile) {
-  if (!['medie', 'biennio', 'triennio'].includes(profile)) return;
-  const previous = getUserProfile();
-  try { localStorage.setItem(PROFILE_STORAGE_KEY, profile); } catch (e) {}
-  applyProfileToBody();
-  closeModal('modal-profile');
-
-  // Le medie sono vincolate a latino + guidata: adatta lo stato corrente in modo non distruttivo
-  if (profile === 'medie') {
-    if (state.meta.lingua !== 'latino') {
-      state.meta.lingua = 'latino';
-    }
-    if (state.mode !== 'guided') {
-      state.mode = 'guided';
-      if (!state.guidedStep) state.guidedStep = 1;
-    }
-    // se eravamo su un tab nascosto, rientra al brano
-    if (state.currentAnalysisTab === 'periodale') state.currentAnalysisTab = 'grammaticale';
-  }
-
-  if (typeof renderAll === 'function') renderAll();
-  if (previous && previous !== profile) {
-    showToast(`Profilo aggiornato → ${PROFILE_FULL_LABELS[profile]}`);
-  } else if (!previous) {
-    showToast(`Benvenuto · profilo ${PROFILE_FULL_LABELS[profile]}`);
-  }
-}
+/* Profilo studente, passaggio d'anno e selettore di fascia: RIMOSSI (servizio
+   unico e avanzato). Il gate LINGUA (sopra) resta: non è competenza. */
 
 function persistCurrent() {
   // Non salvare progetti vuoti (per evitare voci fantasma in archivio)
@@ -26518,41 +26208,11 @@ function arrangeChrome() {
    data-level guida la DENSITÀ dell'interfaccia (CSS progressive disclosure);
    il click su un livello applica anche un PRESET di workflow sui setter esistenti.
    I controlli fini restano disponibili sotto "Personalizza". */
-const LEVEL_STORAGE_KEY = 'poetrify-level';
-const LEVEL_PRESETS = {
-  base:       { mode: 'guided', approach: 'frase-per-frase', label: 'Base' },
-  intermedio: { mode: 'free',   approach: 'attuale',         label: 'Intermedio' },
-  avanzato:   { mode: 'free',   approach: 'integrale',       label: 'Avanzato' },
-};
 let quickBarCustomOpen = false;
-
-function getLevel() {
-  try { const v = localStorage.getItem(LEVEL_STORAGE_KEY); if (LEVEL_PRESETS[v]) return v; } catch (e) {}
-  return 'intermedio';
-}
-/* Densità: derivata dal PROFILO (l'asse «Livello» autonomo è stato rimosso). */
-function applyLevelToBody() { document.body.dataset.level = PROFILE_TO_LEVEL[getUserProfile()] || 'intermedio'; }
+/* Densità d'interfaccia: sempre AVANZATO (servizio unico). L'asse «Livello» e i
+   suoi preset di workflow sono stati rimossi con la distinzione di competenza. */
+function applyLevelToBody() { document.body.dataset.level = 'avanzato'; }
 function toggleQuickBarCustom() { quickBarCustomOpen = !quickBarCustomOpen; renderQuickBar(); }
-
-function setLevel(level) {
-  if (!LEVEL_PRESETS[level]) return;
-  const prev = getLevel();
-  try { localStorage.setItem(LEVEL_STORAGE_KEY, level); } catch (e) {}
-  applyLevelToBody();
-  const p = LEVEL_PRESETS[level];
-  // Preset di workflow applicato direttamente sullo stato (niente toast dai singoli setter).
-  // Le medie restano vincolate alla modalità guidata.
-  if (getUserProfile() !== 'medie') {
-    state.mode = p.mode;
-    if (p.mode === 'guided' && !state.guidedStep) state.guidedStep = 1;
-  }
-  state.approach = p.approach;
-  state.approachShown = true;
-  if (p.approach === 'frase-per-frase') state.frasePerFraseStep = 1;
-  persistCurrent();
-  renderAll();
-  if (level !== prev) showToast('Livello: ' + p.label);
-}
 
 function renderQuickBar() {
   const bar = document.getElementById('quick-bar');
@@ -26560,9 +26220,6 @@ function renderQuickBar() {
 
   const mode = state.mode || 'free';
   const approach = getApproach();
-  const profile = getUserProfile() || 'triennio';
-  const isMedie = profile === 'medie';
-  const level = getLevel();
 
   const metodo = state.metodo || 'strati';
   const vista = state.vista || 'frase';
@@ -26575,15 +26232,9 @@ function renderQuickBar() {
     { value: 'frase',  icon: '🎯', label: 'Frase corrente', title: 'Una frase (o un verso) alla volta, con libertà di salto' },
     { value: 'intero', icon: '🌐', label: 'Brano intero',   title: 'Tutto il testo mostrato insieme · utile per brani coesi e lavoro in blocco' },
   ];
-  // GUIDA (ex «modalità»): per le medie è bloccata su "guidata" (vincolo didattico).
   const guidaBtns = [
     { value: 'free',   icon: '🪶', label: 'Libera',  title: 'Tutti gli strumenti sbloccati, nell’ordine che preferisci' },
     { value: 'guided', icon: '🧭', label: 'Guidata', title: 'Percorso sequenziale a tappe: Lettura → Analisi → Traduzione → Versione' },
-  ];
-  const profileBtns = [
-    { value: 'medie',    icon: '🌱', label: 'Medie',          title: 'Solo latino · percorso guidato · interfaccia essenziale' },
-    { value: 'biennio',  icon: '🌿', label: 'Biennio',        title: 'Latino e greco · strumenti intermedi' },
-    { value: 'triennio', icon: '🌳', label: 'Triennio/Univ.', title: 'Tutto sbloccato · profilo avanzato / universitario' },
   ];
 
   const seg = (label, btns, currentValue, onclickFn, extraAttr) => {
@@ -26608,15 +26259,14 @@ function renderQuickBar() {
             </div>`;
   };
 
-  // QUATTRO ASSI ORTOGONALI, sempre visibili: Profilo · Metodo · Vista · Guida.
+  // TRE ASSI ORTOGONALI, sempre visibili: Metodo · Vista · Guida.
   // In modalità Guidata la Vista non si applica (il wizard è sequenziale per
   // frase): il gruppo Vista resta disabilitato, per chiarezza.
   const vistaDisabled = (mode === 'guided');
   bar.innerHTML =
-    seg('Profilo', profileBtns, profile, 'quickSwitchProfile', null) +
     seg('Metodo',  metodoBtns,  metodo,  'setMetodo', null) +
     seg('Vista',   vistaBtns,   vista,   'setVista', { disabledFor: () => vistaDisabled }) +
-    seg('Guida',   guidaBtns,   mode,    'quickSwitchMode', { disabledFor: b => isMedie && b.value === 'free' });
+    seg('Guida',   guidaBtns,   mode,    'quickSwitchMode', null);
 }
 
 /* Wrapper sottili dei setter esistenti, con verifica e toast informativo.
@@ -26625,10 +26275,6 @@ function renderQuickBar() {
    entry-point (modal, sidebar). */
 function quickSwitchMode(value) {
   if (state.mode === value) return;
-  if (getUserProfile() === 'medie' && value === 'free') {
-    showToast('Il profilo Medie è vincolato alla modalità guidata');
-    return;
-  }
   switchMode(value);
 }
 
@@ -26637,10 +26283,6 @@ function quickSwitchApproach(value) {
   setApproach(value);
 }
 
-function quickSwitchProfile(value) {
-  if (getUserProfile() === value) return;
-  selectProfile(value);
-}
 
 /* Icone della navigazione (Tabler Icons, outline, MIT) incorporate come SVG
    inline: nessuna dipendenza esterna, colore via currentColor (segue la lingua). */
@@ -26665,8 +26307,6 @@ function renderSidebarTabs() {
   let tabs;
   const hasTranslation = state.sentences.some(s => (s.translation || s.translationFinal || (s.ordoVerborum || []).length)) ||
                           state.meta.traduzione || state.meta.traduzioneBella;
-  const profile = getUserProfile();
-  const isMedie = profile === 'medie';
   // Traduzione sdoppiata in due voci (dal mockup): Bozza = officina per frase,
   // Bella copia = resa complessiva finale. Entrambe portano alla scheda E,
   // con vista diversa (state.traduzioneVista).
@@ -26712,11 +26352,6 @@ function renderSidebarTabs() {
         hasContent: true, badge: '' },
     ];
   }
-  // Voce Profilo (dal mockup): apre la scheda dello studente, non è uno step.
-  tabs.push({ num: 0, icon: 'user', title: 'Profilo', group: 'strumenti', enabled: true,
-    hasContent: true, badge: '', onclick: 'openStudentProfileModal()' });
-  // Per il profilo medie filtra le schede non pertinenti
-  if (isMedie) tabs = tabs.filter(t => !t.hideForMedie);
   // Vista d'insieme (Π = Panoramica): sempre disponibile, in testa alla nav.
   tabs.unshift({ num: 7, letter: 'Π', icon: 'dashboard', title: 'Panoramica', group: 'home', enabled: true, hasContent: true, badge: '' });
   // Navigazione raggruppata per funzione (sezioni con titolo), ispirata al
@@ -29599,10 +29234,7 @@ function isGuidedStepCompleteAllSentences(step) {
 }
 
 function getVisibleGuidedSteps() {
-  // Le medie saltano lo step di sintassi periodale (5): rimangono 8 tappe.
-  // Lo step di pre-lettura (1) e la bella copia (9) sono per tutti i profili.
-  const profile = getUserProfile();
-  if (profile === 'medie') return GUIDED_STEPS_META.filter(s => s.num !== 5);
+  // Servizio completo: sempre tutte e 9 le tappe (inclusa la sintassi periodale).
   return GUIDED_STEPS_META.slice();
 }
 
@@ -29705,7 +29337,6 @@ function renderGuidedWizard() {
   // Calcola prev/next fra le sole tappe visibili
   const prevStepObj = currentVisibleIdx > 0 ? visibleSteps[currentVisibleIdx - 1] : null;
   const nextStepObj = currentVisibleIdx < totalSteps - 1 ? visibleSteps[currentVisibleIdx + 1] : null;
-  const isMedie = getUserProfile() === 'medie';
 
   // Pulsante "Passa a libera" rimosso: il toggle modalità è permanentemente
   // disponibile nel segmented control "Modalità" della quick-bar (topbar).
@@ -31721,53 +31352,7 @@ function resetDictFilters() {
    - intermedio (biennio): entrambe lingue, alta+altissima, traduzione + sfumature principali
    - avanzato (triennio): tutto visibile (forme, info morfologica, sfumature complete, metadata) */
 function getDictProfilePreset() {
-  const p = getUserProfile() || 'triennio';
-  if (p === 'medie') {
-    return {
-      level: 'base',
-      label: 'Vocabolario di base',
-      showLangSwitch: false,
-      lockLang: 'latino',
-      showTierTabs: false,
-      lockTier: 'altissima',
-      showAllPosChips: false,           // mostra solo categorie essenziali
-      allowedPos: ['Verbo','Sostantivo','Aggettivo','Avverbio','Preposizione','Congiunzione','Pronome'],
-      cardLayout: 'simple',             // grande lemma + traduzione, niente forme flesse, niente metadata
-      maxSfumature: 0,                  // niente sfumature
-      showForms: false,
-      showInfo: false,
-      showNote: false,
-      showMeta: false,
-      showTierBadge: false,
-      showPosBadge: true,
-      friendlyHeading: 'Parole più importanti',
-      placeholder: 'Cerca una parola in italiano o in latino…'
-    };
-  }
-  if (p === 'biennio') {
-    return {
-      level: 'intermedio',
-      label: 'Dizionario scolastico',
-      showLangSwitch: true,
-      lockLang: null,
-      showTierTabs: true,
-      lockTier: null,
-      showAllPosChips: true,
-      allowedPos: null,
-      cardLayout: 'standard',           // lemma + traduzione + sfumature principali + forme principali
-      maxSfumature: 2,
-      showForms: true,
-      maxFormsInline: 5,
-      showInfo: true,
-      showNote: true,
-      showMeta: true,
-      showTierBadge: true,
-      showPosBadge: true,
-      friendlyHeading: null,
-      placeholder: null
-    };
-  }
-  // triennio / default
+  // Servizio completo: sempre il preset avanzato (Dizionario filologico).
   return {
     level: 'avanzato',
     label: 'Dizionario filologico',
@@ -36865,11 +36450,6 @@ function onTipoTestoChange(v) {
 let pendingNewProjectLang = null;
 
 function setLingua(lang) {
-  // Profilo medie: solo latino
-  if (getUserProfile() === 'medie' && lang !== 'latino') {
-    showToast('Il profilo Medie lavora solo sul latino — cambia profilo dalla pastiglia in alto a destra');
-    return;
-  }
   // BRANCH SCORPORATI: non si può lavorare lo stesso testo in due lingue. Se clicco
   // la lingua già attiva del progetto corrente, resto sul lavoro (eventualmente
   // rientrando da una vista di branch: archivio D o panoramica Π). Se clicco
@@ -36904,11 +36484,7 @@ function openLanguageBranch(lang) {
 
 /* Avvia un nuovo brano nella lingua indicata (dal branch d'archivio). */
 function newProjectInLang(lang) {
-  if (getUserProfile() === 'medie' && lang !== 'latino') {
-    showToast('Il profilo Medie lavora solo sul latino'); return;
-  }
   pendingNewProjectLang = lang;
-  if (getUserProfile() === 'medie') { selectMode('guided'); return; }
   document.getElementById('modal-mode').classList.add('open');
 }
 
@@ -36938,11 +36514,6 @@ function newProject() {
     /* Prima invitava a «salvare prima»: non serve, il salvataggio e' continuo. */
     if (!confirm('Avviare un nuovo progetto?\n\nQuello corrente resta nell\'archivio: lo riapri quando vuoi da «I tuoi progetti».')) return;
   }
-  // Per gli studenti delle medie la modalità è già fissata su guidata + latino
-  if (getUserProfile() === 'medie') {
-    selectMode('guided');
-    return;
-  }
   // Apri il modale di scelta modalità
   document.getElementById('modal-mode').classList.add('open');
 }
@@ -36954,11 +36525,6 @@ function selectMode(mode) {
   state.guidedStep = 1;
   // Lingua del nuovo brano: quella del branch da cui è stato avviato (se presente)
   if (pendingNewProjectLang) { state.meta.lingua = pendingNewProjectLang; pendingNewProjectLang = null; }
-  // Vincoli profilo medie: solo latino + guidata
-  if (getUserProfile() === 'medie') {
-    state.meta.lingua = 'latino';
-    state.mode = 'guided';
-  }
   renderAll();
   if (state.mode === 'guided') {
     showToast('Modalità guidata avviata · inserisci il testo per cominciare');
@@ -37075,7 +36641,7 @@ function setVista(value) {
 function setApproach(newApproach) {
   if (newApproach === 'scheletro') { state.metodo = 'valenziale'; }
   else if (newApproach === 'integrale') { state.metodo = 'strati'; state.vista = 'intero'; }
-  else if (newApproach === 'frase-per-frase') { state.metodo = 'strati'; state.vista = 'frase'; if (getUserProfile() !== 'medie') state.mode = 'guided'; }
+  else if (newApproach === 'frase-per-frase') { state.metodo = 'strati'; state.vista = 'frase'; state.mode = 'guided'; }
   else if (newApproach === 'attuale') { state.metodo = 'strati'; state.vista = 'frase'; }
   else return;
   state.approachShown = true;
@@ -40297,11 +39863,6 @@ function buildCommandPaletteIndex() {
   add('Backup · 💾 Esporta solo il brano corrente',  'Backup', () => exportCurrentProjectJson(), '', '💾');
   add('Backup · 📥 Importa progetti da file (JSON)',  'Backup', () => importProjectsFromFile(),   '', '📥');
 
-  // === Profilo ===
-  add('Profilo · 🌱 Medie',     'Profilo', () => selectProfile('medie'),    '', '🌱');
-  add('Profilo · 🌿 Biennio',   'Profilo', () => selectProfile('biennio'),  '', '🌿');
-  add('Profilo · 🌳 Triennio',  'Profilo', () => selectProfile('triennio'), '', '🌳');
-
   // === Lingua ===
   add('Lingua · Latino',  'Lingua', () => setLingua('latino'), '', 'LAT');
   add('Lingua · Greco',   'Lingua', () => setLingua('greco'),  '', 'ΕΛ');
@@ -40925,15 +40486,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // (es. Map serializzate come oggetto vuoto, suggerimenti di pairing stale)
   _sanitizeTransientFields(state);
 
-  // Applica il profilo utente salvato (gating della UI prima del primo render)
-  applyProfileToBody();
-  // Applica il LIVELLO salvato (densità/disclosure dell'interfaccia)
+  // Interfaccia sempre avanzata (servizio unico).
   applyLevelToBody();
-  // Se utente medie: forza latino + guidata anche su progetti caricati
-  if (getUserProfile() === 'medie') {
-    if (state.meta.lingua !== 'latino') state.meta.lingua = 'latino';
-    if (state.mode !== 'guided') { state.mode = 'guided'; if (!state.guidedStep) state.guidedStep = 1; }
-  }
 
   renderAll();
   syncPreviewState();
@@ -41062,13 +40616,6 @@ document.addEventListener('DOMContentLoaded', () => {
         lista.innerHTML = steps.map(function(s, i){
           return '<span>' + (i + 1) + '. ' + s.label + '</span>';
         }).join('');
-      }
-      var medie = document.getElementById('profile-medie-steps');
-      if (medie) {
-        // per le MEDIE il conteggio e' il loro, non quello del profilo corrente
-        var nMedie = GUIDED_STEPS_META.filter(function(s){ return s.num !== 5; }).length;
-        var txt = 'guidata ' + nMedie + ' tappe';
-        if (medie.textContent !== txt) medie.textContent = txt;
       }
     } catch (e) { /* il wizard non e' ancora pronto: si riprova al prossimo render */ }
   };
@@ -41376,14 +40923,9 @@ document.addEventListener('DOMContentLoaded', () => {
     bd.addEventListener('click', e => { if (e.target === bd) bd.classList.remove('open'); });
   });
 
-  // Primo avvio: se non c'è alcun profilo, mostra il modale di benvenuto;
-  // altrimenti àncora la lingua di lavoro con il gate (una volta per sessione).
-  if (!getUserProfile()) {
-    setTimeout(openProfileModal, 250);
-  } else {
-    // Il passaggio d'anno (1° set.) ha precedenza; se non scatta, mostra il gate lingua.
-    setTimeout(() => { if (!maybeShowYearRollover()) maybeShowLanguageGate(); }, 300);
-  }
+  // Nessun gate di profilo: l'utente entra dritto al servizio completo. Àncora
+  // solo la lingua di lavoro col gate (una volta per sessione).
+  setTimeout(maybeShowLanguageGate, 300);
 
   // autosave
   setInterval(() => { if (state.meta.testoOriginale) persistCurrent(); }, 30000);
