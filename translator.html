@@ -37682,7 +37682,16 @@ function eliminaStaccata(archiveIdx) {
   const sentence = state.sentences.find(s => s.id === _mefStaccateId);
   if (!sentence) return;
   _undoCheckpoint();
+  const rimossa = (sentence._analisiArchiviate || [])[archiveIdx];
   (sentence._analisiArchiviate || []).splice(archiveIdx, 1);
+  // Eliminare un CAPO ancora in archivio lo rende davvero morto: un figlio già
+  // riagganciato che lo puntava resterebbe con un legame penzolante. Ora che non
+  // è più né attivo né archiviato, sgancia chi lo riferiva.
+  const mortoId = rimossa && rimossa.entry && rimossa.entry.id;
+  if (mortoId) {
+    (sentence.logic || []).forEach(x => { if (x.attribuitoA === mortoId) { x.attribuitoA = ''; x.isAttributivo = false; } });
+    (sentence.periodale || []).forEach(x => { if (x.dipendeDa === mortoId) x.dipendeDa = ''; });
+  }
   persistCurrent();
   renderStaccateList();
   renderEditor();
