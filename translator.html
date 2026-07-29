@@ -40722,10 +40722,19 @@ document.addEventListener('DOMContentLoaded', () => {
     l = (ul === 'grc' || ul === 'greco') ? 'greco' : (ul === 'la' || ul === 'latino') ? 'latino' : null;
     if (!l) { setTimeout(maybeShowLanguageGate, 300); return; }   // nessun ?lang=: gate normale
     // Cucitura dalla pagina-lingua: entra dritto nel ramo (archivio del branch —
-    // riprendi una versione o creane una nuova) e salta il gate di sessione.
-    try { sessionStorage.setItem(LANGGATE_SESSION_KEY, l); } catch (e) {}
+    // riprendi una versione o creane una nuova) e salta il gate di sessione. La
+    // chiave di sessione si scrive SOLO dopo il successo di openLanguageBranch: così
+    // un eventuale errore ricade DAVVERO sul gate (rimuovendo la chiave e mostrandolo),
+    // invece di lasciare uno stato muto con la chiave impostata — che al reload
+    // continuerebbe a nascondere il gate lasciando l'utente bloccato.
     var m = document.getElementById('langgate'); if (m) m.hidden = true;
-    try { openLanguageBranch(l); } catch (e) { setTimeout(maybeShowLanguageGate, 300); }
+    try {
+      openLanguageBranch(l);
+      try { sessionStorage.setItem(LANGGATE_SESSION_KEY, l); } catch (e) {}
+    } catch (e) {
+      try { sessionStorage.removeItem(LANGGATE_SESSION_KEY); } catch (e2) {}
+      if (typeof showLanguageGate === 'function') showLanguageGate();
+    }
   }());
 
   // autosave
