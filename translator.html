@@ -27169,12 +27169,17 @@ function scheletroSeedOrdo(sentence) {
   const phraseFromIdx = (idxArr) => [...idxArr].sort((a, b) => a - b)
     .map(i => (tokens.find(t => t.idx === i) || {}).text).filter(Boolean).join(' ');
   const existing = new Set(sentence.ordoVerborum.map(o => o.sourceLogicId).filter(Boolean));
+  // Dedup anche per POSIZIONE: una tessera ancorata a mano (ri-aggancio di un ordo
+  // staccato) ha sourceTokenIdx ma sourceLogicId vuoto, quindi non sta in `existing`
+  // e verrebbe ri-seminata come doppione. Bloccarla per posizione lo impedisce.
+  const existingPos = new Set(sentence.ordoVerborum.map(o => o.sourceTokenIdx).filter(i => typeof i === 'number'));
   const logicCovered = new Set();
   (sentence.logic || []).forEach(l => (l.tokenIndices || []).forEach(i => logicCovered.add(i)));
   let added = 0;
   // 1) sintagmi della logica
   (sentence.logic || []).forEach(l => {
     if (existing.has(l.id)) return;
+    if ((l.tokenIndices || []).length && existingPos.has(Math.min.apply(null, l.tokenIndices))) return;
     let phrase = l.phrase || '';
     if (Array.isArray(l.tokenIndices) && l.tokenIndices.length) { const r = phraseFromIdx(l.tokenIndices); if (r) phrase = r; }
     const o = makeOrdoElement(phrase, '', l.id);
@@ -27188,7 +27193,7 @@ function scheletroSeedOrdo(sentence) {
     .forEach(v => {
       if (logicCovered.has(v.tokenIndex)) return;
       const srcId = 'V:' + v.tokenIndex;
-      if (existing.has(srcId)) return;
+      if (existing.has(srcId) || existingPos.has(v.tokenIndex)) return;
       const o = makeOrdoElement(v.word || (tokens.find(t => t.idx === v.tokenIndex) || {}).text || '', '', srcId);
       o.funzione = 'Predicato verbale'; o.isVerbo = true; o.sourceTokenIdx = v.tokenIndex;
       sentence.ordoVerborum.push(o); added++;
@@ -37424,9 +37429,20 @@ function computeRemapPlan(sentence, newText) {
   // punteggiatura identica. Confrontare le sole parole era falso — il commento
   // prometteva «punteggiatura identica» ma togliere una virgola lascia gli indici
   // stantii che puntano al segno sbagliato.
-  const punctSeq = t => tokenizeSentence(t || '').filter(x => x.kind === 'punct').map(x => x.text).join('|');
-  const strutturaCambiata = !(O.length === N.length && O.every((w, i) => map.get(i) === i) && punctSeq(sentence.original) === punctSeq(newText));
-  const nAsindeti = (sentence.asindeti || []).length;
+  // Gli asindeti reggono solo se il FLUSSO DI TOKEN — parole E punteggiatura, nelle
+  // loro posizioni reciproche — è identico. Confrontare i soli glifi in sequenza
+  // (come faceva punctSeq) mancava lo SPOSTAMENTO di un segno fra due parole
+  // («amo, credo spero» → «amo credo, spero»: stessi glifi, confine diverso).
+  const streamSig = t => tokenizeSentence(t || '').filter(x => x.kind !== 'space').map(x => (x.kind === 'word' ? 'w' : 'p') + '' + x.text).join('');
+  const strutturaCambiata = streamSig(sentence.original) !== streamSig(newText);
+  // Confini asindetici CONFERMATI, contati su ENTRAMBI gli store paralleli in unione
+  // (asindeti di scheda B + _asyndeta del guidato, escluso il terminatore seminato
+  // di default): così il referto avvisa anche chi ha lavorato solo nel guidato,
+  // dove prima il reset di _asyndeta era silenzioso.
+  const punctTok = tokenizeSentence(sentence.original).filter(x => x.kind === 'punct');
+  const finalPunctIdx = punctTok.length ? punctTok[punctTok.length - 1].idx : null;
+  const confiniConfermati = new Set([].concat(sentence.asindeti || [], (sentence._asyndeta || []).filter(i => i !== finalPunctIdx)));
+  const nAsindeti = confiniConfermati.size;
   const asindetiPersi = nAsindeti > 0 && strutturaCambiata;
   return { map, O, N, survivors, detached, asindetiPersi, strutturaCambiata, nAsindeti, newText };
 }
@@ -37644,12 +37660,14 @@ function riaggancia(archiveIdx) {
     else { e.text = w; sentence.periodale.push(e); }
   }
   else if (a.kind === 'ordo') { e.sourceTokenIdx = idx; e.sourceLogicId = ''; sentence.ordoVerborum.push(e); }
-  // Legami per ID che potevano puntare a un'entry mai riagganciata: sganciali, o
-  // resterebbero penzolanti (il capo «senza capo», il figlio a un id inesistente).
-  const idsLogic = new Set(sentence.logic.map(x => x.id));
-  sentence.logic.forEach(x => { if (x.attribuitoA && !idsLogic.has(x.attribuitoA)) { x.attribuitoA = ''; x.isAttributivo = false; } });
-  const idsPer = new Set(sentence.periodale.map(x => x.id));
-  sentence.periodale.forEach(x => { if (x.dipendeDa && !idsPer.has(x.dipendeDa)) x.dipendeDa = ''; });
+  // Legami per ID: un legame è morto SOLO se il suo capo non è né attivo né
+  // ARCHIVIATO. Un capo ancora in archivio può essere riagganciato dopo: sganciarlo
+  // ora reciderebbe per sempre il legame se il docente riaggancia il figlio prima
+  // del capo (regressione della prima versione di questa pulizia).
+  const idArchiviati = new Set((sentence._analisiArchiviate || []).map(z => z.entry && z.entry.id).filter(Boolean));
+  const vivoOArchiviato = new Set([].concat([...sentence.logic.map(x => x.id)], [...sentence.periodale.map(x => x.id)], [...idArchiviati]));
+  sentence.logic.forEach(x => { if (x.attribuitoA && !vivoOArchiviato.has(x.attribuitoA)) { x.attribuitoA = ''; x.isAttributivo = false; } });
+  sentence.periodale.forEach(x => { if (x.dipendeDa && !vivoOArchiviato.has(x.dipendeDa)) x.dipendeDa = ''; });
   sentence._analisiArchiviate.splice(archiveIdx, 1);
   persistCurrent();
   renderStaccateList();
