@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Poetrify · Scegli la lingua</title>
+<!-- Anti-flash tema (D2): imposta [data-theme] prima del paint -->
+<script>(function(){try{var t=localStorage.getItem('poetrify-theme');if(t!=='dark'&&t!=='light'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<!-- Font self-hosted (vendor/fonts/) -->
+<link rel="stylesheet" href="vendor/fonts/fonts.css">
+<!-- Token condivisi (fonte unica del design system · shared/) -->
+<link rel="stylesheet" href="shared/poetrify-tokens.css">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  font-family: 'Source Serif 4', Georgia, serif;
+  color: var(--ink);
+  background:
+    radial-gradient(1100px 560px at 50% -12%, color-mix(in srgb, var(--brass) 6%, transparent), transparent 60%),
+    var(--parchment);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+body { display: flex; flex-direction: column; align-items: center; padding: 0 20px 64px; }
+
+/* ── Testata ── */
+.lg-top { text-align: center; margin-top: clamp(52px, 11vh, 120px); }
+.brand-mark {
+  display: block; font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(30px, 5vw, 42px); font-weight: 700; letter-spacing: -0.015em;
+  color: var(--primary); line-height: 1;
+}
+.lg-eyebrow {
+  display: block; margin-top: 16px; font-family: 'Source Sans 3', sans-serif;
+  font-size: 11.5px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.18em; color: var(--brass);
+}
+.lg-title {
+  font-family: 'Playfair Display', Georgia, serif; font-weight: 700;
+  font-size: clamp(26px, 4.4vw, 38px); line-height: 1.12; margin: 14px 0 6px;
+  color: var(--ink); text-wrap: balance;
+}
+.lg-sub {
+  max-width: 40rem; margin: 0 auto; font-family: 'Source Sans 3', sans-serif;
+  font-size: 14px; line-height: 1.55; color: var(--sepia);
+}
+
+/* ── Dittico ── */
+.diptych {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 18px;
+  width: 100%; max-width: 940px; margin: 44px auto 0;
+}
+@media (max-width: 620px) { .diptych { grid-template-columns: 1fr; } }
+
+.lg-card {
+  position: relative; overflow: hidden; text-decoration: none; text-align: left;
+  border-radius: var(--radius-lg); padding: 34px 30px 26px;
+  border: 1.5px solid var(--accent);
+  background: linear-gradient(180deg, var(--accent-pale), transparent 70%), var(--paper);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+  display: flex; flex-direction: column; min-height: 232px; color: inherit;
+}
+.lg-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lift); }
+.lg-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.lg-card .rule-top { height: 4px; width: 56px; border-radius: 999px; background: var(--accent); margin-bottom: 18px; }
+.lg-word { font-family: var(--font-classical); font-size: clamp(38px, 6vw, 52px); line-height: 1; font-weight: 700; color: var(--accent); }
+.lg-name { font-family: 'Source Sans 3', sans-serif; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-deep); margin-top: 16px; }
+.lg-desc { font-family: 'Source Serif 4', Georgia, serif; font-size: 15px; line-height: 1.5; color: var(--ink-soft); margin-top: 9px; flex-grow: 1; }
+.lg-go { font-family: 'Source Sans 3', sans-serif; font-size: 13px; font-weight: 700; color: var(--accent); margin-top: 16px; }
+.lg-card:hover .lg-go { text-decoration: underline; }
+.lg-watermark { position: absolute; right: -8px; bottom: -34px; font-family: var(--font-classical); font-size: 168px; line-height: 1; color: var(--accent); opacity: 0.06; font-weight: 700; pointer-events: none; user-select: none; }
+
+/* accenti per ramo (scoping locale: la pagina mostra ENTRAMBE le lingue,
+   quindi non si usa body[data-lang]; ogni card porta il suo accento) */
+.lg-card.lat { --accent: var(--accent-lat); --accent-deep: #7d232b; --accent-pale: rgba(162,46,55,0.09); }
+.lg-card.gr  { --accent: var(--accent-gr);  --accent-deep: #0f0070; --accent-pale: rgba(24,0,172,0.07); }
+:root[data-theme="dark"] .lg-card.lat { --accent-deep: #efb0b4; --accent-pale: rgba(229,138,144,0.12); }
+:root[data-theme="dark"] .lg-card.gr  { --accent-deep: #a99cff; --accent-pale: rgba(139,125,255,0.14); }
+
+/* ── Torna indietro ── */
+.lg-back { margin: 26px auto 0; font-family: 'Source Sans 3', sans-serif; font-size: 12.5px; color: var(--sepia); text-decoration: none; }
+.lg-back:hover { color: var(--primary); }
+</style>
+</head>
+<body>
+
+<header class="lg-top">
+  <a href="app.html" style="text-decoration:none"><span class="brand-mark">Poetrify</span></a>
+  <span class="lg-eyebrow" id="lg-eyebrow">Scegli la lingua</span>
+  <h1 class="lg-title">In che lingua vuoi lavorare?</h1>
+  <p class="lg-sub">Il ramo resta scelto per questa sessione — potrai cambiarlo quando vuoi dall'interno dello strumento.</p>
+</header>
+
+<main class="diptych">
+  <a class="lg-card lat" id="card-lat" data-lang="la" href="translator.html?lang=la" aria-label="Entra nel ramo latino">
+    <span class="rule-top" aria-hidden="true"></span>
+    <span class="lg-word">Latīnē</span>
+    <span class="lg-name">Latino · rosso pompeiano</span>
+    <span class="lg-desc">Cicerone, Virgilio, Cesare. Analisi e traduzione del testo latino.</span>
+    <span class="lg-go">Entra nel ramo latino →</span>
+    <span class="lg-watermark" aria-hidden="true">L</span>
+  </a>
+  <a class="lg-card gr" id="card-gr" data-lang="grc" href="translator.html?lang=grc" aria-label="Entra nel ramo greco antico">
+    <span class="rule-top" aria-hidden="true"></span>
+    <span class="lg-word">Ἑλληνικά</span>
+    <span class="lg-name">Greco antico · blu Poetrify</span>
+    <span class="lg-desc">Platone, Omero, Erodoto. Il politonico reso con la faccia da edizione.</span>
+    <span class="lg-go">Entra nel ramo greco →</span>
+    <span class="lg-watermark" aria-hidden="true">Α</span>
+  </a>
+</main>
+
+<a class="lg-back" href="app.html">← Torna agli strumenti</a>
+
+<!-- Tema condiviso (D2): toggle flottante -->
+<script src="shared/poetrify-theme.js" data-inject-toggle></script>
+
+<script>
+/* Routing: ?to=<scopo> decide la destinazione e la testata.
+   Al clic su una card apre <destinazione>.html?lang=<la|grc>. */
+(function () {
+  var DEST  = { translator: 'translator.html', dizionario: 'dictionary.html', corpus: 'corpus.html', grammatica: 'grammatica.html' };
+  var LABEL = { translator: 'Translator', dizionario: 'Dizionario', corpus: 'Corpus', grammatica: 'Grammatica' };
+  var to = (new URLSearchParams(location.search).get('to') || 'translator').toLowerCase();
+  if (!DEST[to]) to = 'translator';
+  var dest = DEST[to];
+  document.getElementById('lg-eyebrow').textContent = LABEL[to] + ' · scegli la lingua';
+  document.title = 'Poetrify · ' + LABEL[to] + ' · scegli la lingua';
+  ['card-lat', 'card-gr'].forEach(function (id) {
+    var el = document.getElementById(id);
+    el.setAttribute('href', dest + '?lang=' + el.dataset.lang);
+  });
+}());
+</script>
+</body>
+</html>

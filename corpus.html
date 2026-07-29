@@ -372,7 +372,9 @@ function renderAuthors() {
 
 // ── Benvenuto / catalogo ───────────────────────────────────────────────────
 function renderWelcome() {
-  state.view = 'welcome'; state.work = null; document.body.removeAttribute('data-lang');
+  state.view = 'welcome'; state.work = null;
+  // colore=lingua: nel ramo scelto la welcome porta il suo accento (rosso/blu)
+  if (state.lang === 'la' || state.lang === 'grc') document.body.dataset.lang = state.lang; else document.body.removeAttribute('data-lang');
   const c = state.index.counts;
   const wrap = el('div');
   const hero = el('div', 'welcome-hero');
@@ -533,7 +535,8 @@ async function runSearch(raw) {
   const q = raw.trim();
   if (q.length < 2) { if (state.view === 'results') renderWelcome(); return; }
   const seq = ++searchSeq;
-  state.view = 'results'; document.body.removeAttribute('data-lang');
+  state.view = 'results';
+  if (state.lang === 'la' || state.lang === 'grc') document.body.dataset.lang = state.lang; else document.body.removeAttribute('data-lang');
   $stage.innerHTML = '<div class="loading"><div class="spinner"></div>Cerco nell\'intero corpus…</div>';
   await loadAll();
   if (seq !== searchSeq) return;                       // query superata da una più recente
@@ -620,6 +623,14 @@ document.getElementById('mobtoggle').onclick = (e) => {
 (async function init() {
   try {
     await loadIndex();
+    // Cucitura dalla pagina-lingua (?lang=la|grc): entra già nel ramo scelto,
+    // pre-selezionando il filtro invece di partire da «Tutte».
+    const _ul = (new URLSearchParams(location.search).get('lang') || '').toLowerCase();
+    const _branch = (_ul === 'la' || _ul === 'latino') ? 'la' : (_ul === 'grc' || _ul === 'greco') ? 'grc' : null;
+    if (_branch) {
+      state.lang = _branch;
+      document.querySelectorAll('.langfilter button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.lang === _branch)));
+    }
     renderWelcome();
   } catch (err) {
     $stage.innerHTML = `<div class="empty">Non riesco a caricare il catalogo del corpus.<br><small>${escapeHtml(String(err))}</small><br><br>Apri la pagina tramite un server locale (es. <code>python -m http.server</code>): i <code>fetch</code> dei dati non funzionano da <code>file://</code>.</div>`;

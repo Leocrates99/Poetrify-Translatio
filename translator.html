@@ -40714,9 +40714,19 @@ document.addEventListener('DOMContentLoaded', () => {
     bd.addEventListener('click', e => { if (e.target === bd) bd.classList.remove('open'); });
   });
 
-  // Nessun gate di profilo: l'utente entra dritto al servizio completo. Àncora
-  // solo la lingua di lavoro col gate (una volta per sessione).
-  setTimeout(maybeShowLanguageGate, 300);
+  // Nessun gate di profilo: l'utente entra dritto al servizio completo. La lingua
+  // di lavoro arriva dalla pagina-lingua (?lang=la|grc) oppure dal gate di sessione.
+  (function _enterBranchFromUrl() {
+    var ul, l;
+    try { ul = (new URLSearchParams(location.search).get('lang') || '').toLowerCase(); } catch (e) { ul = ''; }
+    l = (ul === 'grc' || ul === 'greco') ? 'greco' : (ul === 'la' || ul === 'latino') ? 'latino' : null;
+    if (!l) { setTimeout(maybeShowLanguageGate, 300); return; }   // nessun ?lang=: gate normale
+    // Cucitura dalla pagina-lingua: entra dritto nel ramo (archivio del branch —
+    // riprendi una versione o creane una nuova) e salta il gate di sessione.
+    try { sessionStorage.setItem(LANGGATE_SESSION_KEY, l); } catch (e) {}
+    var m = document.getElementById('langgate'); if (m) m.hidden = true;
+    try { openLanguageBranch(l); } catch (e) { setTimeout(maybeShowLanguageGate, 300); }
+  }());
 
   // autosave
   setInterval(() => { if (state.meta.testoOriginale) persistCurrent(); }, 30000);

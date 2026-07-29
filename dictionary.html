@@ -2469,7 +2469,15 @@ document.addEventListener('DOMContentLoaded', () => {
   try {
     const KEY = 'poetrify-dict-langgate-session';
     const gate = document.getElementById('dict-langgate');
-    if (gate && !sessionStorage.getItem(KEY)) {
+    // Cucitura dalla pagina-lingua (?lang=): se il ramo arriva dall'URL è già
+    // scelto (il modulo ha impostato currentLang) → salta il gate e memorizzalo.
+    const _urlLang = (new URLSearchParams(location.search).get('lang') || '').toLowerCase();
+    const _langFromUrl = (_urlLang === 'la' || _urlLang === 'latino' || _urlLang === 'grc' || _urlLang === 'greco');
+    if (_langFromUrl) {
+      try { sessionStorage.setItem(KEY, (_urlLang === 'grc' || _urlLang === 'greco') ? 'greco' : 'latino'); } catch (e) {}
+      if (gate) gate.hidden = true;
+    }
+    if (gate && !_langFromUrl && !sessionStorage.getItem(KEY)) {
       gate.hidden = false;
       gate.querySelectorAll('.dict-langgate-card').forEach(btn => {
         btn.addEventListener('click', () => {
