@@ -408,7 +408,7 @@ body[data-lang="greco"] .field textarea.greek {
 }
 /* Touch action: niente double-tap zoom su elementi interattivi → tap istantaneo */
 button, .tab-item, .token, .wizard-step, .analysis-tab,
-.sidebar-btn, .profile-chip, .btn, .btn-export, .lang-toggle button { touch-action: manipulation; }
+.sidebar-btn, .btn, .btn-export, .lang-toggle button { touch-action: manipulation; }
 
 button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 input, textarea, select { font-family: inherit; color: inherit; }
@@ -4299,33 +4299,6 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: var(--font-c
   font-family: var(--font-body);
 }
 
-/* ============================================
-   PROFILO UTENTE (medie / biennio / triennio)
-   Adatta la UX al livello scolastico senza alterare il brand.
-   ============================================ */
-body[data-profile="medie"] .profile-triennio-only,
-body[data-profile="biennio"] .profile-triennio-only,
-body[data-profile="medie"] .profile-biennio-plus {
-  display: none !important;
-}
-/* Le medie usano solo latino + guidata: nascondi anche scelta lingua e mode toggle */
-body[data-profile="medie"] .lang-toggle,
-body[data-profile="medie"] .mode-switch,
-body[data-profile="medie"] .mode-toggle-banner {
-  display: none !important;
-}
-/* Tipografia leggermente più ariosa per le medie — niente font diversi, solo dimensioni */
-body[data-profile="medie"] .method-note,
-body[data-profile="medie"] .lemma-hint,
-body[data-profile="medie"] .suggestion-hint,
-body[data-profile="medie"] .wizard-instructions,
-body[data-profile="medie"] .section-title p,
-body[data-profile="medie"] .field-hint {
-  font-size: 13.5px;
-  line-height: 1.7;
-}
-body[data-profile="medie"] .section-title h1 { font-size: 24px; }
-body[data-profile="medie"] .wizard-step-label { font-size: 12px; }
 
 /* ============================================
    LIVELLO (base / intermedio / avanzato) · asse primario di densità.
@@ -4334,12 +4307,6 @@ body[data-profile="medie"] .wizard-step-label { font-size: 12px; }
    La pulizia di base globale dei 162 helper-text arriva nella Fase 2; qui
    differenziamo la densità per livello.
    ============================================ */
-/* Strumenti avanzati: nascosti ai livelli inferiori */
-body[data-level="base"] .profile-triennio-only,
-body[data-level="intermedio"] .profile-triennio-only,
-body[data-level="base"] .profile-biennio-plus {
-  display: none !important;
-}
 /* Sotto-scritte/aiuti verbosi e RIPETITIVI: mostrati SOLO a Base (dove guidano
    davvero il principiante). Da Intermedio in su l'interfaccia resta pulita: le
    istruzioni essenziali restano nei tooltip/title. NON tocchiamo gli avvisi
@@ -4372,45 +4339,6 @@ body[data-level="avanzato"] .syntax-tree-legend {
   display: none !important;
 }
 
-/* Profilo chip: clickabile per riaprire il modale del profilo */
-.profile-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px 4px 8px;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: 999px;
-  font-family: var(--font-ui);
-  font-size: 11px;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--ink);
-  cursor: pointer;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-}
-.profile-chip:hover {
-  background: var(--ivory);
-  border-color: var(--primary);
-  color: var(--primary);
-}
-.profile-chip-dot {
-  width: 8px; height: 8px; border-radius: 50%;
-  background: var(--primary);
-  display: inline-block;
-}
-.profile-chip[data-profile="medie"]    .profile-chip-dot { background: #2f855a; }
-.profile-chip[data-profile="biennio"]  .profile-chip-dot { background: #d69e2e; }
-.profile-chip[data-profile="triennio"] .profile-chip-dot { background: var(--primary); }
-.profile-chip-label { font-weight: 600; }
-.profile-chip-edit {
-  font-family: var(--font-ui);
-  font-size: 10px;
-  opacity: 0.55;
-  text-transform: none;
-  letter-spacing: 0.02em;
-}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    QUICK-BAR · seconda riga della topbar. Tre segmented control sempre disponibili
@@ -4488,44 +4416,6 @@ body[data-level="avanzato"] .syntax-tree-legend {
 /* (Le vecchie regole monolingue usavano variabili inesistenti
    --accent-lat/--accent-gr → sfondo non valido → testo bianco
    invisibile. Ora il colore lo dà --lang-accent nella regola base.) */
-/* Profilo medie: nasconde l'opzione "libera" del segmented mode (le medie
- * sono vincolate a guidata) e nasconde "Frase per frase" dell'approccio
- * (l'approccio è quello "attuale" by default). Manteniamo gli stili coerenti
- * con la disable-by-attribute della classe profile-biennio-plus. */
-body[data-profile="medie"] .quick-seg-btn[data-mode="free"] { display: none; }
-
-/* ── Selettore LIVELLO (controllo primario) + expander "Personalizza" ── */
-.quick-bar-level .quick-bar-label { color: var(--primary); }
-.quick-personalize {
-  appearance: none;
-  border: none;
-  background: transparent;
-  font-family: var(--font-ui);
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  color: var(--sepia);
-  cursor: pointer;
-  padding: 4px 8px;
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  border-radius: 4px;
-  transition: color 0.15s ease, background 0.15s ease;
-}
-.quick-personalize:hover { color: var(--primary); background: var(--ivory); }
-.qp-caret { font-size: 9px; opacity: 0.7; }
-/* I controlli fini compaiono sotto, a tutta larghezza, separati da una hairline */
-.quick-bar-custom {
-  flex-basis: 100%;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  flex-wrap: wrap;
-  padding: 10px 0 2px;
-  margin-top: 4px;
-  border-top: 1px dashed var(--rule-soft);
-}
 
 /* In dark mode, la barra si scurisce con la palette generale */
 :root[data-theme="dark"] body .quick-bar {
@@ -4547,14 +4437,6 @@ body[data-profile="medie"] .quick-seg-btn[data-mode="free"] { display: none; }
   .quick-seg-btn { flex: 1; justify-content: center; }
 }
 
-/* Cards selezione profilo nel modale di benvenuto */
-.profile-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 14px;
-  margin: 18px 0 8px;
-}
-@media (max-width: 820px) { .profile-grid { grid-template-columns: 1fr; } }
 /* SCELTA DELLA LINGUA · banda IN FLUSSO (era un modale d'ingresso).
    Stessa forma della banda del dizionario: le due superfici si somigliano. */
 .langgate { display: block; margin: 0 0 16px; padding: 16px 18px; background: var(--paper); border: 1px solid var(--rule-soft); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); }
@@ -4581,7 +4463,6 @@ body[data-profile="medie"] .quick-seg-btn[data-mode="free"] { display: none; }
 .langgate-gr .langgate-title, .langgate-gr .langgate-icon { color: var(--accent-gr); }
 .langgate-gr .langgate-icon { font-family: 'GreekTimes', 'Times New Roman', serif; font-style: italic; }
 .langgate-gr:hover { background: color-mix(in srgb, var(--accent-gr) 7%, var(--paper)); }
-/* PROFILO STUDENTE · layout del modale */
 /* GRIGLIA PER PAROLE (#modal-edit-frase) · un campo per parola, punteggiatura
    come chip inerti. Il testo colto è serif; i campi seguono la lingua. */
 .gp-grid { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; margin: 18px 0 4px; padding: 14px; background: var(--cream); border: 1px solid var(--rule-soft); border-radius: var(--radius-md); max-height: 46vh; overflow-y: auto; }
@@ -4615,98 +4496,9 @@ body[data-profile="medie"] .quick-seg-btn[data-mode="free"] { display: none; }
 .staccate-vuoto { font-family: var(--font-ui); font-size: 13px; color: var(--sepia); font-style: italic; padding: 8px 0; }
 :root[data-theme="dark"] body .gp-grid { background: rgba(255,255,255,0.03); }
 :root[data-theme="dark"] body .gp-field { background: rgba(255,255,255,0.05); }
-.sp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 18px 0 8px; }
 .sp-field { display: flex; flex-direction: column; gap: 4px; }
-.sp-field-full { grid-column: 1 / -1; }
 .sp-field label { font-family: var(--font-ui); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--sepia); }
 .sp-field select, .sp-field input, .sp-field textarea { font-family: var(--font-ui); font-size: 13px; padding: 7px 9px; border: 1px solid var(--rule); border-radius: var(--radius-sm); background: var(--paper); color: var(--ink); width: 100%; }
-.sp-manuali { display: flex; flex-wrap: wrap; gap: 6px 14px; margin-bottom: 6px; }
-.sp-manuale { display: inline-flex; align-items: center; gap: 5px; font-family: var(--font-ui); font-size: 12px; font-weight: 500; color: var(--ink); text-transform: none; letter-spacing: 0; }
-.sp-manuale input { width: auto; }
-@media (max-width: 560px) { .sp-grid { grid-template-columns: 1fr; } }
-.profile-card {
-  text-align: left;
-  background: var(--paper);
-  border: 1.5px solid var(--rule);
-  border-radius: var(--radius-md);
-  padding: 18px 16px;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  transition: all 0.18s ease;
-  font-family: var(--font-body);
-  position: relative;
-}
-.profile-card:hover {
-  border-color: var(--primary);
-  background: var(--ivory);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(24, 0, 172, 0.08);
-}
-.profile-card .profile-card-badge {
-  position: absolute; top: 12px; right: 12px;
-  font-family: var(--font-ui);
-  font-size: 10px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  padding: 2px 8px;
-  border-radius: 999px;
-  background: rgba(24, 0, 172, 0.08);
-  color: var(--primary);
-}
-.profile-card-icon {
-  font-family: var(--font-display);
-  font-size: 32px;
-  line-height: 1;
-  color: var(--primary);
-  font-weight: 600;
-}
-.profile-card[data-profile="medie"]    .profile-card-icon { color: #2f855a; }
-.profile-card[data-profile="biennio"]  .profile-card-icon { color: #d69e2e; }
-.profile-card[data-profile="triennio"] .profile-card-icon { color: var(--primary); }
-.profile-card-title {
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 600;
-  color: var(--ink);
-  line-height: 1.2;
-}
-.profile-card-sub {
-  font-family: var(--font-ui);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--sepia);
-}
-.profile-card-desc {
-  font-family: var(--font-body);
-  font-size: 13px;
-  line-height: 1.55;
-  color: var(--ink-soft);
-}
-.profile-card-features {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-top: 6px;
-}
-.profile-card-features span {
-  font-family: var(--font-ui);
-  font-size: 10.5px;
-  padding: 2px 8px;
-  background: rgba(0, 0, 0, 0.04);
-  border-radius: 999px;
-  color: var(--sepia);
-}
-.profile-modal-foot {
-  font-family: var(--font-body);
-  font-size: 12.5px;
-  font-style: italic;
-  color: var(--sepia-soft);
-  text-align: center;
-  margin-top: 14px;
-}
 
 /* ============================================
    SEZIONE F · DIZIONARIO — consultazione parallela
@@ -11293,7 +11085,6 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
    gruppo a tutta larghezza, segmenti distribuiti. Vale per sidebar e drawer. */
 #drawer-settings-slot .quick-bar { flex-direction: column; align-items: stretch; gap: 10px; border-top: none; padding: 4px 0; margin: 0; }
 #drawer-settings-slot .quick-bar-group { width: 100%; }
-#drawer-settings-slot .quick-bar-custom { flex-direction: column; align-items: stretch; gap: 10px; flex-basis: auto; }
 #drawer-settings-slot .quick-seg { display: flex; width: 100%; flex-wrap: wrap; }
 #drawer-settings-slot .quick-seg-btn { flex: 1 1 auto; justify-content: center; padding: 6px 8px; font-size: 11px; }
 #drawer-brano-slot .brano-info { width: 100%; }
