@@ -72,11 +72,6 @@ const POS_FILTER_KEY = 'poetrify-dict-pos-filter';
  * completa, default) | 'attestato' (forme attestate nel corpus) */
 const PARADIGM_MODE_KEY = 'poetrify-dict-paradigm-mode';
 const SEGMORPH_KEY = 'poetrify-dict-segmorph';   // vista morfologica (colori+trattini) on/off
-/* [UI] Livello di difficoltà condiviso col translator (densità dell'interfaccia).
- * A Base le sezioni avanzate dell'entry (etimologia, cognati) restano nascoste. */
-const LEVEL_STORAGE_KEY = 'poetrify-level';
-const LEVELS = ['base', 'intermedio', 'avanzato'];
-const LEVEL_LABELS = { base: 'Base', intermedio: 'Interm.', avanzato: 'Avanz.' };
 const AUTOCOMPLETE_LIMIT = 8;
 const BACK_STACK_LIMIT = 30;
 /* [C] profondità massima del drill-down alfabetico: 1ª → +2ª → +3ª → +4ª lettera */
@@ -178,7 +173,6 @@ export class DictionaryApp {
     this.$historyBar = document.getElementById('dict-history-bar');
     this.$backBtn = document.getElementById('dict-back-btn');
     this.$forwardBtn = document.getElementById('dict-forward-btn');
-    this.$levelToggle = document.getElementById('dict-level-toggle');
 
     if (!this.$results) {
       console.warn('[DictionaryApp] container #dict-results-area non trovato');
@@ -231,7 +225,6 @@ export class DictionaryApp {
     if (this.$darkToggle) this.$darkToggle.addEventListener('click', () => this._toggleDark());
     const passoBtn = document.getElementById('dict-passo-toggle');
     if (passoBtn) passoBtn.addEventListener('click', () => { this.viewMode = 'passo'; this.render(); });
-    if (this.$levelToggle) this.$levelToggle.addEventListener('click', () => this._cycleLevel());
     if (this.$fontToggle) this.$fontToggle.addEventListener('click', () => this._cycleFontSize());
     if (this.$kbdToggle) this.$kbdToggle.addEventListener('click', () => this._toggleGreekKbd());
     if (this.$translitToggle) this.$translitToggle.addEventListener('click', () => this._toggleTranslit());
@@ -2296,23 +2289,11 @@ export class DictionaryApp {
   }
 
   /* ════════════════════════════════════════════════════════════════════
-     [UI] LIVELLO · densità condivisa col translator (poetrify-level)
+     [UI] LIVELLO · servizio completo: densità sempre avanzata — tutte le
+     sezioni dell'entry restano visibili (etimologia, cognati indoeuropei).
      ════════════════════════════════════════════════════════════════════ */
-  _getLevel() {
-    try { const v = localStorage.getItem(LEVEL_STORAGE_KEY); if (LEVELS.includes(v)) return v; } catch (_) {}
-    return 'intermedio';
-  }
   _applyLevel() {
-    const lv = this._getLevel();
-    document.body.dataset.level = lv;
-    if (this.$levelToggle) this.$levelToggle.textContent = 'Livello: ' + LEVEL_LABELS[lv];
-  }
-  _cycleLevel() {
-    const next = LEVELS[(LEVELS.indexOf(this._getLevel()) + 1) % LEVELS.length];
-    try { localStorage.setItem(LEVEL_STORAGE_KEY, next); } catch (_) {}
-    this._applyLevel();
-    /* ri-renderizza l'entry corrente per riflettere la nuova densità */
-    if (this.viewMode === 'search' && this.currentQuery) this.render();
+    document.body.dataset.level = 'avanzato';
   }
 
   /* ════════════════════════════════════════════════════════════════════

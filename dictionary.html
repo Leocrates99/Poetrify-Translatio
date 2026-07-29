@@ -1469,13 +1469,6 @@ body.clp-flag-on .mc-suffix { color: #2f855a; }                                /
 .etym-derives, .etym-related { margin-top: 6px; }
 .etym-root-link { font-weight: 700; }
 
-/* [UI] LIVELLO · densità dell'entry. A Base nascondiamo le sezioni avanzate
-   (etimologia, cognati indoeuropei): il principiante vede lemma, glossa,
-   definizione e paradigma. A Intermedio/Avanzato tutto è disponibile. */
-body[data-level="base"] .dict-etymology,
-body[data-level="base"] .dict-cognate {
-  display: none !important;
-}
 
 /* ─── Browse list (alphabet click) ──────────────────────────────────────── */
 .browse-list {
@@ -2353,9 +2346,6 @@ body.dict-has-entry .main-left > section:first-child{ margin-bottom:4px; }
     <small>Latino e Greco antico · nucleo scolastico</small>
   </div>
   <div class="topbar-spacer"></div>
-
-  <!-- [UI] Livello di difficoltà condiviso col translator -->
-  <button class="topbar-btn" id="dict-level-toggle" title="Livello di difficoltà: regola quante sezioni avanzate mostrare (etimologia, cognati). Clicca per cambiare.">Livello: Interm.</button>
 
   <!-- [NEW 12] Back / Forward interno -->
   <button class="topbar-btn" id="dict-back-btn" title="Indietro" disabled>← Indietro</button>
