@@ -4132,6 +4132,53 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: var(--font-c
 .phase-chip[data-state="progress"] { color: var(--warning); }
 
 /* ── PANORAMICA (Π) · ripresa rapida ─────────────────────────────────────── */
+/* ── NASTRO DELLE TAPPE · orientamento permanente dentro il banco ───────────
+   Dice sempre tre cose: dove sei, cosa hai concluso, dove puoi tornare. */
+.nastro {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 0;
+  padding: 10px 14px; margin: 0 0 18px;
+  background: var(--paper); border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-lg);
+}
+.nastro-nodo {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-family: var(--font-ui); font-size: 12px; color: var(--sepia);
+  background: transparent; border: none; padding: 4px 6px; border-radius: var(--radius-sm);
+  cursor: pointer; transition: color var(--transition-base), background var(--transition-base);
+}
+.nastro-nodo:hover { color: var(--lang-accent); background: var(--ivory); }
+.nastro-nodo.statico { cursor: default; }
+.nastro-nodo.statico:hover { background: transparent; color: var(--sepia); }
+.nastro-cerchio {
+  width: 20px; height: 20px; border-radius: 999px; flex: none;
+  border: 1.5px solid var(--rule); display: inline-flex; align-items: center;
+  justify-content: center; font-size: 10px; font-weight: 700;
+}
+.nastro-nodo.fatta { color: var(--success); }
+.nastro-nodo.fatta .nastro-cerchio { border-color: var(--success); background: color-mix(in srgb, var(--success) 14%, transparent); }
+.nastro-nodo.ora { color: var(--lang-accent); font-weight: 700; }
+.nastro-nodo.ora .nastro-cerchio { background: var(--lang-accent); color: var(--on-primary); border-color: var(--lang-accent); }
+.nastro-nodo.statico.ora { color: var(--lang-accent); }
+.nastro-filo { flex: 1; height: 1px; background: var(--rule-soft); margin: 0 8px; min-width: 10px; }
+.nastro-conto { margin-left: 12px; font-family: var(--font-ui); font-size: 11px; color: var(--sepia-soft); }
+@media (max-width: 700px) {
+  .nastro { gap: 4px; }
+  .nastro-filo { display: none; }
+  .nastro-conto { margin-left: auto; }
+}
+
+/* ── SOGLIA · l'attimo prima di entrare nel banco ───────────────────────────*/
+.avvio-corpo.soglia { text-align: center; max-width: 640px; margin: 0 auto; }
+.soglia-k { font-family: var(--font-ui); font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--sepia); }
+.soglia-h { font-family: var(--font-display); font-size: 30px; font-weight: 700; color: var(--ink); margin: 10px 0 8px; }
+.soglia-p { font-family: var(--font-ui); font-size: 13.5px; line-height: 1.6; color: var(--sepia); max-width: 46ch; margin: 0 auto; }
+.soglia-recap { display: flex; justify-content: center; gap: 9px; flex-wrap: wrap; margin: 20px 0 6px; }
+.soglia-recap span {
+  font-family: var(--font-ui); font-size: 11.5px; padding: 5px 12px; border-radius: 999px;
+  background: var(--cream); color: var(--ink-soft); border: 1px solid var(--rule-soft);
+}
+.soglia-nastro { justify-content: center; margin-top: 16px; }
+
 /* ── AVVIO DI UN BRANO · i tre passi ────────────────────────────────────────
    Vive nell'area dell'editor: è una vista, non un modale — la scelta si prende
    con calma e si può tornare indietro. */
@@ -26366,7 +26413,7 @@ function avvioCrea(modo) {
 
 /* ── Render ──────────────────────────────────────────────────────────────── */
 function avvioNastro() {
-  const p = avvio.passo;
+  const p = avvio.passo;   // 4 = soglia: tutti e tre i passi risultano conclusi
   const nodo = (n, etichetta) => {
     const cls = p === n ? 'on' : (p > n ? 'fatto' : '');
     return `<span class="avvio-passo ${cls}"><span class="avvio-num">${p > n ? '✓' : n}</span>${etichetta}</span>`;
@@ -26384,6 +26431,7 @@ function renderAvvioHtml() {
   const testa = sectionHeader('◆', `Nuovo brano · ${lin}`, 'Tre passi e si comincia: da quale libro viene, il testo, come lavorarci.');
   if (avvio.passo === 2) return testa + avvioNastro() + avvioPasso2();
   if (avvio.passo === 3) return testa + avvioNastro() + avvioPasso3();
+  if (avvio.passo === 4) return testa + avvioNastro() + avvioPasso4();
   return testa + avvioNastro() + avvioPasso1();
 }
 
@@ -26486,8 +26534,92 @@ function avvioPasso3() {
           `<span class="am-piano"><span class="am-piano-k">Le stanze</span><ol><li>Scomposizione</li><li>Grammaticale</li><li>Logica</li><li>Sintattico-periodale</li></ol></span>`)}
       </div>
       <div class="avvio-azioni">
-        <button class="btn btn-primary" onclick="avvioCrea('${avvio.modo}')">Apri il banco di lavoro →</button>
+        <button class="btn btn-primary" onclick="avvioVai(4)">Continua →</button>
         <button class="btn btn-ghost" onclick="avvioVai(2)">← Indietro</button>
+      </div>
+    </div>`;
+}
+
+
+/* ════════════════════════════════════════════════════════════════════════════
+   NASTRO DELLE TAPPE · dove sono, cosa ho concluso, dove posso tornare
+   ────────────────────────────────────────────────────────────────────────────
+   Vale per la modalità LIBERA: in quella guidata il wizard ha già il proprio
+   stepper a fasi, cliccabile e con le tappe completate — un secondo indicatore
+   sarebbe rumore, non orientamento. */
+function tappeLibere() {
+  const f = projectPhases(state);
+  const hasTesto = !!(state.meta && state.meta.testoOriginale);
+  const bellaFatta = !!(state.meta && state.meta.traduzioneBella && state.meta.traduzioneBella.trim());
+  const bozzaFatta = f.trad === 'done' || f.trad === 'progress';
+  return [
+    { id: 'brano',   label: 'Brano',        fatta: hasTesto,            vai: 'goToStep(1)',
+      corrente: state.currentStep === 1 },
+    { id: 'scomp',   label: 'Scomposizione', fatta: f.scomp === 'done',  vai: 'goToStep(2)',
+      corrente: state.currentStep === 2 },
+    { id: 'analisi', label: 'Analisi',      fatta: f.analisi === 'done', vai: 'goToStep(3)',
+      corrente: state.currentStep === 3 },
+    { id: 'bozza',   label: 'Bozza',        fatta: bozzaFatta,          vai: "goToTraduzione('bozza')",
+      corrente: state.currentStep === 5 && state.traduzioneVista !== 'bella' },
+    { id: 'bella',   label: 'Bella copia',  fatta: bellaFatta,          vai: "goToTraduzione('bella')",
+      corrente: state.currentStep === 5 && state.traduzioneVista === 'bella' },
+  ];
+}
+
+function renderNastroTappe() {
+  /* Solo nel banco «libero» e solo quando c'è davvero un brano su cui orientarsi. */
+  if (avvio) return '';
+  if (state.mode === 'guided') return '';
+  if (!isWorkStep(state.currentStep)) return '';
+  if (!(state.meta && state.meta.testoOriginale)) return '';
+  const tappe = tappeLibere();
+  const fatte = tappe.filter(t => t.fatta).length;
+  const nodi = tappe.map((t, i) => {
+    const cls = t.corrente ? 'ora' : (t.fatta ? 'fatta' : '');
+    const segno = t.fatta && !t.corrente ? '✓' : String(i + 1);
+    return `<button class="nastro-nodo ${cls}" onclick="${t.vai}"
+        ${t.corrente ? 'aria-current="step"' : ''}
+        aria-label="${escapeHtml(t.label)}${t.fatta ? ' — conclusa' : ''}${t.corrente ? ' — sei qui' : ''}">
+        <span class="nastro-cerchio" aria-hidden="true">${segno}</span>${escapeHtml(t.label)}
+      </button>`;
+  }).join('<span class="nastro-filo" aria-hidden="true"></span>');
+  return `<nav class="nastro" aria-label="Tappe del brano">${nodi}
+      <span class="nastro-conto">${fatte}/${tappe.length}</span>
+    </nav>`;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   SOGLIA · l'attimo fra l'avvio e il banco
+   ────────────────────────────────────────────────────────────────────────────
+   Prima si passava dal modale al modulo vuoto con un toast: nessuno diceva da
+   dove si cominciava. Qui si dichiara il primo passo, si riepiloga il brano e
+   si mostra il piano — poi si entra sapendo dove si è. */
+function avvioPasso4() {
+  const guidata = avvio.modo === 'guided';
+  const tappe = guidata ? getVisibleGuidedSteps().map(s => s.label)
+                        : ['Brano', 'Scomposizione', 'Analisi', 'Bozza', 'Bella copia'];
+  const prima = guidata ? 'pre-lettura' : 'scomposizione';
+  const spiega = guidata
+    ? 'Leggi il brano per intero una prima volta: non serve capire tutto, serve sentire dove respira il periodo.'
+    : 'Il testo è pronto. Si parte dividendolo in frasi: da lì potrai muoverti fra le stanze nell\'ordine che preferisci.';
+  const n = avvioFrasi();
+  const nodi = tappe.map((lab, i) => {
+    const cls = i === 0 ? 'ora' : '';
+    return `<span class="nastro-nodo statico ${cls}"><span class="nastro-cerchio">${i + 1}</span>${escapeHtml(lab)}</span>`;
+  }).join('<span class="nastro-filo"></span>');
+  return `<div class="avvio-corpo soglia">
+      <div class="soglia-k">Tutto pronto</div>
+      <h2 class="soglia-h">Cominciamo dalla ${prima}</h2>
+      <p class="soglia-p">${escapeHtml(spiega)}</p>
+      <div class="soglia-recap">
+        <span>${escapeHtml(avvioTitolo())}</span>
+        <span>${n} fras${n === 1 ? 'e' : 'i'}</span>
+        <span>modalità ${guidata ? 'guidata' : 'libera'}</span>
+      </div>
+      <nav class="nastro soglia-nastro" aria-label="Il piano del lavoro">${nodi}</nav>
+      <div class="avvio-azioni" style="justify-content:center;">
+        <button class="btn btn-primary" onclick="avvioCrea('${avvio.modo}')">Entra nel banco →</button>
+        <button class="btn btn-ghost" onclick="avvioVai(3)">← Indietro</button>
       </div>
     </div>`;
 }
@@ -26497,14 +26629,15 @@ function renderEditor() {
   /* L'avvio di un brano è una vista a sé, VOLATILE: precede il progetto e non
      viene mai salvata. Ha la precedenza su tutto il resto. */
   if (avvio) { c.innerHTML = renderAvvioHtml(); return; }
-  if (state.currentStep === 1) c.innerHTML = renderStep1Html();
+  const nastro = renderNastroTappe();
+  if (state.currentStep === 1) c.innerHTML = nastro + renderStep1Html();
   else if (state.currentStep === 2) {
     if (state.mode === 'guided') c.innerHTML = renderGuidedWizard();
-    else c.innerHTML = renderStep2Html();
+    else c.innerHTML = nastro + renderStep2Html();
   }
-  else if (state.currentStep === 3) c.innerHTML = renderStep3Html();
+  else if (state.currentStep === 3) c.innerHTML = nastro + renderStep3Html();
   else if (state.currentStep === 4) c.innerHTML = renderArchiveHtml();
-  else if (state.currentStep === 5) c.innerHTML = renderTranslationHtml();
+  else if (state.currentStep === 5) c.innerHTML = nastro + renderTranslationHtml();
   else if (state.currentStep === 6) c.innerHTML = renderDictionaryHtml();
   else if (state.currentStep === 7) c.innerHTML = renderPanoramicaHtml();
   if (state.currentStep === 1) {
