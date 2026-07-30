@@ -3925,46 +3925,6 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: var(--font-c
   border: 1px solid var(--rule-soft);
   border-radius: var(--radius-md);
 }
-/* BRANCH linguistico · le due lingue sono archivi separati (tab di branch) */
-.archive-branch-bar {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin: 4px 0 14px;
-  padding: 10px 14px;
-  background: var(--cream);
-  border: 1px solid var(--rule-soft);
-  border-left: 4px solid var(--primary);
-  border-radius: var(--radius-md);
-}
-.archive-branch-label {
-  font-family: var(--font-ui);
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--sepia);
-  margin-right: 4px;
-}
-.archive-branch-btn {
-  padding: 6px 16px;
-  border-radius: var(--radius-sm);
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--sepia);
-  background: var(--paper);
-  border: 1px solid var(--rule-soft);
-  font-family: var(--font-ui);
-  cursor: pointer;
-  transition: all var(--transition-base);
-}
-.archive-branch-btn:hover { border-color: var(--primary); color: var(--primary); }
-.archive-branch-btn.active {
-  background: var(--primary);
-  color: var(--paper);
-  border-color: var(--primary);
-}
 .archive-search {
   flex: 1;
   min-width: 200px;
@@ -4171,6 +4131,59 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: var(--font-c
 .phase-chip[data-state="progress"] { color: var(--warning); }
 
 /* ── PANORAMICA (Π) · ripresa rapida ─────────────────────────────────────── */
+/* ── HOME DI RAMO (Π) · due vie in testa, numeri di stato in fondo ──────────
+   La Home avvia, l'Archivio cerca: da qui la differenza di veste. */
+.home-grid {
+  display: grid;
+  grid-template-columns: 1.02fr 0.98fr;
+  gap: 18px;
+  margin-top: 4px;
+}
+@media (max-width: 860px) { .home-grid { grid-template-columns: 1fr; } }
+.home-panel {
+  background: var(--paper);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+}
+.home-panel.home-start { border-color: var(--lang-accent); box-shadow: 0 0 0 1px var(--lang-accent), var(--shadow-sm); }
+.home-panel-title { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--ink); margin: 0; }
+.home-panel-sub { font-family: var(--font-ui); font-size: 12.5px; color: var(--sepia); margin: 2px 0 0; }
+.home-origins { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+.home-origin {
+  display: flex; flex-direction: column; gap: 3px;
+  text-align: left; padding: 14px 15px;
+  background: var(--ivory);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color var(--transition-base), background var(--transition-base), transform var(--transition-base);
+}
+.home-origin:hover { border-color: var(--lang-accent); background: var(--paper); transform: translateY(-1px); }
+.home-origin .ho-t { font-family: var(--font-ui); font-size: 14px; font-weight: 700; color: var(--lang-accent); }
+.home-origin .ho-d { font-family: var(--font-ui); font-size: 11.5px; line-height: 1.45; color: var(--sepia); }
+.home-empty {
+  margin-top: 14px; padding: 18px 16px;
+  border: 1px dashed var(--rule); border-radius: var(--radius-md);
+  font-family: var(--font-ui); font-size: 12.5px; line-height: 1.6; color: var(--sepia); text-align: center;
+}
+/* Il punto esatto della ripresa: è l'informazione per cui la card esiste. */
+.resume-point {
+  display: block; margin-top: 8px;
+  font-family: var(--font-ui); font-size: 11.5px; font-weight: 700;
+  color: var(--lang-accent);
+}
+.home-foot {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  margin-top: 18px; padding-top: 14px;
+  border-top: 1px solid var(--rule-soft);
+}
+.home-stats { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-right: auto; }
+.home-stat { font-family: var(--font-ui); font-size: 11.5px; color: var(--sepia); }
+.home-stat b { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--ink); margin-right: 4px; }
+.archive-backbar { margin-bottom: 12px; }
+
 .panoramica-label {
   font-size: 11px;
   text-transform: uppercase;
@@ -10667,7 +10680,6 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   .schel-confirm-sel { flex: 1 1 100%; max-width: 100%; }
   .schel-confirm-sel, .schel-vq-field .field-select { min-height: 34px; }
   .schel-trad-tools .btn { flex: 1 1 auto; justify-content: center; }
-  .archive-branch-bar { padding: 8px 10px; gap: 6px; }
 
   /* PREVIEW pane come overlay laterale */
   .preview {
@@ -28653,49 +28665,91 @@ function statusLabel(s) {
    Colpo d'occhio: KPI del branch attivo + «ripresa rapida» dei brani più
    recenti. Come l'archivio è una vista di BRANCH (segue archiveFilters.lingua,
    non il progetto aperto). Ispirata alla HomeView del cruscotto-docente. */
-function renderPanoramicaHtml() {
+/* ════════════════════════════════════════════════════════════════════════
+   DATI DI RAMO · condivisi da Home (Π) e Archivio (D)
+   ────────────────────────────────────────────────────────────────────────
+   Prima le due viste ricalcolavano gli stessi conteggi e clonavano ~60 righe
+   di markup: si aprivano identiche e la Home perdeva la propria identità. */
+function branchData(lang) {
   const allProjects = loadAllProjects();
-  const branchLang = archiveFilters.lingua || state.meta.lingua || 'latino';
-  const branchName = branchLang === 'greco' ? 'greco' : 'latino';
-  const projects = allProjects.filter(p => ((p.meta && p.meta.lingua) || 'latino') === branchLang);
+  const projects = allProjects.filter(p => ((p.meta && p.meta.lingua) || 'latino') === lang);
   const totals = { all: projects.length, todo: 0, progress: 0, done: 0 };
   projects.forEach(p => { totals[projectStatus(p)]++; });
+  return { allProjects, projects, totals };
+}
 
-  const langCount = l => allProjects.filter(p => ((p.meta && p.meta.lingua) || 'latino') === l).length;
-  const branchBtn = (l, label) => `
-    <button class="archive-branch-btn ${branchLang === l ? 'active' : ''}" data-lang="${l}" onclick="setArchiveFilter('lingua','${l}')" title="Panoramica del branch ${l === 'greco' ? 'greco' : 'latino'}">
-      ${label} <span style="opacity:0.7;">(${langCount(l)})</span>
-    </button>`;
-  const branchBar = `
-    <div class="archive-branch-bar" role="tablist" aria-label="Branch linguistico">
-      <span class="archive-branch-label">Branch lingua</span>
-      ${branchBtn('latino', 'Latino')}
-      ${branchBtn('greco', 'Greco')}
+/* I quattro numeri di stato hanno due vesti, secondo il ruolo della vista:
+   a CARD nell'Archivio (dove sono strumento di lettura e filtro), a RIGA
+   discreta nella Home (dove informano, ma non devono accogliere). */
+function renderBranchStats(totals, variant) {
+  if (variant === 'row') {
+    return `<div class="home-stats">
+        <span class="home-stat"><b>${totals.all}</b> ${totals.all === 1 ? 'brano' : 'brani'}</span>
+        <span class="home-stat"><b>${totals.todo}</b> da svolgere</span>
+        <span class="home-stat"><b>${totals.progress}</b> in corso</span>
+        <span class="home-stat"><b>${totals.done}</b> completati</span>
+      </div>`;
+  }
+  return `<div class="archive-stats">
+      <div class="archive-stat-card total"><span class="archive-stat-label">Totale brani</span><span class="archive-stat-value">${totals.all}</span></div>
+      <div class="archive-stat-card todo"><span class="archive-stat-label">Da svolgere</span><span class="archive-stat-value">${totals.todo}</span></div>
+      <div class="archive-stat-card progress"><span class="archive-stat-label">In corso</span><span class="archive-stat-value">${totals.progress}</span></div>
+      <div class="archive-stat-card done"><span class="archive-stat-label">Completati</span><span class="archive-stat-value">${totals.done}</span></div>
     </div>`;
+}
 
-  const stats = `
-    <div class="archive-stats">
-      <div class="archive-stat-card total">
-        <span class="archive-stat-label">Totale brani</span>
-        <span class="archive-stat-value">${totals.all}</span>
-      </div>
-      <div class="archive-stat-card todo">
-        <span class="archive-stat-label">Da svolgere</span>
-        <span class="archive-stat-value">${totals.todo}</span>
-      </div>
-      <div class="archive-stat-card progress">
-        <span class="archive-stat-label">In corso</span>
-        <span class="archive-stat-value">${totals.progress}</span>
-      </div>
-      <div class="archive-stat-card done">
-        <span class="archive-stat-label">Completati</span>
-        <span class="archive-stat-value">${totals.done}</span>
-      </div>
-    </div>`;
+/* «ieri», «3 giorni fa»: nella home conta QUANDO ci si è lasciati, più che la
+   data esatta — che resta nell'archivio, dove serve a ordinare e cercare. */
+function timeAgoLabel(iso) {
+  const t = new Date(iso).getTime();
+  if (!t || isNaN(t)) return '';
+  const giorni = Math.floor((Date.now() - t) / 86400000);
+  if (giorni <= 0) return 'oggi';
+  if (giorni === 1) return 'ieri';
+  if (giorni < 7) return `${giorni} giorni fa`;
+  if (giorni < 14) return 'la settimana scorsa';
+  if (giorni < 60) return `${Math.floor(giorni / 7)} settimane fa`;
+  return new Date(t).toLocaleDateString('it-IT', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+/* Etichetta della ripresa: dichiara il PUNTO ESATTO in cui si rientra, non un
+   generico «apri». È il senso della home — ritrovare il proprio lavoro. */
+const WORK_STEP_NAMES = { 1: 'Brano', 2: 'Scomposizione', 3: 'Analisi', 5: 'Traduzione' };
+function resumePointLabel(p) {
+  if (projectStatus(p) === 'done') return 'completato · rileggi la bella copia';
+  const step = workStepOf(p);
+  const nome = WORK_STEP_NAMES[step] || 'Brano';
+  const tot = (p.sentences || []).length;
+  if ((step === 3 || step === 5) && tot > 0) {
+    const idx = Math.min(Math.max(Number(p.currentSentenceIdx) || 0, 0), tot - 1);
+    return `riprendi da: ${nome} · frase ${idx + 1} di ${tot}`;
+  }
+  return `riprendi da: ${nome}`;
+}
+
+/* Va al Corpus a scegliere una versione d'autore, restando nel proprio ramo. */
+function openCorpusForBranch(lang) {
+  try { persistCurrent(); } catch (e) {}
+  location.href = 'corpus.html?lang=' + (lang === 'greco' ? 'grc' : 'la');
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   Π · HOME DI RAMO — la porta del Translator
+   ────────────────────────────────────────────────────────────────────────
+   Due sole vie in testa: si comincia o si riprende. I numeri di stato
+   scendono in fondo, discreti. Prima questa vista apriva con quattro riquadri
+   di statistiche e teneva il pulsante primario in coda: una dashboard, non una
+   home. La barra Latino/Greco è stata tolta: il ramo si sceglie a monte
+   (lingua.html) e qui non si cambia. */
+function renderPanoramicaHtml() {
+  const branchLang = archiveFilters.lingua || state.meta.lingua || 'latino';
+  const branchName = branchLang === 'greco' ? 'greco' : 'latino';
+  const { projects, totals } = branchData(branchLang);
 
   const recent = projects.slice()
     .sort((a, b) => new Date(b.meta.updatedAt) - new Date(a.meta.updatedAt))
-    .slice(0, 3);
+    .slice(0, 4);
+
   const resumeCards = recent.map(p => {
     const status = projectStatus(p);
     const completion = projectCompletion(p);
@@ -28703,31 +28757,49 @@ function renderPanoramicaHtml() {
     const who = [p.meta.autore, p.meta.opera].filter(Boolean).join(' · ');
     const main = who || p.meta.titolo || 'Senza titolo';
     const nfr = (p.sentences || []).length;
-    const sub = [who ? (p.meta.titolo || '') : '', `${nfr} fras${nfr === 1 ? 'e' : 'i'}`].filter(Boolean).join(' · ');
-    const statusTxt = status === 'done' ? 'completato' : (status === 'progress' ? `in corso ${completion}%` : 'da svolgere');
+    const quando = timeAgoLabel(p.meta.updatedAt);
+    const sub = [quando, `${nfr} fras${nfr === 1 ? 'e' : 'i'}`].filter(Boolean).join(' · ');
     return `
-      <button class="resume-card" data-status="${status}" onclick="resumeProject('${p.id}')" title="${isCurrent ? 'Torna al brano aperto' : 'Riprendi questo brano'}">
+      <button class="resume-card" data-status="${status}" onclick="openProject('${p.id}')" title="${isCurrent ? 'Torna al brano aperto' : 'Riprendi questo brano'}">
         <span class="resume-card-row">
           <span class="resume-card-title">${escapeHtml(main)}</span>
           <span class="resume-card-meta">${escapeHtml(sub)}</span>
           ${isCurrent ? '<span class="current-tag">in lavorazione</span>' : ''}
-          <span class="resume-card-status">${statusTxt}</span>
         </span>
         <span class="resume-card-bar"><span class="resume-card-fill" style="width:${completion}%;"></span></span>
+        <span class="resume-point">${escapeHtml(resumePointLabel(p))} →</span>
       </button>`;
   }).join('');
 
-  const resumeBlock = recent.length === 0
-    ? `<div class="archive-empty">Ancora nessun brano <strong>${branchName}</strong>: creane uno con <strong>+ Nuovo brano ${branchName}</strong> qui sotto.</div>`
-    : `<div class="panoramica-label">Ripresa rapida</div><div class="resume-list">${resumeCards}</div>`;
+  const resumeBody = recent.length === 0
+    ? `<div class="home-empty">Ancora nessun brano ${branchName}.<br>Comincia da una <strong>versione d'autore</strong>: nel Corpus ce ne sono già di pronte.</div>`
+    : `<div class="resume-list">${resumeCards}</div>`;
 
-  return sectionHeader('Π', 'Panoramica', `colpo d'occhio sul branch ${branchName}: lo stato dei brani e la ripresa del lavoro.`)
-    + branchBar
-    + stats
-    + resumeBlock
-    + `<div class="flex-between" style="margin-top: 14px;">
-        <button class="btn btn-ghost btn-sm" onclick="goToStep(4)">Apri l'archivio completo →</button>
-        <button class="btn btn-primary btn-sm" onclick="newProjectInLang('${branchLang}')">+ Nuovo brano ${branchName}</button>
+  return sectionHeader('Π', `Translator · ramo ${branchName}`, 'Comincia un brano nuovo, oppure riprendi quello che hai lasciato a metà.')
+    + `<div class="home-grid">
+        <section class="home-panel home-start">
+          <h3 class="home-panel-title">Comincia un brano</h3>
+          <p class="home-panel-sub">Che versione devi tradurre?</p>
+          <div class="home-origins">
+            <button class="home-origin" onclick="openCorpusForBranch('${branchLang}')">
+              <span class="ho-t">Versione d'autore</span>
+              <span class="ho-d">La cerchi nel Corpus e arriva già pulita, con autore e opera compilati.</span>
+            </button>
+            <button class="home-origin" onclick="newProjectInLang('${branchLang}')">
+              <span class="ho-t">Dal manuale</span>
+              <span class="ho-d">La versione assegnata a scuola: la incolli o la fotografi.</span>
+            </button>
+          </div>
+        </section>
+        <section class="home-panel">
+          <h3 class="home-panel-title">Riprendi</h3>
+          <p class="home-panel-sub">Gli ultimi brani su cui hai lavorato</p>
+          ${resumeBody}
+        </section>
+      </div>
+      <div class="home-foot">
+        ${renderBranchStats(totals, 'row')}
+        <button class="btn btn-ghost btn-sm" onclick="goToStep(4)">Archivio completo →</button>
       </div>`;
 }
 
@@ -28747,15 +28819,13 @@ function openProject(id) {
 function resumeProject(id) { openProject(id); }
 
 function renderArchiveHtml() {
-  const allProjects = loadAllProjects();
-  // BRANCH LINGUISTICO: le due lingue sono scorporate. L'archivio mostra una sola
-  // lingua per volta (quella del progetto corrente, salvo scelta esplicita).
+  // BRANCH LINGUISTICO: le due lingue sono archivi separati. Il ramo arriva da
+  // monte (lingua.html) e qui non si cambia: l'Archivio cerca e gestisce dentro
+  // il proprio ramo, la Home avvia. Conteggi e statistiche sono condivisi.
   const branchLang = archiveFilters.lingua || state.meta.lingua || 'latino';
   const otherLang = branchLang === 'greco' ? 'latino' : 'greco';
-  const projects = allProjects.filter(p => ((p.meta && p.meta.lingua) || 'latino') === branchLang);
+  const { allProjects, projects, totals } = branchData(branchLang);
   const otherCount = allProjects.length - projects.length;
-  const totals = { all: projects.length, todo: 0, progress: 0, done: 0 };
-  projects.forEach(p => { totals[projectStatus(p)]++; });
 
   const search = (archiveFilters.search || '').toLowerCase();
   const filtered = projects.filter(p => {
@@ -28782,19 +28852,6 @@ function renderArchiveHtml() {
   const filterBtn = (key, label, count) => `
     <button class="archive-filter-btn ${archiveFilters.status === key ? 'active' : ''}" onclick="setArchiveFilter('status','${key}')">${label} <span style="opacity:0.7;">(${count})</span></button>`;
 
-  // Selettore di BRANCH linguistico: le due lingue sono archivi separati.
-  const langCount = l => allProjects.filter(p => ((p.meta && p.meta.lingua) || 'latino') === l).length;
-  const branchBtn = (l, label) => `
-    <button class="archive-branch-btn ${branchLang === l ? 'active' : ''}" data-lang="${l}" onclick="setArchiveFilter('lingua','${l}')" title="Mostra l'archivio ${l === 'greco' ? 'greco' : 'latino'}">
-      ${label} <span style="opacity:0.7;">(${langCount(l)})</span>
-    </button>`;
-  const branchBar = `
-    <div class="archive-branch-bar" role="tablist" aria-label="Branch linguistico">
-      <span class="archive-branch-label">Branch lingua</span>
-      ${branchBtn('latino', 'Latino')}
-      ${branchBtn('greco', 'Greco')}
-    </div>`;
-
   const toolbar = `
     <div class="archive-toolbar">
       <input type="text" class="archive-search" id="archive-search" placeholder="Cerca per titolo, autore, opera, testo…" value="${escapeHtml(archiveFilters.search)}" oninput="setArchiveFilter('search', this.value)">
@@ -28813,25 +28870,7 @@ function renderArchiveHtml() {
       </select>
     </div>`;
 
-  const stats = `
-    <div class="archive-stats">
-      <div class="archive-stat-card total">
-        <span class="archive-stat-label">Totale brani</span>
-        <span class="archive-stat-value">${totals.all}</span>
-      </div>
-      <div class="archive-stat-card todo">
-        <span class="archive-stat-label">Da svolgere</span>
-        <span class="archive-stat-value">${totals.todo}</span>
-      </div>
-      <div class="archive-stat-card progress">
-        <span class="archive-stat-label">In corso</span>
-        <span class="archive-stat-value">${totals.progress}</span>
-      </div>
-      <div class="archive-stat-card done">
-        <span class="archive-stat-label">Completati</span>
-        <span class="archive-stat-value">${totals.done}</span>
-      </div>
-    </div>`;
+  const stats = renderBranchStats(totals, 'cards');
 
   const branchName = branchLang === 'greco' ? 'greco' : 'latino';
   let listHtml;
@@ -28843,8 +28882,8 @@ function renderArchiveHtml() {
     listHtml = `<div class="archive-list">${filtered.map(p => renderArchiveCard(p)).join('')}</div>`;
   }
 
-  return sectionHeader('D', 'Archivio dei brani', `branch ${branchName} · le due lingue sono archivi separati: completate, in corso, da svolgere.`)
-    + branchBar
+  return sectionHeader('D', 'Archivio dei brani', `ramo ${branchName} · cerca, filtra e gestisci: completate, in corso, da svolgere.`)
+    + `<div class="archive-backbar"><button class="btn btn-ghost btn-sm" onclick="goToStep(7)">← Panoramica</button></div>`
     + stats
     + toolbar
     + `<div class="flex-between" style="margin-top: 8px;">
