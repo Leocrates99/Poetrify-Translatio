@@ -64,8 +64,12 @@ parte**.
 
 Il vero profilo condiviso oggi è **`poetrify-manuali`** (`shared/poetrify-theme.js`-style IIFE in
 `shared/poetrify-manuali.js`, pagina `profilo.html` intitolata «I tuoi manuali»). Sono **libri, non
-persone**: ottimo per la privacy di utenti minorenni. Ma è **il dato meno protetto dell'ecosistema**:
-nessun export, nessun import, nessuna guardia di quota, e una versione **inerte**.
+persone**: ottimo per la privacy di utenti minorenni. Era **il dato meno protetto dell'ecosistema**:
+nessuna guardia di quota e una versione **inerte** (entrambe sanate in `a31cb88`).
+
+> **Alla luce del perimetro (§4):** che il profilo resti fuori dall'export **non è più un difetto** —
+> i manuali sono una dichiarazione locale, si ridichiarano in un minuto e non sono lavoro dello
+> studente. Ciò che conta, ed è stato fatto, è che **non si distruggano** in silenzio.
 
 > ⚠️ **Conseguenza sulla roadmap UX già pubblicata:** il Passo 4 chiede di «uniformare la tassonomia
 > dei livelli» (Principiante/Intermedio/Avanzato). Applicato alla lettera **reintrodurrebbe una fascia
@@ -107,7 +111,25 @@ esatto dell'obiettivo di reversibilità — e contrasta col modello corretto del
 
 ## 4 · La soluzione proposta
 
-### 4.1 · Un solo file per tutto l'ecosistema
+> ### ⚠️ Perimetro (deciso dal docente, lug 2026)
+>
+> **Import ed export valgono per la SEZIONE DI LAVORO: la traduzione del brano
+> della versione.** È quello il lavoro dello studente — il testo, la
+> scomposizione, l'analisi, la bozza, la bella copia — ed è quello che non deve
+> andare perso e deve poter riprendere su un altro dispositivo.
+>
+> Profilo, lessico personale, cronologia, preferenze e corpus **non sono
+> materia di portabilità**: sono corredo locale del dispositivo. Per loro vale
+> la **salvaguardia** (§4.2: mai distruggere un dato illeggibile, nessun
+> fallimento muto), non il trasferimento.
+>
+> Di conseguenza il formato unico a sezioni descritto qui sotto è **superato**:
+> resta agli atti come ragionamento, ma **non va implementato**. Il formato di
+> riferimento è quello che il translator già produce — l'involucro
+> `{ app, kind, schemaVersion, exportedAt, count, projects }` — su cui
+> concentrare versione, migrazione, anteprima e annullamento.
+
+### 4.1 · ~~Un solo file per tutto l'ecosistema~~ *(proposta superata: vedi il perimetro qui sopra)*
 
 Formato **`.poetrify.json`**, involucro auto-descrittivo, **sezioni indipendenti**:
 
@@ -142,7 +164,7 @@ Formato **`.poetrify.json`**, involucro auto-descrittivo, **sezioni indipendenti
 - **Conservazione dei campi sconosciuti come contratto** (non come effetto collaterale): ciò che il
   lettore non riconosce viene **ri-scritto identico** → round-trip senza perdite, in entrambe le direzioni.
 
-### 4.2 · Le quattro regole non negoziabili
+### 4.2 · Le quattro regole non negoziabili *(valgono ovunque, anche fuori perimetro)*
 
 1. **Mai sovrascrivere ciò che non si è potuto leggere.** Su parse fallito: la stringa grezza va in
    **quarantena** (`poetrify-corrotto.<timestamp>`), si avvisa l'utente, *poi* si riparte da vuoto.
@@ -153,7 +175,12 @@ Formato **`.poetrify.json`**, involucro auto-descrittivo, **sezioni indipendenti
 4. **La versione si legge, non si timbra.** `schemaVersion` pilota una catena di migrazioni; in scrittura
    si stampa la versione reale.
 
-### 4.3 · Il modulo condiviso
+### 4.3 · ~~Il modulo condiviso a sezioni~~ *(superato: serviva al formato unico del §4.1)*
+
+> Le funzioni utili — **anteprima**, **istantanea**, **annulla**, **stato del backup** — restano
+> valide, ma vanno realizzate **dentro il translator**, sui progetti di traduzione, non in un modulo
+> che raccoglie sezioni da tutto l'ecosistema.
+
 
 `shared/poetrify-dati.js` — stesso pattern IIFE di `poetrify-theme.js`, espone `window.PoetrifyDati`:
 
@@ -171,27 +198,33 @@ Così il modulo **non conosce** i dettagli delle singole sezioni, e ogni ramo re
 
 ### 4.4 · Conflitti fra due device
 
-Regola di identità esplicita: progetti per `id`, lemmi per `lang::lemma`. In caso di conflitto **non si
-sceglie in silenzio**: l'anteprima elenca i casi e propone *«tieni il mio / tieni quello importato /
-tieni entrambi»* (per i lemmi: conserva entrambe le definizioni). I timestamp **non** fanno da arbitro
-automatico — gli orologi dei device scolastici non sono affidabili.
+Regola di identità esplicita: i progetti si riconoscono per `id`. In caso di conflitto **non si sceglie
+in silenzio**: l'anteprima elenca i casi e propone *«tieni il mio / tieni quello importato / tieni
+entrambi»*. I timestamp **non** fanno da arbitro automatico — gli orologi dei device scolastici non sono
+affidabili.
 
 ---
 
 ## 5 · Ordine di lavoro
 
-| # | Intervento | Costo | Effetto |
-|---|---|---|---|
-| **1** | **Il bottone «Backup completo» chiama `exportAllProjects()`** | 1 riga | Il backup smette di essere finto. **Fare subito.** |
-| **2** | **Quarantena su dato illeggibile** + mai-sovrascrivere (3 moduli) | piccolo | Elimina la perdita **silenziosa e definitiva** |
-| **3** | **Import del lessico personale** + involucro versionato | medio | Il lessico diventa portabile |
-| **4** | Bottone **«Importa»** visibile + esito di scrittura sempre a schermo | piccolo | I dati sanno tornare, e i guasti si vedono |
-| **5** | Formato unico + `shared/poetrify-dati.js` + profilo nell'export | grande | Portabilità reale dell'ecosistema |
-| **6** | Snapshot/annulla + anteprima import + badge «ultimo backup» | medio | Reversibilità delle operazioni |
-| **7** | Persistenza del corpus (segnalibri) | medio | Chiude l'ultimo ramo senza memoria |
+Rivisto secondo il **perimetro del §4**: portabilità = **solo il lavoro di traduzione**; per il resto,
+salvaguardia locale.
 
-I passi **1-2** valgono da soli la maggior parte del rischio: sono piccoli, e trasformano due bugie
-(«backup completo», «lessico vuoto») in comportamenti onesti.
+| # | Intervento | Stato | Effetto |
+|---|---|---|---|
+| **1** | Il bottone «Backup completo» chiama `exportAllProjects()` | ✅ **fatto** (`a31cb88`) | Il backup smette di essere finto |
+| **2** | Quarantena su dato illeggibile + mai-sovrascrivere | ✅ **fatto** (`a31cb88`) | Elimina la perdita **silenziosa e definitiva** |
+| **3** | Pulsante «Importa» visibile + formati reversibili distinti da quelli a perdere | ✅ **fatto** (`a31cb88`) | Il backup sa tornare indietro |
+| **4** | **Anteprima dell'import + istantanea + «annulla»** *sui progetti del translator* | ⬜ **prossimo** | Chiude la reversibilità sul lavoro che conta |
+| **5** | `schemaVersion` **letto** (non timbrato) e catena di migrazioni sui progetti | ⬜ | Un file vecchio o più nuovo resta leggibile |
+| **6** | Validazione dell'import oltre i due campi + degradare con grazia | ⬜ | Un file troncato non entra e non rompe l'archivio |
+| **7** | Avviso di quota **persistente** (non un toast di 2,4 s) con «Esporta ora» | ⬜ | La memoria piena si vede prima del danno |
+| **8** | Badge «ultimo backup: N giorni fa» nel translator | ⬜ | Rende passiva una disciplina che nessuno ricorda |
+
+**Fuori perimetro** (restano a titolo di salvaguardia locale, non di trasferimento): formato unico a
+sezioni, profilo/lessico/corpus nell'export, persistenza del corpus. Il backup del lessico personale
+già realizzato (`3d7fc7a`) resta come **comodità locale** — utile a chi vuole portarsi via un elenco —
+ma non è la strada della portabilità dell'ecosistema e non va generalizzato.
 
 ---
 
