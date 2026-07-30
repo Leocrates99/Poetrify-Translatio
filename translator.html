@@ -758,6 +758,34 @@ input, textarea, select { font-family: inherit; color: inherit; }
 .badge-backup-urgente:hover { background: color-mix(in srgb, var(--danger, #c53030) 22%, transparent); }
 .badge-backup[hidden] { display: none; }
 
+/* Pannello di chiusura della versione (Bella copia). Neutro finché il lavoro
+   non è finito; prende l'accento della lingua quando è pronto; diventa verde
+   quando la versione è consegnata. */
+.chiusura {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md);
+  background: var(--ivory);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+.chiusura-testo { flex: 1 1 260px; font-size: 13px; line-height: 1.5; }
+.chiusura-testo .muted { color: var(--sepia); }
+.chiusura-testo code { font-family: var(--font-mono); font-size: 11px; word-break: break-all; }
+.chiusura-azioni { display: flex; gap: 8px; flex-wrap: wrap; }
+.chiusura-pronta {
+  border-color: var(--dacc, var(--primary));
+  background: var(--dacc-pale, var(--primary-pale));
+}
+.chiusura-fatta {
+  border-color: var(--success, #2f855a);
+  background: color-mix(in srgb, var(--success, #2f855a) 8%, transparent);
+}
+
 /* Stato del backup dentro il modale: qui si dice sempre, anche se è recente. */
 .export-stato-backup {
   margin: 0 0 14px;
@@ -12616,6 +12644,301 @@ function _safeSetProjects(all) {
   }
 }
 
+/* ════════════════════════════════════════════════════════════════════════════
+   CHIUSURA DELLA VERSIONE · l'atto con cui lo studente dichiara «ho finito»
+   ────────────────────────────────────────────────────────────────────────────
+   L'app sa RILEVARE che l'analisi è completa (projectStatus === 'done'), ma
+   solo chi traduce può DICHIARARE che il lavoro è finito: le due cose restano
+   distinte. Alla chiusura si segna la data di consegna (meta.completatoAt) —
+   che diventa anche la data nel nome del file — e si porta subito allo
+   scaffale: un lavoro finito e non salvato è un lavoro a rischio.
+   La chiusura è reversibile: si può sempre riaprire e continuare.
+   ════════════════════════════════════════════════════════════════════════════ */
+function versioneCompletata(p) { return !!(p && p.meta && p.meta.completatoAt); }
+
+function chiudiVersione() {
+  state.meta.completatoAt = new Date().toISOString();
+  persistCurrent();
+  renderAll();
+  showToast('Versione chiusa e salvata. Ora esportala per non perderla.');
+  openExportModal();
+}
+
+function riapriVersione() {
+  delete state.meta.completatoAt;
+  persistCurrent();
+  renderAll();
+  showToast('Versione riaperta: puoi continuare a lavorarci.');
+}
+
+/* Il pannello compare alla Bella copia. Non impone nulla: se il lavoro non è
+   ancora completo lo dice e basta, senza sbarrare la strada — sarà lo studente
+   a decidere se ha finito. */
+function renderChiusuraVersione() {
+  const compl = projectCompletion(state);
+  const stato = projectStatus(state);
+  const frasi = (state.sentences || []).length;
+  const tradotte = (state.sentences || []).filter(s => (s.translation || '').trim()).length;
+  const bella = (state.meta.traduzioneBella || '').trim().length > 0;
+
+  if (versioneCompletata(state)) {
+    const quando = new Date(state.meta.completatoAt).toLocaleDateString('it-IT',
+      { day: 'numeric', month: 'long', year: 'numeric' });
+    return `<div class="chiusura chiusura-fatta">
+      <div class="chiusura-testo">
+        <strong>Versione consegnata il ${escapeHtml(quando)}.</strong>
+        <span class="muted">Il file porta questa data: <code>${escapeHtml(nomeFileLavoro(state, 'json'))}</code></span>
+      </div>
+      <div class="chiusura-azioni">
+        <button class="btn btn-primary btn-sm" onclick="exportCurrentProjectJson()">💾 Salva il backup di questa versione</button>
+        <button class="btn btn-ghost btn-sm" onclick="riapriVersione()">↺ Riapri e continua</button>
+      </div>
+    </div>`;
+  }
+
+  const pronta = (stato === 'done' || compl >= 80) && bella && (frasi === 0 || tradotte === frasi);
+  const mancanze = [];
+  if (!bella) mancanze.push('la bella copia è ancora vuota');
+  if (frasi && tradotte < frasi) mancanze.push(`${frasi - tradotte} frase/i senza resa`);
+  if (stato !== 'done' && compl < 80) mancanze.push(`l'analisi è al ${compl}%`);
+
+  return `<div class="chiusura ${pronta ? 'chiusura-pronta' : ''}">
+    <div class="chiusura-testo">
+      ${pronta
+        ? '<strong>La versione sembra finita.</strong> <span class="muted">Chiudila per fissare la data di consegna e metterla al sicuro.</span>'
+        : `<strong>Quando hai finito, chiudi la versione.</strong> <span class="muted">Al momento: ${escapeHtml(mancanze.join(' · '))}. Puoi chiuderla lo stesso.</span>`}
+    </div>
+    <div class="chiusura-azioni">
+      <button class="btn ${pronta ? 'btn-primary' : 'btn-ghost'} btn-sm" onclick="chiudiVersione()">✓ Ho finito: chiudi e salva</button>
+    </div>
+  </div>`;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   NOMENCLATURA DEI FILE · un nome che si legge e che si ordina da solo
+   ────────────────────────────────────────────────────────────────────────────
+   Formato:   <data>_<LINGUA>_<autore>_<opera-locus>_<stato>.<est>
+   Esempio:   2026-07-30_LAT_cesare_de-bello-gallico-I-1_completo.json
+              2026-05-12_GRC_senofonte_anabasi-I-3_in-corso.md
+
+   · <data>   ISO YYYY-MM-DD — la data di CONSEGNA se la versione è stata
+              chiusa, altrimenti l'ultima modifica. In testa perché così
+              l'ordine alfabetico È l'ordine cronologico, in ogni sistema.
+   · <LINGUA> LAT o GRC in maiuscolo: si distingue a colpo d'occhio il ramo.
+   · <autore> e <opera-locus> in minuscolo senza accenti né spazi; i campi
+              vuoti si omettono, così non restano trattini doppi.
+   · <stato>  completo · in-corso · da-svolgere (dal semaforo dell'archivio).
+   ════════════════════════════════════════════════════════════════════════════ */
+/* Riduce un testo a un pezzo di nome-file: minuscolo, senza accenti né
+   punteggiatura, parole unite dal trattino. Le lettere greche RESTANO tali
+   (\p{L} le comprende): traslitterarle nel nome del file sarebbe una piccola
+   menzogna, e i sistemi operativi le reggono senza problemi. */
+function slugPoetrify(s, maxLen) {
+  return String(s || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')              // via i diacritici combinanti
+    .toLowerCase()
+    .replace(/[\u2018\u2019\u00ab\u00bb\u0027\u0022]/g, '')   // apici e virgolette
+    .replace(/[^\p{L}\p{N}]+/gu, '-')
+    .replace(/^-+|-+$/g, '')
+    .slice(0, maxLen || 48)
+    .replace(/-+$/, '');
+}
+
+function statoSlug(p) {
+  const s = projectStatus(p);
+  return s === 'done' ? 'completo' : s === 'progress' ? 'in-corso' : 'da-svolgere';
+}
+
+/** Data che governa il nome e l'ordine: consegna se c'è, altrimenti modifica. */
+function dataOrdinamento(p) {
+  const d = (p.meta && (p.meta.completatoAt || p.meta.updatedAt || p.meta.createdAt)) || null;
+  const t = d ? Date.parse(d) : NaN;
+  return isNaN(t) ? 0 : t;
+}
+
+function nomeFileLavoro(p, estensione) {
+  const t = dataOrdinamento(p);
+  const data = new Date(t || Date.now()).toISOString().slice(0, 10);
+  const lingua = (p.meta && p.meta.lingua === 'greco') ? 'GRC' : 'LAT';
+  const pezzi = [data, lingua];
+  const autore = slugPoetrify(p.meta && p.meta.autore, 28);
+  if (autore) pezzi.push(autore);
+  const opera = slugPoetrify((p.meta && (p.meta.opera || p.meta.titolo)) || 'brano', 44);
+  if (opera) pezzi.push(opera);
+  pezzi.push(statoSlug(p));
+  return pezzi.join('_') + '.' + estensione;
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   ZIP · scritto a mano, senza librerie
+   ────────────────────────────────────────────────────────────────────────────
+   Il sito è statico e senza build: nessun bundler può aggiungere una libreria.
+   Un archivio ZIP con voci NON compresse (metodo «stored») è però un formato
+   semplice: intestazione locale + dati + indice centrale. Bastano il CRC-32 e
+   qualche numero in little-endian. I file di testo si comprimerebbero bene, ma
+   la portabilità vale più dei byte risparmiati.
+   ════════════════════════════════════════════════════════════════════════════ */
+const _TAV_CRC = (() => {
+  const t = new Uint32Array(256);
+  for (let n = 0; n < 256; n++) {
+    let c = n;
+    for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+    t[n] = c >>> 0;
+  }
+  return t;
+})();
+
+function _crc32(bytes) {
+  let c = 0xFFFFFFFF;
+  for (let i = 0; i < bytes.length; i++) c = _TAV_CRC[(c ^ bytes[i]) & 0xFF] ^ (c >>> 8);
+  return (c ^ 0xFFFFFFFF) >>> 0;
+}
+
+/** Data/ora nel formato MS-DOS usato dallo ZIP. */
+function _dosDataOra(d) {
+  const anno = Math.max(1980, d.getFullYear());
+  return {
+    ora: (d.getHours() << 11) | (d.getMinutes() << 5) | (Math.floor(d.getSeconds() / 2)),
+    data: ((anno - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate(),
+  };
+}
+
+/**
+ * Costruisce un archivio ZIP.
+ * @param {Array<{nome:string, testo:string, data?:Date}>} voci
+ * @returns {Blob}
+ */
+function creaZip(voci) {
+  const enc = new TextEncoder();
+  const pezzi = [];          // dati grezzi in ordine
+  const centrale = [];       // voci dell'indice centrale
+  let offset = 0;
+
+  const scriviIntestazione = (firma, campi) => {
+    /* campi: [[valore, byte], ...] in little-endian */
+    let n = 4; campi.forEach(c => n += c[1]);
+    const buf = new Uint8Array(n);
+    const dv = new DataView(buf.buffer);
+    dv.setUint32(0, firma, true);
+    let p = 4;
+    campi.forEach(([v, b]) => {
+      if (b === 2) dv.setUint16(p, v, true); else dv.setUint32(p, v, true);
+      p += b;
+    });
+    return buf;
+  };
+
+  voci.forEach(v => {
+    const nome = enc.encode(v.nome);
+    const dati = enc.encode(v.testo);
+    const crc = _crc32(dati);
+    const { ora, data } = _dosDataOra(v.data || new Date());
+    const flag = 0x0800;                       // bit 11: nome file in UTF-8
+
+    const locale = scriviIntestazione(0x04034b50, [
+      [20, 2],        // versione necessaria
+      [flag, 2],
+      [0, 2],         // metodo: stored
+      [ora, 2], [data, 2],
+      [crc, 4], [dati.length, 4], [dati.length, 4],
+      [nome.length, 2], [0, 2],
+    ]);
+    pezzi.push(locale, nome, dati);
+
+    centrale.push({ nome, crc, dim: dati.length, ora, data, flag, offset });
+    offset += locale.length + nome.length + dati.length;
+  });
+
+  const inizioIndice = offset;
+  centrale.forEach(c => {
+    const h = scriviIntestazione(0x02014b50, [
+      [20, 2], [20, 2],
+      [c.flag, 2], [0, 2],
+      [c.ora, 2], [c.data, 2],
+      [c.crc, 4], [c.dim, 4], [c.dim, 4],
+      [c.nome.length, 2], [0, 2], [0, 2],
+      [0, 2], [0, 2], [0, 4],
+      [c.offset, 4],
+    ]);
+    pezzi.push(h, c.nome);
+    offset += h.length + c.nome.length;
+  });
+
+  const coda = scriviIntestazione(0x06054b50, [
+    [0, 2], [0, 2],
+    [centrale.length, 2], [centrale.length, 2],
+    [offset - inizioIndice, 4], [inizioIndice, 4], [0, 2],
+  ]);
+  pezzi.push(coda);
+
+  return new Blob(pezzi, { type: 'application/zip' });
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   ARCHIVIO → cartella ZIP, in ordine cronologico DECRESCENTE
+   Il più recente per primo: la numerazione 001, 002… conserva quell'ordine
+   anche dove i file vengono riordinati alfabeticamente.
+   ════════════════════════════════════════════════════════════════════════════ */
+function esportaArchivioZip(soloLingua) {
+  let progetti = loadAllProjects();
+  if (soloLingua) progetti = progetti.filter(p => (p.meta && p.meta.lingua) === soloLingua);
+  if (!progetti.length) { showToast('Non c\'è nessun brano da esportare'); return; }
+
+  progetti.sort((a, b) => dataOrdinamento(b) - dataOrdinamento(a));   // decrescente
+
+  const adesso = new Date();
+  const oggi = adesso.toISOString().slice(0, 10);
+  const cartella = `poetrify-archivio_${oggi}`;
+  const voci = [];
+  const righeIndice = [];
+
+  progetti.forEach((p, i) => {
+    const n = String(i + 1).padStart(3, '0');
+    const baseJson = nomeFileLavoro(p, 'json');
+    const baseMd = nomeFileLavoro(p, 'md');
+    const quando = new Date(dataOrdinamento(p) || Date.now());
+
+    /* Ogni lavoro esce in due forme: il .json si RILEGGE in Poetrify,
+       il .md si legge e si consegna. */
+    const payload = { app: 'poetrify-translator', kind: 'project', schemaVersion: SCHEMA_VERSION,
+                      exportedAt: adesso.toISOString(), projects: [p] };
+    voci.push({ nome: `${cartella}/${n}_${baseJson}`, testo: JSON.stringify(payload, null, 2), data: quando });
+    try {
+      voci.push({ nome: `${cartella}/${n}_${baseMd}`,
+                  testo: projectMd({ meta: p.meta, sentences: p.sentences || [] }), data: quando });
+    } catch (e) { console.error('[zip] Markdown non generato per', p.id, e); }
+
+    righeIndice.push(`| ${n} | ${quando.toISOString().slice(0, 10)} | ${(p.meta.lingua === 'greco' ? 'greco' : 'latino')} `
+      + `| ${(p.meta.titolo || 'senza titolo').replace(/\|/g, '/')} | ${(p.meta.autore || '—').replace(/\|/g, '/')} `
+      + `| ${statusLabel(projectStatus(p))} | ${projectCompletion(p)}% |`);
+  });
+
+  /* Il backup unico: è il file che rimette in piedi TUTTO l'archivio. */
+  const backup = { app: 'poetrify-translator', kind: 'backup', schemaVersion: SCHEMA_VERSION,
+                   exportedAt: adesso.toISOString(), count: progetti.length, projects: progetti };
+  voci.push({ nome: `${cartella}/poetrify-backup_${oggi}.json`, testo: JSON.stringify(backup, null, 2), data: adesso });
+
+  const indice = `# Archivio Poetrify · ${oggi}\n\n`
+    + `${progetti.length} lavor${progetti.length === 1 ? 'o' : 'i'}, dal più recente al più antico.\n\n`
+    + `| # | data | lingua | titolo | autore | stato | compl. |\n|---|---|---|---|---|---|---|\n`
+    + righeIndice.join('\n')
+    + `\n\n## Come sono fatti i nomi\n\n`
+    + '`<numero>_<data>_<LINGUA>_<autore>_<opera>_<stato>.<estensione>`\n\n'
+    + `Il numero segue l'ordine cronologico decrescente; la data (AAAA-MM-GG) è quella di consegna, `
+    + `o dell'ultima modifica se il lavoro non è stato chiuso.\n\n`
+    + `## Che cosa farne\n\n`
+    + `- I file **.json** si rileggono in Poetrify: *Esporta → Importa un backup*. Ognuno contiene un solo brano.\n`
+    + `- Il file **poetrify-backup_${oggi}.json** contiene l'archivio intero: è quello da usare per rimettere in piedi tutto.\n`
+    + `- I file **.md** sono per leggere e consegnare: non si rileggono in Poetrify.\n`;
+  voci.unshift({ nome: `${cartella}/00_INDICE.md`, testo: indice, data: adesso });
+
+  const blob = creaZip(voci);
+  downloadBlobDirect(blob, `${cartella}.zip`);
+  registraBackupFatto();
+  showToast(`Archivio esportato · ${progetti.length} lavor${progetti.length === 1 ? 'o' : 'i'} in ${voci.length} file`);
+}
+
 /* ── BADGE «ultimo backup» ──────────────────────────────────────────────────
    Nessuno si ricorda di esportare finché non è troppo tardi. Invece di
    chiederlo, l'app dice da quanto tempo non lo si fa, e lo dice sempre più
@@ -15409,7 +15732,7 @@ const GR_CASES = ['Nominativo','Genitivo','Dativo','Accusativo','Vocativo'];
 const GR_PERSONS = ['1ª sing','2ª sing','3ª sing','1ª plur','2ª plur','3ª plur'];
 
 /* Strip diacritici per analisi morfologica (rimuove TUTTI i diacritici, anche spiriti) */
-function _grStrip(s) { return (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); }
+function _grStrip(s) { return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); }
 
 /* Strip dei soli accenti tonali (acuto, grave, circonflesso) preservando spiriti, iota,
    dieresi. Usato per evitare il doppio accento nelle concatenazioni tema + desinenza. */
@@ -15632,7 +15955,7 @@ function _placeRecessiveAccent(form) {
   // Le sillabe sono trovate ignorando i combining marks
   const sylRegex = /(αι|αυ|ει|ευ|οι|ου|υι|ηυ|ωυ|[αεηιουω])/gi;
   // Pulizia: rimuovi temporaneamente i combining marks per il match
-  const noMark = bareNFD.replace(/[̀-ͯ]/g, '');
+  const noMark = bareNFD.replace(/[\u0300-\u036f]/g, '');
   const positions = [];
   let mm;
   const reg = new RegExp(sylRegex);
@@ -17432,7 +17755,7 @@ const GREEK_VERB_TEMPLATES = {
 
 /* Normalizzazione per match con accenti greci */
 function normalizeText(s) {
-  return (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 }
 
 function findStem(word, ending) {
@@ -26196,7 +26519,7 @@ const _GR_AUG_INVERSE = {
 };
 
 function _grStripDiacritics(s) {
-  return (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+  return (s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
 }
 
 function detectGreekAugmentReduplication(word, lemma) {
@@ -29745,6 +30068,8 @@ function renderArchiveHtml() {
         <option value="completion-desc" ${archiveFilters.sort === 'completion-desc' ? 'selected' : ''}>Completamento (alto→basso)</option>
         <option value="completion-asc"  ${archiveFilters.sort === 'completion-asc'  ? 'selected' : ''}>Completamento (basso→alto)</option>
       </select>
+      <button class="btn btn-brand-soft btn-sm" onclick="esportaArchivioZip()"
+              title="Scarica una cartella .zip con tutti i lavori, dal più recente al più antico: un .json che si rilegge e un .md che si legge per ciascuno, più l'indice e il backup completo">⤓ Esporta tutto (.zip)</button>
     </div>`;
 
   const stats = renderBranchStats(totals, 'cards');
@@ -31652,6 +31977,7 @@ function renderTranslationHtml() {
             oninput="state.meta.traduzioneBella = this.value; persistCurrent();"
             placeholder="Componi qui la traduzione d'insieme dell'intera versione…">${escapeHtml(state.meta.traduzioneBella || '')}</textarea>
         </div>
+        ${renderChiusuraVersione()}
         <div class="flex-between" style="margin-top: 18px;">
           <button class="btn btn-ghost btn-sm" onclick="goToTraduzione('bozza')">← Torna alla bozza</button>
           <button class="btn btn-brand-soft btn-sm" onclick="openExportModal()">📤 Esporta traduzione</button>
@@ -39116,10 +39442,10 @@ function projectMd(d) {
       }).join('') + `\n\n`;
     }
 
-    if (s.grammar.length > 0) {
+    if ((s.grammar || []).length > 0) {
       md += `#### Analisi grammaticale\n\n`;
       md += `| Parola | Parte | Lemma | Morfologia | Note |\n|---|---|---|---|---|\n`;
-      s.grammar.forEach(e => {
+      (s.grammar || []).forEach(e => {
         const schema = getMorphSchema(d.meta.lingua, e);
         const morph = schema.map(f => e[f.key] ? `${f.label}: ${e[f.key]}` : null).filter(Boolean).join('; ');
         // Lemma: usa quello salvato (eccezione) o quello predetto
@@ -39135,15 +39461,15 @@ function projectMd(d) {
       });
       md += `\n`;
     }
-    if (s.logic.length > 0) {
+    if ((s.logic || []).length > 0) {
       md += `#### Analisi logica\n\n`;
       md += `| Sintagma | Funzione | Note |\n|---|---|---|\n`;
-      s.logic.forEach(e => {
+      (s.logic || []).forEach(e => {
         md += `| ${escapeMd(e.phrase)} | ${escapeMd(e.funzione || '')} | ${escapeMd(e.note || '')} |\n`;
       });
       md += `\n`;
     }
-    if (s.periodale.length > 0) {
+    if ((s.periodale || []).length > 0) {
       md += `#### Analisi sintattico-periodale\n\n`;
       const annotated = annotatePeriodaleSiglas(s.periodale);
       md += `| Sigla | Proposizione | Ruolo | Tipo | Modo | Connettivo | Dipende da | Note |\n|---|---|---|---|---|---|---|---|\n`;
@@ -39255,10 +39581,10 @@ function buildPrintHtml(includeTokenGrid) {
       html += buildExportTokenGridHtml(s, d.meta.lingua);
     }
 
-    if (s.grammar.length > 0) {
+    if ((s.grammar || []).length > 0) {
       html += `<h4>Analisi grammaticale</h4>`;
       html += `<table><thead><tr><th>Parola</th><th>Parte</th><th>Lemma (vocabolario)</th><th>Morfologia</th><th>Note</th></tr></thead><tbody>`;
-      s.grammar.forEach(e => {
+      (s.grammar || []).forEach(e => {
         const schema = getMorphSchema(d.meta.lingua, e);
         const morph = schema.map(f => e[f.key] ? `<strong>${f.label}:</strong> ${escapeHtml(e[f.key])}` : null).filter(Boolean).join(' · ');
         const caseGroup = caseGroupForGrammarEntry(e);
@@ -39276,10 +39602,10 @@ function buildPrintHtml(includeTokenGrid) {
       });
       html += `</tbody></table>`;
     }
-    if (s.logic.length > 0) {
+    if ((s.logic || []).length > 0) {
       html += `<h4>Analisi logica</h4>`;
       html += `<table><thead><tr><th>Sintagma</th><th>Funzione</th><th>Note</th></tr></thead><tbody>`;
-      s.logic.forEach(e => {
+      (s.logic || []).forEach(e => {
         const caseGroup = funzioneToCaseGroup(e.funzione || '');
         const col = caseExportColor(caseGroup);
         const phraseStyle = `font-weight:700;font-size:11pt;color:#08003f;border-bottom:3px solid ${col};padding-bottom:2pt;display:inline-block;`;
@@ -39288,7 +39614,7 @@ function buildPrintHtml(includeTokenGrid) {
       });
       html += `</tbody></table>`;
     }
-    if (s.periodale.length > 0) {
+    if ((s.periodale || []).length > 0) {
       html += `<h4>Analisi sintattico-periodale</h4>`;
       const annotated = annotatePeriodaleSiglas(s.periodale);
       html += `<table><thead><tr><th>Sigla</th><th>Proposizione</th><th>Ruolo</th><th>Tipo</th><th>Modo</th><th>Connettivo</th><th>Dipende da</th><th>Note</th></tr></thead><tbody>`;
