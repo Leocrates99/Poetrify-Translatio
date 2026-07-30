@@ -1960,7 +1960,11 @@ export class DictionaryApp {
         <p class="muted-text">Nessun lemma salvato in <strong>${escapeHtml(LANG_LABELS[this.currentLang])}</strong>.</p>
         <p class="muted-text"><small>Tot. salvati: ${counts.total} (${counts.latino} lat · ${counts.greco} gr)</small></p>
         <p class="muted-text"><small>Clicca <strong>⭐ Salva</strong> su un'entry per aggiungerla.</small></p>
+        ${this._badgeBackupHtml(counts.total)}
       </div>`;
+      /* Il badge segue il TOTALE, non la lingua in vista: il lessico è uno solo
+       * per latino e greco. Chi sta sul ramo greco ma ha lemmi latini da perdere
+       * dev'essere avvisato lo stesso — prima qui il promemoria taceva. */
       return;
     }
     const isGreek = this.currentLang === 'greco';
