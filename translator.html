@@ -12071,6 +12071,33 @@ const STORAGE_KEY = 'poetrify-translator-v1';
    campi/strutture nuove che richiedono una migrazione in lettura. */
 const SCHEMA_VERSION = 2;
 
+/* ════════════════════════════════════════════════════════════════════════════
+   NAVIGAZIONE · DUE ASSI DISTINTI
+   ────────────────────────────────────────────────────────────────────────────
+   `currentStep` è VOLATILE: dice che cosa si sta guardando adesso, comprese le
+   viste di sola consultazione (4 archivio · 6 dizionario · 7 panoramica).
+   `lastWorkStep` è PERSISTITO: l'ultimo passo di LAVORO vero (1 brano ·
+   2 scomposizione · 3 analisi · 5 traduzione).
+   Su disco finisce soltanto quest'ultimo, così una consultazione non lascia
+   traccia come se fosse lavoro. Prima non era così: aprire l'archivio salvava
+   il brano «fermo all'archivio», e riaprendolo ci si tornava dentro — il gesto
+   centrale («riprendi») falliva proprio sul percorso più battuto.
+   La normalizzazione avviene al SALVATAGGIO, non a ogni assegnazione: intercetta
+   da sola tutte le decine di punti che scrivono currentStep. */
+const WORK_STEPS = [1, 2, 3, 5];
+const isWorkStep = (n) => WORK_STEPS.indexOf(Number(n)) >= 0;
+function workStepOf(s) {
+  if (!s) return 1;
+  if (isWorkStep(s.currentStep)) return Number(s.currentStep);
+  if (isWorkStep(s.lastWorkStep)) return Number(s.lastWorkStep);
+  return 1;
+}
+/* Copia da scrivere su disco: le viste di consultazione non ci arrivano mai. */
+function _persistableSnapshot(s) {
+  const w = workStepOf(s);
+  return Object.assign({}, s, { currentStep: w, lastWorkStep: w });
+}
+
 const defaultState = () => ({
   id: 'project-' + Date.now(),
   meta: {
@@ -12089,6 +12116,7 @@ const defaultState = () => ({
   },
   sentences: [],
   currentStep: 1,
+  lastWorkStep: 1,       // ultimo passo di LAVORO (1/2/3/5) — è ciò che si salva
   currentSentenceIdx: 0,
   currentAnalysisTab: 'grammaticale',
   previewOpen: false,
@@ -12182,7 +12210,12 @@ function persistCurrent() {
       if (txt) txt.textContent = 'in attesa di contenuto';
       return;
     }
-    if (idx >= 0) all[idx] = state; else all.push(state);
+    /* Sul disco va lo snapshot NORMALIZZATO: se in questo momento si sta
+       guardando archivio/dizionario/panoramica, il brano resta salvato al suo
+       ultimo passo di lavoro. La consultazione non è lavoro. */
+    if (isWorkStep(state.currentStep)) state.lastWorkStep = Number(state.currentStep);
+    const snapshot = _persistableSnapshot(state);
+    if (idx >= 0) all[idx] = snapshot; else all.push(snapshot);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
     const dot = document.querySelector('.save-dot');
     if (dot) dot.style.background = 'var(--success)';
@@ -12217,6 +12250,11 @@ function loadAllProjects() {
    futuro) da meta.schemaVersion. */
 function _migrateProject(p) {
   if (!p || !p.meta) return p;
+  /* Navigazione a due assi: i progetti salvati PRIMA della separazione possono
+     avere currentStep su una vista di consultazione (4/6/7). Si riportano al
+     lavoro in lettura, così l'archivio storico guarisce da solo. */
+  if (!isWorkStep(p.lastWorkStep)) p.lastWorkStep = isWorkStep(p.currentStep) ? Number(p.currentStep) : 1;
+  if (!isWorkStep(p.currentStep)) p.currentStep = p.lastWorkStep;
   const m = p.meta;
   if (m.tipoTesto == null) m.tipoTesto = 'prosa';
   if (m.versoIniziale == null) m.versoIniziale = 1;
@@ -28693,13 +28731,20 @@ function renderPanoramicaHtml() {
       </div>`;
 }
 
-/* Ripresa dalla panoramica: carica il progetto e, se era stato salvato su una
-   vista «meta» (archivio/dizionario/panoramica), riportalo alla stanza A. */
-function resumeProject(id) {
-  if (id === state.id) { goToStep(1); return; }
+/* ════════════════════════════════════════════════════════════════════════
+   PORTA UNICA per aprire un brano.
+   ────────────────────────────────────────────────────────────────────────
+   Prima ogni via faceva storia a sé: card d'archivio, modale «Progetti» e
+   command palette chiamavano loadProjectById nudo — che rispetta lo step
+   salvato, quindi poteva riportare dentro l'archivio — mentre solo la ripresa
+   rapida normalizzava. Ora tutte passano di qui e atterrano sul LAVORO. */
+function openProject(id) {
+  if (id === state.id) { goToStep(workStepOf(state)); return; }
   loadProjectById(id);
-  if (state.currentStep === 4 || state.currentStep === 6 || state.currentStep === 7) goToStep(1);
+  if (state && state.id === id) goToStep(workStepOf(state));
 }
+/* Alias storico: la ripresa rapida della Panoramica lo chiama per nome. */
+function resumeProject(id) { openProject(id); }
 
 function renderArchiveHtml() {
   const allProjects = loadAllProjects();
@@ -28856,7 +28901,7 @@ function renderArchiveCard(p) {
       <div class="archive-card-actions" data-card-lang="${p.meta.lingua === 'greco' ? 'greco' : 'latino'}">
         ${isCurrent
           ? `<button class="btn btn-ghost btn-sm" onclick="goToStep(1)">Vai al brano →</button>`
-          : `<button class="btn btn-brand-soft btn-sm" onclick="loadProjectById('${p.id}')">${status === 'done' ? 'Rivedi' : 'Riprendi'} →</button>`}
+          : `<button class="btn btn-brand-soft btn-sm" onclick="openProject('${p.id}')">${status === 'done' ? 'Rivedi' : 'Riprendi'} →</button>`}
         <button class="btn btn-ghost btn-sm" onclick="duplicateProject('${p.id}')" title="Duplica">⎘</button>
         <button class="btn btn-ghost btn-sm" onclick="transferProjectLanguage('${p.id}')" title="Sposta nell'altra lingua (latino ⇄ greco) — utile se la lingua era stata scelta per errore">⇄ ${p.meta.lingua === 'greco' ? 'Lat' : 'Gr'}</button>
         <button class="btn btn-ghost btn-sm" onclick="exportProjectFromArchive('${p.id}')" title="Esporta">⤓</button>
@@ -37991,7 +38036,7 @@ function renderProjectList() {
           <div class="project-item-meta">${dateStr} · ${p.sentences.length} ${p.sentences.length === 1 ? 'frase' : 'frasi'}</div>
         </div>
         <div class="project-item-actions">
-          <button class="btn btn-brand-soft btn-sm" onclick="loadProjectById('${p.id}'); closeModal('modal-projects');">Apri</button>
+          <button class="btn btn-brand-soft btn-sm" onclick="openProject('${p.id}'); closeModal('modal-projects');">Apri</button>
           <button class="btn btn-danger-soft btn-sm" onclick="deleteProjectById('${p.id}')">🗑</button>
         </div>
       </div>`;
@@ -39677,7 +39722,7 @@ function buildCommandPaletteIndex() {
     const projects = loadAllProjects().slice().sort((a,b) => new Date(b.meta.updatedAt) - new Date(a.meta.updatedAt)).slice(0, 5);
     projects.forEach(p => {
       const title = (p.meta && p.meta.titolo) || '(senza titolo)';
-      add(`Carica progetto · ${title}`, 'Archivio', () => loadProjectById(p.id), '', '📁');
+      add(`Carica progetto · ${title}`, 'Archivio', () => openProject(p.id), '', '📁');
     });
   } catch (_) {}
 
@@ -39879,7 +39924,8 @@ function _restoreFromSnapshot(snap) {
     try {
       const all = loadAllProjects();
       const i = all.findIndex(p => p.id === state.id);
-      if (i >= 0) all[i] = state; else all.push(state);
+      const snap2 = _persistableSnapshot(state);   // anche l'undo salva un passo di LAVORO
+      if (i >= 0) all[i] = snap2; else all.push(snap2);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
     } catch (_) {}
     renderAll();
@@ -40265,6 +40311,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Pulisce i campi transienti che si trascinano dalle versioni precedenti
   // (es. Map serializzate come oggetto vuoto, suggerimenti di pairing stale)
   _sanitizeTransientFields(state);
+
+  /* Riapertura dell'app: si rientra sul LAVORO, non sull'ultima consultazione.
+     Prima, chi aveva chiuso mentre guardava il dizionario-ponte o l'archivio
+     riapriva proprio lì, senza nemmeno un ritorno al brano. */
+  if (!isWorkStep(state.currentStep)) state.currentStep = workStepOf(state);
 
   // Interfaccia sempre avanzata (servizio unico).
   applyLevelToBody();
