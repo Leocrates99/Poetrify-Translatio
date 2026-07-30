@@ -24,7 +24,7 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 export const OCR_META = {
-  version: '0.3.0', // 0.3.0: vendoring · zero CDN, tutto servito in locale (offline)
+  version: '0.4.0', // 0.3.0: vendoring · zero CDN, tutto servito in locale (offline)
   engine: 'tesseract.js',
   engineVersion: '5.1.1',
   selfHosted: true,
@@ -137,6 +137,161 @@ export async function recognize(imageSource, projectLang, onProgress) {
     confidence: typeof data.confidence === 'number' ? Math.round(data.confidence) : null,
     lang,
   };
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   RICONOSCIMENTO STRUTTURATO · la pagina di un manuale non è un blocco di testo
+   ────────────────────────────────────────────────────────────────────────────
+   Su una pagina di manuale, accanto alla versione ci sono cose che NON vanno
+   tradotte: il numero della versione in testa, i numeri di verso a margine,
+   le note e l'apparato in fondo. Prendere tutto e incollarlo insieme obbliga
+   poi a ripulire a mano proprio mentre si vorrebbe cominciare.
+   Qui si chiedono a Tesseract i dati per PAROLA (riquadro + confidenza) e si
+   classificano le righe. La divisione in colonne resta a Tesseract, che la fa
+   bene: non la si reimplementa, la si sfrutta e si dichiara quante ne ha viste.
+   Le esclusioni non sono mai definitive: la revisione le mostra e si possono
+   riportare dentro — un'euristica sbaglia, e deve poter essere smentita. */
+export async function recognizeLayout(imageSource, projectLang, onProgress) {
+  const lang = tesseractLangFor(projectLang);
+  const worker = await getWorker(lang, onProgress);
+  try {
+    await worker.setParameters({
+      tessedit_pageseg_mode: '3',        // pagina intera, analisi automatica (regge le colonne)
+      preserve_interword_spaces: '1',
+    });
+  } catch (e) { /* parametri non applicabili: si prosegue col default */ }
+
+  const { data } = await worker.recognize(imageSource, {}, { blocks: true, text: true });
+
+  /* Appiattisce blocchi → paragrafi → righe, conservando l'ordine di lettura
+     stabilito da Tesseract (è quello che risolve le colonne). */
+  const righe = [];
+  let nBlocchi = 0;
+  (data.blocks || []).forEach((b) => {
+    nBlocchi++;
+    (b.paragraphs || []).forEach((p) => {
+      (p.lines || []).forEach((l) => {
+        const parole = (l.words || []).map((w) => ({
+          testo: w.text, conf: typeof w.confidence === 'number' ? w.confidence : null, bbox: w.bbox,
+        }));
+        if (!parole.length && !(l.text || '').trim()) return;
+        righe.push({
+          testo: (l.text || '').replace(/\s+$/, ''),
+          bbox: l.bbox,
+          conf: typeof l.confidence === 'number' ? l.confidence : null,
+          parole,
+        });
+      });
+    });
+  });
+
+  return {
+    righe,
+    nBlocchi,
+    text: data.text || '',
+    confidence: typeof data.confidence === 'number' ? Math.round(data.confidence) : null,
+    lang,
+    /* Se il bundle non restituisce i blocchi si resta col solo testo: l'analisi
+       dell'impaginato si disattiva da sé invece di produrre risultati inventati. */
+    strutturato: righe.length > 0,
+  };
+}
+
+const RE_SOLO_NUMERO = /^\s*[\[(]?\s*\d{1,4}\s*[.)\]]?\s*$/;
+const RE_ROMANO = /^\s*[IVXLCDM]{1,7}\s*[.)]?\s*$/;
+
+function mediana(v) {
+  if (!v.length) return 0;
+  const a = v.slice().sort((x, y) => x - y);
+  const m = Math.floor(a.length / 2);
+  return a.length % 2 ? a[m] : (a[m - 1] + a[m]) / 2;
+}
+
+/* Classifica ogni riga in: corpo · numeroVerso · nota · titolo.
+   Le soglie sono dichiarate qui in chiaro, non sparse nel codice. */
+export function analizzaPagina(righe, opts) {
+  opts = opts || {};
+  const out = { corpo: [], numeriVerso: [], note: [], titolo: [], versioneNum: null, pagina: null, colonne: 1 };
+  if (!righe || !righe.length) return out;
+
+  const y1 = Math.max(...righe.map(r => (r.bbox && r.bbox.y1) || 0));
+  const x0min = Math.min(...righe.map(r => (r.bbox && r.bbox.x0) || 0));
+  const x1max = Math.max(...righe.map(r => (r.bbox && r.bbox.x1) || 0));
+  const larghezza = Math.max(1, x1max - x0min);
+  const altezze = righe.map(r => r.bbox ? (r.bbox.y1 - r.bbox.y0) : 0).filter(Boolean);
+  const H = mediana(altezze) || 1;
+
+  /* Quante colonne ha visto Tesseract: si stima dal numero di righe che
+     cominciano ben dentro la metà destra della pagina. */
+  const inizioDestra = righe.filter(r => r.bbox && (r.bbox.x0 - x0min) > larghezza * 0.52).length;
+  out.colonne = inizioDestra >= Math.max(3, righe.length * 0.25) ? 2 : 1;
+
+  righe.forEach((r, idx) => {
+    const t = (r.testo || '').trim();
+    if (!t) return;
+    r._i = idx;   // posizione originale: serve a ricomporre l'ordine se si riammette una categoria
+    const bb = r.bbox || { x0: 0, y0: 0, x1: 0, y1: 0 };
+    const h = bb.y1 - bb.y0;
+    const inAlto = bb.y1 < y1 * 0.16;
+    const inBasso = bb.y0 > y1 * 0.68;
+    const largRiga = bb.x1 - bb.x0;
+
+    // ① numero di verso o di paragrafo isolato a margine: riga cortissima, tutta cifre
+    if ((RE_SOLO_NUMERO.test(t) || RE_ROMANO.test(t)) && largRiga < larghezza * 0.10 && !inAlto) {
+      out.numeriVerso.push(r); return;
+    }
+    /* ② testa della pagina · titolo della versione.
+       NON si usa l'altezza del riquadro come spia del corpo: misurata, non
+       regge — una riga di testo con lettere discendenti (p, q, g) risulta più
+       ALTA di un titolo in grassetto senza discendenti (31px contro 27px sul
+       campione di prova). Il segnale affidabile è la FORMA con cui i manuali
+       intestano le versioni: «148. Il titolo», cioè un numero d'ordine seguito
+       da punteggiatura, nelle prime righe della pagina. */
+    const haNumeroDOrdine = /^\s*(\d{1,4})\s*[.)·:–—-]\s*\S/.test(t);
+    if (inAlto && idx < 3 && (haNumeroDOrdine || RE_SOLO_NUMERO.test(t) || /versione|vers\./i.test(t))) {
+      out.titolo.push(r);
+      const m = t.match(/^\s*[\[(]?\s*(\d{1,4})/);
+      if (m && out.versioneNum == null) out.versioneNum = m[1];
+      return;
+    }
+    // ③ note e apparato: in fondo alla pagina e in corpo minore del testo
+    if (inBasso && h < H * 0.82) { out.note.push(r); return; }
+
+    out.corpo.push(r);
+  });
+
+  /* Numero di verso appiccicato in coda alla riga (colonna di poesia): ultima
+     parola tutta cifre, staccata e appoggiata al margine destro. */
+  out.corpo.forEach((r) => {
+    const p = r.parole || [];
+    if (p.length < 2) return;
+    const ult = p[p.length - 1], pen = p[p.length - 2];
+    if (!ult.bbox || !pen.bbox) return;
+    const stacco = ult.bbox.x0 - pen.bbox.x1;
+    if (/^\d{1,4}$/.test((ult.testo || '').trim()) && stacco > H * 1.2) {
+      r.numeroInCoda = ult.testo.trim();
+      r.parole = p.slice(0, -1);
+      r.testo = r.parole.map(w => w.testo).join(' ');
+    }
+  });
+
+  return out;
+}
+
+/* Ricompone il testo dalle sole righe scelte, riusando la pulizia esistente. */
+export function componiTesto(righe, opts) {
+  const grezzo = (righe || []).map(r => r.testo).join('\n');
+  return cleanupText(grezzo, opts || { compact: true });
+}
+
+/* Parole sotto soglia: sono i punti dove conviene guardare prima di procedere. */
+export function paroleIncerte(righe, soglia) {
+  const s = typeof soglia === 'number' ? soglia : 75;
+  const fuori = [];
+  (righe || []).forEach(r => (r.parole || []).forEach(w => {
+    if (typeof w.conf === 'number' && w.conf < s && /\S/.test(w.testo || '')) fuori.push(w);
+  }));
+  return fuori;
 }
 
 // Insieme di caratteri "lettera" per latino esteso + greco (incluso politonico).

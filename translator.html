@@ -9586,6 +9586,39 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 }
 .ocr-crop-reset:hover { border-color: var(--primary); color: var(--primary); }
 .ocr-crop-actions { display: flex; justify-content: space-between; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+/* ── REVISIONE OCR · impaginato tolto e parole da controllare ───────────────*/
+.ocr-layout {
+  margin: 10px 0; padding: 11px 13px;
+  background: var(--cream); border: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--brass); border-radius: var(--radius-md);
+}
+.ocr-layout-head { font-family: var(--font-ui); font-size: 12px; line-height: 1.5; color: var(--sepia); }
+.ocr-layout-toggles { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 9px; }
+.ocr-layout-tog {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-ui); font-size: 12px; color: var(--ink); cursor: pointer;
+}
+.ocr-layout-tog input { accent-color: var(--brass); width: 14px; height: 14px; }
+.ocr-layout-n {
+  font-size: 10px; font-weight: 700; color: var(--sepia);
+  background: var(--paper); border: 1px solid var(--rule-soft);
+  border-radius: 999px; padding: 1px 7px;
+}
+.ocr-incerte { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0 4px; }
+.ocr-incerte-k {
+  font-family: var(--font-ui); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--warning-ink); margin-right: 2px;
+}
+.ocr-incerte-ok { font-family: var(--font-ui); font-size: 11.5px; color: var(--success); }
+.ocr-incerta {
+  font-family: var(--font-classical); font-size: 13px;
+  padding: 3px 9px; border-radius: var(--radius-sm);
+  background: color-mix(in srgb, var(--warning) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--warning) 45%, transparent);
+  color: var(--ink); cursor: pointer;
+}
+.ocr-incerta:hover { background: color-mix(in srgb, var(--warning) 28%, transparent); }
+
 .ocr-compact-toggle {
   display: flex; align-items: center; gap: 7px; margin: 8px 0 2px;
   font-family: var(--font-body); font-size: 12.5px; color: var(--sepia); cursor: pointer;
@@ -11589,6 +11622,11 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
         <span class="ocr-result-label">Testo riconosciuto · rivedilo prima di inserirlo</span>
         <span class="ocr-confidence" id="ocr-confidence"></span>
       </div>
+      <div class="ocr-layout" id="ocr-layout" style="display:none;">
+        <div class="ocr-layout-head">Della pagina ho tenuto <strong>solo la versione</strong>. Se ho sbagliato, rimetti dentro:</div>
+        <div class="ocr-layout-toggles" id="ocr-layout-toggles"></div>
+      </div>
+      <div class="ocr-incerte" id="ocr-incerte" style="display:none;"></div>
       <label class="ocr-compact-toggle"><input type="checkbox" id="ocr-compact" checked onchange="ocrToggleCompact()"> Testo compatto in prosa <small>(unisce gli a capo)</small></label>
       <textarea class="ocr-result-textarea classical" id="ocr-result" spellcheck="false" placeholder="Il testo riconosciuto comparirà qui…"></textarea>
       <div class="ocr-note" id="ocr-greek-note" style="display:none;">
@@ -39445,6 +39483,7 @@ function ocrReset() {
   ocrState.busy = false;
   ocrState.img = null; ocrState.rotation = 0; ocrState.crop = null;
   ocrState.dragging = false; ocrState.dragStart = null; ocrState.rawOcrText = '';
+  ocrState.analisi = null; ocrState.includi = { titolo: false, note: false, numeri: false };
   ocrDetachCanvas();
   const set = (id, disp) => { const el = document.getElementById(id); if (el) el.style.display = disp; };
   set('ocr-crop-wrap', 'none');
@@ -39669,13 +39708,32 @@ async function ocrRunRecognition() {
   };
 
   try {
-    const res = await window.PoetrifyOCR.recognize(source, ocrState.lang, onProgress);
+    /* Riconoscimento STRUTTURATO: righe, parole, riquadri e confidenza. Se il
+       bundle non restituisce i blocchi si ricade sul riconoscimento piatto —
+       meglio il testo intero che un'analisi inventata su dati assenti. */
+    let res, analisi = null;
+    try {
+      const det = await window.PoetrifyOCR.recognizeLayout(source, ocrState.lang, onProgress);
+      if (det && det.strutturato) {
+        analisi = window.PoetrifyOCR.analizzaPagina(det.righe);
+        res = { text: det.text, rawText: det.text, confidence: det.confidence, lang: det.lang };
+      } else {
+        res = { text: det.text, rawText: det.text, confidence: det.confidence, lang: det.lang };
+      }
+    } catch (e) {
+      console.warn('[ocr] analisi dell\'impaginato non riuscita, ripiego sul testo piatto:', e);
+      res = await window.PoetrifyOCR.recognize(source, ocrState.lang, onProgress);
+    }
+    ocrState.analisi = analisi;
+    ocrState.includi = { titolo: false, note: false, numeri: false };
     bar.style.width = '100%'; pct.textContent = '100%'; txt.textContent = 'Completato';
     pw.style.display = 'none';
     ocrState.rawOcrText = res.rawText || res.text || '';
     const ta = document.getElementById('ocr-result');
     ta.classList.toggle('greek', ocrState.lang === 'greco');
+    ocrRenderLayoutPanel();
     ocrApplyCleanup();
+    ocrRenderIncerte();
     document.getElementById('ocr-result-wrap').style.display = '';
     const conf = document.getElementById('ocr-confidence');
     conf.textContent = (res.confidence != null) ? ('confidenza ~' + res.confidence + '%') : '';
@@ -39697,11 +39755,95 @@ async function ocrRunRecognition() {
 function ocrApplyCleanup() {
   const ta = document.getElementById('ocr-result');
   if (!ta) return;
-  const compactEl = document.getElementById('ocr-compact');
-  const compact = compactEl ? compactEl.checked : true;
-  ta.value = window.PoetrifyOCR.cleanupText(ocrState.rawOcrText || '', { compact });
+  const compact = !!(document.getElementById('ocr-compact') || {}).checked;
+  const righe = ocrRigheAmmesse();
+  if (righe) {
+    /* Testo ricomposto dalle sole righe ammesse: è qui che le esclusioni
+       dell'impaginato diventano il testo che l'utente vede. */
+    ta.value = window.PoetrifyOCR.componiTesto(righe, { compact });
+  } else {
+    ta.value = window.PoetrifyOCR.cleanupText(ocrState.rawOcrText || '', { compact });
+  }
 }
 function ocrToggleCompact() { ocrApplyCleanup(); }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   REVISIONE · che cosa ho tolto dalla pagina, e dove conviene guardare
+   ────────────────────────────────────────────────────────────────────────────
+   Nessuna esclusione è definitiva: ogni categoria si può rimettere dentro con
+   un clic. Un'euristica sull'impaginato sbaglia — di sicuro, prima o poi — e
+   deve poter essere smentita dall'utente senza rifare la scansione. */
+function ocrRenderLayoutPanel() {
+  const box = document.getElementById('ocr-layout');
+  const tog = document.getElementById('ocr-layout-toggles');
+  const a = ocrState.analisi;
+  if (!box || !tog) return;
+  if (!a) { box.style.display = 'none'; return; }
+  const voci = [
+    { k: 'titolo', n: (a.titolo || []).length, lab: a.versioneNum ? ('intestazione (versione ' + a.versioneNum + ')') : 'intestazione' },
+    { k: 'numeri', n: (a.numeriVerso || []).length, lab: 'numeri di verso' },
+    { k: 'note',   n: (a.note || []).length,        lab: 'note e apparato' },
+  ].filter(v => v.n > 0);
+  if (!voci.length) { box.style.display = 'none'; return; }
+  tog.innerHTML = voci.map(v =>
+    '<label class="ocr-layout-tog"><input type="checkbox" ' + (ocrState.includi[v.k] ? 'checked' : '') +
+    ' onchange="ocrToggleCategoria(\'' + v.k + '\', this.checked)"> ' + v.lab +
+    ' <span class="ocr-layout-n">' + v.n + '</span></label>').join('');
+  const colonne = a.colonne > 1 ? (' · ' + a.colonne + ' colonne riconosciute') : '';
+  box.querySelector('.ocr-layout-head').innerHTML =
+    'Della pagina ho tenuto <strong>solo la versione</strong>' + colonne + '. Se ho sbagliato, rimetti dentro:';
+  box.style.display = '';
+}
+
+function ocrToggleCategoria(k, on) {
+  if (!ocrState.includi) ocrState.includi = {};
+  ocrState.includi[k] = !!on;
+  ocrApplyCleanup();
+  ocrRenderIncerte();
+}
+
+/* Ricompone il testo dalle sole categorie ammesse, nell'ordine originale della
+   pagina (ogni riga porta con sé la propria posizione). */
+function ocrRigheAmmesse() {
+  const a = ocrState.analisi;
+  if (!a) return null;
+  const inc = ocrState.includi || {};
+  let righe = (a.corpo || []).slice();
+  if (inc.titolo) righe = righe.concat(a.titolo || []);
+  if (inc.numeri) righe = righe.concat(a.numeriVerso || []);
+  if (inc.note)   righe = righe.concat(a.note || []);
+  righe.sort((x, y) => (x._i || 0) - (y._i || 0));
+  return righe;
+}
+
+function ocrRenderIncerte() {
+  const box = document.getElementById('ocr-incerte');
+  if (!box) return;
+  const righe = ocrRigheAmmesse();
+  if (!righe) { box.style.display = 'none'; return; }
+  const incerte = window.PoetrifyOCR.paroleIncerte(righe, 75)
+    .map(w => (w.testo || '').trim()).filter(Boolean);
+  if (!incerte.length) {
+    box.innerHTML = '<span class="ocr-incerte-ok">✓ Nessuna parola sotto soglia: il riconoscimento è pulito. Rileggi comunque il testo.</span>';
+    box.style.display = '';
+    return;
+  }
+  const uniche = Array.from(new Set(incerte)).slice(0, 24);
+  box.innerHTML = '<span class="ocr-incerte-k">Da controllare (' + incerte.length + ')</span>'
+    + uniche.map(w => '<button type="button" class="ocr-incerta" onclick="ocrCercaParola(' + JSON.stringify(w).replace(/"/g, '&quot;') + ')">'
+        + escapeHtml(w) + '</button>').join('');
+  box.style.display = '';
+}
+
+/* Clic su una parola incerta: la seleziona nel testo, così si corregge dov'è. */
+function ocrCercaParola(w) {
+  const ta = document.getElementById('ocr-result');
+  if (!ta) return;
+  const i = ta.value.indexOf(w);
+  if (i < 0) { showToast('«' + w + '» non è nel testo corrente'); return; }
+  ta.focus();
+  ta.setSelectionRange(i, i + w.length);
+}
 
 /* Inserisce il testo riconosciuto nel campo di destinazione. mode:
    'replace' = sostituisce tutto · 'append' = aggiunge in coda. In entrambi i casi
@@ -41283,7 +41425,7 @@ document.addEventListener('DOMContentLoaded', () => {
 <!-- Modulo OCR: motore di riconoscimento testo da immagine, esposto su window.
      Indipendente dall'engine; il bundle Tesseract è caricato lazy al primo uso. -->
 <script type="module">
-import * as OCR from './modules/translator/ocr.js?v=0.3.0';
+import * as OCR from './modules/translator/ocr.js?v=0.4.1';
 window.PoetrifyOCR = OCR;
 const INFO_BADGE_OCR = 'background:#1800AC;color:#fff;padding:2px 6px;border-radius:3px;';
 console.log('%c Poetrify OCR ', INFO_BADGE_OCR, 'ocr v' + OCR.OCR_META.version + ' · ' + OCR.OCR_META.engine + ' ' + OCR.OCR_META.engineVersion + ' (lazy CDN)');
