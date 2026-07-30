@@ -12375,7 +12375,10 @@ function persistCurrent() {
   // Non salvare progetti vuoti (per evitare voci fantasma in archivio)
   const isEmpty = !state.meta.testoOriginale && !state.meta.titolo && !state.meta.autore && !state.meta.opera && (!state.sentences || state.sentences.length === 0);
   state.meta.updatedAt = new Date().toISOString();
-  state.meta.schemaVersion = SCHEMA_VERSION;
+  /* La versione si timbra solo se non si sta scrivendo su un progetto nato da
+     una versione PIÙ RECENTE: in quel caso ri-etichettarlo al ribasso renderebbe
+     falsa la versione dichiarata (audit docs/DATI-AUDIT.md). Si conserva la sua. */
+  if (versioneProgetto(state) <= SCHEMA_VERSION) state.meta.schemaVersion = SCHEMA_VERSION;
   try {
     const all = loadAllProjects();
     const idx = all.findIndex(p => p.id === state.id);
@@ -12418,42 +12421,126 @@ function persistCurrent() {
    rete, un dato corrotto tornava [] in silenzio e l'autosave a 30 s
    sovrascriveva l'intero archivio (audit docs/DATI-AUDIT.md §2.2). */
 function loadAllProjects() {
+  _progettiDalFuturo = [];                 // si ricalcola a ogni lettura, non si accumula
+  let arr;
   if (window.PoetrifyQuarantena) {
-    const arr = PoetrifyQuarantena.leggiJSON(STORAGE_KEY, [], { valida: Array.isArray });
-    return Array.isArray(arr) ? arr.map(_migrateProject) : [];
+    arr = PoetrifyQuarantena.leggiJSON(STORAGE_KEY, [], { valida: Array.isArray });
+  } else {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      arr = raw ? JSON.parse(raw) : [];
+    } catch (e) { console.error('Load error:', e); return []; }
   }
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    const arr = raw ? JSON.parse(raw) : [];
-    return Array.isArray(arr) ? arr.map(_migrateProject) : [];
-  } catch (e) { console.error('Load error:', e); return []; }
+  const out = Array.isArray(arr) ? arr.map(_migrateProject) : [];
+  _avvisaSeDalFuturo();
+  return out;
 }
 
-/* Migrazione in lettura: porta i progetti vecchi allo schema corrente riempiendo
-   i campi mancanti, così le feature nuove non trovano `undefined`. Guidata (in
-   futuro) da meta.schemaVersion. */
-function _migrateProject(p) {
-  if (!p || !p.meta) return p;
-  /* Navigazione a due assi: i progetti salvati PRIMA della separazione possono
-     avere currentStep su una vista di consultazione (4/6/7). Si riportano al
-     lavoro in lettura, così l'archivio storico guarisce da solo. */
+/* Un brano scritto da una versione più recente resta leggibile ma potrebbe
+   contenere cose che questa versione non sa mostrare: lo si dice una volta,
+   invece di lasciar credere che sia tutto normale. */
+let _avvisoFuturoDato = false;
+function _avvisaSeDalFuturo() {
+  if (_avvisoFuturoDato || !_progettiDalFuturo.length) return;
+  _avvisoFuturoDato = true;
+  const n = _progettiDalFuturo.length;
+  const titolo = _progettiDalFuturo[0].titolo;
+  if (typeof showToast === 'function') {
+    showToast(n === 1
+      ? `«${titolo}» viene da una versione più recente di Poetrify: lo apri lo stesso, ma qualche dato potrebbe non essere visibile qui.`
+      : `${n} brani vengono da una versione più recente di Poetrify: li apri lo stesso, ma qualche dato potrebbe non essere visibile qui.`);
+  }
+}
+
+/* ── VERSIONE DELLO SCHEMA · si LEGGE, non si indovina ──────────────────────
+   Prima `meta.schemaVersion` veniva scritto ma mai letto: le migrazioni erano
+   euristiche a colpi di null-check e un progetto scritto da una versione più
+   recente veniva ri-etichettato al ribasso, rendendo falsa la versione
+   dichiarata (audit docs/DATI-AUDIT.md). Ora:
+     · la versione si legge (assente = 1, cioè «prima che esistesse»);
+     · si applica la CATENA di migrazioni dalla sua versione alla corrente;
+     · un progetto di versione FUTURA non viene toccato né ri-etichettato:
+       si conserva com'è e lo si segnala.
+   Le migrazioni sono idempotenti: applicarle due volte non cambia il risultato. */
+const MIGRAZIONI = {
+  /* 1 → 2 · nascono la navigazione a due assi (lavoro/consultazione), i campi
+     di metrica e l'organizzazione metodo+vista al posto del vecchio `approach`. */
+  1: function (p) {
+    if (!isWorkStep(p.lastWorkStep)) p.lastWorkStep = isWorkStep(p.currentStep) ? Number(p.currentStep) : 1;
+    if (!isWorkStep(p.currentStep)) p.currentStep = p.lastWorkStep;
+    const m = p.meta;
+    if (m.tipoTesto == null) m.tipoTesto = 'prosa';
+    if (m.versoIniziale == null) m.versoIniziale = 1;
+    if (m.metrica == null || typeof m.metrica !== 'object') m.metrica = { metroDefault: '', perVerse: {} };
+    if (m.metrica.perVerse == null) m.metrica.perVerse = {};
+    if (p.metodo == null || p.vista == null) {
+      const a = p.approach || 'attuale';
+      if (a === 'scheletro') { p.metodo = 'valenziale'; p.vista = p.vista || 'frase'; }
+      else if (a === 'integrale') { p.metodo = 'strati'; p.vista = 'intero'; }
+      else if (a === 'frase-per-frase') { p.metodo = 'strati'; p.vista = 'frase'; if (p.mode !== 'guided') p.mode = 'guided'; }
+      else { p.metodo = 'strati'; p.vista = 'frase'; }            // 'attuale' o ignoto
+      p.approach = (p.metodo === 'valenziale') ? 'scheletro' : (p.vista === 'intero' ? 'integrale' : 'attuale');
+    }
+    return p;
+  },
+};
+
+/* Progetti letti che dichiarano una versione più alta di quella che sappiamo
+   leggere: si registrano per avvisare una volta sola. */
+let _progettiDalFuturo = [];
+
+function versioneProgetto(p) {
+  const v = p && p.meta && p.meta.schemaVersion;
+  return typeof v === 'number' && v >= 1 ? v : 1;
+}
+
+/* Rete di sicurezza: ripara i campi indispensabili anche quando la versione
+   dichiarata è già quella corrente (una build precedente può aver timbrato la
+   versione senza scrivere tutti i campi). È idempotente e non inventa dati. */
+function _riparaCampiEssenziali(p) {
+  if (!Array.isArray(p.sentences)) p.sentences = [];
   if (!isWorkStep(p.lastWorkStep)) p.lastWorkStep = isWorkStep(p.currentStep) ? Number(p.currentStep) : 1;
   if (!isWorkStep(p.currentStep)) p.currentStep = p.lastWorkStep;
-  const m = p.meta;
-  if (m.tipoTesto == null) m.tipoTesto = 'prosa';
-  if (m.versoIniziale == null) m.versoIniziale = 1;
-  if (m.metrica == null || typeof m.metrica !== 'object') m.metrica = { metroDefault: '', perVerse: {} };
-  if (m.metrica.perVerse == null) m.metrica.perVerse = {};
-  // Riorganizzazione a 4 assi: dai vecchi `approach` ricava metodo/vista/mode.
-  if (p.metodo == null || p.vista == null) {
-    const a = p.approach || 'attuale';
-    if (a === 'scheletro') { p.metodo = 'valenziale'; p.vista = p.vista || 'frase'; }
-    else if (a === 'integrale') { p.metodo = 'strati'; p.vista = 'intero'; }
-    else if (a === 'frase-per-frase') { p.metodo = 'strati'; p.vista = 'frase'; if (p.mode !== 'guided') p.mode = 'guided'; }
-    else { p.metodo = 'strati'; p.vista = 'frase'; }            // 'attuale' o ignoto
-    p.approach = (p.metodo === 'valenziale') ? 'scheletro' : (p.vista === 'intero' ? 'integrale' : 'attuale');
-  }
+  if (p.meta.metrica == null || typeof p.meta.metrica !== 'object') p.meta.metrica = { metroDefault: '', perVerse: {} };
   return p;
+}
+
+function _migrateProject(p) {
+  if (!p || !p.meta) return p;
+  const v = versioneProgetto(p);
+  if (v > SCHEMA_VERSION) {
+    /* Dal futuro: non si migra e non si ri-etichetta. Meglio un progetto che
+       questa versione capisce solo in parte, che un progetto mutilato. */
+    _progettiDalFuturo.push({ titolo: (p.meta.titolo || 'senza titolo'), versione: v });
+    return p;
+  }
+  for (let da = v; da < SCHEMA_VERSION; da++) {
+    const passo = MIGRAZIONI[da];
+    if (typeof passo === 'function') {
+      try { p = passo(p) || p; }
+      catch (e) { console.error('[migrazione] passo ' + da + '→' + (da + 1) + ' fallito:', e); }
+    }
+  }
+  p.meta.schemaVersion = SCHEMA_VERSION;
+  return _riparaCampiEssenziali(p);
+}
+
+/* ── VALIDAZIONE DELL'IMPORT ────────────────────────────────────────────────
+   Prima bastavano `p.id` e `p.meta`: un progetto con `sentences` non-array
+   entrava, veniva persistito e rompeva la lista al primo render. Qui si
+   controlla la forma minima e si DICE perché una voce è stata rifiutata. */
+function validaProgetto(p) {
+  if (!p || typeof p !== 'object' || Array.isArray(p)) return { ok: false, motivo: 'non è un brano' };
+  if (typeof p.id !== 'string' || !p.id.trim()) return { ok: false, motivo: 'manca l\'identificativo' };
+  if (!p.meta || typeof p.meta !== 'object' || Array.isArray(p.meta)) return { ok: false, motivo: 'mancano i dati del brano' };
+  if (p.meta.titolo != null && typeof p.meta.titolo !== 'string') return { ok: false, motivo: 'titolo non valido' };
+  if (p.sentences != null && !Array.isArray(p.sentences)) return { ok: false, motivo: 'le frasi non sono una lista' };
+  if (Array.isArray(p.sentences) && p.sentences.some(s => s != null && typeof s !== 'object')) {
+    return { ok: false, motivo: 'alcune frasi non sono leggibili' };
+  }
+  const v = versioneProgetto(p);
+  if (v > SCHEMA_VERSION) return { ok: true, avviso: 'scritto da una versione più recente (schema ' + v + ')' };
+  return { ok: true };
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
@@ -12531,11 +12618,18 @@ function _preparaAnteprimaImport(data, nomeFile) {
       + 'per riprendere il lavoro serve un <strong>backup .json</strong>.');
     return;
   }
-  const valid = incoming.filter(p => p && p.id && p.meta);
-  const invalidi = incoming.length - valid.length;
+  /* Validazione con motivo: si sa PERCHÉ una voce è stata rifiutata. */
+  const valid = [], scartati = [];
+  incoming.forEach((p, i) => {
+    const esito = validaProgetto(p);
+    if (esito.ok) valid.push(p);
+    else scartati.push({ posizione: i + 1, titolo: (p && p.meta && p.meta.titolo) || '', motivo: esito.motivo });
+  });
+  const invalidi = scartati.length;
   if (!valid.length) {
-    _mostraImportErrore('Il file contiene dati, ma nessun brano con la struttura attesa '
-      + `(${invalidi} voce/i scartata/e).`);
+    _mostraImportErrore('Il file contiene dati, ma nessun brano con la struttura attesa.<br><br>'
+      + scartati.slice(0, 5).map(s => `• voce ${s.posizione}${s.titolo ? ' «' + escapeHtml(s.titolo) + '»' : ''}: ${escapeHtml(s.motivo)}`).join('<br>')
+      + (invalidi > 5 ? `<br>…e altre ${invalidi - 5}` : ''));
     return;
   }
   const attuali = loadAllProjects();
@@ -12547,7 +12641,7 @@ function _preparaAnteprimaImport(data, nomeFile) {
     else nuovi.push(p);
   });
   const versioneFile = data && typeof data.schemaVersion === 'number' ? data.schemaVersion : null;
-  _importInSospeso = { valid, nuovi, aggiornati, invalidi, versioneFile, nomeFile };
+  _importInSospeso = { valid, nuovi, aggiornati, invalidi, scartati, versioneFile, nomeFile };
   _renderAnteprimaImport();
 }
 
@@ -12590,7 +12684,10 @@ function _renderAnteprimaImport() {
       Potrai comunque <strong>annullare</strong> subito dopo.</p>`;
   }
   if (s.invalidi) {
-    html += `<p class="muted" style="margin:0 0 10px">${s.invalidi} voce/i del file non ha la struttura attesa e verrà ignorata.</p>`;
+    html += `<p class="muted" style="margin:0 0 4px">${s.invalidi} voce/i del file verrà ignorata:</p>
+      <ul class="muted" style="margin:0 0 10px 18px">${(s.scartati || []).slice(0, 5).map(x =>
+        `<li>voce ${x.posizione}${x.titolo ? ' «' + escapeHtml(x.titolo) + '»' : ''} — ${escapeHtml(x.motivo)}</li>`).join('')}
+      ${s.invalidi > 5 ? `<li>…e altre ${s.invalidi - 5}</li>` : ''}</ul>`;
   }
   if (!s.nuovi.length && !s.aggiornati.length) {
     html += `<p class="muted" style="margin:0">Non c'è nulla da importare.</p>`;
