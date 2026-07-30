@@ -12824,7 +12824,8 @@ function _dosDataOra(d) {
 
 /**
  * Costruisce un archivio ZIP.
- * @param {Array<{nome:string, testo:string, data?:Date}>} voci
+ * @param {Array<{nome:string, testo?:string, byte?:Uint8Array, data?:Date}>} voci
+ *        `testo` per i file di testo, `byte` per i binari (PDF, PNG).
  * @returns {Blob}
  */
 function creaZip(voci) {
@@ -12849,7 +12850,10 @@ function creaZip(voci) {
 
   voci.forEach(v => {
     const nome = enc.encode(v.nome);
-    const dati = enc.encode(v.testo);
+    /* I binari (PDF, PNG) arrivano già come byte: passarli da TextEncoder li
+       corromperebbe, perché non sono testo UTF-8. */
+    const dati = v.byte ? (v.byte instanceof Uint8Array ? v.byte : new Uint8Array(v.byte))
+                        : enc.encode(v.testo || '');
     const crc = _crc32(dati);
     const { ora, data } = _dosDataOra(v.data || new Date());
     const flag = 0x0800;                       // bit 11: nome file in UTF-8
@@ -12894,11 +12898,276 @@ function creaZip(voci) {
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
+   FORMATI VETTORIALI · un solo modello, due resti (PDF e SVG)
+   ────────────────────────────────────────────────────────────────────────────
+   Nota di verità, perché i nomi ingannano:
+     · il PDF che l'app produceva era RASTER — html2canvas fotografava la
+       pagina e l'immagine finiva dentro il PDF: pesante, sgranata se ingrandita,
+       testo non selezionabile né ricercabile;
+     · il PNG non può essere vettoriale: è una griglia di pixel per definizione.
+       Il formato vettoriale vero, per un documento, è l'SVG.
+   Qui il contenuto viene ridotto a BLOCCHI tipizzati (titolo, paragrafo, righe
+   di tabella…) e da quelli si disegnano il PDF (testo vero, con jsPDF) e l'SVG
+   (elementi <text>). Stesso modello, due uscite: nessuna delle due passa più
+   da una fotografia.
+   ════════════════════════════════════════════════════════════════════════════ */
+function datiDi(p) { return { meta: p.meta || {}, sentences: p.sentences || [] }; }
+
+/** Riduce un progetto a una sequenza di blocchi tipizzati. */
+function blocchiDi(p) {
+  const d = datiDi(p);
+  const b = [];
+  const sigla = d.meta.lingua === 'greco' ? 'GR' : 'LA';
+  b.push({ t: 'titolo', x: `${d.meta.titolo || 'Traduzione'} [${sigla}]` });
+  const sotto = [d.meta.autore, d.meta.opera].filter(Boolean).join(' · ');
+  if (sotto) b.push({ t: 'sotto', x: sotto });
+  b.push({ t: 'meta', x: `${statusLabel(projectStatus(d))} · ${projectCompletion(d)}% · `
+    + `${d.sentences.length} frasi · ${projectWordCount(d)} parole` });
+  if (d.meta.completatoAt) {
+    b.push({ t: 'meta', x: 'Consegnata il ' + new Date(d.meta.completatoAt).toLocaleDateString('it-IT') });
+  }
+  if (d.meta.testoOriginale) {
+    b.push({ t: 'h2', x: 'Testo originale' });
+    b.push({ t: 'cit', x: d.meta.testoOriginale });
+  }
+  d.sentences.forEach((s, i) => {
+    b.push({ t: 'h2', x: `Frase ${i + 1}` });
+    if (s.text) b.push({ t: 'cit', x: s.text });
+    if ((s.translation || '').trim()) {
+      b.push({ t: 'h3', x: 'Traduzione' });
+      b.push({ t: 'p', x: s.translation });
+    }
+    const sezioni = [
+      ['Analisi grammaticale', s.grammar, e => [e.word || e.text || '—',
+        [e.partOfSpeech, e.lemma].filter(Boolean).join(' · ') || '—']],
+      ['Analisi logica', s.logic, e => [e.tipo || e.funzione || '—', e.testo || e.text || '—']],
+      ['Analisi del periodo', s.periodale, e => [e.tipo || '—', e.testo || e.text || '—']],
+    ];
+    sezioni.forEach(([titolo, voci, riga]) => {
+      const v = (voci || []).filter(Boolean);
+      if (!v.length) return;
+      b.push({ t: 'h3', x: titolo });
+      v.forEach(e => { const r = riga(e); b.push({ t: 'riga', a: String(r[0]), b: String(r[1]) }); });
+    });
+  });
+  if ((d.meta.traduzioneBella || '').trim()) {
+    b.push({ t: 'h2', x: 'Bella copia' });
+    b.push({ t: 'p', x: d.meta.traduzioneBella });
+  }
+  return b;
+}
+
+/* ── PDF VETTORIALE · testo vero, selezionabile e ricercabile ─────────────── */
+async function pdfDi(p) {
+  await ensureLib('jspdf');
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4', compress: true });
+  const L = 56, R = 56, TOP = 62, BOT = 56;
+  const larghezza = doc.internal.pageSize.getWidth() - L - R;
+  const fondo = doc.internal.pageSize.getHeight() - BOT;
+  let y = TOP;
+
+  const nuovaPagina = () => { doc.addPage(); y = TOP; };
+  const spazio = (h) => { if (y + h > fondo) nuovaPagina(); };
+  const scrivi = (testo, opz) => {
+    const o = opz || {};
+    doc.setFont('times', o.stile || 'normal');
+    doc.setFontSize(o.dim || 11);
+    doc.setTextColor(o.colore || '#1a1f24');
+    const righe = doc.splitTextToSize(String(testo || ''), (o.larghezza || larghezza));
+    const passo = (o.dim || 11) * 1.42;
+    righe.forEach(r => { spazio(passo); doc.text(r, o.x != null ? o.x : L, y); y += passo; });
+    y += (o.dopo != null ? o.dopo : 4);
+  };
+
+  blocchiDi(p).forEach(bl => {
+    switch (bl.t) {
+      case 'titolo':
+        spazio(30); scrivi(bl.x, { dim: 19, stile: 'bold', colore: '#1800AC', dopo: 2 });
+        doc.setDrawColor('#1800AC'); doc.setLineWidth(1.2);
+        spazio(8); doc.line(L, y, L + larghezza, y); y += 12;
+        break;
+      case 'sotto': scrivi(bl.x, { dim: 12, stile: 'italic', colore: '#4a4540', dopo: 2 }); break;
+      case 'meta':  scrivi(bl.x, { dim: 9, colore: '#6b6660', dopo: 8 }); break;
+      case 'h2':
+        y += 8; spazio(22); scrivi(bl.x, { dim: 14, stile: 'bold', colore: '#1800AC', dopo: 3 });
+        break;
+      case 'h3': y += 4; scrivi(bl.x, { dim: 11, stile: 'bold', colore: '#0f0070', dopo: 2 }); break;
+      case 'cit': {
+        const inizio = y;
+        scrivi(bl.x, { dim: 11.5, stile: 'italic', x: L + 14, larghezza: larghezza - 14, dopo: 6 });
+        doc.setDrawColor('#1800AC'); doc.setLineWidth(2.4);
+        doc.line(L + 3, inizio - 9, L + 3, y - 8);
+        break;
+      }
+      case 'p': scrivi(bl.x, { dim: 11, dopo: 5 }); break;
+      case 'riga': {
+        const colA = larghezza * 0.34;
+        doc.setFont('times', 'bold'); doc.setFontSize(10); doc.setTextColor('#08003f');
+        const ra = doc.splitTextToSize(bl.a, colA - 8);
+        doc.setFont('times', 'normal'); doc.setTextColor('#1a1f24');
+        const rb = doc.splitTextToSize(bl.b, larghezza - colA);
+        const alt = Math.max(ra.length, rb.length) * 13.5;
+        spazio(alt + 4);
+        const y0 = y;
+        doc.setFont('times', 'bold'); doc.setTextColor('#08003f');
+        ra.forEach((r, i) => doc.text(r, L, y0 + i * 13.5));
+        doc.setFont('times', 'normal'); doc.setTextColor('#1a1f24');
+        rb.forEach((r, i) => doc.text(r, L + colA, y0 + i * 13.5));
+        y = y0 + alt + 3;
+        doc.setDrawColor('#e8e6e1'); doc.setLineWidth(0.4);
+        doc.line(L, y - 6, L + larghezza, y - 6);
+        break;
+      }
+    }
+  });
+
+  const n = doc.internal.getNumberOfPages();
+  for (let i = 1; i <= n; i++) {
+    doc.setPage(i);
+    doc.setFont('times', 'normal'); doc.setFontSize(8); doc.setTextColor('#8a857e');
+    doc.text(`Poetrify · ${i} di ${n}`, L, doc.internal.pageSize.getHeight() - 28);
+  }
+  return doc;
+}
+
+/* ── SVG VETTORIALE · il formato scalabile vero (al posto del «PNG vettoriale»,
+      che non può esistere: il PNG è una griglia di pixel) ───────────────────── */
+function svgDi(p) {
+  const W = 820, ML = 56, MR = 56, larghezza = W - ML - MR;
+  const esc = s => String(s == null ? '' : s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  /* Ritorno a capo stimato sulla larghezza media del carattere: senza un motore
+     di testo non si può misurare esattamente, ma per un documento di lettura
+     l'approssimazione è più che sufficiente. */
+  const spezza = (testo, dim, disp) => {
+    const perRiga = Math.max(12, Math.floor(disp / (dim * 0.5)));
+    const out = [];
+    String(testo || '').split(/\n/).forEach(par => {
+      let riga = '';
+      par.split(/\s+/).forEach(par2 => {
+        if ((riga + ' ' + par2).trim().length > perRiga) { if (riga) out.push(riga); riga = par2; }
+        else riga = (riga ? riga + ' ' : '') + par2;
+      });
+      out.push(riga);
+    });
+    return out;
+  };
+  let y = 62, corpo = '';
+  const testo = (t, o) => {
+    const dim = o.dim || 11, x = o.x != null ? o.x : ML;
+    spezza(t, dim, o.larghezza || larghezza).forEach(r => {
+      corpo += `<text x="${x}" y="${y}" font-family="${o.font || 'Georgia, serif'}" font-size="${dim}"`
+        + `${o.peso ? ` font-weight="${o.peso}"` : ''}${o.corsivo ? ' font-style="italic"' : ''}`
+        + ` fill="${o.colore || '#1a1f24'}">${esc(r)}</text>\n`;
+      y += dim * 1.45;
+    });
+    y += (o.dopo != null ? o.dopo : 4);
+  };
+
+  blocchiDi(p).forEach(bl => {
+    switch (bl.t) {
+      case 'titolo':
+        testo(bl.x, { dim: 22, peso: 700, colore: '#1800AC', dopo: 2 });
+        corpo += `<line x1="${ML}" y1="${y}" x2="${W - MR}" y2="${y}" stroke="#1800AC" stroke-width="1.5"/>\n`;
+        y += 16; break;
+      case 'sotto': testo(bl.x, { dim: 13, corsivo: true, colore: '#4a4540', dopo: 2 }); break;
+      case 'meta':  testo(bl.x, { dim: 10, colore: '#6b6660', font: 'Helvetica, Arial, sans-serif', dopo: 10 }); break;
+      case 'h2':    y += 10; testo(bl.x, { dim: 16, peso: 700, colore: '#1800AC', dopo: 4 }); break;
+      case 'h3':    y += 4;  testo(bl.x, { dim: 12, peso: 700, colore: '#0f0070', dopo: 2 }); break;
+      case 'cit': {
+        const y0 = y;
+        testo(bl.x, { dim: 12.5, corsivo: true, x: ML + 16, larghezza: larghezza - 16, dopo: 8 });
+        corpo += `<line x1="${ML + 4}" y1="${y0 - 12}" x2="${ML + 4}" y2="${y - 10}" stroke="#1800AC" stroke-width="3"/>\n`;
+        break;
+      }
+      case 'p': testo(bl.x, { dim: 12, dopo: 6 }); break;
+      case 'riga': {
+        const y0 = y;
+        testo(bl.a, { dim: 11, peso: 700, colore: '#08003f', larghezza: larghezza * 0.32, dopo: 0 });
+        const yA = y; y = y0;
+        testo(bl.b, { dim: 11, x: ML + larghezza * 0.34, larghezza: larghezza * 0.66, dopo: 0 });
+        y = Math.max(yA, y) + 5;
+        corpo += `<line x1="${ML}" y1="${y - 4}" x2="${W - MR}" y2="${y - 4}" stroke="#e8e6e1" stroke-width="0.6"/>\n`;
+        break;
+      }
+    }
+  });
+
+  const H = Math.ceil(y + 48);
+  return `<?xml version="1.0" encoding="UTF-8"?>\n`
+    + `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">\n`
+    + `<title>${esc((p.meta && p.meta.titolo) || 'Poetrify')}</title>\n`
+    + `<rect width="${W}" height="${H}" fill="#ffffff"/>\n${corpo}`
+    + `<text x="${ML}" y="${H - 20}" font-family="Helvetica, Arial, sans-serif" font-size="9" fill="#8a857e">Poetrify</text>\n`
+    + `</svg>\n`;
+}
+
+/* ── PNG · raster, e lo diciamo ───────────────────────────────────────────── */
+async function pngDi(p) {
+  const { canvas, target } = await renderExportToCanvas(datiDi(p));
+  try {
+    return await new Promise((res, rej) =>
+      canvas.toBlob(b => b ? res(b) : rej(new Error('immagine vuota')), 'image/png'));
+  } finally { if (target) target.innerHTML = ''; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
    ARCHIVIO → cartella ZIP, in ordine cronologico DECRESCENTE
    Il più recente per primo: la numerazione 001, 002… conserva quell'ordine
    anche dove i file vengono riordinati alfabeticamente.
    ════════════════════════════════════════════════════════════════════════════ */
-function esportaArchivioZip(soloLingua) {
+/* I formati in cui l'archivio può uscire. `rileggibile` dice la sola cosa che
+   conta davvero: se quel file Poetrify sa riaprirlo. */
+const FORMATI_ARCHIVIO = {
+  md:   { etichetta: 'Markdown', est: 'md',  tipo: 'testo',   nota: 'testo semplice · Obsidian, Notion, WordPress' },
+  word: { etichetta: 'Word',     est: 'doc', tipo: 'testo',   nota: 'si apre in Word, LibreOffice, Google Docs' },
+  pdf:  { etichetta: 'PDF',      est: 'pdf', tipo: 'binario', nota: 'vettoriale: testo selezionabile e ricercabile, nitido a ogni ingrandimento' },
+  svg:  { etichetta: 'SVG',      est: 'svg', tipo: 'testo',   nota: 'vettoriale: si ingrandisce senza sgranare, si apre nel browser' },
+  png:  { etichetta: 'PNG',      est: 'png', tipo: 'binario', nota: 'immagine a pixel: comoda da incollare, ma sgrana se ingrandita' },
+  solo: { etichetta: 'Solo backup', est: null, tipo: null,    nota: 'nessun documento da leggere: solo i file che si rimettono in Poetrify' },
+};
+
+/** Il documento del formato scelto, per un progetto. */
+async function documentoDi(p, formato) {
+  switch (formato) {
+    case 'md':   return projectMd(datiDi(p));
+    case 'word': return docWordDi(datiDi(p));
+    case 'svg':  return svgDi(p);
+    case 'pdf':  return (await pdfDi(p)).output('arraybuffer');
+    case 'png':  return await (await pngDi(p)).arrayBuffer();
+    default:     return null;
+  }
+}
+
+/** Apre la scelta del formato prima di costruire l'archivio. */
+function apriSceltaFormatoArchivio() {
+  const progetti = loadAllProjects();
+  if (!progetti.length) { showToast('Non c\'è nessun brano da esportare'); return; }
+  const voci = Object.keys(FORMATI_ARCHIVIO).map(k => {
+    const f = FORMATI_ARCHIVIO[k];
+    return `<button class="export-option" onclick="esportaArchivioZip('${k}')" style="grid-column: span 2;">
+      <div class="export-option-title">${escapeHtml(f.etichetta)}${f.est ? ` <span style="font-weight:600;opacity:.65">.${f.est}</span>` : ''}</div>
+      <div class="export-option-desc">${escapeHtml(f.nota)}</div>
+    </button>`;
+  }).join('');
+  document.getElementById('import-titolo').textContent = 'In che formato vuoi l\'archivio?';
+  document.getElementById('import-sottotitolo').textContent =
+    `${progetti.length} lavor${progetti.length === 1 ? 'o' : 'i'} · dal più recente al più antico.`;
+  document.getElementById('import-corpo').innerHTML =
+    `<div class="export-grid">${voci}</div>
+     <p class="muted" style="margin:12px 0 0">In <strong>ogni</strong> archivio, qualunque formato tu scelga, ci sono
+     sempre anche i file <strong>.json</strong> — uno per brano più il backup completo: sono quelli che
+     Poetrify sa <strong>rileggere</strong> per rimettere in piedi il lavoro. Gli altri formati servono a
+     leggere, stampare e consegnare.</p>`;
+  document.getElementById('import-azioni').innerHTML =
+    `<button class="btn btn-ghost" onclick="closeModal('modal-import')">Chiudi</button>`;
+  document.getElementById('modal-import').classList.add('open');
+}
+
+async function esportaArchivioZip(formato, soloLingua) {
+  formato = formato || 'md';
+  const f = FORMATI_ARCHIVIO[formato] || FORMATI_ARCHIVIO.md;
   let progetti = loadAllProjects();
   if (soloLingua) progetti = progetti.filter(p => (p.meta && p.meta.lingua) === soloLingua);
   if (!progetti.length) { showToast('Non c\'è nessun brano da esportare'); return; }
@@ -12910,27 +13179,42 @@ function esportaArchivioZip(soloLingua) {
   const cartella = `poetrify-archivio_${oggi}`;
   const voci = [];
   const righeIndice = [];
+  const falliti = [];
+  const lento = formato === 'pdf' || formato === 'png';
 
-  progetti.forEach((p, i) => {
+  closeModal('modal-import');
+  if (lento) showToast(`Preparo ${progetti.length} document${progetti.length === 1 ? 'o' : 'i'} ${f.etichetta}…`);
+
+  for (let i = 0; i < progetti.length; i++) {
+    const p = progetti[i];
     const n = String(i + 1).padStart(3, '0');
-    const baseJson = nomeFileLavoro(p, 'json');
-    const baseMd = nomeFileLavoro(p, 'md');
     const quando = new Date(dataOrdinamento(p) || Date.now());
 
-    /* Ogni lavoro esce in due forme: il .json si RILEGGE in Poetrify,
-       il .md si legge e si consegna. */
+    /* Il .json c'è SEMPRE: è l'unico file che rimette il lavoro dentro Poetrify.
+       Qualunque formato l'utente scelga, non deve poter esportare un archivio
+       che non sa tornare indietro. */
     const payload = { app: 'poetrify-translator', kind: 'project', schemaVersion: SCHEMA_VERSION,
                       exportedAt: adesso.toISOString(), projects: [p] };
-    voci.push({ nome: `${cartella}/${n}_${baseJson}`, testo: JSON.stringify(payload, null, 2), data: quando });
-    try {
-      voci.push({ nome: `${cartella}/${n}_${baseMd}`,
-                  testo: projectMd({ meta: p.meta, sentences: p.sentences || [] }), data: quando });
-    } catch (e) { console.error('[zip] Markdown non generato per', p.id, e); }
+    voci.push({ nome: `${cartella}/${n}_${nomeFileLavoro(p, 'json')}`,
+                testo: JSON.stringify(payload, null, 2), data: quando });
+
+    if (f.est) {
+      if (lento) showToast(`${f.etichetta} ${i + 1} di ${progetti.length}…`);
+      try {
+        const doc = await documentoDi(p, formato);
+        const voce = { nome: `${cartella}/${n}_${nomeFileLavoro(p, f.est)}`, data: quando };
+        if (f.tipo === 'binario') voce.byte = new Uint8Array(doc); else voce.testo = doc;
+        voci.push(voce);
+      } catch (e) {
+        console.error(`[zip] ${f.etichetta} non generato per`, p.id, e);
+        falliti.push((p.meta && p.meta.titolo) || p.id);
+      }
+    }
 
     righeIndice.push(`| ${n} | ${quando.toISOString().slice(0, 10)} | ${(p.meta.lingua === 'greco' ? 'greco' : 'latino')} `
       + `| ${(p.meta.titolo || 'senza titolo').replace(/\|/g, '/')} | ${(p.meta.autore || '—').replace(/\|/g, '/')} `
       + `| ${statusLabel(projectStatus(p))} | ${projectCompletion(p)}% |`);
-  });
+  }
 
   /* Il backup unico: è il file che rimette in piedi TUTTO l'archivio. */
   const backup = { app: 'poetrify-translator', kind: 'backup', schemaVersion: SCHEMA_VERSION,
@@ -12938,23 +13222,35 @@ function esportaArchivioZip(soloLingua) {
   voci.push({ nome: `${cartella}/poetrify-backup_${oggi}.json`, testo: JSON.stringify(backup, null, 2), data: adesso });
 
   const indice = `# Archivio Poetrify · ${oggi}\n\n`
-    + `${progetti.length} lavor${progetti.length === 1 ? 'o' : 'i'}, dal più recente al più antico.\n\n`
+    + `${progetti.length} lavor${progetti.length === 1 ? 'o' : 'i'}, dal più recente al più antico.\n`
+    + `Formato dei documenti: **${f.etichetta}**${f.est ? ` (.${f.est})` : ' — nessuno: solo backup'}.\n\n`
     + `| # | data | lingua | titolo | autore | stato | compl. |\n|---|---|---|---|---|---|---|\n`
     + righeIndice.join('\n')
+    + (falliti.length ? `\n\n> ⚠ Non è stato possibile generare il documento ${f.etichetta} per: `
+        + falliti.join(', ') + `. Il rispettivo file .json è comunque presente e integro.\n` : '')
     + `\n\n## Come sono fatti i nomi\n\n`
     + '`<numero>_<data>_<LINGUA>_<autore>_<opera>_<stato>.<estensione>`\n\n'
     + `Il numero segue l'ordine cronologico decrescente; la data (AAAA-MM-GG) è quella di consegna, `
     + `o dell'ultima modifica se il lavoro non è stato chiuso.\n\n`
     + `## Che cosa farne\n\n`
-    + `- I file **.json** si rileggono in Poetrify: *Esporta → Importa un backup*. Ognuno contiene un solo brano.\n`
-    + `- Il file **poetrify-backup_${oggi}.json** contiene l'archivio intero: è quello da usare per rimettere in piedi tutto.\n`
-    + `- I file **.md** sono per leggere e consegnare: non si rileggono in Poetrify.\n`;
+    + `### Per RIPRENDERE il lavoro (anche su un altro dispositivo)\n\n`
+    + `1. Apri Poetrify → **Esporta** → **Importa un backup**.\n`
+    + `2. Scegli **poetrify-backup_${oggi}.json**: rimette in piedi l'intero archivio.\n`
+    + `   Prima di applicare vedrai che cosa entra, e potrai annullare subito dopo.\n`
+    + `3. Per un solo brano, scegli invece il suo file numerato **.json**.\n\n`
+    + `### Per LEGGERE, stampare o consegnare\n\n`
+    + (f.est
+        ? `I file **.${f.est}** (${f.etichetta}): ${f.nota}. **Non** si rileggono in Poetrify.\n`
+        : `Questo archivio contiene solo i file di ripristino.\n`)
+    + `\n> I file .json sono l'originale: conservali anche se non ti servono oggi.\n`;
   voci.unshift({ nome: `${cartella}/00_INDICE.md`, testo: indice, data: adesso });
 
   const blob = creaZip(voci);
   downloadBlobDirect(blob, `${cartella}.zip`);
   registraBackupFatto();
-  showToast(`Archivio esportato · ${progetti.length} lavor${progetti.length === 1 ? 'o' : 'i'} in ${voci.length} file`);
+  showToast(falliti.length
+    ? `Archivio esportato · ${falliti.length} document${falliti.length === 1 ? 'o' : 'i'} ${f.etichetta} non riuscit${falliti.length === 1 ? 'o' : 'i'} (i .json ci sono tutti)`
+    : `Archivio esportato · ${progetti.length} lavor${progetti.length === 1 ? 'o' : 'i'} in ${voci.length} file`);
 }
 
 /* ── BADGE «ultimo backup» ──────────────────────────────────────────────────
@@ -30079,8 +30375,8 @@ function renderArchiveHtml() {
         <option value="completion-desc" ${archiveFilters.sort === 'completion-desc' ? 'selected' : ''}>Completamento (alto→basso)</option>
         <option value="completion-asc"  ${archiveFilters.sort === 'completion-asc'  ? 'selected' : ''}>Completamento (basso→alto)</option>
       </select>
-      <button class="btn btn-brand-soft btn-sm" onclick="esportaArchivioZip()"
-              title="Scarica una cartella .zip con tutti i lavori, dal più recente al più antico: un .json che si rilegge e un .md che si legge per ciascuno, più l'indice e il backup completo">⤓ Esporta tutto (.zip)</button>
+      <button class="btn btn-brand-soft btn-sm" onclick="apriSceltaFormatoArchivio()"
+              title="Scarica una cartella .zip con tutti i lavori, dal più recente al più antico: scegli il formato dei documenti (Markdown, Word, PDF, SVG, PNG); i file .json che si rileggono in Poetrify ci sono sempre">⤓ Esporta tutto (.zip)</button>
     </div>`;
 
   const stats = renderBranchStats(totals, 'cards');
@@ -39505,9 +39801,18 @@ function escapeMd(text) { if (!text) return ''; return String(text).replace(/\|/
 
 function exportWord() {
   if (!validateExport()) return;
-  const html = buildPrintHtml(true);
+  const blob = new Blob(['﻿', docWordDi(buildExportData())], { type: 'application/msword' });
+  downloadBlobDirect(blob, fileName('doc'));
+  closeModal('modal-export');
+  showToast('Documento Word esportato');
+}
+
+/* Documento Word (HTML in veste .doc) di UN progetto qualsiasi: serve sia al
+   pulsante del brano corrente sia all'esportazione dell'intero archivio. */
+function docWordDi(dati) {
+  const html = buildPrintHtml(true, dati);
   const fullHtml = `<!DOCTYPE html><html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
-<head><meta charset="utf-8"><title>${escapeHtml(state.meta.titolo || 'Poetrify')}</title>
+<head><meta charset="utf-8"><title>${escapeHtml((dati.meta && dati.meta.titolo) || 'Poetrify')}</title>
 <style>
 @page{size:A4;margin:2cm;}
 body{font-family:'Source Serif 4',Georgia,'Times New Roman',serif;line-height:1.6;color:#1a1f24;font-size:11.5pt;}
@@ -39529,14 +39834,13 @@ hr{border:none;border-top:1pt solid #d5d2cb;margin:14pt 0;}
 ul,ol{margin:6pt 0;padding-left:18pt;}
 li{margin-bottom:3pt;}
 </style></head><body>${html}</body></html>`;
-  const blob = new Blob(['﻿', fullHtml], { type: 'application/msword' });
-  downloadBlobDirect(blob, fileName('doc'));
-  closeModal('modal-export');
-  showToast('Documento Word esportato');
+  return fullHtml;
 }
 
-function buildPrintHtml(includeTokenGrid) {
-  const d = buildExportData();
+/* `dati` opzionale: se manca si usa il brano corrente. Serve per esportare
+   QUALSIASI progetto dell'archivio, non solo quello aperto. */
+function buildPrintHtml(includeTokenGrid, dati) {
+  const d = dati || buildExportData();
   const sigla = d.meta.lingua === 'greco' ? 'GR' : 'LA';
   const completion = projectCompletion(d);
   const status = statusLabel(projectStatus(d));
@@ -39671,7 +39975,9 @@ function loadScript(src) {
   });
 }
 
-async function renderExportToCanvas() {
+/* `dati` opzionale: senza, si rasterizza il brano corrente. Con, un progetto
+   qualsiasi dell'archivio — senza toccare lo stato globale. */
+async function renderExportToCanvas(dati) {
   // Crea un container offscreen ben dimensionato e attende che le immagini/font siano pronti
   const target = document.getElementById('export-render-target');
   target.style.cssText = 'position:fixed;top:0;left:-10000px;width:840px;background:#ffffff;';
@@ -39693,7 +39999,7 @@ async function renderExportToCanvas() {
     .summary-print tbody tr:nth-child(even) td { background: #fafaf7; }
     .summary-print hr { border: none; border-top: 1pt solid #d5d2cb; margin: 16pt 0; }
   </style>`;
-  target.innerHTML = overrideStyles + `<div class="summary-print" style="width:840px;background:#ffffff;padding:52px 60px;">${buildPrintHtml(true)}</div>`;
+  target.innerHTML = overrideStyles + `<div class="summary-print" style="width:840px;background:#ffffff;padding:52px 60px;">${buildPrintHtml(true, dati)}</div>`;
   // Forza reflow + attesa font (best-effort)
   if (document.fonts && document.fonts.ready) { try { await document.fonts.ready; } catch(e){} }
   await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
