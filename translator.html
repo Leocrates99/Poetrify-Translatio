@@ -12963,43 +12963,33 @@ function esportaArchivioZip(soloLingua) {
    chiaramente col passare dei giorni (audit docs/DATI-AUDIT.md). */
 const ULTIMO_BACKUP_KEY = 'poetrify-ultimo-backup';
 
+/* Il conteggio dei giorni e la scala d'urgenza vivono in
+   shared/poetrify-quarantena.js: il dizionario usa gli stessi, così le due
+   superfici non finiscono per contare in modi diversi. Qui resta solo ciò che
+   è proprio del translator: quale chiave, e che cosa conta come «lavoro». */
 function registraBackupFatto() {
-  try { localStorage.setItem(ULTIMO_BACKUP_KEY, new Date().toISOString()); } catch (e) {}
+  if (window.PoetrifyQuarantena) PoetrifyQuarantena.registraBackup(ULTIMO_BACKUP_KEY);
+  else { try { localStorage.setItem(ULTIMO_BACKUP_KEY, new Date().toISOString()); } catch (e) {} }
   aggiornaBadgeBackup();
 }
 
 function statoBackup() {
-  let quando = null;
-  try { quando = localStorage.getItem(ULTIMO_BACKUP_KEY); } catch (e) {}
   const progetti = loadAllProjects().length;
-  if (!quando) return { mai: true, giorni: null, progetti };
-  const t = Date.parse(quando);
-  if (isNaN(t)) return { mai: true, giorni: null, progetti };
-  const giorni = Math.floor((Date.now() - t) / 86400000);
-  return { mai: false, giorni: giorni < 0 ? 0 : giorni, quando, progetti };
-}
-
-/* Il testo cresce di urgenza con i giorni, ma non grida mai senza motivo:
-   se non c'è nulla da perdere, non dice nulla. */
-function testoStatoBackup() {
-  const s = statoBackup();
-  if (!s.progetti) return null;                       // niente lavoro, niente allarme
-  if (s.mai) return { livello: 'attenzione', testo: 'Non hai mai salvato un backup' };
-  if (s.giorni === 0) return { livello: 'ok', testo: 'Backup di oggi' };
-  if (s.giorni === 1) return { livello: 'ok', testo: 'Ultimo backup: ieri' };
-  if (s.giorni <= 6) return { livello: 'ok', testo: `Ultimo backup: ${s.giorni} giorni fa` };
-  if (s.giorni <= 29) return { livello: 'attenzione', testo: `Ultimo backup: ${s.giorni} giorni fa` };
-  return { livello: 'urgente', testo: `Ultimo backup: più di un mese fa` };
+  const s = window.PoetrifyQuarantena
+    ? PoetrifyQuarantena.statoBackup(ULTIMO_BACKUP_KEY)
+    : { mai: true, giorni: null, quando: null };
+  return Object.assign({}, s, { progetti });
 }
 
 function aggiornaBadgeBackup() {
   const b = document.getElementById('badge-backup');
   if (!b) return;
-  const st = testoStatoBackup();
-  if (!st || st.livello === 'ok') { b.hidden = true; b.textContent = ''; return; }
+  const Q = window.PoetrifyQuarantena;
+  const avviso = Q ? Q.avvisoBackup(ULTIMO_BACKUP_KEY, loadAllProjects().length > 0) : null;
+  if (!avviso) { b.hidden = true; b.textContent = ''; return; }
   b.hidden = false;
-  b.textContent = st.testo;
-  b.className = 'badge-backup badge-backup-' + st.livello;
+  b.textContent = avviso.testo;
+  b.className = 'badge-backup badge-backup-' + avviso.livello;
   b.title = 'Esporta un backup per non perdere il lavoro: apri «Esporta» → «Backup · tutti i brani»';
 }
 function exportAllProjects() {
@@ -39251,13 +39241,9 @@ function openExportModal() {
   /* Nel modale lo stato del backup si dice sempre — anche quando è recente —
      perché è qui che si decide se salvarlo. */
   const riga = document.getElementById('export-stato-backup');
-  if (riga) {
-    const s = statoBackup();
-    riga.textContent = s.mai
-      ? 'Non hai mai salvato un backup.'
-      : (s.giorni === 0 ? 'Ultimo backup: oggi.'
-        : s.giorni === 1 ? 'Ultimo backup: ieri.'
-        : `Ultimo backup: ${s.giorni} giorni fa.`);
+  if (riga && window.PoetrifyQuarantena) {
+    const s = PoetrifyQuarantena.statoBackup(ULTIMO_BACKUP_KEY);
+    riga.textContent = PoetrifyQuarantena.fraseBackup(ULTIMO_BACKUP_KEY);
     riga.className = 'export-stato-backup' + (s.mai || s.giorni > 6 ? ' is-vecchio' : '');
   }
   document.getElementById('modal-export').classList.add('open');

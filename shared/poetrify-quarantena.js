@@ -217,6 +217,56 @@
     if (el) el.remove();
   }
 
+  /* ── FRESCHEZZA DEL BACKUP · «da quanto non salvi?» ────────────────────────
+     Nessuno si ricorda di esportare finché non è troppo tardi. Invece di
+     chiederlo, si dice da quanto tempo non lo si fa — e lo si dice sempre più
+     chiaramente col passare dei giorni. Sta qui, non nelle singole pagine,
+     perché la regola dev'essere UNA per tutto Poetrify: il dizionario e il
+     translator devono contare i giorni allo stesso modo. */
+
+  /** Segna «backup fatto adesso» per la chiave data. */
+  function registraBackup(chiave) {
+    try { localStorage.setItem(chiave, new Date().toISOString()); } catch (e) {}
+  }
+
+  /** @returns {{mai:boolean, giorni:number|null, quando:string|null}} */
+  function statoBackup(chiave) {
+    var quando = null;
+    try { quando = localStorage.getItem(chiave); } catch (e) {}
+    if (!quando) return { mai: true, giorni: null, quando: null };
+    var t = Date.parse(quando);
+    if (isNaN(t)) return { mai: true, giorni: null, quando: null };
+    var g = Math.floor((Date.now() - t) / 86400000);
+    return { mai: false, giorni: g < 0 ? 0 : g, quando: quando };
+  }
+
+  /**
+   * L'avviso da mostrare, o null se non c'è ragione di dire nulla.
+   * Tace se non c'è nulla da perdere e se il backup è recente: un avviso che
+   * compare a vuoto insegna a ignorarlo, e la volta che conta non lo guarda più
+   * nessuno.
+   * @param {string} chiave      chiave della data di backup
+   * @param {boolean} haLavoro   c'è qualcosa che si può perdere?
+   * @returns {{livello:'attenzione'|'urgente', testo:string}|null}
+   */
+  function avvisoBackup(chiave, haLavoro) {
+    if (!haLavoro) return null;
+    var s = statoBackup(chiave);
+    if (s.mai) return { livello: 'attenzione', testo: 'Non hai mai salvato un backup' };
+    if (s.giorni <= 6) return null;                       // recente: silenzio
+    if (s.giorni <= 29) return { livello: 'attenzione', testo: 'Ultimo backup: ' + s.giorni + ' giorni fa' };
+    return { livello: 'urgente', testo: 'Ultimo backup: più di un mese fa' };
+  }
+
+  /** Frase distesa per i punti in cui lo stato si dice sempre (es. un modale). */
+  function fraseBackup(chiave) {
+    var s = statoBackup(chiave);
+    if (s.mai) return 'Non hai mai salvato un backup.';
+    if (s.giorni === 0) return 'Ultimo backup: oggi.';
+    if (s.giorni === 1) return 'Ultimo backup: ieri.';
+    return 'Ultimo backup: ' + s.giorni + ' giorni fa.';
+  }
+
   /**
    * Scrive un valore come JSON. Restituisce true/false: l'esito NON va ignorato.
    * @returns {boolean} false se la scrittura è fallita (memoria piena)
@@ -306,6 +356,10 @@
     scarta: scarta,
     avvisaMemoriaPiena: avvisaMemoriaPiena,
     nascondiAvvisoMemoria: nascondiAvvisoMemoria,
+    registraBackup: registraBackup,
+    statoBackup: statoBackup,
+    avvisoBackup: avvisoBackup,
+    fraseBackup: fraseBackup,
     PREFISSO: PREFISSO,
   };
 })();

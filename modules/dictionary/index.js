@@ -72,6 +72,7 @@ const POS_FILTER_KEY = 'poetrify-dict-pos-filter';
  * completa, default) | 'attestato' (forme attestate nel corpus) */
 const PARADIGM_MODE_KEY = 'poetrify-dict-paradigm-mode';
 const SEGMORPH_KEY = 'poetrify-dict-segmorph';   // vista morfologica (colori+trattini) on/off
+const BACKUP_LESSICO_KEY = 'poetrify-lessico-ultimo-backup';   // data dell'ultimo backup del lessico
 const AUTOCOMPLETE_LIMIT = 8;
 const BACK_STACK_LIMIT = 30;
 /* [C] profondità massima del drill-down alfabetico: 1ª → +2ª → +3ª → +4ª lettera */
@@ -1920,6 +1921,19 @@ export class DictionaryApp {
     setTimeout(() => URL.revokeObjectURL(url), 300);
   }
 
+  /* Badge «da quanto non salvi il lessico». Stessa regola del translator —
+     la logica sta una volta sola in shared/poetrify-quarantena.js, così le due
+     superfici contano i giorni allo stesso modo. Tace se non c'è nulla da
+     perdere o se il backup è recente. */
+  _badgeBackupHtml(quantiLemmi) {
+    const Q = typeof window !== 'undefined' && window.PoetrifyQuarantena;
+    if (!Q || !Q.avvisoBackup) return '';
+    const a = Q.avvisoBackup(BACKUP_LESSICO_KEY, quantiLemmi > 0);
+    if (!a) return '';
+    return `<button type="button" class="vocab-badge-backup vocab-badge-${a.livello}"
+      title="Salva un backup per non perdere il lessico">⚠ ${escapeHtml(a.testo)}</button>`;
+  }
+
   /* Esito di un'operazione sul lessico, mostrato nel pannello: nessun
      fallimento muto (docs/DATI-AUDIT.md, regola 3). */
   _avvisoVocab(testo, isErrore) {
@@ -1970,6 +1984,7 @@ export class DictionaryApp {
         <button class="vocab-clear" type="button">🗑 Svuota</button>
       </div>
       ${Vocab.hasSnapshot() ? '<div class="vocab-undo-row"><button class="vocab-undo" type="button">↶ Annulla l\'ultima importazione</button></div>' : ''}
+      ${this._badgeBackupHtml(counts.total)}
     </div>`;
     this.$vocabPanel.querySelectorAll('.vocab-item .vocab-lemma').forEach(span => {
       span.addEventListener('click', () => {
@@ -2000,6 +2015,8 @@ export class DictionaryApp {
       this._scaricaFile(JSON.stringify(payload, null, 2),
         `poetrify-lessico_${new Date().toISOString().slice(0, 10)}.json`,
         'application/json;charset=utf-8');
+      if (window.PoetrifyQuarantena) PoetrifyQuarantena.registraBackup(BACKUP_LESSICO_KEY);
+      this._renderVocabPanel();          // il badge sparisce: il conto riparte
       this._avvisoVocab(`Backup salvato · ${payload.count} lemm${payload.count === 1 ? 'a' : 'i'}`);
     });
 

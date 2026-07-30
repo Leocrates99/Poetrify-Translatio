@@ -1791,6 +1791,29 @@ body.clp-flag-on .mc-suffix { color: #2f855a; }                                /
 }
 .vocab-avviso.is-errore { border-color: var(--warning); color: var(--warning-ink, var(--warning)); }
 
+/* Badge «da quanto non salvi il lessico»: stesso registro del translator.
+   Compare solo quando c'è del lessico da perdere e il tempo è troppo. */
+.vocab-badge-backup {
+  width: 100%;
+  margin-top: 8px;
+  padding: 7px 10px;
+  font-family: var(--font-ui);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.35;
+  text-align: left;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--warning, #b9791f);
+  background: color-mix(in srgb, var(--warning, #b9791f) 10%, transparent);
+  color: var(--warning-ink, #8a5a15);
+  cursor: default;
+}
+.vocab-badge-urgente {
+  border-color: var(--danger, #c53030);
+  background: color-mix(in srgb, var(--danger, #c53030) 12%, transparent);
+  color: var(--danger-ink, #9b2c2c);
+}
+
 /* ─── Footer ────────────────────────────────────────────────────────────── */
 footer {
   text-align: center;
