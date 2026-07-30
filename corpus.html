@@ -487,11 +487,21 @@ function buildActs() {
   return acts;
 }
 
-// ── Cuciture verso gli altri rami (URL-seam; il lato ricevente le leggerà) ──
+// ── Cuciture verso gli altri rami (URL-seam) ───────────────────────────────
+/* Il passo viaggia COMPLETO della sua provenienza: il solo locus non basterebbe
+   al Translator per riempire autore e opera, che qui abbiamo già in memoria.
+   `tipo` distingue prosa e versi, così di là il brano nasce impaginato giusto. */
 function toTranslator(doc, loc, text) {
-  const src = `${doc.source.urn}:${loc}`;
-  const url = `translator.html?lang=${doc.lang}&src=${encodeURIComponent(src)}&text=${encodeURIComponent(text)}`;
-  window.open(url, '_blank');
+  const q = new URLSearchParams({
+    lang:   doc.lang,
+    src:    `${doc.source.urn}:${loc}`,
+    text:   text,
+    autore: doc.author || '',
+    opera:  doc.title || '',
+    loc:    loc || '',
+    tipo:   doc.kind === 'versi' ? 'poesia' : 'prosa',
+  });
+  window.open('translator.html?' + q.toString(), '_blank');
 }
 function toDictionary(word, lang) {
   const clean = word.replace(/[.,;:···!?'"«»()\[\]—–]/g, '').replace(/[·;]/g, '').trim();

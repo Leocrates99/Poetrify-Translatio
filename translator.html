@@ -36228,6 +36228,47 @@ function openLanguageBranch(lang) {
   showToast(`Branch ${ln}: scegli una versione da riprendere o creane una nuova`);
 }
 
+/* ════════════════════════════════════════════════════════════════════════
+   CUCITURA DAL CORPUS — il passo scelto nella biblioteca diventa un brano
+   ────────────────────────────────────────────────────────────────────────
+   Il Corpus apre `translator.html?lang=&src=&text=&autore=&opera=&loc=&tipo=`.
+   Prima leggevamo solo `lang`: testo e provenienza finivano nel nulla e il
+   pulsante «→ traduci» prometteva senza mantenere. Qui il passo diventa un
+   progetto vero, già scomposto in frasi, e si atterra sulla scomposizione. */
+function importPassoDalCorpus(lang, testo, p) {
+  const src    = (p.get('src')    || '').trim();
+  const autore = (p.get('autore') || '').trim();
+  const opera  = (p.get('opera')  || '').trim();
+  /* Il locus arriva esplicito; se manca (link della versione precedente) si
+     ricava dalla coda dell'URN CTS, che è appunto `urn:cts:…:opera:1.1.1`. */
+  let loc = (p.get('loc') || '').trim();
+  if (!loc && src) { const seg = src.split(':'); if (seg.length > 4) loc = seg[seg.length - 1]; }
+
+  state = defaultState();
+  state.meta.lingua = lang;
+  state.meta.testoOriginale = testo;
+  state.meta.autore = autore;
+  state.meta.opera = opera;
+  /* Titolo parlante: è ciò che si leggerà nell'archivio, mai «Senza titolo». */
+  state.meta.titolo = [opera, loc].filter(Boolean).join(' ') || autore || 'Passo dal corpus';
+  if (src) state.meta.fonteUrn = src;                  // provenienza citabile (locus CTS)
+  if ((p.get('tipo') || '') === 'poesia') state.meta.tipoTesto = 'poesia';
+
+  state.sentences = splitTextIntoSentences(testo).map(makeSentence);
+  maybeAutoClosedClass();          // classi chiuse riconosciute subito, come in confirmSetup
+  archiveFilters.lingua = lang;    // il ramo resta quello del passo importato
+  state.currentStep = 2;           // dritti alla scomposizione: il testo c'è già
+  persistCurrent();
+  renderAll();
+
+  /* L'URL si ripulisce: un ricaricamento non deve reimportare lo stesso passo
+     creando un doppione nell'archivio. */
+  try { history.replaceState({}, '', 'translator.html?lang=' + (lang === 'greco' ? 'grc' : 'la')); } catch (e) {}
+
+  const dove = [autore, state.meta.titolo].filter(Boolean).join(' · ');
+  showToast('Passo importato dal Corpus' + (dove ? ': ' + dove : '') + ' — ' + state.sentences.length + ' frasi');
+}
+
 /* Avvia un nuovo brano nella lingua indicata (dal branch d'archivio). */
 function newProjectInLang(lang) {
   pendingNewProjectLang = lang;
@@ -40665,9 +40706,27 @@ document.addEventListener('DOMContentLoaded', () => {
   // Nessun gate di profilo: l'utente entra dritto al servizio completo. La lingua
   // di lavoro arriva dalla pagina-lingua (?lang=la|grc) oppure dal gate di sessione.
   (function _enterBranchFromUrl() {
-    var ul, l;
-    try { ul = (new URLSearchParams(location.search).get('lang') || '').toLowerCase(); } catch (e) { ul = ''; }
+    var p = null, ul = '', txt = '', l;
+    try {
+      p = new URLSearchParams(location.search);
+      ul = (p.get('lang') || '').toLowerCase();
+      txt = p.get('text') || '';
+    } catch (e) { p = null; }
     l = (ul === 'grc' || ul === 'greco') ? 'greco' : (ul === 'la' || ul === 'latino') ? 'latino' : null;
+
+    /* CUCITURA DAL CORPUS · ha la precedenza sul gate: se arriva un testo, la
+       lingua la dichiara il passo stesso e non c'è nulla da chiedere. */
+    if (p && txt.trim()) {
+      try {
+        importPassoDalCorpus(l || 'latino', txt, p);
+        try { sessionStorage.setItem(LANGGATE_SESSION_KEY, l || 'latino'); } catch (e) {}
+        var mg = document.getElementById('langgate'); if (mg) mg.hidden = true;
+        return;
+      } catch (e) {
+        console.warn('[corpus] import del passo fallito, proseguo con ingresso normale:', e);
+      }
+    }
+
     if (!l) { setTimeout(maybeShowLanguageGate, 300); return; }   // nessun ?lang=: gate normale
     // Cucitura dalla pagina-lingua: entra dritto nel ramo (archivio del branch —
     // riprendi una versione o creane una nuova) e salta il gate di sessione. La
