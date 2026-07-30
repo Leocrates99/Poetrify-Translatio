@@ -1908,6 +1908,34 @@ export class DictionaryApp {
   /* ════════════════════════════════════════════════════════════════════
      LESSICO PERSONALE · invariato
      ════════════════════════════════════════════════════════════════════ */
+  /* Scarica un contenuto come file. Unico punto di download del dizionario:
+     prima la sequenza Blob→URL→<a>→revoke era ripetuta in linea. */
+  _scaricaFile(contenuto, nomeFile, mime) {
+    const blob = new Blob([contenuto], { type: mime });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = nomeFile;
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 300);
+  }
+
+  /* Esito di un'operazione sul lessico, mostrato nel pannello: nessun
+     fallimento muto (docs/DATI-AUDIT.md, regola 3). */
+  _avvisoVocab(testo, isErrore) {
+    if (!this.$vocabPanel) return;
+    let box = this.$vocabPanel.querySelector('.vocab-avviso');
+    if (!box) {
+      box = document.createElement('div');
+      box.className = 'vocab-avviso';
+      const wrap = this.$vocabPanel.querySelector('.vocab-list-wrap') || this.$vocabPanel;
+      wrap.appendChild(box);
+    }
+    box.textContent = testo;
+    box.classList.toggle('is-errore', !!isErrore);
+    box.setAttribute('role', isErrore ? 'alert' : 'status');
+  }
+
   _renderVocabPanel() {
     if (!this.$vocabPanel) return;
     const counts = Vocab.countEntries();
@@ -1936,9 +1964,12 @@ export class DictionaryApp {
       <div class="vocab-count">${entries.length} lemm${entries.length === 1 ? 'a' : 'i'} · totale ${counts.total}</div>
       <ul class="vocab-list">${itemsHtml}</ul>
       <div class="vocab-actions">
-        <button class="vocab-export" type="button">⤓ Esporta TSV</button>
+        <button class="vocab-backup" type="button" title="Salva un file che Poetrify sa rileggere: serve a non perdere il lessico e a riprenderlo su un altro dispositivo">💾 Backup</button>
+        <button class="vocab-import" type="button" title="Rileggi un backup: i lemmi già presenti non vengono cancellati, ma arricchiti">📥 Importa</button>
+        <button class="vocab-export" type="button" title="Tabella per foglio di calcolo: NON si rilegge in Poetrify">⤓ TSV</button>
         <button class="vocab-clear" type="button">🗑 Svuota</button>
       </div>
+      ${Vocab.hasSnapshot() ? '<div class="vocab-undo-row"><button class="vocab-undo" type="button">↶ Annulla l\'ultima importazione</button></div>' : ''}
     </div>`;
     this.$vocabPanel.querySelectorAll('.vocab-item .vocab-lemma').forEach(span => {
       span.addEventListener('click', () => {
@@ -1961,16 +1992,64 @@ export class DictionaryApp {
         if (this.currentHit && this.currentHit.lemma === btn.dataset.lemma) this.render();
       });
     });
+    /* BACKUP · file versionato che Poetrify sa rileggere (docs/DATI-AUDIT.md §2.1).
+       È la differenza fra «ho una copia» e «ho una copia che serve a qualcosa». */
+    const backupBtn = this.$vocabPanel.querySelector('.vocab-backup');
+    if (backupBtn) backupBtn.addEventListener('click', () => {
+      const payload = Vocab.exportBackup();
+      this._scaricaFile(JSON.stringify(payload, null, 2),
+        `poetrify-lessico_${new Date().toISOString().slice(0, 10)}.json`,
+        'application/json;charset=utf-8');
+      this._avvisoVocab(`Backup salvato · ${payload.count} lemm${payload.count === 1 ? 'a' : 'i'}`);
+    });
+
+    /* IMPORT · non distruttivo: aggiunge e arricchisce, mai cancella. */
+    const importBtn = this.$vocabPanel.querySelector('.vocab-import');
+    if (importBtn) importBtn.addEventListener('click', () => {
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'application/json,.json';
+      input.onchange = () => {
+        const file = input.files && input.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+          let payload;
+          try { payload = JSON.parse(reader.result); }
+          catch (e) { this._avvisoVocab('File non leggibile: non è un JSON valido.', true); return; }
+          const r = Vocab.importBackup(payload);
+          if (!r.ok) { this._avvisoVocab(r.motivo || 'Importazione non riuscita.', true); return; }
+          const parti = [];
+          if (r.aggiunti) parti.push(`${r.aggiunti} nuovo/i`);
+          if (r.arricchiti) parti.push(`${r.arricchiti} arricchito/i`);
+          if (r.invalidi) parti.push(`${r.invalidi} scartato/i`);
+          if (r.oltreIlTetto) parti.push(`${r.oltreIlTetto} oltre il tetto di ${1000}`);
+          this._avvisoVocab(parti.length ? `Importati: ${parti.join(' · ')}` : 'Nessuna voce da importare.');
+          this._renderVocabPanel();
+          this.render();
+        };
+        reader.readAsText(file);
+      };
+      input.click();
+    });
+
+    /* ANNULLA · l'importazione è reversibile finché resta l'istantanea. */
+    const undoBtn = this.$vocabPanel.querySelector('.vocab-undo');
+    if (undoBtn) undoBtn.addEventListener('click', () => {
+      if (Vocab.undoImport()) {
+        this._avvisoVocab('Importazione annullata: lessico riportato com\'era.');
+        this._renderVocabPanel();
+        this.render();
+      } else {
+        this._avvisoVocab('Non è stato possibile annullare.', true);
+      }
+    });
+
     const exportBtn = this.$vocabPanel.querySelector('.vocab-export');
     if (exportBtn) exportBtn.addEventListener('click', () => {
-      const tsv = Vocab.exportAsTsv();
-      const blob = new Blob([tsv], { type: 'text/tab-separated-values;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = `poetrify-lessico_${new Date().toISOString().slice(0,10)}.tsv`;
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      setTimeout(() => URL.revokeObjectURL(url), 300);
+      this._scaricaFile(Vocab.exportAsTsv(),
+        `poetrify-lessico_${new Date().toISOString().slice(0, 10)}.tsv`,
+        'text/tab-separated-values;charset=utf-8');
     });
     const clearBtn = this.$vocabPanel.querySelector('.vocab-clear');
     if (clearBtn) clearBtn.addEventListener('click', () => {

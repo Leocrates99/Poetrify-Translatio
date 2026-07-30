@@ -1757,7 +1757,7 @@ body.clp-flag-on .mc-suffix { color: #2f855a; }                                /
 }
 .vocab-remove:hover { background: var(--danger); color: var(--paper); border-color: var(--danger); }
 .vocab-actions { display: flex; gap: 6px; flex-wrap: wrap; }
-.vocab-export, .vocab-clear {
+.vocab-export, .vocab-clear, .vocab-backup, .vocab-import, .vocab-undo {
   flex: 1;
   appearance: none;
   padding: 6px 10px;
@@ -1772,6 +1772,24 @@ body.clp-flag-on .mc-suffix { color: #2f855a; }                                /
 }
 .vocab-export:hover { background: var(--primary); color: var(--paper); border-color: var(--primary); }
 .vocab-clear:hover { background: var(--danger); color: var(--paper); border-color: var(--danger); }
+/* Backup e importazione sono le azioni che SALVANO il lavoro: hanno il rilievo
+   dell'accento di lingua, mentre il TSV (che non si rilegge) resta neutro. */
+.vocab-backup, .vocab-import { flex: 1 1 46%; border-color: var(--dacc, var(--primary)); color: var(--dacc, var(--primary)); }
+.vocab-backup:hover, .vocab-import:hover { background: var(--dacc, var(--primary)); color: var(--paper); }
+.vocab-undo-row { margin-top: 6px; }
+.vocab-undo { width: 100%; border-style: dashed; color: var(--ink-soft); }
+.vocab-undo:hover { border-style: solid; background: var(--cream); color: var(--ink); }
+.vocab-avviso {
+  margin-top: 8px;
+  padding: 7px 9px;
+  font-size: 11.5px;
+  line-height: 1.45;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--rule);
+  background: var(--cream);
+  color: var(--ink);
+}
+.vocab-avviso.is-errore { border-color: var(--warning); color: var(--warning-ink, var(--warning)); }
 
 /* ─── Footer ────────────────────────────────────────────────────────────── */
 footer {
