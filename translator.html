@@ -4132,6 +4132,87 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: var(--font-c
 .phase-chip[data-state="progress"] { color: var(--warning); }
 
 /* ── PANORAMICA (Π) · ripresa rapida ─────────────────────────────────────── */
+/* ── AVVIO DI UN BRANO · i tre passi ────────────────────────────────────────
+   Vive nell'area dell'editor: è una vista, non un modale — la scelta si prende
+   con calma e si può tornare indietro. */
+.avvio-corpo { max-width: 720px; }
+.avvio-nastro { display: flex; align-items: center; flex-wrap: wrap; margin: 4px 0 22px; }
+.avvio-passo { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-ui); font-size: 12.5px; color: var(--sepia); }
+.avvio-num {
+  width: 23px; height: 23px; border-radius: 999px; border: 1.5px solid var(--rule);
+  display: inline-flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700;
+}
+.avvio-passo.on { color: var(--lang-accent); font-weight: 700; }
+.avvio-passo.on .avvio-num { background: var(--lang-accent); color: var(--on-primary); border-color: var(--lang-accent); }
+.avvio-passo.fatto .avvio-num { border-color: var(--success); color: var(--success); }
+.avvio-sep { flex: 1; height: 1px; background: var(--rule-soft); margin: 0 12px; min-width: 16px; }
+.avvio-domanda { font-family: var(--font-display); font-size: 25px; font-weight: 700; color: var(--ink); margin: 0; }
+.avvio-sotto { font-family: var(--font-ui); font-size: 13px; color: var(--sepia); margin: 4px 0 18px; }
+
+.avvio-origini { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 700px) { .avvio-origini { grid-template-columns: 1fr; } }
+.avvio-origine {
+  display: flex; flex-direction: column; gap: 5px; text-align: left;
+  padding: 18px; background: var(--paper);
+  border: 1.5px solid var(--rule-soft); border-radius: var(--radius-lg);
+  cursor: pointer; transition: all var(--transition-base);
+}
+.avvio-origine:hover { border-color: var(--lang-accent); transform: translateY(-1px); }
+.avvio-origine.sel { border-color: var(--lang-accent); box-shadow: 0 0 0 1px var(--lang-accent); background: var(--ivory); }
+.avvio-origine .ao-t { font-family: var(--font-display); font-size: 18px; font-weight: 700; color: var(--lang-accent); }
+.avvio-origine .ao-d { font-family: var(--font-ui); font-size: 12px; line-height: 1.5; color: var(--sepia); }
+
+.avvio-box { margin-top: 16px; padding: 16px 18px; background: var(--cream); border: 1px solid var(--rule-soft); border-radius: var(--radius-md); }
+.avvio-box-nota { font-family: var(--font-ui); font-size: 12px; line-height: 1.55; color: var(--sepia); margin: 0; }
+.avvio-k { display: block; font-family: var(--font-ui); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sepia); margin-bottom: 8px; }
+.avvio-campi { display: grid; gap: 10px; }
+.avvio-campi.tre { grid-template-columns: 1.2fr 1.2fr 0.8fr; }
+.avvio-campi.manuale { grid-template-columns: 2fr 1fr 1fr; }
+@media (max-width: 620px) { .avvio-campi.tre, .avvio-campi.manuale { grid-template-columns: 1fr; } }
+.avvio-campi label { display: flex; flex-direction: column; gap: 4px; font-family: var(--font-ui); font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--sepia); }
+.avvio-campi input, .avvio-campi select {
+  font-family: var(--font-ui); font-size: 13px; font-weight: 400; letter-spacing: 0; text-transform: none;
+  padding: 9px 11px; border: 1px solid var(--rule); border-radius: var(--radius-sm);
+  background: var(--paper); color: var(--ink); width: 100%;
+}
+.avvio-campi input:focus, .avvio-campi select:focus { outline: none; border-color: var(--lang-accent); }
+.avvio-nomanuali { font-family: var(--font-ui); font-size: 12.5px; line-height: 1.6; color: var(--sepia); }
+.avvio-nomanuali a { color: var(--lang-accent); font-weight: 700; }
+
+.avvio-testo {
+  width: 100%; font-family: var(--font-classical); font-size: 16px; line-height: 1.7;
+  padding: 14px 16px; border: 1.5px solid var(--rule); border-radius: var(--radius-md);
+  background: var(--paper); color: var(--ink); resize: vertical;
+}
+.avvio-testo:focus { outline: none; border-color: var(--lang-accent); }
+.avvio-sottobarra { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 10px; }
+.avvio-spia { font-family: var(--font-ui); font-size: 12.5px; margin-right: auto; }
+.avvio-spia-ok { color: var(--success); font-weight: 600; }
+.avvio-spia-vuota { color: var(--sepia); }
+.avvio-titolo-anteprima {
+  margin-top: 14px; padding: 10px 14px; border-radius: var(--radius-md);
+  background: var(--cream); border: 1px solid var(--rule-soft);
+  font-family: var(--font-ui); font-size: 12.5px; color: var(--sepia);
+}
+.avvio-titolo-anteprima strong { color: var(--ink); }
+
+.avvio-modi { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 700px) { .avvio-modi { grid-template-columns: 1fr; } }
+.avvio-modo {
+  display: flex; flex-direction: column; gap: 5px; text-align: left; padding: 18px;
+  background: var(--paper); border: 1.5px solid var(--rule-soft); border-radius: var(--radius-lg);
+  cursor: pointer; transition: all var(--transition-base);
+}
+.avvio-modo:hover { border-color: var(--lang-accent); }
+.avvio-modo.sel { border-color: var(--lang-accent); box-shadow: 0 0 0 1px var(--lang-accent); }
+.avvio-modo .am-t { font-family: var(--font-display); font-size: 19px; font-weight: 700; color: var(--ink); }
+.avvio-modo .am-d { font-family: var(--font-ui); font-size: 12px; line-height: 1.5; color: var(--sepia); }
+.am-piano { display: block; margin-top: 12px; padding-top: 11px; border-top: 1px dashed var(--rule-soft); }
+.am-piano-k { display: block; font-family: var(--font-ui); font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sepia); }
+.am-piano ol { margin: 7px 0 0 16px; font-family: var(--font-ui); font-size: 11.5px; line-height: 1.75; color: var(--ink-soft); }
+
+.avvio-azioni { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 22px; }
+
 /* ── HOME DI RAMO (Π) · due vie in testa, numeri di stato in fondo ──────────
    La Home avvia, l'Archivio cerca: da qui la differenza di veste. */
 .home-grid {
@@ -11536,34 +11617,6 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   </div>
 </div>
 
-<div class="modal-backdrop" id="modal-mode">
-  <div class="modal" style="max-width: 720px;">
-    <h3 class="modal-title">Come vuoi cominciare?</h3>
-    <p class="modal-subtitle">Scegli il flusso di lavoro per questa nuova analisi. Potrai sempre cambiare modalità in seguito dalla scheda Brano.</p>
-    <div class="mode-grid">
-      <button class="mode-option" onclick="selectMode('free')">
-        <span class="mode-icon">∞</span>
-        <span class="mode-title">Modalità libera</span>
-        <span class="mode-desc">Navighi liberamente tra le tre stanze (grammaticale, logica, sintattico-periodale) nell'ordine che preferisci. Adatta a chi conosce già il metodo.</span>
-        <span class="mode-steps">
-          <span>scomposizione</span>
-          <span>grammaticale</span>
-          <span>logica</span>
-          <span>sintattico-periodale</span>
-        </span>
-      </button>
-      <button class="mode-option" onclick="selectMode('guided')">
-        <span class="mode-icon">↻</span>
-        <span class="mode-title">Modalità guidata</span>
-        <span class="mode-desc" id="mode-desc-guided">Sei accompagnato passo dopo passo: prima l'ossatura del periodo (frasi, verbi, connettivi), poi la sintassi delle proposizioni e dei sintagmi, infine la morfologia. Ideale per chi vuole un metodo passo-passo.</span>
-        <span class="mode-steps" id="mode-steps-list"></span>
-      </button>
-    </div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeModal('modal-mode')">Annulla</button>
-    </div>
-  </div>
-</div>
 
 
 <!-- GATE LINGUA · finestra d'ingresso che àncora il settore (latino/greco) -->
@@ -25962,7 +26015,10 @@ function syncTopbar() {
   if (tbTitle) {
     // Il titolo della versione di lavoro non ha senso in archivio (D), dizionario
     // (F) o panoramica (Π): lì non si sta lavorando un brano specifico → nascondilo.
-    const noBrano = (state.currentStep === 4 || state.currentStep === 6 || state.currentStep === 7);
+    /* Anche durante l'AVVIO di un brano il titolo non ha senso: quello in
+       memoria è del brano precedente, e mostrarlo mentre se ne crea un altro
+       fa credere di starci ancora lavorando. */
+    const noBrano = (state.currentStep === 4 || state.currentStep === 6 || state.currentStep === 7 || !!avvio);
     tbTitle.style.display = noBrano ? 'none' : '';
     tbTitle.textContent = (state.meta.titolo && state.meta.titolo.trim()) ? state.meta.titolo.trim() : 'Versione senza titolo';
   }
@@ -26181,8 +26237,266 @@ function renderSidebarTabs() {
   }).join('');
 }
 
+
+/* ════════════════════════════════════════════════════════════════════════════
+   AVVIO DI UN BRANO · tre passi, nell'ordine in cui le cose accadono davvero
+   ────────────────────────────────────────────────────────────────────────────
+   Prima si apriva un modale che chiedeva «libera o guidata?» PRIMA ancora di
+   avere un testo: una scelta a scatola chiusa, seguita dall'atterraggio su un
+   modulo vuoto. Ora: (1) da quale libro viene · (2) il testo · (3) come
+   lavorare, col piano delle tappe in chiaro.
+   Lo stato è VOLATILE: il progetto nasce solo alla fine, quando si apre il
+   banco. Chi annulla non lascia brani fantasma in archivio. */
+let avvio = null;
+
+function startAvvio(lang) {
+  const l = (lang === 'greco') ? 'greco' : 'latino';
+  try { persistCurrent(); } catch (e) {}     // il lavoro in corso resta al sicuro
+  avvio = {
+    passo: 1, lingua: l, origine: null,
+    autore: '', opera: '', loc: '',
+    manualeId: '', versione: '', pagina: '',
+    testo: '', modo: 'guided'
+  };
+  renderAll();
+}
+
+function avvioAnnulla() { avvio = null; state.currentStep = 7; renderAll(); }
+function avvioVai(passo) { if (!avvio) return; avvio.passo = passo; renderAll(); }
+function avvioSetOrigine(o) { if (!avvio) return; avvio.origine = o; renderAll(); }
+function avvioCampo(k, v) { if (avvio) avvio[k] = v; }   // niente re-render: non si perde il fuoco
+
+/* Il titolo si compone da sé, ed è il modo in cui il brano sarà ritrovato:
+   «Latino · vers. 148, p. 212» oppure «Cicerone · De officiis I, 15».
+   Non deve MAI restare «Senza titolo» — è il difetto che rende l'archivio
+   inconsultabile. */
+function avvioTitolo() {
+  if (!avvio) return '';
+  if (avvio.origine === 'manuale') {
+    const lin = avvio.lingua === 'greco' ? 'Greco' : 'Latino';
+    const n = String(avvio.versione || '').trim();
+    const p = String(avvio.pagina || '').trim();
+    if (n || p) return lin + (n ? ' · vers. ' + n : '') + (p ? (n ? ', p. ' : ' · p. ') + p : '');
+  }
+  if (avvio.origine === 'autore') {
+    const a = String(avvio.autore || '').trim();
+    const o = String(avvio.opera || '').trim();
+    const lo = String(avvio.loc || '').trim();
+    const testa = [a, [o, lo].filter(Boolean).join(' ')].filter(Boolean).join(' · ');
+    if (testa) return testa;
+  }
+  const t = String(avvio.testo || '').trim();
+  if (t) {
+    const parole = t.split(/\s+/).slice(0, 6).join(' ');
+    return parole + (t.split(/\s+/).length > 6 ? '…' : '');
+  }
+  return 'Brano del ' + new Date().toLocaleDateString('it-IT');
+}
+
+function avvioFrasi() {
+  const t = String((avvio && avvio.testo) || '').trim();
+  if (!t) return 0;
+  try { return splitTextIntoSentences(t).length; } catch (e) { return 0; }
+}
+
+/* Il conteggio si aggiorna mentre si scrive, senza ridisegnare la pagina
+   (ridisegnarla farebbe perdere il fuoco a ogni battuta). */
+function avvioTestoInput(v) {
+  if (!avvio) return;
+  avvio.testo = v;
+  const spia = document.getElementById('avvio-spia');
+  if (spia) spia.innerHTML = avvioSpiaHtml();
+  const av = document.getElementById('avvio-avanti');
+  if (av) av.disabled = !String(v).trim();
+}
+function avvioSpiaHtml() {
+  const n = avvioFrasi();
+  const parole = String((avvio && avvio.testo) || '').trim().split(/\s+/).filter(Boolean).length;
+  if (!n) return '<span class="avvio-spia-vuota">Incolla il testo, o fotografa la pagina del manuale.</span>';
+  return '<span class="avvio-spia-ok">✓ ' + n + ' fras' + (n === 1 ? 'e' : 'i') + ' rilevat' + (n === 1 ? 'a' : 'e')
+       + ' · ' + parole + ' parole</span>';
+}
+
+/* L'OCR esiste già (Tesseract vendorizzato): qui lo si punta al campo del
+   wizard e alla lingua del brano che sta nascendo, non a quella del progetto
+   precedente ancora in memoria. */
+function avvioApriOcr() {
+  if (!avvio) return;
+  openOcrModal('avvio-testo');
+  try {
+    ocrState.lang = avvio.lingua;
+    const pill = document.getElementById('ocr-lang-pill');
+    if (pill) pill.textContent = avvio.lingua === 'greco' ? 'Greco antico (grc)' : 'Latino (lat)';
+  } catch (e) {}
+}
+
+/* Solo qui nasce il progetto. */
+function avvioCrea(modo) {
+  if (!avvio) return;
+  const a = avvio;
+  if (!String(a.testo || '').trim()) { showToast('Serve almeno il testo per cominciare'); return; }
+  const titolo = avvioTitolo();
+
+  state = defaultState();
+  state.meta.lingua = a.lingua;
+  state.meta.testoOriginale = a.testo;
+  state.meta.titolo = titolo;
+  if (a.origine === 'autore') {
+    state.meta.autore = String(a.autore || '').trim();
+    state.meta.opera  = String(a.opera || '').trim();
+    if (String(a.loc || '').trim()) state.meta.locus = String(a.loc).trim();
+  } else if (a.origine === 'manuale') {
+    state.meta.dalLibro = true;
+    const m = (window.PoetrifyManuali ? PoetrifyManuali.lista(a.lingua) : []).find(x => x.id === a.manualeId);
+    if (m) state.meta.manuale = { id: m.id, titolo: m.titolo, editore: m.editore };
+    if (String(a.versione || '').trim()) state.meta.versioneNum = String(a.versione).trim();
+    if (String(a.pagina || '').trim()) state.meta.pagina = String(a.pagina).trim();
+  }
+  state.mode = (modo === 'guided') ? 'guided' : 'free';
+  state.guidedStep = 1;
+  state.sentences = splitTextIntoSentences(a.testo).map(makeSentence);
+  maybeAutoClosedClass();
+  archiveFilters.lingua = a.lingua;
+  state.currentStep = 2;                 // dritti al lavoro: il testo c'è già
+  avvio = null;
+  persistCurrent();
+  renderAll();
+  showToast('«' + titolo + '» · ' + state.sentences.length + ' frasi — si comincia');
+}
+
+/* ── Render ──────────────────────────────────────────────────────────────── */
+function avvioNastro() {
+  const p = avvio.passo;
+  const nodo = (n, etichetta) => {
+    const cls = p === n ? 'on' : (p > n ? 'fatto' : '');
+    return `<span class="avvio-passo ${cls}"><span class="avvio-num">${p > n ? '✓' : n}</span>${etichetta}</span>`;
+  };
+  return `<div class="avvio-nastro">
+      ${nodo(1, 'Che versione')}<span class="avvio-sep"></span>
+      ${nodo(2, 'Il testo')}<span class="avvio-sep"></span>
+      ${nodo(3, 'Come lavorare')}
+    </div>`;
+}
+
+function renderAvvioHtml() {
+  if (!avvio) return '';
+  const lin = avvio.lingua === 'greco' ? 'greco' : 'latino';
+  const testa = sectionHeader('◆', `Nuovo brano · ${lin}`, 'Tre passi e si comincia: da quale libro viene, il testo, come lavorarci.');
+  if (avvio.passo === 2) return testa + avvioNastro() + avvioPasso2();
+  if (avvio.passo === 3) return testa + avvioNastro() + avvioPasso3();
+  return testa + avvioNastro() + avvioPasso1();
+}
+
+function avvioPasso1() {
+  const sel = avvio.origine;
+  const card = (id, tit, desc) => `
+    <button class="avvio-origine ${sel === id ? 'sel' : ''}" onclick="avvioSetOrigine('${id}')">
+      <span class="ao-t">${tit}</span>
+      <span class="ao-d">${desc}</span>
+    </button>`;
+
+  let dettaglio = '';
+  if (sel === 'autore') {
+    dettaglio = `
+      <div class="avvio-box">
+        <p class="avvio-box-nota">Se la versione è nel <strong>Corpus</strong>, prendila da lì: arriva già pulita e con i dati compilati.</p>
+        <div class="avvio-azioni" style="margin:10px 0 16px;">
+          <button class="btn btn-brand-soft btn-sm" onclick="openCorpusForBranch('${avvio.lingua}')">Cercala nel Corpus →</button>
+        </div>
+        <span class="avvio-k">oppure scrivi tu i riferimenti</span>
+        <div class="avvio-campi tre">
+          <label>Autore<input type="text" value="${escapeHtml(avvio.autore)}" oninput="avvioCampo('autore', this.value)" placeholder="Cicerone"></label>
+          <label>Opera<input type="text" value="${escapeHtml(avvio.opera)}" oninput="avvioCampo('opera', this.value)" placeholder="De officiis"></label>
+          <label>Locus<input type="text" value="${escapeHtml(avvio.loc)}" oninput="avvioCampo('loc', this.value)" placeholder="I, 15"></label>
+        </div>
+      </div>`;
+  } else if (sel === 'manuale') {
+    const manuali = window.PoetrifyManuali ? PoetrifyManuali.lista(avvio.lingua) : [];
+    const pref = window.PoetrifyManuali ? PoetrifyManuali.preferito(avvio.lingua) : null;
+    if (!avvio.manualeId && pref) avvio.manualeId = pref.id;
+    const opzioni = manuali.map(m =>
+      `<option value="${m.id}" ${m.id === avvio.manualeId ? 'selected' : ''}>${escapeHtml(PoetrifyManuali.etichetta(m))}</option>`).join('');
+    const tendina = manuali.length
+      ? `<label>Manuale<select onchange="avvioCampo('manualeId', this.value)">${opzioni}</select></label>`
+      : `<div class="avvio-nomanuali">Non hai ancora dichiarato i tuoi manuali.
+           <a href="profilo.html">Aggiungili una volta sola →</a></div>`;
+    dettaglio = `
+      <div class="avvio-box">
+        <div class="avvio-campi manuale">
+          ${tendina}
+          <label>Versione n.<input type="text" inputmode="numeric" value="${escapeHtml(avvio.versione)}" oninput="avvioCampo('versione', this.value)" placeholder="148"></label>
+          <label>Pagina<input type="text" inputmode="numeric" value="${escapeHtml(avvio.pagina)}" oninput="avvioCampo('pagina', this.value)" placeholder="212"></label>
+        </div>
+        <p class="avvio-box-nota">Numero e pagina diventano il nome del brano: così lo ritrovi come lo chiami tu.</p>
+      </div>`;
+  }
+
+  return `<div class="avvio-corpo">
+      <h2 class="avvio-domanda">Da quale libro viene?</h2>
+      <p class="avvio-sotto">Serve a ritrovarla dopo — e a chiamarla col suo nome.</p>
+      <div class="avvio-origini">
+        ${card('autore', "Versione d'autore", 'Cicerone, Cesare, Virgilio, Platone… un testo antico con autore e opera.')}
+        ${card('manuale', 'Dal manuale scolastico', 'La versione assegnata a scuola: manuale, numero e pagina.')}
+      </div>
+      ${dettaglio}
+      <div class="avvio-azioni">
+        <button class="btn btn-primary" ${sel ? '' : 'disabled'} onclick="avvioVai(2)">Continua →</button>
+        <button class="btn btn-ghost" onclick="avvioAnnulla()">Annulla</button>
+      </div>
+    </div>`;
+}
+
+function avvioPasso2() {
+  const greca = avvio.lingua === 'greco' ? ' classical greek' : '';
+  return `<div class="avvio-corpo">
+      <h2 class="avvio-domanda">Il testo</h2>
+      <p class="avvio-sotto">Incollalo, oppure fotografa la pagina e lascia che lo riconosca io.</p>
+      <textarea id="avvio-testo" class="avvio-testo${greca}" rows="8"
+        placeholder="Incolla qui la versione…"
+        oninput="avvioTestoInput(this.value)">${escapeHtml(avvio.testo)}</textarea>
+      <div class="avvio-sottobarra">
+        <span id="avvio-spia" class="avvio-spia">${avvioSpiaHtml()}</span>
+        <button class="btn btn-brand-soft btn-sm" onclick="avvioApriOcr()">Fotografa la pagina</button>
+      </div>
+      <div class="avvio-titolo-anteprima">Si chiamerà: <strong>${escapeHtml(avvioTitolo())}</strong></div>
+      <div class="avvio-azioni">
+        <button class="btn btn-primary" id="avvio-avanti" ${String(avvio.testo).trim() ? '' : 'disabled'} onclick="avvioVai(3)">Continua →</button>
+        <button class="btn btn-ghost" onclick="avvioVai(1)">← Indietro</button>
+      </div>
+    </div>`;
+}
+
+function avvioPasso3() {
+  const tappe = getVisibleGuidedSteps();
+  const piano = tappe.map((s, i) => `<li>${escapeHtml(s.label)}</li>`).join('');
+  const n = avvioFrasi();
+  const scelta = (id, tit, desc, corpo) => `
+    <button class="avvio-modo ${avvio.modo === id ? 'sel' : ''}" onclick="avvioCampo('modo','${id}'); renderAll();">
+      <span class="am-t">${tit}</span>
+      <span class="am-d">${desc}</span>
+      ${corpo}
+    </button>`;
+  return `<div class="avvio-corpo">
+      <h2 class="avvio-domanda">Come vuoi affrontarlo?</h2>
+      <p class="avvio-sotto">${escapeHtml(avvioTitolo())} — ${n} fras${n === 1 ? 'e' : 'i'}.</p>
+      <div class="avvio-modi">
+        ${scelta('guided', 'Guidata', "Ti accompagno tappa per tappa: prima l'ossatura del periodo, poi il dettaglio, infine la traduzione.",
+          `<span class="am-piano"><span class="am-piano-k">Il percorso · ${tappe.length} tappe</span><ol>${piano}</ol></span>`)}
+        ${scelta('free', 'Libera', 'Vai dove vuoi, nell\'ordine che preferisci. Le stanze restano tutte aperte.',
+          `<span class="am-piano"><span class="am-piano-k">Le stanze</span><ol><li>Scomposizione</li><li>Grammaticale</li><li>Logica</li><li>Sintattico-periodale</li></ol></span>`)}
+      </div>
+      <div class="avvio-azioni">
+        <button class="btn btn-primary" onclick="avvioCrea('${avvio.modo}')">Apri il banco di lavoro →</button>
+        <button class="btn btn-ghost" onclick="avvioVai(2)">← Indietro</button>
+      </div>
+    </div>`;
+}
+
 function renderEditor() {
   const c = document.getElementById('editor-content');
+  /* L'avvio di un brano è una vista a sé, VOLATILE: precede il progetto e non
+     viene mai salvata. Ha la precedenza su tutto il resto. */
+  if (avvio) { c.innerHTML = renderAvvioHtml(); return; }
   if (state.currentStep === 1) c.innerHTML = renderStep1Html();
   else if (state.currentStep === 2) {
     if (state.mode === 'guided') c.innerHTML = renderGuidedWizard();
@@ -36276,10 +36590,6 @@ function onTipoTestoChange(v) {
   }
   renderPreview(); renderEditor(); renderSidebarTabs(); renderStats(); syncTopbar();
 }
-/* Lingua di un nuovo progetto in attesa di creazione (impostata dal pulsante
-   «+ Nuovo brano <lingua>» dell'archivio di un branch). Applicata in selectMode. */
-let pendingNewProjectLang = null;
-
 function setLingua(lang) {
   // BRANCH SCORPORATI: non si può lavorare lo stesso testo in due lingue. Se clicco
   // la lingua già attiva del progetto corrente, resto sul lavoro (eventualmente
@@ -36356,8 +36666,7 @@ function importPassoDalCorpus(lang, testo, p) {
 
 /* Avvia un nuovo brano nella lingua indicata (dal branch d'archivio). */
 function newProjectInLang(lang) {
-  pendingNewProjectLang = lang;
-  document.getElementById('modal-mode').classList.add('open');
+  startAvvio(lang);
 }
 
 function confirmSetup() {
@@ -36382,28 +36691,11 @@ function discardSetup() {
 }
 
 function newProject() {
-  if (state.meta.testoOriginale || state.sentences.length > 0) {
-    /* Prima invitava a «salvare prima»: non serve, il salvataggio e' continuo. */
-    if (!confirm('Avviare un nuovo progetto?\n\nQuello corrente resta nell\'archivio: lo riapri quando vuoi da «I tuoi progetti».')) return;
-  }
-  // Apri il modale di scelta modalità
-  document.getElementById('modal-mode').classList.add('open');
+  /* Il lavoro corrente non si perde: il salvataggio è continuo e il brano resta
+     in archivio. Nessuna conferma da dare, nessun modale: si entra nell'avvio. */
+  startAvvio((state.meta && state.meta.lingua) || 'latino');
 }
 
-function selectMode(mode) {
-  closeModal('modal-mode');
-  state = defaultState();
-  state.mode = (mode === 'guided') ? 'guided' : 'free';
-  state.guidedStep = 1;
-  // Lingua del nuovo brano: quella del branch da cui è stato avviato (se presente)
-  if (pendingNewProjectLang) { state.meta.lingua = pendingNewProjectLang; pendingNewProjectLang = null; }
-  renderAll();
-  if (state.mode === 'guided') {
-    showToast('Modalità guidata avviata · inserisci il testo per cominciare');
-  } else {
-    showToast('Modalità libera avviata');
-  }
-}
 
 /* ════════════════════════════════════════════════════════════════════════
    APPROCCIO TRADUTTIVO — selettore a 3 vie con pro/contro
