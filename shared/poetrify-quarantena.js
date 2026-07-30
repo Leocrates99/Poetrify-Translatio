@@ -161,6 +161,62 @@
     return ripiego;
   }
 
+  /* ── MEMORIA PIENA · avviso PERSISTENTE ────────────────────────────────────
+     Il vecchio avviso era un toast di 2,4 secondi: spariva prima di essere
+     letto, proprio nel momento in cui il lavoro stava per andare perduto
+     (audit docs/DATI-AUDIT.md). Questo resta finché non lo si chiude o finché
+     un salvataggio non riesce di nuovo, e porta con sé l'azione che risolve. */
+  var ID_AVVISO_MEMORIA = 'poetrify-avviso-memoria';
+
+  function avvisaMemoriaPiena(opz) {
+    opz = opz || {};
+    function mostra() {
+      var vecchio = document.getElementById(ID_AVVISO_MEMORIA);
+      if (vecchio) vecchio.remove();          // ridisegna con l'azione più pertinente
+      var box = document.createElement('div');
+      box.id = ID_AVVISO_MEMORIA;
+      box.setAttribute('role', 'alert');
+      box.style.cssText = 'position:fixed;left:12px;right:12px;bottom:12px;z-index:100000;'
+        + 'max-width:660px;margin:0 auto;padding:14px 16px;border-radius:10px;'
+        + 'border:2px solid var(--danger,#c53030);background:var(--paper,#fff);'
+        + 'color:var(--ink,#2c3539);font:14px/1.5 var(--font-ui,system-ui,sans-serif);'
+        + 'box-shadow:var(--shadow-strong,0 8px 28px rgba(0,0,0,.28))';
+      var testo = document.createElement('div');
+      testo.innerHTML = '<strong>La memoria del browser è piena: le ultime modifiche NON sono state salvate.</strong><br>'
+        + 'Non chiudere la pagina prima di aver messo al sicuro il lavoro. '
+        + (opz.dettaglio ? '<span style="opacity:.75">' + opz.dettaglio + '</span>' : '');
+      var riga = document.createElement('div');
+      riga.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;margin-top:12px';
+      if (typeof opz.azione === 'function') {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = opz.etichettaAzione || '💾 Esporta un backup adesso';
+        b.style.cssText = 'padding:7px 14px;border-radius:8px;border:1px solid transparent;cursor:pointer;'
+          + 'font:600 13px var(--font-ui,system-ui,sans-serif);background:var(--danger,#c53030);color:#fff';
+        b.addEventListener('click', function () { try { opz.azione(); } catch (e) { console.error(e); } });
+        riga.appendChild(b);
+      }
+      var chiudi = document.createElement('button');
+      chiudi.type = 'button';
+      chiudi.textContent = 'Ho capito';
+      chiudi.style.cssText = 'padding:7px 14px;border-radius:8px;cursor:pointer;'
+        + 'font:600 13px var(--font-ui,system-ui,sans-serif);'
+        + 'border:1px solid var(--rule,#d5d2cb);background:transparent;color:inherit';
+      chiudi.addEventListener('click', function () { box.remove(); });
+      riga.appendChild(chiudi);
+      box.appendChild(testo); box.appendChild(riga);
+      document.body.appendChild(box);
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mostra);
+    else mostra();
+  }
+
+  /* Da chiamare quando una scrittura torna a riuscire: il pericolo è passato. */
+  function nascondiAvvisoMemoria() {
+    var el = document.getElementById(ID_AVVISO_MEMORIA);
+    if (el) el.remove();
+  }
+
   /**
    * Scrive un valore come JSON. Restituisce true/false: l'esito NON va ignorato.
    * @returns {boolean} false se la scrittura è fallita (memoria piena)
@@ -168,14 +224,18 @@
   function scriviJSON(chiave, valore) {
     try {
       localStorage.setItem(chiave, JSON.stringify(valore));
+      nascondiAvvisoMemoria();
       return true;
     } catch (e) {
       console.error('[quarantena] scrittura fallita su «' + chiave + '»:', e);
+      var gestito = false;
       try {
-        document.dispatchEvent(new CustomEvent('poetrify:memoria-piena', {
-          detail: { chiave: chiave, errore: String(e && e.name || e) },
-        }));
+        var ev = new CustomEvent('poetrify:memoria-piena', {
+          detail: { chiave: chiave, errore: String(e && e.name || e) }, cancelable: true,
+        });
+        gestito = !document.dispatchEvent(ev);   // una pagina può gestirlo a modo suo
       } catch (e2) {}
+      if (!gestito) avvisaMemoriaPiena({ dettaglio: 'Dato non salvato: «' + chiave + '».' });
       return false;
     }
   }
@@ -244,6 +304,8 @@
     ripristina: ripristina,
     scarica: scarica,
     scarta: scarta,
+    avvisaMemoriaPiena: avvisaMemoriaPiena,
+    nascondiAvvisoMemoria: nascondiAvvisoMemoria,
     PREFISSO: PREFISSO,
   };
 })();

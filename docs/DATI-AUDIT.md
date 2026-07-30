@@ -215,11 +215,15 @@ salvaguardia locale.
 | **1** | Il bottone «Backup completo» chiama `exportAllProjects()` | ✅ **fatto** (`a31cb88`) | Il backup smette di essere finto |
 | **2** | Quarantena su dato illeggibile + mai-sovrascrivere | ✅ **fatto** (`a31cb88`) | Elimina la perdita **silenziosa e definitiva** |
 | **3** | Pulsante «Importa» visibile + formati reversibili distinti da quelli a perdere | ✅ **fatto** (`a31cb88`) | Il backup sa tornare indietro |
-| **4** | **Anteprima dell'import + istantanea + «annulla»** *sui progetti del translator* | ⬜ **prossimo** | Chiude la reversibilità sul lavoro che conta |
-| **5** | `schemaVersion` **letto** (non timbrato) e catena di migrazioni sui progetti | ⬜ | Un file vecchio o più nuovo resta leggibile |
-| **6** | Validazione dell'import oltre i due campi + degradare con grazia | ⬜ | Un file troncato non entra e non rompe l'archivio |
-| **7** | Avviso di quota **persistente** (non un toast di 2,4 s) con «Esporta ora» | ⬜ | La memoria piena si vede prima del danno |
-| **8** | Badge «ultimo backup: N giorni fa» nel translator | ⬜ | Rende passiva una disciplina che nessuno ricorda |
+| **4** | Anteprima dell'import + istantanea + «annulla» *sui progetti* | ✅ **fatto** (`aa4bc0c`) | Chiude la reversibilità sul lavoro che conta |
+| **5** | `schemaVersion` **letto** (non timbrato) e catena di migrazioni | ✅ **fatto** (`44ffbdb`) | Un file vecchio o più nuovo resta leggibile |
+| **6** | Validazione dell'import oltre i due campi, col **motivo** del rifiuto | ✅ **fatto** (`44ffbdb`) | Un file malformato non entra e non rompe l'archivio |
+| **7** | Avviso di quota **persistente** con «Esporta ora» | ✅ **fatto** | La memoria piena si vede prima del danno |
+| **8** | Badge «ultimo backup: N giorni fa» | ✅ **fatto** | Rende passiva una disciplina che nessuno ricorda |
+
+Con questi, il perimetro del §4 è **coperto**: il lavoro di traduzione si esporta in un formato che si
+rilegge, si reimporta vedendo prima che cosa accadrà e potendo tornare indietro, sopravvive ai cambi di
+versione, e l'utente viene avvertito *prima* che la memoria lo tradisca.
 
 **Fuori perimetro** (restano a titolo di salvaguardia locale, non di trasferimento): formato unico a
 sezioni, profilo/lessico/corpus nell'export, persistenza del corpus. Il backup del lessico personale
