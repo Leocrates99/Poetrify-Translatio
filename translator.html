@@ -12572,6 +12572,21 @@ function versioneProgetto(p) {
    versione senza scrivere tutti i campi). È idempotente e non inventa dati. */
 function _riparaCampiEssenziali(p) {
   if (!Array.isArray(p.sentences)) p.sentences = [];
+  /* INVARIANTE DELLE FRASI: grammar, logic, periodale e tokens sono SEMPRE
+     array. Il resto dell'applicazione lo dà per scontato in una trentina di
+     punti (`s.grammar.length`, `sentence.logic.filter(…)`, …): garantirlo qui,
+     una volta sola al caricamento, è più solido che rincorrere ogni accesso —
+     e chiude alla radice una classe di guasti. Un brano che arriva da un
+     backup, da una versione vecchia o da un lavoro appena cominciato può
+     benissimo non averli, e prima faceva cadere il rendering della sidebar,
+     cioè l'intera pagina. */
+  p.sentences.forEach(s => {
+    if (!s || typeof s !== 'object') return;
+    if (!Array.isArray(s.grammar)) s.grammar = [];
+    if (!Array.isArray(s.logic)) s.logic = [];
+    if (!Array.isArray(s.periodale)) s.periodale = [];
+    if (!Array.isArray(s.tokens)) s.tokens = [];
+  });
   if (!isWorkStep(p.lastWorkStep)) p.lastWorkStep = isWorkStep(p.currentStep) ? Number(p.currentStep) : 1;
   if (!isWorkStep(p.currentStep)) p.currentStep = p.lastWorkStep;
   if (p.meta.metrica == null || typeof p.meta.metrica !== 'object') p.meta.metrica = { metroDefault: '', perVerse: {} };
@@ -12585,7 +12600,10 @@ function _migrateProject(p) {
     /* Dal futuro: non si migra e non si ri-etichetta. Meglio un progetto che
        questa versione capisce solo in parte, che un progetto mutilato. */
     _progettiDalFuturo.push({ titolo: (p.meta.titolo || 'senza titolo'), versione: v });
-    return p;
+    /* Non si migra e non si ri-etichetta, ma l'invariante delle frasi va
+       garantito anche qui: aggiungere array vuoti non toglie nulla, e senza
+       di essi il rendering cadrebbe. */
+    return _riparaCampiEssenziali(p);
   }
   for (let da = v; da < SCHEMA_VERSION; da++) {
     const passo = MIGRAZIONI[da];
@@ -26991,7 +27009,10 @@ function renderSidebarTabs() {
         hasContent: state.sentences.length > 0 },
       { num: 3, letter: 'C', icon: 'tree', title: 'Analisi', group: 'lavoro',
         enabled: state.sentences.length > 0,
-        hasContent: state.sentences.some(s => s.grammar.length || s.logic.length || s.periodale.length) },
+        /* Guardie necessarie: una frase può non avere ancora nessuna delle tre
+           analisi (lavoro appena cominciato, o brano importato da un backup):
+           senza `|| []` la sidebar si rompeva e con essa l'intera pagina. */
+        hasContent: state.sentences.some(s => (s.grammar || []).length || (s.logic || []).length || (s.periodale || []).length) },
       { num: 5, sub: 'bozza', letter: 'E', icon: 'pencil', title: 'Bozza', group: 'traduzione',
         enabled: !!state.meta.testoOriginale, onclick: "goToTraduzione('bozza')",
         hasContent: hasTranslation, hideForMedie: true },
