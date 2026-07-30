@@ -11570,12 +11570,26 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   </div>
 </div>
 
+<!-- ANTEPRIMA DELL'IMPORTAZIONE (audit docs/DATI-AUDIT.md §5.4)
+     Prima l'import si applicava al volo, annunciando «successo» anche quando
+     un backup vecchio aveva appena sovrascritto il lavoro più recente. Qui si
+     vede PRIMA che cosa entrerebbe, e dopo si può tornare indietro. -->
+<div class="modal-backdrop" id="modal-import">
+  <div class="modal">
+    <h3 class="modal-title" id="import-titolo">Che cosa contiene questo backup</h3>
+    <p class="modal-subtitle" id="import-sottotitolo">Niente è ancora stato toccato: controlla e decidi.</p>
+    <div id="import-corpo"></div>
+    <div class="modal-actions" id="import-azioni"></div>
+  </div>
+</div>
+
 <div class="modal-backdrop" id="modal-projects">
   <div class="modal">
     <h3 class="modal-title">I tuoi progetti</h3>
     <p class="modal-subtitle">Lavori salvati nel browser. Nessun dato lascia il tuo dispositivo.</p>
     <div class="project-list" id="project-list"></div>
     <div class="modal-actions">
+      <span id="projects-undo-slot"></span>
       <button class="btn btn-ghost" onclick="closeModal('modal-projects')">Chiudi</button>
     </div>
   </div>
@@ -12465,6 +12479,30 @@ function exportCurrentProjectJson() {
   downloadBlob(JSON.stringify(payload, null, 2), `poetrify-${title}-${ts}.json`, 'application/json');
   if (typeof showToast === 'function') showToast('Progetto corrente esportato');
 }
+/* ════════════════════════════════════════════════════════════════════════
+   IMPORTAZIONE IN DUE TEMPI · anteprima, poi applicazione annullabile
+   ------------------------------------------------------------------------
+   Audit docs/DATI-AUDIT.md: l'import era distruttivo e non annullabile —
+   un backup più vecchio poteva sovrascrivere il lavoro più recente e
+   annunciarlo come «successo». Ora:
+     1. si LEGGE il file e si mostra che cosa entrerebbe (nulla è toccato);
+     2. all'applicazione si salva un'ISTANTANEA dell'archivio;
+     3. finché l'istantanea esiste, l'importazione si ANNULLA.
+   ════════════════════════════════════════════════════════════════════════ */
+const SNAPSHOT_KEY = STORAGE_KEY + '.prima-import';
+let _importInSospeso = null;   // { nuovi:[], aggiornati:[], invalidi:n, versioneFile }
+
+function _titoloProgetto(p) {
+  const t = (p && p.meta && p.meta.titolo) || '';
+  return t.trim() || 'senza titolo';
+}
+function _quandoProgetto(p) {
+  const d = p && p.meta && (p.meta.updatedAt || p.meta.createdAt);
+  if (!d) return '';
+  try { return new Date(d).toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' }); }
+  catch (e) { return ''; }
+}
+
 function importProjectsFromFile() {
   const input = document.createElement('input');
   input.type = 'file'; input.accept = 'application/json,.json';
@@ -12473,32 +12511,158 @@ function importProjectsFromFile() {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = () => {
-      try {
-        const data = JSON.parse(reader.result);
-        const incoming = Array.isArray(data) ? data : (data && Array.isArray(data.projects) ? data.projects : null);
-        if (!incoming) { showToast('File non valido: nessun progetto trovato'); return; }
-        const valid = incoming.filter(p => p && p.id && p.meta);
-        if (!valid.length) { showToast('File non valido: progetti senza struttura attesa'); return; }
-        const all = loadAllProjects();
-        let added = 0, updated = 0;
-        valid.forEach(p => {
-          const mp = _migrateProject(p);
-          const i = all.findIndex(x => x.id === mp.id);
-          if (i >= 0) { all[i] = mp; updated++; } else { all.push(mp); added++; }
-        });
-        if (_safeSetProjects(all)) {
-          showToast(`Importati: ${added} nuovo/i · ${updated} aggiornato/i`);
-          if (typeof renderSidebarTabs === 'function') renderSidebarTabs();
-          if (typeof renderEditor === 'function') renderEditor();
-        }
-      } catch (e) {
-        console.error('Import error:', e);
-        showToast('Errore nell\'importazione: file JSON non leggibile');
-      }
+      let data;
+      try { data = JSON.parse(reader.result); }
+      catch (e) { _mostraImportErrore('Questo file non è un JSON leggibile. Se l\'hai modificato a mano, riprova con l\'originale.'); return; }
+      _preparaAnteprimaImport(data, file.name);
     };
+    reader.onerror = () => _mostraImportErrore('Non è stato possibile leggere il file dal disco.');
     reader.readAsText(file);
   };
   input.click();
+}
+
+/* Costruisce l'anteprima SENZA applicare nulla. */
+function _preparaAnteprimaImport(data, nomeFile) {
+  const incoming = Array.isArray(data) ? data : (data && Array.isArray(data.projects) ? data.projects : null);
+  if (!incoming) {
+    _mostraImportErrore('In questo file non c\'è nessun brano da importare. '
+      + 'Attenzione: i file Markdown, Word, PDF e PNG sono <em>documenti</em> e non si rileggono: '
+      + 'per riprendere il lavoro serve un <strong>backup .json</strong>.');
+    return;
+  }
+  const valid = incoming.filter(p => p && p.id && p.meta);
+  const invalidi = incoming.length - valid.length;
+  if (!valid.length) {
+    _mostraImportErrore('Il file contiene dati, ma nessun brano con la struttura attesa '
+      + `(${invalidi} voce/i scartata/e).`);
+    return;
+  }
+  const attuali = loadAllProjects();
+  const perId = new Map(attuali.map(p => [p.id, p]));
+  const nuovi = [], aggiornati = [];
+  valid.forEach(p => {
+    const esistente = perId.get(p.id);
+    if (esistente) aggiornati.push({ nuovo: p, vecchio: esistente });
+    else nuovi.push(p);
+  });
+  const versioneFile = data && typeof data.schemaVersion === 'number' ? data.schemaVersion : null;
+  _importInSospeso = { valid, nuovi, aggiornati, invalidi, versioneFile, nomeFile };
+  _renderAnteprimaImport();
+}
+
+function _mostraImportErrore(html) {
+  document.getElementById('import-titolo').textContent = 'Non posso importare questo file';
+  document.getElementById('import-sottotitolo').textContent = 'Il tuo lavoro non è stato toccato.';
+  document.getElementById('import-corpo').innerHTML = `<p class="muted" style="margin:0">${html}</p>`;
+  document.getElementById('import-azioni').innerHTML =
+    `<button class="btn btn-ghost" onclick="closeModal('modal-import')">Chiudi</button>`;
+  document.getElementById('modal-import').classList.add('open');
+}
+
+function _renderAnteprimaImport() {
+  const s = _importInSospeso;
+  if (!s) return;
+  const el = (id) => document.getElementById(id);
+  el('import-titolo').textContent = 'Che cosa contiene questo backup';
+  el('import-sottotitolo').textContent = 'Niente è ancora stato toccato: controlla e decidi.';
+
+  let html = '';
+  if (s.versioneFile !== null && s.versioneFile > SCHEMA_VERSION) {
+    html += `<p class="muted" style="margin:0 0 10px"><strong>Nota:</strong> questo backup è stato scritto da una versione più
+      recente di Poetrify (schema ${escapeHtml(String(s.versioneFile))}, qui si legge la ${SCHEMA_VERSION}).
+      Si importa lo stesso: quello che questa versione non riconosce viene conservato intatto.</p>`;
+  }
+  if (s.nuovi.length) {
+    html += `<p style="margin:0 0 4px"><strong>${s.nuovi.length} brano/i nuovo/i</strong> — verranno aggiunti:</p>
+      <ul style="margin:0 0 12px 18px">${s.nuovi.slice(0, 8).map(p =>
+        `<li>${escapeHtml(_titoloProgetto(p))} <span class="muted">${escapeHtml(_quandoProgetto(p))}</span></li>`).join('')}
+      ${s.nuovi.length > 8 ? `<li class="muted">…e altri ${s.nuovi.length - 8}</li>` : ''}</ul>`;
+  }
+  if (s.aggiornati.length) {
+    html += `<p style="margin:0 0 4px"><strong>${s.aggiornati.length} brano/i già presente/i</strong> —
+      la versione nel file <em>sostituirà</em> quella che hai adesso:</p>
+      <ul style="margin:0 0 12px 18px">${s.aggiornati.slice(0, 8).map(coppia =>
+        `<li>${escapeHtml(_titoloProgetto(coppia.nuovo))}<br>
+          <span class="muted">qui: ${escapeHtml(_quandoProgetto(coppia.vecchio) || '—')} → dal file: ${escapeHtml(_quandoProgetto(coppia.nuovo) || '—')}</span></li>`).join('')}
+      ${s.aggiornati.length > 8 ? `<li class="muted">…e altri ${s.aggiornati.length - 8}</li>` : ''}</ul>
+      <p class="muted" style="margin:0 0 10px">Controlla le date: se qui hai lavoro più recente, potresti perderlo.
+      Potrai comunque <strong>annullare</strong> subito dopo.</p>`;
+  }
+  if (s.invalidi) {
+    html += `<p class="muted" style="margin:0 0 10px">${s.invalidi} voce/i del file non ha la struttura attesa e verrà ignorata.</p>`;
+  }
+  if (!s.nuovi.length && !s.aggiornati.length) {
+    html += `<p class="muted" style="margin:0">Non c'è nulla da importare.</p>`;
+  }
+  el('import-corpo').innerHTML = html;
+
+  const totale = s.nuovi.length + s.aggiornati.length;
+  el('import-azioni').innerHTML = totale
+    ? `<button class="btn btn-ghost" onclick="closeModal('modal-import'); _importInSospeso = null;">Lascia stare</button>
+       <button class="btn btn-primary" onclick="applicaImportInSospeso()">Importa ${totale} brano/i</button>`
+    : `<button class="btn btn-ghost" onclick="closeModal('modal-import'); _importInSospeso = null;">Chiudi</button>`;
+  document.getElementById('modal-import').classList.add('open');
+}
+
+/* Applica l'importazione, dopo aver messo al sicuro lo stato corrente. */
+function applicaImportInSospeso() {
+  const s = _importInSospeso;
+  if (!s) return;
+  const attuali = loadAllProjects();
+  /* ISTANTANEA prima di toccare qualsiasi cosa: è ciò che rende l'operazione
+     reversibile. Se non c'è spazio nemmeno per questa, ci si ferma: meglio non
+     importare che importare senza via d'uscita. */
+  try {
+    localStorage.setItem(SNAPSHOT_KEY, JSON.stringify({ quando: new Date().toISOString(), progetti: attuali }));
+  } catch (e) {
+    _mostraImportErrore('Non c\'è spazio per mettere al sicuro il lavoro attuale, quindi non importo: '
+      + 'un\'importazione senza possibilità di tornare indietro è troppo rischiosa. '
+      + 'Esporta un backup e libera spazio, poi riprova.');
+    return;
+  }
+
+  const all = attuali.slice();
+  let added = 0, updated = 0;
+  s.valid.forEach(p => {
+    const mp = _migrateProject(p);
+    const i = all.findIndex(x => x.id === mp.id);
+    if (i >= 0) { all[i] = mp; updated++; } else { all.push(mp); added++; }
+  });
+  if (!_safeSetProjects(all)) { _mostraImportErrore('Memoria del browser piena: l\'importazione non è stata salvata.'); return; }
+
+  _importInSospeso = null;
+  if (typeof renderSidebarTabs === 'function') renderSidebarTabs();
+  if (typeof renderEditor === 'function') renderEditor();
+
+  document.getElementById('import-titolo').textContent = 'Importazione fatta';
+  document.getElementById('import-sottotitolo').textContent = 'Se non è quello che volevi, torna indietro adesso.';
+  document.getElementById('import-corpo').innerHTML =
+    `<p style="margin:0">Aggiunti <strong>${added}</strong> · aggiornati <strong>${updated}</strong>.</p>`;
+  document.getElementById('import-azioni').innerHTML =
+    `<button class="btn btn-ghost" onclick="annullaUltimoImport()">↶ Annulla l'importazione</button>
+     <button class="btn btn-primary" onclick="closeModal('modal-import')">Va bene</button>`;
+  showToast(`Importati: ${added} nuovo/i · ${updated} aggiornato/i`);
+}
+
+/** True se esiste un'istantanea da cui tornare indietro. */
+function haIstantaneaImport() {
+  try { return !!localStorage.getItem(SNAPSHOT_KEY); } catch (e) { return false; }
+}
+
+/** Riporta l'archivio com'era prima dell'ultima importazione. */
+function annullaUltimoImport() {
+  let snap = null;
+  try { snap = JSON.parse(localStorage.getItem(SNAPSHOT_KEY)); } catch (e) { snap = null; }
+  if (!snap || !Array.isArray(snap.progetti)) { showToast('Non c\'è un\'importazione da annullare'); return false; }
+  if (!_safeSetProjects(snap.progetti)) return false;
+  try { localStorage.removeItem(SNAPSHOT_KEY); } catch (e) {}
+  if (typeof renderSidebarTabs === 'function') renderSidebarTabs();
+  if (typeof renderEditor === 'function') renderEditor();
+  closeModal('modal-import');
+  if (typeof renderProjectList === 'function' && document.getElementById('modal-projects').classList.contains('open')) renderProjectList();
+  showToast('Importazione annullata: archivio riportato com\'era');
+  return true;
 }
 
 /* Pulisce i campi transienti dallo state caricato da localStorage.
@@ -38541,6 +38705,14 @@ function closeModal(id) { document.getElementById(id).classList.remove('open'); 
 
 function renderProjectList() {
   const list = document.getElementById('project-list');
+  /* L'annullamento dell'ultima importazione resta a portata di mano finché
+     l'istantanea esiste, anche dopo aver chiuso il modale dell'import. */
+  const slot = document.getElementById('projects-undo-slot');
+  if (slot) {
+    slot.innerHTML = haIstantaneaImport()
+      ? `<button class="btn btn-ghost" onclick="annullaUltimoImport()" title="Riporta l'archivio com'era prima dell'ultima importazione">↶ Annulla l'ultima importazione</button>`
+      : '';
+  }
   const projects = loadAllProjects().sort((a, b) => new Date(b.meta.updatedAt) - new Date(a.meta.updatedAt));
   if (projects.length === 0) {
     list.innerHTML = `<div class="entry-empty">Nessun progetto salvato.</div>`;
