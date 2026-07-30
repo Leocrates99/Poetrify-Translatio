@@ -14,7 +14,12 @@
 const STORAGE_KEY = 'poetrify-dict-search-history';
 const MAX_ENTRIES = 20;
 
+/* Lettura/scrittura protette dalla QUARANTENA — vedi docs/DATI-AUDIT.md §2.2
+ * (stesso anti-pattern del lessico personale: un dato illeggibile diventava []
+ * in silenzio e veniva poi sovrascritto). */
 function _readAll() {
+  const Q = typeof window !== 'undefined' && window.PoetrifyQuarantena;
+  if (Q) return Q.leggiJSON(STORAGE_KEY, [], { valida: Array.isArray });
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
@@ -27,6 +32,8 @@ function _readAll() {
 }
 
 function _writeAll(entries) {
+  const Q = typeof window !== 'undefined' && window.PoetrifyQuarantena;
+  if (Q) return Q.scriviJSON(STORAGE_KEY, entries);
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
     return true;

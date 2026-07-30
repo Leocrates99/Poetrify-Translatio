@@ -14,6 +14,7 @@
 <!-- Token condivisi (fonte unica del design system · shared/) -->
 <link rel="stylesheet" href="shared/poetrify-tokens.css">
 <!-- API tema condivisa (il toggle #dark-mode-toggle la usa) -->
+<script src="shared/poetrify-quarantena.js"></script>
 <script src="shared/poetrify-manuali.js"></script>
 <script src="shared/poetrify-theme.js"></script>
 
@@ -11535,29 +11536,35 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   <div class="modal">
     <h3 class="modal-title">Esporta il lavoro</h3>
     <p class="modal-subtitle">Tutto ciò che hai compilato — brano, scomposizione, analisi sui tre piani — viene esportato in modo strutturato.</p>
+    <p class="modal-subtitle" style="margin-top:-4px"><strong>Per non perdere i progressi</strong> (o per riprenderli su un altro dispositivo) usa il <strong>backup</strong>: è l'unico formato che Poetrify sa rileggere.</p>
     <div class="export-grid">
+      <button class="export-option" onclick="exportJSON()" style="grid-column: span 2;">
+        <div class="export-option-title">💾 Backup · tutti i brani <span style="font-weight:600;opacity:.7">(si rilegge)</span></div>
+        <div class="export-option-desc">.json — l'intero archivio. Da conservare e da usare per riprendere il lavoro su un nuovo dispositivo.</div>
+      </button>
+      <button class="export-option" onclick="exportCurrentProjectJson(); closeModal('modal-export');" style="grid-column: span 2;">
+        <div class="export-option-title">💾 Backup · solo questo brano <span style="font-weight:600;opacity:.7">(si rilegge)</span></div>
+        <div class="export-option-desc">.json — un singolo lavoro, per consegnarlo o spostarlo senza portarsi dietro tutto l'archivio.</div>
+      </button>
       <button class="export-option" onclick="exportMarkdown()">
-        <div class="export-option-title">Markdown</div>
-        <div class="export-option-desc">.md — Obsidian, Notion, WordPress</div>
+        <div class="export-option-title">Markdown <span style="font-weight:600;opacity:.6">· documento</span></div>
+        <div class="export-option-desc">.md — Obsidian, Notion, WordPress. <em>Non si rilegge in Poetrify.</em></div>
       </button>
       <button class="export-option" onclick="exportWord()">
-        <div class="export-option-title">Word</div>
-        <div class="export-option-desc">.doc — Word, LibreOffice, Google Docs (con mappa cromatica)</div>
+        <div class="export-option-title">Word <span style="font-weight:600;opacity:.6">· documento</span></div>
+        <div class="export-option-desc">.doc — Word, LibreOffice, Google Docs (con mappa cromatica). <em>Non si rilegge.</em></div>
       </button>
       <button class="export-option" onclick="exportPNG()">
-        <div class="export-option-title">PNG</div>
-        <div class="export-option-desc">Immagine ad alta risoluzione con tagging colorato</div>
+        <div class="export-option-title">PNG <span style="font-weight:600;opacity:.6">· immagine</span></div>
+        <div class="export-option-desc">Immagine ad alta risoluzione con tagging colorato. <em>Non si rilegge.</em></div>
       </button>
       <button class="export-option" onclick="exportPDF()">
-        <div class="export-option-title">PDF</div>
-        <div class="export-option-desc">Documento stampabile multi-pagina con palette</div>
-      </button>
-      <button class="export-option" onclick="exportJSON()" style="grid-column: span 2;">
-        <div class="export-option-title">JSON · Backup completo</div>
-        <div class="export-option-desc">Esportazione integrale dei dati per archiviazione o trasferimento</div>
+        <div class="export-option-title">PDF <span style="font-weight:600;opacity:.6">· documento</span></div>
+        <div class="export-option-desc">Stampabile multi-pagina con palette. <em>Non si rilegge.</em></div>
       </button>
     </div>
     <div class="modal-actions">
+      <button class="btn btn-brand-soft" onclick="closeModal('modal-export'); importProjectsFromFile();" title="Rileggi un file di backup .json (i brani già presenti non vengono cancellati)">📥 Importa un backup</button>
       <button class="btn btn-ghost" onclick="closeModal('modal-export')">Chiudi</button>
     </div>
   </div>
@@ -12391,7 +12398,16 @@ function persistCurrent() {
   }
 }
 
+/* Lettura dell'archivio. Passa dalla QUARANTENA (shared/poetrify-quarantena.js):
+   se il JSON è illeggibile o ha forma inattesa, il grezzo NON viene perso — è
+   messo da parte e l'utente avvisato — poi si riparte da vuoto. Senza questa
+   rete, un dato corrotto tornava [] in silenzio e l'autosave a 30 s
+   sovrascriveva l'intero archivio (audit docs/DATI-AUDIT.md §2.2). */
 function loadAllProjects() {
+  if (window.PoetrifyQuarantena) {
+    const arr = PoetrifyQuarantena.leggiJSON(STORAGE_KEY, [], { valida: Array.isArray });
+    return Array.isArray(arr) ? arr.map(_migrateProject) : [];
+  }
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     const arr = raw ? JSON.parse(raw) : [];
@@ -39029,11 +39045,19 @@ async function exportPDF() {
 }
 
 /* Esportazione JSON (backup completo) */
+/* BACKUP · esporta l'intero archivio in un file che Poetrify sa RILEGGERE.
+   Storia di questo punto (audit docs/DATI-AUDIT.md §1): qui si serializzava
+   buildExportData() — cioè { meta, sentences } del SOLO brano corrente, senza
+   involucro. Ma importProjectsFromFile() accetta un array oppure `data.projects`:
+   quel file veniva quindi RIFIUTATO dall'app stessa («File non valido: nessun
+   progetto trovato»). Lo studente credeva di avere un backup e non l'aveva.
+   Ora si delega a exportAllProjects(), che produce l'involucro corretto
+   { app, kind, schemaVersion, exportedAt, count, projects }.
+   NB: buildExportData() resta in uso — ed è giusto — per Markdown/Word/PDF,
+   che sono esportazioni documentali del brano corrente, non backup. */
 function exportJSON() {
-  const data = JSON.stringify(buildExportData(), null, 2);
-  downloadBlob(data, fileName('json'), 'application/json;charset=utf-8');
+  exportAllProjects();
   closeModal('modal-export');
-  showToast('JSON esportato (backup completo)');
 }
 
 /* 9. UTILITY */

@@ -29,20 +29,53 @@
 
   function vuoto() { return { v: VERSIONE, la: [], grc: [] }; }
 
+  /* Lettura protetta e NON distruttiva (audit docs/DATI-AUDIT.md §2.2 e §2.4).
+     Due difetti chiusi qui:
+     1. il `catch` restituiva l'oggetto vuoto in silenzio → il profilo appariva
+        azzerato e la prima modifica lo sovrascriveva. Ora il grezzo illeggibile
+        passa dalla QUARANTENA (se disponibile) e l'utente viene avvisato.
+     2. `p.v = VERSIONE` veniva eseguito SEMPRE: la versione veniva *timbrata*
+        invece che *letta*, rendendo impossibile ogni migrazione e ogni ritorno
+        indietro. Un profilo scritto da una versione più recente veniva
+        ri-etichettato e riscritto, perdendo i campi nuovi. Ora la versione si
+        legge e si conserva: i campi sconosciuti restano intatti. */
   function leggi() {
-    try {
-      var raw = localStorage.getItem(KEY);
-      if (!raw) return vuoto();
-      var p = JSON.parse(raw);
-      if (!p || typeof p !== 'object') return vuoto();
-      if (!Array.isArray(p.la)) p.la = [];
-      if (!Array.isArray(p.grc)) p.grc = [];
-      p.v = VERSIONE;
+    var p = null;
+    var Q = window.PoetrifyQuarantena;
+    if (Q) {
+      p = Q.leggiJSON(KEY, null, { valida: function (v) { return v && typeof v === 'object' && !Array.isArray(v); } });
+      if (p === null) return vuoto();
+    } else {
+      try {
+        var raw = localStorage.getItem(KEY);
+        if (!raw) return vuoto();
+        p = JSON.parse(raw);
+        if (!p || typeof p !== 'object') return vuoto();
+      } catch (e) { return vuoto(); }   // file:// o modalità privata: non bloccare mai
+    }
+    if (!Array.isArray(p.la)) p.la = [];
+    if (!Array.isArray(p.grc)) p.grc = [];
+    /* La versione si LEGGE (default 1 per i dati scritti prima che esistesse). */
+    var v = typeof p.v === 'number' ? p.v : 1;
+    if (v > VERSIONE) {
+      /* Dato scritto da una versione più recente dell'app: non lo si capisce
+         del tutto, ma non lo si mutila. Si conserva `v` e ogni campo estraneo,
+         così la scrittura successiva è un round-trip senza perdite. */
+      console.warn('[manuali] profilo in versione ' + v + ', questa app legge la ' + VERSIONE
+        + ': i campi non riconosciuti vengono conservati intatti.');
       return p;
-    } catch (e) { return vuoto(); }   // file:// o modalità privata: non bloccare mai
+    }
+    /* v < VERSIONE → qui andrà la catena di migrazioni (m1→m2→…) quando servirà. */
+    p.v = v;
+    return p;
   }
 
+  /* La versione si timbra SOLO in scrittura, e solo se il dato non proviene da
+     una versione più recente (in quel caso si rispetta quella che c'è). */
   function scrivi(p) {
+    if (p && (typeof p.v !== 'number' || p.v < VERSIONE)) p.v = VERSIONE;
+    var Q = window.PoetrifyQuarantena;
+    if (Q) return Q.scriviJSON(KEY, p);
     try { localStorage.setItem(KEY, JSON.stringify(p)); return true; }
     catch (e) { return false; }
   }

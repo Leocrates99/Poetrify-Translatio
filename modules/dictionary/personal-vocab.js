@@ -15,7 +15,16 @@
 const STORAGE_KEY = 'poetrify-personal-vocab';
 const MAX_ENTRIES = 1000; // hard cap per evitare bloat su localStorage
 
+/* Lettura protetta dalla QUARANTENA (shared/poetrify-quarantena.js, caricata
+ * come script classico prima dei moduli). Prima qui un JSON corrotto veniva
+ * intercettato e trasformato in [] con un semplice console.warn: lo studente
+ * vedeva il lessico VUOTO senza alcun avviso e la prima scrittura successiva
+ * sovrascriveva — distruggendolo — un dato che era ancora recuperabile.
+ * Ora il grezzo illeggibile viene messo da parte e l'utente avvisato.
+ * Vedi docs/DATI-AUDIT.md §2.2. */
 function _readAll() {
+  const Q = typeof window !== 'undefined' && window.PoetrifyQuarantena;
+  if (Q) return Q.leggiJSON(STORAGE_KEY, [], { valida: Array.isArray });
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
@@ -27,7 +36,12 @@ function _readAll() {
   }
 }
 
+/* Restituisce false se la scrittura fallisce (memoria piena). L'esito NON va
+ * ignorato dal chiamante: senza un avviso, il lemma «salvato» sparisce e lo
+ * studente non sa perché. */
 function _writeAll(entries) {
+  const Q = typeof window !== 'undefined' && window.PoetrifyQuarantena;
+  if (Q) return Q.scriviJSON(STORAGE_KEY, entries);
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
     return true;
