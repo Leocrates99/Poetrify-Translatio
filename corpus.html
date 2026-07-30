@@ -52,17 +52,6 @@ button { font-family: inherit; cursor: pointer; }
   font-family: var(--font-ui); font-size: 10.5px; font-weight: 600;
   text-transform: uppercase; letter-spacing: .18em; color: var(--sepia); margin-top: 3px;
 }
-.langfilter { margin-left: auto; display: flex; gap: 8px; }
-.langfilter button {
-  font-family: var(--font-ui); font-size: 12px; font-weight: 700; letter-spacing: .02em;
-  padding: 7px 14px; border-radius: 999px; border: 1.5px solid var(--rule);
-  background: transparent; color: var(--sepia); transition: all .15s;
-}
-.langfilter button:hover { border-color: var(--sepia); }
-.langfilter button[aria-pressed="true"] { color: #fff; }
-.langfilter button.all[aria-pressed="true"]  { background: var(--primary); border-color: var(--primary); }
-.langfilter button.la[aria-pressed="true"]   { background: var(--accent-lat); border-color: var(--accent-lat); }
-.langfilter button.grc[aria-pressed="true"]  { background: var(--accent-gr); border-color: var(--accent-gr); }
 
 /* ── Barra di ricerca ─────────────────────────────────────────── */
 .searchwrap { padding: 18px clamp(16px, 4vw, 40px) 6px; background: var(--paper); }
@@ -134,10 +123,6 @@ button { font-family: inherit; cursor: pointer; }
 .welcome-hero { text-align: center; padding: 24px 0 8px; }
 .welcome-hero h1 { font-family: var(--font-display); font-size: clamp(30px, 5vw, 44px); font-weight: 700; color: var(--ink); letter-spacing: -.015em; }
 .welcome-hero p { max-width: 30rem; margin: 16px auto 0; font-size: 17px; line-height: 1.6; color: var(--sepia); }
-.stats-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 30px 0 40px; }
-.stat { background: var(--paper); border: 1px solid var(--rule-soft); border-radius: 10px; padding: 12px 20px; text-align: center; }
-.stat .n { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--primary); }
-.stat .l { font-family: var(--font-ui); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--sepia); margin-top: 2px; }
 .catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
 .catcard {
   text-align: left; background: var(--paper); border: 1px solid var(--rule-soft);
@@ -242,7 +227,7 @@ body[data-lang="grc"] .verse .vt { font-family: var(--font-read-gr); font-size: 
   .browser.open { display: block; }
   .mobtoggle { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-size: 12px; font-weight: 700; color: var(--primary); background: var(--cream); border: 1px solid var(--rule-soft); border-radius: 8px; padding: 8px 14px; margin: 12px auto 0; }
 }
-@media (max-width: 560px) { .langfilter .lbl { display: none; } .brand .sub { display: none; } }
+@media (max-width: 560px) { .brand .sub { display: none; } }
 
 /* ── Dark mode (armonizzata con app/translator/dizionario) ────── */
 /* Dark (D2): token in shared/ [data-theme]. Qui solo le regole del Corpus.
@@ -251,7 +236,6 @@ body[data-lang="grc"] .verse .vt { font-family: var(--font-read-gr); font-size: 
 :root[data-theme="dark"] #q:focus { box-shadow: 0 0 0 4px rgba(139,125,255,.16); }
 :root[data-theme="dark"] .catcard:hover, :root[data-theme="dark"] .res:hover { box-shadow: var(--shadow-lift); }
 :root[data-theme="dark"] mark { color: #fff; }
-:root[data-theme="dark"] .langfilter button[aria-pressed="true"],
 :root[data-theme="dark"] .book-nav button[aria-current="true"] { color: var(--on-primary); }
 </style>
 </head>
@@ -263,11 +247,6 @@ body[data-lang="grc"] .verse .vt { font-family: var(--font-read-gr); font-size: 
     Poetrify
   </a>
   <div class="brand"><span class="mark">Corpus</span><span class="sub">biblioteca dei testi antichi</span></div>
-  <nav class="langfilter" aria-label="Filtra per lingua">
-    <button class="all" data-lang="all" aria-pressed="true">Tutte</button>
-    <button class="la"  data-lang="la"  aria-pressed="false"><span class="lbl">Latino</span><span aria-hidden="true" style="display:none">LA</span></button>
-    <button class="grc" data-lang="grc" aria-pressed="false">Greco</button>
-  </nav>
 </header>
 
 <div class="searchwrap">
@@ -375,20 +354,11 @@ function renderWelcome() {
   state.view = 'welcome'; state.work = null;
   // colore=lingua: nel ramo scelto la welcome porta il suo accento (rosso/blu)
   if (state.lang === 'la' || state.lang === 'grc') document.body.dataset.lang = state.lang; else document.body.removeAttribute('data-lang');
-  const c = state.index.counts;
   const wrap = el('div');
   const hero = el('div', 'welcome-hero');
   hero.appendChild(el('h1', null, 'La biblioteca dei classici'));
   hero.appendChild(el('p', null, 'Il testo originale, greco e latino, da leggere e cercare. Un nucleo del canone scolastico — pronto a crescere.'));
   wrap.appendChild(hero);
-
-  const stats = el('div', 'stats-row');
-  const mk = (n, l) => { const s = el('div', 'stat'); s.appendChild(el('div', 'n', n)); s.appendChild(el('div', 'l', l)); return s; };
-  const fmt = (x) => new Intl.NumberFormat('it-IT').format(x);
-  stats.appendChild(mk(fmt(c.works), 'opere'));
-  stats.appendChild(mk(fmt(c.authors), 'autori'));
-  stats.appendChild(mk(fmt(c.words), 'parole'));
-  wrap.appendChild(stats);
 
   const cat = el('div', 'catalog');
   const works = state.index.works.filter(w => state.lang === 'all' || w.lang === state.lang);
@@ -604,16 +574,6 @@ document.getElementById('q').addEventListener('input', (e) => {
   const v = e.target.value;
   debTimer = setTimeout(() => runSearch(v), 220);
 });
-document.querySelectorAll('.langfilter button').forEach(b => {
-  b.onclick = () => {
-    state.lang = b.dataset.lang;
-    document.querySelectorAll('.langfilter button').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-    const qv = document.getElementById('q').value.trim();
-    if (state.view === 'results' && qv.length >= 2) runSearch(qv);
-    else if (state.view === 'reader') renderAuthors();
-    else renderWelcome();
-  };
-});
 document.getElementById('mobtoggle').onclick = (e) => {
   const b = document.getElementById('browser'); const open = b.classList.toggle('open');
   e.currentTarget.setAttribute('aria-expanded', String(open));
@@ -623,14 +583,11 @@ document.getElementById('mobtoggle').onclick = (e) => {
 (async function init() {
   try {
     await loadIndex();
-    // Cucitura dalla pagina-lingua (?lang=la|grc): entra già nel ramo scelto,
-    // pre-selezionando il filtro invece di partire da «Tutte».
+    // Cucitura dalla pagina-lingua (?lang=la|grc): il ramo è già scelto a monte,
+    // quindi il corpus entra direttamente in quella lingua (niente filtro interno).
     const _ul = (new URLSearchParams(location.search).get('lang') || '').toLowerCase();
     const _branch = (_ul === 'la' || _ul === 'latino') ? 'la' : (_ul === 'grc' || _ul === 'greco') ? 'grc' : null;
-    if (_branch) {
-      state.lang = _branch;
-      document.querySelectorAll('.langfilter button').forEach(x => x.setAttribute('aria-pressed', String(x.dataset.lang === _branch)));
-    }
+    if (_branch) state.lang = _branch;
     renderWelcome();
   } catch (err) {
     $stage.innerHTML = `<div class="empty">Non riesco a caricare il catalogo del corpus.<br><small>${escapeHtml(String(err))}</small><br><br>Apri la pagina tramite un server locale (es. <code>python -m http.server</code>): i <code>fetch</code> dei dati non funzionano da <code>file://</code>.</div>`;

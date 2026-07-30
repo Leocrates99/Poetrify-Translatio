@@ -173,15 +173,6 @@ kbd {
   align-items: stretch;
   flex-wrap: wrap;
 }
-.dict-search-row select {
-  padding: 10px 12px;
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-ui);
-  font-size: 13px;
-  background: var(--ivory);
-  color: var(--ink);
-}
 .dict-search-input-wrap {
   position: relative;
   flex: 1;
@@ -629,15 +620,6 @@ kbd {
   transition: all 0.15s ease;
 }
 .history-clear:hover { background: var(--danger); color: var(--paper); border-color: var(--danger); }
-
-/* ─── Help row sotto la search bar ───────────────────────────────────────── */
-.dict-search-help {
-  margin-top: 8px;
-  font-family: var(--font-ui);
-  font-size: 11px;
-  color: var(--sepia);
-}
-.dict-search-help kbd { font-size: 10px; }
 
 /* ─── Results area ───────────────────────────────────────────────────────── */
 .dict-results-area { min-height: 240px; }
@@ -2306,7 +2288,6 @@ header.topbar { transition: background 0.25s ease; }
    aiuti di sfoglia e sidebar nascosti (restano richiamabili dalla home/ricerca). */
 body.dict-has-entry main{ grid-template-columns:1fr !important; max-width:900px; }
 body.dict-has-entry .main-right{ display:none; }
-body.dict-has-entry .dict-search-help,
 body.dict-has-entry #dict-pos-filter,
 body.dict-has-entry #dict-alphabet,
 body.dict-has-entry .reverse-search-row,
@@ -2385,10 +2366,6 @@ body.dict-has-entry .main-left > section:first-child{ margin-bottom:4px; }
       <h2>🔍 Cerca o esplora</h2>
       <div class="dict-search-wrap">
         <div class="dict-search-row">
-          <select id="dict-lang-select" aria-label="Lingua">
-            <option value="latino">Latino</option>
-            <option value="greco">Greco antico</option>
-          </select>
           <div class="dict-search-input-wrap">
             <input id="dict-search-input" type="text" autocomplete="off"
                    placeholder="Cerca un lemma o una forma flessa…">
@@ -2399,9 +2376,6 @@ body.dict-has-entry .main-left > section:first-child{ margin-bottom:4px; }
           <button id="dict-search-btn" type="button">Cerca</button>
         </div>
         <div id="dict-autocomplete"></div>
-      </div>
-      <div class="dict-search-help">
-        💡 <kbd>/</kbd> focus rapido · <kbd>↑↓</kbd> naviga suggerimenti · <kbd>Enter</kbd> conferma · <kbd>Esc</kbd> chiudi · <kbd>Alt</kbd>+<kbd>←</kbd>/<kbd>→</kbd> back/forward
       </div>
 
       <!-- [NEW 28] Mount point della tastiera virtuale (popolato da JS) -->
@@ -2483,9 +2457,10 @@ document.addEventListener('DOMContentLoaded', () => {
         btn.addEventListener('click', () => {
           const lang = btn.dataset.lang === 'greco' ? 'greco' : 'latino';
           try { sessionStorage.setItem(KEY, lang); } catch (e) {}
-          const sel = document.getElementById('dict-lang-select');
-          if (sel) { sel.value = lang; sel.dispatchEvent(new Event('change', { bubbles: true })); }
           gate.hidden = true;
+          /* Il selettore interno non esiste più: si rientra dalla cucitura ?lang=,
+             la stessa che usa la pagina-lingua (una sola strada per il ramo). */
+          location.search = '?lang=' + (lang === 'greco' ? 'grc' : 'la');
         });
       });
     }

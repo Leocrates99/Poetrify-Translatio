@@ -247,12 +247,6 @@ body[data-lang="latino"] .analysis-tab.active {
 }
 body[data-lang="latino"] .analysis-tab:hover { color: var(--lang-accent); }
 
-/* 2. Lang-toggle nella topbar (latino/greco) */
-body[data-lang="latino"] .lang-toggle button.active {
-  background: var(--lang-accent);
-  color: var(--paper);
-}
-
 /* 3. Menù di sinistra (latino): lettere, spunte di verifica e accento del tab
    attivo in rosso pompeiano invece del blu. */
 body[data-lang="latino"] .tab-letter,
@@ -408,7 +402,7 @@ body[data-lang="greco"] .field textarea.greek {
 }
 /* Touch action: niente double-tap zoom su elementi interattivi → tap istantaneo */
 button, .tab-item, .token, .wizard-step, .analysis-tab,
-.sidebar-btn, .btn, .btn-export, .lang-toggle button { touch-action: manipulation; }
+.sidebar-btn, .btn, .btn-export { touch-action: manipulation; }
 
 button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 input, textarea, select { font-family: inherit; color: inherit; }
@@ -553,13 +547,6 @@ input, textarea, select { font-family: inherit; color: inherit; }
   border-color: var(--primary);
   background: white;
 }
-.lang-toggle {
-  display: flex;
-  background: var(--cream);
-  border-radius: var(--radius-md);
-  padding: 3px;
-  border: 1px solid var(--rule-soft);
-}
 .topbar-iconbtn {
   display: inline-flex;
   align-items: center;
@@ -577,27 +564,6 @@ input, textarea, select { font-family: inherit; color: inherit; }
   background: var(--ivory);
   border-color: var(--rule-soft);
 }
-.lang-toggle button {
-  padding: 5px 14px;
-  border-radius: var(--radius-sm);
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--sepia);
-  font-family: var(--font-classical);
-  letter-spacing: 0.05em;
-  transition: all var(--transition-base);
-}
-/* Ogni pulsante porta il colore della SUA lingua anche da spento, così il
-   toggle si legge a colpo d'occhio come «rosso = latino · blu = greco». */
-.lang-toggle button[data-lang="latino"] { color: #A22E37; }
-.lang-toggle button[data-lang="greco"]  { color: #1800AC; }
-.lang-toggle button.active {
-  background: var(--lang-accent);   /* rosso se latino attivo · blu se greco attivo */
-  color: #fff;
-  box-shadow: 0 2px 6px var(--tr-shadow-strong);
-}
-:root[data-theme="dark"] body .lang-toggle button[data-lang="latino"] { color: #e58a90; }
-:root[data-theme="dark"] body .lang-toggle button[data-lang="greco"]  { color: #8b7dff; }
 .save-status {
   display: flex;
   align-items: center;
@@ -10554,8 +10520,6 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   }
   .brano-meta .meta-field:nth-child(3) { display: none; }
   .meta-field input, .meta-field select { font-size: 13px; padding: 5px 8px; }
-  .lang-toggle { padding: 2px; }
-  .lang-toggle button { padding: 4px 10px; font-size: 11px; }
 
   /* MAIN: layout a colonna unica — sidebar (auto) + editor (1fr scrollabile). */
   .main {
@@ -11206,11 +11170,6 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
         <span class="brand-mark">Poetrify</span>
         <span class="brand-sub">Officina del greco e del latino</span>
       </a>
-      <!-- Toggle lingua (shift) subito a destra del logo. -->
-      <div class="lang-toggle" role="tablist" aria-label="Lingua">
-        <button class="active" data-lang="latino" title="Latino">LAT</button>
-        <button data-lang="greco" title="Greco">ΕΛ</button>
-      </div>
       <!-- Home discreta a icona (dal mockup): torna alla dashboard salvando. -->
       <a class="topbar-iconbtn" href="app.html" onclick="try{persistCurrent()}catch(e){}" title="Torna alla home (dashboard Poetrify)" aria-label="Home">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
@@ -25956,10 +25915,6 @@ function syncTopbar() {
     tbTitle.style.display = noBrano ? 'none' : '';
     tbTitle.textContent = (state.meta.titolo && state.meta.titolo.trim()) ? state.meta.titolo.trim() : 'Versione senza titolo';
   }
-  // Il toggle in alto a destra riflette la lingua attiva (già calcolata sopra).
-  document.querySelectorAll('.lang-toggle button').forEach(b => {
-    b.classList.toggle('active', b.dataset.lang === activeLang);
-  });
   // Aggiorna la pillola identitaria linguistica
   const langPill = document.getElementById('poetrify-lang-pill');
   if (langPill) langPill.textContent = activeLang === 'greco' ? 'Greco' : 'Latino';
@@ -36266,7 +36221,7 @@ function setLingua(lang) {
    progetto attualmente caricato: cambierà solo aprendone/creandone uno. */
 function openLanguageBranch(lang) {
   archiveFilters.lingua = lang;
-  if (state.currentStep !== 7) state.currentStep = 4;   // default: scheda D · Archivio
+  state.currentStep = 7;   // ingresso di ramo: Panoramica (nuovo brano / riprendi)
   persistCurrent();
   renderAll();
   const ln = lang === 'greco' ? 'greco' : 'latino';
@@ -39654,10 +39609,6 @@ function buildCommandPaletteIndex() {
   add('Backup · 💾 Esporta solo il brano corrente',  'Backup', () => exportCurrentProjectJson(), '', '💾');
   add('Backup · 📥 Importa progetti da file (JSON)',  'Backup', () => importProjectsFromFile(),   '', '📥');
 
-  // === Lingua ===
-  add('Lingua · Latino',  'Lingua', () => setLingua('latino'), '', 'LAT');
-  add('Lingua · Greco',   'Lingua', () => setLingua('greco'),  '', 'ΕΛ');
-
   // === Strumenti ===
   add('Apri progetti…',                 'Strumenti', () => openProjectList(),       '', '📂');
   add('Nuovo progetto',                 'Strumenti', () => newProject(),            '', '📄');
@@ -40117,9 +40068,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (tipoSelEl) tipoSelEl.addEventListener('change', e => onTipoTestoChange(e.target.value));
   const versoEl = document.getElementById('meta-versoiniziale');
   if (versoEl) versoEl.addEventListener('input', e => { state.meta.versoIniziale = Math.max(1, parseInt(e.target.value, 10) || 1); persistCurrent(); renderPreview(); renderEditor(); });
-  document.querySelectorAll('.lang-toggle button').forEach(b => {
-    b.addEventListener('click', () => setLingua(b.dataset.lang));
-  });
 
   // Menù laterale: colloca impostazioni e dati-brano nel menù (header minimale).
   arrangeChrome();
