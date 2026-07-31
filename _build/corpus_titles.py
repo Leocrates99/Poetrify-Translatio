@@ -37,6 +37,24 @@ ORDINE
 Gli autori seguono l'**ordine scolastico diacronico** — quello in cui si
 affrontano in classe, non l'alfabetico — così la tavola si legge e si mantiene
 come un programma. Le opere di ciascun autore seguono l'ordine tradizionale.
+
+REGOLA ADOTTATA (decisione del docente, 31 lug 2026)
+----------------------------------------------------
+**Se una traduzione italiana del titolo esiste, si mette quella in prima fascia
+e il latino passa in seconda.** Il latino resta in testa solo dove una forma
+italiana non esiste affatto (Topica, Partitiones oratoriae) o esiste come sola
+glossa esplicativa e non come titolo (De architectura), e per le commedie di
+Plauto che in italiano si citano col titolo latino.
+
+Va detto con chiarezza, perché è una scelta e non un dato di fatto: una verifica
+sull'uso editoriale ha mostrato che **come forma di CITAZIONE prevale il latino**
+per parecchie di queste opere — manuali, Treccani e critica dicono «il De rerum
+natura», non «La natura delle cose». La forma italiana esiste però come titolo di
+edizioni reali in commercio («L'agricoltura», Mondadori; «Bruto», BUR Narducci;
+«Il punitore di se stesso», BUR). Qui si è scelto di privilegiare **il titolo che
+dice all'allievo di che cosa si tratta**, lasciando il latino subito sotto: la
+scheda mostra sempre entrambi, quindi nulla va perduto.
+Per invertire un singolo caso basta rimettere `None`.
 """
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -73,8 +91,8 @@ LAT.update({
 
 # Terenzio
 LAT.update({
-    "phi0134.phi001": None,                       # Andria
-    "phi0134.phi002": None,                       # Heautontimorumenos («Il punitore di sé stesso»)
+    "phi0134.phi001": "La ragazza di Andro",      # Andria
+    "phi0134.phi002": "Il punitore di se stesso", # Heautontimorumenos
     "phi0134.phi003": "L'eunuco",
     "phi0134.phi004": "Formione",
     "phi0134.phi005": "La suocera",
@@ -82,11 +100,11 @@ LAT.update({
 })
 
 # Catone
-LAT.update({"stoa0079.stoa001": None})            # De agri cultura
+LAT.update({"stoa0079.stoa001": "L'agricoltura"})   # De agri cultura
 
 # ── ETÀ REPUBBLICANA ──────────────────────────────────────────────────────
 LAT.update({
-    "phi0550.phi001": None,                       # Lucrezio · De rerum natura
+    "phi0550.phi001": "La natura delle cose",     # Lucrezio · De rerum natura
     "phi0472.phi001": "Carmi",                    # Catullo
     "phi0448.phi001": "La guerra gallica",        # Cesare
     "phi0448.phi002": "La guerra civile",
@@ -143,11 +161,11 @@ LAT.update({
 LAT.update({
     "phi0474.phi036": "L'invenzione retorica",
     "phi0474.phi037": "Dell'oratore",             # De oratore
-    "phi0474.phi038": None,                       # Partitiones oratoriae
-    "phi0474.phi039": None,                       # Brutus
+    "phi0474.phi038": None,                       # Partitiones oratoriae — nessuna forma italiana
+    "phi0474.phi039": "Bruto",                    # Brutus
     "phi0474.phi040": "L'oratore",                # Orator
     "phi0474.phi041": "Il miglior genere di oratori",
-    "phi0474.phi042": None,                       # Topica
+    "phi0474.phi042": None,                       # Topica — mai tradotto in italiano
 })
 # Cicerone · filosofia
 LAT.update({
@@ -155,7 +173,7 @@ LAT.update({
     "phi0474.phi045": "Questioni accademiche",
     "phi0474.phi046": "Questioni accademiche",
     "phi0474.phi047": "I paradossi degli Stoici",
-    "phi0474.phi048": None,                       # De finibus bonorum et malorum
+    "phi0474.phi048": "I termini estremi del bene e del male",   # De finibus
     "phi0474.phi049": "Le Tusculane",
     "phi0474.phi050": "La natura degli dèi",
     "phi0474.phi051": "La vecchiaia",             # De senectute (Cato maior)
