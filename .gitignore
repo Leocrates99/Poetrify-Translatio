@@ -25,6 +25,11 @@ _build/sources/cache/
 # JSON normalizzati (data/corpus/), NON i sorgenti grezzi.
 _build/corpus_cache/
 
+# Ramo CORPUS · import integrale: cloni superficiali dei repository Perseus
+# (~250 MB). Si rifanno con `git clone --depth 1` (vedi CORPUS_SPEC.md, fase C0).
+# Versionati lo script e i JSON normalizzati, mai i sorgenti.
+_build/corpus_sources/
+
 # Fusione (S.2): input/batch e output grezzi degli agenti = intermedi rigenerabili.
 # Versionato il PRODOTTO fuso data/*/fused/ (output LLM NON riproducibile) + gli script.
 _build/fusion_input/

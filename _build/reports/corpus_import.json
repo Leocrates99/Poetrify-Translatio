@@ -1,0 +1,374 @@
+{
+ "imported": 1157,
+ "rejected": 69,
+ "unmapped_textgroups": [],
+ "rejects": [
+  {
+   "id": "phi0474.phi044",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Cicerone"
+  },
+  {
+   "id": "phi0692.phi009",
+   "title": "phi0692.phi009",
+   "reason": "XML illeggibile: mismatched tag: line 409, column 27",
+   "author": "Appendix Vergiliana"
+  },
+  {
+   "id": "phi0972.phi001p",
+   "title": "phi0972.phi001p",
+   "reason": "XML illeggibile: not well-formed (invalid token): line 526, column 1",
+   "author": "Petronio"
+  },
+  {
+   "id": "phi1014.phi004",
+   "title": "Fragmenta",
+   "reason": "testo assente o troppo breve",
+   "chars": 0,
+   "author": "Seneca il Vecchio"
+  },
+  {
+   "id": "phi1221.phi007",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Augusto"
+  },
+  {
+   "id": "tlg0007.tlg125",
+   "title": "Αἴτια φυσικά",
+   "reason": "edizione bilingue (lingua mista)",
+   "foreign_pct": 15.5,
+   "author": "Plutarco"
+  },
+  {
+   "id": "tlg0032.tlg015",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Senofonte"
+  },
+  {
+   "id": "tlg0061.tlg001",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Pseudo-Luciano"
+  },
+  {
+   "id": "tlg0061.tlg003",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Pseudo-Luciano"
+  },
+  {
+   "id": "tlg0061.tlg004",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Pseudo-Luciano"
+  },
+  {
+   "id": "tlg0061.tlg006",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Pseudo-Luciano"
+  },
+  {
+   "id": "tlg0081.tlg007",
+   "title": "Libri secundi de antiquis oratoribus reliquiae",
+   "reason": "testo assente o troppo breve",
+   "chars": 3,
+   "author": "Dionigi di Alicarnasso"
+  },
+  {
+   "id": "tlg0094.tlg001",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Pseudo-Plutarco"
+  },
+  {
+   "id": "tlg0527.tlg001",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg002",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg003",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg004",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg005",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg006",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg008",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg010",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg011",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg012",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg013",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg014",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg015",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg016",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg018",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg019",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg027",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg029",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg030",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg031",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg032",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg036",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg037",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg038",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg039",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg040",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg041",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg042",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg043",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg044",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg045",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg046",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg047",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg048",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg049",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg051",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg053",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0527.tlg056",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Antico Testamento"
+  },
+  {
+   "id": "tlg0551.tlg001",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Appiano"
+  },
+  {
+   "id": "tlg0551.tlg002",
+   "title": "ἐκ τῆς βασιλικῆς",
+   "reason": "testo assente o troppo breve",
+   "chars": 0,
+   "author": "Appiano"
+  },
+  {
+   "id": "tlg0551.tlg003",
+   "title": "ἐκ τῆς Ἰταλικῆς",
+   "reason": "testo assente o troppo breve",
+   "chars": 0,
+   "author": "Appiano"
+  },
+  {
+   "id": "tlg0551.tlg004",
+   "title": "ἐκ τῆς Σαυνιτικῆς",
+   "reason": "testo assente o troppo breve",
+   "chars": 0,
+   "author": "Appiano"
+  },
+  {
+   "id": "tlg0551.tlg005",
+   "title": "ἐκ τῆς Κελτῖκης",
+   "reason": "testo assente o troppo breve",
+   "chars": 0,
+   "author": "Appiano"
+  },
+  {
+   "id": "tlg0551.tlg006",
+   "title": "ἐκ τῆς Σικελῖκης καὶ νησιωτικής",
+   "reason": "testo assente o troppo breve",
+   "chars": 0,
+   "author": "Appiano"
+  },
+  {
+   "id": "tlg0551.tlg010",
+   "title": "ἐκ τῆς Νομαδικῆς",
+   "reason": "testo assente o troppo breve",
+   "chars": 0,
+   "author": "Appiano"
+  },
+  {
+   "id": "tlg0551.tlg011",
+   "title": "ἐκ τῆς Μακεδονικῆς",
+   "reason": "testo assente o troppo breve",
+   "chars": 0,
+   "author": "Appiano"
+  },
+  {
+   "id": "tlg0557.tlg003a",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Epitteto"
+  },
+  {
+   "id": "tlg0627.tlg014",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Ippocrate"
+  },
+  {
+   "id": "tlg0646.tlg004",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Pseudo-Giustino"
+  },
+  {
+   "id": "tlg1271.tlg001",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Clemente Romano"
+  },
+  {
+   "id": "tlg1271.tlg002",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Clemente Romano"
+  },
+  {
+   "id": "tlg1311.tlg001",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Didaché"
+  },
+  {
+   "id": "tlg1419.tlg001",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Erma"
+  },
+  {
+   "id": "tlg1443.tlg001",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Ignazio di Antiochia"
+  },
+  {
+   "id": "tlg1484.tlg001",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Martirio di Policarpo"
+  },
+  {
+   "id": "tlg1622.tlg001",
+   "reason": "nessuna edizione in lingua originale",
+   "author": "Policarpo"
+  }
+ ]
+}

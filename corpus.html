@@ -6,7 +6,7 @@
 <title>Poetrify · Corpus dei testi antichi</title>
 <!-- Anti-flash tema (D2): imposta [data-theme] prima del paint -->
 <script>(function(){try{var t=localStorage.getItem('poetrify-theme');if(t!=='dark'&&t!=='light'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
-<!-- Font self-hosted (vendor/fonts/) — GFS Didot copre il greco POLITONICO -->
+<!-- Font self-hosted (vendor/fonts/) — GreekTimes copre il greco POLITONICO -->
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
 <!-- Token condivisi (fonte unica del design system · shared/) -->
 <link rel="stylesheet" href="shared/poetrify-tokens.css">
@@ -24,8 +24,6 @@ html, body {
 body { display: flex; flex-direction: column; }
 button { font-family: inherit; cursor: pointer; }
 ::selection { background: rgba(24,0,172,.14); }
-/* Identità cromatica di LINGUA: in lettura l'accento del lettore commuta
-   (latino rosso pompeiano · greco blu Poetrify), coerente in chiaro e scuro. */
 /* colore=lingua del lettore: in shared/poetrify-tokens.css (body[data-lang]). */
 
 /* ── Masthead ─────────────────────────────────────────────────── */
@@ -55,9 +53,7 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ── Barra di ricerca ─────────────────────────────────────────── */
 .searchwrap { padding: 18px clamp(16px, 4vw, 40px) 6px; background: var(--paper); }
-.searchbox {
-  position: relative; max-width: 760px; margin: 0 auto;
-}
+.searchbox { position: relative; max-width: 760px; margin: 0 auto; }
 .searchbox svg { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); width: 19px; height: 19px; color: var(--sepia); pointer-events: none; }
 #q {
   width: 100%; font-family: var(--font-read); font-size: 17px; color: var(--ink);
@@ -85,90 +81,142 @@ button { font-family: inherit; cursor: pointer; }
 .browser h2 {
   font-family: var(--font-ui); font-size: 10.5px; font-weight: 700;
   text-transform: uppercase; letter-spacing: .1em; color: var(--sepia);
-  margin: 0 6px 12px;
+  margin: 0 6px 10px; display: flex; align-items: baseline; gap: 6px;
 }
-.author { margin-bottom: 4px; }
-.author > summary {
-  list-style: none; cursor: pointer; display: flex; align-items: baseline; gap: 8px;
-  padding: 8px 10px; border-radius: 8px; transition: background .12s;
+.browser h2 .n { margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--sepia-soft); }
+#authorfilter {
+  width: 100%; font-family: var(--font-ui); font-size: 13px; color: var(--ink);
+  padding: 7px 11px; border: 1px solid var(--rule); border-radius: 8px;
+  background: var(--ivory); margin-bottom: 10px;
 }
-.author > summary::-webkit-details-marker { display: none; }
-.author > summary:hover { background: var(--cream); }
-.author .aname { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--ink); }
-.author .alang {
-  margin-left: auto; font-family: var(--font-ui); font-size: 9px; font-weight: 700;
-  letter-spacing: .08em; padding: 2px 7px; border-radius: 999px; align-self: center;
+#authorfilter:focus { outline: none; border-color: var(--primary); }
+.arow {
+  display: flex; align-items: baseline; gap: 8px; width: 100%; text-align: left;
+  background: none; border: none; padding: 6px 9px; border-radius: 8px;
+  color: var(--ink); transition: background .12s;
 }
-.author.la  .aname { color: var(--accent-lat); }
-.author.grc .aname { color: var(--accent-gr); }
-.author.la  .alang { color: var(--accent-lat); background: rgba(162,46,55,.08); }
-.author.grc .alang { color: var(--accent-gr);  background: rgba(24,0,172,.07); }
-.worklist { padding: 2px 0 8px 12px; }
-.worklink {
-  display: block; width: 100%; text-align: left; background: none; border: none;
-  padding: 7px 10px 7px 14px; border-left: 2px solid var(--rule-soft);
-  color: var(--ink); border-radius: 0 6px 6px 0; transition: background .12s, border-color .12s;
-}
-.worklink:hover { background: var(--cream); border-left-color: var(--accent); }
-.worklink[aria-current="true"] { background: var(--cream); border-left-color: var(--accent); }
-.worklink .wtitle { font-family: var(--font-read); font-size: 15px; }
-.author.grc .worklink .wtitle { font-family: var(--font-read-gr); font-size: 16px; }
-.worklink .wmeta { display: block; font-family: var(--font-ui); font-size: 11px; color: var(--sepia); margin-top: 1px; }
+.arow:hover { background: var(--cream); }
+.arow[aria-current="true"] { background: var(--cream); box-shadow: inset 3px 0 0 var(--accent); }
+.arow .aname { font-family: var(--font-display); font-size: 15px; font-weight: 600; }
+.arow.la .aname { color: var(--accent-lat); }
+.arow.grc .aname { color: var(--accent-gr); }
+.arow .an { margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--sepia); }
 
-/* ── Stage (benvenuto / risultati / lettore) ──────────────────── */
+/* ── Stage ────────────────────────────────────────────────────── */
 .stage { padding: clamp(20px, 3vw, 40px) clamp(16px, 4vw, 48px) 80px; overflow-x: hidden; }
-.stage-inner { max-width: 820px; margin: 0 auto; }
+.stage-inner { max-width: 900px; margin: 0 auto; }
 
-/* Benvenuto */
-.welcome-hero { text-align: center; padding: 24px 0 8px; }
+.welcome-hero { text-align: center; padding: 18px 0 6px; }
 .welcome-hero h1 { font-family: var(--font-display); font-size: clamp(30px, 5vw, 44px); font-weight: 700; color: var(--ink); letter-spacing: -.015em; }
-.welcome-hero p { max-width: 30rem; margin: 16px auto 0; font-size: 17px; line-height: 1.6; color: var(--sepia); }
+.welcome-hero p { max-width: 32rem; margin: 14px auto 0; font-size: 17px; line-height: 1.6; color: var(--sepia); }
+.stats-row { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin: 24px 0 8px; }
+.stat { background: var(--paper); border: 1px solid var(--rule-soft); border-radius: var(--radius-lg); padding: 10px 18px; text-align: center; }
+.stat .n { font-family: var(--font-display); font-size: 23px; font-weight: 700; color: var(--primary); font-variant-numeric: tabular-nums; }
+.stat .l { font-family: var(--font-ui); font-size: 10.5px; font-weight: 600; text-transform: uppercase; letter-spacing: .06em; color: var(--sepia); margin-top: 1px; }
+
+/* ── Faccette ─────────────────────────────────────────────────── */
+.facetbar { display: flex; gap: 7px; flex-wrap: wrap; align-items: center; margin-top: 14px; }
+.facetbar + .facetbar { margin-top: 8px; }
+.facet-lbl {
+  font-family: var(--font-ui); font-size: 10px; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--sepia-soft); margin-right: 2px; min-width: 52px;
+}
+.facet {
+  font-family: var(--font-ui); font-size: 11.5px; font-weight: 600; padding: 5px 11px;
+  border-radius: var(--radius-pill); border: 1px solid var(--rule); color: var(--ink-soft);
+  background: var(--paper); transition: all .13s;
+}
+.facet:hover { border-color: var(--accent); color: var(--accent); }
+.facet .c { color: var(--sepia); font-variant-numeric: tabular-nums; font-size: 10px; margin-left: 5px; }
+.facet[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: var(--on-primary); }
+.facet[aria-pressed="true"] .c { color: var(--on-primary); opacity: .75; }
+.resultline {
+  font-family: var(--font-ui); font-size: 12.5px; color: var(--sepia);
+  margin: 20px 0 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.resultline b { color: var(--ink); }
+.clearf {
+  font-family: var(--font-ui); font-size: 11px; font-weight: 600; color: var(--accent);
+  background: none; border: none; text-decoration: underline; padding: 0;
+}
+
+/* ── Griglia opere ────────────────────────────────────────────── */
 .catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
 .catcard {
   text-align: left; background: var(--paper); border: 1px solid var(--rule-soft);
-  border-radius: 12px; padding: 18px 18px 16px; border-left: 4px solid var(--rule);
+  border-radius: var(--radius-lg); padding: 16px 16px 14px; border-left: 4px solid var(--rule);
   transition: border-color .15s, box-shadow .15s, transform .15s;
 }
-.catcard:hover { box-shadow: 0 10px 26px rgba(24,0,172,.08); transform: translateY(-2px); }
+.catcard:hover { box-shadow: var(--shadow-lift); transform: translateY(-2px); }
 .catcard.la  { border-left-color: var(--accent-lat); }
 .catcard.grc { border-left-color: var(--accent-gr); }
-.catcard .ctitle { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--ink); line-height: 1.15; }
-.catcard.grc .ctitle { font-family: var(--font-read-gr); }
-.catcard .cauthor { font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; color: var(--sepia); margin-top: 4px; }
-.catcard .cmeta { font-family: var(--font-ui); font-size: 11px; color: var(--sepia); margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap; }
-.catcard .cmeta span { padding: 2px 8px; border-radius: 999px; background: var(--cream); }
+.catcard .ctitle { font-family: var(--font-display); font-size: 18.5px; font-weight: 700; color: var(--ink); line-height: 1.15; }
+.catcard.grc .ctitle { font-family: var(--font-classical); }
+.catcard .cauthor { font-family: var(--font-ui); font-size: 12px; font-weight: 600; color: var(--sepia); margin-top: 4px; }
+.catcard .cmeta { font-family: var(--font-ui); font-size: 10.5px; color: var(--sepia); margin-top: 9px; display: flex; gap: 5px; flex-wrap: wrap; }
+.catcard .cmeta span { padding: 2px 8px; border-radius: var(--radius-pill); background: var(--cream); }
+.catcard .cmeta span.inf { border: 1px dashed var(--rule); background: transparent; }
+.sentinel { height: 1px; }
+.moreline { text-align: center; font-family: var(--font-ui); font-size: 12px; color: var(--sepia-soft); padding: 18px 0; }
 
-/* Risultati ricerca */
+/* ── Pagina autore ────────────────────────────────────────────── */
+.author-head { border-bottom: 2px solid var(--accent); padding-bottom: 14px; margin-bottom: 6px; }
+.author-head .rk { font-family: var(--font-ui); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
+.author-head h1 { font-family: var(--font-display); font-size: clamp(26px, 4vw, 36px); font-weight: 700; line-height: 1.1; margin-top: 5px; }
+.author-head .byline { font-family: var(--font-ui); font-size: 13px; color: var(--sepia); margin-top: 7px; }
+.backlink {
+  font-family: var(--font-ui); font-size: 12px; font-weight: 600; color: var(--sepia);
+  background: none; border: none; padding: 4px 0; margin-bottom: 12px;
+}
+.backlink:hover { color: var(--accent); }
+
+/* ── Risultati ricerca ────────────────────────────────────────── */
 .results-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; flex-wrap: wrap; }
 .results-head h1 { font-family: var(--font-display); font-size: 24px; font-weight: 700; }
 .results-head .count { font-family: var(--font-ui); font-size: 13px; color: var(--sepia); }
+.sect-lbl {
+  font-family: var(--font-ui); font-size: 10.5px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--sepia); margin: 26px 0 10px;
+  display: flex; align-items: center; gap: 9px;
+}
+.sect-lbl::after { content: ""; flex: 1; height: 1px; background: var(--rule-soft); }
+.stageline {
+  font-family: var(--font-ui); font-size: 12px; color: var(--sepia);
+  display: flex; align-items: center; gap: 9px; padding: 9px 13px; background: var(--cream);
+  border-radius: var(--radius-md); flex-wrap: wrap; margin-bottom: 4px;
+}
+.stageline b { color: var(--ink); }
+.prog { height: 3px; background: var(--rule-soft); border-radius: 2px; flex: 1; min-width: 60px; overflow: hidden; }
+.prog i { display: block; height: 100%; background: var(--accent); border-radius: 2px; transition: width .2s; }
 .res {
   width: 100%; text-align: left; background: var(--paper); border: 1px solid var(--rule-soft);
-  border-left: 3px solid var(--rule); border-radius: 10px; padding: 13px 16px; margin: 10px 0;
+  border-left: 3px solid var(--rule); border-radius: var(--radius-md); padding: 12px 15px; margin: 9px 0;
   transition: border-color .13s, box-shadow .13s;
 }
-.res:hover { box-shadow: 0 6px 18px rgba(0,0,0,.05); border-left-color: var(--accent); }
+.res:hover { box-shadow: var(--shadow-sm); border-left-color: var(--accent); }
 .res.la  { --accent: var(--accent-lat); }
 .res.grc { --accent: var(--accent-gr); }
 .res .rref { font-family: var(--font-ui); font-size: 11.5px; font-weight: 600; color: var(--sepia); margin-bottom: 5px; }
 .res .rref b { color: var(--accent); }
 .res .rtext { font-family: var(--font-read); font-size: 16px; line-height: 1.5; color: var(--ink); }
-.res.grc .rtext { font-family: var(--font-read-gr); font-size: 17px; }
+.res.grc .rtext { font-family: var(--font-classical); font-size: 17px; }
 mark { background: var(--mark); color: inherit; border-radius: 3px; padding: 0 1px; }
 
 /* ── Lettore ──────────────────────────────────────────────────── */
 .reader-head { border-bottom: 2px solid var(--accent); padding-bottom: 16px; margin-bottom: 4px; }
 .reader-head .rk { font-family: var(--font-ui); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--accent); }
 .reader-head h1 { font-family: var(--font-display); font-size: clamp(28px, 4vw, 38px); font-weight: 700; color: var(--ink); line-height: 1.1; margin-top: 6px; }
-body[data-lang="grc"] .reader-head h1 { font-family: var(--font-read-gr); font-weight: 700; }
+body[data-lang="grc"] .reader-head h1 { font-family: var(--font-classical); font-weight: 700; }
 .reader-head .byline { font-family: var(--font-read); font-size: 17px; font-style: italic; color: var(--sepia); margin-top: 6px; }
+.reader-head .byline button { font: inherit; color: inherit; background: none; border: none; text-decoration: underline; text-underline-offset: 3px; padding: 0; }
+.reader-head .byline button:hover { color: var(--accent); }
 .reader-head .src { font-family: var(--font-mono); font-size: 10.5px; color: var(--sepia); margin-top: 10px; word-break: break-all; }
 .reader-head .src a { color: var(--accent); text-decoration: none; }
 .book-nav { display: flex; flex-wrap: wrap; gap: 6px; margin: 18px 0 8px; }
 .book-nav .blabel { font-family: var(--font-ui); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--sepia); align-self: center; margin-right: 4px; }
 .book-nav button {
   font-family: var(--font-ui); font-size: 13px; font-weight: 600; min-width: 34px;
-  padding: 5px 11px; border-radius: 8px; border: 1.5px solid var(--rule); background: transparent; color: var(--ink); transition: all .13s;
+  padding: 5px 11px; border-radius: var(--radius-md); border: 1.5px solid var(--rule); background: transparent; color: var(--ink); transition: all .13s;
 }
 .book-nav button:hover { border-color: var(--accent); }
 .book-nav button[aria-current="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
@@ -178,29 +226,23 @@ body[data-lang="grc"] .reader-head h1 { font-family: var(--font-read-gr); font-w
   border-radius: 14px; padding: clamp(20px, 3vw, 40px) clamp(18px, 3vw, 44px);
   margin-top: 12px; box-shadow: inset 0 1px 0 rgba(255,255,255,.5);
 }
-/* Prosa */
 .para { position: relative; margin: 0 0 14px; padding-left: 8px; }
 .para .loc {
   font-family: var(--font-mono); font-size: 10.5px; color: var(--sepia);
   user-select: none; margin-right: 8px; font-weight: 500;
 }
 .para .txt { font-family: var(--font-read); font-size: 18px; line-height: 1.72; color: var(--ink); }
-body[data-lang="grc"] .para .txt { font-family: var(--font-read-gr); font-size: 20px; line-height: 1.85; }
-/* Versi */
+body[data-lang="grc"] .para .txt { font-family: var(--font-classical); font-size: 20px; line-height: 1.85; }
 .verse { display: flex; align-items: baseline; gap: 14px; padding: 1px 0; }
 .verse .ln { flex: 0 0 34px; text-align: right; font-family: var(--font-mono); font-size: 10.5px; color: var(--sepia); user-select: none; }
 .verse .vt { font-family: var(--font-read); font-size: 18px; line-height: 1.62; color: var(--ink); }
-body[data-lang="grc"] .verse .vt { font-family: var(--font-read-gr); font-size: 20px; line-height: 1.72; }
+body[data-lang="grc"] .verse .vt { font-family: var(--font-classical); font-size: 20px; line-height: 1.72; }
 .verse:target, .para:target { background: rgba(251,227,138,.4); border-radius: 6px; }
 .unit.flash { animation: flash 1.6s ease; }
 @keyframes flash { 0%,40% { background: rgba(251,227,138,.55); } 100% { background: transparent; } }
 
-/* azioni per unità (hover) */
 .unit { border-radius: 6px; }
-.unit .acts {
-  display: inline-flex; gap: 4px; margin-left: 8px; opacity: 0; transition: opacity .12s;
-  vertical-align: middle;
-}
+.unit .acts { display: inline-flex; gap: 4px; margin-left: 8px; opacity: 0; transition: opacity .12s; vertical-align: middle; }
 .unit:hover .acts { opacity: 1; }
 .acts button {
   font-family: var(--font-ui); font-size: 10.5px; font-weight: 600; color: var(--sepia);
@@ -208,30 +250,24 @@ body[data-lang="grc"] .verse .vt { font-family: var(--font-read-gr); font-size: 
   transition: all .12s;
 }
 .acts button:hover { color: var(--accent); border-color: var(--accent); }
-.wtok { cursor: pointer; }
-.wtok:hover { text-decoration: underline; text-decoration-color: var(--accent); text-underline-offset: 3px; }
 
 .loading, .empty { text-align: center; color: var(--sepia); padding: 60px 20px; font-size: 15px; }
 .spinner { width: 26px; height: 26px; border: 3px solid var(--rule-soft); border-top-color: var(--accent); border-radius: 50%; margin: 0 auto 14px; animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: #fff; font-family: var(--font-ui); font-size: 13px; padding: 9px 16px; border-radius: 999px; opacity: 0; transition: all .2s; pointer-events: none; z-index: 60; }
+.toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--paper); font-family: var(--font-ui); font-size: 13px; padding: 9px 16px; border-radius: var(--radius-pill); opacity: 0; transition: all .2s; pointer-events: none; z-index: 60; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
 .mobtoggle { display: none; }
 
-/* ── Responsive ───────────────────────────────────────────────── */
 @media (max-width: 860px) {
   .layout { grid-template-columns: 1fr; }
   .browser { position: static; max-height: none; border-right: none; border-bottom: 1px solid var(--rule-soft); display: none; }
   .browser.open { display: block; }
-  .mobtoggle { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-size: 12px; font-weight: 700; color: var(--primary); background: var(--cream); border: 1px solid var(--rule-soft); border-radius: 8px; padding: 8px 14px; margin: 12px auto 0; }
+  .mobtoggle { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-size: 12px; font-weight: 700; color: var(--primary); background: var(--cream); border: 1px solid var(--rule-soft); border-radius: var(--radius-md); padding: 8px 14px; margin: 12px auto 0; }
 }
-@media (max-width: 560px) { .brand .sub { display: none; } }
+@media (max-width: 560px) { .brand .sub { display: none; } .facet-lbl { min-width: 0; } }
 
-/* ── Dark mode (armonizzata con app/translator/dizionario) ────── */
-/* Dark (D2): token in shared/ [data-theme]. Qui solo le regole del Corpus.
-   La colonna di lettura tiene una pergamena scura più calda + evidenziazione propria. */
+/* Dark (D2): token in shared/ [data-theme]. Qui solo le regole del Corpus. */
 :root[data-theme="dark"] { --parchment: #24242c; --parchment-edge: #34343f; --mark: #6b5a1e; }
 :root[data-theme="dark"] #q:focus { box-shadow: 0 0 0 4px rgba(139,125,255,.16); }
 :root[data-theme="dark"] .catcard:hover, :root[data-theme="dark"] .res:hover { box-shadow: var(--shadow-lift); }
@@ -253,15 +289,16 @@ body[data-lang="grc"] .verse .vt { font-family: var(--font-read-gr); font-size: 
   <div class="searchbox">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
     <input id="q" type="search" autocomplete="off" spellcheck="false"
-           placeholder="Cerca nel corpus — una parola, un sintagma…" aria-label="Cerca nel corpus">
+           placeholder="Cerca un autore, un'opera o una parola nei testi…" aria-label="Cerca nel corpus">
   </div>
   <p class="searchhint">La ricerca ignora accenti e spiriti: cerca <b>μηνιν</b> e trovi <b>μῆνιν</b>; <b>vita</b> trova anche <b>uita</b>.</p>
 </div>
 
 <main class="layout">
-  <button class="mobtoggle" id="mobtoggle" aria-expanded="false">☰ Sfoglia autori e opere</button>
-  <aside class="browser" id="browser" aria-label="Classificazione per autore e opera">
-    <h2>Sfoglia per autore</h2>
+  <button class="mobtoggle" id="mobtoggle" aria-expanded="false">☰ Sfoglia gli autori</button>
+  <aside class="browser" id="browser" aria-label="Sfoglia per autore">
+    <h2>Autori <span class="n" id="acount"></span></h2>
+    <input id="authorfilter" type="search" autocomplete="off" placeholder="Filtra gli autori…" aria-label="Filtra gli autori">
     <div id="authors"></div>
   </aside>
   <section class="stage"><div class="stage-inner" id="stage"><div class="loading"><div class="spinner"></div>Carico il catalogo…</div></div></section>
@@ -272,19 +309,37 @@ body[data-lang="grc"] .verse .vt { font-family: var(--font-read-gr); font-size: 
 <script>
 'use strict';
 // ───────────────────────────────────────────────────────────────────────────
-// Poetrify · Corpus — lettore local-first (nessuna dipendenza, fetch dei JSON)
+// Poetrify · Corpus — biblioteca dei testi antichi (local-first, senza build)
+//
+// ARCHITETTURA DELLA RICERCA (fase C5 di _build/CORPUS_SPEC.md)
+// Con 1.157 opere e ~16 milioni di parole non si può più scandire tutto: si
+// interroga un INDICE INVERSO (forma → opere) diviso a spicchi, si restringe il
+// campo alle poche opere candidate e solo QUELLE si scaricano e si scandiscono
+// per trovare il passo esatto. Il costo dipende da quanto è rara la parola
+// cercata, non da quanto è grande il corpus.
 // ───────────────────────────────────────────────────────────────────────────
 const BASE = 'data/corpus';
-const state = { lang: 'all', index: null, docs: {}, allLoaded: false, view: 'welcome', work: null, book: null };
+const PAGE = 60;              // opere disegnate per volta nel catalogo
+const MAX_WORKS_SCAN = 60;    // tetto di opere aperte per una ricerca
+const MAX_HITS = 200;         // tetto di passi mostrati
+
+const state = {
+  lang: 'all', index: null, docs: {},
+  manifest: null, shards: {},
+  view: 'welcome', work: null, book: null, author: null,
+  facets: { genre: null, epoch: null },
+  shown: 0, filtered: [],
+};
 
 const el = (t, c, txt) => { const e = document.createElement(t); if (c) e.className = c; if (txt != null) e.textContent = txt; return e; };
 const $stage = document.getElementById('stage');
 const $authors = document.getElementById('authors');
 const langName = { la: 'Latino', grc: 'Greco' };
-const langTag  = { la: 'LAT', grc: 'ΕΛΛ' };
+const nf = new Intl.NumberFormat('it-IT');
 
-// Folding accent/case-insensitive con MAPPA verso gli indici originali,
-// per evidenziare la porzione esatta anche saltando diacritici.
+// Folding accent/case-insensitive con MAPPA verso gli indici originali, per
+// evidenziare la porzione esatta anche saltando i diacritici. Deve restare
+// IDENTICA a fold() in _build/build_corpus_index.py, o l'indice non combacia.
 function foldMap(s) {
   const out = []; const map = [];
   for (let i = 0; i < s.length; i++) {
@@ -304,85 +359,239 @@ function toast(msg) {
   clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove('show'), 1600);
 }
 
-// ── Caricamento dati ───────────────────────────────────────────────────────
+// ── Dati ───────────────────────────────────────────────────────────────────
 async function loadIndex() {
   const r = await fetch(`${BASE}/_index.json`);
-  if (!r.ok) throw new Error('indice non trovato');
+  if (!r.ok) throw new Error('catalogo non trovato');
   state.index = await r.json();
 }
 async function loadWork(id) {
   if (state.docs[id]) return state.docs[id];
   const meta = state.index.works.find(w => w.id === id);
+  if (!meta) throw new Error('opera sconosciuta: ' + id);
   const r = await fetch(`${BASE}/${meta.lang}/${id}.json`);
+  if (!r.ok) throw new Error('opera non caricata: ' + id);
   const doc = await r.json();
   state.docs[id] = doc;
   return doc;
 }
-async function loadAll() {
-  if (state.allLoaded) return;
-  await Promise.all(state.index.works.map(w => loadWork(w.id)));
-  state.allLoaded = true;
+async function loadManifest() {
+  if (state.manifest !== null) return state.manifest;
+  try {
+    const r = await fetch(`${BASE}/_idx/_manifest.json`);
+    state.manifest = r.ok ? await r.json() : false;
+  } catch { state.manifest = false; }
+  return state.manifest;
+}
+async function loadShard(ch) {
+  const key = ch.codePointAt(0).toString(16).padStart(4, '0');
+  if (key in state.shards) return state.shards[key];
+  try {
+    const r = await fetch(`${BASE}/_idx/${key}.json`);
+    state.shards[key] = r.ok ? await r.json() : null;
+  } catch { state.shards[key] = null; }
+  return state.shards[key];
 }
 
-// ── Sidebar: classificazione autore → opera ────────────────────────────────
-function renderAuthors() {
+// ── Selezione corrente ─────────────────────────────────────────────────────
+function inBranch(w) { return state.lang === 'all' || w.lang === state.lang; }
+function currentWorks() {
+  return state.index.works.filter(w =>
+    inBranch(w) &&
+    (!state.facets.genre || w.genre === state.facets.genre) &&
+    (!state.facets.epoch || w.epoch === state.facets.epoch));
+}
+
+// ── Colonna autori ─────────────────────────────────────────────────────────
+function renderAuthors(filter) {
+  const f = fold(filter || '');
+  const authors = state.index.authors
+    .filter(a => (state.lang === 'all' || a.lang === state.lang) && (!f || fold(a.name).includes(f)));
+  document.getElementById('acount').textContent = authors.length;
   $authors.innerHTML = '';
-  const authors = state.index.authors.filter(a => state.lang === 'all' || a.lang === state.lang);
+  const frag = document.createDocumentFragment();
   for (const a of authors) {
-    const det = el('details', `author ${a.lang}`); det.open = false;
-    const sum = el('summary');
-    sum.appendChild(el('span', 'aname', a.name));
-    sum.appendChild(el('span', 'alang', langTag[a.lang]));
-    det.appendChild(sum);
-    const list = el('div', 'worklist');
-    for (const w of a.works) {
-      const b = el('button', 'worklink'); b.dataset.id = w.id;
-      if (state.work && state.work.id === w.id) b.setAttribute('aria-current', 'true');
-      b.appendChild(el('span', 'wtitle', w.title));
-      b.appendChild(el('span', 'wmeta', `${w.genre} · ${w.kind === 'versi' ? w.units + ' versi' : w.units + ' passi'}`));
-      b.onclick = () => openWork(w.id);
-      list.appendChild(b);
-    }
-    det.appendChild(list);
-    if (state.work && a.works.some(w => w.id === state.work.id)) det.open = true;
-    $authors.appendChild(det);
+    const b = el('button', `arow ${a.lang}`);
+    if (state.author === a.id) b.setAttribute('aria-current', 'true');
+    b.appendChild(el('span', 'aname', a.name));
+    b.appendChild(el('span', 'an', a.works));
+    b.onclick = () => openAuthor(a.id);
+    frag.appendChild(b);
   }
+  if (!authors.length) {
+    const e = el('div', 'moreline', 'Nessun autore con questo nome.');
+    frag.appendChild(e);
+  }
+  $authors.appendChild(frag);
 }
 
-// ── Benvenuto / catalogo ───────────────────────────────────────────────────
+// ── Biblioteca (catalogo a faccette) ───────────────────────────────────────
 function renderWelcome() {
-  state.view = 'welcome'; state.work = null;
-  // colore=lingua: nel ramo scelto la welcome porta il suo accento (rosso/blu)
-  if (state.lang === 'la' || state.lang === 'grc') document.body.dataset.lang = state.lang; else document.body.removeAttribute('data-lang');
+  state.view = 'welcome'; state.work = null; state.author = null;
+  if (state.lang === 'la' || state.lang === 'grc') document.body.dataset.lang = state.lang;
+  else document.body.removeAttribute('data-lang');
+
   const wrap = el('div');
   const hero = el('div', 'welcome-hero');
   hero.appendChild(el('h1', null, 'La biblioteca dei classici'));
-  hero.appendChild(el('p', null, 'Il testo originale, greco e latino, da leggere e cercare. Un nucleo del canone scolastico — pronto a crescere.'));
+  hero.appendChild(el('p', null, 'Il testo originale, greco e latino: da sfogliare per autore, restringere per genere ed epoca, o cercare parola per parola in tutto il corpus.'));
   wrap.appendChild(hero);
 
-  const cat = el('div', 'catalog');
-  const works = state.index.works.filter(w => state.lang === 'all' || w.lang === state.lang);
-  for (const w of works) {
-    const card = el('button', `catcard ${w.lang}`);
-    card.appendChild(el('div', 'ctitle', w.title));
-    card.appendChild(el('div', 'cauthor', w.author));
-    const meta = el('div', 'cmeta');
-    meta.appendChild(el('span', null, w.genre));
-    meta.appendChild(el('span', null, w.epoch));
-    meta.appendChild(el('span', null, w.kind === 'versi' ? `${new Intl.NumberFormat('it-IT').format(w.units)} versi` : `${w.units} passi`));
-    card.appendChild(meta);
-    card.onclick = () => openWork(w.id);
-    cat.appendChild(card);
-  }
-  wrap.appendChild(cat);
+  const base = state.index.works.filter(inBranch);
+  const stats = el('div', 'stats-row');
+  const mk = (n, l) => { const s = el('div', 'stat'); s.appendChild(el('div', 'n', n)); s.appendChild(el('div', 'l', l)); return s; };
+  stats.appendChild(mk(nf.format(base.length), 'opere'));
+  stats.appendChild(mk(nf.format(new Set(base.map(w => w.authorId)).size), 'autori'));
+  stats.appendChild(mk(nf.format(base.reduce((s, w) => s + w.words, 0)), 'parole'));
+  wrap.appendChild(stats);
+
+  wrap.appendChild(buildFacets('genre', 'Genere'));
+  wrap.appendChild(buildFacets('epoch', 'Epoca'));
+
+  const list = el('div');
+  list.id = 'worklist';
+  wrap.appendChild(list);
+
   $stage.innerHTML = ''; $stage.appendChild(wrap);
-  renderAuthors();
+  paintWorks();
+  renderAuthors(document.getElementById('authorfilter').value);
+}
+
+// Le faccette mostrano quante opere restano, calcolate sulla selezione
+// dell'ALTRA faccetta: così i conteggi dicono il vero invece di promettere
+// risultati che il filtro incrociato azzererebbe.
+function buildFacets(field, label) {
+  const other = field === 'genre' ? 'epoch' : 'genre';
+  const pool = state.index.works.filter(w =>
+    inBranch(w) && (!state.facets[other] || w[other] === state.facets[other]));
+  const tally = {};
+  for (const w of pool) tally[w[field]] = (tally[w[field]] || 0) + 1;
+  const entries = Object.entries(tally).sort((a, b) => b[1] - a[1]);
+
+  const bar = el('div', 'facetbar');
+  bar.appendChild(el('span', 'facet-lbl', label));
+  for (const [val, n] of entries) {
+    const b = el('button', 'facet');
+    b.setAttribute('aria-pressed', String(state.facets[field] === val));
+    b.appendChild(document.createTextNode(val));
+    b.appendChild(el('span', 'c', n));
+    b.onclick = () => {
+      state.facets[field] = state.facets[field] === val ? null : val;
+      state.shown = 0;
+      renderWelcome();
+    };
+    bar.appendChild(b);
+  }
+  return bar;
+}
+
+// Disegno INCREMENTALE: 1.157 schede in un colpo sono migliaia di nodi. Si
+// disegna a blocchi e si prosegue quando la sentinella entra nel viewport.
+function paintWorks() {
+  const host = document.getElementById('worklist');
+  if (!host) return;
+  host.innerHTML = '';
+  state.filtered = currentWorks();
+  state.shown = 0;
+
+  const line = el('div', 'resultline');
+  const strong = el('b', null, `${nf.format(state.filtered.length)} oper${state.filtered.length === 1 ? 'a' : 'e'}`);
+  line.appendChild(strong);
+  const active = ['genre', 'epoch'].filter(k => state.facets[k]).map(k => state.facets[k]);
+  if (active.length) {
+    line.appendChild(el('span', null, '· ' + active.join(' · ')));
+    const clr = el('button', 'clearf', 'azzera i filtri');
+    clr.onclick = () => { state.facets = { genre: null, epoch: null }; renderWelcome(); };
+    line.appendChild(clr);
+  }
+  host.appendChild(line);
+
+  const grid = el('div', 'catalog'); grid.id = 'catgrid';
+  host.appendChild(grid);
+  const more = el('div', 'moreline'); more.id = 'moreline';
+  host.appendChild(more);
+  appendChunk();
+
+  const sentinel = el('div', 'sentinel'); host.appendChild(sentinel);
+  if (window.IntersectionObserver) {
+    const io = new IntersectionObserver((ents) => {
+      if (ents.some(e => e.isIntersecting)) {
+        if (state.shown >= state.filtered.length) { io.disconnect(); return; }
+        appendChunk();
+      }
+    }, { rootMargin: '400px' });
+    io.observe(sentinel);
+  }
+}
+
+function appendChunk() {
+  const grid = document.getElementById('catgrid');
+  if (!grid) return;
+  const slice = state.filtered.slice(state.shown, state.shown + PAGE);
+  const frag = document.createDocumentFragment();
+  for (const w of slice) frag.appendChild(workCard(w));
+  grid.appendChild(frag);
+  state.shown += slice.length;
+  const more = document.getElementById('moreline');
+  if (more) {
+    more.textContent = state.shown < state.filtered.length
+      ? `${nf.format(state.shown)} di ${nf.format(state.filtered.length)} — scorri per vedere le altre`
+      : '';
+  }
+}
+
+function workCard(w) {
+  const card = el('button', `catcard ${w.lang}`);
+  card.appendChild(el('div', 'ctitle', w.title));
+  card.appendChild(el('div', 'cauthor', w.author));
+  const meta = el('div', 'cmeta');
+  const g = el('span', w.inferred ? 'inf' : null, w.genre);
+  if (w.inferred) g.title = 'Genere ed epoca dedotti dall’autore, non curati opera per opera';
+  meta.appendChild(g);
+  meta.appendChild(el('span', null, w.epoch));
+  meta.appendChild(el('span', null, w.kind === 'versi' ? `${nf.format(w.units)} versi` : `${nf.format(w.units)} passi`));
+  card.appendChild(meta);
+  card.onclick = () => openWork(w.id);
+  return card;
+}
+
+// ── Pagina autore ──────────────────────────────────────────────────────────
+function openAuthor(id) {
+  const a = state.index.authors.find(x => x.id === id);
+  if (!a) return;
+  state.view = 'author'; state.author = id; state.work = null;
+  document.body.dataset.lang = a.lang;
+  closeMobileBrowser();
+
+  const works = state.index.works.filter(w => w.authorId === id);
+  const wrap = el('div');
+  const back = el('button', 'backlink', '← Tutta la biblioteca');
+  back.onclick = () => { state.author = null; renderWelcome(); };
+  wrap.appendChild(back);
+
+  const head = el('div', 'author-head');
+  const genres = [...new Set(works.map(w => w.genre))];
+  head.appendChild(el('div', 'rk', `${langName[a.lang]} · ${genres.slice(0, 3).join(' · ')}`));
+  head.appendChild(el('h1', null, a.name));
+  head.appendChild(el('div', 'byline',
+    `${nf.format(works.length)} oper${works.length === 1 ? 'a' : 'e'} · ${nf.format(a.words)} parole · ${works[0] ? works[0].epoch : ''}`));
+  wrap.appendChild(head);
+
+  const line = el('div', 'resultline');
+  line.appendChild(el('b', null, 'Le opere'));
+  wrap.appendChild(line);
+
+  const grid = el('div', 'catalog');
+  for (const w of works) grid.appendChild(workCard(w));
+  wrap.appendChild(grid);
+
+  $stage.innerHTML = ''; $stage.appendChild(wrap);
+  window.scrollTo({ top: 0 });
+  renderAuthors(document.getElementById('authorfilter').value);
 }
 
 // ── Lettore ────────────────────────────────────────────────────────────────
 function booksOf(doc) {
-  // raggruppa le unità per PRIMO segmento del locus (libro/orazione); se i loci
-  // sono a un solo livello, l'opera è "un libro solo".
   const map = new Map();
   for (const u of doc.units) {
     const key = u.loc.includes('.') ? u.loc.split('.')[0] : '·';
@@ -392,13 +601,19 @@ function booksOf(doc) {
   return map;
 }
 function lastSeg(loc) { const p = loc.split('.'); return p[p.length - 1]; }
-
-async function openWork(id, targetLoc) {
+function closeMobileBrowser() {
   document.getElementById('browser').classList.remove('open');
   document.getElementById('mobtoggle').setAttribute('aria-expanded', 'false');
+}
+
+async function openWork(id, targetLoc) {
+  closeMobileBrowser();
   $stage.innerHTML = '<div class="loading"><div class="spinner"></div>Apro l\'opera…</div>';
-  const doc = await loadWork(id);
-  state.view = 'reader'; state.work = doc; document.body.dataset.lang = doc.lang;
+  let doc;
+  try { doc = await loadWork(id); }
+  catch (e) { $stage.innerHTML = `<div class="empty">Non riesco ad aprire quest’opera.<br><small>${escapeHtml(String(e))}</small></div>`; return; }
+  state.view = 'reader'; state.work = doc; state.author = doc.authorId;
+  document.body.dataset.lang = doc.lang;
   const books = booksOf(doc);
   const keys = [...books.keys()];
   let book = state.book;
@@ -406,25 +621,34 @@ async function openWork(id, targetLoc) {
   if (!keys.includes(book)) book = keys[0];
   state.book = book;
   renderReader(doc, books, book, targetLoc);
-  renderAuthors();
+  renderAuthors(document.getElementById('authorfilter').value);
 }
 
 function renderReader(doc, books, bookKey, targetLoc) {
   const keys = [...books.keys()];
   const wrap = el('div');
 
+  const back = el('button', 'backlink', '← ' + doc.author);
+  back.onclick = () => openAuthor(doc.authorId);
+  wrap.appendChild(back);
+
   const head = el('div', 'reader-head');
   head.appendChild(el('div', 'rk', `${langName[doc.lang]} · ${doc.genre} · ${doc.epoch}`));
   head.appendChild(el('h1', null, doc.title));
-  head.appendChild(el('div', 'byline', doc.author));
+  const by = el('div', 'byline');
+  const abtn = el('button', null, doc.author);
+  abtn.onclick = () => openAuthor(doc.authorId);
+  by.appendChild(abtn);
+  head.appendChild(by);
   const src = el('div', 'src');
-  src.innerHTML = `Fonte: <a href="https://scaife.perseus.org/library/${encodeURIComponent(doc.source.urn)}/" target="_blank" rel="noopener">${doc.source.urn}</a> · ${doc.source.license}`;
+  src.innerHTML = `Fonte: <a href="https://scaife.perseus.org/library/${encodeURIComponent(doc.source.urn)}/" target="_blank" rel="noopener">${escapeHtml(doc.source.urn)}</a> · ${escapeHtml(doc.source.license)}`
+    + (doc.source.edition ? `<br>Edizione: ${escapeHtml(doc.source.edition)}` : '');
   head.appendChild(src);
   wrap.appendChild(head);
 
   if (keys.length > 1) {
     const nav = el('div', 'book-nav');
-    nav.appendChild(el('span', 'blabel', doc.kind === 'versi' ? 'Libro' : 'Libro'));
+    nav.appendChild(el('span', 'blabel', 'Libro'));
     for (const k of keys) {
       const b = el('button', null, k);
       if (k === bookKey) b.setAttribute('aria-current', 'true');
@@ -469,7 +693,7 @@ function renderUnit(doc, u) {
     const n = lastSeg(u.loc);
     const showN = (parseInt(n, 10) % 5 === 0) || n === '1';
     unit.appendChild(el('span', 'ln', showN ? n : ''));
-    unit.appendChild(el('span', 'vt', u.t));           // testo semplice: lookup per delega
+    unit.appendChild(el('span', 'vt', u.t));
   } else {
     unit.classList.add('para');
     unit.appendChild(el('span', 'loc', u.loc));
@@ -504,76 +728,187 @@ function toTranslator(doc, loc, text) {
   window.open('translator.html?' + q.toString(), '_blank');
 }
 function toDictionary(word, lang) {
-  const clean = word.replace(/[.,;:···!?'"«»()\[\]—–]/g, '').replace(/[·;]/g, '').trim();
+  const clean = word.replace(/[.,;:···!?'"«»()\[\]—–]/g, '').replace(/[·;]/g, '').trim();
   if (!clean) return;
   window.open(`dictionary.html?lang=${lang}&lemma=${encodeURIComponent(clean)}`, '_blank');
 }
 
-// ── Ricerca ────────────────────────────────────────────────────────────────
+// ══════════════════════════════════════════════════════════════════════════
+// RICERCA A DUE STADI
+// ══════════════════════════════════════════════════════════════════════════
+/* Stadio 1 — l'indice dice IN QUALI opere compare la forma cercata.
+   Si cerca per PREFISSO dentro un solo spicchio, così «virtut» continua a
+   trovare «virtute» come faceva la vecchia ricerca a scansione.
+   Con più parole si intersecano gli insiemi partendo dalla più RARA: in
+   «Gallia est omnis», «est» sta ovunque e «Gallia» in poche opere. */
+async function candidateWorks(query) {
+  const man = await loadManifest();
+  if (!man) return null;                       // nessun indice: si ripiega (sotto)
+  const toks = fold(query).split(/[^\p{L}]+/u).filter(Boolean);
+  if (!toks.length) return null;
+
+  const sets = [];
+  for (const t of toks) {
+    const shard = await loadShard(t[0]);
+    if (!shard) return [];                     // spicchio assente = nessuna occorrenza
+    const s = new Set();
+    if (shard[t]) for (const wi of shard[t]) s.add(wi);
+    for (const form in shard) {                // prefisso: virtut → virtute, virtutis…
+      if (form.length > t.length && form.startsWith(t)) {
+        for (const wi of shard[form]) s.add(wi);
+      }
+    }
+    if (!s.size) return [];
+    sets.push(s);
+  }
+  sets.sort((a, b) => a.size - b.size);        // si parte dalla parola più rara
+  let acc = sets[0];
+  for (let i = 1; i < sets.length; i++) {
+    const next = new Set();
+    for (const wi of acc) if (sets[i].has(wi)) next.add(wi);
+    acc = next;
+    if (!acc.size) break;
+  }
+  return [...acc].map(i => man.works[i]).filter(Boolean);
+}
+
+/* Ordine dei candidati: NON alfabetico.
+   Quando l'indice restringe a più opere di quante se ne possano aprire, chi
+   resta fuori dal taglio conta. In ordine alfabetico per autore, cercando
+   «virtus» il primo risultato era Agostino e Cicerone rischiava di non entrare.
+   Si mette davanti il canone scolastico — l'età classica per il greco, l'età
+   di Cesare e Augusto per il latino — e in coda tarda antichità e cristiani.
+   È una preferenza didattica dichiarata, non un giudizio di valore: la riga di
+   stato dice sempre quante opere sono state escluse dal taglio. */
+const CANON_RANK = {
+  classica: 0, repubblicana: 0, augustea: 1, arcaica: 2,
+  ellenistica: 3, imperiale: 4, tarda: 5,
+};
+function byCanon(a, b) {
+  const ra = CANON_RANK[a.epoch] ?? 9, rb = CANON_RANK[b.epoch] ?? 9;
+  if (ra !== rb) return ra - rb;
+  return b.words - a.words;          // a parità d'epoca, prima le opere maggiori
+}
+
 let searchSeq = 0;
 async function runSearch(raw) {
   const q = raw.trim();
   if (q.length < 2) { if (state.view === 'results') renderWelcome(); return; }
   const seq = ++searchSeq;
-  state.view = 'results';
-  if (state.lang === 'la' || state.lang === 'grc') document.body.dataset.lang = state.lang; else document.body.removeAttribute('data-lang');
-  $stage.innerHTML = '<div class="loading"><div class="spinner"></div>Cerco nell\'intero corpus…</div>';
-  await loadAll();
-  if (seq !== searchSeq) return;                       // query superata da una più recente
+  state.view = 'results'; state.work = null;
+  if (state.lang === 'la' || state.lang === 'grc') document.body.dataset.lang = state.lang;
+  else document.body.removeAttribute('data-lang');
 
+  // ── Stadio 0: catalogo (istantaneo, è già in memoria) ────────────────────
   const nq = fold(q);
-  const results = [];
-  const CAP = 400;
-  let truncated = false;
-  for (const w of state.index.works) {
-    if (state.lang !== 'all' && w.lang !== state.lang) continue;
-    const doc = state.docs[w.id];
-    for (const u of doc.units) {
-      const fm = foldMap(u.t);
-      const at = fm.norm.indexOf(nq);
-      if (at < 0) continue;
-      if (results.length >= CAP) { truncated = true; break; }
-      const os = fm.map[at]; const oe = fm.map[Math.min(at + nq.length - 1, fm.map.length - 1)] + 1;
-      results.push({ doc, u, os, oe });
-    }
-    if (truncated) break;
-  }
-  renderResults(q, results, truncated);
-}
+  const catHits = state.index.works.filter(w => inBranch(w) &&
+    (fold(w.title).includes(nq) || fold(w.author).includes(nq) ||
+     (w.titleEn && fold(w.titleEn).includes(nq))));
 
-function renderResults(q, results, truncated) {
   const wrap = el('div');
   const head = el('div', 'results-head');
   head.appendChild(el('h1', null, '“' + q + '”'));
-  head.appendChild(el('span', 'count', results.length === 0 ? 'nessun passo trovato'
-    : `${results.length}${truncated ? '+' : ''} pass${results.length === 1 ? 'o' : 'i'}`));
+  const countEl = el('span', 'count', 'cerco nei testi…');
+  head.appendChild(countEl);
   wrap.appendChild(head);
 
-  if (results.length === 0) {
-    const e = el('div', 'empty'); e.textContent = 'Nessun passo contiene questa sequenza. Prova con una sola parola, o cambia il filtro di lingua.';
-    wrap.appendChild(e);
+  if (catHits.length) {
+    wrap.appendChild(el('div', 'sect-lbl', `Opere e autori · ${catHits.length}`));
+    const grid = el('div', 'catalog');
+    for (const w of catHits.slice(0, 12)) grid.appendChild(workCard(w));
+    wrap.appendChild(grid);
   }
-  for (const r of results) {
-    const btn = el('button', `res ${r.doc.lang}`);
-    const ref = el('div', 'rref');
-    ref.innerHTML = `<b>${escapeHtml(r.doc.author)}</b> · ${escapeHtml(r.doc.title)} <span style="opacity:.7">${escapeHtml(r.u.loc)}</span>`;
-    btn.appendChild(ref);
-    const t = r.u.t;
-    const snippet = snip(t, r.os, r.oe);
-    const txt = el('div', 'rtext'); txt.innerHTML = snippet;
-    btn.appendChild(txt);
-    btn.onclick = () => openWork(r.doc.id, r.u.loc);
-    wrap.appendChild(btn);
-  }
+
+  wrap.appendChild(el('div', 'sect-lbl', 'Passi nei testi'));
+  const stageLine = el('div', 'stageline');
+  const stageTxt = el('span', null, 'Consulto l’indice…');
+  const prog = el('span', 'prog'); const progBar = el('i'); prog.appendChild(progBar);
+  stageLine.appendChild(stageTxt); stageLine.appendChild(prog);
+  wrap.appendChild(stageLine);
+  const hits = el('div'); wrap.appendChild(hits);
   $stage.innerHTML = ''; $stage.appendChild(wrap);
+
+  // ── Stadio 1: l'indice restringe il campo ────────────────────────────────
+  let cand;
+  try { cand = await candidateWorks(q); }
+  catch { cand = null; }
+  if (seq !== searchSeq) return;
+
+  if (cand === null) {
+    // Nessun indice disponibile: non si scandisce mezzo corpus di nascosto.
+    stageTxt.textContent = 'Indice di ricerca non disponibile: cerco solo nel catalogo.';
+    progBar.style.width = '100%';
+    countEl.textContent = catHits.length ? `${catHits.length} nel catalogo` : 'nessun risultato';
+    if (!catHits.length) hits.appendChild(el('div', 'empty', 'Nessuna opera con questo nome.'));
+    return;
+  }
+
+  let pool = cand.map(id => state.index.works.find(w => w.id === id)).filter(w => w && inBranch(w));
+  pool.sort(byCanon);
+  const total = pool.length;
+  if (!total) {
+    stageTxt.textContent = 'Nessuna opera contiene questa forma.';
+    progBar.style.width = '100%';
+    countEl.textContent = catHits.length ? `${catHits.length} nel catalogo · nessun passo` : 'nessun passo trovato';
+    hits.appendChild(el('div', 'empty', 'Nessun passo contiene questa sequenza. Prova con una sola parola, o con la sua radice.'));
+    return;
+  }
+  const capped = pool.slice(0, MAX_WORKS_SCAN);
+
+  // ── Stadio 2: si aprono SOLO le opere candidate ──────────────────────────
+  let found = 0, scanned = 0, stop = false;
+  for (let i = 0; i < capped.length && !stop; i += 10) {
+    const batch = capped.slice(i, i + 10);
+    const docs = await Promise.all(batch.map(w => loadWork(w.id).catch(() => null)));
+    if (seq !== searchSeq) return;
+    for (const doc of docs) {
+      scanned++;
+      if (!doc) continue;
+      for (const u of doc.units) {
+        const fm = foldMap(u.t);
+        const at = fm.norm.indexOf(nq);
+        if (at < 0) continue;
+        const os = fm.map[at];
+        const oe = fm.map[Math.min(at + nq.length - 1, fm.map.length - 1)] + 1;
+        hits.appendChild(hitRow(doc, u, os, oe));
+        found++;
+        if (found >= MAX_HITS) { stop = true; break; }
+      }
+      if (stop) break;
+    }
+    progBar.style.width = Math.round(100 * scanned / capped.length) + '%';
+    stageTxt.innerHTML = `L’indice ha ristretto a <b>${nf.format(total)}</b> oper${total === 1 ? 'a' : 'e'} · aperte <b>${nf.format(Math.min(scanned, capped.length))}</b> · <b>${nf.format(found)}</b> passi`;
+    countEl.textContent = `${nf.format(found)}${stop ? '+' : ''} pass${found === 1 ? 'o' : 'i'}`;
+  }
+
+  if (!found) {
+    hits.appendChild(el('div', 'empty', 'La forma esiste nel corpus, ma non come sequenza esatta in questi passi.'));
+  }
+  if (total > capped.length) {
+    hits.appendChild(el('div', 'moreline',
+      `Mostrate le prime ${nf.format(capped.length)} opere di ${nf.format(total)}: restringi con una parola più rara o una radice più lunga.`));
+  } else if (stop) {
+    hits.appendChild(el('div', 'moreline', `Fermato a ${MAX_HITS} passi: la forma è molto frequente.`));
+  }
+}
+
+function hitRow(doc, u, os, oe) {
+  const btn = el('button', `res ${doc.lang}`);
+  const ref = el('div', 'rref');
+  ref.innerHTML = `<b>${escapeHtml(doc.author)}</b> · ${escapeHtml(doc.title)} <span style="opacity:.7">${escapeHtml(u.loc)}</span>`;
+  btn.appendChild(ref);
+  const txt = el('div', 'rtext'); txt.innerHTML = snip(u.t, os, oe);
+  btn.appendChild(txt);
+  btn.onclick = () => openWork(doc.id, u.loc);
+  return btn;
 }
 
 // estrae un frammento centrato sul match, con la porzione evidenziata
 function snip(text, os, oe, ctx = 90) {
-  let a = Math.max(0, os - ctx), b = Math.min(text.length, oe + ctx);
-  let pre = (a > 0 ? '… ' : '') + text.slice(a, os);
-  let hit = text.slice(os, oe);
-  let post = text.slice(oe, b) + (b < text.length ? ' …' : '');
+  const a = Math.max(0, os - ctx), b = Math.min(text.length, oe + ctx);
+  const pre = (a > 0 ? '… ' : '') + text.slice(a, os);
+  const hit = text.slice(os, oe);
+  const post = text.slice(oe, b) + (b < text.length ? ' …' : '');
   return escapeHtml(pre) + '<mark>' + escapeHtml(hit) + '</mark>' + escapeHtml(post);
 }
 
@@ -582,7 +917,13 @@ let debTimer;
 document.getElementById('q').addEventListener('input', (e) => {
   clearTimeout(debTimer);
   const v = e.target.value;
-  debTimer = setTimeout(() => runSearch(v), 220);
+  debTimer = setTimeout(() => runSearch(v), 260);
+});
+let afTimer;
+document.getElementById('authorfilter').addEventListener('input', (e) => {
+  clearTimeout(afTimer);
+  const v = e.target.value;
+  afTimer = setTimeout(() => renderAuthors(v), 140);
 });
 document.getElementById('mobtoggle').onclick = (e) => {
   const b = document.getElementById('browser'); const open = b.classList.toggle('open');
@@ -595,10 +936,18 @@ document.getElementById('mobtoggle').onclick = (e) => {
     await loadIndex();
     // Cucitura dalla pagina-lingua (?lang=la|grc): il ramo è già scelto a monte,
     // quindi il corpus entra direttamente in quella lingua (niente filtro interno).
-    const _ul = (new URLSearchParams(location.search).get('lang') || '').toLowerCase();
-    const _branch = (_ul === 'la' || _ul === 'latino') ? 'la' : (_ul === 'grc' || _ul === 'greco') ? 'grc' : null;
-    if (_branch) state.lang = _branch;
-    renderWelcome();
+    const p = new URLSearchParams(location.search);
+    const ul = (p.get('lang') || '').toLowerCase();
+    const branch = (ul === 'la' || ul === 'latino') ? 'la' : (ul === 'grc' || ul === 'greco') ? 'grc' : null;
+    if (branch) state.lang = branch;
+    const work = p.get('opera') || p.get('work');
+    if (work && state.index.works.some(w => w.id === work)) {
+      renderAuthors('');
+      await openWork(work, p.get('loc') || undefined);
+    } else {
+      renderWelcome();
+    }
+    loadManifest();                         // si scalda l'indice senza bloccare
   } catch (err) {
     $stage.innerHTML = `<div class="empty">Non riesco a caricare il catalogo del corpus.<br><small>${escapeHtml(String(err))}</small><br><br>Apri la pagina tramite un server locale (es. <code>python -m http.server</code>): i <code>fetch</code> dei dati non funzionano da <code>file://</code>.</div>`;
     console.error(err);
