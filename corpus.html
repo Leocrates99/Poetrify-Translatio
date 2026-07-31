@@ -23,8 +23,27 @@ html, body {
 }
 body { display: flex; flex-direction: column; }
 button { font-family: inherit; cursor: pointer; }
-::selection { background: rgba(24,0,172,.14); }
 /* colore=lingua del lettore: in shared/poetrify-tokens.css (body[data-lang]). */
+
+/* ── Accessibilità: selezione, fuoco, altezza della testata ───────
+   La selezione segue tema E lingua: era un indaco fisso al 14%, che sul fondo
+   scuro spariva (1,02:1) e nel ramo latino restava blu mentre tutto il resto
+   era rosso. `--head-h` la misura JS: la colonna si agganciava a 132 px contro
+   una testata che ne occupa 158, lasciando una fessura in cui il testo scorreva. */
+:root { --select-bg: rgba(24,0,172,.20); --head-h: 158px; --hit-bg: rgba(251,227,138,.5); }
+:root[data-theme="dark"] { --select-bg: rgba(169,156,255,.34); --hit-bg: rgba(240,198,116,.15); }
+body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
+:root[data-theme="dark"] body[data-lang="la"] { --select-bg: rgba(229,138,144,.32); }
+::selection { background: var(--select-bg); }
+
+/* Un solo indicatore di fuoco per tutta la pagina, sull'accento della lingua.
+   Prima due campi lo toglievano con `outline: none` senza rimpiazzarlo: chi
+   naviga da tastiera perdeva del tutto il segno di dov'era. */
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
 
 /* ── Masthead ─────────────────────────────────────────────────── */
 .topbar {
@@ -60,8 +79,11 @@ button { font-family: inherit; cursor: pointer; }
   padding: 13px 16px 13px 46px; border: 1.5px solid var(--rule);
   border-radius: 12px; background: var(--ivory); transition: border-color .15s, box-shadow .15s;
 }
-#q:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(24,0,172,.08); }
-#q::placeholder { color: #a49f97; }
+/* Anello esplicito sui campi: `:focus-visible` dipende da un'euristica del
+   browser, e su un campo di ricerca non deve esserci dubbio su dove sia il fuoco. */
+#q:focus, #authorfilter:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+#q:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-pale); }
+#q::placeholder { color: var(--sepia); }
 .searchhint {
   max-width: 760px; margin: 6px auto 0; text-align: center;
   font-family: var(--font-ui); font-size: 11.5px; color: var(--sepia);
@@ -75,21 +97,22 @@ button { font-family: inherit; cursor: pointer; }
 }
 .browser {
   border-right: 1px solid var(--rule-soft); background: var(--paper);
-  padding: 20px 16px 60px; overflow-y: auto; max-height: calc(100vh - 132px);
-  position: sticky; top: 132px;
+  padding: 20px 16px 60px; overflow-y: auto; max-height: calc(100vh - var(--head-h));
+  position: sticky; top: var(--head-h);
 }
 .browser h2 {
   font-family: var(--font-ui); font-size: 10.5px; font-weight: 700;
   text-transform: uppercase; letter-spacing: .1em; color: var(--sepia);
   margin: 0 6px 10px; display: flex; align-items: baseline; gap: 6px;
 }
-.browser h2 .n { margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--sepia-soft); }
+.browser h2 .n { margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--sepia); }
 #authorfilter {
   width: 100%; font-family: var(--font-ui); font-size: 13px; color: var(--ink);
   padding: 7px 11px; border: 1px solid var(--rule); border-radius: 8px;
   background: var(--ivory); margin-bottom: 10px;
 }
-#authorfilter:focus { outline: none; border-color: var(--primary); }
+#authorfilter:focus { border-color: var(--primary); }
+#authorfilter::placeholder { color: var(--sepia); }
 .arow {
   display: flex; align-items: baseline; gap: 8px; width: 100%; text-align: left;
   background: none; border: none; padding: 6px 9px; border-radius: 8px;
@@ -119,7 +142,7 @@ button { font-family: inherit; cursor: pointer; }
 .facetbar + .facetbar { margin-top: 8px; }
 .facet-lbl {
   font-family: var(--font-ui); font-size: 10px; font-weight: 700; letter-spacing: .09em;
-  text-transform: uppercase; color: var(--sepia-soft); margin-right: 2px; min-width: 52px;
+  text-transform: uppercase; color: var(--sepia); margin-right: 2px; min-width: 52px;
 }
 .facet {
   font-family: var(--font-ui); font-size: 11.5px; font-weight: 600; padding: 5px 11px;
@@ -157,7 +180,7 @@ button { font-family: inherit; cursor: pointer; }
 .catcard .cmeta span { padding: 2px 8px; border-radius: var(--radius-pill); background: var(--cream); }
 .catcard .cmeta span.inf { border: 1px dashed var(--rule); background: transparent; }
 .sentinel { height: 1px; }
-.moreline { text-align: center; font-family: var(--font-ui); font-size: 12px; color: var(--sepia-soft); padding: 18px 0; }
+.moreline { text-align: center; font-family: var(--font-ui); font-size: 12px; color: var(--sepia); padding: 18px 0; }
 
 /* ── Pagina autore ────────────────────────────────────────────── */
 .author-head { border-bottom: 2px solid var(--accent); padding-bottom: 14px; margin-bottom: 6px; }
@@ -237,13 +260,29 @@ body[data-lang="grc"] .para .txt { font-family: var(--font-classical); font-size
 .verse .ln { flex: 0 0 34px; text-align: right; font-family: var(--font-mono); font-size: 10.5px; color: var(--sepia); user-select: none; }
 .verse .vt { font-family: var(--font-read); font-size: 18px; line-height: 1.62; color: var(--ink); }
 body[data-lang="grc"] .verse .vt { font-family: var(--font-classical); font-size: 20px; line-height: 1.72; }
-.verse:target, .para:target { background: rgba(251,227,138,.4); border-radius: 6px; }
-.unit.flash { animation: flash 1.6s ease; }
-@keyframes flash { 0%,40% { background: rgba(251,227,138,.55); } 100% { background: transparent; } }
+/* Il passo raggiunto dalla ricerca si segnala su DUE canali: un fondo tenue e un
+   filetto d'accento. Col solo fondo è impossibile soddisfare insieme i due
+   vincoli nel tema scuro — distinguersi dalla pergamena (≥3:1) e lasciare
+   leggibile il testo che ci sta sopra (≥4,5:1): schiarendolo si perde il testo,
+   scurendolo si perde il segnale. Il filetto porta il «sei qui», il fondo resta
+   discreto, e il colore segue la lingua. */
+.verse:target, .para:target, .unit.flash {
+  background: var(--hit-bg);
+  box-shadow: inset 3px 0 0 var(--accent);
+  border-radius: 6px;
+}
+.unit.flash { animation: flash 1.8s ease; }
+@keyframes flash {
+  0%, 45% { background: var(--hit-bg); box-shadow: inset 3px 0 0 var(--accent); }
+  100%    { background: transparent;   box-shadow: inset 3px 0 0 transparent; }
+}
 
 .unit { border-radius: 6px; }
 .unit .acts { display: inline-flex; gap: 4px; margin-left: 8px; opacity: 0; transition: opacity .12s; vertical-align: middle; }
-.unit:hover .acts { opacity: 1; }
+/* `:focus-within` non è un di più: senza, in un libro dell'Iliade restavano
+   centinaia di fermate di tabulazione su bottoni invisibili — chi naviga da
+   tastiera attraversava il testo a vuoto senza sapere dove si trovava. */
+.unit:hover .acts, .unit:focus-within .acts { opacity: 1; }
 .acts button {
   font-family: var(--font-ui); font-size: 10.5px; font-weight: 600; color: var(--sepia);
   border: 1px solid var(--rule-soft); background: var(--paper); border-radius: 6px; padding: 2px 7px;
@@ -504,8 +543,9 @@ function buildFacets(field, label) {
   return bar;
 }
 
-// Disegno INCREMENTALE: 1.157 schede in un colpo sono migliaia di nodi. Si
+// Disegno INCREMENTALE: oltre mille schede in un colpo sono migliaia di nodi. Si
 // disegna a blocchi e si prosegue quando la sentinella entra nel viewport.
+let catalogIO = null;
 function paintWorks() {
   const host = document.getElementById('worklist');
   if (!host) return;
@@ -533,13 +573,17 @@ function paintWorks() {
 
   const sentinel = el('div', 'sentinel'); host.appendChild(sentinel);
   if (window.IntersectionObserver) {
-    const io = new IntersectionObserver((ents) => {
+    // Si disconnette quello precedente: ogni cambio di faccetta ridisegna il
+    // catalogo, e senza questo restavano appesi tanti osservatori quante erano
+    // state le selezioni, tutti a spiare sentinelle ormai staccate dal documento.
+    if (catalogIO) catalogIO.disconnect();
+    catalogIO = new IntersectionObserver((ents) => {
       if (ents.some(e => e.isIntersecting)) {
-        if (state.shown >= state.filtered.length) { io.disconnect(); return; }
+        if (state.shown >= state.filtered.length) { catalogIO.disconnect(); return; }
         appendChunk();
       }
     }, { rootMargin: '400px' });
-    io.observe(sentinel);
+    catalogIO.observe(sentinel);
   }
 }
 
@@ -561,7 +605,9 @@ function appendChunk() {
 
 function workCard(w) {
   const card = el('button', `catcard ${w.lang}`);
-  card.appendChild(el('div', 'ctitle', w.title));
+  const t = el('div', 'ctitle', w.title);
+  t.lang = w.lang === 'grc' ? 'grc' : 'la';      // il titolo è in lingua antica
+  card.appendChild(t);
   card.appendChild(el('div', 'cauthor', w.author));
   const meta = el('div', 'cmeta');
   const g = el('span', w.inferred ? 'inf' : null, w.genre);
@@ -678,6 +724,9 @@ function renderReader(doc, books, bookKey, targetLoc) {
   }
 
   const scroll = el('div', 'scroll');
+  // La pagina dichiara lang="it": senza questo, uno screen reader legge l'Iliade
+  // con la pronuncia italiana. Marca il ramo di lettura con la lingua vera.
+  scroll.lang = doc.lang === 'grc' ? 'grc' : 'la';
   const units = books.get(bookKey);
   const byLoc = Object.create(null);
   for (const u of units) { byLoc[u.loc] = u.t; scroll.appendChild(renderUnit(doc, u)); }
@@ -922,9 +971,11 @@ async function runSearch(raw) {
 function hitRow(doc, u, os, oe) {
   const btn = el('button', `res ${doc.lang}`);
   const ref = el('div', 'rref');
-  ref.innerHTML = `<b>${escapeHtml(doc.author)}</b> · ${escapeHtml(doc.title)} <span style="opacity:.7">${escapeHtml(u.loc)}</span>`;
+  // niente opacity sul locus: attenuava un testo già tenue fino a 3:1
+  ref.innerHTML = `<b>${escapeHtml(doc.author)}</b> · ${escapeHtml(doc.title)} <span class="loc">${escapeHtml(u.loc)}</span>`;
   btn.appendChild(ref);
-  const txt = el('div', 'rtext'); txt.innerHTML = snip(u.t, os, oe);
+  const txt = el('div', 'rtext'); txt.lang = doc.lang === 'grc' ? 'grc' : 'la';
+  txt.innerHTML = snip(u.t, os, oe);
   btn.appendChild(txt);
   btn.onclick = () => openWork(doc.id, u.loc);
   return btn;
@@ -956,6 +1007,18 @@ document.getElementById('mobtoggle').onclick = (e) => {
   const b = document.getElementById('browser'); const open = b.classList.toggle('open');
   e.currentTarget.setAttribute('aria-expanded', String(open));
 };
+
+/* L'aggancio della colonna autori si MISURA, non si indovina: era scritto a mano
+   a 132 px mentre la testata ne occupa 158, e in quella fessura il testo scorreva
+   sotto la barra di ricerca. Si ricalcola anche al ridimensionamento, perché
+   l'altezza cambia quando il suggerimento va a capo. */
+function syncHeadHeight() {
+  const bottom = document.querySelector('.searchwrap').getBoundingClientRect().bottom
+               + window.scrollY;
+  document.documentElement.style.setProperty('--head-h', Math.round(bottom) + 'px');
+}
+addEventListener('resize', syncHeadHeight);
+syncHeadHeight();
 
 // ── Avvio ──────────────────────────────────────────────────────────────────
 (async function init() {
