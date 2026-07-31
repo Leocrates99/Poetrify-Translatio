@@ -42,6 +42,7 @@ import xml.etree.ElementTree as ET
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from corpus_meta import meta_for, name_for, TEXTGROUPS  # noqa: E402
+from corpus_titles import title_for                     # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -437,11 +438,18 @@ def process_work(repo_dir, repo_name, lang, tag, urn_ns, tg, wk, author):
                       "foreign_pct": round(foreign, 1)}
 
     genre, epoch, inferred = meta_for(tg, key)
+    # Titolo d'USO italiano: `title` diventa il nome con cui l'opera si chiama in
+    # classe, `titleOrig` conserva l'originale per la seconda fascia della scheda.
+    # `titleState` dice quale dei tre casi è (vedi corpus_titles.py): serve
+    # all'interfaccia per non mostrare due volte la stessa riga né spacciare per
+    # originale un ripiego inglese.
+    t_main, t_orig, t_state = title_for(key, title, title_en)
     words = sum(len(t.split()) for _, t in units)
     doc = {
         "id": key, "lang": lang,
         "author": author, "authorId": tg,
-        "title": title, "titleEn": title_en,
+        "title": t_main, "titleOrig": t_orig, "titleState": t_state,
+        "titleEn": title_en,
         "genre": genre, "epoch": epoch, "inferred": inferred,
         "kind": kind,
         "source": {"urn": f"urn:cts:{urn_ns}:{key}", "repo": repo_name,
@@ -544,7 +552,8 @@ def build_index(docs):
     """Catalogo: opere + albero autori + faccette (generi, epoche)."""
     works = [{
         "id": d["id"], "lang": d["lang"], "authorId": d["authorId"], "author": d["author"],
-        "title": d["title"], "titleEn": d.get("titleEn"),
+        "title": d["title"], "titleOrig": d.get("titleOrig"),
+        "titleState": d.get("titleState"), "titleEn": d.get("titleEn"),
         "genre": d["genre"], "epoch": d["epoch"], "inferred": d["inferred"],
         "kind": d["kind"], "citation": d["citation"],
         "units": d["stats"]["units"], "words": d["stats"]["words"],
