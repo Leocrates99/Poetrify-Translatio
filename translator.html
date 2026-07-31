@@ -7219,6 +7219,32 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   color: var(--ink);
   margin: 0 0 10px;
 }
+/* Ponte verso il Corpus: due direzioni nello stesso posto — se il passo è
+   arrivato di là ci si torna, se è stato incollato a mano si va a scoprire
+   da dove viene. */
+.corpus-bridge {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  margin-top: 12px; padding: 10px 12px;
+  border: 1px dashed var(--rule); border-radius: var(--radius-md);
+  background: var(--cream);
+}
+.corpus-bridge.known { border-style: solid; border-color: var(--dacc, var(--primary)); }
+.corpus-bridge .cb-label { font-family: var(--font-ui); font-size: 12.5px; font-weight: 700; color: var(--ink); }
+.corpus-bridge .cb-hint  { font-family: var(--font-ui); font-size: 11.5px; color: var(--sepia); }
+.corpus-bridge .cb-urn {
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--sepia);
+  background: var(--paper); padding: 2px 7px; border-radius: var(--radius-sm);
+  word-break: break-all;
+}
+.corpus-bridge .cb-btn {
+  font-family: var(--font-ui); font-size: 12.5px; font-weight: 700;
+  color: var(--on-primary); background: var(--dacc, var(--primary));
+  border: none; border-radius: var(--radius-md); padding: 7px 14px; cursor: pointer;
+  transition: filter .13s;
+}
+.corpus-bridge .cb-btn:hover { filter: brightness(1.08); }
+.corpus-bridge .cb-btn[disabled] { opacity: .45; cursor: default; }
+.corpus-bridge .cb-btn:focus-visible { outline: 2px solid var(--dacc, var(--primary)); outline-offset: 2px; }
 .guided-lettura-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -30842,6 +30868,7 @@ function renderGuidedStepLettura() {
               placeholder="es. De bello Gallico · Anabasi…">
           </div>
         </div>
+        ${corpusBridgeHtml()}
       </section>
 
       <section class="guided-lettura-section">
@@ -37857,6 +37884,67 @@ function importPassoDalCorpus(lang, testo, p) {
 
   const dove = [autore, state.meta.titolo].filter(Boolean).join(' · ');
   showToast('Passo importato dal Corpus' + (dove ? ': ' + dove : '') + ' — ' + state.sentences.length + ' frasi');
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   CUCITURA VERSO IL CORPUS — il viaggio di ritorno
+   ────────────────────────────────────────────────────────────────────────
+   Due direzioni, a seconda di quello che già si sa del brano:
+
+   · se il passo È ARRIVATO dal Corpus porta con sé il suo locus (`fonteUrn`),
+     e allora si torna esattamente lì: è il giro di ritorno che mancava;
+   · se la versione è stata incollata a mano — la fotocopia, il libro di testo —
+     non si sa di chi sia: si manda al RICONOSCIMENTO, che la confronta con
+     tutto il corpus e risponde con autore, opera, loci e quanta parte del
+     brano ha ritrovato.
+
+   È la stessa domanda dell'insegnante davanti a una versione senza intestazione:
+   «questa da dove viene?». */
+function corpusWorkFromUrn(urn) {
+  // urn:cts:latinLit:phi0448.phi001:1.1.1 → { opera:'phi0448.phi001', loc:'1.1.1' }
+  const seg = String(urn || '').split(':');
+  if (seg.length < 4) return null;
+  return { opera: seg[3], loc: seg.length > 4 ? seg[4] : '' };
+}
+
+function apriPassoNelCorpus() {
+  const rif = corpusWorkFromUrn(state.meta.fonteUrn);
+  if (!rif) return;
+  const q = new URLSearchParams({ opera: rif.opera });
+  if (rif.loc) q.set('loc', rif.loc);
+  window.open('corpus.html?' + q.toString(), '_blank');
+}
+
+function riconosciNelCorpus() {
+  const testo = (state.meta.testoOriginale || '').trim();
+  if (!testo) { showToast('Non c’è ancora un testo da riconoscere'); return; }
+  const q = new URLSearchParams({
+    riconosci: testo.slice(0, 4000),        // basta il brano, non un libro intero
+    lang: state.meta.lingua === 'greco' ? 'grc' : 'la',
+  });
+  window.open('corpus.html?' + q.toString(), '_blank');
+}
+
+/* Il blocco che compare sotto «Autore & opera»: una riga sola, che cambia
+   faccia a seconda che la provenienza sia nota o da scoprire. */
+function corpusBridgeHtml() {
+  const rif = corpusWorkFromUrn(state.meta.fonteUrn);
+  if (rif) {
+    return `<div class="corpus-bridge known">
+      <span class="cb-label">Questo passo viene dal Corpus</span>
+      <code class="cb-urn">${escapeHtml(state.meta.fonteUrn)}</code>
+      <button type="button" class="cb-btn" onclick="apriPassoNelCorpus()">Rileggilo nel Corpus →</button>
+    </div>`;
+  }
+  const pronto = (state.meta.testoOriginale || '').trim().length > 20;
+  return `<div class="corpus-bridge">
+    <span class="cb-label">Non sai di chi è questa versione?</span>
+    <button type="button" class="cb-btn" onclick="riconosciNelCorpus()" ${pronto ? '' : 'disabled'}>
+      Cercala nel Corpus →</button>
+    <span class="cb-hint">${pronto
+      ? 'La confronto con 1.166 opere e ti dico autore, opera e loci.'
+      : 'Serve prima il testo della versione.'}</span>
+  </div>`;
 }
 
 /* Avvia un nuovo brano nella lingua indicata (dal branch d'archivio). */
