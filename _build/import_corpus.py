@@ -113,7 +113,17 @@ def parse_tei(path):
         return ET.fromstring(_fix_entities(raw))
 
 
-SKIP_TEXT = {"note", "bibl", "ref", "cit", "head", "milestone", "gap", "del", "figure"}
+# Elementi il cui contenuto NON è testo d'autore.
+# NB: `cit` NON va qui. Un <cit> è «citazione + sua fonte»: contiene il testo citato
+# (<quote>, <l>, <p>) e la referenza (<bibl>). Saltando l'intero <cit> si buttavano
+# via ~20.000 parole di testo vero; bastano `bibl` e `ref`, già presenti, a togliere
+# la sola referenza bibliografica.
+SKIP_TEXT = {"note", "bibl", "ref", "head", "milestone", "gap", "del", "figure"}
+
+# Coppie di varianti mutuamente esclusive. In TEI stanno di norma dentro <choice>,
+# ma capita che siano fratelli diretti senza involucro: allora vanno trattate come
+# una scelta implicita, altrimenti nel testo finiscono ENTRAMBE le letture.
+IMPLICIT_CHOICE = {"abbr": "expan", "sic": "corr", "orig": "reg"}
 
 
 def clean_text(elem):
@@ -144,8 +154,14 @@ def clean_text(elem):
             return
         if e.text:
             parts.append(e.text)
-        for c in e:
-            walk(c)
+        # scelta implicita: se fra i figli c'è sia `abbr` sia `expan` (o sic/corr,
+        # orig/reg) senza <choice> attorno, si tiene solo la forma preferita.
+        kids = list(e)
+        present = {ln(c.tag) for c in kids}
+        drop = {a for a, b in IMPLICIT_CHOICE.items() if a in present and b in present}
+        for c in kids:
+            if ln(c.tag) not in drop:
+                walk(c)
             if c.tail:
                 parts.append(c.tail)
 
@@ -165,49 +181,111 @@ def find_body(root):
 
 
 def edition_root(body):
+    """Il ramo che contiene l'edizione. Riconosce anche la marcatura TEI antica
+    (`div1`), altrimenti su quei file si ripiegava sul <body> intero."""
     for e in body.iter():
-        if ln(e.tag) == "div" and e.get("type") == "edition":
+        if DIVLIKE.match(ln(e.tag)) and e.get("type") == "edition":
             return e
     for e in body:
-        if ln(e.tag) == "div":
-            return e
+        if DIVLIKE.match(ln(e.tag)):
+            return body if ln(e.tag) != "div" else e
     return body
 
 
+DIVLIKE = re.compile(r"div\d*$")          # `div` e la marcatura TEI antica div1…div4
+CONTAINER = {"lg", "sp", "quote", "cit", "body", "text", "group"}
+PROSE_UNIT = {"p", "said", "ab"}
+
+
 def extract(elem, path, units, kind_flags):
-    """Estrae ricorsivamente unità citabili (versi <l> / paragrafi <p>)."""
-    handled = False
-    for c in elem:
+    """Estrae ricorsivamente le unità citabili. Ritorna quante ne ha prodotte.
+
+    Un solo ciclo tratta versi e paragrafi INSIEME: la versione precedente, appena
+    incontrava un <l> o un <div>, usciva prima di guardare i <p> fratelli — e in
+    un'opera mista (prosa con versi citati) quei paragrafi sparivano dal testo.
+
+    Si scende anche dentro `quote` e `cit`: i versi citati dentro una citazione sono
+    versi, non prosa; senza questo, ~17.000 versi finivano appiattiti e certe opere
+    venivano classificate «prosa» a torto.
+
+    I contenitori senza `n` contribuiscono al locus con la loro POSIZIONE: senza,
+    rami diversi collassavano sullo stesso locus (fino a 35 unità con la stessa
+    citazione, che rende impossibile puntare al passo giusto).
+    """
+    made = 0
+    # numerazione di riserva per i figli privi di @n, per tipo
+    seq = {}
+    kids = list(elem)
+    plain = {t: sum(1 for c in kids if ln(c.tag) == t and not c.get("n"))
+             for t in ("p", "said", "ab", "l")}
+
+    for c in kids:
         t = ln(c.tag)
+        n = c.get("n")
+
         if t == "l":
-            n = c.get("n")
+            if not n and plain["l"] > 1:
+                seq["l"] = seq.get("l", 0) + 1
+                n = str(seq["l"])
             loc = [x for x in path + ([n] if n else []) if x]
             txt = clean_text(c)
             if txt:
                 units.append((".".join(loc), txt))
                 kind_flags["verse"] = True
-            handled = True
-        elif t in ("div", "lg", "sp"):
-            n = c.get("n")
-            extract(c, path + ([n] if n else []), units, kind_flags)
-            handled = True
-    if handled:
-        return
-    ps = [c for c in elem if ln(c.tag) in ("p", "said")]
-    if ps:
-        multi = len(ps) > 1
-        for i, p in enumerate(ps, 1):
-            n = p.get("n") or (str(i) if multi else None)
+                made += 1
+
+        elif t in PROSE_UNIT:
+            if not n and plain.get(t, 0) > 1:
+                seq[t] = seq.get(t, 0) + 1
+                n = str(seq[t])
             loc = [x for x in path + ([n] if n else []) if x]
-            txt = clean_text(p)
+            txt = clean_text(c)
             if txt:
                 units.append((".".join(loc), txt))
-        kind_flags["prose"] = True
-    else:
+                kind_flags["prose"] = True
+                made += 1
+
+        elif t == "speaker":
+            # nel dramma il nome del personaggio è testo, non impaginazione:
+            # senza questo ramo sparivano ~40.000 battute d'attacco.
+            txt = clean_text(c)
+            if txt:
+                units.append((".".join([x for x in path if x]), txt))
+                made += 1
+
+        elif DIVLIKE.match(t) or t in CONTAINER:
+            if not n:
+                seq[t] = seq.get(t, 0) + 1
+                same = sum(1 for k in kids if ln(k.tag) == t)
+                if same > 1:
+                    n = str(seq[t])
+            made += extract(c, path + ([n] if n else []), units, kind_flags)
+
+    if made == 0:
         txt = clean_text(elem)
         if txt:
             units.append((".".join([x for x in path if x]), txt))
             kind_flags["prose"] = True
+            made = 1
+    return made
+
+
+def dedupe_loci(units):
+    """Rete di sicurezza: se due unità restano con lo stesso locus, si distinguono.
+
+    Il locus è ciò che rende citabile un passo e ciò su cui il lettore salta dai
+    risultati di ricerca: due unità omonime mandano sempre alla prima.
+    """
+    seen = {}
+    out = []
+    for loc, txt in units:
+        if loc in seen:
+            seen[loc] += 1
+            loc = f"{loc}#{seen[loc]}"
+        else:
+            seen[loc] = 1
+        out.append((loc, txt))
+    return out
 
 
 def citation_label(units, kind):
@@ -242,7 +320,7 @@ def cts_first(path, localname, lang_pref=()):
 XLANG = "{http://www.w3.org/XML/1998/namespace}lang"
 
 
-def edition_label_and_desc(path, tag):
+def edition_label_and_desc(path, tag, edition_id=None):
     """Titolo in LINGUA ORIGINALE e citazione dell'edizione a stampa.
 
     Attenzione: nel catalogo Perseus il titolo greco/latino NON sta quasi mai in
@@ -258,6 +336,7 @@ def edition_label_and_desc(path, tag):
     except ET.ParseError:
         return None, None
     fallback = (None, None)
+    by_lang = (None, None)
     for e in root.iter():
         if ln(e.tag) != "edition":
             continue
@@ -268,11 +347,16 @@ def edition_label_and_desc(path, tag):
                 label = re.sub(r"\s+", " ", d.text.strip())
             elif t == "description" and (d.text or "").strip() and desc is None:
                 desc = re.sub(r"\s+", " ", d.text.strip())
-        if e.get(XLANG) == tag:          # l'edizione nella lingua che importiamo
+        # Corrispondenza ESATTA con l'edizione che stiamo davvero importando: senza,
+        # un'opera con più edizioni nella stessa lingua veniva attribuita alla stampa
+        # sbagliata (curatore ed editore altrui accanto a un testo che non è suo).
+        if edition_id and (e.get("urn") or "").endswith(edition_id):
             return label, desc
+        if e.get(XLANG) == tag and by_lang == (None, None):
+            by_lang = (label, desc)
         if fallback == (None, None):
             fallback = (label, desc)
-    return fallback
+    return by_lang if by_lang != (None, None) else fallback
 
 
 def tei_header_title(root):
@@ -321,7 +405,8 @@ def process_work(repo_dir, repo_name, lang, tag, urn_ns, tg, wk, author):
         return None, {"id": key, "reason": "nessuna edizione in lingua originale"}
 
     wcts = os.path.join(work_dir, "__cts__.xml")
-    label, edition = edition_label_and_desc(wcts, tag)
+    edition_id = fname[:-4] if fname.endswith(".xml") else fname   # es. phi0448.phi001.perseus-lat2
+    label, edition = edition_label_and_desc(wcts, tag, edition_id)
     title_en = cts_first(wcts, "title", lang_pref=("eng",))
     # ordine: etichetta dell'edizione originale → <title> in lingua → inglese
     title = label or cts_first(wcts, "title", lang_pref=("lat", "grc")) or title_en
@@ -337,6 +422,7 @@ def process_work(repo_dir, repo_name, lang, tag, urn_ns, tg, wk, author):
 
     units, kind_flags = [], {}
     extract(edition_root(find_body(root)), [], units, kind_flags)
+    units = dedupe_loci(units)
     kind = "versi" if kind_flags.get("verse") else "prosa"
 
     # ── cancello di fruibilità ────────────────────────────────────────────
@@ -381,9 +467,15 @@ def main():
     os.makedirs(REPORTS, exist_ok=True)
     for lang in ("la", "grc"):
         d = os.path.join(OUT, lang)
-        if os.path.isdir(d):
-            shutil.rmtree(d)          # via gli id vecchi (slug) → ora id canonici
+        # La pulizia si fa SOLO sull'import completo: con --limit si scriverebbero
+        # 40 opere dopo averne cancellate 1.157, lasciando il catalogo monco e
+        # l'indice appeso al vuoto. «Prova rapida» non deve poter distruggere nulla.
+        if limit is None and os.path.isdir(d):
+            shutil.rmtree(d)
         os.makedirs(d, exist_ok=True)
+    if limit is not None:
+        print(f"[--limit {limit}] prova rapida: NON ripulisco data/corpus/ e NON "
+              f"riscrivo _index.json (userei un catalogo parziale).\n")
 
     docs, rejected, unmapped = [], [], set()
     for repo_name, lang, tag, urn_ns in REPOS:
@@ -420,7 +512,8 @@ def main():
                 break
         print(f"   {repo_name}: {done} esaminate")
 
-    build_index(docs)
+    if limit is None:
+        build_index(docs)
     report = {
         "imported": len(docs), "rejected": len(rejected),
         "unmapped_textgroups": sorted(unmapped),

@@ -152,6 +152,30 @@ passo e regge i ponti verso gli altri rami.
 
 ---
 
+## 3-bis · Revisione avversariale (30 lug 2026) — che cosa è emerso
+
+Il primo import «funzionava»: apriva, cercava, leggeva. Una revisione a lenti multiple
+con verifica per confutazione ha però trovato che **il testo estratto era incompleto**,
+e nessuno dei difetti era visibile dall'interfaccia. Recuperati con le correzioni:
+**+9 opere · +64.720 parole · +48.940 unità citabili** (568.150 → 617.090).
+
+| Difetto | Effetto reale | Correzione |
+|---|---|---|
+| Marcatura TEI antica `<div1>`/`<div2>` non riconosciuta | opere intere collassate in **una sola unità** con locus vuoto | `DIVLIKE = div\d*` in `extract` e `edition_root` |
+| `<p>` fratelli di `<l>`/`<div>`/`<sp>` scartati | il vecchio `if handled: return` usciva prima di guardarli: paragrafi spariti nelle opere miste | un **unico ciclo** tratta versi e paragrafi insieme |
+| `<cit>` in `SKIP_TEXT` | ~20.000 parole di **testo citato** buttate con la referenza | tolto `cit`; `bibl`/`ref` bastano a togliere la sola bibliografia |
+| `<l>` dentro `<quote>`/`<cit>` mai estratti | ~17.000 **versi appiattiti in prosa**, opere classificate «prosa» a torto | si scende nei contenitori `quote`/`cit` |
+| `<speaker>` ignorato | i nomi dei personaggi sparivano dal dramma | ramo dedicato: nel dramma il personaggio **è** testo |
+| `abbr`/`expan` e `sic`/`corr` **fuori** da `<choice>` | nel testo comparivano **entrambe** le letture | `IMPLICIT_CHOICE`: fratelli trattati come scelta implicita |
+| Contenitori senza `@n` | fino a **35 unità con lo stesso locus** → impossibile puntare al passo | la posizione entra nel locus + rete di sicurezza `dedupe_loci` |
+| `source.edition` scelto per lingua | opere con più edizioni attribuite alla **stampa sbagliata** | corrispondenza esatta con l'`urn` del file importato |
+| **`--limit` cancellava il corpus** | la «prova rapida» faceva `rmtree` di 1.157 opere per scriverne 40 | con `--limit` non si ripulisce e non si riscrive il catalogo |
+| La cache memorizzava i **fallimenti** di rete | una connessione caduta su uno spicchio da 3 MB faceva rispondere «nessuna opera contiene questa forma» — falso — per tutta la sessione | si memorizza solo l'esito buono e il 404; richieste in volo condivise |
+| `candidateWorks` confondeva «indice assente» e «query senza lettere» | cercare `1.1` accusava l'indice di essere rotto | due esiti distinti (`NO_INDEX` / `NO_WORDS`), due messaggi |
+
+**Confutati** (nessuna modifica): prefisso vs sottostringa nei due stadi · ricerca in volo
+non annullata · `shard[t]` e `Object.prototype` · l'import che non invalida `_idx/`.
+
 ## 4 · Regole d'oro del parser TEI
 
 Tre correzioni pagate con bug reali — **non toccarle a cuor leggero**:

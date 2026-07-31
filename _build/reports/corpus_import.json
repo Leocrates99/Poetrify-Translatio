@@ -1,6 +1,6 @@
 {
- "imported": 1157,
- "rejected": 69,
+ "imported": 1166,
+ "rejected": 60,
  "unmapped_textgroups": [],
  "rejects": [
   {
@@ -19,13 +19,6 @@
    "title": "phi0972.phi001p",
    "reason": "XML illeggibile: not well-formed (invalid token): line 526, column 1",
    "author": "Petronio"
-  },
-  {
-   "id": "phi1014.phi004",
-   "title": "Fragmenta",
-   "reason": "testo assente o troppo breve",
-   "chars": 0,
-   "author": "Seneca il Vecchio"
   },
   {
    "id": "phi1221.phi007",
@@ -63,13 +56,6 @@
    "id": "tlg0061.tlg006",
    "reason": "nessuna edizione in lingua originale",
    "author": "Pseudo-Luciano"
-  },
-  {
-   "id": "tlg0081.tlg007",
-   "title": "Libri secundi de antiquis oratoribus reliquiae",
-   "reason": "testo assente o troppo breve",
-   "chars": 3,
-   "author": "Dionigi di Alicarnasso"
   },
   {
    "id": "tlg0094.tlg001",
@@ -269,55 +255,6 @@
   {
    "id": "tlg0551.tlg001",
    "reason": "nessuna edizione in lingua originale",
-   "author": "Appiano"
-  },
-  {
-   "id": "tlg0551.tlg002",
-   "title": "ἐκ τῆς βασιλικῆς",
-   "reason": "testo assente o troppo breve",
-   "chars": 0,
-   "author": "Appiano"
-  },
-  {
-   "id": "tlg0551.tlg003",
-   "title": "ἐκ τῆς Ἰταλικῆς",
-   "reason": "testo assente o troppo breve",
-   "chars": 0,
-   "author": "Appiano"
-  },
-  {
-   "id": "tlg0551.tlg004",
-   "title": "ἐκ τῆς Σαυνιτικῆς",
-   "reason": "testo assente o troppo breve",
-   "chars": 0,
-   "author": "Appiano"
-  },
-  {
-   "id": "tlg0551.tlg005",
-   "title": "ἐκ τῆς Κελτῖκης",
-   "reason": "testo assente o troppo breve",
-   "chars": 0,
-   "author": "Appiano"
-  },
-  {
-   "id": "tlg0551.tlg006",
-   "title": "ἐκ τῆς Σικελῖκης καὶ νησιωτικής",
-   "reason": "testo assente o troppo breve",
-   "chars": 0,
-   "author": "Appiano"
-  },
-  {
-   "id": "tlg0551.tlg010",
-   "title": "ἐκ τῆς Νομαδικῆς",
-   "reason": "testo assente o troppo breve",
-   "chars": 0,
-   "author": "Appiano"
-  },
-  {
-   "id": "tlg0551.tlg011",
-   "title": "ἐκ τῆς Μακεδονικῆς",
-   "reason": "testo assente o troppo breve",
-   "chars": 0,
    "author": "Appiano"
   },
   {
