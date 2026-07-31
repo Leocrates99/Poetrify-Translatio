@@ -89,6 +89,55 @@ body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
   font-family: var(--font-ui); font-size: 11.5px; color: var(--sepia);
 }
 .searchhint b { color: var(--primary); font-weight: 700; }
+.searchhint .recog {
+  font: inherit; font-weight: 700; color: var(--accent); background: none;
+  border: none; padding: 0 0 0 6px; text-decoration: underline; text-underline-offset: 3px;
+}
+
+/* ── Riconoscimento di un brano ───────────────────────────────── */
+.recog-head { margin-bottom: 4px; }
+.recog-head h1 { font-family: var(--font-display); font-size: clamp(25px, 3.6vw, 34px); font-weight: 700; letter-spacing: -.015em; }
+.recog-head p { max-width: 60ch; margin-top: 10px; font-size: 16px; color: var(--sepia); line-height: 1.55; }
+#brano {
+  width: 100%; min-height: 168px; margin-top: 18px; resize: vertical;
+  font-family: var(--font-read); font-size: 17px; line-height: 1.65; color: var(--ink);
+  padding: 16px 18px; border: 1.5px solid var(--rule); border-radius: var(--radius-lg);
+  background: var(--parchment);
+}
+#brano:focus { outline: 2px solid var(--accent); outline-offset: 2px; border-color: var(--accent); }
+#brano::placeholder { color: var(--sepia); }
+.recog-bar { display: flex; gap: 12px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+.btn-primary {
+  font-family: var(--font-ui); font-size: 14px; font-weight: 700; color: var(--on-primary);
+  background: var(--accent); border: none; border-radius: var(--radius-md); padding: 10px 20px;
+  transition: filter .13s;
+}
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-primary[disabled] { opacity: .5; cursor: default; }
+.recog-note { font-family: var(--font-ui); font-size: 12px; color: var(--sepia); }
+
+.match {
+  width: 100%; text-align: left; background: var(--paper); border: 1px solid var(--rule-soft);
+  border-left: 4px solid var(--rule); border-radius: var(--radius-lg);
+  padding: 15px 18px; margin: 12px 0; transition: box-shadow .13s, border-color .13s;
+}
+.match:hover { box-shadow: var(--shadow); }
+.match.la { --accent: var(--accent-lat); } .match.grc { --accent: var(--accent-gr); }
+.match.top { border-left-color: var(--accent); border-color: var(--accent); }
+.match-top { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.score {
+  font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--accent);
+  font-variant-numeric: tabular-nums; line-height: 1;
+}
+.score small { font-size: 13px; font-weight: 600; }
+.match-who { font-family: var(--font-display); font-size: 18px; font-weight: 700; }
+.match-loc { font-family: var(--font-mono); font-size: 11.5px; color: var(--sepia); margin-left: auto; }
+.meter { height: 5px; background: var(--cream); border-radius: 3px; margin-top: 10px; overflow: hidden; }
+.meter i { display: block; height: 100%; background: var(--accent); border-radius: 3px; }
+.match-snip { font-family: var(--font-read); font-size: 15.5px; line-height: 1.55; color: var(--ink-soft); margin-top: 10px; }
+.match.grc .match-snip { font-family: var(--font-classical); font-size: 16.5px; }
+.match-why { font-family: var(--font-ui); font-size: 11.5px; color: var(--sepia); margin-top: 9px; }
+.match-why b { color: var(--accent); }
 
 /* ── Layout a due pannelli ────────────────────────────────────── */
 .layout {
@@ -330,7 +379,8 @@ body[data-lang="grc"] .verse .vt { font-family: var(--font-classical); font-size
     <input id="q" type="search" autocomplete="off" spellcheck="false"
            placeholder="Cerca un autore, un'opera o una parola nei testi…" aria-label="Cerca nel corpus">
   </div>
-  <p class="searchhint">La ricerca ignora accenti e spiriti: cerca <b>μηνιν</b> e trovi <b>μῆνιν</b>; <b>vita</b> trova anche <b>uita</b>.</p>
+  <p class="searchhint">La ricerca ignora accenti e spiriti: cerca <b>μηνιν</b> e trovi <b>μῆνιν</b>; <b>vita</b> trova anche <b>uita</b>.
+    <button class="recog" id="openrecog" type="button">Hai una versione? Scopri da dove viene</button></p>
 </div>
 
 <main class="layout">
@@ -379,17 +429,36 @@ const nf = new Intl.NumberFormat('it-IT');
 // Folding accent/case-insensitive con MAPPA verso gli indici originali, per
 // evidenziare la porzione esatta anche saltando i diacritici. Deve restare
 // IDENTICA a fold() in _build/build_corpus_index.py, o l'indice non combacia.
+const COMBINING = /[̀-ͯ]/g;
+/* L'apostrofo di elisione (ʼ U+02BC e simili) è per Unicode una LETTERA
+   modificatrice: `\p{L}` lo tiene dentro la parola, così «μυρίʼ» non combaciava
+   mai con «μυρι». Nella ricerca il danno restava nascosto — il confronto per
+   prefisso li trovava lo stesso — ma il riconoscimento confronta insiemi esatti
+   e perdeva proprio le parole elise, frequentissime in poesia. Va tolto QUI e
+   nello stesso punto di build_corpus_index.py, o indice e ricerca divergono. */
+const ELISION = /[ʼ’ʹ᾽᾿῾´'’]/g;
+const SWAP = (s) => s.toLowerCase().replace(ELISION, '')
+  .replace(/ς/g, 'σ').replace(/v/g, 'u').replace(/j/g, 'i');
+
+/* fold() lavora sull'INTERA stringa: chiamare normalize() una volta per carattere
+   costava secondi di CPU su un'opera intera, e rendeva il riconoscimento — che
+   normalizza ogni unità di dieci opere — semplicemente inutilizzabile. */
+const fold = (s) => SWAP(s.normalize('NFD').replace(COMBINING, ''));
+
+/* foldMap() serve solo dove occorre risalire alla posizione ORIGINALE (per
+   evidenziare la forma accentata nei risultati), quindi mantiene la mappa —
+   ma salta normalize() sui caratteri ASCII, che normalizzano a sé stessi.
+   Deve restare d'accordo con fold(): stesse sostituzioni, stesso ordine. */
 function foldMap(s) {
   const out = []; const map = [];
   for (let i = 0; i < s.length; i++) {
-    let f = '';
-    for (const c of s[i].normalize('NFD')) { if (!/[̀-ͯ]/.test(c)) f += c; }
-    f = f.toLowerCase().replace(/ς/g, 'σ').replace(/v/g, 'u').replace(/j/g, 'i');
+    const ch = s[i];
+    let f = ch.charCodeAt(0) < 128 ? ch : ch.normalize('NFD').replace(COMBINING, '');
+    f = SWAP(f);
     for (const c of f) { out.push(c); map.push(i); }
   }
   return { norm: out.join(''), map };
 }
-const fold = (s) => foldMap(s).norm;
 const escapeHtml = (s) => s.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
 
 let toastTimer;
@@ -990,6 +1059,220 @@ function snip(text, os, oe, ctx = 90) {
   return escapeHtml(pre) + '<mark>' + escapeHtml(hit) + '</mark>' + escapeHtml(post);
 }
 
+// ══════════════════════════════════════════════════════════════════════════
+// RICONOSCIMENTO DI UN BRANO
+// ══════════════════════════════════════════════════════════════════════════
+/* Data una versione — ritrascritta, fotocopiata, magari presa da un'edizione
+   diversa — si cerca da dove viene. La corrispondenza esatta quasi mai esiste,
+   quindi la risposta non è «trovato / non trovato» ma QUANTA parte del brano si
+   ritrova, e su quale intervallo di loci.
+
+   Il peso di ogni parola è il suo `idf`, ricavato dall'indice: una forma che
+   compare in poche opere vale molto, una che compare ovunque vale quasi nulla.
+   In un passo di Cesare «et» ed «est» sono rumore, «Helvetii» e «Garumna» sono
+   un'impronta digitale. */
+
+const RECOG_WORKS = 10;      // opere aperte per il confronto ravvicinato
+const RECOG_MIN_TOKENS = 4;
+
+function tokenize(text) {
+  return fold(text).split(/[^\p{L}]+/u).filter(t => t.length > 1);
+}
+
+async function recognize(text, onProgress) {
+  const toks = tokenize(text);
+  if (toks.length < RECOG_MIN_TOKENS) return { error: 'troppo-corto' };
+  const man = await loadManifest();
+  if (!man) return { error: 'indice' };
+
+  // 1 · peso di ogni forma distinta (idf dalla lunghezza delle sue postings)
+  const uniq = [...new Set(toks)];
+  const weight = new Map(), postings = new Map();
+  const N = man.works.length;
+  for (const t of uniq) {
+    const shard = await loadShard(t[0]).catch(() => null);
+    const post = shard && shard[t];
+    if (!post || !post.length) continue;             // forma assente dal corpus
+    postings.set(t, post);
+    weight.set(t, Math.log(N / post.length) + 0.25);
+  }
+  if (!weight.size) return { error: 'nessuna-forma' };
+  const totalW = toks.reduce((s, t) => s + (weight.get(t) || 0), 0);
+  if (!totalW) return { error: 'nessuna-forma' };
+
+  // 2 · quali opere valgono la pena di essere aperte
+  const perWork = new Map();
+  for (const [t, post] of postings) {
+    const w = weight.get(t);
+    for (const wi of post) perWork.set(wi, (perWork.get(wi) || 0) + w);
+  }
+  const shortlist = [...perWork.entries()]
+    .sort((a, b) => b[1] - a[1]).slice(0, RECOG_WORKS)
+    .map(([wi]) => man.works[wi])
+    .map(id => state.index.works.find(w => w.id === id))
+    .filter(w => w && inBranch(w));
+  if (!shortlist.length) return { error: 'nessuna-opera' };
+
+  // 3 · dentro ogni opera, la finestra di unità che copre meglio il brano
+  const wanted = new Set(uniq.filter(t => weight.has(t)));
+  const out = [];
+  for (let i = 0; i < shortlist.length; i++) {
+    if (onProgress) onProgress(i, shortlist.length);
+    const doc = await loadWork(shortlist[i].id).catch(() => null);
+    if (!doc) continue;
+    const best = bestWindow(doc, wanted, weight, totalW);
+    if (best && best.score > 0.08) out.push({ doc, ...best });
+  }
+  /* A PARITÀ di riconoscimento vince l'autore più antico. Non è un vezzo: un
+     brano famoso lo contiene sia chi l'ha scritto sia chi lo cita — l'incipit
+     dell'Iliade sta al 100% in Omero e al 100% in Dione Crisostomo, che lo
+     riporta. Chi cerca la provenienza di una versione vuole la fonte, non il
+     testimone; e le due letture restano comunque entrambe in elenco. */
+  out.sort((a, b) => (b.score - a.score) ||
+    ((CANON_RANK[a.doc.epoch] ?? 9) - (CANON_RANK[b.doc.epoch] ?? 9)));
+  return { matches: out.slice(0, 6), totalW, wanted };
+}
+
+/* La finestra migliore: si valuta ogni unità, si parte dalla più ricca e si
+   allarga finché le unità vicine continuano a portare parole del brano. Senza
+   questo, una versione che occupa cinque capitoli verrebbe attribuita a uno solo. */
+function bestWindow(doc, wanted, weight, totalW) {
+  // La scomposizione in parole di un'opera si fa UNA VOLTA e resta attaccata al
+  // documento: un secondo riconoscimento sulle stesse opere candidate non la
+  // rifà da capo.
+  if (!doc._toks) doc._toks = doc.units.map(u => tokenize(u.t));
+  const hits = doc._toks.map(list => {
+    const found = new Set();
+    for (const t of list) if (wanted.has(t)) found.add(t);
+    let w = 0; for (const t of found) w += weight.get(t);
+    return { found, w };
+  });
+  let seed = 0;
+  for (let i = 1; i < hits.length; i++) if (hits[i].w > hits[seed].w) seed = i;
+  if (!hits.length || hits[seed].w === 0) return null;
+
+  let lo = seed, hi = seed;
+  const acc = new Set(hits[seed].found);
+  const MAX_SPAN = 60;
+  for (let step = 0; step < MAX_SPAN; step++) {
+    const before = lo > 0 ? countNew(hits[lo - 1].found, acc, weight) : -1;
+    const after = hi < hits.length - 1 ? countNew(hits[hi + 1].found, acc, weight) : -1;
+    if (before <= 0 && after <= 0) break;
+    if (before >= after) { lo--; for (const t of hits[lo].found) acc.add(t); }
+    else { hi++; for (const t of hits[hi].found) acc.add(t); }
+  }
+  let matched = 0; for (const t of acc) matched += weight.get(t);
+  return {
+    score: matched / totalW,
+    from: doc.units[lo].loc, to: doc.units[hi].loc,
+    lo, hi, units: hi - lo + 1,
+    snippet: doc.units[lo].t,
+    hitTokens: acc,
+  };
+}
+function countNew(found, acc, weight) {
+  let w = 0; for (const t of found) if (!acc.has(t)) w += weight.get(t);
+  return w;
+}
+
+function renderRecognizeView(preset) {
+  state.view = 'recognize'; state.work = null; state.author = null;
+  if (state.lang === 'la' || state.lang === 'grc') document.body.dataset.lang = state.lang;
+  const wrap = el('div');
+  const head = el('div', 'recog-head');
+  head.appendChild(el('h1', null, 'Da dove viene questo brano?'));
+  head.appendChild(el('p', null, 'Incolla una versione — anche ritrascritta, anche da un’edizione diversa — e la confronto con tutto il corpus. Ti dico l’autore, l’opera, i loci e quanta parte del brano ho ritrovato.'));
+  wrap.appendChild(head);
+
+  const ta = el('textarea'); ta.id = 'brano';
+  ta.placeholder = 'Gallia est omnis divisa in partes tres…';
+  ta.setAttribute('aria-label', 'Il brano da riconoscere');
+  if (preset) ta.value = preset;
+  wrap.appendChild(ta);
+
+  const bar = el('div', 'recog-bar');
+  const go = el('button', 'btn-primary', 'Riconosci il brano');
+  const note = el('span', 'recog-note', 'Bastano una decina di parole; più ne dai, più il riconoscimento è sicuro.');
+  bar.appendChild(go); bar.appendChild(note);
+  wrap.appendChild(bar);
+
+  const res = el('div'); res.id = 'recogres';
+  wrap.appendChild(res);
+
+  go.onclick = () => runRecognize(ta.value, go, note, res);
+  ta.addEventListener('keydown', (e) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') go.click();
+  });
+
+  $stage.innerHTML = ''; $stage.appendChild(wrap);
+  ta.focus();
+  if (preset) go.click();
+}
+
+async function runRecognize(text, go, note, res) {
+  go.disabled = true;
+  note.textContent = 'Consulto l’indice…';
+  res.innerHTML = '';
+  let r;
+  try {
+    r = await recognize(text, (i, n) => { note.textContent = `Confronto con le opere candidate… ${i + 1} di ${n}`; });
+  } catch (e) {
+    r = { error: 'rete' };
+  }
+  go.disabled = false;
+
+  const msg = {
+    'troppo-corto': 'Servono almeno quattro parole per tentare un riconoscimento.',
+    'indice': 'L’indice non è raggiungibile in questo momento: riprova fra un istante.',
+    'nessuna-forma': 'Nessuna di queste parole compare nel corpus: controlla la lingua del brano.',
+    'nessuna-opera': 'Nessuna opera del ramo scelto contiene queste parole.',
+    'rete': 'Qualcosa è andato storto nella lettura dei dati: riprova.',
+  };
+  if (r.error) {
+    note.textContent = '';
+    res.appendChild(el('div', 'empty', msg[r.error] || 'Riconoscimento non riuscito.'));
+    return;
+  }
+  if (!r.matches.length) {
+    note.textContent = '';
+    res.appendChild(el('div', 'empty', 'Non ho trovato un passo che corrisponda. Può essere un autore fuori dal corpus, oppure un testo troppo rimaneggiato.'));
+    return;
+  }
+  note.textContent = 'Le corrispondenze migliori, dalla più probabile.';
+  r.matches.forEach((m, i) => res.appendChild(matchCard(m, i === 0)));
+}
+
+function matchCard(m, isTop) {
+  const pct = Math.round(m.score * 100);
+  const card = el('button', `match ${m.doc.lang}${isTop ? ' top' : ''}`);
+  const top = el('div', 'match-top');
+  const s = el('div', 'score', String(pct));
+  s.appendChild(el('small', null, '%'));
+  top.appendChild(s);
+  const who = el('div');
+  who.appendChild(el('div', 'match-who', m.doc.author));
+  const t = el('div', 'match-snip', m.doc.title);
+  t.style.margin = '2px 0 0'; t.lang = m.doc.lang === 'grc' ? 'grc' : 'la';
+  who.appendChild(t);
+  top.appendChild(who);
+  top.appendChild(el('div', 'match-loc', m.from === m.to ? m.from : `${m.from} – ${m.to}`));
+  card.appendChild(top);
+
+  const meter = el('div', 'meter'); const fill = el('i');
+  fill.style.width = Math.max(3, pct) + '%'; meter.appendChild(fill);
+  card.appendChild(meter);
+
+  const snip = el('div', 'match-snip', m.snippet.slice(0, 220) + (m.snippet.length > 220 ? ' …' : ''));
+  snip.lang = m.doc.lang === 'grc' ? 'grc' : 'la';
+  card.appendChild(snip);
+
+  card.appendChild(el('div', 'match-why',
+    `${m.units} unit${m.units === 1 ? 'à' : 'à'} · ${m.hitTokens.size} parole del brano ritrovate · ${pct >= 60 ? 'corrispondenza forte' : pct >= 30 ? 'corrispondenza parziale' : 'indizio debole'}`));
+
+  card.onclick = () => openWork(m.doc.id, m.from);
+  return card;
+}
+
 // ── Controlli ──────────────────────────────────────────────────────────────
 let debTimer;
 document.getElementById('q').addEventListener('input', (e) => {
@@ -1020,6 +1303,11 @@ function syncHeadHeight() {
 addEventListener('resize', syncHeadHeight);
 syncHeadHeight();
 
+document.getElementById('openrecog').onclick = () => {
+  document.getElementById('q').value = '';
+  renderRecognizeView();
+};
+
 // ── Avvio ──────────────────────────────────────────────────────────────────
 (async function init() {
   try {
@@ -1031,7 +1319,14 @@ syncHeadHeight();
     const branch = (ul === 'la' || ul === 'latino') ? 'la' : (ul === 'grc' || ul === 'greco') ? 'grc' : null;
     if (branch) state.lang = branch;
     const work = p.get('opera') || p.get('work');
-    if (work && state.index.works.some(w => w.id === work)) {
+    // Cucitura d'ingresso per il RICONOSCIMENTO: ?riconosci=<testo> apre il
+    // brano già incollato e avvia il confronto. È il ponte che il Translator
+    // userà per chiedere «da dove viene la versione su cui sto lavorando?».
+    const brano = p.get('riconosci') || p.get('text');
+    if (brano && p.has('riconosci')) {
+      renderAuthors('');
+      renderRecognizeView(brano);
+    } else if (work && state.index.works.some(w => w.id === work)) {
       renderAuthors('');
       await openWork(work, p.get('loc') || undefined);
     } else {

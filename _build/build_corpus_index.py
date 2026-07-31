@@ -54,11 +54,17 @@ IDX = os.path.join(CORPUS, "_idx")
 WORD = re.compile(r"[^\W\d_]+", re.UNICODE)
 
 
+# L'apostrofo di elisione è per Unicode una LETTERA modificatrice: `\w` lo tiene
+# dentro la parola, e «μυρίʼ» non combacia mai con «μυρι». Va tolto qui e nello
+# stesso punto di corpus.html (costante ELISION), o indice e ricerca divergono.
+ELISION = "ʼ’ʹ᾽᾿῾´'"
+
+
 def fold(s):
-    """Stessa normalizzazione della ricerca nel browser: via i diacritici,
-    minuscole, sigma finale unificato, u/v e i/j unificati per il latino."""
+    """Stessa normalizzazione della ricerca nel browser: via i diacritici e gli
+    apostrofi d'elisione, minuscole, sigma finale unificato, u/v e i/j unificati."""
     s = unicodedata.normalize("NFD", s)
-    s = "".join(c for c in s if not unicodedata.combining(c))
+    s = "".join(c for c in s if not unicodedata.combining(c) and c not in ELISION)
     return s.lower().replace("ς", "σ").replace("v", "u").replace("j", "i")
 
 
@@ -91,7 +97,9 @@ def main():
         seen = set()
         for u in doc["units"]:
             for m in WORD.findall(u["t"]):
-                seen.add(fold(m))
+                t = fold(m)
+                if t:          # una «parola» fatta del solo apostrofo si annulla
+                    seen.add(t)
         total_tokens += len(seen)
         for tok in seen:
             postings.setdefault(tok, []).append(wi)
