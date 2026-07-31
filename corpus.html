@@ -229,7 +229,18 @@ body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
 .catcard .cmeta span { padding: 2px 8px; border-radius: var(--radius-pill); background: var(--cream); }
 .catcard .cmeta span.inf { border: 1px dashed var(--rule); background: transparent; }
 .sentinel { height: 1px; }
-.moreline { text-align: center; font-family: var(--font-ui); font-size: 12px; color: var(--sepia); padding: 18px 0; }
+.moreline {
+  text-align: center; font-family: var(--font-ui); font-size: 12px; color: var(--sepia);
+  padding: 18px 0; display: flex; gap: 12px; align-items: center; justify-content: center; flex-wrap: wrap;
+}
+/* Comando esplicito accanto allo scorrimento automatico: un caricamento che si
+   attiva SOLO scorrendo è inoperabile da tastiera e con lo screen reader. */
+.btn-more {
+  font-family: var(--font-ui); font-size: 12.5px; font-weight: 700; color: var(--accent);
+  background: var(--paper); border: 1.5px solid var(--rule); border-radius: var(--radius-pill);
+  padding: 6px 16px; transition: border-color .13s;
+}
+.btn-more:hover { border-color: var(--accent); }
 
 /* ── Pagina autore ────────────────────────────────────────────── */
 .author-head { border-bottom: 2px solid var(--accent); padding-bottom: 14px; margin-bottom: 6px; }
@@ -637,6 +648,10 @@ function paintWorks() {
   const grid = el('div', 'catalog'); grid.id = 'catgrid';
   host.appendChild(grid);
   const more = el('div', 'moreline'); more.id = 'moreline';
+  const moreTxt = el('span'); moreTxt.id = 'moretxt';
+  const moreBtn = el('button', 'btn-more', 'Mostra le altre'); moreBtn.id = 'morebtn';
+  moreBtn.onclick = () => appendChunk();
+  more.appendChild(moreTxt); more.appendChild(moreBtn);
   host.appendChild(more);
   appendChunk();
 
@@ -664,11 +679,13 @@ function appendChunk() {
   for (const w of slice) frag.appendChild(workCard(w));
   grid.appendChild(frag);
   state.shown += slice.length;
-  const more = document.getElementById('moreline');
-  if (more) {
-    more.textContent = state.shown < state.filtered.length
-      ? `${nf.format(state.shown)} di ${nf.format(state.filtered.length)} — scorri per vedere le altre`
-      : '';
+  const txt = document.getElementById('moretxt');
+  const btn = document.getElementById('morebtn');
+  if (txt && btn) {
+    const left = state.filtered.length - state.shown;
+    txt.textContent = left ? `${nf.format(state.shown)} di ${nf.format(state.filtered.length)}` : '';
+    btn.hidden = !left;
+    btn.textContent = left > PAGE ? `Mostra altre ${PAGE}` : 'Mostra le ultime';
   }
 }
 
@@ -758,6 +775,7 @@ async function openWork(id, targetLoc) {
   renderAuthors(document.getElementById('authorfilter').value);
 }
 
+let readerIO = null;
 function renderReader(doc, books, bookKey, targetLoc) {
   const keys = [...books.keys()];
   const wrap = el('div');
@@ -798,7 +816,35 @@ function renderReader(doc, books, bookKey, targetLoc) {
   scroll.lang = doc.lang === 'grc' ? 'grc' : 'la';
   const units = books.get(bookKey);
   const byLoc = Object.create(null);
-  for (const u of units) { byLoc[u.loc] = u.t; scroll.appendChild(renderUnit(doc, u)); }
+  for (const u of units) byLoc[u.loc] = u.t;
+
+  /* Anche la lettura è INCREMENTALE: un libro di Livio sono migliaia di unità,
+     e disegnarle tutte a ogni clic bloccava la pagina per secondi. Si disegna a
+     blocchi; se si arriva da una ricerca, si disegna comunque fin dove sta il
+     passo cercato, altrimenti non ci si potrebbe saltare. */
+  const READ_CHUNK = 300;
+  const sentinel = el('div', 'sentinel');
+  const tail = el('div', 'moreline');
+  const tailTxt = el('span');
+  const tailBtn = el('button', 'btn-more', 'Mostra le altre');
+  tail.appendChild(tailTxt); tail.appendChild(tailBtn);
+  let drawn = 0;
+  const drawUpTo = (n) => {
+    const end = Math.min(n, units.length);
+    if (end <= drawn) return;
+    const frag = document.createDocumentFragment();
+    for (let i = drawn; i < end; i++) frag.appendChild(renderUnit(doc, units[i]));
+    scroll.insertBefore(frag, sentinel);
+    drawn = end;
+    const left = units.length - drawn;
+    tailTxt.textContent = left ? `${nf.format(drawn)} di ${nf.format(units.length)}` : '';
+    tailBtn.hidden = !left;
+    tailBtn.textContent = left > READ_CHUNK ? `Mostra altre ${nf.format(READ_CHUNK)}` : 'Mostra le ultime';
+  };
+  tailBtn.onclick = () => drawUpTo(drawn + READ_CHUNK);
+  scroll.appendChild(sentinel);
+  const targetIdx = targetLoc ? units.findIndex(u => u.loc === targetLoc) : -1;
+  drawUpTo(Math.max(READ_CHUNK, targetIdx >= 0 ? targetIdx + 30 : 0));
 
   // DELEGA (un solo handler per l'intero libro, non uno per parola/bottone):
   // doppio-click su una parola → dizionario; click sulle azioni copia/traduci.
@@ -814,7 +860,18 @@ function renderReader(doc, books, bookKey, targetLoc) {
     else toTranslator(doc, unit.dataset.loc, t);
   });
   wrap.appendChild(scroll);
+  wrap.appendChild(tail);
   $stage.innerHTML = ''; $stage.appendChild(wrap);
+
+  if (readerIO) readerIO.disconnect();
+  if (window.IntersectionObserver && drawn < units.length) {
+    readerIO = new IntersectionObserver((ents) => {
+      if (!ents.some(e => e.isIntersecting)) return;
+      drawUpTo(drawn + READ_CHUNK);
+      if (drawn >= units.length) readerIO.disconnect();
+    }, { rootMargin: '600px' });
+    readerIO.observe(sentinel);
+  }
 
   if (targetLoc) {
     const node = scroll.querySelector(`[data-loc="${CSS.escape(targetLoc)}"]`);
@@ -1009,7 +1066,14 @@ async function runSearch(raw) {
     for (const doc of docs) {
       scanned++;
       if (!doc) continue;
-      for (const u of doc.units) {
+      // Due velocità: la normalizzazione RAPIDA (intera stringa) decide se
+      // l'unità contiene la sequenza; la mappa posizionale — cara, e sul greco
+      // senza scorciatoie ASCII — si costruisce solo per le poche unità che un
+      // riscontro ce l'hanno davvero. Prima si pagava su tutte.
+      if (!doc._fold) doc._fold = doc.units.map(u => fold(u.t));
+      for (let ui = 0; ui < doc.units.length; ui++) {
+        if (doc._fold[ui].indexOf(nq) < 0) continue;
+        const u = doc.units[ui];
         const fm = foldMap(u.t);
         const at = fm.norm.indexOf(nq);
         if (at < 0) continue;
