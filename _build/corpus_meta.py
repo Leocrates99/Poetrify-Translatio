@@ -278,6 +278,85 @@ def name_for(textgroup, cts_name):
     """Nome italiano se lo conosciamo, altrimenti quello del catalogo CTS."""
     return NAMES.get(textgroup) or cts_name
 
+
+# ── CRONOLOGIA DEGLI AUTORI ───────────────────────────────────────────────
+# Anno approssimativo di *floruit* (negativo = a.C.). Serve a ordinare gli
+# autori come si affrontano in classe — per tempo, non per alfabeto: dentro
+# l'età classica greca Erodoto viene prima di Demostene, e nessuna lista
+# alfabetica lo direbbe.
+#
+# Sono APPROSSIMAZIONI dichiarate, non date d'archivio: per molti antichi la
+# cronologia è discussa e per alcuni ignota. Servono a mettere in fila, non a
+# datare; l'interfaccia infatti non le mostra mai come anni.
+CRONO = {
+    # ── latini ────────────────────────────────────────────────────────────
+    "stoa0079": -180, "phi0119": -200, "phi0134": -165,
+    # Gli anni pari lasciavano decidere all'alfabeto, e usciva Tibullo prima di
+    # Virgilio: qui la successione conta più della precisione della data, perché
+    # è la sequenza in cui gli autori si affrontano.
+    "phi0474": -63, "phi0550": -58, "phi0472": -57,
+    "phi0448": -55, "phi0478": -54, "phi0426": -45, "phi0428": -45, "phi0430": -45,
+    "phi0631": -40, "phi0588": -35,
+    "phi0690": -29, "phi0893": -23, "phi0660": -22, "phi0620": -20,
+    "phi1056": -21, "phi0692": -12, "phi0914": -10, "phi1221": 10, "phi0959": 5,
+    "phi0836": 30, "phi1014": 20, "phi1038": 30, "phi0975": 40,
+    "phi0860": 50, "phi2003": 50, "phi1017": 55, "stoa0255": 55,
+    "phi0969": 60, "phi0972": 60, "phi0845": 60, "phi0917": 62,
+    "phi0978": 70, "phi1035": 85, "phi1020": 90, "phi1345": 90,
+    "phi1002": 90, "phi1294": 90, "phi1318": 105, "phi1351": 105,
+    "phi1276": 110, "phi1348": 120, "phi1242": 120,
+    "phi1212": 160, "phi1254": 160,
+    "stoa0203": 200, "stoa0275": 200, "stoa0276": 220,
+    "phi2331": 380, "stoa0023": 385, "stoa0162": 390, "stoa0045": 375,
+    "stoa0089": 400, "stoa0238": 400, "stoa0040": 400,
+    "stoa0261": 470, "stoa0058": 520, "stoa0054": 720,
+    # ── greci ─────────────────────────────────────────────────────────────
+    "tlg0012": -750, "tlg0020": -700, "tlg0013": -650,
+    "tlg0085": -470, "tlg0033": -480, "tlg0199": -470,
+    "tlg0016": -440, "tlg0011": -440, "tlg0006": -430,
+    "tlg0003": -420, "tlg0028": -420, "tlg0627": -410, "tlg0019": -410,
+    "tlg0027": -400, "tlg0540": -395, "tlg0032": -390,
+    "tlg0059": -380, "tlg0010": -380, "tlg0017": -370,
+    "tlg0058": -350, "tlg0014": -345, "tlg0026": -345,
+    "tlg0086": -340, "tlg0030": -340, "tlg0034": -330, "tlg0535": -330,
+    "tlg0029": -320, "tlg0093": -310, "tlg0613": -300, "tlg1799": -290,
+    "tlg0005": -270, "tlg0341": -270, "tlg0653": -270,
+    "tlg0533": -260, "tlg0001": -250, "tlg0527": -250,
+    "tlg0543": -150, "tlg0035": -150, "tlg0036": -100,
+    "tlg0556": -50, "tlg0060": -40, "tlg0655": -30, "tlg0081": -20,
+    "tlg0099": 10, "tlg0560": 50, "tlg0554": 60, "tlg0648": 60,
+    "tlg0031": 60, "tlg0526": 80, "tlg1271": 96,
+    "tlg0007": 100, "tlg0612": 100, "tlg1311": 100,
+    "tlg0557": 110, "tlg1443": 110, "tlg1216": 120, "tlg1622": 130,
+    "tlg0074": 140, "tlg1419": 140,
+    "tlg0548": 150, "tlg0363": 150, "tlg0551": 150, "tlg0719": 150,
+    "tlg0641": 150, "tlg1484": 160, "tlg0284": 160,
+    "tlg0062": 165, "tlg0532": 170, "tlg0525": 170,
+    "tlg0057": 175, "tlg0562": 175, "tlg0023": 180, "tlg1389": 180,
+    "tlg0061": 180,
+    "tlg0008": 200, "tlg0090": 200, "tlg0094": 200, "tlg0545": 200,
+    "tlg0555": 200, "tlg0561": 200, "tlg0646": 200,
+    "tlg0024": 215, "tlg0385": 220, "tlg0638": 220, "tlg1600": 220,
+    "tlg0004": 230, "tlg0652": 250, "tlg0647": 280,
+    "tlg4091": 300, "tlg2018": 320, "tlg2003": 360, "tlg2040": 370,
+    "tlg2046": 380, "tlg2045": 450, "tlg4036": 460, "tlg4081": 500,
+    "tlg4029": 550, "tlg2934": 730, "tlg7000": 900, "tlg3135": 1120,
+}
+
+# Quando l'anno manca, l'autore si colloca comunque nella sua epoca invece di
+# finire in testa o in coda a caso.
+EPOCH_FALLBACK = {
+    "arcaica": -600, "repubblicana": -80, "classica": -420, "augustea": -15,
+    "ellenistica": -200, "imperiale": 120, "tarda": 400, "non datata": 9999,
+}
+
+
+def year_for(textgroup, epoch=None):
+    """Anno d'ordinamento. `None` non esiste: chi manca prende l'epoca."""
+    if textgroup in CRONO:
+        return CRONO[textgroup]
+    return EPOCH_FALLBACK.get(epoch, 9999)
+
 # ── Eccezioni PER OPERA ───────────────────────────────────────────────────
 # Solo dove il genere dell'autore mente sull'opera. Queste escono NON dedotte.
 WORKS = {

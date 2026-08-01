@@ -740,7 +740,8 @@ const state = {
   manifest: null, shards: {},
   view: 'home', work: null, book: null, author: null,
   browse: { lang: null, epoch: null, author: null, genre: null },
-  axis: 'genre',        // asse delle card di categoria in home
+  axis: 'epoch',        // asse delle card in home: l'EPOCA è il primo taglio
+  autOrd: 'crono',      // ordine degli autori: 'crono' (per tempo) | 'alfa'
   sort: 'trad',         // ordinamento delle opere nello sfoglio
   alpha: null,          // iniziale selezionata nella striscia degli autori
   searchMode: 'kwic',   // 'kwic' (concordanza) | 'estesi'
@@ -1186,27 +1187,51 @@ function renderLivelloAutori(wrap) {
   const pool = browsePool();
   const mappa = new Map();
   for (const w of pool) {
-    if (!mappa.has(w.authorId)) mappa.set(w.authorId, { id: w.authorId, name: w.author, n: 0 });
+    if (!mappa.has(w.authorId)) {
+      const a = state.index.authors.find(x => x.id === w.authorId);
+      mappa.set(w.authorId, { id: w.authorId, name: w.author, n: 0, year: a ? a.year : 9999 });
+    }
     mappa.get(w.authorId).n++;
   }
-  const autori = [...mappa.values()].sort((a, c) => a.name.localeCompare(c.name, 'it'));
+  /* CRONOLOGICO di default: dentro un'epoca gli autori si affrontano per tempo,
+     non per alfabeto — Erodoto prima di Demostene, e nessuna lista alfabetica lo
+     direbbe. L'alfabetico resta a un clic, perché serve quando il nome si sa già. */
+  const autori = [...mappa.values()].sort(state.autOrd === 'alfa'
+    ? (a, c) => a.name.localeCompare(c.name, 'it')
+    : (a, c) => (a.year - c.year) || a.name.localeCompare(c.name, 'it'));
 
   const h = el('div', 'band-h');
   h.appendChild(el('span', null, `Scegli l'autore · ${autori.length}`));
   wrap.appendChild(h);
 
-  /* Le lettere senza autori restano visibili ma spente: «qui non c'è nulla»
-     è un'informazione, e toglierle farebbe ballare la striscia a ogni filtro. */
-  const presenti = new Set(autori.map(a => (a.name[0] || '').toUpperCase()));
-  const strip = el('div', 'alpha');
-  for (const L of 'ABCDEFGHILMNOPQRSTUVZ') {
-    const btn = el('button', null, L);
-    btn.disabled = !presenti.has(L);
-    btn.setAttribute('aria-pressed', String(state.alpha === L));
-    btn.onclick = () => { state.alpha = (state.alpha === L ? null : L); renderBrowse(); };
-    strip.appendChild(btn);
+  const bar = el('div', 'sortbar');
+  bar.appendChild(el('span', 'sl', 'Ordina'));
+  for (const [k, lab, tip] of [
+    ['crono', 'Cronologico', 'Nell’ordine in cui gli autori si affrontano: per tempo'],
+    ['alfa', 'Alfabetico', 'Per nome, quando l’autore lo si sa già'],
+  ]) {
+    const btn = el('button', null, lab);
+    btn.title = tip;
+    btn.setAttribute('aria-pressed', String(state.autOrd === k));
+    btn.onclick = () => { state.autOrd = k; state.alpha = null; renderBrowse(); };
+    bar.appendChild(btn);
   }
-  wrap.appendChild(strip);
+  wrap.appendChild(bar);
+
+  /* La striscia delle iniziali compare SOLO in ordine alfabetico: su una lista
+     cronologica salterebbe avanti e indietro nel tempo a ogni lettera. */
+  if (state.autOrd === 'alfa') {
+    const presenti = new Set(autori.map(a => (a.name[0] || '').toUpperCase()));
+    const strip = el('div', 'alpha');
+    for (const L of 'ABCDEFGHILMNOPQRSTUVZ') {
+      const btn = el('button', null, L);
+      btn.disabled = !presenti.has(L);
+      btn.setAttribute('aria-pressed', String(state.alpha === L));
+      btn.onclick = () => { state.alpha = (state.alpha === L ? null : L); renderBrowse(); };
+      strip.appendChild(btn);
+    }
+    wrap.appendChild(strip);
+  }
 
   const grid = el('div', 'auths');
   for (const a of autori) {

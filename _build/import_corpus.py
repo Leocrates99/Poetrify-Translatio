@@ -41,7 +41,7 @@ import sys
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from corpus_meta import meta_for, name_for, TEXTGROUPS  # noqa: E402
+from corpus_meta import meta_for, name_for, year_for, TEXTGROUPS  # noqa: E402
 from corpus_titles import title_for                     # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -564,6 +564,9 @@ def build_index(docs):
     for w in works:
         a = authors.setdefault(w["authorId"], {
             "id": w["authorId"], "name": w["author"], "lang": w["lang"],
+            # anno d'ordinamento: serve a mettere gli autori in fila per TEMPO,
+            # come si affrontano in classe, non per alfabeto
+            "year": year_for(w["authorId"], w["epoch"]),
             "works": 0, "words": 0,
         })
         a["works"] += 1
