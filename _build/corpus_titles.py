@@ -111,12 +111,23 @@ LAT.update({
 })
 
 # Cornelio Nepote — le singole vite del De viris illustribus
+# La serie va data INTERA: curarne dieci su venticinque lasciava «Vita di Dione»
+# accanto a «Hannibal» nella stessa lista d'autore. L'unica che non è una vita è
+# il De regibus, catalogo di sovrani: l'italiano lo dice per quello che è.
 LAT.update({
     "phi0588.abo001": "Vita di Milziade",   "phi0588.abo002": "Vita di Temistocle",
     "phi0588.abo003": "Vita di Aristide",   "phi0588.abo004": "Vita di Pausania",
     "phi0588.abo005": "Vita di Cimone",     "phi0588.abo006": "Vita di Lisandro",
     "phi0588.abo007": "Vita di Alcibiade",  "phi0588.abo008": "Vita di Trasibulo",
     "phi0588.abo009": "Vita di Conone",     "phi0588.abo010": "Vita di Dione",
+    "phi0588.abo011": "Vita di Ificrate",   "phi0588.abo012": "Vita di Cabria",
+    "phi0588.abo013": "Vita di Timoteo",    "phi0588.abo014": "Vita di Datame",
+    "phi0588.abo015": "Vita di Epaminonda", "phi0588.abo016": "Vita di Pelopida",
+    "phi0588.abo017": "Vita di Agesilao",   "phi0588.abo018": "Vita di Eumene",
+    "phi0588.abo019": "Vita di Focione",    "phi0588.abo020": "Vita di Timoleonte",
+    "phi0588.abo021": "I re",               # ▸ De regibus: catalogo, non vita
+    "phi0588.abo022": "Vita di Amilcare",   "phi0588.abo023": "Vita di Annibale",
+    "phi0588.abo024": "Vita di Catone",     "phi0588.abo025": "Vita di Attico",
 })
 
 # Cicerone · orazioni (ordine tradizionale)
@@ -282,6 +293,18 @@ LAT.update({
     "phi0975.phi001": "Favole",                   # Fedro
     "phi1254.phi001": "Le notti attiche",         # Aulo Gellio
 })
+# L'epica flavia. I due poemi di Stazio hanno regime diverso e non è una svista:
+# la Tebaide e l'Achilleide si citano in italiano, le Silvae no — nessuno dice
+# «Le selve», come nessuno dice «I fasti» per Ovidio. Il Punica di Silio esce
+# invece in italiano da un'edizione reale (UTET, Vinchesi): vale la regola di
+# casa, il titolo che dice all'allievo di che cosa si tratta.
+LAT.update({
+    "phi1020.phi001": "Tebaide",                  # Stazio · Thebais
+    "phi1020.phi002": None,                       # Silvae
+    "phi1020.phi003": "Achilleide",               # Achilleis
+    "phi1035.phi001": "Le Argonautiche",          # Valerio Flacco
+    "phi1345.phi001": "Le guerre puniche",        # Silio Italico · Punica
+})
 # Tacito
 LAT.update({
     "phi1351.phi001": "Agricola",
@@ -291,12 +314,19 @@ LAT.update({
     "phi1351.phi005": "Annali",
 })
 # Svetonio · Vite dei Cesari
+# NOTA — qui il «Divus» del titolo latino NON si comporta come nella Historia
+# Augusta. Là segna un catalogo opposto alle vite singole e l'italiano usa la
+# forma nuda («Il divo Claudio»); qui ogni scheda è una vita, e la serie aveva
+# già deciso da sé: «Vita di Cesare» sta su *Divus Iulius*, «Vita di Claudio»
+# su *Divus Claudius*, «Vita di Vespasiano» su *Divus Vespasianus*. Le ultime
+# due seguono le prime dieci, non la regola dell'altro autore.
 LAT.update({
     "phi1348.abo011": "Vita di Cesare",     "phi1348.abo012": "Vita di Augusto",
     "phi1348.abo013": "Vita di Tiberio",    "phi1348.abo014": "Vita di Caligola",
     "phi1348.abo015": "Vita di Claudio",    "phi1348.abo016": "Vita di Nerone",
     "phi1348.abo017": "Vita di Galba",      "phi1348.abo018": "Vita di Otone",
     "phi1348.abo019": "Vita di Vitellio",   "phi1348.abo020": "Vita di Vespasiano",
+    "phi1348.abo021": "Vita di Tito",       "phi1348.abo022": "Vita di Domiziano",
 })
 # Apuleio
 LAT.update({
@@ -378,11 +408,32 @@ ORIG = {
     "tlg0011.tlg008": "Ἰχνευταί",              # era «Ichneutae»
     "tlg0001.tlg001": "Ἀργοναυτικά",           # era «Argonautica» (latino)
     "tlg0562.tlg001": "Τὰ εἰς ἑαυτόν",         # era «Ad Se Ipsum» (latino)
-    "tlg0013.tlg001": "εἰς Διόνυσον",          # gli Inni omerici sono tutti in inglese
-    "tlg0013.tlg002": "εἰς Δημήτραν",
-    "tlg0013.tlg003": "εἰς Ἀπόλλωνα",
-    "tlg0013.tlg004": "εἰς Ἑρμῆν",
-    "tlg0013.tlg005": "εἰς Ἀφροδίτην",
+    # Inni omerici · TUTTI E TRENTATRÉ. Il catalogo non ne registra uno in
+    # greco, e la copertura parziale era il peggiore dei mondi: dal VI al XXII
+    # la scheda mostrava «Hymn 8 to Ares» nella fascia dell'ORIGINALE, cioè
+    # marcata `lang="grc"` — una riga inglese spacciata per greca, proprio dove
+    # si promette il testo vero. I titoli sono quelli tràditi dai manoscritti,
+    # «εἰς» minuscolo più l'accusativo; dove il codice porta l'epiteto o
+    # l'apposizione (XIV, XV, XXX) si dà la forma intera.
+    "tlg0013.tlg001": "εἰς Διόνυσον",       "tlg0013.tlg002": "εἰς Δημήτραν",
+    "tlg0013.tlg003": "εἰς Ἀπόλλωνα",       "tlg0013.tlg004": "εἰς Ἑρμῆν",
+    "tlg0013.tlg005": "εἰς Ἀφροδίτην",      "tlg0013.tlg006": "εἰς Ἀφροδίτην",
+    "tlg0013.tlg007": "εἰς Διόνυσον",       "tlg0013.tlg008": "εἰς Ἄρεα",
+    "tlg0013.tlg009": "εἰς Ἄρτεμιν",        "tlg0013.tlg010": "εἰς Ἀφροδίτην",
+    "tlg0013.tlg011": "εἰς Ἀθηνᾶν",         "tlg0013.tlg012": "εἰς Ἥραν",
+    "tlg0013.tlg013": "εἰς Δημήτραν",       "tlg0013.tlg014": "εἰς Μητέρα θεῶν",
+    "tlg0013.tlg015": "εἰς Ἡρακλέα λεοντόθυμον",
+    "tlg0013.tlg016": "εἰς Ἀσκληπιόν",      "tlg0013.tlg017": "εἰς Διοσκούρους",
+    "tlg0013.tlg018": "εἰς Ἑρμῆν",          "tlg0013.tlg019": "εἰς Πᾶνα",
+    "tlg0013.tlg020": "εἰς Ἥφαιστον",       "tlg0013.tlg021": "εἰς Ἀπόλλωνα",
+    "tlg0013.tlg022": "εἰς Ποσειδῶνα",      "tlg0013.tlg023": "εἰς Δία",
+    "tlg0013.tlg024": "εἰς Ἑστίαν",
+    "tlg0013.tlg025": "εἰς Μούσας καὶ Ἀπόλλωνα",
+    "tlg0013.tlg026": "εἰς Διόνυσον",       "tlg0013.tlg027": "εἰς Ἄρτεμιν",
+    "tlg0013.tlg028": "εἰς Ἀθηνᾶν",         "tlg0013.tlg029": "εἰς Ἑστίαν",
+    "tlg0013.tlg030": "εἰς Γῆν μητέρα πάντων",
+    "tlg0013.tlg031": "εἰς Ἥλιον",          "tlg0013.tlg032": "εἰς Σελήνην",
+    "tlg0013.tlg033": "εἰς Διοσκούρους",
 
     # Historia Augusta · quattro grafie di Perseus sono corrotte, non varianti.
     # «Clodinus» e «Casius» non sono nomi latini esistenti; «Heliogobalus»
@@ -413,6 +464,139 @@ ORIG = {
     "tlg0627.tlg013": "Iusiurandum",               # era «Jusjurandum» (Ippocrate)
 }
 
+# ══════════════════════════════════════════════════════════════════════════
+# MINUSCOLA CLASSICA (decisione del docente, 1 ago 2026)
+# ══════════════════════════════════════════════════════════════════════════
+# Perseus registra i titoli latini nel Title Case inglese, dove ogni parola
+# piena prende la maiuscola: «De Cultu Feminarum», «Epicedion in Patrem».
+# Le edizioni critiche latine non fanno così: capitalizzano **la prima parola
+# e i nomi propri**, nient'altro. La tavola qui sopra aveva già adottato quella
+# grafia — «De bello civili», «Adversus Iudaeos liber», «Maximini duo» — ma
+# solo sulle opere che qualcuno aveva avuto motivo di toccare, e il risultato
+# era che dentro lo stesso autore convivevano le due ortografie: Tertulliano
+# esibiva «De idolatria» accanto a «De Cultu Feminarum», Ausonio era tutto in
+# Title Case tranne una riga. Le sessantasei righe che seguono chiudono la
+# forbice: da qui in avanti la minuscola classica è l'unica grafia di casa.
+#
+# NON È UNA TRASFORMAZIONE MECCANICA, e si vede da ciò che NON è cambiato.
+# Restano maiuscoli, perché nomi propri: «Ad Scapulam», «Adversus Hermogenem»,
+# «Adversus Praxean», «Adversus Marcionem», «De carne Christi». Restano
+# maiuscoli i derivati etnici e geografici, come vuole l'uso di Teubner e OCT:
+# «De bello Africo», «Epitome rerum Romanorum», «professorum Burdigalensium»
+# — è la stessa regola per cui in «De bello civili», là sopra, *civili* è
+# invece minuscolo: non è un etnico, è un aggettivo comune. Restano maiuscole
+# le persone divine in Boezio: «Trinitas», «Deus», «Pater», «Filius»,
+# «Spiritus Sanctus», mentre i «tres dii» pagani della stessa riga vanno
+# minuscoli. E resta intatto «Adversus Valentinianos»: i Valentiniani sono i
+# seguaci di Valentino, non una categoria.
+#
+# CLAUDIANO VA NELLA DIREZIONE OPPOSTA. Là il catalogo dà «de raptu
+# Proserpinae» con la minuscola anche sulla prima parola: la stessa regola,
+# applicata, alza quel «de» invece di abbassare il resto.
+#
+# TRE COSE OLTRE LE MAIUSCOLE, che sarebbe stato assurdo lasciare mentre si
+# riscriveva la riga accanto (l'anti-duplicato regge: `title_for` confronta il
+# ripiego anche col titolo GREZZO, quindi correggere una parola non fa
+# riaffiorare sotto la grafia appena corretta sopra — vedi in fondo al file):
+#   · refusi della fonte — «Idolotria», «Testimionio», «Fescinnina», e il
+#     «Symmachia» che al genitivo fa Symmachi, non un nome di donna;
+#   · un «De» spurio davanti a Scorpiace, che è il titolo greco dell'opera
+#     (σκορπιάκη, l'antidoto) e non regge preposizione;
+#   · rubriche di catalogo scambiate per titoli: «De Spectaculis, Tertullian,
+#     Apology, De spectaculis», «Res Rustica. Books I-IX», e la didascalia
+#     «Ausonii de XII Caesaribus per Suetonium Tranquillum scriptis», che è la
+#     descrizione dell'opera e non il suo nome — i Caesares.
+#
+# UNA SOLA RIGA VA PIÙ IN LÀ della sola ortografia, ed è marcata ▸: il
+# tertullianeo «De praescriptione haereticorum». Perseus conserva il plurale
+# di Oehler e la monottongazione medievale («De Praescriptionibus
+# Hereticorum»); si è messa la forma con cui l'opera si cita ovunque. Per
+# tornare indietro basta quella riga.
+ORIG.update({
+    # ── ETÀ REPUBBLICANA E AUGUSTEA ──────────────────────────────────────
+    "phi0474.phi038": "Partitiones oratoriae",     # Cicerone
+    "phi0478.phi003": "Commentariolum petitionis", # Quinto Tullio Cicerone
+    "phi0588.abo021": "De regibus",                # Nepote · l'unica non-vita
+    "phi0426.phi001": "De bello Africo",           # Pseudo-Cesare
+    "phi0428.phi001": "De bello Alexandrino",
+    "phi0430.phi001": "De bello Hispaniensi",
+    "phi0660.phi003": "Carmina omnia",             # Corpus Tibullianum
+    "phi0692.phi012": "De institutione viri boni", # Appendix Vergiliana
+    "phi0692.phi013": "De est et non",
+
+    # ── ETÀ IMPERIALE ────────────────────────────────────────────────────
+    "phi0836.phi002": "De medicina",               # Celso
+    "phi0845.phi002": "Res rustica",               # Columella · era «Res Rustica. Books I-IX»
+    "phi0860.phi001": "Historiae Alexandri Magni", # Curzio Rufo · la fonte ripeteva la rubrica
+    "phi1038.phi001": "Facta et dicta memorabilia",# Valerio Massimo
+    "phi1242.phi001": "Epitome rerum Romanorum",   # Floro
+    "phi2003.phi001": "De re coquinaria",          # Apicio
+
+    # ── TERTULLIANO ──────────────────────────────────────────────────────
+    "stoa0275.stoa001": "Ad martyras",
+    "stoa0275.stoa002": "Ad nationes libri duo",   # come il vicino «Adversus Iudaeos liber»
+    "stoa0275.stoa010": "De anima",
+    "stoa0275.stoa011": "De baptismo",
+    "stoa0275.stoa012": "De carne Christi",
+    "stoa0275.stoa013": "De corona",
+    "stoa0275.stoa014": "De cultu feminarum",
+    "stoa0275.stoa015": "De exhortatione castitatis liber",
+    "stoa0275.stoa016": "De fuga in persecutione",
+    "stoa0275.stoa017": "De idolatria",            # era «De Idolotria»
+    "stoa0275.stoa019": "De monogamia",
+    "stoa0275.stoa020": "De oratione",
+    "stoa0275.stoa021": "De paenitentia",
+    "stoa0275.stoa022": "De pallio",
+    "stoa0275.stoa023": "De patientia",
+    "stoa0275.stoa024": "De praescriptione haereticorum",   # ▸ vedi nota
+    "stoa0275.stoa025": "De pudicitia",
+    "stoa0275.stoa026": "De resurrectione carnis",
+    "stoa0275.stoa027": "De spectaculis",          # era una rubrica di quattro pezzi
+    "stoa0275.stoa028": "De testimonio animae",    # era «De Testimionio Animae»
+    "stoa0275.stoa029": "De virginibus velandis",
+    "stoa0275.stoa030": "Scorpiace",               # era «De Scorpiace»
+    "stoa0276.stoa002": "Ad uxorem",               # Pseudo-Tertulliano
+
+    # ── TARDA ANTICHITÀ · Prudenzio ──────────────────────────────────────
+    "stoa0238.stoa007": "Contra orationem Symmachi",   # era «Symmachia»
+
+    # ── TARDA ANTICHITÀ · Ausonio ────────────────────────────────────────
+    "stoa0045.stoa002": "Caesares",                # era la didascalia del catalogo
+    "stoa0045.stoa003": "Cento nuptialis",
+    "stoa0045.stoa004": "Commemoratio professorum Burdigalensium",
+    "stoa0045.stoa005": "Cupido cruciatus",
+    "stoa0045.stoa006": "De herediolo",
+    "stoa0045.stoa007": "Eclogarum liber",
+    "stoa0045.stoa009": "Epicedion in patrem",
+    "stoa0045.stoa010": "Epigrammaton liber",
+    "stoa0045.stoa013": "Genethliacon ad Ausonium nepotem",
+    "stoa0045.stoa014": "Gratiarum actio",
+    "stoa0045.stoa015": "Griphus ternarii numeri",
+    "stoa0045.stoa016": "Liber protrepticus ad nepotem",
+    "stoa0045.stoa017": "[Libri de fastis] conclusio",
+    "stoa0045.stoa018": "Ludus septem sapientum",
+    "stoa0045.stoa020": "Oratio versibus rhopalicis",
+    "stoa0045.stoa021": "Ordo urbium nobilium",
+    "stoa0045.stoa027": "Versus paschales",        # «Prosodic» era una troncatura
+
+    # ── TARDA ANTICHITÀ · Claudiano (qui la maiuscola si alza) ───────────
+    "stoa0089.stoa002": "De bello Gildonico",
+    "stoa0089.stoa003": "De bello Gothico",
+    "stoa0089.stoa004": "De consulatu Stilichonis",
+    "stoa0089.stoa005": "De raptu Proserpinae",
+    "stoa0089.stoa007": "Fescennina de nuptiis Honorii Augusti",   # era «Fescinnina»
+
+    # ── TARDA ANTICHITÀ · Boezio (gli opuscoli teologici) ────────────────
+    "stoa0058.stoa003": "Quomodo substantiae in eo quod sint bonae sint "
+                        "cum non sint substantialia bona",
+    "stoa0058.stoa006": "De fide catholica",
+    "stoa0058.stoa023": "Liber de persona et duabus naturis "
+                        "contra Eutychen et Nestorium",
+    "stoa0058.stoa025": "Quomodo Trinitas unus Deus ac non tres dii (De Trinitate)",
+    "stoa0058.stoa028": "Utrum Pater et Filius ac Spiritus Sanctus de divinitate "
+                        "substantialiter praedicentur liber",
+})
+
 
 # ══════════════════════════════════════════════════════════════════════════
 # LETTERATURA GRECA
@@ -433,6 +617,9 @@ GRC.update({
     "tlg0012.tlg003": "Epigrammi omerici",
 })
 # Inni omerici — il catalogo li registra in inglese; in italiano sono «Inno a…»
+# Il numerale fra parentesi disambigua le divinità che tornano: la PRIMA
+# occorrenza resta nuda, le successive portano il numero dell'inno. Afrodite ha
+# tre inni (V, VI, X), Dioniso tre (I, VII, XXVI), Estia due (XXIV, XXIX).
 GRC.update({
     "tlg0013.tlg001": "Inno a Dioniso",        "tlg0013.tlg002": "Inno a Demetra",
     "tlg0013.tlg003": "Inno ad Apollo",        "tlg0013.tlg004": "Inno a Ermes",
@@ -445,6 +632,13 @@ GRC.update({
     "tlg0013.tlg017": "Inno ai Dioscuri",      "tlg0013.tlg018": "Inno a Ermes (XVIII)",
     "tlg0013.tlg019": "Inno a Pan",            "tlg0013.tlg020": "Inno a Efesto",
     "tlg0013.tlg021": "Inno ad Apollo (XXI)",  "tlg0013.tlg022": "Inno a Poseidone",
+    "tlg0013.tlg023": "Inno a Zeus",           "tlg0013.tlg024": "Inno a Estia",
+    "tlg0013.tlg025": "Inno alle Muse e ad Apollo",
+    "tlg0013.tlg026": "Inno a Dioniso (XXVI)", "tlg0013.tlg027": "Inno ad Artemide (XXVII)",
+    "tlg0013.tlg028": "Inno ad Atena (XXVIII)","tlg0013.tlg029": "Inno a Estia (XXIX)",
+    "tlg0013.tlg030": "Inno alla Terra madre di tutti",
+    "tlg0013.tlg031": "Inno a Elio",           "tlg0013.tlg032": "Inno a Selene",
+    "tlg0013.tlg033": "Inno ai Dioscuri (XXXIII)",
 })
 GRC.update({
     "tlg0020.tlg001": "Teogonia",
