@@ -1,0 +1,12 @@
+# Aristotele — cronologia interna discussa: si ordina per fase e per gruppo di trattati
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0086.tlg003 | filosofia | Costituzione degli Ateniesi | Ἀθηναίων πολιτεία
+tlg0086.tlg009 | filosofia | Etica Eudemia | Ἠθικὰ Εὐδήμεια
+tlg0086.tlg010 | filosofia | Etica Nicomachea | Ἠθικὰ Νικομάχεια
+tlg0086.tlg025 | filosofia | Metafisica | τὰ Μετὰ τὰ Φυσικά
+tlg0086.tlg029 | filosofia | Economici | Οἰκονομικά
+tlg0086.tlg034 | filosofia | Poetica | Περὶ ποιητικῆς
+tlg0086.tlg035 | retorica | Politica | Πολιτικά
+tlg0086.tlg038 | retorica | Retorica | Ῥητορική
+tlg0086.tlg045 | filosofia | Sulle virtù e sui vizi | περὶ Ἀρετῶν καὶ Κακιῶν

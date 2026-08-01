@@ -44,6 +44,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from corpus_meta import meta_for, name_for, year_for, canonico, TEXTGROUPS  # noqa: E402
 from corpus_titles import title_for                     # noqa: E402
 from corpus_autori import esteso_per                    # noqa: E402
+from corpus_opere import data_per                       # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -516,12 +517,18 @@ def process_work(repo_dir, repo_name, lang, tag, urn_ns, tg, wk, author):
     # confronta forme già ripiegate a minuscolo.
     units = capitalizza_unita(units)
     words = sum(len(t.split()) for _, t in units)
+    # Data di composizione, dove è stata curata (canone liceale). `yearKind` è
+    # il campo che conta: dice se l'anno si può stampare come data o se è solo
+    # un posto in una successione.
+    datazione = data_per(key)
+    anno, anno_tipo, anno_base = datazione if datazione else (None, None, None)
     doc = {
         "id": key, "lang": lang,
         "author": author, "authorId": canonico(tg),
         "title": t_main, "titleOrig": t_orig, "titleState": t_state,
         "titleEn": title_en,
         "genre": genre, "epoch": epoch, "inferred": inferred,
+        "year": anno, "yearKind": anno_tipo, "yearNote": anno_base,
         "kind": kind,
         "source": {"urn": f"urn:cts:{urn_ns}:{key}", "repo": repo_name,
                    "file": fname, "edition": edition, "license": LICENSE},
@@ -630,6 +637,7 @@ def build_index(docs):
         "title": d["title"], "titleOrig": d.get("titleOrig"),
         "titleState": d.get("titleState"), "titleEn": d.get("titleEn"),
         "genre": d["genre"], "epoch": d["epoch"], "inferred": d["inferred"],
+        "year": d.get("year"), "yearKind": d.get("yearKind"), "yearNote": d.get("yearNote"),
         "kind": d["kind"], "citation": d["citation"],
         "units": d["stats"]["units"], "words": d["stats"]["words"],
     } for d in docs]

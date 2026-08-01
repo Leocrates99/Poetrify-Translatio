@@ -1,0 +1,4 @@
+# Catullo — liber unico
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0472.phi001 | lirica | Carmi | Carmina

@@ -1,0 +1,50 @@
+# Livio — Ab urbe condita a decadi, composizione lunga
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0914.phi001 | storiografia | Storia di Roma dalla fondazione | Ab urbe condita
+phi0914.phi0011 | storiografia | Ab urbe condita, books 1-5 - 1 | 
+phi0914.phi00110 | storiografia | Ab Urbe Condita, books 8-10 - 10 | 
+phi0914.phi00111s | storiografia | Ab Urbe Condita, books 8-10 - 11s | 
+phi0914.phi00112s | storiografia | Ab Urbe Condita, books 8-10 - 12s | 
+phi0914.phi00113s | storiografia | Ab Urbe Condita, books 8-10 - 13s | 
+phi0914.phi00114s | storiografia | Ab Urbe Condita, books 8-10 - 14s | 
+phi0914.phi00115s | storiografia | Ab Urbe Condita, books 8-10 - 15s | 
+phi0914.phi00116s | storiografia | Ab Urbe Condita, books 8-10 - 16s | 
+phi0914.phi00117s | storiografia | Ab Urbe Condita, books 8-10 - 17s | 
+phi0914.phi00118s | storiografia | Ab Urbe Condita, books 8-10 - 18s | 
+phi0914.phi00119s | storiografia | Ab Urbe Condita, books 8-10 - 19s | 
+phi0914.phi0012 | storiografia | Ab urbe condita, books 1-5 - 2 | 
+phi0914.phi00120s | storiografia | Ab Urbe Condita, books 8-10 - 20s | 
+phi0914.phi00121 | storiografia | Ab urbe condita, books 21-25 - 21 | 
+phi0914.phi00122 | storiografia | Ab urbe condita, books 21-25 - 22 | 
+phi0914.phi00123 | storiografia | Ab Urbe Condita, books 23-25 - 23 | 
+phi0914.phi00124 | storiografia | Ab Urbe Condita, books 23-25 - 24 | 
+phi0914.phi00125 | storiografia | Ab Urbe Condita, books 23-25 - 25 | 
+phi0914.phi00126 | storiografia | Ab urbe condita, books 26-30 - 26 | 
+phi0914.phi00127 | storiografia | Ab urbe condita, books 26-30 - 27 | 
+phi0914.phi00128 | storiografia | Ab Urbe Condita, books 28-30 - 28 | 
+phi0914.phi00129 | storiografia | Ab Urbe Condita, books 28-30 - 29 | 
+phi0914.phi0013 | storiografia | Ab Urbe Condita, books 3-4 - 3 | 
+phi0914.phi00130 | storiografia | Ab Urbe Condita, books 28-30 - 30 | 
+phi0914.phi00131 | storiografia | Ab urbe condita libri, erklärt von M. Weissenborn, books 31-32 - 31 | 
+phi0914.phi00132 | storiografia | Ab urbe condita libri, erklärt von M. Weissenborn, books 31-32 - 32 | 
+phi0914.phi00133 | storiografia | Ab urbe condita libri, erklärt von M. Weissenborn, books 33-34 - 33 | 
+phi0914.phi00134 | storiografia | Ab urbe condita libri, erklärt von M. Weissenborn, books 33-34 - 34 | 
+phi0914.phi00135 | storiografia | Ab urbe condita libri, erklärt von M. Weissenborn, books 35-38 - 35 | 
+phi0914.phi00136 | storiografia | Ab urbe condita libri, erklärt von M. Weissenborn, books 35-38 - 36 | 
+phi0914.phi00137 | storiografia | Ab urbe condita libri, erklärt von M. Weissenborn, books 35-38 - 37 | 
+phi0914.phi00138 | storiografia | Ab urbe condita libri, erklärt von M. Weissenborn, books 35-38 - 38 | 
+phi0914.phi00139 | storiografia | Ab urbe condita libri, erklärt von M. Weissenborn, books 39-40 - 39 | 
+phi0914.phi0014 | storiografia | Ab Urbe Condita, books 3-4 - 4 | 
+phi0914.phi00140 | storiografia | Ab urbe condita libri, erklärt von M. Weissenborn, books 39-40 - 40 | 
+phi0914.phi00141 | storiografia | Ab urbe condita libri, erklärt von M. Weissenborn, books 41-42 - 41 | 
+phi0914.phi00142 | storiografia | Ab urbe condita libri, erklärt von M. Weissenborn, books 41-42 - 42 | 
+phi0914.phi00143 | storiografia | Ab Urbe Condita, books 43-45 - 43 | 
+phi0914.phi00144 | storiografia | Ab Urbe Condita, books 43-45 - 44 | 
+phi0914.phi00145 | storiografia | Ab Urbe Condita, books 43-45 - 45 | 
+phi0914.phi0015 | storiografia | Ab Urbe Condita, books 5-7 - 5 | 
+phi0914.phi0016 | storiografia | Ab urbe condita, books 6-10 - 6 | 
+phi0914.phi0017 | storiografia | Ab urbe condita, books 6-10 - 7 | 
+phi0914.phi0018 | storiografia | Ab Urbe Condita, books 8-10 - 8 | 
+phi0914.phi0019 | storiografia | Ab Urbe Condita, books 8-10 - 9 | 
+phi0914.phi001fr | storiografia | Ab urbe condita, fragments | 

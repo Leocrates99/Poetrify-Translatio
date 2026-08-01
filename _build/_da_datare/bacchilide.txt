@@ -1,0 +1,5 @@
+# Bacchilide — epinici datati dalla vittoria celebrata
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0199.tlg001 | lirica | Epinici | Ἐπίνικοι
+tlg0199.tlg002 | lirica | Ditirambi | Διθύραμβοι

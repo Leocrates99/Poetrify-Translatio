@@ -1,0 +1,8 @@
+# Tacito — Agricola e Germania 98, poi Historiae e Annales
+# id | genere | opere | titolo italiano | titolo originale
+
+phi1351.phi001 | storiografia | Agricola | De Vita Iulii Agricolae
+phi1351.phi002 | storiografia | Germania | De Origine et Situ Germanorum Liber
+phi1351.phi003 | storiografia | Dialogo degli oratori | Dialogus de Oratoribus
+phi1351.phi004 | storiografia | Storie | Historiae
+phi1351.phi005 | storiografia | Annali | Annales

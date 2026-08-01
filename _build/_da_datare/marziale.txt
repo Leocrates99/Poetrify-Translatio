@@ -1,0 +1,4 @@
+# Marziale — libri di epigrammi, quasi tutti datati anno per anno
+# id | genere | opere | titolo italiano | titolo originale
+
+phi1294.phi002 | epigramma | Epigrammi | Epigrammata

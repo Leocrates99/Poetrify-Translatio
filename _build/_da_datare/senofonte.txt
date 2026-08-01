@@ -1,0 +1,17 @@
+# Senofonte — cronologia relativa ricostruita
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0032.tlg001 | storiografia | Elleniche | Ἑλληνικά
+tlg0032.tlg002 | filosofia | Memorabili | Ἀπομνημονεύματα
+tlg0032.tlg003 | storiografia | Economico | Οἰκονομικός
+tlg0032.tlg004 | storiografia | Simposio | Συμπόσιον
+tlg0032.tlg005 | storiografia | Apologia di Socrate | Ἀπολογία Σωκράτους
+tlg0032.tlg006 | storiografia | Anabasi | Ἀνάβασις
+tlg0032.tlg007 | storiografia | Ciropedia | Κύρου παιδεία
+tlg0032.tlg008 | storiografia | Ierone | Ἱέρων
+tlg0032.tlg009 | storiografia | Agesilao | Ἀγησίλαος
+tlg0032.tlg010 | storiografia | Costituzione degli Spartani | Λακεδαιμονίων Πολιτεία
+tlg0032.tlg011 | storiografia | Le entrate | Πόροι ἢ περὶ προσόδων
+tlg0032.tlg012 | storiografia | Ipparchico | Ἱππαρχικός
+tlg0032.tlg013 | storiografia | L'arte equestre | Περὶ ἱππικῆς
+tlg0032.tlg014 | storiografia | Cinegetico | Κυνηγετικός

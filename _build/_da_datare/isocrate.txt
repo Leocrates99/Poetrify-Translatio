@@ -1,0 +1,33 @@
+# Isocrate — orazioni e discorsi databili
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0010.tlg001 | oratoria | Πρὸς Εὐθύνους ἀμάρτυρος | Against Euthynus
+tlg0010.tlg002 | oratoria | Παραγραφή πρὸς Καλλίμαχον | Against Callimachus
+tlg0010.tlg003 | oratoria | Κατὰ Λοχίτου | Against Lochites
+tlg0010.tlg004 | oratoria | Περὶ τοῦ ζεύγους | Concerning the Team of Horses
+tlg0010.tlg005 | oratoria | Τραπεζιτικός | Trapeziticus
+tlg0010.tlg006 | oratoria | Αἰγητικὸς | Aegineticus
+tlg0010.tlg007 | oratoria | A Demonico | Πρὸς Δημόνικον
+tlg0010.tlg008 | oratoria | Contro i sofisti | Κατὰ τῶν σοφιστῶν
+tlg0010.tlg009 | oratoria | Elena | Ἑλένη
+tlg0010.tlg010 | oratoria | Busiride | Βούσιρις
+tlg0010.tlg011 | oratoria | Panegirico | Πανηγυρικός
+tlg0010.tlg012 | oratoria | Πλαταικός | Plataicus
+tlg0010.tlg013 | oratoria | A Nicocle | Πρὸς Νικόκλεα
+tlg0010.tlg014 | oratoria | Nicocle | Νικόκλης ἢ Κύπριοι
+tlg0010.tlg015 | oratoria | Evagora | Εὐαγόρας
+tlg0010.tlg016 | oratoria | Archidamo | Ἀρχίδαμος
+tlg0010.tlg017 | oratoria | Sulla pace | Περὶ εἰρήνης
+tlg0010.tlg018 | oratoria | Areopagitico | Ἀρεοπαγιτικός
+tlg0010.tlg019 | oratoria | Antidosi | Περὶ ἀντιδόσεως
+tlg0010.tlg020 | oratoria | Filippo | Φίλιππος
+tlg0010.tlg021 | oratoria | Panatenaico | Παναθηναικός
+tlg0010.tlg022 | oratoria | Ἐπιστολαὶ αʹ Διονύσιῳ | To Dionysius
+tlg0010.tlg023 | oratoria | Ἐπιστολαὶ ςʹ Τοῖς Ἰάσονος παισίν | To the Children of Jason
+tlg0010.tlg024 | oratoria | Ἐπιστολαὶ θʹ Ἀρχιδάμῳ | To Archidamus
+tlg0010.tlg025 | oratoria | Ἐπιστολαὶ ηʹ Τοῖς Μυτιληναίων ἄρχουσιν | To the Rulers of the Mytilenaeans
+tlg0010.tlg026 | oratoria | Ἐπιστολαὶ ζʹ Τιμοθέῳ | To Timotheus
+tlg0010.tlg027 | oratoria | Ἐπιστολαὶ βʹ Φιλίππῳ α΄ | To Philip, I
+tlg0010.tlg028 | oratoria | Ἐπιστολαὶ εʹ Ἀλεξάνδρῳ | To Alexander
+tlg0010.tlg029 | oratoria | Ἐπιστολαὶ δʹ Ἀντιπάτρῳ | To Antipater
+tlg0010.tlg030 | oratoria | Ἐπιστολαὶ γʹ Φιλίππῳ β΄ | To Philip, II

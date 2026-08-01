@@ -1,0 +1,4 @@
+# Quintiliano — Institutio oratoria, composizione circoscritta
+# id | genere | opere | titolo italiano | titolo originale
+
+phi1002.phi001 | retorica | L'istituzione oratoria | Institutio Oratoria

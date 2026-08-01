@@ -1,0 +1,22 @@
+# Euripide — tragedia greca · molte date certe da didascalie e scoli
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0006.tlg001 | tragedia | Il Ciclope | Κύκλωψ
+tlg0006.tlg002 | tragedia | Alcesti | Ἄλκηστις
+tlg0006.tlg003 | tragedia | Medea | Μήδεια
+tlg0006.tlg004 | tragedia | Gli Eraclidi | Ἡρακλεῖδαι
+tlg0006.tlg005 | tragedia | Ippolito | Ἱππόλυτος
+tlg0006.tlg006 | tragedia | Andromaca | Ἀνδρομάχη
+tlg0006.tlg007 | tragedia | Ecuba | Ἑκάβη
+tlg0006.tlg008 | tragedia | Le supplici | Ἱκέτιδες
+tlg0006.tlg009 | tragedia | Eracle | Ἡρακλῆς
+tlg0006.tlg010 | tragedia | Ione | Ἴων
+tlg0006.tlg011 | tragedia | Le Troiane | Τρῳάδες
+tlg0006.tlg012 | tragedia | Elettra | Ἠλέκτρα
+tlg0006.tlg013 | tragedia | Ifigenia in Tauride | Ἰφιγένεια ἐν Ταύροις
+tlg0006.tlg014 | tragedia | Elena | Ἑλένη
+tlg0006.tlg015 | tragedia | Le Fenicie | Φοίνισσαι
+tlg0006.tlg016 | tragedia | Oreste | Ὀρέστης
+tlg0006.tlg017 | tragedia | Le Baccanti | Βάκχαι
+tlg0006.tlg018 | tragedia | Ifigenia in Aulide | Ἰφιγένεια ἐν Αὐλίδι
+tlg0006.tlg019 | tragedia | Reso | Ῥῆσος

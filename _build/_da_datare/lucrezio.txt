@@ -1,0 +1,4 @@
+# Lucrezio — opera unica
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0550.phi001 | didascalica | La natura delle cose | De Rerum Natura

@@ -1,0 +1,6 @@
+# Sallustio — monografie databili con precisione
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0631.phi001 | storiografia | La congiura di Catilina | Catilinae Coniuratio
+phi0631.phi002 | storiografia | La guerra giugurtina | Bellum Iugurthinum
+phi0631.phi003 | storiografia | Le Storie | Historiae

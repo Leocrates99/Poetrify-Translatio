@@ -1,0 +1,6 @@
+# Apuleio — Apologia databile al processo, Metamorfosi più tarda
+# id | genere | opere | titolo italiano | titolo originale
+
+phi1212.phi001 | romanzo | Apologia | 
+phi1212.phi002 | romanzo | Le metamorfosi | Metamorphoses
+phi1212.phi003 | romanzo | Florida | 

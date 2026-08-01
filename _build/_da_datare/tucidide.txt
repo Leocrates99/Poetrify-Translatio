@@ -1,0 +1,4 @@
+# Tucidide — opera unica
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0003.tlg001 | storiografia | La guerra del Peloponneso | Ἱστορίαι

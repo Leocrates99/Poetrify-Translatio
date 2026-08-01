@@ -1,0 +1,4 @@
+# Polibio — opera unica
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0543.tlg001 | storiografia | Storie | Ἱστορίαι

@@ -1,0 +1,39 @@
+# Platone — NESSUNA data certa: si usano le tre fasi canoniche (giovanile, matura, tarda) e si ordina per fase
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0059.tlg001 | filosofia | Eutifrone | Εὐθύφρων
+tlg0059.tlg002 | filosofia | Apologia di Socrate | Ἀπολογία Σωκράτους
+tlg0059.tlg003 | filosofia | Critone | Κρίτων
+tlg0059.tlg004 | filosofia | Fedone | Φαίδων
+tlg0059.tlg005 | filosofia | Cratilo | Κρατύλος
+tlg0059.tlg006 | filosofia | Teeteto | Θεαίτητος
+tlg0059.tlg007 | filosofia | Sofista | Σοφιστής
+tlg0059.tlg008 | filosofia | Politico | Πολιτικός
+tlg0059.tlg009 | filosofia | Parmenide | Παρμενίδης
+tlg0059.tlg010 | filosofia | Filebo | Φίληβος
+tlg0059.tlg011 | filosofia | Simposio | Συμπόσιον
+tlg0059.tlg012 | filosofia | Fedro | Φαῖδρος
+tlg0059.tlg013 | filosofia | Alcibiade primo | Ἀλκιβιάδης αʹ
+tlg0059.tlg014 | filosofia | Alcibiade secondo | Ἀλκιβιάδης βʹ
+tlg0059.tlg015 | filosofia | Ipparco | Ἵππαρχος
+tlg0059.tlg016 | filosofia | Gli amanti | Ἐρασταί
+tlg0059.tlg017 | filosofia | Teage | Θεάγης
+tlg0059.tlg018 | filosofia | Carmide | Χαρμίδης
+tlg0059.tlg019 | filosofia | Lachete | Λάχης
+tlg0059.tlg020 | filosofia | Liside | Λύσις
+tlg0059.tlg021 | filosofia | Eutidemo | Εὐθύδημος
+tlg0059.tlg022 | filosofia | Protagora | Πρωταγόρας
+tlg0059.tlg023 | filosofia | Gorgia | Γοργίας
+tlg0059.tlg024 | filosofia | Menone | Μένων
+tlg0059.tlg025 | filosofia | Ippia maggiore | Ἱππίας μείζων
+tlg0059.tlg026 | filosofia | Ippia minore | Ἱππίας ἐλάττων
+tlg0059.tlg027 | filosofia | Ione | Ἴων
+tlg0059.tlg028 | filosofia | Menesseno | Μενέξενος
+tlg0059.tlg029 | filosofia | Clitofonte | Κλειτοφῶν
+tlg0059.tlg030 | filosofia | La Repubblica | Πολιτεία
+tlg0059.tlg031 | filosofia | Timeo | Τίμαιος
+tlg0059.tlg032 | filosofia | Crizia | Κριτίας
+tlg0059.tlg033 | filosofia | Minosse | Μίνως
+tlg0059.tlg034 | filosofia | Le leggi | Νόμοι
+tlg0059.tlg035 | filosofia | Epinomide | Ἐπινομίς
+tlg0059.tlg036 | filosofia | Lettere | Ἐπιστολαί

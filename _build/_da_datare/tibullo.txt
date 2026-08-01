@@ -1,0 +1,5 @@
+# Tibullo — libri di elegie
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0660.phi001 | elegia | Elegie | Elegiae
+phi0660.phi003 | elegia | Carmina Omnia | 

@@ -1,0 +1,4 @@
+# Lucano — opera unica, incompiuta
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0917.phi001 | epica | Farsaglia | Pharsalia

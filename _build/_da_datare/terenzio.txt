@@ -1,0 +1,9 @@
+# Terenzio — palliata · le didascalie danno l'anno esatto di ciascuna delle sei commedie
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0134.phi001 | commedia | La ragazza di Andro | Andria
+phi0134.phi002 | commedia | Il punitore di se stesso | Heautontimorumenos
+phi0134.phi003 | commedia | L'eunuco | Eunuchus
+phi0134.phi004 | commedia | Formione | Phormio
+phi0134.phi005 | commedia | La suocera | Hecyra
+phi0134.phi006 | commedia | Gli Adelfi | Adelphi

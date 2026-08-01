@@ -1,0 +1,4 @@
+# Plinio il Giovane — libri di epistole, pubblicati a scaglioni
+# id | genere | opere | titolo italiano | titolo originale
+
+phi1318.phi001 | epistolografia | Lettere | Epistulae

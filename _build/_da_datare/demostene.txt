@@ -1,0 +1,66 @@
+# Demostene — orazioni datatissime dal contesto politico
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0014.tlg001 | oratoria | Prima Olintiaca | Ὀλυνθιακὸς α΄
+tlg0014.tlg002 | oratoria | Seconda Olintiaca | Ὀλυνθιακὸς β΄
+tlg0014.tlg003 | oratoria | Terza Olintiaca | Ὀλυνθιακὸς γ΄
+tlg0014.tlg004 | oratoria | Prima Filippica | κατὰ Φιλίππου α΄
+tlg0014.tlg005 | oratoria | Sulla pace | περὶ τῆς εἰρήνης
+tlg0014.tlg006 | oratoria | Seconda Filippica | κατὰ Φιλίππου β΄
+tlg0014.tlg007 | oratoria | Su Alonneso | περὶ Ἀλοννήσου
+tlg0014.tlg008 | oratoria | Sul Chersoneso | περὶ τῶν ἐν Χερρονήσῳ
+tlg0014.tlg009 | oratoria | Terza Filippica | κατὰ Φιλίππου γ΄
+tlg0014.tlg010 | oratoria | Quarta Filippica | κατὰ Φιλίππου δ΄
+tlg0014.tlg011 | oratoria | Risposta alla lettera di Filippo | πρὸς τὴν ἐπιστολήν τὴν Φιλίππου
+tlg0014.tlg012 | oratoria | Lettera di Filippo | ἐπιστολή [Φιλίππου]
+tlg0014.tlg013 | oratoria | Sull'ordinamento finanziario | περὶ συντάξεως
+tlg0014.tlg014 | oratoria | Sulle simmorie | περὶ τῶν συμμοριῶν
+tlg0014.tlg015 | oratoria | Per la libertà dei Rodii | ὑπὲρ τῆς Ῥοδίων ἐλευθερίας
+tlg0014.tlg016 | oratoria | Per i Megalopolitani | ὑπὲρ Μεγαλοπολιτῶν
+tlg0014.tlg017 | oratoria | Sui trattati con Alessandro | περὶ τῶν πρὸς Ἀλέξανδρον συνθηκῶν
+tlg0014.tlg018 | oratoria | Sulla corona | ὑπὲρ Κτησιφῶντος περὶ τοῦ στεφάνου
+tlg0014.tlg019 | oratoria | Sull'ambasceria | περὶ τῆς παραπρεσβείας
+tlg0014.tlg020 | oratoria | Contro Leptine | περὶ τῆς Ἀτελείας πρὸς Λεπτίνην
+tlg0014.tlg021 | oratoria | Contro Midia | κατὰ Μειδίου περὶ τοῦ Κονδύλου
+tlg0014.tlg022 | oratoria | Contro Androzione | κατὰ Ἀνδροτίωνος παρανόμων
+tlg0014.tlg023 | oratoria | Contro Aristocrate | κατὰ Ἀριστοκράτους
+tlg0014.tlg024 | oratoria | Contro Timocrate | κατὰ Τιμοκράτους
+tlg0014.tlg025 | oratoria | Contro Aristogitone · primo discorso | κατὰ Ἀριστογείτονος α΄
+tlg0014.tlg026 | oratoria | Contro Aristogitone · secondo discorso | κατὰ Ἀριστογείτονος β΄
+tlg0014.tlg027 | oratoria | Contro Afobo · primo discorso | κατὰ Ἀφόβου ἐπιτροπῆς α΄
+tlg0014.tlg028 | oratoria | Contro Afobo · secondo discorso | κατὰ Ἀφόβου β΄
+tlg0014.tlg029 | oratoria | Contro Afobo, per Fano | πρὸς Ἄφοβον ὑπὲρ Φάνου ψευδομαρτυριῶν γ΄
+tlg0014.tlg030 | oratoria | Contro Onetore · primo discorso | πρὸς Ὀνήτορα ἐξούλης α΄
+tlg0014.tlg031 | oratoria | Contro Onetore · secondo discorso | πρὸς Ὀνήτορα ἐξούλης β΄
+tlg0014.tlg032 | oratoria | Contro Zenotemi | πρὸς Ζηνόθεμιν παραγραφή
+tlg0014.tlg033 | oratoria | Contro Apaturio | πρὸς Ἀπατούριον παραγραφή
+tlg0014.tlg034 | oratoria | Contro Formione, per un prestito | πρὸς Φορμίωνα ὑπὲρ δανείου
+tlg0014.tlg035 | oratoria | Contro Lacrito | πρὸς τὴν Λάκριτον παραγραφὴν
+tlg0014.tlg036 | oratoria | Per Formione | παραγραφὴ ὑπὲρ Φορμίωνος
+tlg0014.tlg037 | oratoria | Contro Pantèneto | παραγραφὴ πρὸς Πανταίνετον
+tlg0014.tlg038 | oratoria | Contro Nausimaco e Senopite | παραγραφὴ πρὸς Ναυσίμακον καὶ Ξενοπείθην
+tlg0014.tlg039 | oratoria | Contro Beoto, sul nome | πρὸς Βοιωτὸν περὶ τοῦ Ὀνόματος
+tlg0014.tlg040 | oratoria | Contro Beoto, sulla dote materna | πρὸς Βοιωτὸν περὶ προικὸς μητρῴας
+tlg0014.tlg041 | oratoria | Contro Spudia | πρὸς Σπουδίαν ὑπὲρ προικός
+tlg0014.tlg042 | oratoria | Contro Fenippo | πρὸς Φαίνιππον περὶ ἀντιδόσεως
+tlg0014.tlg043 | oratoria | Contro Macartato | πρὸς Μακάρτατον περὶ Ἁγνίου κλήρου
+tlg0014.tlg044 | oratoria | Contro Leocare | πρὸς Λεωκάρη περὶ τοῦ Ἀρχιάδου κλήρου
+tlg0014.tlg045 | oratoria | Contro Stefano · primo discorso | κατὰ Στεφάνου ψευδομαρτυριῶν α΄
+tlg0014.tlg046 | oratoria | Contro Stefano · secondo discorso | κατὰ Στεφάνου ψευδομαρτυριῶν β΄
+tlg0014.tlg047 | oratoria | Contro Evergo e Mnesibulo | κατὰ Εὐέργου καὶ Μνησιβούλου ψευδομαρτυριῶν
+tlg0014.tlg048 | oratoria | Contro Olimpiodoro | κατὰ Ὀλυμπιοδώρου βλάβης
+tlg0014.tlg049 | oratoria | Contro Timoteo | πρὸς Τιμόθεον ὑπὲρ χρέως
+tlg0014.tlg050 | oratoria | Contro Policle | πρὸς Πολυκλέα περὶ τοῦ ἐπιτριηραρχήματος
+tlg0014.tlg051 | oratoria | Sulla corona trierarchica | περὶ τοῦ Στεφάνου τῆς τριηραρκίας
+tlg0014.tlg052 | oratoria | Contro Callippo | πρὸς Κάλλιππον
+tlg0014.tlg053 | oratoria | Contro Nicostrato | πρὸς Νικόστρατον περὶ ἀνδραπόδων ἀπογραφῆς Ἀρεθουσίου
+tlg0014.tlg054 | oratoria | Contro Conone | κατὰ Κόνωνος αἰκείας
+tlg0014.tlg055 | oratoria | Contro Callicle | πρὸς Καλλικλέα περὶ χωρίου βλάβης
+tlg0014.tlg056 | oratoria | Contro Dionisodoro | κατὰ Διονυσοδώρου βλάβης
+tlg0014.tlg057 | oratoria | Contro Eubulide | ἔφεσις πρὸς Εὐβουλίδην
+tlg0014.tlg058 | oratoria | Contro Teocrine | ἔνδειξις κατὰ Θεοκρίνου
+tlg0014.tlg059 | oratoria | Contro Neera | κατὰ Νεαίρας
+tlg0014.tlg060 | oratoria | Epitafio | ἐπιτάφιος
+tlg0014.tlg061 | oratoria | Erotico | ἐρωτικὸς
+tlg0014.tlg062 | oratoria | Proemi | προοίμια δημηγορικά
+tlg0014.tlg063 | oratoria | Lettere | Δημοσθένους ἐπιστολαὶ

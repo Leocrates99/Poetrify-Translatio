@@ -1,0 +1,5 @@
+# Teocrito — Idilli, cronologia relativa incerta
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0005.tlg001 | lirica | Idilli | Εἰδύλλια
+tlg0005.tlg002 | lirica | Epigrammi | Ἐπιγράμματα

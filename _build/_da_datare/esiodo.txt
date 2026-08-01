@@ -1,0 +1,6 @@
+# Esiodo — cronologia relativa fra Teogonia e Opere
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0020.tlg001 | didascalica | Teogonia | Θεογονία
+tlg0020.tlg002 | didascalica | Le opere e i giorni | Ἔργα καὶ Ἡμέραι
+tlg0020.tlg003 | didascalica | Lo scudo di Eracle | Ἀσπὶς Ἡρακλέους

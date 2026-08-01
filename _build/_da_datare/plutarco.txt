@@ -1,0 +1,145 @@
+# Plutarco — Vite e Moralia, cronologia relativa poco determinabile
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0007.tlg001 | biografia | Vita di Teseo | Θησεύς
+tlg0007.tlg002 | biografia | Vita di Romolo | Ῥωμύλος
+tlg0007.tlg003 | biografia | Confronto fra Teseo e Romolo | Θησέως καὶ Ῥωμύλου σύγκρισις
+tlg0007.tlg004 | biografia | Vita di Licurgo | Λυκοῦργος
+tlg0007.tlg005 | biografia | Vita di Numa | Νομᾶς
+tlg0007.tlg006 | biografia | Confronto fra Licurgo e Numa | Λυκούργου καὶ Νομᾶ σύγκρισις
+tlg0007.tlg007 | biografia | Vita di Solone | Σόλων
+tlg0007.tlg008 | biografia | Vita di Publicola | Ποπλικόλας
+tlg0007.tlg009 | biografia | Confronto fra Solone e Publicola | Σόλωνος καὶ Ποπλικόλα σύγκρισις
+tlg0007.tlg010 | biografia | Vita di Temistocle | Θεμιστοκλῆς
+tlg0007.tlg011 | biografia | Vita di Camillo | Κάμιλλος
+tlg0007.tlg012 | biografia | Vita di Pericle | Περικλῆς
+tlg0007.tlg013 | biografia | Vita di Fabio Massimo | Φάβιος Μάξιμος
+tlg0007.tlg014 | biografia | Confronto fra Pericle e Fabio Massimo | Περικλέους καὶ Φαβίου σύγκρισις
+tlg0007.tlg015 | biografia | Vita di Alcibiade | Ἀλκιβιάδης
+tlg0007.tlg016 | biografia | Vita di Coriolano | Γάϊος Μάρκιος
+tlg0007.tlg017 | biografia | Confronto fra Alcibiade e Coriolano | Ἀλκιβιάδου καὶ Κοριολὰνου σύγκρισις
+tlg0007.tlg018 | biografia | Vita di Timoleonte | Τιμολέων
+tlg0007.tlg019 | biografia | Vita di Emilio Paolo | Αἰμίλιος Παῦλλος
+tlg0007.tlg020 | biografia | Confronto fra Timoleonte ed Emilio Paolo | Σύγκρισις Τιμολέοντος καὶ Αἰμιλίου
+tlg0007.tlg021 | biografia | Vita di Pelopida | Πελοπίδας
+tlg0007.tlg022 | biografia | Vita di Marcello | Μάρκελλος
+tlg0007.tlg023 | biografia | Confronto fra Pelopida e Marcello | Πελοπίδου καὶ Μαρκέλλου σύγκρισις
+tlg0007.tlg024 | biografia | Vita di Aristide | Ἀριστείδης
+tlg0007.tlg025 | biografia | Vita di Marco Catone | Μάρκος Κάτων
+tlg0007.tlg026 | biografia | Confronto fra Aristide e Catone | Ἀριστείδου καὶ Κάτωνος σύγκρισις
+tlg0007.tlg027 | biografia | Vita di Filopemene | Φιλοποίμην
+tlg0007.tlg028 | biografia | Vita di Tito Flaminino | Τίτος Φλαμινῖνος
+tlg0007.tlg029 | biografia | Confronto fra Filopemene e Tito Flaminino | Φιλοποίμενος καὶ Τίτου σύγκρισις
+tlg0007.tlg030 | biografia | Vita di Pirro | Πύρρος
+tlg0007.tlg031 | biografia | Vita di Gaio Mario | Γάιος Μάριος
+tlg0007.tlg032 | biografia | Vita di Lisandro | Λύσανδρος
+tlg0007.tlg033 | biografia | Vita di Silla | Σύλλας
+tlg0007.tlg034 | biografia | Confronto fra Lisandro e Silla | Σύγκρισις Λυσάνδρου καὶ Σύλλα
+tlg0007.tlg035 | biografia | Vita di Cimone | Κίμων
+tlg0007.tlg036 | biografia | Vita di Lucullo | Λούκουλλος
+tlg0007.tlg037 | biografia | Confronto fra Cimone e Lucullo | Κίμωνος καὶ Λουκούλλος σύγκρισις
+tlg0007.tlg038 | biografia | Vita di Nicia | Νικίας
+tlg0007.tlg039 | biografia | Vita di Crasso | Κράσσος
+tlg0007.tlg040 | biografia | Confronto fra Nicia e Crasso | Νικίου καὶ Κράσσου σύγκρισις
+tlg0007.tlg041 | biografia | Vita di Eumene | Εὐμένης
+tlg0007.tlg042 | biografia | Vita di Sertorio | Σερτώριος
+tlg0007.tlg043 | biografia | Confronto fra Sertorio ed Eumene | Σύγκρισις Σερτωρίου καὶ Εὐμένους
+tlg0007.tlg044 | biografia | Vita di Agesilao | Ἀγησίλαος
+tlg0007.tlg045 | biografia | Vita di Pompeo | Πομπήϊος
+tlg0007.tlg046 | biografia | Confronto fra Agesilao e Pompeo | Ἀγησιλάου καὶ Πομπηΐου σύγκρισις
+tlg0007.tlg047 | biografia | Vita di Alessandro | Ἀλέξανδρος
+tlg0007.tlg048 | biografia | Vita di Cesare | Καῖσαρ
+tlg0007.tlg049 | biografia | Vita di Focione | Φωκίων
+tlg0007.tlg050 | biografia | Vita di Catone Uticense | Κάτων
+tlg0007.tlg051 | biografia | Vite di Agide e Cleomene | Ἄγις καὶ Κλεομένης
+tlg0007.tlg052 | biografia | Vite di Tiberio e Gaio Gracco | Tιβέριος καὶ Γάιος Γράκχοι
+tlg0007.tlg053 | biografia | Confronto fra Agide, Cleomene e i Gracchi | Σύγκρισις Ἄγιδος καὶ Κλεομένους καὶ τῶν Γράκχων
+tlg0007.tlg054 | biografia | Vita di Demostene | Δημοσθένης
+tlg0007.tlg055 | biografia | Vita di Cicerone | Κικέρων
+tlg0007.tlg056 | biografia | Confronto fra Demostene e Cicerone | Σύγκρισις Δημοσθένους καὶ Κικέρωνος
+tlg0007.tlg057 | biografia | Vita di Demetrio | Δημήτριος
+tlg0007.tlg058 | biografia | Vita di Antonio | Ἀντώνιος
+tlg0007.tlg059 | biografia | Confronto fra Demetrio e Antonio | Σύγκρισις Δημητρίου καὶ Ἀντωνίου
+tlg0007.tlg060 | biografia | Vita di Dione | Δίων
+tlg0007.tlg061 | biografia | Vita di Bruto | Βροῦτος
+tlg0007.tlg062 | biografia | Confronto fra Dione e Bruto | Σύγκρισις Δίωνος καὶ Βρούτου
+tlg0007.tlg063 | biografia | Vita di Arato | Ἄρατος
+tlg0007.tlg064 | biografia | Vita di Artaserse | Ἀρταξέρξης
+tlg0007.tlg065 | biografia | Vita di Galba | Γάλβας
+tlg0007.tlg066 | biografia | Vita di Otone | Ὄθων
+tlg0007.tlg067 | biografia | L'educazione dei figli | Περὶ παίδων ἀγωγῆς
+tlg0007.tlg068 | biografia | Come il giovane deve ascoltare i poeti | Πῶς δεῖ τὸν νέον ποιημάτων ἀκούειν.
+tlg0007.tlg069 | biografia | L'arte di ascoltare | Περὶ τοῦ ἀκούειν.
+tlg0007.tlg070 | biografia | Come distinguere l'adulatore dall'amico | Πῶς ἄν τις διακρίνειε τὸν κόλακα τοῦ φίλοῦ
+tlg0007.tlg071 | biografia | Come accorgersi dei propri progressi nella virtù | Πῶς ἄν τις αἴσθοιτο ἑαυτοῦ προκόπτοντος ἐπʼ ἀρετή
+tlg0007.tlg072 | biografia | Come trarre giovamento dai nemici | Πῶς ἄν τις ἀπ’ ἐχθρῶν ὠφελοῖτο
+tlg0007.tlg073 | biografia | L'abbondanza di amici | Περὶ πολυφιλίας
+tlg0007.tlg074 | biografia | La fortuna | Περὶ τύχης
+tlg0007.tlg075 | biografia | La virtù e il vizio | Περὶ ἀρετῆς καὶ κακιάς
+tlg0007.tlg076 | biografia | Consolazione ad Apollonio | Πραμυθητικὸς πρὸς Ἀπολλώνιον
+tlg0007.tlg077 | biografia | Precetti sulla salute | Ὑγιεινὰ παραγγέλματα
+tlg0007.tlg078 | biografia | Precetti coniugali | Γαμικὰ παραγγέλματα
+tlg0007.tlg079 | biografia | Il convito dei sette sapienti | Πων επτά σοφών συμπόσιον
+tlg0007.tlg080 | biografia | La superstizione | Περὶ δεισιδαιμονίας
+tlg0007.tlg081 | biografia | Detti di re e di generali | Ἀποφθέγματα βασιλέων καὶ στρατηγῶν
+tlg0007.tlg082 | biografia | Detti spartani | Ἀποφθέγματα Λακωνικά
+tlg0007.tlg082a | biografia | Le antiche usanze degli Spartani | Τὰ παλαιὰ τῶν Λακεδαινίων ἐπιτηδεύματα
+tlg0007.tlg082b | biografia | Detti di donne spartane | Λακαινῶν ἀποφθάγματα
+tlg0007.tlg083 | biografia | Virtù di donne | Γυναικῶν ἀρεταί
+tlg0007.tlg084a | biografia | Questioni romane | Κεφαλαίων καταγραφή Ῥωμαϊκά
+tlg0007.tlg084b | biografia | Questioni greche | Κεφαλαίων καταγραφή Ἑλληνικά
+tlg0007.tlg085 | biografia | Storie parallele greche e romane | Συναγωγὴ ἱστοριῶν παραλλήλων Ἑλληνικῶν καὶ Ῥωμαϊκῶν
+tlg0007.tlg086 | biografia | La fortuna dei Romani | Περὶ τῆς Ῥωμαίων τύχης
+tlg0007.tlg087 | biografia | La fortuna o la virtù di Alessandro | Περὶ τῆς Ἀλεξάνδρου τύχης ἢ ἀρετῆς λόγος Α, λόγος Β
+tlg0007.tlg088 | biografia | Se gli Ateniesi siano stati più illustri in guerra o in sapienza | Πότερον Ἀθηναῖοι κατὰ πόλεμον ἢ κατὰ σοφίαν ἐνδοξότεροι
+tlg0007.tlg089 | biografia | Iside e Osiride | Περὶ Ἴσιδος και Ὀσίριδος
+tlg0007.tlg090 | biografia | L'E di Delfi | Περὶ τοῦ Ε τοῦ ἐν Δελφοῖς
+tlg0007.tlg091 | biografia | Perché la Pizia non dà più responsi in versi | Περὶ τοῦ μὴ χρᾶν ἔμμετρα νῦν τὴν Πυθίαν
+tlg0007.tlg092 | biografia | Il tramonto degli oracoli | Περὶ τῶν ἐκλελοιπότων
+tlg0007.tlg093 | biografia | Se la virtù si possa insegnare | Εἰ διδακτὸν ἡ ἀρετή
+tlg0007.tlg094 | biografia | La virtù etica | Περὶ τῆς ἠθικῆς ἀρετῆς
+tlg0007.tlg095 | biografia | Il controllo dell'ira | Περὶ ἀοπγησίας
+tlg0007.tlg096 | biografia | La serenità interiore | Περὶ εὐθυμίας
+tlg0007.tlg097 | biografia | L'amore fraterno | Περὶ φιλαδελφίας
+tlg0007.tlg098 | biografia | L'amore per i figli | Περὶ τῆς εἰς τὰ ἔκγονα φιλοστοργίας
+tlg0007.tlg099 | biografia | Se il vizio basti a rendere infelici | Εἰ αὐτάρκης ἡ κακία πρὸς κακοδαιμονίαν
+tlg0007.tlg100 | biografia | Se siano peggiori le malattie dell'anima o del corpo | Ποτερον τὰ τῆς ψυχῆς ἢ τὰ τοῦ σώματος πάθη χείρονα
+tlg0007.tlg101 | biografia | La loquacità | Περὶ ἀδολεσχίας
+tlg0007.tlg102 | biografia | La curiosità | Περὶ πολυπραγμοσύνης
+tlg0007.tlg103 | biografia | L'amore per la ricchezza | Περὶ φιλοπλουτίας
+tlg0007.tlg104 | biografia | La falsa vergogna | Περὶ δυσωπίας
+tlg0007.tlg105 | biografia | L'invidia e l'odio | Περὶ φθόνου καὶ μίσους
+tlg0007.tlg106 | biografia | Come lodarsi senza suscitare invidia | Περὶ τοῦ ἑαυτὸν ἐπαινεῖν ἀνεπιφθόνως
+tlg0007.tlg107 | biografia | I ritardi della punizione divina | Περὶ τῶν ὑπὸ τοῦ θείου βραδέως τιμωρουμένων
+tlg0007.tlg108 | biografia | Il destino | Περὶ εἱμαρμένης
+tlg0007.tlg109 | biografia | Il demone di Socrate | Περὶ τοῦ Σωκράτους δαιμονίου
+tlg0007.tlg110 | biografia | L'esilio | Περὶ φυγῆς
+tlg0007.tlg111 | biografia | Consolazione alla moglie | Παραμυθητικός εἰς τὴν γυναῖκα τὴν αὑτου
+tlg0007.tlg112 | biografia | Questioni conviviali | Συμποσιακῶν προβλημάτων βιβλία
+tlg0007.tlg113 | biografia | Dialogo sull'amore | Ἐρωτικός
+tlg0007.tlg114 | biografia | Storie d'amore | Ἐρωτικαὶ διγηήσεις
+tlg0007.tlg115 | biografia | Che il filosofo deve conversare soprattutto con i potenti | Περὶ τοῦ ὅτι μάλιστα τοῖς ἡγεμόσι δεῖ τὸν φιλοσοφόν διαλέγεσθαι
+tlg0007.tlg116 | biografia | A un governante incolto | Πρὸς ἡγεμόνα ἀπαίδευτον
+tlg0007.tlg117 | biografia | Se il vecchio debba far politica | Εἰ πρεσβυτέρῳ πολιτευτέον
+tlg0007.tlg118 | biografia | Precetti politici | Πολιτικὰ παραγγέλματα
+tlg0007.tlg119 | biografia | Monarchia, democrazia e oligarchia | Περὶ μοναρχίας καὶ δημοκρατίας καὶ ὀλιγαρχίας
+tlg0007.tlg120 | biografia | Che non si deve prendere denaro a prestito | Περὶ τοῦ μὴ δεῖν δανείζεσθαι
+tlg0007.tlg121 | biografia | Vite dei dieci oratori | Περὶ τῶν δέκα ἡτόρων
+tlg0007.tlg122 | biografia | Compendio del confronto fra Aristofane e Menandro | Συγκρίσεως Ἀριστοφάνους καὶ Μενάνδρου ἐπιτομή
+tlg0007.tlg123 | biografia | La malignità di Erodoto | Περὶ τῆς Ἡροδότου κακοηθείας
+tlg0007.tlg126 | biografia | Il volto della luna | Περὶ τοῦ ἐμφαινομένου προσώπου τῷ κύκλῳ τῆς σελήνης
+tlg0007.tlg127 | biografia | Il principio del freddo | Περὶ τοῦ πρώτως ψυχροῦ
+tlg0007.tlg128 | biografia | Se sia più utile l'acqua o il fuoco | Περὶ τοῦ πότερον ὕδωρ ἢ πῦρ χρησιμώτερον
+tlg0007.tlg129 | biografia | Se siano più intelligenti gli animali terrestri o acquatici | Πότερα τῶν ζῴων φρονιμώτερα τὰ χερσαῖα ἢ τὰ ἔνυδρα
+tlg0007.tlg130 | biografia | Che gli animali irrazionali usano la ragione | Περὶ τοῦ τὰ ἄλογα λόγῳ χρῆσθαι
+tlg0007.tlg131 | biografia | Il mangiar carne · primo discorso | Περὶ σαρκοφαγίας λόγος α′
+tlg0007.tlg132 | biografia | Il mangiar carne · secondo discorso | Περὶ σαρκοφαγίας λόγος β′
+tlg0007.tlg133 | biografia | Questioni platoniche | Πλατωνικὰ ζητήματα
+tlg0007.tlg134 | biografia | La generazione dell'anima nel Timeo | Περὶ τῆς ἐν Τιμαίῳ ψυχογονίας
+tlg0007.tlg135 | biografia | Epitome della generazione dell'anima nel Timeo | Ἐπιτομὴ τοῦ περὶ τῆς ἐν τῷ Τιμαίῳ ψυχογονίας
+tlg0007.tlg136 | biografia | Le contraddizioni degli Stoici | Περὶ Στωικῶν ἐνιγμάτων.
+tlg0007.tlg137 | biografia | Che gli Stoici dicono cose più paradossali dei poeti | Σύνοψις τοῦ ὅτι παραδοξότερα οἱ Στωικοὶ τῶν ποιητῶν λέγουσι
+tlg0007.tlg138 | biografia | Le nozioni comuni, contro gli Stoici | Περὶ τῶν κοινῶν ἐννοιῶν πρὸς τοὺς Στωικοὺς
+tlg0007.tlg139 | biografia | Che non è possibile vivere felici secondo Epicuro | Ὅτι οὐδ' ἡδέως ζῆν ἔστι κατ' Ἐπίκουρον
+tlg0007.tlg140 | biografia | Contro Colote | Πρὸς Κωλώτην
+tlg0007.tlg141 | biografia | Se sia ben detto «vivi nascosto» | Εἰ καλῶς εἴρηται τὸ λάθε βιώτας

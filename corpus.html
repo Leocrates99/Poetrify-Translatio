@@ -439,6 +439,18 @@ body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
 .catcard .cmeta { font-family: var(--font-ui); font-size: 10.5px; color: var(--sepia); margin-top: 9px; display: flex; gap: 5px; flex-wrap: wrap; }
 .catcard .cmeta span { padding: 2px 8px; border-radius: var(--radius-pill); background: var(--cream); }
 .catcard .cmeta span.inf { border: 1px dashed var(--rule); background: transparent; }
+/* L'anno · in cifre monospaziate, così le date si incolonnano all'occhio
+   quando si scorre un elenco cronologico, e in ottone perché è un dato
+   d'edizione — la stessa famiglia dei filetti e delle testatine. */
+.catcard .cmeta span.yr {
+  font-family: var(--font-mono); background: transparent;
+  border: 1px solid var(--brass); color: var(--brass); padding: 1px 7px;
+}
+/* La riga che dichiara su cosa si regge l'ordine cronologico. */
+.sortnote {
+  font-family: var(--font-ui); font-size: 11px; color: var(--sepia);
+  margin: -6px 0 12px; padding-left: 2px;
+}
 /* Separatore di genere · attraversa tutta la griglia (`1 / -1`), altrimenti si
    accomoderebbe in una colonna come se fosse una scheda. Filetto d'ottone e
    testatina in maiuscoletto: è un'intestazione d'edizione, non un'etichetta di
@@ -791,7 +803,12 @@ const state = {
   browse: { lang: null, epoch: null, author: null, genre: null },
   axis: 'epoch',        // asse delle card in home: l'EPOCA è il primo taglio
   autOrd: 'crono',      // ordine degli autori: 'crono' (per tempo) | 'alfa'
-  sort: 'trad',         // ordinamento delle opere nello sfoglio
+  /* null = «non l'ho ancora scelto io», e allora decide il gruppo che si sta
+     guardando (cronologico se le date coprono almeno metà delle opere). Un
+     valore iniziale qui dentro scavalcherebbe sempre quella scelta: e infatti
+     con `'trad'` cablato Orazio usciva in ordine tradizionale pur avendo tutte
+     e sei le opere datate. */
+  sort: null,           // ordinamento delle opere nello sfoglio
   alpha: null,          // iniziale selezionata nella striscia degli autori
   searchMode: 'kwic',   // 'kwic' (concordanza) | 'estesi'
   modeForced: false,    // true quando la vista l'ha scelta l'utente
@@ -1395,32 +1412,86 @@ function renderLivelloAutori(wrap) {
   wrap.appendChild(grid);
 }
 
-/* Ordinamenti delle opere. Il default è quello TRADIZIONALE — l'ordine in cui
-   il catalogo della fonte dispone le opere di un autore, che è la successione
-   ricevuta dalla tradizione. Non lo chiamo «cronologico» perché per gli autori
-   antichi la cronologia delle singole opere è quasi sempre una ricostruzione
-   discussa, non un dato: chiamarlo così prometterebbe una precisione che i
-   dati non hanno. Chi vuole l'ordine per nome ha «alfabetico». */
+/* Ordinamenti delle opere.
+   A lungo qui c'è stato solo l'ordine TRADIZIONALE — la successione in cui il
+   catalogo della fonte dispone le opere di un autore — e la nota diceva che
+   «cronologico» non si poteva chiamare, perché per gli antichi la data della
+   singola opera è quasi sempre una ricostruzione discussa e non un dato.
+   Resta vero. La differenza è che ora le date ci sono per il canone liceale,
+   curate una per una e ciascuna con dichiarato COME la si conosce: documentata
+   («certa»), convergenza della critica («circa»), oppure semplice posto in una
+   successione relativa («fase»). Su quella base l'ordine cronologico si può
+   offrire senza promettere nulla di falso — e infatti la scheda mostra l'anno
+   solo quando è dell'uno o dell'altro dei primi due tipi. */
+const perId = (a, b) => a.id.localeCompare(b.id, 'en', { numeric: true });
 const SORTS = {
-  trad:  { label: 'Tradizionale', cmp: (a, b) => a.id.localeCompare(b.id, 'en', { numeric: true }) },
+  /* Cronologico · c'è solo dove le date sono state curate a mano (canone
+     liceale). Le opere senza data finiscono in coda nell'ordine tradizionale,
+     invece di essere sparpagliate a caso da un anno inventato. */
+  crono: { label: 'Cronologico', cmp: (a, b) => (a.year ?? 9e4) - (b.year ?? 9e4) || perId(a, b) },
+  trad:  { label: 'Tradizionale', cmp: perId },
   alfa:  { label: 'Alfabetico',   cmp: (a, b) => a.title.localeCompare(b.title, 'it') },
   ampio: { label: 'Per ampiezza', cmp: (a, b) => b.words - a.words },
 };
+
+/* Quante opere del gruppo hanno una data curata, e di che tipo. Serve a due
+   cose: decidere se offrire l'ordine cronologico, e dichiarare al lettore su
+   che cosa si regge l'ordine che sta guardando. */
+function censimentoDate(pool) {
+  const c = { tot: pool.length, datate: 0, certa: 0, circa: 0, fase: 0 };
+  for (const w of pool) {
+    if (w.year == null) continue;
+    c.datate++; c[w.yearKind || 'circa']++;
+  }
+  return c;
+}
+
+/* L'ordine di default è una scelta, non un ripiego: se le date ci sono per la
+   maggioranza del gruppo, il tempo è il criterio giusto — è quello con cui un
+   autore si studia. Sotto la metà si torna alla successione tradizionale, che
+   almeno non finge un ordine che i dati non reggono. */
+function ordineDefault(pool) {
+  const c = censimentoDate(pool);
+  return (c.datate && c.datate * 2 >= c.tot) ? 'crono' : 'trad';
+}
 
 function renderLivelloOpere(wrap) {
   const b = state.browse;
   const pool = browsePool();
 
+  const censo = censimentoDate(pool);
+  /* L'ordine attivo si ricalcola sul gruppo che si sta guardando: passando da
+     un autore datato a uno senza date, tenere «cronologico» lascerebbe una
+     lista in ordine casuale sotto un'etichetta che promette il tempo. */
+  const attivo = (state.sort && (state.sort !== 'crono' || censo.datate)) ? state.sort : ordineDefault(pool);
+
   const bar = el('div', 'sortbar');
   bar.appendChild(el('span', 'sl', 'Ordina'));
   for (const [k, s] of Object.entries(SORTS)) {
+    if (k === 'crono' && !censo.datate) continue;   // niente date, niente bottone
     const btn = el('button', null, s.label);
-    btn.setAttribute('aria-pressed', String((state.sort || 'trad') === k));
+    btn.setAttribute('aria-pressed', String(attivo === k));
     if (k === 'trad') btn.title = "Ordine in cui la tradizione dispone le opere dell'autore";
+    if (k === 'crono') btn.title = 'Per data di composizione, dove è stata curata a mano';
     btn.onclick = () => { state.sort = k; renderBrowse(); };
     bar.appendChild(btn);
   }
   wrap.appendChild(bar);
+
+  /* Su che cosa si regge l'ordine · un ordinamento cronologico parziale che
+     non dichiara la propria parzialità si legge come completo, e mente. Qui si
+     dice quante opere hanno una data e quante sono soltanto collocate. */
+  if (attivo === 'crono') {
+    const parti = [];
+    const pl = (n, una, molte) => `${n} ${n === 1 ? una : molte}`;
+    if (censo.certa) parti.push(pl(censo.certa, 'con data documentata', 'con data documentata'));
+    if (censo.circa) parti.push(pl(censo.circa, 'per convergenza della critica', 'per convergenza della critica'));
+    if (censo.fase) parti.push(pl(censo.fase, 'collocata per fase, senza data', 'collocate per fase, senza data'));
+    const senza = censo.tot - censo.datate;
+    if (senza) parti.push(pl(senza, 'non databile, in coda', 'non databili, in coda'));
+    const nota = el('div', 'sortnote', parti.join(' · '));
+    wrap.appendChild(nota);
+  }
 
   const list = el('div'); list.id = 'worklist';
   wrap.appendChild(list);
@@ -1436,7 +1507,7 @@ function renderLivelloOpere(wrap) {
   const unAutore = b.author && b.author !== '*';
   state.perGenere = Boolean(unAutore && generi.length > 1);
 
-  const cmp = SORTS[state.sort || 'trad'].cmp;
+  const cmp = SORTS[attivo].cmp;
   if (!state.perGenere) return pool.slice().sort(cmp);
 
   const peso = {};
@@ -1548,6 +1619,23 @@ function workCard(w) {
   if (w.inferred) g.title = 'Genere ed epoca dedotti dall’autore, non curati opera per opera';
   meta.appendChild(g);
   meta.appendChild(el('span', null, w.epoch));
+  /* L'anno compare SOLO se lo si conosce come anno. Per le opere collocate in
+     una successione relativa il numero esiste — serve a ordinare — ma stamparlo
+     lo farebbe passare per una data, ed è il tipo di bugia che un manuale non
+     perdona. Quelle portano la targhetta tratteggiata «datazione incerta», che
+     nel resto del catalogo significa già «dato non curato uno per uno». */
+  if (w.year != null) {
+    if (w.yearKind === 'fase') {
+      const p = el('span', 'inf', 'datazione incerta');
+      p.title = w.yearNote || 'Collocata in una successione relativa, senza data';
+      meta.appendChild(p);
+    } else {
+      const era = w.year < 0 ? 'a.C.' : 'd.C.';
+      const p = el('span', 'yr', `${w.yearKind === 'circa' ? 'ca. ' : ''}${Math.abs(w.year)} ${era}`);
+      p.title = w.yearNote || '';
+      meta.appendChild(p);
+    }
+  }
   meta.appendChild(el('span', null, w.kind === 'versi' ? `${nf.format(w.units)} versi` : `${nf.format(w.units)} passi`));
   card.appendChild(meta);
   card.onclick = () => openWork(w.id);
@@ -1613,7 +1701,17 @@ function renderReader(doc, books, bookKey, targetLoc) {
   wrap.appendChild(back);
 
   const head = el('div', 'reader-head');
-  head.appendChild(el('div', 'rk', `${langName[doc.lang]} · ${doc.genre} · ${doc.epoch}`));
+  /* Il kicker porta anche l'anno, con la stessa regola della scheda: si stampa
+     solo dove è una data, non dove è un posto in una successione. Chi apre un
+     testo vuole sapere quando è stato scritto — e l'armonizzazione vuole che lo
+     dica qui come lo dice nel catalogo. */
+  const kick = [langName[doc.lang], doc.genre, doc.epoch];
+  if (doc.year != null && doc.yearKind !== 'fase') {
+    kick.push(`${doc.yearKind === 'circa' ? 'ca. ' : ''}${Math.abs(doc.year)} ${doc.year < 0 ? 'a.C.' : 'd.C.'}`);
+  }
+  const rk = el('div', 'rk', kick.join(' · '));
+  if (doc.yearNote) rk.title = doc.yearNote;
+  head.appendChild(rk);
   const st = doc.titleState || 'assente';
   const h1 = el('h1', st !== 'it' ? 'antico' : null, doc.title);
   if (st !== 'it') h1.lang = doc.lang;

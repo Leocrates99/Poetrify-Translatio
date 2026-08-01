@@ -1,0 +1,6 @@
+# Eschine — tre orazioni, date certe
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0026.tlg001 | oratoria | Contro Timarco | Κατὰ Τιμάρχου
+tlg0026.tlg002 | oratoria | Sull'ambasceria | Περὶ τῆς παραπρεσβείας
+tlg0026.tlg003 | oratoria | Contro Ctesifonte | Κατά Κτησιφώντος

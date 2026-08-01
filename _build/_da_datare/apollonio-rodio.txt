@@ -1,0 +1,4 @@
+# Apollonio Rodio — opera unica
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0001.tlg001 | epica | Le Argonautiche | Ἀργοναυτικά

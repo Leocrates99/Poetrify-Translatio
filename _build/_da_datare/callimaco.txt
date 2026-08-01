@@ -1,0 +1,11 @@
+# Callimaco — cronologia relativa incerta
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0533.tlg003 | elegia | Epigrammi | Ἐπιγράμματα
+tlg0533.tlg004 | elegia | Epigrammi | Ἐπιγράμματα
+tlg0533.tlg015 | elegia | Inno a Zeus | εἰς Δία
+tlg0533.tlg016 | elegia | Inno ad Apollo | εἰς Απόλλωνα
+tlg0533.tlg017 | elegia | Inno ad Artemide | εἰς Ἄρτεμιν
+tlg0533.tlg018 | elegia | Inno a Delo | εἰς Δῆλον
+tlg0533.tlg019 | elegia | Per i lavacri di Pallade | εἰς Λουτρά τῆς Παλλάδος
+tlg0533.tlg020 | elegia | Inno a Demetra | εἰς Δήμητρα

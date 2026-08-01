@@ -1,0 +1,4 @@
+# Agostino — opere databili con precisione dalle Retractationes
+# id | genere | opere | titolo italiano | titolo originale
+
+stoa0040.stoa011 | religione | Epistulae. Selections. | 

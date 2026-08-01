@@ -1,0 +1,4 @@
+# Persio — opera unica
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0969.phi001 | satira | Satire | Saturae

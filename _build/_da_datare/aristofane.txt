@@ -1,0 +1,14 @@
+# Aristofane — commedia antica · quasi tutte le date di rappresentazione sono note
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0019.tlg001 | commedia | Gli Acarnesi | Ἀχαρνῆς
+tlg0019.tlg002 | commedia | I cavalieri | Ἱππῆς
+tlg0019.tlg003 | commedia | Le nuvole | Νεφέλαι
+tlg0019.tlg004 | commedia | Le vespe | Σφῆκες
+tlg0019.tlg005 | commedia | La pace | Εἰρήνη
+tlg0019.tlg006 | commedia | Gli uccelli | Ὄρνιθες
+tlg0019.tlg007 | commedia | Lisistrata | Λυσιστράτη
+tlg0019.tlg008 | commedia | Le Tesmoforiazuse | Θεσμοφοριάζουσαι
+tlg0019.tlg009 | commedia | Le rane | Βάτραχοι
+tlg0019.tlg010 | commedia | Le Ecclesiazuse | Ἐκκλησιάζουσαι
+tlg0019.tlg011 | commedia | Pluto | Πλοῦτος

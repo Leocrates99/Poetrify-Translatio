@@ -1,0 +1,23 @@
+# Plauto — palliata · date incerte, si va per fasce; alcune ancorate (Stichus 200, Pseudolus 191)
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0119.phi001 | commedia | Anfitrione | Amphitruo
+phi0119.phi002 | commedia | Asinaria | 
+phi0119.phi003 | commedia | Aulularia | 
+phi0119.phi004 | commedia | Le Bacchidi | Bacchides
+phi0119.phi005 | commedia | I prigionieri | Captivi
+phi0119.phi006 | commedia | Casina | 
+phi0119.phi007 | commedia | Cistellaria | 
+phi0119.phi008 | commedia | Curculio | 
+phi0119.phi009 | commedia | Epidico | Epidicus
+phi0119.phi010 | commedia | I Menecmi | Menaechmi
+phi0119.phi011 | commedia | Il mercante | Mercator
+phi0119.phi012 | commedia | Il soldato fanfarone | Miles Gloriosus
+phi0119.phi013 | commedia | Mostellaria | 
+phi0119.phi014 | commedia | Il Persiano | Persa
+phi0119.phi015 | commedia | Il Cartaginese | Poenulus
+phi0119.phi016 | commedia | Pseudolo | Pseudolus
+phi0119.phi017 | commedia | La gomena | Rudens
+phi0119.phi018 | commedia | Stico | Stichus
+phi0119.phi019 | commedia | Le tre monete | Trinummus
+phi0119.phi020 | commedia | Truculentus | 

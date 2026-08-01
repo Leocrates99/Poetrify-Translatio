@@ -1,0 +1,6 @@
+# Omero — opera di tradizione orale: si dà la fascia convenzionale
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0012.tlg001 | epica | Iliade | Ἰλιάς
+tlg0012.tlg002 | epica | Odissea | Ὀδύσσεια
+tlg0012.tlg003 | epica | Epigrammi omerici | Ὁμήρου ἐπιγράμματα

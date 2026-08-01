@@ -1,0 +1,4 @@
+# Properzio — libri di elegie
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0620.phi001 | elegia | Elegie | Elegiae

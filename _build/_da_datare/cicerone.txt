@@ -1,0 +1,62 @@
+# Cicerone — opera datatissima: orazioni per il processo, trattati per le lettere e i proemi
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0474.phi001 | oratoria | Per Publio Quinzio | Pro P. Quinctio
+phi0474.phi002 | oratoria | Per Sesto Roscio Amerino | Pro Sex. Roscio Amerino
+phi0474.phi003 | oratoria | Per Quinto Roscio comico | Pro Q. Roscio Comoedo
+phi0474.phi004 | oratoria | Divinazione contro Quinto Cecilio | Divinatio in Q. Caecilium
+phi0474.phi005 | oratoria | Le Verrine | In C. Verrem
+phi0474.phi006 | oratoria | Per Marco Tullio | Pro M. Tullio
+phi0474.phi007 | oratoria | Per Marco Fonteio | Pro M. Fonteio
+phi0474.phi008 | oratoria | Per Aulo Cecina | Pro A. Caecina
+phi0474.phi009 | oratoria | Per la legge Manilia | De Imperio Cn. Pompei Ad Quirites
+phi0474.phi010 | oratoria | Per Aulo Cluenzio | Pro A. Cluentio
+phi0474.phi011 | oratoria | Le agrarie | De Lege Agraria
+phi0474.phi012 | oratoria | Per Gaio Rabirio | Pro Rabirio Perduellionis Reo Ad Quirites
+phi0474.phi013 | oratoria | Le Catilinarie | In L. Catilinam
+phi0474.phi014 | oratoria | Per Lucio Murena | Pro L. Murena
+phi0474.phi015 | oratoria | Per Publio Silla | Pro P. Sulla
+phi0474.phi016 | oratoria | Per il poeta Archia | Pro Archia Poeta
+phi0474.phi017 | oratoria | Per Lucio Flacco | Pro L. Flacco
+phi0474.phi018 | oratoria | Al popolo dopo il ritorno | Cum Populo Gratias Egit
+phi0474.phi019 | oratoria | Al senato dopo il ritorno | Cum Senatui Gratias Egit
+phi0474.phi020 | oratoria | La sua casa | De domo sua ad pontifices
+phi0474.phi021 | oratoria | La risposta degli aruspici | De Haruspicum Responso In P. Clodium
+phi0474.phi022 | oratoria | Per Publio Sestio | Pro P. Sestio
+phi0474.phi023 | oratoria | Contro Vatinio | In P. Vatinium Testem Interrogatio
+phi0474.phi024 | oratoria | Per Marco Celio | Pro M. Caelio
+phi0474.phi025 | oratoria | Le province consolari | De Provinciis Consularibus In Senatu
+phi0474.phi026 | oratoria | Per Lucio Cornelio Balbo | Pro L. Cornelio Balbo
+phi0474.phi027 | oratoria | Contro Pisone | In L. Calpurnium Pisonem
+phi0474.phi028 | oratoria | Per Gneo Plancio | Pro Cn. Plancio
+phi0474.phi029 | oratoria | Per Marco Scauro | Pro M. Scauro
+phi0474.phi030 | oratoria | Per Gaio Rabirio Postumo | Pro C. Rabirio Postumo
+phi0474.phi031 | oratoria | Per Tito Annio Milone | Pro T. Annio Milone
+phi0474.phi032 | oratoria | Per Marco Marcello | Pro M. Marcello
+phi0474.phi033 | oratoria | Per Quinto Ligario | Pro Q. Ligario
+phi0474.phi034 | oratoria | Per il re Deiotaro | Pro Rege Deiotaro Ad. C. Caesarem
+phi0474.phi035 | oratoria | Le Filippiche | Philippicae
+phi0474.phi036 | oratoria | L'invenzione retorica | De Inventione
+phi0474.phi037 | oratoria | Dell'oratore | De Oratore
+phi0474.phi038 | oratoria | Partitiones Oratoriae | 
+phi0474.phi039 | oratoria | Bruto | Brutus
+phi0474.phi040 | oratoria | L'oratore | Orator
+phi0474.phi041 | oratoria | Il miglior genere di oratori | De Optimo Genere Oratorum
+phi0474.phi042 | oratoria | Topica | 
+phi0474.phi043 | oratoria | Lo Stato | De Re Publica
+phi0474.phi045 | oratoria | Questioni accademiche | Academicorum reliquiae cum Lucullo
+phi0474.phi046 | oratoria | Questioni accademiche | Academicorum reliquiae cum Lucullo
+phi0474.phi047 | oratoria | I paradossi degli Stoici | Paradoxa Stoicorum
+phi0474.phi048 | oratoria | I termini estremi del bene e del male | de Finibus Bonorum et Malorum
+phi0474.phi049 | oratoria | Le Tusculane | Tusculanae Disputationes
+phi0474.phi050 | oratoria | La natura degli dèi | de Natura Deorum
+phi0474.phi051 | filosofia | La vecchiaia | De Senectute
+phi0474.phi052 | filosofia | L'amicizia | De Amicitia
+phi0474.phi053 | oratoria | La divinazione | De Divinatione
+phi0474.phi054 | filosofia | Il fato | De Fato
+phi0474.phi055 | filosofia | I doveri | De Officiis
+phi0474.phi056 | retorica | Lettere ai familiari | Epistulae ad Familiares
+phi0474.phi057 | epistolografia | Lettere ad Attico | Epistulae Ad Atticum
+phi0474.phi058 | epistolografia | Lettere al fratello Quinto | Epistulae ad Quintum Fratrem
+phi0474.phi059 | oratoria | Lettere a Bruto | Epistulae ad M. Brutum
+phi0474.phi072 | oratoria | Timeo | Timaeus

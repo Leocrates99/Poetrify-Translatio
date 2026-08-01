@@ -1,0 +1,10 @@
+# Eschilo — tragedia greca · le didascalie danno spesso l'anno esatto di rappresentazione
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0085.tlg001 | tragedia | Le supplici | Ἱκέτιδες
+tlg0085.tlg002 | tragedia | I Persiani | Πέρσαι
+tlg0085.tlg003 | tragedia | Prometeo incatenato | Προμηθεὺς δεσμώτης
+tlg0085.tlg004 | tragedia | I sette contro Tebe | Ἑπτὰ ἐπὶ Θήβας
+tlg0085.tlg005 | tragedia | Agamennone | Ἀγαμέμνων
+tlg0085.tlg006 | tragedia | Le Coefore | Χοηφóρoι
+tlg0085.tlg007 | tragedia | Le Eumenidi | Εὐμενίδες

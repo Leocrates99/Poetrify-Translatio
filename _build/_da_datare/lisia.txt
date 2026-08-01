@@ -1,0 +1,37 @@
+# Lisia — orazioni databili dal processo
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0540.tlg001 | oratoria | Per l'uccisione di Eratostene | ὑπὲρ τοῦ Ἐρατοσθένους φόνου ἀπολογία
+tlg0540.tlg002 | oratoria | Epitafio | Ἐπιτάφιος τοῖς Κορινθίων βοηθοῖς
+tlg0540.tlg003 | oratoria | Contro Simone | πρὸς Σίμωνα ἀπολογία
+tlg0540.tlg004 | oratoria | Per una ferita premeditata | περὶ τραύματος ἐκ προνοίας, ὑπὲρ οὗ καὶ πρὸς ὃν ἄδηλον
+tlg0540.tlg005 | oratoria | Per Callia | ὑπὲρ Καλλίου ἱεροσυλίας ἀπολογία
+tlg0540.tlg006 | oratoria | Contro Andocide | κατ᾽ Ἀνδοκίδου ἀσεβείας
+tlg0540.tlg007 | oratoria | Areopagitico, per l'olivo sacro | Ἀρεοπαγιτικὸς περὶ τοῦ σηκοῦ ἀπολογία
+tlg0540.tlg008 | oratoria | Accusa di calunnia ai compagni | κατηγορία πρὸς τοὺς συνουσιαστὰς κακολογιῶν
+tlg0540.tlg009 | oratoria | Per il soldato | ὑπὲρ τοῦ στρατιωτοῦ
+tlg0540.tlg010 | oratoria | Contro Teomnesto · primo discorso | κατὰ θεομνήστου, Α
+tlg0540.tlg011 | oratoria | Contro Teomnesto · secondo discorso | κατὰ θεομν́ηστου, Β
+tlg0540.tlg012 | oratoria | Contro Eratostene | κατὰ Ερατοσθένους τοῦ γενομένου τῶν τριάκοντα, ὃν αὐτὸς εἶπε Λυσίας
+tlg0540.tlg013 | oratoria | Contro Agorato | κατὰ Ἀγοράτου ἐνδείξεως
+tlg0540.tlg014 | oratoria | Contro Alcibiade, per diserzione | κατὰ Ἀλκιβιάδου λιποταξίου
+tlg0540.tlg015 | oratoria | Contro Alcibiade, per renitenza | κατὰ Ἀλκιβιάδου ἀστρατείας
+tlg0540.tlg016 | oratoria | Per Mantiteo | ἐν βουλῇ Μαντιθέῳ δοκιμαζομένῳ ἀπολογία
+tlg0540.tlg017 | oratoria | Sui beni di Eratone | περὶ τῶν Ἐράτωνος χρημάτων: πρὸς τὸ δημόσιον
+tlg0540.tlg018 | oratoria | Sulla confisca dei beni del fratello di Nicia | περὶ τῆς δημεύσεως τῶν τοῦ Νικίου ἀδέλφου ἐπίλογος
+tlg0540.tlg019 | oratoria | Sui beni di Aristofane | ὑπὲρ τῶν Ἀριστοφάνους χρημάτων, πρὸς τὸ δημόσιον
+tlg0540.tlg020 | oratoria | Per Polistrato | ὑπὲρ Πολυστράτου
+tlg0540.tlg021 | oratoria | Difesa da un'accusa di corruzione | ἀπολογία δωροδοκίας ἀπαράσημος
+tlg0540.tlg022 | oratoria | Contro i mercanti di grano | κατὰ τῶν σιτοπωλῶν
+tlg0540.tlg023 | oratoria | Contro Pancleone | κατὰ Παγκλέωνος ὅτι οὐκ ἦν Πλαταιεύς
+tlg0540.tlg024 | oratoria | Per l'invalido | Πρὸς τὴν εἰσαγγελίαν περὶ τοῦ μὴ δίδοσθαι τῷ ἀδυνάτῳ ἀργύριον
+tlg0540.tlg025 | oratoria | Difesa dall'accusa di attentato alla democrazia | δήμου καταλύσεως ἀπολογία
+tlg0540.tlg026 | oratoria | Sulla dokimasia di Evandro | περὶ τῆς Εὐάνδρου δοκιμασίας
+tlg0540.tlg027 | oratoria | Contro Epicrate | κατὰ Ἐπικράτους καὶ τῶν συμπρεσβευτῶν ἐπίλογος ὡς Θεόδωρος
+tlg0540.tlg028 | oratoria | Contro Ergocle | κατὰ Ἐργοκλέους ἐπίλογος
+tlg0540.tlg029 | oratoria | Contro Filocrate | κατὰ Φιλοκράτους ἐπίλογος
+tlg0540.tlg030 | oratoria | Contro Nicomaco | κατὰ Νικομάχου γραμματέως εὐθυνῶν κατηγορία
+tlg0540.tlg031 | oratoria | Contro Filone | κατὰ Φίλωνος δοκιμασίας
+tlg0540.tlg032 | oratoria | Contro Diogitone | κατὰ Διογείτονος
+tlg0540.tlg033 | oratoria | Olimpico | Ολυμπιακός
+tlg0540.tlg034 | oratoria | Sul non abolire la costituzione patria | περὶ τοῦ μὴ καταλῦσαι τὴν πάτριον πολιτείαν Αθήνησι

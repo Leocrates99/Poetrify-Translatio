@@ -1,0 +1,27 @@
+# Seneca — Dialogi databili singolarmente; Lettere a Lucilio 62-65; tragedie incerte
+# id | genere | opere | titolo italiano | titolo originale
+
+phi1017.phi001 | tragedia | Ercole furioso | Hercules
+phi1017.phi002 | tragedia | Le Troiane | Troades
+phi1017.phi003 | tragedia | Le Fenicie | Phoenissae
+phi1017.phi004 | tragedia | Medea | 
+phi1017.phi005 | tragedia | Fedra | Phaedra
+phi1017.phi006 | tragedia | Edipo | Oedipus
+phi1017.phi007 | tragedia | Agamennone | Agamemnon
+phi1017.phi008 | tragedia | Tieste | Thyestes
+phi1017.phi009 | tragedia | Ercole sull'Eta | Hercules Oetaeus
+phi1017.phi010 | tragedia | Ottavia | Octavia
+phi1017.phi011 | satira | Apocolocintosi | Apocolocyntosis
+phi1017.phi013 | filosofia | I benefici | de Beneficiis
+phi1017.phi014 | filosofia | La clemenza | de Clementia
+phi1017.phi015 | epistolografia | Lettere a Lucilio | Epistulae
+stoa0255.stoa004 | filosofia | La brevità della vita | De Brevitate Vitae
+stoa0255.stoa006 | filosofia | Consolazione a Elvia | De consolatione ad Helviam
+stoa0255.stoa007 | filosofia | Consolazione a Marcia | De consolatione ad Marciam
+stoa0255.stoa008 | filosofia | Consolazione a Polibio | De consolatione ad Polybium
+stoa0255.stoa009 | filosofia | La fermezza del saggio | De Constantia
+stoa0255.stoa010 | filosofia | L'ira | De Ira
+stoa0255.stoa011 | filosofia | L'ozio | De Otio Sapientis
+stoa0255.stoa012 | filosofia | La provvidenza | De Providentia
+stoa0255.stoa013 | filosofia | La tranquillità dell'animo | De Tranquilitate Animi
+stoa0255.stoa014 | filosofia | La vita felice | De Vita Beata

@@ -1,0 +1,15 @@
+# Svetonio — De vita Caesarum
+# id | genere | opere | titolo italiano | titolo originale
+
+phi1348.abo011 | biografia | Vita di Cesare | Divus Iulius
+phi1348.abo012 | biografia | Vita di Augusto | Divus Augustus
+phi1348.abo013 | biografia | Vita di Tiberio | Tiberius
+phi1348.abo014 | biografia | Vita di Caligola | Caligula
+phi1348.abo015 | biografia | Vita di Claudio | Divus Claudius
+phi1348.abo016 | biografia | Vita di Nerone | Nero
+phi1348.abo017 | biografia | Vita di Galba | Galba
+phi1348.abo018 | biografia | Vita di Otone | Otho
+phi1348.abo019 | biografia | Vita di Vitellio | Vitellius
+phi1348.abo020 | biografia | Vita di Vespasiano | Divus Vespasianus
+phi1348.abo021 | biografia | Divus Titus | 
+phi1348.abo022 | biografia | Domitianus | 

@@ -1,0 +1,5 @@
+# Cesare — Bellum Gallicum e Bellum civile, composizione ben circoscritta
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0448.phi001 | storiografia | La guerra gallica | De Bello Gallico
+phi0448.phi002 | storiografia | La guerra civile | De bello civili

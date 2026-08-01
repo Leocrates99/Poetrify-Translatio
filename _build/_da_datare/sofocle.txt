@@ -1,0 +1,11 @@
+# Sofocle — tragedia greca · alcune date certe (Filottete 409, Edipo a Colono postumo 401), altre congetturali
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0011.tlg001 | tragedia | Le Trachinie | Τραχίνιαι
+tlg0011.tlg002 | tragedia | Antigone | Ἀντιγόνη
+tlg0011.tlg003 | tragedia | Aiace | Αἴας
+tlg0011.tlg004 | tragedia | Edipo re | Οἰδίπους Τύραννος
+tlg0011.tlg005 | tragedia | Elettra | Ἠλέκτρα
+tlg0011.tlg006 | tragedia | Filottete | Φιλοκτήτης
+tlg0011.tlg007 | tragedia | Edipo a Colono | Οἰδίπους ἐπὶ Κολωνῷ
+tlg0011.tlg008 | tragedia | I cercatori di tracce | Ἰχνευταί

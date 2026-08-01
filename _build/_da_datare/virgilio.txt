@@ -1,0 +1,6 @@
+# Virgilio — Bucoliche, Georgiche, Eneide: cronologia canonica e sicura
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0690.phi001 | epica | Bucoliche | Bucolica
+phi0690.phi002 | epica | Georgiche | Georgica
+phi0690.phi003 | epica | Eneide | Aeneis

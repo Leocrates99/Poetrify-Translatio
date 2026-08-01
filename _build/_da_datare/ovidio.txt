@@ -1,0 +1,13 @@
+# Ovidio — dalle opere amatorie all'esilio, cronologia ben ricostruita
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0959.phi001 | elegia | Amori | Amores
+phi0959.phi002 | didascalica | Eroidi | Epistulae
+phi0959.phi003 | elegia | I cosmetici per il volto femminile | Medicamina faciei femineae
+phi0959.phi004 | elegia | L'arte di amare | Ars Amatoria
+phi0959.phi005 | elegia | I rimedi dell'amore | Remedia Amoris
+phi0959.phi006 | epica | Le metamorfosi | Metamorphoses
+phi0959.phi007 | elegia | Fasti | 
+phi0959.phi008 | elegia | Tristezze | Tristia
+phi0959.phi009 | elegia | Lettere dal Ponto | Ex Ponto
+phi0959.phi010 | elegia | Ibis | 

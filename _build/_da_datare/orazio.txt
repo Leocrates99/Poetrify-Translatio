@@ -1,0 +1,9 @@
+# Orazio — raccolte datate per libro (Satire, Epodi, Odi I-III e IV, Epistole)
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0893.phi001 | lirica | Odi | Carmina
+phi0893.phi002 | lirica | Carme secolare | Carmen Saeculare
+phi0893.phi003 | lirica | Epodi | Epodon
+phi0893.phi004 | satira | Satire | Satyrarum libri
+phi0893.phi005 | epistolografia | Epistole | Epistulae
+phi0893.phi006 | lirica | Arte poetica | Ars Poetica

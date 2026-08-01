@@ -1,0 +1,4 @@
+# Girolamo — opere databili
+# id | genere | opere | titolo italiano | titolo originale
+
+stoa0162.stoa004 | religione | Epistulae. Selections. | Epistolae

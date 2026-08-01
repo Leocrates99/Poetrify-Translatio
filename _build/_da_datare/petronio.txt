@@ -1,0 +1,5 @@
+# Petronio — opera unica
+# id | genere | opere | titolo italiano | titolo originale
+
+phi0972.phi001 | romanzo | Satyricon | 
+phi0972.phi001f | romanzo | Fragments | 

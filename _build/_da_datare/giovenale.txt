@@ -1,0 +1,4 @@
+# Giovenale — satire per libri
+# id | genere | opere | titolo italiano | titolo originale
+
+phi1276.phi001 | satira | Satire | Saturae

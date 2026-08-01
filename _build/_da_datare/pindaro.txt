@@ -1,0 +1,7 @@
+# Pindaro — epinici datati dalla vittoria celebrata
+# id | genere | opere | titolo italiano | titolo originale
+
+tlg0033.tlg001 | lirica | Olimpiche | Ὀλυμπιονῖκαι
+tlg0033.tlg002 | lirica | Pitiche | Πυθιονῖκαι
+tlg0033.tlg003 | lirica | Nemee | Νεμεονῖκαι
+tlg0033.tlg004 | lirica | Istmiche | Ἰσθμιονῖκαι
