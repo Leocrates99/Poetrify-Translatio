@@ -586,6 +586,72 @@ body[data-lang="grc"] .verse .vt { font-family: var(--font-classical); font-size
 .spinner { width: 26px; height: 26px; border: 3px solid var(--rule-soft); border-top-color: var(--accent); border-radius: 50%; margin: 0 auto 14px; animation: spin .8s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
+/* ══ IL TAVOLO DEI PASSI ═════════════════════════════════════════
+   Quando si prepara una versione o una lezione sul lessico non si cerca UN
+   passo: se ne raccolgono sei o sette, da autori diversi. Il ripiano resta a
+   fondo pagina, sempre visibile finché ha qualcosa dentro. */
+.tavolo {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  background: var(--paper); border-top: 1px solid var(--rule);
+  box-shadow: 0 -6px 22px rgba(44,53,57,.10);
+}
+:root[data-theme="dark"] .tavolo { box-shadow: 0 -6px 22px rgba(0,0,0,.45); }
+.tavolo[hidden] { display: none; }
+.tv-bar {
+  display: flex; align-items: center; gap: 11px; flex-wrap: wrap;
+  padding: 10px clamp(14px, 4vw, 40px);
+  font-family: var(--font-ui); font-size: 12.5px; color: var(--ink);
+}
+.tv-bar b { font-weight: 700; }
+.tv-cnt {
+  background: var(--brass); color: #fff; font-size: 10.5px; font-weight: 700;
+  padding: 2px 9px; border-radius: var(--radius-pill);
+}
+:root[data-theme="dark"] .tv-cnt { color: #14121c; }
+.tv-sub { color: var(--sepia); }
+.tv-acts { margin-left: auto; display: flex; gap: 7px; flex-wrap: wrap; }
+.tv-acts button {
+  font-family: var(--font-ui); font-size: 11.5px; font-weight: 700;
+  padding: 6px 13px; border-radius: var(--radius-md);
+  border: 1px solid var(--rule); color: var(--ink-soft); background: var(--paper);
+  transition: all .13s;
+}
+.tv-acts button:hover { border-color: var(--accent); color: var(--accent); }
+.tv-acts button.pri { background: var(--brass); border-color: var(--brass); color: #fff; }
+:root[data-theme="dark"] .tv-acts button.pri { color: #14121c; }
+.tv-list {
+  display: flex; gap: 9px; overflow-x: auto; padding: 0 clamp(14px, 4vw, 40px) 13px;
+}
+.tv-card {
+  flex: 0 0 216px; background: var(--paper); border: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--rule); border-radius: var(--radius-md);
+  padding: 9px 11px; position: relative;
+}
+.tv-card.la { border-left-color: var(--accent-lat); }
+.tv-card.grc { border-left-color: var(--accent-gr); }
+.tv-card .tr { font-family: var(--font-mono); font-size: 9.5px; color: var(--sepia); padding-right: 18px; }
+.tv-card .ts { font-family: var(--font-read); font-size: 13px; line-height: 1.45; margin-top: 4px; color: var(--ink-soft);
+  display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.tv-card.grc .ts { font-family: var(--font-classical); font-size: 14px; }
+.tv-card .tx {
+  position: absolute; top: 5px; right: 6px; width: 20px; height: 20px; line-height: 1;
+  border: none; background: none; color: var(--sepia); font-size: 15px; border-radius: var(--radius-sm);
+}
+.tv-card .tx:hover { color: var(--danger-ink); background: var(--cream); }
+
+/* il pulsante «raccogli», nel lettore e nei risultati */
+.pick {
+  font-family: var(--font-ui); font-size: 10.5px; font-weight: 700;
+  border: 1px solid var(--rule-soft); background: var(--paper); color: var(--sepia);
+  border-radius: var(--radius-sm); padding: 2px 7px; transition: all .12s;
+}
+.pick:hover { color: var(--brass); border-color: var(--brass); }
+.pick[aria-pressed="true"] { background: var(--brass); border-color: var(--brass); color: #fff; }
+:root[data-theme="dark"] .pick[aria-pressed="true"] { color: #14121c; }
+td.kw-pick { width: 26px; padding-left: 0 !important; }
+/* il ripiano copre il fondo: il contenuto deve poterci scorrere sotto */
+body.con-tavolo .stage { padding-bottom: 190px; }
+
 .toast { position: fixed; bottom: 22px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--paper); font-family: var(--font-ui); font-size: 13px; padding: 9px 16px; border-radius: var(--radius-pill); opacity: 0; transition: all .2s; pointer-events: none; z-index: 60; }
 .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 .mobtoggle { display: none; }
@@ -636,6 +702,19 @@ body[data-lang="grc"] .verse .vt { font-family: var(--font-classical); font-size
   </aside>
   <section class="stage"><div class="stage-inner" id="stage"><div class="loading"><div class="spinner"></div>Carico il catalogo…</div></div></section>
 </main>
+
+<aside class="tavolo" id="tavolo" hidden aria-label="Passi raccolti">
+  <div class="tv-bar">
+    <b>Tavolo</b><span class="tv-cnt" id="tvcnt">0</span>
+    <span class="tv-sub" id="tvsub"></span>
+    <span class="tv-acts">
+      <button id="tvclear" type="button">svuota</button>
+      <button id="tvexport" type="button">esporta</button>
+      <button id="tvsend" class="pri" type="button">→ porta nel Translator</button>
+    </span>
+  </div>
+  <div class="tv-list" id="tvlist"></div>
+</aside>
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -1415,8 +1494,14 @@ function renderReader(doc, books, bookKey, targetLoc) {
     const b = e.target.closest('button[data-act]'); if (!b) return;
     const unit = b.closest('.unit'); const t = unit && byLoc[unit.dataset.loc];
     if (!t) return;
+    const loc = unit.dataset.loc;
     if (b.dataset.act === 'copy') navigator.clipboard.writeText(t).then(() => toast('Passo copiato'));
-    else toTranslator(doc, unit.dataset.loc, t);
+    else if (b.dataset.act === 'pick') {
+      const ora = raccogli(doc, { loc, t });
+      b.setAttribute('aria-pressed', String(ora));
+      b.textContent = ora ? '✓ sul tavolo' : '+ raccogli';
+    }
+    else toTranslator(doc, loc, t);
   });
   wrap.appendChild(scroll);
   wrap.appendChild(tail);
@@ -1452,15 +1537,19 @@ function renderUnit(doc, u) {
     unit.appendChild(el('span', 'loc', u.loc));
     unit.appendChild(el('span', 'txt', u.t));
   }
-  unit.appendChild(buildActs());
+  unit.appendChild(buildActs(doc, u));
   return unit;
 }
 
-function buildActs() {
+function buildActs(doc, u) {
   const acts = el('span', 'acts');
+  const dentro = nelTavolo(doc.id, u.loc);
+  const pick = el('button', null, dentro ? '✓ sul tavolo' : '+ raccogli');
+  pick.dataset.act = 'pick';
+  pick.setAttribute('aria-pressed', String(dentro));
   const copy = el('button', null, 'copia'); copy.dataset.act = 'copy';
   const tr = el('button', null, '→ traduci'); tr.dataset.act = 'tr'; tr.title = 'Porta il passo nel Translator';
-  acts.appendChild(copy); acts.appendChild(tr);
+  acts.appendChild(pick); acts.appendChild(copy); acts.appendChild(tr);
   return acts;
 }
 
@@ -1685,6 +1774,130 @@ async function runSearch(raw) {
         : null;
   paintHits();
   paintDistribution();
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// IL TAVOLO DEI PASSI
+// ══════════════════════════════════════════════════════════════════════════
+/* Preparare una versione o una lezione sul lessico non è cercare UN passo: è
+   raccoglierne sei o sette, da autori diversi, e poi metterli insieme. Finora
+   quel lavoro non esisteva nell'interfaccia e si supiliva con appunti fuori
+   dall'applicazione, perdendo per strada la provenienza. */
+const TAVOLO_KEY = 'poetrify-corpus-tavolo';
+const CONSEGNA_KEY = 'poetrify-tavolo-consegna';
+
+function tavolo() {
+  try { return JSON.parse(localStorage.getItem(TAVOLO_KEY) || '[]'); } catch { return []; }
+}
+function salvaTavolo(list) {
+  try { localStorage.setItem(TAVOLO_KEY, JSON.stringify(list)); } catch {}
+  renderTavolo();
+}
+const chiaveP = (id, loc) => id + '|' + loc;
+function nelTavolo(id, loc) { return tavolo().some(p => chiaveP(p.id, p.loc) === chiaveP(id, loc)); }
+
+function raccogli(doc, u) {
+  const list = tavolo();
+  const k = chiaveP(doc.id, u.loc);
+  const i = list.findIndex(p => chiaveP(p.id, p.loc) === k);
+  if (i >= 0) { list.splice(i, 1); salvaTavolo(list); toast('Tolto dal tavolo'); return false; }
+  list.push({ id: doc.id, loc: u.loc, t: u.t, autore: doc.author, opera: doc.title,
+              lang: doc.lang, urn: doc.source ? doc.source.urn : '', kind: doc.kind });
+  salvaTavolo(list);
+  toast(`Sul tavolo · ${list.length} pass${list.length === 1 ? 'o' : 'i'}`);
+  return true;
+}
+
+function bottonePick(doc, u) {
+  const b = el('button', 'pick', '+');
+  const dentro = nelTavolo(doc.id, u.loc);
+  b.setAttribute('aria-pressed', String(dentro));
+  b.title = dentro ? 'Togli dal tavolo' : 'Raccogli sul tavolo';
+  if (dentro) b.textContent = '✓';
+  b.onclick = (e) => {
+    e.stopPropagation();
+    const ora = raccogli(doc, u);
+    b.setAttribute('aria-pressed', String(ora));
+    b.textContent = ora ? '✓' : '+';
+    b.title = ora ? 'Togli dal tavolo' : 'Raccogli sul tavolo';
+  };
+  return b;
+}
+
+function renderTavolo() {
+  const box = document.getElementById('tavolo');
+  const list = tavolo();
+  box.hidden = !list.length;
+  document.body.classList.toggle('con-tavolo', !!list.length);
+  if (!list.length) return;
+  document.getElementById('tvcnt').textContent = list.length;
+  const autori = new Set(list.map(p => p.autore));
+  const parole = list.reduce((s, p) => s + p.t.split(/\s+/).length, 0);
+  document.getElementById('tvsub').textContent =
+    `· ${autori.size} autor${autori.size === 1 ? 'e' : 'i'} · ${nf.format(parole)} parole`;
+
+  const host = document.getElementById('tvlist');
+  host.innerHTML = '';
+  for (const p of list) {
+    const c = el('div', `tv-card ${p.lang}`);
+    c.appendChild(el('div', 'tr', `${p.autore} · ${p.opera} ${p.loc}`));
+    const s = el('div', 'ts', p.t);
+    s.lang = p.lang === 'grc' ? 'grc' : 'la';
+    c.appendChild(s);
+    const x = el('button', 'tx', '×');
+    x.title = 'Togli dal tavolo';
+    x.onclick = () => salvaTavolo(tavolo().filter(q => chiaveP(q.id, q.loc) !== chiaveP(p.id, p.loc)));
+    c.appendChild(x);
+    host.appendChild(c);
+  }
+}
+
+/* L'esportazione porta i LOCI: è il foglio di riferimento, quello che si stampa
+   o si allega. Il testo per il Translator invece viaggia pulito (vedi sotto). */
+function esportaTavolo() {
+  const list = tavolo();
+  if (!list.length) return;
+  const righe = list.map(p => `${p.autore}, ${p.opera} ${p.loc}\n${p.t}\n`);
+  const testa = `Passi dal Corpus di Poetrify — ${list.length} passi\n` +
+    `Testi di pubblico dominio · edizioni digitali Perseus Digital Library, CC BY-SA\n\n`;
+  const blob = new Blob([testa + righe.join('\n')], { type: 'text/plain;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'passi-corpus.txt';
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  toast('Foglio esportato');
+}
+
+/* Verso il Translator la raccolta NON passa dall'URL: sei o sette passi fanno
+   una stringa di chilobyte, e i limiti dei browser sono diversi e silenziosi.
+   Corpus e Translator stanno sulla stessa origine, quindi condividono
+   localStorage: la raccolta si deposita lì e l'indirizzo porta solo il segnale.
+   Il testo arriva PULITO, senza i loci intercalati: là dentro si traduce, e una
+   citazione in mezzo al latino verrebbe scomposta come se fosse testo d'autore. */
+function inviaTavolo() {
+  const list = tavolo();
+  if (!list.length) return;
+  const lingue = new Set(list.map(p => p.lang));
+  if (lingue.size > 1) {
+    toast('Il tavolo mescola greco e latino: il Translator lavora su una lingua sola');
+    return;
+  }
+  const opere = new Set(list.map(p => p.id));
+  const unaSola = opere.size === 1;
+  const consegna = {
+    lang: list[0].lang,
+    testo: list.map(p => p.t).join('\n\n'),
+    autore: unaSola ? list[0].autore : 'Raccolta di passi',
+    opera: unaSola ? list[0].opera : `${list.length} passi da ${new Set(list.map(p => p.autore)).size} autori`,
+    loc: unaSola ? list[0].loc : '',
+    src: unaSola && list[0].urn ? `${list[0].urn}:${list[0].loc}` : '',
+    tipo: list.every(p => p.kind === 'versi') ? 'poesia' : 'prosa',
+    passi: list.map(p => ({ autore: p.autore, opera: p.opera, loc: p.loc })),
+  };
+  try { localStorage.setItem(CONSEGNA_KEY, JSON.stringify(consegna)); }
+  catch { toast('Non riesco a preparare la consegna'); return; }
+  window.open('translator.html?dalTavolo=1&lang=' + consegna.lang, '_blank');
 }
 
 // ══════════════════════════════════════════════════════════════════════════
@@ -1919,6 +2132,9 @@ function paintHits() {
       const ri = Math.min(t.length, h.oe + KWIC_CTX);
       const tr = el('tr', h.doc.lang);
       tr.tabIndex = 0;
+      const pk = el('td', 'kw-pick');
+      pk.appendChild(bottonePick(h.doc, h.u));
+      tr.appendChild(pk);
       const ref = el('td', 'kw-ref');
       ref.innerHTML = `<b>${escapeHtml(shortAuthor(h.doc.author))}</b> ${escapeHtml(h.u.loc)}`;
       ref.title = `${h.doc.author} · ${h.doc.title} ${h.u.loc}`;
@@ -2006,16 +2222,24 @@ function shortAuthor(nome) {
 }
 
 function hitRow(doc, u, os, oe) {
-  const btn = el('button', `res ${doc.lang}`);
+  /* Non è più un <button>: deve contenere il pulsante «raccogli», e un bottone
+     dentro un bottone è marcatura non valida (e il click interno diventa
+     imprevedibile). Resta operabile da tastiera con ruolo e gestione dei tasti. */
+  const row = el('div', `res ${doc.lang}`);
+  row.setAttribute('role', 'button');
+  row.tabIndex = 0;
   const ref = el('div', 'rref');
   // niente opacity sul locus: attenuava un testo già tenue fino a 3:1
-  ref.innerHTML = `<b>${escapeHtml(doc.author)}</b> · ${escapeHtml(doc.title)} <span class="loc">${escapeHtml(u.loc)}</span>`;
-  btn.appendChild(ref);
+  ref.innerHTML = `<b>${escapeHtml(doc.author)}</b> · ${escapeHtml(doc.title)} <span class="loc">${escapeHtml(u.loc)}</span> `;
+  ref.appendChild(bottonePick(doc, u));
+  row.appendChild(ref);
   const txt = el('div', 'rtext'); txt.lang = doc.lang === 'grc' ? 'grc' : 'la';
   txt.innerHTML = snip(u.t, os, oe);
-  btn.appendChild(txt);
-  btn.onclick = () => openWork(doc.id, u.loc);
-  return btn;
+  row.appendChild(txt);
+  const vai = () => openWork(doc.id, u.loc);
+  row.onclick = (e) => { if (!e.target.closest('.pick')) vai(); };
+  row.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); vai(); } };
+  return row;
 }
 
 // estrae un frammento centrato sul match, con la porzione evidenziata
@@ -2275,6 +2499,16 @@ function syncHeadHeight() {
 }
 addEventListener('resize', syncHeadHeight);
 syncHeadHeight();
+
+document.getElementById('tvclear').onclick = () => {
+  if (!tavolo().length) return;
+  salvaTavolo([]); toast('Tavolo svuotato');
+  if (state.view === 'reader' && state.work) openWork(state.work.id);   // i «✓» tornano «+»
+  else if (state.view === 'results') paintHits();
+};
+document.getElementById('tvexport').onclick = esportaTavolo;
+document.getElementById('tvsend').onclick = inviaTavolo;
+renderTavolo();
 
 document.getElementById('openrecog').onclick = () => {
   document.getElementById('q').value = '';

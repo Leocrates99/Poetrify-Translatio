@@ -37947,6 +37947,54 @@ function corpusBridgeHtml() {
   </div>`;
 }
 
+/* ════════════════════════════════════════════════════════════════════════
+   CUCITURA DAL TAVOLO DEI PASSI
+   ────────────────────────────────────────────────────────────────────────
+   Una raccolta di sei o sette passi non puo' viaggiare nell'URL: sarebbe una
+   stringa di chilobyte, e i limiti dei browser sono diversi e silenziosi.
+   Corpus e Translator stanno pero' sulla STESSA ORIGINE, quindi condividono
+   localStorage: la' si deposita la consegna e l'indirizzo porta solo il
+   segnale `?dalTavolo=1`. La chiave si consuma subito dopo la lettura, cosi'
+   un ricaricamento non ricrea un doppione nell'archivio. */
+const TAVOLO_CONSEGNA_KEY = 'poetrify-tavolo-consegna';
+
+function importTavoloDalCorpus(lang) {
+  let c = null;
+  try {
+    const raw = localStorage.getItem(TAVOLO_CONSEGNA_KEY);
+    if (!raw) return false;
+    c = JSON.parse(raw);
+    localStorage.removeItem(TAVOLO_CONSEGNA_KEY);
+  } catch (e) { return false; }
+  if (!c || !c.testo || !c.testo.trim()) return false;
+
+  state = defaultState();
+  state.meta.lingua = lang;
+  state.meta.testoOriginale = c.testo;
+  state.meta.autore = c.autore || '';
+  state.meta.opera = c.opera || '';
+  state.meta.titolo = c.opera || 'Passi dal corpus';
+  if (c.src) state.meta.fonteUrn = c.src;
+  if (c.tipo === 'poesia') state.meta.tipoTesto = 'poesia';
+  /* La provenienza dei singoli passi finisce nel sottotitolo: il testo resta
+     PULITO, perche' una citazione intercalata verrebbe scomposta come se fosse
+     parola d'autore, e il glossario si riempirebbe di nomi propri. */
+  if (Array.isArray(c.passi) && c.passi.length > 1) {
+    state.meta.sottotitolo = c.passi.map(p => `${p.autore}, ${p.opera} ${p.loc}`).join(' · ');
+  }
+
+  state.sentences = splitTextIntoSentences(c.testo).map(makeSentence);
+  maybeAutoClosedClass();
+  archiveFilters.lingua = lang;
+  state.currentStep = 2;
+  persistCurrent();
+  renderAll();
+  try { history.replaceState({}, '', 'translator.html?lang=' + (lang === 'greco' ? 'grc' : 'la')); } catch (e) {}
+  const n = Array.isArray(c.passi) ? c.passi.length : 1;
+  showToast(`${n} pass${n === 1 ? 'o' : 'i'} dal tavolo del Corpus — ${state.sentences.length} frasi`);
+  return true;
+}
+
 /* Avvia un nuovo brano nella lingua indicata (dal branch d'archivio). */
 function newProjectInLang(lang) {
   startAvvio(lang);
@@ -42517,6 +42565,19 @@ document.addEventListener('DOMContentLoaded', () => {
       txt = p.get('text') || '';
     } catch (e) { p = null; }
     l = (ul === 'grc' || ul === 'greco') ? 'greco' : (ul === 'la' || ul === 'latino') ? 'latino' : null;
+
+    /* CUCITURA DAL TAVOLO · la raccolta sta in localStorage, non nell'URL. */
+    if (p && p.get('dalTavolo')) {
+      try {
+        if (importTavoloDalCorpus(l || 'latino')) {
+          try { sessionStorage.setItem(LANGGATE_SESSION_KEY, l || 'latino'); } catch (e) {}
+          var mt = document.getElementById('langgate'); if (mt) mt.hidden = true;
+          return;
+        }
+      } catch (e) {
+        console.warn('[corpus] consegna del tavolo non leggibile, proseguo:', e);
+      }
+    }
 
     /* CUCITURA DAL CORPUS · ha la precedenza sul gate: se arriva un testo, la
        lingua la dichiara il passo stesso e non c'è nulla da chiedere. */
