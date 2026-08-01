@@ -89,6 +89,37 @@ body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
   font-family: var(--font-ui); font-size: 11.5px; color: var(--sepia);
 }
 .searchhint b { color: var(--primary); font-weight: 700; }
+
+/* ── La citazione riconosciuta ────────────────────────────────────
+   Sta sotto la casella e dichiara come ha capito: un campo che indovina in
+   silenzio è magico finché non sbaglia, uno che lo dice resta prevedibile. */
+#cite { max-width: 760px; margin: 8px auto 0; }
+.citebox {
+  border: 1.5px solid var(--accent); border-radius: var(--radius-lg);
+  background: var(--paper); overflow: hidden; box-shadow: var(--shadow-sm);
+}
+.cite-cap {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap;
+  padding: 9px 14px; background: var(--cream); border-bottom: 1px solid var(--rule-soft);
+}
+.cite-kind {
+  font-family: var(--font-ui); font-size: 10px; font-weight: 700; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--accent);
+}
+.cite-who { font-family: var(--font-display); font-size: 15px; font-weight: 700; color: var(--ink); }
+.cite-row {
+  display: flex; align-items: baseline; gap: 12px; width: 100%; text-align: left;
+  padding: 9px 14px; background: none; border: none; border-top: 1px solid var(--rule-soft);
+  transition: background .12s;
+}
+.cite-row:first-of-type { border-top: none; }
+.cite-row:hover { background: var(--cream); }
+.cite-row .ck {
+  font-family: var(--font-mono); font-size: 11px; color: var(--sepia);
+  flex: 0 0 76px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.cite-row .cv { font-family: var(--font-read); font-size: 14.5px; color: var(--ink); }
+.cite-row .cgo { margin-left: auto; font-family: var(--font-ui); font-size: 11px; font-weight: 700; color: var(--accent); }
 .searchhint .recog {
   font: inherit; font-weight: 700; color: var(--accent); background: none;
   border: none; padding: 0 0 0 6px; text-decoration: underline; text-underline-offset: 3px;
@@ -591,7 +622,8 @@ body[data-lang="grc"] .verse .vt { font-family: var(--font-classical); font-size
     <input id="q" type="search" autocomplete="off" spellcheck="false"
            placeholder="Cerca un autore, un'opera o una parola nei testi…" aria-label="Cerca nel corpus">
   </div>
-  <p class="searchhint">La ricerca ignora accenti e spiriti: cerca <b>μηνιν</b> e trovi <b>μῆνιν</b>; <b>vita</b> trova anche <b>uita</b>.
+  <div id="cite" aria-live="polite"></div>
+  <p class="searchhint">Una parola cerca nei testi · una citazione come <b>Caes. Gall. 1,1</b> apre il passo · accenti e spiriti ignorati.
     <button class="recog" id="openrecog" type="button">Hai una versione? Scopri da dove viene</button></p>
 </div>
 
@@ -1656,6 +1688,214 @@ async function runSearch(raw) {
 }
 
 // ══════════════════════════════════════════════════════════════════════════
+// LA CITAZIONE COME INPUT — «Caes. Gall. 1,1» apre il passo
+// ══════════════════════════════════════════════════════════════════════════
+/* Un classicista non naviga: CITA. Ha in mente «Cesare, Gallico I 1» e finora
+   doveva tradurlo in una sequenza di clic. Qui la stessa casella riconosce
+   l'intento e lo DICHIARA con un'etichetta — un campo che indovina in silenzio
+   è magico finché non sbaglia; uno che dice come ti ha capito resta prevedibile
+   anche quando sbaglia.
+
+   Le sigle d'AUTORE non si possono dedurre («Caes.» non è prefisso di «Cesare»):
+   servono tabulate. Quelle d'OPERA quasi sempre sì, confrontandole con ogni
+   parola del titolo — italiano o originale: «Gall.» sta in «De Bello Gallico»,
+   «Il.» in «Iliade». */
+const SIGLA_AUTORI = {
+  // latini
+  caes: 'phi0448', cic: 'phi0474', verg: 'phi0690', virg: 'phi0690', hor: 'phi0893',
+  ov: 'phi0959', ovid: 'phi0959', liv: 'phi0914', sall: 'phi0631', tac: 'phi1351',
+  sen: 'phi1017', lucr: 'phi0550', catull: 'phi0472', cat: 'phi0472', prop: 'phi0620',
+  tib: 'phi0660', quint: 'phi1002', suet: 'phi1348', iuv: 'phi1276', juv: 'phi1276',
+  mart: 'phi1294', pers: 'phi0969', petron: 'phi0972', apul: 'phi1212',
+  phaedr: 'phi0975', nep: 'phi0588', plaut: 'phi0119', ter: 'phi0134',
+  lucan: 'phi0917', stat: 'phi1020', vitr: 'phi1056', gell: 'phi1254',
+  amm: 'stoa0023', boeth: 'stoa0058', tert: 'stoa0275', colum: 'phi0845',
+  // greci
+  hom: 'tlg0012', hes: 'tlg0020', hdt: 'tlg0016', hrdt: 'tlg0016', thuc: 'tlg0003',
+  xen: 'tlg0032', plat: 'tlg0059', pl: 'tlg0059', arist: 'tlg0086', aristot: 'tlg0086',
+  aesch: 'tlg0085', soph: 'tlg0011', eur: 'tlg0006', aristoph: 'tlg0019', ar: 'tlg0019',
+  dem: 'tlg0014', demosth: 'tlg0014', lys: 'tlg0540', isocr: 'tlg0010', isoc: 'tlg0010',
+  aeschin: 'tlg0026', pind: 'tlg0033', bacchyl: 'tlg0199', plut: 'tlg0007',
+  luc: 'tlg0062', lucian: 'tlg0062', polyb: 'tlg0543', apoll: 'tlg0001',
+  theocr: 'tlg0005', callim: 'tlg0533', paus: 'tlg0525', strab: 'tlg0099',
+  long: 'tlg0561', epict: 'tlg0557', diod: 'tlg0060', ath: 'tlg0008', gal: 'tlg0057',
+};
+/* Le poche sigle d'opera che nessuna parola del titolo può dare. */
+const SIGLA_OPERE = {
+  'tlg0059|resp': 'tlg0059.tlg030', 'tlg0059|r': 'tlg0059.tlg030',
+  'tlg0032|an': 'tlg0032.tlg006', 'tlg0032|hell': 'tlg0032.tlg001',
+  'tlg0032|mem': 'tlg0032.tlg002', 'tlg0032|cyr': 'tlg0032.tlg007',
+  'phi0448|civ': 'phi0448.phi002', 'phi0474|off': 'phi0474.phi055',
+  'phi0474|am': 'phi0474.phi052', 'phi0474|sen': 'phi0474.phi051',
+  'phi0474|nat': 'phi0474.phi050', 'phi0474|tusc': 'phi0474.phi049',
+  'phi0474|att': 'phi0474.phi057', 'phi0474|fam': 'phi0474.phi056',
+  'phi0690|ecl': 'phi0690.phi001', 'phi0690|georg': 'phi0690.phi002',
+  'phi0893|carm': 'phi0893.phi001', 'phi0893|sat': 'phi0893.phi004',
+  'phi0893|epist': 'phi0893.phi005', 'phi1017|epist': 'phi1017.phi015',
+  'phi0959|met': 'phi0959.phi006', 'phi1351|ann': 'phi1351.phi005',
+  'phi1351|hist': 'phi1351.phi004', 'phi1351|germ': 'phi1351.phi002',
+  'phi1351|agr': 'phi1351.phi001', 'tlg0012|il': 'tlg0012.tlg001',
+  'tlg0012|od': 'tlg0012.tlg002',
+};
+
+const ROMANI = { i: 1, v: 5, x: 10, l: 50, c: 100, d: 500, m: 1000 };
+function romanoANumero(s) {
+  const t = s.toLowerCase();
+  if (!/^[ivxlcdm]+$/.test(t)) return null;
+  let tot = 0;
+  for (let i = 0; i < t.length; i++) {
+    const v = ROMANI[t[i]], next = ROMANI[t[i + 1]];
+    tot += (next && v < next) ? -v : v;
+  }
+  return tot > 0 ? tot : null;
+}
+const sigla = (s) => fold(s).replace(/[.,;:]/g, '').trim();
+/* Le chiavi delle tavole vanno passate per la STESSA normalizzazione della
+   ricerca, che unifica v→u e j→i: senza, «Verg.» diventa «uerg» e non trova
+   mai la voce scritta «verg». Funzionavano solo le sigle prive di v e di j —
+   un guasto che si nascondeva dietro i casi che andavano. */
+const SIGLA_AUTORI_N = Object.fromEntries(
+  Object.entries(SIGLA_AUTORI).map(([k, v]) => [sigla(k), v]));
+const SIGLA_OPERE_N = Object.fromEntries(
+  Object.entries(SIGLA_OPERE).map(([k, v]) => {
+    const [a, s] = k.split('|');
+    return [a + '|' + sigla(s), v];
+  }));
+
+/* Riconosce «autore opera locus». Restituisce null se non è una citazione:
+   il campo resta una ricerca testuale, e non si inventa un'intenzione. */
+function parseCitation(raw) {
+  /* Dove finisce il riferimento e comincia il locus non si decide con una
+     regola sola: «Verg. Aen. VI 847» ha il libro in cifre romane separato da
+     uno spazio, ma «Il.» dell'Iliade è fatto di lettere che SONO cifre romane
+     (i + l) e verrebbe inghiottito. Si provano quindi i tagli possibili, dal
+     più corto, e vince il primo che si risolve davvero in un'opera: è il testo
+     a dire dove sta il confine, non una presunzione. */
+  const q = raw.trim();
+  const tok = q.split(/\s+/).filter(Boolean);
+  if (tok.length < 2) return null;
+  const numerico = (t) => /^\d+([.,]\d+)*$/.test(t) || romanoANumero(t.replace(/[.,]$/, '')) !== null;
+
+  /* Si valutano TUTTI i tagli possibili e vince il meglio risolto, non il primo:
+     «Hor. carm. I 11» col taglio corto lascia "carm i" e finisce sul Carme
+     secolare per somiglianza; col taglio lungo lascia "carm", che la tavola
+     conosce come le Odi. Il punteggio premia la corrispondenza tabulata. */
+  let migliore = null;
+  for (let k = 1; k <= Math.min(3, tok.length - 1); k++) {
+    const coda = tok.slice(tok.length - k);
+    if (!coda.every(numerico)) break;                 // non è più un locus: fermarsi
+    const r = risolviCitazione(tok.slice(0, tok.length - k).join(' '), coda);
+    if (!r) continue;
+    if (!migliore || r.punti > migliore.punti) migliore = r;
+  }
+  return migliore;
+}
+
+function risolviCitazione(rif, coda) {
+  const loc = coda.join('.').split(/[.,]/).map(p => {
+    const t = p.trim().replace(/[.,]$/, '');
+    if (!t) return null;
+    return /^\d+$/.test(t) ? t : String(romanoANumero(t) || t);
+  }).filter(Boolean).join('.');
+  if (!rif || rif.length < 2 || !loc) return null;
+
+  const parole = rif.split(/[\s.]+/).map(sigla).filter(Boolean);
+  if (!parole.length) return null;
+
+  // 1 · l'autore: sigla tabulata, oppure prefisso di una parola del suo nome
+  let autore = null, consumate = 0, punti = 0;
+  for (const n of [2, 1]) {                      // «M. Aur.» prima di «Aur.»
+    if (parole.length < n) continue;
+    const chiave = parole.slice(0, n).join('');
+    if (SIGLA_AUTORI_N[chiave]) { autore = SIGLA_AUTORI_N[chiave]; consumate = n; punti += 3; break; }
+  }
+  if (!autore) {
+    const p = parole[0];
+    const cand = state.index.authors.filter(a =>
+      fold(a.name).split(/\s+/).some(w => w.startsWith(p) && p.length >= 3));
+    if (cand.length === 1) { autore = cand[0].id; consumate = 1; punti += 2; }
+    else if (cand.length > 1) {
+      const esatto = cand.find(a => fold(a.name) === p);
+      if (esatto) { autore = esatto.id; consumate = 1; punti += 2; }
+    }
+  }
+  if (!autore) return null;
+
+  // 2 · l'opera: sigla tabulata, oppure prefisso di una parola del titolo
+  const opere = state.index.works.filter(w => w.authorId === autore && inBranch(w));
+  const resto = parole.slice(consumate);
+  let opera = null;
+  if (!resto.length) {
+    if (opere.length === 1) { opera = opere[0]; punti += 3; }
+    else {
+      /* Alcuni autori si citano senza nominare l'opera perché ne hanno una che
+         li rappresenta: «Liv. 21,1» è l'Ab urbe condita. Si accetta solo quando
+         un'opera pesa da sola almeno il 40% dell'autore — vale per Livio, non
+         per Cicerone, dove indovinare sarebbe arbitrario. Punteggio basso: una
+         sigla esplicita vince sempre. */
+      const tot = opere.reduce((s, w) => s + w.words, 0);
+      const grande = opere.slice().sort((a, b) => b.words - a.words)[0];
+      if (grande && tot && grande.words / tot >= 0.4) { opera = grande; punti += 1; }
+    }
+  } else {
+    const k = autore + '|' + resto.join('');
+    if (SIGLA_OPERE_N[k]) {
+      opera = opere.find(w => w.id === SIGLA_OPERE_N[k]) || null;
+      if (opera) punti += 5;                     // la tavola è la fonte più sicura
+    }
+    if (!opera) {
+      const compatto = resto.join('');
+      const parti = (w) => [w.title, w.titleOrig, w.titleEn].filter(Boolean)
+        .flatMap(t => fold(t).split(/[\s,]+/));
+      // prima chi combacia con TUTTO il resto, poi chi combacia con la sola sigla
+      const pieno = opere.filter(w => parti(w).some(x => x.startsWith(compatto)));
+      const parziale = opere.filter(w => parti(w).some(x => x.startsWith(resto[0])));
+      if (pieno.length) { opera = pieno[0]; punti += 3; }
+      else if (parziale.length) { opera = parziale[0]; punti += 1; }
+    }
+  }
+  return { autore, opera, loc, opere, punti };
+}
+
+/* Pannello sotto la casella: dichiara come ha capito e offre le vie. Non
+   sostituisce la ricerca testuale, che prosegue sotto: se l'interpretazione è
+   sbagliata non si è perso nulla. */
+function paintCitation(raw) {
+  const host = document.getElementById('cite');
+  if (!host) return;
+  host.innerHTML = '';
+  let c = null;
+  try { c = parseCitation(raw); } catch { c = null; }
+  if (!c || !c.opera) return;
+
+  const w = c.opera;
+  const box = el('div', 'citebox');
+  const cap = el('div', 'cite-cap');
+  cap.appendChild(el('span', 'cite-kind', `Citazione · ${langName[w.lang]}`));
+  cap.appendChild(el('span', 'cite-who', `${w.author} · ${w.title}`));
+  box.appendChild(cap);
+
+  const vie = [];
+  const doc = state.docs[w.id];
+  vie.push({ k: c.loc, t: 'apri il passo', go: () => openWork(w.id, c.loc) });
+  if (c.loc.includes('.')) {
+    const libro = c.loc.split('.')[0];
+    vie.push({ k: libro, t: 'apri il libro', go: () => { state.book = libro; openWork(w.id); } });
+  }
+  vie.push({ k: '↳', t: `tutte le opere di ${w.author}`, go: () => openAuthor(w.authorId) });
+
+  for (const v of vie) {
+    const r = el('button', 'cite-row');
+    r.appendChild(el('span', 'ck', v.k));
+    r.appendChild(el('span', 'cv', v.t));
+    r.appendChild(el('span', 'cgo', 'apri →'));
+    r.onclick = () => { document.getElementById('q').value = ''; host.innerHTML = ''; v.go(); };
+    box.appendChild(r);
+  }
+  host.appendChild(box);
+}
+
+// ══════════════════════════════════════════════════════════════════════════
 // RESA DEI PASSI — concordanza o passi estesi
 // ══════════════════════════════════════════════════════════════════════════
 const KWIC_CTX = 58;        // caratteri di contesto per lato
@@ -2006,6 +2246,11 @@ let debTimer;
 document.getElementById('q').addEventListener('input', (e) => {
   clearTimeout(debTimer);
   const v = e.target.value;
+  /* La citazione si riconosce SUBITO, senza attesa: è un riscontro sul catalogo
+     già in memoria, non costa nulla. La ricerca testuale segue col suo ritardo,
+     e resta comunque disponibile sotto — se l'interpretazione è sbagliata non si
+     è perso niente. */
+  paintCitation(v);
   debTimer = setTimeout(() => runSearch(v), 260);
 });
 let afTimer;
