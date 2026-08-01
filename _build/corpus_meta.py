@@ -61,7 +61,12 @@ LAT = {
     "phi0978": ("scienze", "imperiale"),         # Plinio il Vecchio
     "phi1002": ("retorica", "imperiale"),        # Quintiliano
     "phi1014": ("retorica", "imperiale"),        # Seneca il Vecchio
-    "phi1017": ("filosofia", "imperiale"),       # Seneca
+    # ATTENZIONE ai due gruppi di Seneca, che il catalogo Perseus tiene separati
+    # in modo controintuitivo: `phi1017` raccoglie le TRAGEDIE (più qualche prosa),
+    # `stoa0255` i DIALOGHI filosofici. Erano invertiti, e l'errore è rimasto
+    # invisibile finché il genere è stato solo un'etichetta: è emerso sfogliando
+    # il catalogo per genere, dove «tragedia» restituiva le Consolazioni.
+    "phi1017": ("tragedia", "imperiale"),        # Seneca tragico
     "phi1020": ("epica", "imperiale"),           # Stazio
     "phi1035": ("epica", "imperiale"),           # Valerio Flacco
     "phi1038": ("erudizione", "imperiale"),      # Valerio Massimo
@@ -84,7 +89,7 @@ LAT = {
     "stoa0162": ("religione", "tarda"),          # Girolamo
     "stoa0203": ("religione", "tarda"),          # Minucio Felice
     "stoa0238": ("religione", "tarda"),          # Prudenzio
-    "stoa0255": ("tragedia", "imperiale"),       # Seneca tragico
+    "stoa0255": ("filosofia", "imperiale"),      # Seneca · i Dialogi
     "stoa0275": ("religione", "tarda"),          # Tertulliano
     "stoa0276": ("religione", "tarda"),          # Pseudo-Tertulliano
     # Questi sei gruppi NON hanno `__cts__.xml` nel repository: identificati
@@ -293,6 +298,12 @@ WORKS = {
     "tlg0086.tlg035": ("retorica", "classica"),     # Aristotele · Poetica
     "tlg0086.tlg038": ("retorica", "classica"),     # Aristotele · Retorica
     "tlg0020.tlg001": ("didascalica", "arcaica"),   # Esiodo · Teogonia
+    # `phi1017` è il gruppo delle tragedie, ma ospita anche quattro prose:
+    # senza queste eccezioni finirebbero in catalogo fra i drammi.
+    "phi1017.phi011": ("satira", "imperiale"),          # Apocolocintosi
+    "phi1017.phi013": ("filosofia", "imperiale"),       # De beneficiis
+    "phi1017.phi014": ("filosofia", "imperiale"),       # De clementia
+    "phi1017.phi015": ("epistolografia", "imperiale"),  # Lettere a Lucilio
 }
 
 UNKNOWN = ("non classificato", "non datata")

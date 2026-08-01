@@ -212,6 +212,139 @@ body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
   background: none; border: none; text-decoration: underline; padding: 0;
 }
 
+/* ══ HOME ESSENZIALE · riprendi + categorie ══════════════════════ */
+.band { margin-top: 30px; }
+.band-h {
+  display: flex; align-items: baseline; gap: 10px; margin-bottom: 13px; flex-wrap: wrap;
+  font-family: var(--font-ui); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .11em; text-transform: uppercase; color: var(--sepia);
+}
+.band-h .more {
+  margin-left: auto; font-family: var(--font-ui); font-size: 11.5px; font-weight: 700;
+  letter-spacing: 0; text-transform: none; color: var(--accent);
+  background: none; border: none; padding: 0; text-decoration: underline; text-underline-offset: 3px;
+}
+/* Riprendi */
+.resume { display: grid; grid-template-columns: repeat(auto-fill, minmax(228px, 1fr)); gap: 12px; }
+.rcard {
+  text-align: left; background: var(--paper); border: 1px solid var(--rule-soft);
+  border-left: 3px solid var(--rule); border-radius: var(--radius-lg); padding: 14px 15px;
+  transition: box-shadow .15s, transform .15s;
+}
+.rcard:hover { box-shadow: var(--shadow-lift); transform: translateY(-2px); }
+.rcard.la { border-left-color: var(--accent-lat); }
+.rcard.grc { border-left-color: var(--accent-gr); }
+.rcard .rt { font-family: var(--font-display); font-size: 17.5px; font-weight: 700; line-height: 1.18; }
+.rcard .ra { font-family: var(--font-ui); font-size: 11.5px; color: var(--sepia); margin-top: 3px; }
+.rcard .rw {
+  font-family: var(--font-mono); font-size: 10px; color: var(--sepia); margin-top: 10px;
+  display: flex; justify-content: space-between; gap: 8px;
+}
+.rcard .rp { height: 4px; background: var(--cream); border-radius: 2px; margin-top: 6px; overflow: hidden; }
+.rcard .rp i { display: block; height: 100%; border-radius: 2px; background: var(--accent); }
+.rcard.la .rp i { background: var(--accent-lat); }
+.rcard.grc .rp i { background: var(--accent-gr); }
+
+/* Categorie del catalogo */
+.axis { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 13px; }
+.axis button {
+  font-family: var(--font-ui); font-size: 11.5px; font-weight: 700; padding: 6px 14px;
+  border-radius: var(--radius-pill); border: 1px solid var(--rule); color: var(--sepia);
+  background: var(--paper); transition: all .13s;
+}
+.axis button:hover { border-color: var(--accent); color: var(--accent); }
+.axis button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-primary); }
+.cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(156px, 1fr)); gap: 11px; }
+.cat {
+  text-align: left; background: var(--paper); border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-lg); padding: 13px 14px 11px;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.cat:hover { border-color: var(--accent); box-shadow: var(--shadow-lift); transform: translateY(-2px); }
+.cat .cn { font-family: var(--font-display); font-size: 17px; font-weight: 700; line-height: 1.15; }
+.cat .cc { font-family: var(--font-ui); font-size: 11.5px; color: var(--sepia); margin-top: 3px; }
+/* Il filetto è in ottone, non nel colore-lingua: qui il colore significherebbe
+   una lingua che la categoria non ha (l'oratoria è greca e latina insieme). */
+.cat .cb { height: 3px; background: var(--cream); border-radius: 2px; margin-top: 10px; overflow: hidden; }
+.cat .cb i { display: block; height: 100%; background: var(--brass); opacity: .75; border-radius: 2px; }
+.cat.all { background: var(--cream); border-style: dashed; }
+.cat.all .cn { color: var(--accent); }
+
+/* ══ SFOGLIO RAMIFICATO ══════════════════════════════════════════ */
+.crumb {
+  display: flex; align-items: center; gap: 7px; flex-wrap: wrap;
+  font-family: var(--font-ui); font-size: 12px; color: var(--sepia); margin-bottom: 18px;
+}
+.crumb button {
+  font: inherit; color: var(--accent); background: none; border: none; padding: 2px 0;
+  font-weight: 600; text-decoration: underline; text-underline-offset: 3px;
+}
+.crumb .sep { opacity: .5; }
+.crumb .cur { color: var(--ink); font-weight: 700; }
+.crumb .cnt { margin-left: auto; font-family: var(--font-mono); font-size: 10.5px; }
+
+.lits { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+.lit {
+  text-align: left; background: var(--paper); border: 1px solid var(--rule-soft);
+  border-top: 4px solid var(--rule); border-radius: var(--radius-lg);
+  padding: 22px 22px 18px; transition: box-shadow .15s, transform .15s;
+}
+.lit:hover { box-shadow: var(--shadow-lift); transform: translateY(-2px); }
+.lit.la { border-top-color: var(--accent-lat); }
+.lit.grc { border-top-color: var(--accent-gr); }
+.lit .ln { font-family: var(--font-display); font-size: 24px; font-weight: 700; line-height: 1.1; }
+.lit.la .ln { color: var(--accent-lat); }
+.lit.grc .ln { color: var(--accent-gr); }
+.lit .lo { font-family: var(--font-classical); font-size: 15.5px; color: var(--sepia); margin-top: 4px; }
+.lit .lc { font-family: var(--font-ui); font-size: 12.5px; color: var(--sepia); margin-top: 12px; }
+.lit .le { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 9px; font-family: var(--font-ui); font-size: 10.5px; color: var(--sepia); }
+.lit .le span { background: var(--cream); border-radius: var(--radius-pill); padding: 2px 9px; }
+
+.epochs { display: grid; grid-template-columns: repeat(auto-fit, minmax(158px, 1fr)); gap: 11px; }
+.ep {
+  text-align: left; background: var(--paper); border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-lg); padding: 14px 15px 12px;
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.ep:hover { border-color: var(--accent); box-shadow: var(--shadow-lift); transform: translateY(-2px); }
+.ep .ew { font-family: var(--font-mono); font-size: 9.5px; color: var(--brass); }
+.ep .en { font-family: var(--font-display); font-size: 18px; font-weight: 700; margin-top: 4px; line-height: 1.15; }
+.ep .ec { font-family: var(--font-ui); font-size: 11.5px; color: var(--sepia); margin-top: 3px; }
+.ep .eb { height: 3px; background: var(--cream); border-radius: 2px; margin-top: 10px; overflow: hidden; }
+.ep .eb i { display: block; height: 100%; background: var(--brass); opacity: .7; border-radius: 2px; }
+
+.alpha { display: flex; gap: 3px; flex-wrap: wrap; margin-bottom: 14px; }
+.alpha button {
+  font-family: var(--font-ui); font-size: 11px; font-weight: 700; width: 25px; height: 25px;
+  border-radius: var(--radius-sm); color: var(--sepia); border: 1px solid var(--rule-soft);
+  background: var(--paper); padding: 0;
+}
+.alpha button:hover:not([disabled]) { border-color: var(--accent); color: var(--accent); }
+.alpha button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-primary); }
+.alpha button[disabled] { opacity: .3; cursor: default; }
+.auths { display: grid; grid-template-columns: repeat(auto-fill, minmax(186px, 1fr)); gap: 9px; }
+.auth {
+  display: flex; align-items: baseline; gap: 8px; text-align: left;
+  padding: 9px 12px; border: 1px solid var(--rule-soft); border-radius: var(--radius-md);
+  background: var(--paper); transition: border-color .15s;
+}
+.auth:hover { border-color: var(--accent); }
+.auth .an { font-family: var(--font-display); font-size: 16px; font-weight: 600; }
+.auth .ac { margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--sepia); }
+
+.sortbar { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
+.sortbar .sl {
+  font-family: var(--font-ui); font-size: 10px; font-weight: 700; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--sepia); margin-right: 3px;
+}
+.sortbar button {
+  font-family: var(--font-ui); font-size: 11.5px; font-weight: 700; padding: 5px 13px;
+  border-radius: var(--radius-pill); border: 1px solid var(--rule); color: var(--sepia); background: var(--paper);
+  transition: all .13s;
+}
+.sortbar button:hover { border-color: var(--accent); color: var(--accent); }
+.sortbar button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-primary); }
+
 /* ── Griglia opere ────────────────────────────────────────────── */
 .catalog { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; }
 .catcard {
@@ -446,8 +579,11 @@ const MAX_HITS = 200;         // tetto di passi mostrati
 const state = {
   lang: 'all', index: null, docs: {},
   manifest: null, shards: {},
-  view: 'welcome', work: null, book: null, author: null,
-  facets: { genre: null, epoch: null },
+  view: 'home', work: null, book: null, author: null,
+  browse: { lang: null, epoch: null, author: null, genre: null },
+  axis: 'genre',        // asse delle card di categoria in home
+  sort: 'trad',         // ordinamento delle opere nello sfoglio
+  alpha: null,          // iniziale selezionata nella striscia degli autori
   shown: 0, filtered: [],
 };
 
@@ -500,7 +636,12 @@ function toast(msg) {
 
 // ── Dati ───────────────────────────────────────────────────────────────────
 async function loadIndex() {
-  const r = await fetch(`${BASE}/_index.json`);
+  /* `no-cache` = si rivalida sempre col server (che risponde 304 se nulla è
+     cambiato: costa un giro, non un download). Serve perché il catalogo si
+     rigenera a ogni import: senza, dopo una pubblicazione il browser continua
+     a mostrare il catalogo vecchio — titoli e generi di ieri su testi di oggi.
+     I JSON delle singole opere restano in cache: quelli non cambiano. */
+  const r = await fetch(`${BASE}/_index.json`, { cache: 'no-cache' });
   if (!r.ok) throw new Error('catalogo non trovato');
   state.index = await r.json();
 }
@@ -525,7 +666,7 @@ const inflight = new Map();
 async function loadManifest() {
   if (state.manifest) return state.manifest;
   try {
-    const r = await fetch(`${BASE}/_idx/_manifest.json`);
+    const r = await fetch(`${BASE}/_idx/_manifest.json`, { cache: 'no-cache' });
     if (!r.ok) return r.status === 404 ? (state.manifest = false) : false;
     state.manifest = await r.json();
   } catch { return false; }           // transitorio: si ritenta alla prossima ricerca
@@ -553,12 +694,6 @@ async function loadShard(ch) {
 
 // ── Selezione corrente ─────────────────────────────────────────────────────
 function inBranch(w) { return state.lang === 'all' || w.lang === state.lang; }
-function currentWorks() {
-  return state.index.works.filter(w =>
-    inBranch(w) &&
-    (!state.facets.genre || w.genre === state.facets.genre) &&
-    (!state.facets.epoch || w.epoch === state.facets.epoch));
-}
 
 // ── Colonna autori ─────────────────────────────────────────────────────────
 function renderAuthors(filter) {
@@ -583,87 +718,390 @@ function renderAuthors(filter) {
   $authors.appendChild(frag);
 }
 
-// ── Biblioteca (catalogo a faccette) ───────────────────────────────────────
-function renderWelcome() {
-  state.view = 'welcome'; state.work = null; state.author = null;
+// ══════════════════════════════════════════════════════════════════════════
+// MEMORIA DI LETTURA — «Riprendi»
+// ══════════════════════════════════════════════════════════════════════════
+/* Sta sul dispositivo, come il tema: opera, libro, ultimo locus visto e quando.
+   Non è statistica d'uso, è il segnalibro — l'unica cosa che una biblioteca
+   deve ricordare al posto di chi legge. */
+const LETTURE_KEY = 'poetrify-corpus-letture';
+const LETTURE_MAX = 12;
+
+function letture() {
+  try { return JSON.parse(localStorage.getItem(LETTURE_KEY) || '[]'); }
+  catch { return []; }
+}
+function segnaLettura(doc, bookKey, units, drawn) {
+  try {
+    const list = letture().filter(x => x.id !== doc.id);
+    list.unshift({
+      id: doc.id, lang: doc.lang, title: doc.title, author: doc.author,
+      book: bookKey, tot: doc.stats ? doc.stats.units : units,
+      pos: drawn || 0, ts: Date.now(),
+    });
+    localStorage.setItem(LETTURE_KEY, JSON.stringify(list.slice(0, LETTURE_MAX)));
+  } catch { /* spazio esaurito o modalità privata: il segnalibro è un di più */ }
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// HOME ESSENZIALE — cerca · riprendi · sfoglia
+// ══════════════════════════════════════════════════════════════════════════
+const AXES = [
+  { key: 'genre', label: 'Genere' },
+  { key: 'epoch', label: 'Epoca' },
+  { key: 'authorId', label: 'Autore' },
+  { key: 'lang', label: 'Lingua' },
+];
+const LANG_LABEL = { la: 'Latino', grc: 'Greco' };
+
+function renderWelcome() {          // la home; il nome resta per le chiamate esistenti
+  state.view = 'home'; state.work = null; state.author = null;
+  state.browse = { lang: null, epoch: null, author: null, genre: null };
   if (state.lang === 'la' || state.lang === 'grc') document.body.dataset.lang = state.lang;
   else document.body.removeAttribute('data-lang');
 
+  const base = state.index.works.filter(inBranch);
   const wrap = el('div');
+
   const hero = el('div', 'welcome-hero');
-  hero.appendChild(el('h1', null, 'La biblioteca dei classici'));
-  hero.appendChild(el('p', null, 'Il testo originale, greco e latino: da sfogliare per autore, restringere per genere ed epoca, o cercare parola per parola in tutto il corpus.'));
+  hero.appendChild(el('h1', null, state.lang === 'all'
+    ? 'La biblioteca dei classici'
+    : `${nf.format(base.length)} opere ${state.lang === 'la' ? 'latine' : 'greche'}`));
+  hero.appendChild(el('p', null,
+    'Cerca una parola, scrivi una citazione, o incolla una versione. Oppure sfoglia il catalogo qui sotto.'));
   wrap.appendChild(hero);
 
-  const base = state.index.works.filter(inBranch);
-  const stats = el('div', 'stats-row');
-  const mk = (n, l) => { const s = el('div', 'stat'); s.appendChild(el('div', 'n', n)); s.appendChild(el('div', 'l', l)); return s; };
-  stats.appendChild(mk(nf.format(base.length), 'opere'));
-  stats.appendChild(mk(nf.format(new Set(base.map(w => w.authorId)).size), 'autori'));
-  stats.appendChild(mk(nf.format(base.reduce((s, w) => s + w.words, 0)), 'parole'));
-  wrap.appendChild(stats);
+  // ── Riprendi · o, la prima volta, da dove cominciare ────────────────────
+  const storiche = letture().filter(x => state.index.works.some(w => w.id === x.id) &&
+    (state.lang === 'all' || x.lang === state.lang));
+  const bandR = el('div', 'band');
+  const hR = el('div', 'band-h');
+  hR.appendChild(el('span', null, storiche.length ? 'Riprendi' : 'Da dove cominciare'));
+  bandR.appendChild(hR);
+  const grid = el('div', 'resume');
+  if (storiche.length) {
+    const clr = el('button', 'more', 'dimentica la cronologia');
+    clr.onclick = () => { try { localStorage.removeItem(LETTURE_KEY); } catch {} renderWelcome(); };
+    hR.appendChild(clr);
+    for (const r of storiche.slice(0, 4)) grid.appendChild(resumeCard(r));
+  } else {
+    /* Stato vuoto che lavora: alla prima visita non c'è una storia, ma c'è
+       comunque una risposta alla domanda «da che parte si comincia». */
+    const semi = ['phi0448.phi001', 'tlg0032.tlg006', 'phi0690.phi003', 'tlg0012.tlg001'];
+    for (const id of semi) {
+      const w = state.index.works.find(x => x.id === id && inBranch(x));
+      if (w) grid.appendChild(workCard(w));
+    }
+  }
+  bandR.appendChild(grid);
+  wrap.appendChild(bandR);
 
-  wrap.appendChild(buildFacets('genre', 'Genere'));
-  wrap.appendChild(buildFacets('epoch', 'Epoca'));
+  // ── Sfoglia il catalogo · card di categoria ─────────────────────────────
+  const bandC = el('div', 'band');
+  const hC = el('div', 'band-h');
+  hC.appendChild(el('span', null, 'Sfoglia il catalogo'));
+  const tutte = el('button', 'more', `tutte le ${nf.format(base.length)} opere →`);
+  tutte.onclick = () => openBrowse({});
+  hC.appendChild(tutte);
+  bandC.appendChild(hC);
 
-  const list = el('div');
-  list.id = 'worklist';
-  wrap.appendChild(list);
+  const axisBar = el('div', 'axis');
+  for (const a of AXES) {
+    if (a.key === 'lang' && state.lang !== 'all') continue;   // ramo già scelto
+    const b = el('button', null, a.label);
+    b.setAttribute('aria-pressed', String(state.axis === a.key));
+    b.onclick = () => { state.axis = a.key; renderWelcome(); };
+    axisBar.appendChild(b);
+  }
+  bandC.appendChild(axisBar);
+  bandC.appendChild(buildCategoryCards(base));
+  wrap.appendChild(bandC);
 
   $stage.innerHTML = ''; $stage.appendChild(wrap);
-  paintWorks();
   renderAuthors(document.getElementById('authorfilter').value);
 }
 
-// Le faccette mostrano quante opere restano, calcolate sulla selezione
-// dell'ALTRA faccetta: così i conteggi dicono il vero invece di promettere
-// risultati che il filtro incrociato azzererebbe.
-function buildFacets(field, label) {
-  const other = field === 'genre' ? 'epoch' : 'genre';
-  const pool = state.index.works.filter(w =>
-    inBranch(w) && (!state.facets[other] || w[other] === state.facets[other]));
-  const tally = {};
-  for (const w of pool) tally[w[field]] = (tally[w[field]] || 0) + 1;
-  const entries = Object.entries(tally).sort((a, b) => b[1] - a[1]);
+function resumeCard(r) {
+  const card = el('button', `rcard ${r.lang}`);
+  card.appendChild(el('div', 'rt', r.title));
+  card.appendChild(el('div', 'ra', r.author + (r.book && r.book !== '·' ? ' · libro ' + r.book : '')));
+  const pct = r.tot ? Math.min(100, Math.round(100 * (r.pos || 0) / r.tot)) : 0;
+  const w = el('div', 'rw');
+  w.appendChild(el('span', null, r.pos ? `${nf.format(r.pos)} di ${nf.format(r.tot)}` : 'aperta'));
+  w.appendChild(el('span', null, pct + '%'));
+  card.appendChild(w);
+  const p = el('div', 'rp'); const i = el('i'); i.style.width = Math.max(2, pct) + '%';
+  p.appendChild(i); card.appendChild(p);
+  card.onclick = () => openWork(r.id);
+  return card;
+}
 
-  const bar = el('div', 'facetbar');
-  bar.appendChild(el('span', 'facet-lbl', label));
-  for (const [val, n] of entries) {
-    const b = el('button', 'facet');
-    b.setAttribute('aria-pressed', String(state.facets[field] === val));
-    b.appendChild(document.createTextNode(val));
-    b.appendChild(el('span', 'c', n));
-    b.onclick = () => {
-      state.facets[field] = state.facets[field] === val ? null : val;
-      state.shown = 0;
-      renderWelcome();
-    };
-    bar.appendChild(b);
+/* Le categorie NON sono colorate: nel Corpus il colore significa la lingua, e
+   «oratoria» è greca e latina insieme. Il filetto proporzionale è in ottone. */
+function buildCategoryCards(base) {
+  const axis = state.axis || 'genre';
+  const tally = {};
+  for (const w of base) {
+    const k = w[axis];
+    if (!tally[k]) tally[k] = { n: 0, words: 0 };
+    tally[k].n++; tally[k].words += w.words;
   }
-  return bar;
+  let voci = Object.entries(tally);
+  // epoca in ordine cronologico, il resto per numerosità
+  if (axis === 'epoch') voci.sort((a, b) => (EPOCH_ORDER[a[0]] ?? 9) - (EPOCH_ORDER[b[0]] ?? 9));
+  else voci.sort((a, b) => b[1].n - a[1].n);
+
+  const max = Math.max(...voci.map(v => v[1].n), 1);
+  const CAP = axis === 'genre' ? 11 : (axis === 'authorId' ? 11 : 99);
+  const mostrate = voci.slice(0, CAP);
+  const resto = voci.slice(CAP);
+
+  const grid = el('div', 'cats');
+  for (const [k, v] of mostrate) {
+    const c = el('button', 'cat');
+    c.appendChild(el('div', 'cn', labelFor(axis, k)));
+    c.appendChild(el('div', 'cc', `${nf.format(v.n)} oper${v.n === 1 ? 'a' : 'e'}`));
+    const bar = el('div', 'cb'); const i = el('i');
+    i.style.width = Math.round(100 * v.n / max) + '%'; bar.appendChild(i);
+    c.appendChild(bar);
+    c.onclick = () => openBrowse(axis === 'lang' ? { lang: k }
+      : axis === 'authorId' ? { lang: langOfAuthor(k), author: k }
+      : { [axis]: k });
+    grid.appendChild(c);
+  }
+  if (resto.length) {
+    const n = resto.reduce((s, v) => s + v[1].n, 0);
+    const c = el('button', 'cat all');
+    c.appendChild(el('div', 'cn', `Altri ${resto.length}`));
+    c.appendChild(el('div', 'cc', `${nf.format(n)} opere`));
+    c.onclick = () => openBrowse({});
+    grid.appendChild(c);
+  }
+  return grid;
+}
+
+const EPOCH_ORDER = { arcaica: 0, repubblicana: 1, classica: 1, augustea: 2, ellenistica: 2, imperiale: 3, tarda: 4 };
+const EPOCH_WHEN = {
+  arcaica: 'le origini', repubblicana: 'età repubblicana', augustea: 'età augustea',
+  classica: 'V–IV sec. a.C.', ellenistica: 'III–I sec. a.C.',
+  imperiale: 'età imperiale', tarda: 'tarda antichità',
+};
+function labelFor(axis, k) {
+  if (axis === 'lang') return LANG_LABEL[k] || k;
+  if (axis === 'authorId') {
+    const a = state.index.authors.find(x => x.id === k);
+    return a ? a.name : k;
+  }
+  return k.charAt(0).toUpperCase() + k.slice(1);
+}
+function langOfAuthor(id) {
+  const a = state.index.authors.find(x => x.id === id);
+  return a ? a.lang : null;
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// SFOGLIO RAMIFICATO — letteratura › epoca › autore › opere
+// ══════════════════════════════════════════════════════════════════════════
+/* La ramificazione segue il modo in cui la letteratura si insegna, non
+   l'ordine alfabetico di un archivio: prima la lingua, poi il tempo, poi
+   l'autore, infine le opere. Chi arriva da una card di categoria salta
+   direttamente all'elenco filtrato: è la stessa vista con un contesto diverso. */
+function openBrowse(ctx) {
+  state.browse = Object.assign({ lang: null, epoch: null, author: null, genre: null }, ctx);
+  if (state.lang !== 'all') state.browse.lang = state.lang;   // ramo deciso a monte
+  state.view = 'browse';
+  closeMobileBrowser();
+  renderBrowse();
+  window.scrollTo({ top: 0 });
+}
+
+function browsePool() {
+  const b = state.browse;
+  return state.index.works.filter(w => inBranch(w) &&
+    (!b.lang || w.lang === b.lang) &&
+    (!b.epoch || w.epoch === b.epoch) &&
+    (!b.author || w.authorId === b.author) &&
+    (!b.genre || w.genre === b.genre));
+}
+
+function renderBrowse() {
+  const b = state.browse;
+  document.body.dataset.lang = b.lang || (state.lang !== 'all' ? state.lang : '');
+  if (!b.lang && state.lang === 'all') document.body.removeAttribute('data-lang');
+
+  const wrap = el('div');
+  wrap.appendChild(buildCrumb());
+
+  // livello raggiunto: le opere si mostrano quando il campo è ristretto davvero
+  const mostraOpere = !!(b.author || b.genre);
+  let daDisegnare = null;
+  if (mostraOpere) daDisegnare = renderLivelloOpere(wrap);
+  else if (!b.lang) renderLivelloLetterature(wrap);
+  else if (!b.epoch) renderLivelloEpoche(wrap);
+  else renderLivelloAutori(wrap);
+
+  $stage.innerHTML = ''; $stage.appendChild(wrap);
+  if (daDisegnare) paintWorks(daDisegnare);      // ora `#worklist` è nel documento
+  renderAuthors(document.getElementById('authorfilter').value);
+}
+
+function buildCrumb() {
+  const b = state.browse;
+  const c = el('div', 'crumb');
+  const passo = (testo, azione, corrente) => {
+    if (corrente) { c.appendChild(el('span', 'cur', testo)); return; }
+    const btn = el('button', null, testo); btn.onclick = azione; c.appendChild(btn);
+    c.appendChild(el('span', 'sep', '›'));
+  };
+  passo('Catalogo', () => openBrowse({}), !b.lang && !b.genre);
+  if (b.genre) passo(labelFor('genre', b.genre), null, true);
+  if (b.lang) {
+    passo(b.lang === 'la' ? 'Latina' : 'Greca', () => openBrowse({ lang: b.lang }), !b.epoch && !b.author);
+    if (b.epoch) passo(labelFor('epoch', b.epoch),
+      () => openBrowse({ lang: b.lang, epoch: b.epoch }), !b.author);
+    if (b.author) passo(labelFor('authorId', b.author), null, true);
+  }
+  const n = browsePool().length;
+  c.appendChild(el('span', 'cnt', `${nf.format(n)} oper${n === 1 ? 'a' : 'e'}`));
+  return c;
+}
+
+function renderLivelloLetterature(wrap) {
+  const h = el('div', 'band-h'); h.appendChild(el('span', null, 'Scegli la letteratura'));
+  wrap.appendChild(h);
+  const grid = el('div', 'lits');
+  for (const lg of ['la', 'grc']) {
+    const ws = state.index.works.filter(w => w.lang === lg);
+    if (!ws.length) continue;
+    const card = el('button', `lit ${lg}`);
+    card.appendChild(el('div', 'ln', lg === 'la' ? 'Letteratura latina' : 'Letteratura greca'));
+    const o = el('div', 'lo', lg === 'la' ? 'Litterae Latinae' : 'Ἑλληνικὰ γράμματα');
+    o.lang = lg; card.appendChild(o);
+    card.appendChild(el('div', 'lc',
+      `${nf.format(ws.length)} opere · ${nf.format(new Set(ws.map(w => w.authorId)).size)} autori`));
+    const ep = el('div', 'le');
+    const viste = [...new Set(ws.map(w => w.epoch))].sort((a, c) => (EPOCH_ORDER[a] ?? 9) - (EPOCH_ORDER[c] ?? 9));
+    for (const e of viste) ep.appendChild(el('span', null, e));
+    card.appendChild(ep);
+    card.onclick = () => openBrowse({ lang: lg });
+    grid.appendChild(card);
+  }
+  wrap.appendChild(grid);
+}
+
+function renderLivelloEpoche(wrap) {
+  const b = state.browse;
+  const h = el('div', 'band-h'); h.appendChild(el('span', null, "Scegli l'epoca"));
+  const tutte = el('button', 'more', 'tutte le opere di questa letteratura →');
+  tutte.onclick = () => openBrowse({ lang: b.lang, genre: null, author: '*' });
+  wrap.appendChild(h);
+
+  const pool = state.index.works.filter(w => inBranch(w) && w.lang === b.lang);
+  const tally = {};
+  for (const w of pool) tally[w.epoch] = (tally[w.epoch] || 0) + 1;
+  /* Ordine CRONOLOGICO, non per numerosità: un asse del tempo si legge dal
+     principio, e «imperiale» in testa solo perché è la più ricca disorienta. */
+  const voci = Object.entries(tally).sort((a, c) => (EPOCH_ORDER[a[0]] ?? 9) - (EPOCH_ORDER[c[0]] ?? 9));
+  const max = Math.max(...voci.map(v => v[1]), 1);
+
+  const grid = el('div', 'epochs');
+  for (const [k, n] of voci) {
+    const c = el('button', 'ep');
+    c.appendChild(el('div', 'ew', EPOCH_WHEN[k] || ''));
+    c.appendChild(el('div', 'en', labelFor('epoch', k)));
+    c.appendChild(el('div', 'ec', `${nf.format(n)} oper${n === 1 ? 'a' : 'e'}`));
+    const bar = el('div', 'eb'); const i = el('i');
+    i.style.width = Math.round(100 * n / max) + '%'; bar.appendChild(i);
+    c.appendChild(bar);
+    c.onclick = () => openBrowse({ lang: b.lang, epoch: k });
+    grid.appendChild(c);
+  }
+  wrap.appendChild(grid);
+}
+
+function renderLivelloAutori(wrap) {
+  const b = state.browse;
+  const pool = browsePool();
+  const mappa = new Map();
+  for (const w of pool) {
+    if (!mappa.has(w.authorId)) mappa.set(w.authorId, { id: w.authorId, name: w.author, n: 0 });
+    mappa.get(w.authorId).n++;
+  }
+  const autori = [...mappa.values()].sort((a, c) => a.name.localeCompare(c.name, 'it'));
+
+  const h = el('div', 'band-h');
+  h.appendChild(el('span', null, `Scegli l'autore · ${autori.length}`));
+  wrap.appendChild(h);
+
+  /* Le lettere senza autori restano visibili ma spente: «qui non c'è nulla»
+     è un'informazione, e toglierle farebbe ballare la striscia a ogni filtro. */
+  const presenti = new Set(autori.map(a => (a.name[0] || '').toUpperCase()));
+  const strip = el('div', 'alpha');
+  for (const L of 'ABCDEFGHILMNOPQRSTUVZ') {
+    const btn = el('button', null, L);
+    btn.disabled = !presenti.has(L);
+    btn.setAttribute('aria-pressed', String(state.alpha === L));
+    btn.onclick = () => { state.alpha = (state.alpha === L ? null : L); renderBrowse(); };
+    strip.appendChild(btn);
+  }
+  wrap.appendChild(strip);
+
+  const grid = el('div', 'auths');
+  for (const a of autori) {
+    if (state.alpha && (a.name[0] || '').toUpperCase() !== state.alpha) continue;
+    const btn = el('button', 'auth');
+    btn.appendChild(el('span', 'an', a.name));
+    btn.appendChild(el('span', 'ac', a.n));
+    btn.onclick = () => openBrowse({ lang: b.lang, epoch: b.epoch, author: a.id });
+    grid.appendChild(btn);
+  }
+  wrap.appendChild(grid);
+}
+
+/* Ordinamenti delle opere. Il default è quello TRADIZIONALE — l'ordine in cui
+   il catalogo della fonte dispone le opere di un autore, che è la successione
+   ricevuta dalla tradizione. Non lo chiamo «cronologico» perché per gli autori
+   antichi la cronologia delle singole opere è quasi sempre una ricostruzione
+   discussa, non un dato: chiamarlo così prometterebbe una precisione che i
+   dati non hanno. Chi vuole l'ordine per nome ha «alfabetico». */
+const SORTS = {
+  trad:  { label: 'Tradizionale', cmp: (a, b) => a.id.localeCompare(b.id, 'en', { numeric: true }) },
+  alfa:  { label: 'Alfabetico',   cmp: (a, b) => a.title.localeCompare(b.title, 'it') },
+  ampio: { label: 'Per ampiezza', cmp: (a, b) => b.words - a.words },
+};
+
+function renderLivelloOpere(wrap) {
+  const b = state.browse;
+  const pool = browsePool();
+
+  const bar = el('div', 'sortbar');
+  bar.appendChild(el('span', 'sl', 'Ordina'));
+  for (const [k, s] of Object.entries(SORTS)) {
+    const btn = el('button', null, s.label);
+    btn.setAttribute('aria-pressed', String((state.sort || 'trad') === k));
+    if (k === 'trad') btn.title = "Ordine in cui la tradizione dispone le opere dell'autore";
+    btn.onclick = () => { state.sort = k; renderBrowse(); };
+    bar.appendChild(btn);
+  }
+  wrap.appendChild(bar);
+
+  const list = el('div'); list.id = 'worklist';
+  wrap.appendChild(list);
+  /* Il disegno si rimanda: paintWorks cerca `#worklist` nel DOCUMENTO, e qui il
+     ramo è ancora staccato — chiamarlo adesso lo farebbe uscire a vuoto e la
+     griglia resterebbe muta. Lo esegue renderBrowse dopo l'inserimento. */
+  return pool.slice().sort(SORTS[state.sort || 'trad'].cmp);
 }
 
 // Disegno INCREMENTALE: oltre mille schede in un colpo sono migliaia di nodi. Si
 // disegna a blocchi e si prosegue quando la sentinella entra nel viewport.
 let catalogIO = null;
-function paintWorks() {
+function paintWorks(list) {
   const host = document.getElementById('worklist');
   if (!host) return;
   host.innerHTML = '';
-  state.filtered = currentWorks();
+  state.filtered = list || state.index.works.filter(inBranch);
   state.shown = 0;
-
-  const line = el('div', 'resultline');
-  const strong = el('b', null, `${nf.format(state.filtered.length)} oper${state.filtered.length === 1 ? 'a' : 'e'}`);
-  line.appendChild(strong);
-  const active = ['genre', 'epoch'].filter(k => state.facets[k]).map(k => state.facets[k]);
-  if (active.length) {
-    line.appendChild(el('span', null, '· ' + active.join(' · ')));
-    const clr = el('button', 'clearf', 'azzera i filtri');
-    clr.onclick = () => { state.facets = { genre: null, epoch: null }; renderWelcome(); };
-    line.appendChild(clr);
-  }
-  host.appendChild(line);
 
   const grid = el('div', 'catalog'); grid.id = 'catgrid';
   host.appendChild(grid);
@@ -753,38 +1191,14 @@ function workCard(w) {
 }
 
 // ── Pagina autore ──────────────────────────────────────────────────────────
+/* L'autore non ha più una vista propria: È il quarto livello dello sfoglio.
+   Tenerne due, con briciole diverse e ordinamenti diversi, avrebbe significato
+   due posti da cui la stessa domanda riceve risposte disallineate. */
 function openAuthor(id) {
   const a = state.index.authors.find(x => x.id === id);
   if (!a) return;
-  state.view = 'author'; state.author = id; state.work = null;
-  document.body.dataset.lang = a.lang;
-  closeMobileBrowser();
-
-  const works = state.index.works.filter(w => w.authorId === id);
-  const wrap = el('div');
-  const back = el('button', 'backlink', '← Tutta la biblioteca');
-  back.onclick = () => { state.author = null; renderWelcome(); };
-  wrap.appendChild(back);
-
-  const head = el('div', 'author-head');
-  const genres = [...new Set(works.map(w => w.genre))];
-  head.appendChild(el('div', 'rk', `${langName[a.lang]} · ${genres.slice(0, 3).join(' · ')}`));
-  head.appendChild(el('h1', null, a.name));
-  head.appendChild(el('div', 'byline',
-    `${nf.format(works.length)} oper${works.length === 1 ? 'a' : 'e'} · ${nf.format(a.words)} parole · ${works[0] ? works[0].epoch : ''}`));
-  wrap.appendChild(head);
-
-  const line = el('div', 'resultline');
-  line.appendChild(el('b', null, 'Le opere'));
-  wrap.appendChild(line);
-
-  const grid = el('div', 'catalog');
-  for (const w of works) grid.appendChild(workCard(w));
-  wrap.appendChild(grid);
-
-  $stage.innerHTML = ''; $stage.appendChild(wrap);
-  window.scrollTo({ top: 0 });
-  renderAuthors(document.getElementById('authorfilter').value);
+  const prima = state.index.works.find(w => w.authorId === id);
+  openBrowse({ lang: a.lang, epoch: prima ? prima.epoch : null, author: id });
 }
 
 // ── Lettore ────────────────────────────────────────────────────────────────
@@ -818,6 +1232,10 @@ async function openWork(id, targetLoc) {
   if (!keys.includes(book)) book = keys[0];
   state.book = book;
   renderReader(doc, books, book, targetLoc);
+  // Il segnalibro si posa all'apertura e si aggiorna a ogni cambio di libro:
+  // l'unica cosa che una biblioteca deve ricordare al posto di chi legge.
+  const idx = targetLoc ? doc.units.findIndex(u => u.loc === targetLoc) : 0;
+  segnaLettura(doc, book, doc.units.length, idx > 0 ? idx + 1 : 0);
   renderAuthors(document.getElementById('authorfilter').value);
 }
 
@@ -858,7 +1276,11 @@ function renderReader(doc, books, bookKey, targetLoc) {
     for (const k of keys) {
       const b = el('button', null, k);
       if (k === bookKey) b.setAttribute('aria-current', 'true');
-      b.onclick = () => { state.book = k; renderReader(doc, books, k); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+      b.onclick = () => {
+        state.book = k; renderReader(doc, books, k);
+        segnaLettura(doc, k, doc.units.length, 0);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
       nav.appendChild(b);
     }
     wrap.appendChild(nav);
