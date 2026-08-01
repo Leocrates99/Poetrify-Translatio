@@ -11444,8 +11444,8 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
       </a>
       <!-- Indietro: torna alla pagina da cui si è arrivati (di norma la scelta
            della lingua), non sempre all'hub. Salva il lavoro prima di lasciare. -->
-      <a class="topbar-iconbtn" href="lingua.html?to=translator" data-indietro="lingua.html?to=translator"
-         onclick="try{persistCurrent()}catch(e){}" title="Torna indietro" aria-label="Indietro">
+      <a class="topbar-iconbtn" href="lingua.html?to=translator"
+         onclick="event.preventDefault(); indietroTranslator();" title="Torna indietro" aria-label="Indietro">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></svg>
       </a>
       <!-- Home discreta a icona (dal mockup): torna alla dashboard salvando. -->
@@ -27112,6 +27112,104 @@ let dragSelect = {
 const DRAG_SELECT_THRESHOLD = 6; // px
 
 /* 5. RENDER */
+
+/* ════════════════════════════════════════════════════════════════════════════
+   CRONOLOGIA DELLE VISTE · l'indietro funziona anche DENTRO il translator
+   ────────────────────────────────────────────────────────────────────────────
+   Il translator è una pagina sola con molte stanze (brano, scomposizione,
+   analisi, traduzione, archivio, dizionario, panoramica, i passi dell'avvio,
+   le tappe della guidata): per il browser era tutto «una pagina», quindi il
+   tasto indietro — e il gesto indietro del telefono — usciva dall'app invece
+   di tornare alla stanza precedente.
+
+   Qui ogni cambio di vista lascia una voce nella cronologia vera del browser
+   (history.pushState). Così un solo gesto serve tutto: il pulsante «Indietro»
+   in testata, il tasto del browser e la gesture del telefono percorrono le
+   stanze a ritroso e, esaurite quelle, escono dalla pagina.
+
+   Non si instrumentano le venti funzioni che cambiano vista: si osserva il
+   punto in cui TUTTE convergono (renderAll) e si registra solo quando il
+   descrittore cambia davvero — così un ridisegno per una modifica al testo non
+   sporca la cronologia. */
+let _vistaCorrenteChiave = null;   // ultima vista registrata
+let _ripristinoVista = false;      // stiamo tornando indietro: non registrare
+let _visteRegistrate = 0;          // quante voci abbiamo aggiunto noi
+
+function descrittoreVista() {
+  return {
+    id: state.id,
+    step: state.currentStep,
+    avvio: avvio ? avvio.passo : 0,
+    guided: (state.mode === 'guided') ? (state.guidedStep || 1) : 0,
+    trad: (state.currentStep === 5) ? (state.traduzioneVista || 'bozza') : '',
+    frase: (state.currentStep === 3) ? (state.currentSentenceIdx || 0) : -1,
+    tab: (state.currentStep === 3) ? (state.currentAnalysisTab || '') : '',
+  };
+}
+
+function segnaVista() {
+  if (_ripristinoVista) return;
+  let d;
+  try { d = descrittoreVista(); } catch (e) { return; }
+  const chiave = JSON.stringify(d);
+  if (chiave === _vistaCorrenteChiave) return;      // stessa stanza: niente da registrare
+  const primaVolta = _vistaCorrenteChiave === null;
+  _vistaCorrenteChiave = chiave;
+  try {
+    /* La prima vista SOSTITUISCE la voce corrente (non ne aggiunge una): così
+       il primo indietro esce dalla pagina come ci si aspetta, invece di
+       rimbalzare su una voce fantasma. */
+    if (primaVolta) history.replaceState({ poetrifyVista: d }, '', location.href);
+    else { history.pushState({ poetrifyVista: d }, '', location.href); _visteRegistrate++; }
+  } catch (e) { /* history non disponibile: l'app resta comunque usabile */ }
+}
+
+/* Riporta l'app alla vista descritta, senza registrarla di nuovo. */
+function applicaVista(d) {
+  if (!d) return;
+  _ripristinoVista = true;
+  try {
+    if (d.id && d.id !== state.id) {
+      /* Vista di un altro brano: si ricarica quello, altrimenti si tornerebbe
+         a una stanza che appartiene a un testo diverso. */
+      try { loadProjectById(d.id); } catch (e) {}
+    }
+    /* I passi dell'AVVIO vivono in memoria volatile: se il brano è già stato
+       creato, quello stato non esiste più e non lo si può inventare. In quel
+       caso si atterra sulla home del ramo, che è il posto onesto. */
+    if (d.avvio) {
+      if (avvio) avvio.passo = d.avvio;
+      else { avvio = null; state.currentStep = 7; }
+    } else {
+      if (avvio) avvio = null;
+      state.currentStep = d.step;
+      if (d.guided) state.guidedStep = d.guided;
+      if (d.trad) state.traduzioneVista = d.trad;
+      if (d.frase >= 0) state.currentSentenceIdx = d.frase;
+      if (d.tab) state.currentAnalysisTab = d.tab;
+    }
+    _vistaCorrenteChiave = JSON.stringify(descrittoreVista());
+    renderAll();
+  } finally {
+    _ripristinoVista = false;
+  }
+}
+
+window.addEventListener('popstate', function (e) {
+  if (_visteRegistrate > 0) _visteRegistrate--;
+  if (e.state && e.state.poetrifyVista) applicaVista(e.state.poetrifyVista);
+});
+
+/* Il pulsante «Indietro» della testata: prima percorre le stanze, poi esce.
+   Un solo comando per entrambe le scale — è ciò che l'utente si aspetta dal
+   tasto indietro, e ora è ciò che fa. */
+function indietroTranslator() {
+  try { persistCurrent(); } catch (e) {}
+  if (_visteRegistrate > 0) { history.back(); return; }
+  if (window.PoetrifyIndietro) PoetrifyIndietro.torna('lingua.html?to=translator');
+  else location.href = 'lingua.html?to=translator';
+}
+
 function renderAll() {
   syncTopbar();
   renderSidebarTabs();
@@ -27119,6 +27217,7 @@ function renderAll() {
   renderEditor();
   renderPreview();
   renderStats();
+  segnaVista();   // registra la stanza nella cronologia del browser, se è cambiata
 }
 
 function syncTopbar() {

@@ -382,7 +382,16 @@ body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
   text-align: left; background: var(--paper); border: 1px solid var(--rule-soft);
   border-radius: var(--radius-lg); padding: 16px 16px 14px; border-left: 4px solid var(--rule);
   transition: border-color .15s, box-shadow .15s, transform .15s;
+  display: flex; flex-direction: column;   /* vedi «fasce disuguali» qui sotto */
 }
+/* Fasce disuguali · le card di una riga non hanno tutte lo stesso numero di
+   fasce (chi ha il titolo italiano ne ha una in più di chi non ce l'ha), e la
+   griglia le pareggia in altezza: senza accorgimenti autore e targhette
+   galleggerebbero ad altezze diverse lungo la riga. Lo spazio in eccesso lo
+   assorbe il blocco dei titoli, così la riga dell'autore fa da riga di base
+   comune. Il `nth-last-child(3)` è l'ultima fascia di titolo qualunque sia la
+   forma della card: [titolo, originale?, autore, targhette]. */
+.catcard > div:nth-last-child(3) { padding-bottom: 7px; }
 .catcard:hover { box-shadow: var(--shadow-lift); transform: translateY(-2px); }
 .catcard.la  { border-left-color: var(--accent-lat); }
 .catcard.grc { border-left-color: var(--accent-gr); }
@@ -403,7 +412,7 @@ body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
 }
 .catcard .cauthor {
   font-family: var(--font-ui); font-size: 12px; font-weight: 600; color: var(--sepia);
-  margin-top: 7px; padding-top: 7px; border-top: 1px solid var(--rule-soft);
+  margin-top: auto; padding-top: 7px; border-top: 1px solid var(--rule-soft);
 }
 .catcard .cmeta { font-family: var(--font-ui); font-size: 10.5px; color: var(--sepia); margin-top: 9px; display: flex; gap: 5px; flex-wrap: wrap; }
 .catcard .cmeta span { padding: 2px 8px; border-radius: var(--radius-pill); background: var(--cream); }
@@ -675,7 +684,7 @@ body.con-tavolo .stage { padding-bottom: 190px; }
 <body>
 
 <header class="topbar">
-  <a class="home" href="app.html" data-indietro="app.html" title="Torna alla home di Poetrify">
+  <a class="home" href="app.html" onclick="event.preventDefault(); indietroCorpus();" title="Torna indietro">
     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     <span data-indietro-etichetta>Poetrify</span>
   </a>
@@ -917,8 +926,59 @@ const AXES = [
 ];
 const LANG_LABEL = { la: 'Latino', grc: 'Greco' };
 
+/* ════════════════════════════════════════════════════════════════════════════
+   CRONOLOGIA DELLE VISTE · l'indietro vale anche dentro il Corpus
+   ────────────────────────────────────────────────────────────────────────────
+   Anche qui una pagina sola contiene più stanze (home, sfoglio, lettore,
+   risultati, riconoscimento): senza voci in cronologia il tasto indietro — e la
+   gesture del telefono — usciva dal Corpus invece di tornare all'elenco da cui
+   si era aperta un'opera. Ogni vista lascia ora la sua voce; il pulsante in
+   testata percorre prima le stanze e solo dopo lascia la pagina. */
+let _vistaChiaveCorpus = null, _ripristinoCorpus = false, _visteCorpus = 0;
+
+function segnaVistaCorpus() {
+  if (_ripristinoCorpus) return;
+  const d = { view: state.view, work: state.work ? state.work.id : null,
+              author: state.author || null, lang: state.lang || 'all',
+              q: (document.getElementById('q') || {}).value || '' };
+  const chiave = JSON.stringify(d);
+  if (chiave === _vistaChiaveCorpus) return;
+  const prima = _vistaChiaveCorpus === null;
+  _vistaChiaveCorpus = chiave;
+  try {
+    if (prima) history.replaceState({ corpusVista: d }, '', location.href);
+    else { history.pushState({ corpusVista: d }, '', location.href); _visteCorpus++; }
+  } catch (e) {}
+}
+
+function applicaVistaCorpus(d) {
+  if (!d) return;
+  _ripristinoCorpus = true;
+  try {
+    if (d.lang) state.lang = d.lang;
+    if (d.view === 'reader' && d.work) openWork(d.work);
+    else if (d.view === 'browse') renderBrowse();
+    else if (d.view === 'results' && d.q) runSearch(d.q);
+    else renderWelcome();
+    _vistaChiaveCorpus = JSON.stringify(d);
+  } finally { _ripristinoCorpus = false; }
+}
+
+window.addEventListener('popstate', function (e) {
+  if (_visteCorpus > 0) _visteCorpus--;
+  if (e.state && e.state.corpusVista) applicaVistaCorpus(e.state.corpusVista);
+});
+
+/* Il pulsante in testata: prima le stanze, poi fuori dalla pagina. */
+function indietroCorpus() {
+  if (_visteCorpus > 0) { history.back(); return; }
+  if (window.PoetrifyIndietro) PoetrifyIndietro.torna('app.html');
+  else location.href = 'app.html';
+}
+
+
 function renderWelcome() {          // la home; il nome resta per le chiamate esistenti
-  state.view = 'home'; state.work = null; state.author = null;
+  state.view = 'home'; state.work = null; state.author = null; segnaVistaCorpus();
   state.browse = { lang: null, epoch: null, author: null, genre: null };
   if (state.lang === 'la' || state.lang === 'grc') document.body.dataset.lang = state.lang;
   else document.body.removeAttribute('data-lang');
@@ -1072,7 +1132,7 @@ function langOfAuthor(id) {
 function openBrowse(ctx) {
   state.browse = Object.assign({ lang: null, epoch: null, author: null, genre: null }, ctx);
   if (state.lang !== 'all') state.browse.lang = state.lang;   // ramo deciso a monte
-  state.view = 'browse';
+  state.view = 'browse'; segnaVistaCorpus();
   closeMobileBrowser();
   renderBrowse();
   window.scrollTo({ top: 0 });
@@ -1410,7 +1470,7 @@ async function openWork(id, targetLoc) {
   let doc;
   try { doc = await loadWork(id); }
   catch (e) { $stage.innerHTML = `<div class="empty">Non riesco ad aprire quest’opera.<br><small>${escapeHtml(String(e))}</small></div>`; return; }
-  state.view = 'reader'; state.work = doc; state.author = doc.authorId;
+  state.view = 'reader'; state.work = doc; state.author = doc.authorId; segnaVistaCorpus();
   document.body.dataset.lang = doc.lang;
   const books = booksOf(doc);
   const keys = [...books.keys()];
@@ -1668,7 +1728,7 @@ async function runSearch(raw) {
   const q = raw.trim();
   if (q.length < 2) { if (state.view === 'results') renderWelcome(); return; }
   const seq = ++searchSeq;
-  state.view = 'results'; state.work = null;
+  state.view = 'results'; state.work = null; segnaVistaCorpus();
   state.lastHits = []; state.searchTail = null;
   if (state.lang === 'la' || state.lang === 'grc') document.body.dataset.lang = state.lang;
   else document.body.removeAttribute('data-lang');
@@ -2393,7 +2453,7 @@ function countNew(found, acc, weight) {
 }
 
 function renderRecognizeView(preset) {
-  state.view = 'recognize'; state.work = null; state.author = null;
+  state.view = 'recognize'; state.work = null; state.author = null; segnaVistaCorpus();
   if (state.lang === 'la' || state.lang === 'grc') document.body.dataset.lang = state.lang;
   const wrap = el('div');
   const head = el('div', 'recog-head');
