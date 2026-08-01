@@ -41,8 +41,9 @@ import sys
 import xml.etree.ElementTree as ET
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from corpus_meta import meta_for, name_for, year_for, TEXTGROUPS  # noqa: E402
+from corpus_meta import meta_for, name_for, year_for, canonico, TEXTGROUPS  # noqa: E402
 from corpus_titles import title_for                     # noqa: E402
+from corpus_autori import esteso_per                    # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -58,6 +59,71 @@ LICENSE = "CC BY-SA (Perseus Digital Library)"
 
 GREEK_CH = re.compile(r"[Ͱ-Ͽἀ-῿]")
 LATIN_CH = re.compile(r"[A-Za-z]")
+
+# ── Maiuscola dopo il punto fermo ─────────────────────────────────────────
+# Le edizioni Perseus lasciano quasi sempre la minuscola dopo il punto: è la
+# consuetudine delle edizioni critiche, ma su una pagina di lettura si legge
+# come un refuso e spezza il ritmo di chi traduce. Si interviene SOLO sul punto
+# fermo — non su «?», «!», né sul «;» che in greco È il punto interrogativo e
+# sul «·» che è i due punti.
+#
+# Due trappole, entrambe pagate con dati veri:
+#  · le ABBREVIAZIONI. «a. d. III Kal.» diventerebbe «a. D. III»; i praenomina
+#    romani (C. M. Cn. Ti.) e le lettere-numerale greche (α. β.) sono seguiti da
+#    punto senza chiudere frase. Si salta quando ciò che precede il punto è
+#    corto o è in tabella.
+#  · il GRECO POLITONICO. `str.upper()` su una vocale con iota sottoscritto la
+#    fa ESPLODERE in due caratteri (ᾳ → ΑΙ), cioè aggiunge una lettera alla
+#    parola. `str.title()` dà invece la maiuscola precomposta giusta (ᾳ → ᾼ):
+#    si usa quella, e si rinuncia se il risultato non è un carattere solo.
+ABBREV = {
+    # praenomina che non stanno in due lettere
+    "ser", "sex", "sp", "ap", "tib", "kal", "non", "id",
+    # sigle correnti nelle edizioni
+    "cos", "coss", "pr", "trib", "leg", "fr", "cf", "cap", "lib", "vol",
+    "praef", "epist", "op", "cit", "ibid", "sc", "pl", "sing",
+}
+DOPO_PUNTO = re.compile(r"(\S*?)(\.\s+)([^\W\d_])", re.UNICODE)
+
+
+def _maiuscola(ch):
+    """La maiuscola di UN carattere, o None se non ne ha una di un carattere solo."""
+    su = ch.title()
+    return su if len(su) == 1 and su != ch else None
+
+
+def capitalizza_dopo_punto(testo):
+    def sostituisci(m):
+        prima, punto, lettera = m.group(1), m.group(2), m.group(3)
+        # ciò che precede il punto: se è una sigla, il punto non chiude la frase
+        coda = re.split(r"[\s(\[]", prima)[-1]
+        if len(coda) <= 2 or coda.lower() in ABBREV:
+            return m.group(0)
+        su = _maiuscola(lettera)
+        return prima + punto + su if su else m.group(0)
+    return DOPO_PUNTO.sub(sostituisci, testo)
+
+
+CHIUDE_FRASE = re.compile(r"[.]['\"»’\)\]]*\s*$")
+
+
+def capitalizza_unita(units):
+    """Come sopra, ma sull'INTERA opera: il punto fermo che chiude un passo apre
+    il passo successivo, e la frase seguente comincia là. Se invece il passo
+    precedente finiva a metà frase (virgola, o niente), il passo che segue è una
+    continuazione e la minuscola è giusta — è il caso dei versi spezzati e della
+    prosa che l'editore ha diviso in paragrafi numerati."""
+    fuori = []
+    apre = False                      # il passo precedente ha chiuso la frase?
+    for loc, t in units:
+        t = capitalizza_dopo_punto(t)
+        if apre and t:
+            su = _maiuscola(t[0])
+            if su:
+                t = su + t[1:]
+        apre = bool(CHIUDE_FRASE.search(t))
+        fuori.append((loc, t))
+    return fuori
 
 # ── Cancello di FRUIBILITÀ (fase C2) ──────────────────────────────────────
 # La soglia distingue la SCHEDA VUOTA dal TESTO BREVE: i frammenti di Appiano e i
@@ -444,10 +510,15 @@ def process_work(repo_dir, repo_name, lang, tag, urn_ns, tg, wk, author):
     # all'interfaccia per non mostrare due volte la stessa riga né spacciare per
     # originale un ripiego inglese.
     t_main, t_orig, t_state = title_for(key, title, title_en)
+    # La frase che ricomincia dopo il punto ricomincia con la maiuscola: si fa
+    # QUI, una volta sola, così lettore, concordanza, tavolo dei passi e ponte
+    # col Translator leggono tutti lo stesso testo. Non tocca la ricerca, che
+    # confronta forme già ripiegate a minuscolo.
+    units = capitalizza_unita(units)
     words = sum(len(t.split()) for _, t in units)
     doc = {
         "id": key, "lang": lang,
-        "author": author, "authorId": tg,
+        "author": author, "authorId": canonico(tg),
         "title": t_main, "titleOrig": t_orig, "titleState": t_state,
         "titleEn": title_en,
         "genre": genre, "epoch": epoch, "inferred": inferred,
@@ -497,7 +568,11 @@ def main():
             tg_dir = os.path.join(data_dir, tg)
             cts_name = cts_first(os.path.join(tg_dir, "__cts__.xml"), "groupname",
                                  lang_pref=("eng",)) or tg
-            author = name_for(tg, cts_name)
+            # L'autore si mostra sotto il suo textgroup CANONICO: Seneca è uno
+            # solo anche se Perseus lo tiene in due gruppi, e i tre continuatori
+            # anonimi di Cesare sono un solo «Pseudo-Cesare». Il textgroup vero
+            # (`tg`) resta in uso per genere ed epoca, che sono dell'OPERA.
+            author = name_for(canonico(tg), cts_name)
             if tg not in TEXTGROUPS:
                 unmapped.add(f"{tg} · {author}")
             for wk in sorted(d for d in os.listdir(tg_dir)
@@ -567,6 +642,9 @@ def build_index(docs):
             # anno d'ordinamento: serve a mettere gli autori in fila per TEMPO,
             # come si affrontano in classe, non per alfabeto
             "year": year_for(w["authorId"], w["epoch"]),
+            # nome per esteso col **grassetto** sull'elemento d'uso; assente per
+            # raccolte e pseudo-autori, e allora la card non mostra la riga
+            "full": esteso_per(w["authorId"]),
             "works": 0, "words": 0,
         })
         a["works"] += 1

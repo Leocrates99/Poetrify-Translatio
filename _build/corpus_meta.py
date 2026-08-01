@@ -279,6 +279,36 @@ def name_for(textgroup, cts_name):
     return NAMES.get(textgroup) or cts_name
 
 
+# ── AUTORI CHE SONO UNA PERSONA SOLA ──────────────────────────────────────
+# Perseus divide per «textgroup», che è un'unità di TRASMISSIONE, non un autore:
+# lo stesso scrittore può stare in due gruppi perché le sue opere sono arrivate
+# per strade diverse. Nel catalogo il risultato è un autore che compare due o
+# tre volte, ciascuna con una fetta delle sue opere — e uno studente che cerca
+# Seneca ne trova due, senza modo di sapere quale contenga cosa.
+#
+# La chiave è il textgroup da assorbire, il valore quello che resta.
+#  · Seneca: le tragedie e le opere in prosa stanno in due gruppi (phi1017 /
+#    stoa0255), ma sono lo stesso Lucio Anneo Seneca. Fondendoli l'autore
+#    riacquista tutti e cinque i suoi generi — ed è il caso per cui i
+#    separatori di genere nell'elenco delle opere servono davvero.
+#  · Pseudo-Cesare: tre gruppi per i tre libri del corpus cesariano non
+#    autentici (Africo, Alessandrino, Ispaniense). La distinzione fra i tre
+#    anonimi continuatori è filologia: per chi legge, pseudo è pseudo.
+# Attenzione: la fusione riguarda SOLO l'identità dell'autore. Genere ed epoca
+# restano calcolati sul textgroup ORIGINALE, altrimenti le tragedie di Seneca
+# erediterebbero il genere dei Dialogi.
+FUSIONI = {
+    "stoa0255": "phi1017",     # Seneca · Dialogi → Seneca
+    "phi0428": "phi0426",      # Pseudo-Cesare · Bellum Alexandrinum
+    "phi0430": "phi0426",      # Pseudo-Cesare · Bellum Hispaniense
+}
+
+
+def canonico(textgroup):
+    """Il textgroup sotto cui l'autore va mostrato in catalogo."""
+    return FUSIONI.get(textgroup, textgroup)
+
+
 # ── CRONOLOGIA DEGLI AUTORI ───────────────────────────────────────────────
 # Anno approssimativo di *floruit* (negativo = a.C.). Serve a ordinare gli
 # autori come si affrontano in classe — per tempo, non per alfabeto: dentro

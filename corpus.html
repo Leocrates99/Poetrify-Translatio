@@ -331,7 +331,9 @@ body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
 .lit .le { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 9px; font-family: var(--font-ui); font-size: 10.5px; color: var(--sepia); }
 .lit .le span { background: var(--cream); border-radius: var(--radius-pill); padding: 2px 9px; }
 
-.epochs { display: grid; grid-template-columns: repeat(auto-fit, minmax(158px, 1fr)); gap: 11px; }
+/* Le colonne si allargano da 158 a 268: da quando la card porta la didascalia,
+   a 158px il testo usciva a canne d'organo, due o tre parole per riga. */
+.epochs { display: grid; grid-template-columns: repeat(auto-fit, minmax(268px, 1fr)); gap: 11px; }
 .ep {
   text-align: left; background: var(--paper); border: 1px solid var(--rule-soft);
   border-radius: var(--radius-lg); padding: 14px 15px 12px;
@@ -341,6 +343,16 @@ body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
 .ep .ew { font-family: var(--font-mono); font-size: 9.5px; color: var(--brass); }
 .ep .en { font-family: var(--font-display); font-size: 18px; font-weight: 700; margin-top: 4px; line-height: 1.15; }
 .ep .ec { font-family: var(--font-ui); font-size: 11.5px; color: var(--sepia); margin-top: 3px; }
+/* La didascalia è prosa, non etichetta: va in serif di lettura, con la misura
+   di riga larga che il testo di pensiero vuole. Sta sopra al conteggio perché
+   il contesto viene prima del numero. */
+.ep .ed {
+  font-family: var(--font-read); font-size: 13px; line-height: 1.5;
+  color: var(--ink-soft); margin-top: 7px; text-wrap: pretty;
+}
+.ep .ed i { font-style: italic; }
+.ep .ed i[lang="grc"] { font-family: var(--font-classical); font-style: normal; }
+.ep .ec { margin-top: 9px; }
 .ep .eb { height: 3px; background: var(--cream); border-radius: 2px; margin-top: 10px; overflow: hidden; }
 .ep .eb i { display: block; height: 100%; background: var(--brass); opacity: .7; border-radius: 2px; }
 
@@ -355,13 +367,23 @@ body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
 .alpha button[disabled] { opacity: .3; cursor: default; }
 .auths { display: grid; grid-template-columns: repeat(auto-fill, minmax(186px, 1fr)); gap: 9px; }
 .auth {
-  display: flex; align-items: baseline; gap: 8px; text-align: left;
+  display: block; text-align: left;
   padding: 9px 12px; border: 1px solid var(--rule-soft); border-radius: var(--radius-md);
   background: var(--paper); transition: border-color .15s;
 }
 .auth:hover { border-color: var(--accent); }
+.auth .ar { display: flex; align-items: baseline; gap: 8px; }
 .auth .an { font-family: var(--font-display); font-size: 16px; font-weight: 600; }
 .auth .ac { margin-left: auto; font-family: var(--font-mono); font-size: 10px; color: var(--sepia); }
+/* Il nome per esteso · in tono minore, perché è l'apposizione del nome d'uso e
+   non deve contendergli la testa. Il grassetto rialza l'elemento corrente:
+   sulla riga smorzata è lui che si legge per primo. */
+.auth .af {
+  font-family: var(--font-read); font-size: 12px; line-height: 1.35;
+  color: var(--sepia); margin-top: 2px;
+}
+.auth .af[lang="grc"] { font-family: var(--font-classical); font-size: 13px; }
+.auth .af b { font-weight: 700; color: var(--ink-soft); }
 
 .sortbar { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-bottom: 14px; }
 .sortbar .sl {
@@ -417,6 +439,24 @@ body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
 .catcard .cmeta { font-family: var(--font-ui); font-size: 10.5px; color: var(--sepia); margin-top: 9px; display: flex; gap: 5px; flex-wrap: wrap; }
 .catcard .cmeta span { padding: 2px 8px; border-radius: var(--radius-pill); background: var(--cream); }
 .catcard .cmeta span.inf { border: 1px dashed var(--rule); background: transparent; }
+/* Separatore di genere · attraversa tutta la griglia (`1 / -1`), altrimenti si
+   accomoderebbe in una colonna come se fosse una scheda. Filetto d'ottone e
+   testatina in maiuscoletto: è un'intestazione d'edizione, non un'etichetta di
+   interfaccia — l'ottone qui fa quello che gli compete, il filetto, non la
+   campitura. */
+.gsep {
+  grid-column: 1 / -1; display: flex; align-items: center; gap: 11px;
+  margin: 8px 0 2px;
+}
+.gsep:first-child { margin-top: 0; }
+.gsep span {
+  font-family: var(--font-ui); font-size: 10.5px; font-weight: 700;
+  letter-spacing: .11em; text-transform: uppercase; color: var(--brass);
+  white-space: nowrap;
+}
+.gsep::after {
+  content: ''; flex: 1; height: 1px; background: var(--brass); opacity: .35;
+}
 .sentinel { height: 1px; }
 .moreline {
   text-align: center; font-family: var(--font-ui); font-size: 12px; color: var(--sepia);
@@ -1109,6 +1149,37 @@ const EPOCH_WHEN = {
   classica: 'V–IV sec. a.C.', ellenistica: 'III–I sec. a.C.',
   imperiale: 'età imperiale', tarda: 'tarda antichità',
 };
+/* Didascalie d'epoca · il contesto storico-letterario in tre frasi, perché una
+   fascia di secoli non dice nulla a chi non ce l'ha già in testa: «ellenistica»
+   è un'etichetta, «poesia dotta per lettori che hanno già letto tutto» è un
+   mondo. Sono indicizzate per LINGUA e epoca insieme: l'età arcaica greca e
+   quella latina condividono il nome e nient'altro. */
+const EPOCA_NOTA = {
+  grc: {
+    arcaica: "L’aedo canta e la memoria fa da biblioteca: prima che la scrittura si diffonda, la poesia vive nell’orecchio di chi ascolta. Da quella voce escono i poemi omerici e la <i>Teogonia</i> di Esiodo, magazzino di immagini e di dèi per i mille anni successivi. Tutto il resto della grecità cita da qui.",
+    classica: "Atene inventa il teatro e il processo, e nello stesso secolo mette in scena Edipo e manda a morte Socrate. La <i lang=\"grc\">πόλις</i> — «città» come corpo di cittadini, non come cerchia di mura — pretende gente che sappia parlare: nascono l’oratoria giudiziaria, la storiografia che indaga (<i lang=\"grc\">ἱστορίη</i>, «ricerca») e la filosofia scritta in dialogo. Il secolo in cui la parola diventa uno strumento pubblico.",
+    ellenistica: "Alessandro muore e il greco resta, parlato dall’Egitto all’Indo da genti che greche non sono. La letteratura trasloca nelle biblioteche di Alessandria e Pergamo, dove il poeta è anche filologo: Callimaco cataloga i libri che imita. Poesia dotta, breve, per lettori che hanno già letto tutto.",
+    imperiale: "Roma comanda e la cultura resta greca: sotto gli imperatori si scrive più greco che mai, e lo si scrive guardando indietro. La Seconda Sofistica rifà l’attico di cinque secoli prima come si rifà un modello di bottega; accanto, Plutarco affianca vite greche e romane, Galeno ordina la medicina, Luciano ride di tutti. Un’epoca che si misura con i propri classici.",
+    tarda: "La grecità passa il testimone al cristianesimo, e i Padri rivolgono contro i pagani gli strumenti retorici imparati dai pagani. Neoplatonismo, esegesi biblica e commentari ad Aristotele occupano lo spazio che fu della tragedia; Bisanzio comincia qui, senza accorgersene. La lingua di Omero regge ancora, curvata su un altro dio.",
+  },
+  la: {
+    arcaica: "Roma conquista il Mediterraneo e si accorge di non avere una letteratura: la costruisce traducendo, e traduce dal greco. Plauto porta sulla scena la commedia nuova di Atene e la riempie di sale italico; Catone scrive in latino per non scrivere in greco. Una letteratura nata per imitazione, e già insofferente al modello.",
+    repubblicana: "Un secolo di guerre civili produce la prosa più limpida che Roma abbia scritto. Cicerone costruisce il periodo latino come si costruisce un arco — ogni membro tiene perché spinge contro l’altro — e Cesare gli oppone la nudità del <i lang=\"la\">commentarius</i>, il «resoconto» che finge di non essere letteratura. Intanto Lucrezio mette in esametri l’atomo e Catullo inventa l’io.",
+    augustea: "Il principato porta la pace e chiede una letteratura all’altezza: Mecenate paga, Augusto legge, e i poeti fanno molto più di quanto commissionato. L’<i>Eneide</i> dà a Roma il poema che le mancava e insieme il conto delle sue vittorie; Orazio lima; Ovidio prende il mito e ne fa romanzo, e finisce esiliato. La stagione più sorvegliata della latinità è anche la più libera.",
+    imperiale: "Con la libertà politica finisce l’oratoria che serviva a persuadere, e la parola si ritira nella scuola e nel gusto. Seneca spezza il periodo ciceroniano in sentenze che si conficcano; Tacito scrive la storia come un’autopsia; Marziale e Giovenale fanno di Roma materia comica e amara. Prosa di chi non può più parlare in piazza.",
+    tarda: "L’impero si sfalda e il latino, per la prima volta, deve reggere una fede. Agostino porta nella lingua di Cicerone l’esame di sé; Girolamo traduce la Bibbia e ne fissa il lessico per mille anni; Ausonio e Claudiano continuano a limare esametri mentre i confini cedono. Il latino smette di essere la lingua di un popolo e diventa quella di un’istituzione.",
+  },
+};
+
+/* I nomi estesi arrivano dai dati con il grassetto marcato a doppi asterischi.
+   Si passa da HTML e non da textContent, quindi il testo va prima neutralizzato:
+   la sorgente è nostra, ma una tabella di dati non deve MAI poter iniettare
+   markup — è la sola regola che rende sicuro un innerHTML. */
+function grassetta(s) {
+  const esc = String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+  return esc.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+}
+
 function labelFor(axis, k) {
   if (axis === 'lang') return LANG_LABEL[k] || k;
   if (axis === 'authorId') {
@@ -1232,6 +1303,10 @@ function renderLivelloEpoche(wrap) {
     const c = el('button', 'ep');
     c.appendChild(el('div', 'ew', EPOCH_WHEN[k] || ''));
     c.appendChild(el('div', 'en', labelFor('epoch', k)));
+    /* La didascalia porta il contesto: senza, «ellenistica» è solo un'etichetta.
+       Va in HTML perché contiene corsivi e qualche parola in lingua originale. */
+    const nota = (EPOCA_NOTA[b.lang] || {})[k];
+    if (nota) { const d = el('div', 'ed'); d.innerHTML = nota; c.appendChild(d); }
     c.appendChild(el('div', 'ec', `${nf.format(n)} oper${n === 1 ? 'a' : 'e'}`));
     const bar = el('div', 'eb'); const i = el('i');
     i.style.width = Math.round(100 * n / max) + '%'; bar.appendChild(i);
@@ -1249,7 +1324,10 @@ function renderLivelloAutori(wrap) {
   for (const w of pool) {
     if (!mappa.has(w.authorId)) {
       const a = state.index.authors.find(x => x.id === w.authorId);
-      mappa.set(w.authorId, { id: w.authorId, name: w.author, n: 0, year: a ? a.year : 9999 });
+      mappa.set(w.authorId, {
+        id: w.authorId, name: w.author, n: 0,
+        year: a ? a.year : 9999, full: a ? a.full : null,
+      });
     }
     mappa.get(w.authorId).n++;
   }
@@ -1297,8 +1375,20 @@ function renderLivelloAutori(wrap) {
   for (const a of autori) {
     if (state.alpha && (a.name[0] || '').toUpperCase() !== state.alpha) continue;
     const btn = el('button', 'auth');
-    btn.appendChild(el('span', 'an', a.name));
-    btn.appendChild(el('span', 'ac', a.n));
+    const riga = el('div', 'ar');
+    riga.appendChild(el('span', 'an', a.name));
+    riga.appendChild(el('span', 'ac', a.n));
+    btn.appendChild(riga);
+    /* Il nome per esteso, con in evidenza l'elemento con cui l'autore si chiama
+       davvero: «Publius <b>Vergilius</b> Maro». Ricorda che i romani hanno tre
+       nomi senza far perdere di vista quale dei tre è quello d'uso. Manca per
+       raccolte e pseudo-autori, e allora la riga non compare. */
+    if (a.full) {
+      const f = el('div', 'af');
+      f.innerHTML = grassetta(a.full);
+      f.lang = (b.lang === 'grc' && /[Ͱ-Ͽἀ-῿]/.test(a.full)) ? 'grc' : 'la';
+      btn.appendChild(f);
+    }
     btn.onclick = () => openBrowse({ lang: b.lang, epoch: b.epoch, author: a.id });
     grid.appendChild(btn);
   }
@@ -1334,10 +1424,26 @@ function renderLivelloOpere(wrap) {
 
   const list = el('div'); list.id = 'worklist';
   wrap.appendChild(list);
-  /* Il disegno si rimanda: paintWorks cerca `#worklist` nel DOCUMENTO, e qui il
-     ramo è ancora staccato — chiamarlo adesso lo farebbe uscire a vuoto e la
-     griglia resterebbe muta. Lo esegue renderBrowse dopo l'inserimento. */
-  return pool.slice().sort(SORTS[state.sort || 'trad'].cmp);
+
+  /* Separatori di GENERE · valgono solo dentro l'opera omnia di UN autore che
+     ne abbia scritti più d'uno. Seneca è il caso limite: filosofia, tragedie,
+     satira ed epistolario in un elenco unico si mescolano senza che si capisca
+     dove finisce il filosofo e comincia il tragediografo. Su un catalogo di più
+     autori la stessa riga sarebbe rumore, e infatti non compare.
+     I generi vanno in ordine di consistenza — quello in cui l'autore ha lasciato
+     di più apre l'elenco — e dentro ciascuno resta l'ordine scelto qui sopra. */
+  const generi = [...new Set(pool.map(w => w.genre))];
+  const unAutore = b.author && b.author !== '*';
+  state.perGenere = Boolean(unAutore && generi.length > 1);
+
+  const cmp = SORTS[state.sort || 'trad'].cmp;
+  if (!state.perGenere) return pool.slice().sort(cmp);
+
+  const peso = {};
+  for (const w of pool) peso[w.genre] = (peso[w.genre] || 0) + 1;
+  const rango = Object.fromEntries(
+    generi.sort((g, h) => (peso[h] - peso[g]) || g.localeCompare(h, 'it')).map((g, i) => [g, i]));
+  return pool.slice().sort((a, c) => (rango[a.genre] - rango[c.genre]) || cmp(a, c));
 }
 
 // Disegno INCREMENTALE: oltre mille schede in un colpo sono migliaia di nodi. Si
@@ -1381,7 +1487,18 @@ function appendChunk() {
   if (!grid) return;
   const slice = state.filtered.slice(state.shown, state.shown + PAGE);
   const frag = document.createDocumentFragment();
-  for (const w of slice) frag.appendChild(workCard(w));
+  /* Il genere dell'ultima scheda già disegnata: il confronto deve reggere anche
+     fra un blocco e il successivo, non solo dentro lo stesso. */
+  let genere = state.shown ? state.filtered[state.shown - 1].genre : null;
+  for (const w of slice) {
+    if (state.perGenere && w.genre !== genere) {
+      const sep = el('div', 'gsep');
+      sep.appendChild(el('span', null, labelFor('genre', w.genre)));
+      frag.appendChild(sep);
+      genere = w.genre;
+    }
+    frag.appendChild(workCard(w));
+  }
   grid.appendChild(frag);
   state.shown += slice.length;
   const txt = document.getElementById('moretxt');
