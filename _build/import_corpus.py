@@ -69,6 +69,34 @@ MIN_CHARS = 50
 MIN_UNITS = 1
 MAX_FOREIGN_PCT = 15.0   # oltre: edizione bilingue (greco + versione latina a fronte)
 
+# ── Doppioni della fonte (decisione del docente, 1 ago 2026) ──────────────
+# Livio è l'UNICO textgroup del canone Perseus — uno su 1.226 directory d'opera —
+# in cui accanto all'opera dichiarata dal catalogo CTS stanno altre 46 cartelle
+# senza `__cts__.xml`, che l'enumeratore promuove a opere a pieno titolo. Il
+# risultato era mezzo milione di parole in catalogo due volte: ogni passo di
+# Livio usciva doppio dalla ricerca e la barra per autore ne raddoppiava il peso.
+#
+# I due testimoni portano lo STESSO Livio — gli stessi 35 libri superstiti (I-X,
+# XXI-XLV), identici al 98,5% dei token — ma phi001 è il Teubner Weissenborn-
+# Müller uniforme e dichiarato, mentre le 46 cartelle sono un rammendo di OCT
+# Conway, Loeb e Weissenborn-Weidmann senza edizione dichiarata, con otto libri
+# stampati in *u* consonantica e ventisette in *v*.
+#
+# SI TIENE phi001, e con esso NON SI PERDE NULLA di ciò che le cartelle davano:
+#   · le 45 Periochae dei libri I-XLV stanno già dentro phi001 (loci «1s»…«45s»),
+#     e le dieci schede autonome 11s-20s ne sono una seconda redazione con lo
+#     stesso identico conteggio di parole;
+#   · le Periochae dei 97 libri perduti XLVI-CXLII restano in phi001fr, che dopo
+#     la correzione di edition_root() entra per intero invece che al 2%.
+# Restano fuori le lezioni proprie di Loeb e OCT: è il prezzo dichiarato di
+# avere un solo testimone con un'edizione sola.
+ESCLUSE = {
+    k: "doppione della fonte: lo stesso testo è già in phi0914.phi001"
+    for k in ([f"phi0914.phi001{n}" for n in range(1, 11)] +      # libri I-X
+              [f"phi0914.phi001{n}" for n in range(21, 46)] +     # libri XXI-XLV
+              [f"phi0914.phi001{n}s" for n in range(11, 21)])     # periochae XI-XX
+}
+
 
 # ══════════════════════════════════════════════════════════════════════════
 # Parsing TEI — nucleo collaudato sul nucleo scolastico (non toccare a cuor
@@ -183,23 +211,89 @@ def find_body(root):
 
 def edition_root(body):
     """Il ramo che contiene l'edizione. Riconosce anche la marcatura TEI antica
-    (`div1`), altrimenti su quei file si ripiegava sul <body> intero."""
+    (`div1`), altrimenti su quei file si ripiegava sul <body> intero.
+
+    UN solo <div> senza tipo è l'involucro dell'edizione, e ci si scende dentro.
+    PIÙ d'uno sono già le sue partizioni — i libri, i frammenti, le periochae — e
+    scendere nel primo significa buttare via tutti i fratelli. Costava due opere
+    quasi intere: le Periochae dei 97 libri perduti di Livio entravano con UNO dei
+    97 <div> (210 parole su 11.691) e i Fragmenta di Petronio con uno su 26.
+    """
     for e in body.iter():
         if DIVLIKE.match(ln(e.tag)) and e.get("type") == "edition":
             return e
-    for e in body:
-        if DIVLIKE.match(ln(e.tag)):
-            return body if ln(e.tag) != "div" else e
+    figli = [e for e in body if DIVLIKE.match(ln(e.tag))]
+    if figli:
+        if len(figli) > 1 or ln(figli[0].tag) != "div":
+            return body
+        return figli[0]
     return body
+
+
+def structural_divs(tei_root):
+    """Quanti <div> stanno fra il <body> e il PRIMO GRADO DI CITAZIONE.
+
+    Non è un'euristica: lo dichiara il file stesso. Nel `refsDecl` marcato CTS il
+    pattern più grossolano — quello con un solo gruppo — porta l'xpath completo
+    fino al primo grado citabile, e i <div> che lo precedono sono STRUTTURA
+    dell'edizione, non gradi del riferimento:
+
+        book: /tei:TEI/tei:text/tei:body/tei:div/tei:div/tei:div[@n='$1']
+                                          edizione  pars    libro ← qui si cita
+
+    Nella stragrande maggioranza dei file (1.778 su 1.796) i <div> sono due —
+    l'edizione e il grado citabile — e non c'è nulla da saltare. In diciotto no,
+    e lì il livello di troppo finiva dritto nel locus: Catullo si citava
+    «lyrics.5.1» invece di 5,1; Giovenale «5.16.60» col numero del libro davanti;
+    le Lettere a Lucilio «20.124.24»; gli otto Dialoghi di Seneca col numero del
+    dialogo in testa («10.1.1» per Brev. 1,1); Livio con la pars del Teubner
+    («2.21.35.1» per 21,35,1). Restituisce None se il file non lo dichiara.
+    """
+    livelli = None
+    for e in tei_root.iter():
+        if ln(e.tag) != "cRefPattern":
+            continue
+        rp = e.get("replacementPattern") or ""
+        m = re.search(r"\$1", rp)
+        if not m or len(re.findall(r"\$\d", rp)) != 1:
+            continue                       # non è il grado più grossolano
+        livelli = len(re.findall(r"tei:div", rp[: m.start()]))
+    return livelli
+
+
+def div_depth(body, target):
+    """Quanti livelli di <div> separano il <body> dall'elemento dato (incluso)."""
+    if target is body:
+        return 0
+    padre = {c: p for p in body.iter() for c in p}
+    n, e = 0, target
+    while e is not body and e in padre:
+        if DIVLIKE.match(ln(e.tag)):
+            n += 1
+        e = padre[e]
+    return n
 
 
 DIVLIKE = re.compile(r"div\d*$")          # `div` e la marcatura TEI antica div1…div4
 CONTAINER = {"lg", "sp", "quote", "cit", "body", "text", "group"}
 PROSE_UNIT = {"p", "said", "ab"}
 
+# <div type="textpart" subtype="index"> è l'INDEX NOTARUM: la tavola delle sigle
+# dei codici («V = Veronensis saec. V.»), apparato dell'editore e non testo
+# d'autore. In tutto il corpus compare in un file solo — il Livio del Teubner,
+# due volte — dove valeva 64 unità di sigle in testa al testo e, non avendo @n,
+# rubava il numero 1 al primo libro di ciascuna pars: trentuno loci in collisione.
+SKIP_TEXTPART = {"index"}
 
-def extract(elem, path, units, kind_flags):
+
+def extract(elem, path, units, kind_flags, salta=0):
     """Estrae ricorsivamente le unità citabili. Ritorna quante ne ha prodotte.
+
+    `salta` è il numero di livelli di <div> ancora da ATTRAVERSARE SENZA CITARE,
+    calcolato da structural_divs() sul refsDecl del file: sono le partizioni
+    dell'edizione (parti, volumi, libri di raccolta) che il CTS dichiara fuori
+    dal riferimento canonico. Si consuma un livello per volta e si azzera appena
+    si entra in un grado citabile.
 
     Un solo ciclo tratta versi e paragrafi INSIEME: la versione precedente, appena
     incontrava un <l> o un <div>, usciva prima di guardare i <p> fratelli — e in
@@ -255,6 +349,13 @@ def extract(elem, path, units, kind_flags):
                 made += 1
 
         elif DIVLIKE.match(t) or t in CONTAINER:
+            # L'apparato dell'editore ha un nome proprio nel TEI: non si indovina.
+            if c.get("type") == "textpart" and (c.get("subtype") or "").lower() in SKIP_TEXTPART:
+                continue
+            # Livello di STRUTTURA: si attraversa, non entra nel locus.
+            if salta and DIVLIKE.match(t):
+                made += extract(c, path, units, kind_flags, salta - 1)
+                continue
             if not n:
                 seq[t] = seq.get(t, 0) + 1
                 same = sum(1 for k in kids if ln(k.tag) == t)
@@ -401,6 +502,10 @@ def pick_edition(work_dir, tag):
 def process_work(repo_dir, repo_name, lang, tag, urn_ns, tg, wk, author):
     work_dir = os.path.join(repo_dir, "data", tg, wk)
     key = f"{tg}.{wk}"
+    # L'esclusione passa dallo stesso canale degli scarti, così finisce dichiarata
+    # nel registro d'import invece di sparire in silenzio.
+    if key in ESCLUSE:
+        return None, {"id": key, "reason": ESCLUSE[key]}
     fname = pick_edition(work_dir, tag)
     if not fname:
         return None, {"id": key, "reason": "nessuna edizione in lingua originale"}
@@ -422,7 +527,13 @@ def process_work(repo_dir, repo_name, lang, tag, urn_ns, tg, wk, author):
         title = tei_header_title(root) or key
 
     units, kind_flags = [], {}
-    extract(edition_root(find_body(root)), [], units, kind_flags)
+    body = find_body(root)
+    er = edition_root(body)
+    # I livelli di struttura che edition_root() ha già attraversato non vanno
+    # saltati due volte: si conta quanto è sceso e si chiede il resto a extract().
+    livelli = structural_divs(root)
+    salta = max(0, (livelli - 1) - div_depth(body, er)) if livelli else 0
+    extract(er, [], units, kind_flags, salta)
     units = dedupe_loci(units)
     kind = "versi" if kind_flags.get("verse") else "prosa"
 

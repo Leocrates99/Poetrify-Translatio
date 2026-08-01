@@ -22,21 +22,63 @@ edizioni critiche recenti (sotto copyright). Quello che importiamo *è* il corpu
 
 ---
 
-## 1-bis · Risultato dell'import (eseguito il 30 lug 2026)
+## 1-bis · Risultato dell'import (ultimo giro: 1 ago 2026)
 
 | | |
 |---|---|
-| **Opere importate** | **1.157** (394 latine · 763 greche) |
+| **Opere importate** | **1.121** (350 latine · 771 greche) |
 | **Autori** | **150**, tutti con nome italiano e classificazione |
-| **Parole** | **15.907.233** in **568.150** unità citabili |
-| **Peso** | testi 174 MB + indice 29,5 MB = **201 MB**; sito totale **541 MB** su 1.024 |
-| **Indice** | 707.026 forme distinte · 4,1 mln coppie forma-opera · 67 spicchi |
-| **Scartate** | 69: 57 solo-traduzioni · 9 schede vuote · 2 XML rotti · 1 bilingue |
+| **Parole** | **15.477.230** in **614.919** unità citabili |
+| **Peso** | testi 195,5 MB + indice 28,7 MB = **224 MB**; sito totale **431 MB** su 1.024 |
+| **Indice** | 704.752 forme distinte · 3.970.422 coppie forma-opera · 65 spicchi |
+| **Scartate** | 105: 57 solo-traduzioni · **45 doppioni di Livio** · 2 XML rotti · 1 bilingue |
 
-Prove di ricerca superate (browser reale, server locale):
-`virtus` → 210 opere ristrette, Cicerone in testa, 200 passi in ~1,9 s ·
-`μηνιν` (senza accenti) → 48 opere, 93 passi, forma accentata evidenziata ·
-`Gallia est omnis` (frase) → intersezione di tre parole, **1 solo passo**: Cesare I,1,1.
+Prove di ricerca superate:
+`virtus` → 187 opere ristrette, Cicerone in testa con 44 ·
+`μηνιν` (senza accenti) → 49 opere ·
+`Gallia est omnis` (frase) → 88 opere candidate al primo stadio, **1 solo passo** al
+secondo: Cesare 1,1,1. È la prova che l'architettura a due stadi funziona — l'indice
+restringe, il browser conferma.
+
+> **Il conteggio scende da 1.166 a 1.121 e non è una perdita.** Livio era importato due
+> volte (§1-ter): togliendo i 45 doppioni si perdono 494.723 parole di testo ridondante
+> e se ne guadagnano 11.917 di testo che prima non entrava affatto. Le opere latine
+> passano da 395 a 350; le greche non si toccano.
+
+### 1-ter · Livio, e i due difetti che ha scoperchiato (1 ago 2026)
+
+Livio è l'**unico** textgroup del canone — uno su 1.226 directory d'opera — in cui
+accanto all'opera dichiarata dal catalogo CTS stanno altre 46 cartelle senza
+`__cts__.xml`, che l'enumeratore promuoveva a opere. Mezzo milione di parole in
+catalogo due volte: ogni passo di Livio usciva doppio dalla ricerca. Si tiene il
+Teubner Weissenborn-Müller (`phi0914.phi001`), uniforme e con l'edizione dichiarata;
+le 45 cartelle stanno in `ESCLUSE` (`import_corpus.py`) e l'esclusione è **dichiarata**
+nel registro d'import, non silenziosa. Nulla di ciò che davano va perduto: le 45
+Periochae dei libri I-XLV erano già dentro `phi001` (loci «1s»…«45s»).
+
+Scavando sono usciti due difetti che non riguardavano Livio soltanto:
+
+1. **`edition_root()` teneva un solo `<div>` fratello.** Dove il `<body>` non ha un
+   `div type="edition"` ma direttamente le partizioni, si scendeva nella prima e si
+   buttavano le altre. Costava due opere quasi intere: le Periochae dei 97 libri
+   perduti di Livio entravano con 210 parole su 11.691, i *Fragmenta* di Petronio con
+   una unità su 26. **+11.917 parole recuperate.**
+2. **Il livello di struttura finiva nel *locus*.** Il `refsDecl` CTS dichiara da quale
+   `<div>` comincia il riferimento canonico; `extract()` invece concatenava ogni `@n`
+   che incontrava. In 18 file su 1.796 c'è un livello di troppo, e lì la citazione era
+   inservibile — **17 opere in uso, tutte di canone**: Catullo si citava «lyrics.5.1»
+   invece di 5,1; Giovenale «5.16.60» col numero del libro davanti; le *Lettere a
+   Lucilio* «20.124.24»; gli otto *Dialoghi* di Seneca col numero del dialogo in testa
+   («10.1.1» per *Brev.* 1,1); Livio con la *pars* del Teubner («2.21.35.1» per 21,35,1).
+   Ora `structural_divs()` legge il `refsDecl` e `extract()` attraversa quei livelli
+   senza citarli. Livio comincia da `1.pr.1` — la *praefatio* — e finisce a `45.44.21`.
+
+E uno che si è deciso di NON correggere: `<del>` resta in `SKIP_TEXT`. Nel TEI marca
+testo espunto dall'editore, e il campione allargato mostra che la fonte lo usa proprio
+così — versi interpolati interi nell'*Eneide* e nelle *Metamorfosi*, parole secluse nel
+Livio del Teubner. Tenerlo avrebbe rimesso 28.806 parole di testo espunto in 384 opere.
+Il prezzo dichiarato: la *periocha* del libro I resta senza il proprio incipit, 145
+parole che quel file racchiude in un `<del>` — un caso singolo, non una regola.
 
 ### Quattro trappole pagate, da non ripetere
 
@@ -46,9 +88,12 @@ Prove di ricerca superate (browser reale, server locale):
 2. **Il titolo originale non sta in `<title>`** ma nella `<label>` dell'`<edition>`:
    solo 8 opere greche su 772 hanno un `<title xml:lang="grc">`. Senza questo, Tucidide
    entrava in catalogo come «History of the Peloponnesian War».
-3. **63 opere non hanno `__cts__.xml`** (tutta l'Appendix Vergiliana, Apicio, Catone,
-   Beda, Agostino, Sidonio): il titolo va preso dall'intestazione TEI del testo, o
-   finiscono in catalogo con l'identificativo al posto del titolo.
+3. **18 opere in catalogo non hanno `__cts__.xml`** (tutta l'Appendix Vergiliana, Apicio,
+   Catone, Beda, Agostino, Sidonio, le Periochae di Livio, i Fragmenta di Petronio): il
+   titolo va preso dall'intestazione TEI del testo, o finiscono in catalogo con
+   l'identificativo al posto del titolo. Erano 63 prima della potatura di Livio, che ne
+   contava 46 da sola — ma **l'assenza del file CTS non è un criterio di scarto**: di
+   quelle 63, 45 erano doppioni e 18 sono opere reali senza gemello.
 4. **La soglia del cancello distingue il vuoto dal breve.** A 200 caratteri scartava gli
    Inni omerici 13 e 23 — opere complete di tre versi. Sta a 50: i frammenti di Appiano
    (0 caratteri) restano fuori, gli inni entrano.
@@ -199,5 +244,14 @@ Tre correzioni pagate con bug reali — **non toccarle a cuor leggero**:
   esce come curata (`inferred: false`), non dedotta.
 - **Nuovo autore senza nome italiano**: riga in `NAMES`. Chi manca tiene il nome CTS
   (mai inventato) e viene elencato a fine import.
+- **Escludere un doppione della fonte**: riga in `ESCLUSE` (`import_corpus.py`) con la
+  ragione scritta per esteso. Passa dallo stesso canale degli scarti, quindi finisce
+  **dichiarata** nel registro `_build/reports/corpus_import.json` invece di sparire.
 - **Rigenerare tutto**: l'import è idempotente e ripulisce `data/corpus/<lang>/` prima
-  di riscrivere.
+  di riscrivere. **Non basta:** `data/corpus/_idx/` è versionato e va ricostruito a
+  parte con `python _build/build_corpus_index.py`, altrimenti il manifesto continua a
+  puntare a opere che non esistono più e la ricerca porta a schede vuote. Il controllo
+  è di una riga: `len(_manifest.json["works"]) == _index.json["counts"]["works"]`.
+- **Cambiare il conteggio delle opere**: oltre a §1-bis qui sopra, il numero è scritto
+  in chiaro in `app.html` (due punti, uno visibile all'utente), `corpus.html` (commento)
+  e `translator.html` (visibile). Cercare la cifra vecchia in tutto il repo.

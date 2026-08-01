@@ -28,7 +28,7 @@ LE TRE RISPOSTE POSSIBILI (contratto con l'interfaccia)
     id assente              → non curato: 1ª fascia originale, 2ª fascia inglese
                               marcato «en» (ripiego dichiarato, mai inventato)
 
-Quest'ultimo caso è la maggioranza del corpus, ed è giusto così: dei 1.166 testi
+Quest'ultimo caso è la maggioranza del corpus, ed è giusto così: dei 1.121 testi
 importati la coda è fatta di trattati medici, omelie e scoli che nessuno cercherà
 mai per titolo italiano. Qui si cura **il canone che si legge a scuola**.
 
@@ -225,6 +225,10 @@ LAT.update({
 })
 LAT.update({
     "phi0914.phi001": "Storia di Roma dalla fondazione",   # Livio · Ab urbe condita
+    # Dei 142 libri ne restano 35. Di tutti gli altri sopravvive l'epitome antica,
+    # e questa scheda è quella: chiamarla «fragments», come faceva il catalogo,
+    # prometteva schegge di Livio e dava invece un riassunto tardoantico completo.
+    "phi0914.phi001fr": "Periochae dei libri XLVI-CXLII",
 })
 LAT.update({
     "phi0660.phi001": "Elegie",                   # Tibullo
@@ -523,6 +527,13 @@ ORIG.update({
     "phi0660.phi003": "Carmina omnia",             # Corpus Tibullianum
     "phi0692.phi012": "De institutione viri boni", # Appendix Vergiliana
     "phi0692.phi013": "De est et non",
+
+    # ── ETÀ AUGUSTEA ─────────────────────────────────────────────────────
+    # Due schede che il catalogo intitolava all'inglese perché la fonte non dà
+    # loro un titolo: sono l'una l'epitome dei libri perduti di Livio, l'altra i
+    # frammenti di Petronio. Entrambe entravano prima al 2-4% del loro contenuto.
+    "phi0914.phi001fr": "Librorum XLVI-CXLII periochae",   # era «Ab urbe condita, fragments»
+    "phi0972.phi001f": "Fragmenta",                        # era «Fragments»
 
     # ── ETÀ IMPERIALE ────────────────────────────────────────────────────
     "phi0836.phi002": "De medicina",               # Celso
