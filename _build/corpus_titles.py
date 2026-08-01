@@ -310,6 +310,53 @@ LAT.update({
     "stoa0023.stoa001": "Storie",                  # Ammiano Marcellino · Res gestae
     "stoa0058.stoa001": "La consolazione della filosofia",   # Boezio
 })
+# Historia Augusta · le trenta vite
+# ---------------------------------------------------------------------------
+# Senza titolo italiano queste trenta schede stampavano la stessa stringa due
+# volte, perché nel catalogo Perseus il campo «titolo inglese» ripete il latino.
+#
+# LA CONVENZIONE È DOPPIA, e non per distrazione: l'italiano segue la forma che
+# il latino stesso ha. Dove il titolo tradito nomina una PERSONA («Hadrianus»,
+# «Probus») l'italiano dice «Vita di X»: sulla card, sopra il latino e accanto
+# al nome dell'autore, un «Adriano» nudo si leggerebbe come l'imperatore, non
+# come il testo. Dove invece il titolo è un CATALOGO — numerale («Gordiani
+# tres») o «Divus» — l'italiano usa la forma determinativa nuda, perché è
+# quella che si cita davvero: la verifica ha trovato ZERO occorrenze di «Vita
+# dei due Gallieni», che sarebbe una traduzione inventata, contro un uso
+# corrente e attestato di «I due Gallieni».
+# Per uniformare tutto a «Vita di…» basta riscrivere le sette righe marcate ▸.
+LAT.update({
+    "phi2331.phi001": "Vita di Adriano",
+    "phi2331.phi002": "Vita di Elio Cesare",       # L. Elio Cesare, non il biografo
+    "phi2331.phi003": "Vita di Antonino Pio",
+    "phi2331.phi004": "Vita di Marco Aurelio",
+    "phi2331.phi005": "Vita di Lucio Vero",        # «Lucio» lo distingue da Elio Vero
+    "phi2331.phi006": "Vita di Avidio Cassio",
+    "phi2331.phi007": "Vita di Commodo",
+    "phi2331.phi008": "Vita di Pertinace",
+    "phi2331.phi009": "Vita di Didio Giuliano",
+    "phi2331.phi010": "Vita di Settimio Severo",   # «Settimio» lo distingue da Alessandro S.
+    "phi2331.phi011": "Vita di Pescennio Nigro",
+    "phi2331.phi012": "Vita di Clodio Albino",
+    "phi2331.phi013": "Vita di Caracalla",
+    "phi2331.phi014": "Vita di Geta",
+    "phi2331.phi015": "Vita di Macrino",           # storicamente M. Opellio Macrino
+    "phi2331.phi016": "Vita di Diadumeniano",      # la persona; il titolo latino ha «Diadumenus»
+    "phi2331.phi017": "Vita di Eliogabalo",
+    "phi2331.phi018": "Vita di Alessandro Severo",
+    "phi2331.phi019": "I due Massimini",           # ▸ catalogo, non vita singola
+    "phi2331.phi020": "I tre Gordiani",            # ▸
+    "phi2331.phi021": "Vita di Massimo e Balbino", # il «Massimo» è il Pupieno italiano
+    "phi2331.phi022": "I due Valeriani",           # ▸
+    "phi2331.phi023": "I due Gallieni",            # ▸
+    "phi2331.phi024": "I trenta tiranni",          # ▸
+    "phi2331.phi025": "Il divo Claudio",           # ▸ Claudio II il Gotico
+    "phi2331.phi026": "Il divo Aureliano",         # ▸
+    "phi2331.phi027": "Vita di Tacito",            # l'IMPERATORE M. Claudio Tacito
+    "phi2331.phi028": "Vita di Probo",
+    "phi2331.phi029": "Vita di Firmo, Saturnino, Proculo e Bonoso",
+    "phi2331.phi030": "Vita di Caro, Carino e Numeriano",
+})
 
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -336,6 +383,34 @@ ORIG = {
     "tlg0013.tlg003": "εἰς Ἀπόλλωνα",
     "tlg0013.tlg004": "εἰς Ἑρμῆν",
     "tlg0013.tlg005": "εἰς Ἀφροδίτην",
+
+    # Historia Augusta · quattro grafie di Perseus sono corrotte, non varianti.
+    # «Clodinus» e «Casius» non sono nomi latini esistenti; «Heliogobalus»
+    # rompe la grecizzazione su hélios. In «Firmus Saturninus» la virgola cade
+    # nel posto sbagliato e fonde due dei quattro usurpatori in una persona
+    # sola: la vita ne racconta quattro.
+    "phi2331.phi006": "Avidius Cassius",           # era «Avidius Casius»
+    "phi2331.phi012": "Clodius Albinus",           # era «Clodinus Albinus»
+    "phi2331.phi017": "Antoninus Heliogabalus",    # era «Antoninus Heliogobalus»
+    "phi2331.phi029": "Firmus, Saturninus, Proculus et Bonosus",
+    # Non errori, ma titoli monchi o fuori serie rispetto alle altre ventinove.
+    "phi2331.phi001": "Hadrianus",                 # era la rubrica «De Vita Hadriani»
+    "phi2331.phi002": "Aelius",                    # «Helius» è grafia del Palatino
+    "phi2331.phi008": "Helvius Pertinax",          # Perseus tronca il gentilizio
+    # Numerali in minuscolo, come nelle edizioni critiche.
+    "phi2331.phi019": "Maximini duo",
+    "phi2331.phi020": "Gordiani tres",
+    "phi2331.phi022": "Valeriani duo",
+    "phi2331.phi023": "Gallieni duo",
+    "phi2331.phi024": "Tyranni triginta",
+
+    # Ortografia classica · il corpus aveva quattro titoli latini con la J
+    # ottocentesca e uno con la I («De Vita Iulii Agricolae»). Correggerne uno
+    # solo avrebbe lasciato l'incoerenza altrove: si uniformano tutti.
+    "phi2331.phi009": "Didius Iulianus",           # era «Didius Julianus»
+    "phi1348.abo011": "Divus Iulius",              # era «Divus Julius» (Svetonio)
+    "stoa0275.stoa005": "Adversus Iudaeos liber",  # era «Adversus Judaeos Liber»
+    "tlg0627.tlg013": "Iusiurandum",               # era «Jusjurandum» (Ippocrate)
 }
 
 
@@ -776,17 +851,45 @@ GRC.update({
 TITLES = {**LAT, **GRC}
 
 
+def _stessa_stringa(a, b):
+    """Due titoli dicono la stessa cosa? Confronto tollerante: maiuscole,
+    spazi doppi e punto finale non fanno differenza. Serve perché nel catalogo
+    Perseus il campo «titolo inglese» spesso RIPETE il titolo latino, a volte
+    con una maiuscola diversa («De Vita Hadriani» / «De vita Hadriani»)."""
+    if not a or not b:
+        return False
+    norm = lambda s: " ".join(s.split()).casefold().rstrip(".")
+    return norm(a) == norm(b)
+
+
 def title_for(work_id, original, title_en=None):
     """Restituisce (titolo_principale, titolo_secondario, stato).
 
     stato: 'it'     → curato, l'uso italiano differisce dall'originale
            'orig'   → curato, l'uso italiano È il titolo originale (una fascia sola)
            'assente'→ non curato: originale in testa, inglese come ripiego marcato
+
+    Il secondo campo può tornare None in ogni stato: significa «non c'è una
+    seconda fascia da stampare», e la scheda ne stampa una sola.
     """
+    grezzo = original                          # come lo registra la fonte
     original = ORIG.get(work_id, original)     # l'originale vero, non l'inglese
     if work_id in TITLES:
         it = TITLES[work_id]
         if it is None:
             return original, None, "orig"
+        if _stessa_stringa(it, original):
+            # Il titolo italiano curato coincide con l'originale: è il caso
+            # 'orig' scritto per esteso invece che con None. Vale come tale.
+            return it, None, "orig"
         return it, original, "it"
+    # Non curato. Il ripiego vale solo se AGGIUNGE qualcosa: se ripete
+    # l'originale, la seconda fascia stamperebbe la stessa riga due volte.
+    # Il confronto va fatto anche col titolo GREZZO: quando ORIG corregge una
+    # grafia («Adversus Judaeos» → «Adversus Iudaeos»), il campo inglese di
+    # Perseus resta alla grafia vecchia e smette di coincidere con l'originale
+    # corretto — se non lo si riconoscesse, la scheda finirebbe per esibire
+    # sotto proprio la grafia che si è appena corretta sopra.
+    if _stessa_stringa(title_en, original) or _stessa_stringa(title_en, grezzo):
+        return original, None, "assente"
     return original, title_en, "assente"
