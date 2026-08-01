@@ -420,6 +420,54 @@ body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
 .stageline b { color: var(--ink); }
 .prog { height: 3px; background: var(--rule-soft); border-radius: 2px; flex: 1; min-width: 60px; overflow: hidden; }
 .prog i { display: block; height: 100%; background: var(--accent); border-radius: 2px; transition: width .2s; }
+/* ══ CONCORDANZA (KWIC) ══════════════════════════════════════════
+   La forma con cui la filologia legge cento occorrenze insieme da un secolo:
+   le occorrenze incolonnate sulla parola, il contesto a destra e a sinistra.
+   L'occhio si àncora a un asse fisso e scorre in verticale. */
+.modes { margin-left: auto; display: flex; gap: 4px; }
+.modes button {
+  font-family: var(--font-ui); font-size: 10.5px; font-weight: 700; padding: 4px 11px;
+  border-radius: var(--radius-pill); border: 1px solid var(--rule); color: var(--sepia);
+  background: var(--paper); transition: all .13s;
+}
+.modes button:hover { border-color: var(--accent); color: var(--accent); }
+.modes button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-primary); }
+
+/* Distribuzione per autore. I colori sono quelli della LINGUA — la sola
+   semantica cromatica del prodotto — ma nello «scalino da grafico»: il blu
+   d'inchiostro #1800AC, nato per il testo, come barra risulta molto più scuro
+   del rosso e falserebbe il confronto fra le proporzioni. */
+:root { --lat-chart: #A22E37; --grc-chart: #4a3fd0; }
+:root[data-theme="dark"] { --lat-chart: #d2727a; --grc-chart: #8b7dff; }
+.dist { display: flex; flex-direction: column; gap: 5px; margin: 4px 0 18px; }
+.dist-row { display: grid; grid-template-columns: 132px 1fr 46px; gap: 10px; align-items: center; }
+.dist-lab {
+  font-family: var(--font-ui); font-size: 11.5px; color: var(--ink-soft); text-align: right;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.dist-track { height: 13px; background: var(--cream); border-radius: var(--radius-sm); overflow: hidden; }
+.dist-fill { height: 100%; border-radius: 3px; }
+.dist-fill.la { background: var(--lat-chart); }
+.dist-fill.grc { background: var(--grc-chart); }
+.dist-val { font-family: var(--font-mono); font-size: 11px; color: var(--sepia); font-variant-numeric: tabular-nums; }
+.dist-leg { font-family: var(--font-ui); font-size: 11px; color: var(--sepia); display: flex; gap: 16px; flex-wrap: wrap; margin-top: 2px; }
+.dist-leg i { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 5px; }
+
+.kwic-wrap { overflow-x: auto; }
+table.kwic { border-collapse: collapse; width: 100%; font-size: 15px; }
+table.kwic td { padding: 5px 6px; border-top: 1px solid var(--rule-soft); vertical-align: baseline; }
+table.kwic tr { cursor: pointer; }
+table.kwic tr:hover td { background: var(--cream); }
+table.kwic tr:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.kw-ref { font-family: var(--font-mono); font-size: 10.5px; color: var(--sepia); white-space: nowrap; }
+.kw-ref b { color: var(--accent); font-weight: 700; }
+.kw-l { text-align: right; white-space: nowrap; color: var(--ink-soft); }
+.kw-k { text-align: center; white-space: nowrap; font-weight: 700; background: var(--mark); border-radius: 3px; padding: 0 5px !important; }
+.kw-r { text-align: left; white-space: nowrap; color: var(--ink-soft); }
+tr.la .kw-ref b { color: var(--accent-lat); }
+tr.grc .kw-ref b { color: var(--accent-gr); }
+tr.grc .kw-l, tr.grc .kw-k, tr.grc .kw-r { font-family: var(--font-classical); font-size: 16px; }
+
 .res {
   width: 100%; text-align: left; background: var(--paper); border: 1px solid var(--rule-soft);
   border-left: 3px solid var(--rule); border-radius: var(--radius-md); padding: 12px 15px; margin: 9px 0;
@@ -584,6 +632,9 @@ const state = {
   axis: 'genre',        // asse delle card di categoria in home
   sort: 'trad',         // ordinamento delle opere nello sfoglio
   alpha: null,          // iniziale selezionata nella striscia degli autori
+  searchMode: 'kwic',   // 'kwic' (concordanza) | 'estesi'
+  modeForced: false,    // true quando la vista l'ha scelta l'utente
+  lastHits: [], searchTail: null,
   shown: 0, filtered: [],
 };
 
@@ -1472,6 +1523,7 @@ async function runSearch(raw) {
   if (q.length < 2) { if (state.view === 'results') renderWelcome(); return; }
   const seq = ++searchSeq;
   state.view = 'results'; state.work = null;
+  state.lastHits = []; state.searchTail = null;
   if (state.lang === 'la' || state.lang === 'grc') document.body.dataset.lang = state.lang;
   else document.body.removeAttribute('data-lang');
 
@@ -1495,13 +1547,36 @@ async function runSearch(raw) {
     wrap.appendChild(grid);
   }
 
-  wrap.appendChild(el('div', 'sect-lbl', 'Passi nei testi'));
+  /* Vista dei passi. Il default si adatta alla domanda: una parola sola si
+     legge meglio incolonnata (concordanza), una frase no — sarebbe quasi tutta
+     evidenziata, senza contesto ai lati. Una scelta esplicita dell'utente
+     però vince e resta per la sessione. */
+  const unaParola = nq.split(/[^\p{L}]+/u).filter(Boolean).length === 1;
+  if (!state.modeForced) state.searchMode = unaParola ? 'kwic' : 'estesi';
+
+  const sect = el('div', 'sect-lbl');
+  sect.appendChild(el('span', null, 'Passi nei testi'));
+  const modes = el('div', 'modes');
+  for (const [k, lab] of [['kwic', 'concordanza'], ['estesi', 'passi estesi']]) {
+    const b = el('button', null, lab);
+    b.setAttribute('aria-pressed', String(state.searchMode === k));
+    b.onclick = () => {
+      state.searchMode = k; state.modeForced = true;
+      paintHits(); [...modes.children].forEach(c => c.setAttribute('aria-pressed', String(c === b)));
+    };
+    modes.appendChild(b);
+  }
+  sect.appendChild(modes);
+  wrap.appendChild(sect);
+
   const stageLine = el('div', 'stageline');
   const stageTxt = el('span', null, 'Consulto l’indice…');
   const prog = el('span', 'prog'); const progBar = el('i'); prog.appendChild(progBar);
   stageLine.appendChild(stageTxt); stageLine.appendChild(prog);
   wrap.appendChild(stageLine);
-  const hits = el('div'); wrap.appendChild(hits);
+  const dist = el('div'); dist.id = 'dist'; wrap.appendChild(dist);
+  const hits = el('div'); hits.id = 'hits'; wrap.appendChild(hits);
+  state.lastHits = [];
   $stage.innerHTML = ''; $stage.appendChild(wrap);
 
   // ── Stadio 1: l'indice restringe il campo ────────────────────────────────
@@ -1555,26 +1630,139 @@ async function runSearch(raw) {
         if (at < 0) continue;
         const os = fm.map[at];
         const oe = fm.map[Math.min(at + nq.length - 1, fm.map.length - 1)] + 1;
-        hits.appendChild(hitRow(doc, u, os, oe));
+        state.lastHits.push({ doc, u, os, oe });
         found++;
         if (found >= MAX_HITS) { stop = true; break; }
       }
       if (stop) break;
     }
+    paintHits();          // si ridisegna a ogni lotto: i passi compaiono man mano
     progBar.style.width = Math.round(100 * scanned / capped.length) + '%';
     stageTxt.innerHTML = `L’indice ha ristretto a <b>${nf.format(total)}</b> oper${total === 1 ? 'a' : 'e'} · aperte <b>${nf.format(Math.min(scanned, capped.length))}</b> · <b>${nf.format(found)}</b> passi`;
     countEl.textContent = `${nf.format(found)}${stop ? '+' : ''} pass${found === 1 ? 'o' : 'i'}`;
   }
 
-  if (!found) {
-    hits.appendChild(el('div', 'empty', 'La forma esiste nel corpus, ma non come sequenza esatta in questi passi.'));
+  /* La coda si disegna DOPO l'ultimo ridisegno dei passi: paintHits() rifà
+     `#hits` da capo, e un avviso appeso prima sparirebbe al lotto successivo. */
+  state.searchTail = !found
+    ? { tipo: 'empty', testo: 'La forma esiste nel corpus, ma non come sequenza esatta in questi passi.' }
+    : total > capped.length
+      ? { tipo: 'moreline', testo: `Mostrate le prime ${nf.format(capped.length)} opere di ${nf.format(total)}: restringi con una parola più rara o una radice più lunga.` }
+      : stop
+        ? { tipo: 'moreline', testo: `Fermato a ${MAX_HITS} passi: la forma è molto frequente.` }
+        : null;
+  paintHits();
+  paintDistribution();
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// RESA DEI PASSI — concordanza o passi estesi
+// ══════════════════════════════════════════════════════════════════════════
+const KWIC_CTX = 58;        // caratteri di contesto per lato
+
+function paintHits() {
+  const host = document.getElementById('hits');
+  if (!host) return;
+  host.innerHTML = '';
+  const list = state.lastHits || [];
+
+  if (state.searchMode === 'kwic' && list.length) {
+    /* Il contesto si taglia in JS, non con l'ellissi CSS: su una colonna
+       allineata a destra servirebbe `direction: rtl`, che sul greco sposta la
+       punteggiatura e scombina i diacritici. Tagliare la stringa è esatto. */
+    const wrapT = el('div', 'kwic-wrap');
+    const tbl = el('table', 'kwic');
+    const body = document.createElement('tbody');
+    for (const h of list) {
+      const t = h.u.t;
+      const li = Math.max(0, h.os - KWIC_CTX);
+      const ri = Math.min(t.length, h.oe + KWIC_CTX);
+      const tr = el('tr', h.doc.lang);
+      tr.tabIndex = 0;
+      const ref = el('td', 'kw-ref');
+      ref.innerHTML = `<b>${escapeHtml(shortAuthor(h.doc.author))}</b> ${escapeHtml(h.u.loc)}`;
+      ref.title = `${h.doc.author} · ${h.doc.title} ${h.u.loc}`;
+      tr.appendChild(ref);
+      tr.appendChild(el('td', 'kw-l', (li > 0 ? '… ' : '') + t.slice(li, h.os)));
+      tr.appendChild(el('td', 'kw-k', t.slice(h.os, h.oe)));
+      tr.appendChild(el('td', 'kw-r', t.slice(h.oe, ri) + (ri < t.length ? ' …' : '')));
+      const vai = () => openWork(h.doc.id, h.u.loc);
+      tr.onclick = vai;
+      tr.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); vai(); } };
+      body.appendChild(tr);
+    }
+    tbl.appendChild(body); wrapT.appendChild(tbl); host.appendChild(wrapT);
+  } else {
+    for (const h of list) host.appendChild(hitRow(h.doc, h.u, h.os, h.oe));
   }
-  if (total > capped.length) {
-    hits.appendChild(el('div', 'moreline',
-      `Mostrate le prime ${nf.format(capped.length)} opere di ${nf.format(total)}: restringi con una parola più rara o una radice più lunga.`));
-  } else if (stop) {
-    hits.appendChild(el('div', 'moreline', `Fermato a ${MAX_HITS} passi: la forma è molto frequente.`));
+
+  if (state.searchTail) host.appendChild(el('div', state.searchTail.tipo, state.searchTail.testo));
+}
+
+/* «Di chi è questa parola» è la domanda che viene prima di «dove sta»: la
+   distribuzione per autore risponde in sei righe, e sta sopra l'elenco. */
+function paintDistribution() {
+  const host = document.getElementById('dist');
+  if (!host) return;
+  host.innerHTML = '';
+  const list = state.lastHits || [];
+  if (list.length < 4) return;                  // sotto, l'elenco basta a sé
+
+  const per = new Map();
+  for (const h of list) {
+    const k = h.doc.authorId;
+    if (!per.has(k)) per.set(k, { nome: h.doc.author, lang: h.doc.lang, n: 0 });
+    per.get(k).n++;
   }
+  const voci = [...per.values()].sort((a, b) => b.n - a.n);
+  if (voci.length < 2) return;                  // un autore solo: niente da confrontare
+  const mostrate = voci.slice(0, 6);
+  const max = mostrate[0].n;
+
+  const box = el('div', 'dist');
+  for (const v of mostrate) {
+    const row = el('div', 'dist-row');
+    row.appendChild(el('span', 'dist-lab', v.nome));
+    const track = el('span', 'dist-track');
+    const fill = el('span', `dist-fill ${v.lang}`);
+    fill.style.width = Math.max(2, Math.round(100 * v.n / max)) + '%';
+    track.appendChild(fill); row.appendChild(track);
+    row.appendChild(el('span', 'dist-val', nf.format(v.n)));
+    box.appendChild(row);
+  }
+  host.appendChild(box);
+
+  const leg = el('div', 'dist-leg');
+  const seg = (cls, testo) => {
+    const s = el('span'); const i = el('i');
+    i.style.background = cls === 'la' ? 'var(--lat-chart)' : 'var(--grc-chart)';
+    s.appendChild(i); s.appendChild(document.createTextNode(testo)); return s;
+  };
+  if (mostrate.some(v => v.lang === 'la')) leg.appendChild(seg('la', 'latino'));
+  if (mostrate.some(v => v.lang === 'grc')) leg.appendChild(seg('grc', 'greco'));
+  if (voci.length > mostrate.length) {
+    leg.appendChild(el('span', null, `primi ${mostrate.length} di ${voci.length} autori`));
+  }
+  /* Un grafico invita a leggere i numeri come statistica del corpus. Qui non lo
+     sono: la ricerca ha un tetto, e le opere si aprono in ordine di canone —
+     quindi chi viene prima accumula piú occorrenze prima che il taglio scatti.
+     Se il taglio è scattato, la legenda lo dice: le barre restano utili per
+     vedere CHI usa la parola, non quante volte in assoluto. */
+  const tagliata = !!(state.searchTail && state.searchTail.tipo === 'moreline');
+  const nota = el('span', null, tagliata
+    ? 'conteggio parziale: la ricerca si è fermata prima di esaurire il corpus'
+    : 'sui passi trovati, non su tutto il corpus');
+  if (tagliata) nota.style.color = 'var(--warning-ink)';
+  leg.appendChild(nota);
+  host.appendChild(leg);
+}
+
+/* Nella concordanza la colonna del riferimento è stretta: un nome lungo la
+   allargherebbe togliendo spazio al contesto, che è la sostanza della vista. */
+function shortAuthor(nome) {
+  if (nome.length <= 14) return nome;
+  const p = nome.split(/\s+/);
+  return p.length > 1 ? p[p.length - 1].slice(0, 14) : nome.slice(0, 13) + '.';
 }
 
 function hitRow(doc, u, os, oe) {
