@@ -13,6 +13,7 @@
 <!-- API tema condivisa (il toggle #dict-dark-toggle la usa) -->
 <script src="shared/poetrify-quarantena.js"></script>
 <script src="shared/poetrify-manuali.js"></script>
+<script src="shared/poetrify-indietro.js"></script>
 <script src="shared/poetrify-theme.js"></script>
 <style>
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -2383,7 +2384,7 @@ body.dict-has-entry .main-left > section:first-child{ margin-bottom:4px; }
   <button class="topbar-btn" id="dict-font-toggle" title="Cambia dimensione del testo (S/M/L)">A</button>
 
   <button class="topbar-btn" id="dict-dark-toggle" title="Alterna tema scuro/chiaro">🌙 Scuro</button>
-  <a class="topbar-link" href="app.html" title="Dashboard SPA">← Dashboard</a>
+  <a class="topbar-link" href="app.html" data-indietro="app.html" title="Torna agli strumenti">← Strumenti</a>
   <a class="topbar-link" href="translator.html" title="Officina di traduzione">📜 Translator</a>
 </header>
 

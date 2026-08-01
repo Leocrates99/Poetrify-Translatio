@@ -16,6 +16,7 @@
 <!-- API tema condivisa (il toggle #dark-mode-toggle la usa) -->
 <script src="shared/poetrify-quarantena.js"></script>
 <script src="shared/poetrify-manuali.js"></script>
+<script src="shared/poetrify-indietro.js"></script>
 <script src="shared/poetrify-theme.js"></script>
 
 <!-- Librerie export self-hosted (vendor/lib/) — nessuna dipendenza da cdnjs -->
@@ -11440,6 +11441,12 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
       <a class="brand" href="app.html" title="Torna all'inizio (dashboard Poetrify)" onclick="try{persistCurrent()}catch(e){}">
         <span class="brand-mark">Poetrify</span>
         <span class="brand-sub">Officina del greco e del latino</span>
+      </a>
+      <!-- Indietro: torna alla pagina da cui si è arrivati (di norma la scelta
+           della lingua), non sempre all'hub. Salva il lavoro prima di lasciare. -->
+      <a class="topbar-iconbtn" href="lingua.html?to=translator" data-indietro="lingua.html?to=translator"
+         onclick="try{persistCurrent()}catch(e){}" title="Torna indietro" aria-label="Indietro">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></svg>
       </a>
       <!-- Home discreta a icona (dal mockup): torna alla dashboard salvando. -->
       <a class="topbar-iconbtn" href="app.html" onclick="try{persistCurrent()}catch(e){}" title="Torna alla home (dashboard Poetrify)" aria-label="Home">

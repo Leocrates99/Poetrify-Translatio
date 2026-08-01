@@ -675,9 +675,9 @@ body.con-tavolo .stage { padding-bottom: 190px; }
 <body>
 
 <header class="topbar">
-  <a class="home" href="app.html" title="Torna alla home di Poetrify">
-    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    Poetrify
+  <a class="home" href="app.html" data-indietro="app.html" title="Torna alla home di Poetrify">
+    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    <span data-indietro-etichetta>Poetrify</span>
   </a>
   <div class="brand"><span class="mark">Corpus</span><span class="sub">biblioteca dei testi antichi</span></div>
 </header>
@@ -2574,6 +2574,7 @@ document.getElementById('openrecog').onclick = () => {
 <!-- Tema condiviso (D2): toggle flottante -->
 <script src="shared/poetrify-quarantena.js"></script>
 <script src="shared/poetrify-manuali.js"></script>
+<script src="shared/poetrify-indietro.js"></script>
 <script src="shared/poetrify-theme.js" data-inject-toggle></script>
 </body>
 </html>
