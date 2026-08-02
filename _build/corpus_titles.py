@@ -439,6 +439,13 @@ ORIG = {
     "tlg0013.tlg031": "εἰς Ἥλιον",          "tlg0013.tlg032": "εἰς Σελήνην",
     "tlg0013.tlg033": "εἰς Διοσκούρους",
 
+    # Isocrate · due grafie della fonte che non sono varianti ma guasti.
+    # «Αἰγητικὸς» ha perso una sillaba intera: l'aggettivo è Αἰγινητικός, da
+    # Αἰγινήτης. In «Πλαταικός» manca la dieresi, e senza quella lo iota si
+    # legge in dittongo: il tràdito è Πλαταϊκός, da Πλάταια.
+    "tlg0010.tlg006": "Αἰγινητικός",
+    "tlg0010.tlg012": "Πλαταϊκός",
+
     # Historia Augusta · quattro grafie di Perseus sono corrotte, non varianti.
     # «Clodinus» e «Casius» non sono nomi latini esistenti; «Heliogobalus»
     # rompe la grecizzazione su hélios. In «Firmus Saturninus» la virgola cade
@@ -818,6 +825,49 @@ GRC.update({
     "tlg0540.tlg032": "Contro Diogitone",
     "tlg0540.tlg033": "Olimpico",
     "tlg0540.tlg034": "Sul non abolire la costituzione patria",
+})
+
+# Isocrate · il resto del corpus — le giudiziarie e le nove lettere.
+# Valgono le stesse ragioni di Demostene e Lisia: la nomenclatura è formulare e
+# si dà per intero senza inventare. I titoli in -ico restano tali, come già
+# Areopagitico e Panatenaico qui sopra: Τραπεζιτικός è il «Trapezitico», e
+# Αἰγινητικός fa «Eginetico» per la stessa via per cui Ἀρεοπαγιτικός fa
+# «Areopagitico» — il suffisso -ιτικός si innesta su -ίτης, non sul nome del
+# luogo (Αἰγινήτης, l'egineta → eginetico; non «egineico» da Egina).
+#
+# LE DUE RUBRICHE TRÀDITE SI LASCIANO CADERE. Il titolo di tlg001 porta
+# «ἀμάρτυρος» (la causa discussa senza testimoni) e quello di tlg002
+# «παραγραφή» (l'eccezione di rito): sono qualificazioni processuali che il
+# greco della seconda fascia continua a mostrare per intero, e la regola di casa
+# vuole il qualificatore soltanto dove serve a distinguere due omonimi — qui non
+# c'è nessun altro Eutino e nessun altro Callimaco.
+GRC.update({
+    "tlg0010.tlg001": "Contro Eutino",         # Πρὸς Εὐθύνους ἀμάρτυρος
+    "tlg0010.tlg002": "Contro Callimaco",      # Παραγραφή πρὸς Καλλίμαχον
+    "tlg0010.tlg003": "Contro Lochite",        # Κατὰ Λοχίτου
+    "tlg0010.tlg004": "Sulla pariglia",        # Περὶ τοῦ ζεύγους — i cavalli di Alcibiade
+    "tlg0010.tlg005": "Trapezitico",           # Τραπεζιτικός — la causa contro il banchiere
+    "tlg0010.tlg006": "Eginetico",             # Αἰγινητικός
+    "tlg0010.tlg012": "Plataico",              # Πλαταϊκός
+})
+# Le nove lettere. Nel catalogo i file non seguono l'ordine dei numeri, e la
+# rubrica greca porta il numerale PRIMA del destinatario («Ἐπιστολαὶ ςʹ Τοῖς
+# Ἰάσονος παισίν» = lettera 6, ai figli di Giasone): qui si ordinano per numero,
+# che è come si citano. L'ordinale si scrive per esteso e davanti — «Prima
+# lettera a Filippo» — come già «Prima Olintiaca» e «Prima Filippica», e non col
+# «· primo discorso» di Demostene e Lisia: là separa due orazioni che portano lo
+# STESSO titolo, qui distingue due pezzi di una serie numerata, che è il caso
+# degli Inni omerici. Le sette con destinatario unico restano nude.
+GRC.update({
+    "tlg0010.tlg022": "Lettera a Dionisio",              # Ep. I
+    "tlg0010.tlg027": "Prima lettera a Filippo",         # Ep. II
+    "tlg0010.tlg030": "Seconda lettera a Filippo",       # Ep. III
+    "tlg0010.tlg029": "Lettera ad Antipatro",            # Ep. IV
+    "tlg0010.tlg028": "Lettera ad Alessandro",           # Ep. V
+    "tlg0010.tlg023": "Lettera ai figli di Giasone",     # Ep. VI
+    "tlg0010.tlg026": "Lettera a Timoteo",               # Ep. VII
+    "tlg0010.tlg025": "Lettera ai governanti di Mitilene",  # Ep. VIII
+    "tlg0010.tlg024": "Lettera ad Archidamo",            # Ep. IX
 })
 GRC.update({                                   # Senofonte
     "tlg0032.tlg001": "Elleniche",             "tlg0032.tlg002": "Memorabili",
