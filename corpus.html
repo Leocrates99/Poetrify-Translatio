@@ -2075,7 +2075,11 @@ function renderReader(doc, books, bookKey, targetLoc) {
       b.setAttribute('aria-pressed', String(ora));
       b.textContent = ora ? '✓ sul tavolo' : '+ raccogli';
     }
-    else toTranslator(doc, loc, t);
+    else if (b.dataset.act === 'an') analizzaPasso(doc, { loc, t });
+    // il ramo finale resta il Translator: era l'unica altra azione, e cambiarlo
+    // in un `else if` esplicito eviterebbe che una futura azione senza ramo
+    // proprio finisse per traduzione senza che nessuno se ne accorga
+    else if (b.dataset.act === 'tr') toTranslator(doc, loc, t);
   });
   wrap.appendChild(scroll);
   wrap.appendChild(tail);
@@ -2153,8 +2157,43 @@ function buildActs(doc, u) {
   pick.setAttribute('aria-pressed', String(dentro));
   const copy = el('button', null, 'copia'); copy.dataset.act = 'copy';
   const tr = el('button', null, '→ traduci'); tr.dataset.act = 'tr'; tr.title = 'Porta il passo nel Translator';
-  acts.appendChild(pick); acts.appendChild(copy); acts.appendChild(tr);
+  const an = el('button', null, '→ analizza'); an.dataset.act = 'an';
+  an.title = 'Porta il passo nell’Analisi del testo';
+  acts.appendChild(pick); acts.appendChild(copy); acts.appendChild(tr); acts.appendChild(an);
   return acts;
+}
+
+/* ════════════════════════════════════════════════════════════════════════
+   CUCITURA VERSO L'ANALISI DEL TESTO
+   ────────────────────────────────────────────────────────────────────────
+   L'Analisi è un ALTRO REPO — Leocrates99/analisi-testo — e su Pages sta
+   accanto a questo: `leocrates99.github.io/analisi-testo/`. Da qui il percorso
+   relativo `../analisi-testo/`, che regge in produzione e NON in locale, dove i
+   due strumenti girano su server diversi. È il prezzo di una cucitura fra repo
+   distinti, e va detto invece che scoperto.
+
+   Attenzione a una trappola: la cartella locale si chiama
+   «Poetrify-SPA-Dizionario» ma il REPO si chiama «Poetrify-Translatio», e su
+   Pages l'indirizzo lo fa il nome del repo. Il ritorno, dall'altra parte, deve
+   puntare a `../Poetrify-Translatio/corpus.html`.
+
+   Passa dall'URL e non da localStorage: un passo solo ci sta comodo, e l'URL
+   funziona anche se un giorno i due finissero su origini diverse. */
+const BASE_ANALISI = '../analisi-testo/analisi.html';
+
+function analizzaPasso(doc, u) {
+  const q = new URLSearchParams({
+    testo: u.t,
+    autore: doc.author || '',
+    opera: [doc.title, u.loc].filter(Boolean).join(' '),
+    titolo: `${doc.title} ${u.loc}`,
+    lingua: doc.lang === 'grc' ? 'grc' : 'la',
+    genere: doc.kind === 'versi' ? 'poesia' : 'prosa',
+    // la provenienza, che è ciò che permette all'Analisi di riportare qui
+    fonteOpera: doc.id,
+    fonteLoc: u.loc,
+  });
+  window.open(BASE_ANALISI + '?' + q.toString(), '_blank');
 }
 
 // ── Cuciture verso gli altri rami (URL-seam) ───────────────────────────────
