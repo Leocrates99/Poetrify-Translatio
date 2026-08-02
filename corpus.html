@@ -774,7 +774,19 @@ body[data-lang="grc"] .verse .vt { font-family: var(--font-classical); font-size
 }
 .tv-card.la { border-left-color: var(--accent-lat); }
 .tv-card.grc { border-left-color: var(--accent-gr); }
-.tv-card .tr { font-family: var(--font-mono); font-size: 9.5px; color: var(--sepia); padding-right: 18px; }
+/* Il riferimento è un pulsante ma non deve sembrarlo a riposo: sotto c'è un
+   testo antico, e una fila di bottoni sopra ogni passo farebbe rumore. Si
+   dichiara al passaggio del mouse e al focus, dove serve. */
+.tv-card .tr {
+  font-family: var(--font-mono); font-size: 9.5px; color: var(--sepia);
+  padding: 0 18px 0 0; background: none; border: 0; text-align: left;
+  display: block; width: 100%; cursor: pointer;
+  text-decoration: underline; text-decoration-color: transparent;
+  text-underline-offset: 3px; transition: color .13s, text-decoration-color .13s;
+}
+.tv-card .tr:hover, .tv-card .tr:focus-visible {
+  color: var(--accent); text-decoration-color: currentColor;
+}
 .tv-card .ts { font-family: var(--font-read); font-size: 13px; line-height: 1.45; margin-top: 4px; color: var(--ink-soft);
   display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
 .tv-card.grc .ts { font-family: var(--font-classical); font-size: 14px; }
@@ -2432,7 +2444,18 @@ function renderTavolo() {
   host.innerHTML = '';
   for (const p of list) {
     const c = el('div', `tv-card ${p.lang}`);
-    c.appendChild(el('div', 'tr', `${p.autore} · ${p.opera} ${p.loc}`));
+    /* IL RIFERIMENTO RIPORTA AL TESTO. Il tavolo era un vicolo cieco: si
+       raccoglievano passi, si esportavano o si mandavano al Translator, ma non
+       si poteva tornare a vedere da dove venivano — e un passo staccato dal suo
+       contesto è proprio ciò che un tavolo di lavoro non deve produrre.
+       Il clic sta sulla RIGA DI RIFERIMENTO e non sull'intera card, così il
+       testo del passo resta selezionabile con il mouse: chi lo vuole copiare a
+       mano non deve combattere con un bersaglio cliccabile largo quanto la
+       scheda. Aprendo si atterra nel componimento, come dalla ricerca. */
+    const rif = el('button', 'tr', `${p.autore} · ${p.opera} ${p.loc}`);
+    rif.title = 'Torna a questo passo nel testo';
+    rif.onclick = () => openWork(p.id, p.loc);
+    c.appendChild(rif);
     const s = el('div', 'ts', p.t);
     s.lang = p.lang === 'grc' ? 'grc' : 'la';
     c.appendChild(s);
