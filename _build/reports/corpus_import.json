@@ -1,6 +1,6 @@
 {
- "imported": 1120,
- "rejected": 106,
+ "imported": 1122,
+ "rejected": 104,
  "unmapped_textgroups": [],
  "rejects": [
   {
@@ -12,12 +12,6 @@
    "id": "phi0660.phi003",
    "reason": "doppione: sono le elegie di Sulpicia, già in phi0660.phi001 a 3.13-3.18",
    "author": "Tibullo"
-  },
-  {
-   "id": "phi0692.phi009",
-   "title": "phi0692.phi009",
-   "reason": "XML illeggibile: mismatched tag: line 409, column 27",
-   "author": "Appendix Vergiliana"
   },
   {
    "id": "phi0914.phi0011",
@@ -243,12 +237,6 @@
    "id": "phi0914.phi0019",
    "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
    "author": "Livio"
-  },
-  {
-   "id": "phi0972.phi001p",
-   "title": "phi0972.phi001p",
-   "reason": "XML illeggibile: not well-formed (invalid token): line 526, column 1",
-   "author": "Petronio"
   },
   {
    "id": "phi1221.phi007",

@@ -146,13 +146,83 @@ def _fix_entities(text):
     return _ENT.sub(rep, text)
 
 
+# ── Struttura sbilanciata ─────────────────────────────────────────────────
+# Due file del canone non aprono nemmeno: un parser rigoroso rifiuta l'intero
+# documento per un tag che manca o per uno di troppo, e l'opera sparisce dal
+# catalogo come «XML illeggibile». I guasti sono simmetrici e banali:
+#
+#   · phi0692.phi009 (il Catalepton) usa lo schema TEI a gruppo —
+#     <text><group> … <text n="catalepton"> … — e non chiude né il group né il
+#     text esterno: mancano due tag in fondo. Sono sedici componimenti, e con i
+#     loro <div1 type="poem" n="N"> sarebbe l'unica opera dell'Appendix
+#     Vergiliana citabile per numero.
+#   · phi0972.phi001p (Petronio) ha la sequenza di chiusura scritta DUE volte:
+#     «</body></text></TEI>» compare, identica, anche dopo la fine.
+#
+# Il rimedio è lo stesso schema delle entità qui sopra — si risana e si ritenta —
+# e come quello non indovina nulla: si limita a pareggiare il conto dei tag.
+_TAG = re.compile(r"<(/?)([A-Za-z][\w.:-]*)([^>]*?)(/?)>")
+
+
+def _fix_structure(raw):
+    """Pareggia i tag di struttura: taglia la coda dopo la chiusura della radice
+    e chiude quelli rimasti aperti NEL PUNTO in cui lo squilibrio si manifesta.
+
+    L'ultimo dettaglio è quello che conta: aggiungere i tag mancanti in fondo al
+    documento non servirebbe, perché la chiusura della radice è già lì e i tag
+    orfani vanno chiusi PRIMA di lei. Ce ne si accorge quando una chiusura non
+    corrisponde alla cima della pila: lì, e non altrove, va messa la toppa."""
+    fine = re.search(r"</TEI(?:\.\d)?\s*>", raw)
+    if fine and raw[fine.end():].strip():
+        raw = raw[: fine.end()]                    # coda di chiusura ripetuta
+
+    pila, toppe = [], []
+    for t in _TAG.finditer(raw):
+        chiude, nome, _attr, auto = t.groups()
+        if auto or nome[:1] in "?!":
+            continue
+        if not chiude:
+            pila.append(nome)
+            continue
+        if nome not in pila:
+            continue                               # chiusura orfana: non si tocca
+        mancanti = []
+        while pila and pila[-1] != nome:
+            mancanti.append(pila.pop())
+        if pila:
+            pila.pop()
+        if mancanti:
+            toppe.append((t.start(), "".join(f"</{x}>" for x in mancanti)))
+
+    if not toppe:
+        return raw
+    pezzi, ultimo = [], 0
+    for pos, testo in toppe:
+        pezzi.append(raw[ultimo:pos])
+        pezzi.append(testo)
+        ultimo = pos
+    pezzi.append(raw[ultimo:])
+    return "".join(pezzi)
+
+
 def parse_tei(path):
-    """Parsing tollerante: se il file inciampa nelle entità, si risana e si ritenta."""
+    """Parsing tollerante: se il file inciampa, si risana e si ritenta.
+
+    I rimedi si provano in cascata perché non si escludono — il Catalogo del
+    Catalepton ha insieme un'entità non dichiarata E la struttura sbilanciata,
+    e nessuno dei due rimedi da solo gli basta."""
     raw = open(path, "rb").read().decode("utf-8", "replace")
-    try:
-        return ET.fromstring(raw)
-    except ET.ParseError:
-        return ET.fromstring(_fix_entities(raw))
+    rimedi = (lambda s: s,
+              _fix_entities,
+              _fix_structure,
+              lambda s: _fix_structure(_fix_entities(s)))
+    ultimo = None
+    for rimedio in rimedi:
+        try:
+            return ET.fromstring(rimedio(raw))
+        except ET.ParseError as e:
+            ultimo = e
+    raise ultimo
 
 
 # Elementi il cui contenuto NON è testo d'autore.

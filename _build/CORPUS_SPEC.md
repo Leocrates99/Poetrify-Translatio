@@ -26,12 +26,12 @@ edizioni critiche recenti (sotto copyright). Quello che importiamo *è* il corpu
 
 | | |
 |---|---|
-| **Opere importate** | **1.120** (349 latine · 771 greche) |
+| **Opere importate** | **1.122** (351 latine · 771 greche) |
 | **Autori** | **150**, tutti con nome italiano e classificazione |
-| **Parole** | **15.476.974** in **614.879** unità citabili |
+| **Parole** | **15.479.794** in **614.925** unità citabili |
 | **Peso** | testi 166,8 MB + indice 28,7 MB = **195 MB**; sito totale **431 MB** su 1.024 |
-| **Indice** | 704.752 forme distinte · 3.970.217 coppie forma-opera · 65 spicchi |
-| **Scartate** | 106: 57 solo-traduzioni · **46 doppioni** (45 di Livio, 1 di Sulpicia) · 2 XML rotti · 1 bilingue |
+| **Indice** | 704.825 forme distinte · 3.972.212 coppie forma-opera · 65 spicchi |
+| **Scartate** | 104: 57 solo-traduzioni · **46 doppioni** (45 di Livio, 1 di Sulpicia) · 1 bilingue. **Nessun XML illeggibile**: i due che lo erano sono stati risanati (§1-quinquies) |
 
 Prove di ricerca superate:
 `virtus` → 187 opere ristrette, Cicerone in testa con 44 ·
@@ -40,37 +40,12 @@ Prove di ricerca superate:
 secondo: Cesare 1,1,1. È la prova che l'architettura a due stadi funziona — l'indice
 restringe, il browser conferma.
 
-> **Il conteggio scende da 1.166 a 1.120 e non è una perdita.** Livio era importato due
+> **Il conteggio scende da 1.166 a 1.122 e non è una perdita.** Livio era importato due
 > volte (§1-ter): togliendo i 45 doppioni si perdono 494.723 parole di testo ridondante
 > e se ne guadagnano 11.917 di testo che prima non entrava affatto. Il quarantaseiesimo
-> scarto è Sulpicia (§1-quater). Le opere latine passano da 395 a 349; le greche non si
-> toccano.
-
-### 1-quater · Le sovrapposizioni che NON sono doppioni d'import (1 ago 2026)
-
-Una scansione a 5-grammi su tutte le opere ha trovato, oltre a Livio, tre coppie ad alto
-contenimento. **Nessuna nasce da un difetto del codice** — hanno tutte il loro
-`__cts__.xml` — ma per chi cerca il sintomo è identico: lo stesso testo due volte.
-Vanno decise una per una, e le tre decisioni sono diverse:
-
-| Coppia | Contenimento | Decisione |
-|---|---|---|
-| Tibullo *Elegie* ⊃ *Carmina omnia* | **0,960** | **potata**: sono le sei elegie di Sulpicia, già in III 13-18 |
-| Ausonio *Eclogarum liber* ⊃ AV *De institutione viri boni* | 0,800 | **tenuta** |
-| idem ⊃ AV *De est et non* | 0,639 | **tenuta** |
-
-La differenza è di natura, non di soglia. La scheda di Sulpicia ripeteva lo **stesso**
-testo dello **stesso** autore rinumerandolo da 1 a 6 sotto il titolo «Carmina omnia»:
-insegnava una citazione che non esiste. Le due dell'Appendix Vergiliana no — sono la
-stessa poesia sotto **due attribuzioni diverse**, con varianti reali («nihil est hominum»
-contro «nil est, hominum»): cancellarle toglierebbe dal catalogo un fatto di tradizione.
-Restano dunque, col difetto dichiarato che il loro file non ha marcatura di verso
-(`body` → `head` + un solo `<p>`) e la scheda esce con una unità sola e il locus vuoto.
-Irreparabile dalla fonte: la versione citabile per verso è quella ausoniana.
-
-> **Non usare il contenimento come regola automatica.** A soglia 0,60 cadrebbero anche
-> nove delle dieci periochae di Livio e le due dell'Appendix Vergiliana. La sovrapposizione
-> dice dove guardare, non che cosa fare.
+> scarto è Sulpicia (§1-quater); in compenso due opere che il corpus rifiutava come
+> illeggibili sono state recuperate (§1-quinquies). Le opere latine passano da 395 a
+> 351; le greche non si toccano.
 
 ### 1-ter · Livio, e i due difetti che ha scoperchiato (1 ago 2026)
 
@@ -107,15 +82,72 @@ Livio del Teubner. Tenerlo avrebbe rimesso 28.806 parole di testo espunto in 384
 Il prezzo dichiarato: la *periocha* del libro I resta senza il proprio incipit, 145
 parole che quel file racchiude in un `<del>` — un caso singolo, non una regola.
 
+### 1-quater · Le sovrapposizioni che NON sono doppioni d'import (1 ago 2026)
+
+Una scansione a 5-grammi su tutte le opere ha trovato, oltre a Livio, tre coppie ad alto
+contenimento. **Nessuna nasce da un difetto del codice** — hanno tutte il loro
+`__cts__.xml` — ma per chi cerca il sintomo è identico: lo stesso testo due volte.
+Vanno decise una per una, e le tre decisioni sono diverse:
+
+| Coppia | Contenimento | Decisione |
+|---|---|---|
+| Tibullo *Elegie* ⊃ *Carmina omnia* | **0,960** | **potata**: sono le sei elegie di Sulpicia, già in III 13-18 |
+| Ausonio *Eclogarum liber* ⊃ AV *De institutione viri boni* | 0,800 | **tenuta** |
+| idem ⊃ AV *De est et non* | 0,639 | **tenuta** |
+
+La differenza è di natura, non di soglia. La scheda di Sulpicia ripeteva lo **stesso**
+testo dello **stesso** autore rinumerandolo da 1 a 6 sotto il titolo «Carmina omnia»:
+insegnava una citazione che non esiste. Le due dell'Appendix Vergiliana no — sono la
+stessa poesia sotto **due attribuzioni diverse**, con varianti reali («nihil est hominum»
+contro «nil est, hominum»): cancellarle toglierebbe dal catalogo un fatto di tradizione.
+Restano dunque, col difetto dichiarato che il loro file non ha marcatura di verso
+(`body` → `head` + un solo `<p>`) e la scheda esce con una unità sola e il locus vuoto.
+Irreparabile dalla fonte: la versione citabile per verso è quella ausoniana.
+
+> **Non usare il contenimento come regola automatica.** A soglia 0,60 cadrebbero anche
+> nove delle dieci periochae di Livio e le due dell'Appendix Vergiliana. La sovrapposizione
+> dice dove guardare, non che cosa fare.
+
+### 1-quinquies · Due XML risanati, e l'Appendix che ritrova i nomi (1 ago 2026)
+
+Il corpus scartava due opere come «XML illeggibile». I guasti erano banali e **simmetrici**,
+e si diagnosticano dal solo bilancio dei tag:
+
+| Opera | Guasto | Rimedio |
+|---|---|---|
+| `phi0692.phi009` · Catalepton | schema TEI a gruppo (`<text><group>…`) con `group` e `text` esterno mai chiusi: **due tag in meno** | si chiudono nel punto in cui lo squilibrio si manifesta |
+| `phi0972.phi001p` · Petronio, poesie | la sequenza `</body></text></TEI>` scritta **due volte**: tag in più | si taglia la coda dopo la chiusura della radice |
+
+`_fix_structure()` fa le due cose e `parse_tei()` prova i rimedi **in cascata**, perché non
+si escludono: il Catalepton ha insieme un `&mdash;` non dichiarato e la struttura
+sbilanciata, e nessuno dei due rimedi da solo gli basta. Il dettaglio che conta è *dove*
+si mette la toppa: chiudere i tag mancanti in fondo al documento non servirebbe, perché
+`</TEI.2>` è già lì e `group` va chiuso **prima** di lei.
+
+Guadagno: **+2 opere, +2.820 parole**, e soprattutto il Catalepton entra con i suoi
+sedici componimenti numerati — l'**unica** opera dell'Appendix Vergiliana citabile per
+numero, visto che tutte le altre hanno nel sorgente un `<p>` solo e nessuna marcatura di
+verso.
+
+Nella stessa passata l'Appendix ha ritrovato i nomi. Tre schede si intitolavano tutte e
+tre soltanto «Appendix Vergiliana» — tre card identiche nella stessa lista — perché per
+quei file il `<title>` del catalogo non porta il nome del pezzo. Il nome però sta nel
+`<head>` del testo: sono le **Elegiae in Maecenatem**, la **Ciris** e i **Priapea**,
+confermati anche dagli incipit. Altre cinque portavano il nome della raccolta appiccicato
+al proprio (`Dirae, Appendix Vergiliana`): il suffisso sta solo nel `<title>`, ed è
+apparato. Le undici schede hanno ora un nome ciascuna.
+
 ### Quattro trappole pagate, da non ripetere
 
-1. **Entità HTML non dichiarate** (`&dagger;` `&mdash;` `&iacute;`…): un parser rigoroso
-   rifiuta l'intero file. Costavano 17 opere — nove di un solo autore, una di Tacito,
-   una di Cicerone — per una croce tipografica. → `parse_tei()` risana e ritenta.
+1. **Un parser rigoroso rifiuta l'INTERO file per un guasto locale.** Le entità HTML non
+   dichiarate (`&dagger;` `&mdash;` `&iacute;`…) costavano 17 opere — nove di un solo
+   autore, una di Tacito, una di Cicerone — per una croce tipografica; la struttura
+   sbilanciata ne costava altre due (§1-quinquies). → `parse_tei()` risana e ritenta, e i
+   rimedi si provano **in cascata** perché un file può avere entrambi i guasti.
 2. **Il titolo originale non sta in `<title>`** ma nella `<label>` dell'`<edition>`:
    solo 8 opere greche su 772 hanno un `<title xml:lang="grc">`. Senza questo, Tucidide
    entrava in catalogo come «History of the Peloponnesian War».
-3. **18 opere in catalogo non hanno `__cts__.xml`** (tutta l'Appendix Vergiliana, Apicio,
+3. **20 opere in catalogo non hanno `__cts__.xml`** (tutta l'Appendix Vergiliana, Apicio,
    Catone, Beda, Agostino, Sidonio, le Periochae di Livio, i Fragmenta di Petronio): il
    titolo va preso dall'intestazione TEI del testo, o finiscono in catalogo con
    l'identificativo al posto del titolo. Erano 63 prima della potatura di Livio, che ne

@@ -28,7 +28,7 @@ LE TRE RISPOSTE POSSIBILI (contratto con l'interfaccia)
     id assente              → non curato: 1ª fascia originale, 2ª fascia inglese
                               marcato «en» (ripiego dichiarato, mai inventato)
 
-Quest'ultimo caso è la maggioranza del corpus, ed è giusto così: dei 1.120 testi
+Quest'ultimo caso è la maggioranza del corpus, ed è giusto così: dei 1.122 testi
 importati la coda è fatta di trattati medici, omelie e scoli che nessuno cercherà
 mai per titolo italiano. Qui si cura **il canone che si legge a scuola**.
 
@@ -288,6 +288,7 @@ LAT.update({
 })
 LAT.update({
     "phi0972.phi001": None,                       # Petronio · Satyricon
+    "phi0972.phi001p": "Poesie",                  # il ripiego del catalogo è «Poems»
     "phi0917.phi001": "Farsaglia",                # Lucano · Pharsalia
     "phi0969.phi001": "Satire",                   # Persio
     "phi0978.phi001": "Storia naturale",          # Plinio il Vecchio
@@ -538,11 +539,29 @@ ORIG.update({
     # catalogo. Le testate di phi012 e phi013 restano quelle tràdite: «De
     # institutione viri boni» non è una rubrica inventata, e la tradizione
     # ausoniana intitola per conto suo la stessa poesia «De viro bono».
+    # Tre schede si intitolavano tutte e tre soltanto «Appendix Vergiliana» — tre
+    # card identiche nella stessa lista d'autore — perché per queste il <title>
+    # del catalogo NON porta il nome del pezzo. Il nome però c'è, ed è nel <head>
+    # del testo: l'import lo cerca già lì (è il ripiego delle opere senza
+    # __cts__.xml), ma solo quando il <title> manca del tutto, e qui il <title>
+    # c'è ed è inutile. Le identificazioni sono confermate anche dagli incipit:
+    # «defleram iuuenis tristi modo carmine fata» sono le Elegiae in Maecenatem,
+    # «etsi me uario iactatum laudis amore» è la Ciris, e i tre pezzi di phi008
+    # sono i Priapea.
+    "phi0692.phi006": "Elegiae in Maecenatem",
+    "phi0692.phi007": "Ciris",
+    "phi0692.phi008": "Priapea",
     "phi0692.phi001": "Dirae",
     "phi0692.phi002": "Lydia",
     "phi0692.phi003": "Culex",
     "phi0692.phi005": "Copa",
+    "phi0692.phi009": "Catalepton",
     "phi0692.phi011": "Moretum",
+    # Petronio · il catalogo intitola «Poems» un testo latino, e la fonte non gli
+    # dà titolo proprio: il <head> è vuoto e l'incipit rimanda all'edizione
+    # («Poet. Lat. Min. iv, ed. Baehrens»). Si mette la forma con cui si designa
+    # una raccolta di versi, e che il corpus usa già per Sidonio.
+    "phi0972.phi001p": "Carmina",
     "phi0692.phi012": "De institutione viri boni",
     "phi0692.phi013": "De est et non",
 
