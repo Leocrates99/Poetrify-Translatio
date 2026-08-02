@@ -1,0 +1,99 @@
+# LOTTO 07 — 45 opere, 26 autori
+# riga: id | titolo così come sta oggi in catalogo
+
+### Areteo — greco, medicina, imperiale (4 opere)
+tlg0719.tlg001 | Περὶ αἰτίων καὶ σημείων ὀξέων παθών
+tlg0719.tlg002 | Περὶ αἰτίων καὶ σημείων χρονίων παθῶν
+tlg0719.tlg003 | Ὀξέων νούσων θεραπευτικόν
+tlg0719.tlg004 | Χρονίων νούσων θεραπευτικών
+
+### Flavio Giuseppe — greco, storiografia, imperiale (4 opere)
+tlg0526.tlg001 | Ἰουδαϊκὴ ἀρχαιολογία
+tlg0526.tlg002 | Ἰωσήπου βίος
+tlg0526.tlg003 | περὶ ἀρχαιότητος Ἰουδαίων
+tlg0526.tlg004 | Ἰουδαϊκοῦ πολέμου πρὸς Ῥωμαίους
+
+### Bione — greco, lirica, ellenistica (3 opere)
+tlg0036.tlg001 | Αδώνιδος επιτάφιος
+tlg0036.tlg002 | Μύρσων καὶ Λυκίδας
+tlg0036.tlg003 | Fragmenta
+
+### Clemente Alessandrino — greco, religione, imperiale (3 opere)
+tlg0555.tlg001 | Προτρεπτικὸς πρὸς Ἕλληνας
+tlg0555.tlg004 | Στρώματα
+tlg0555.tlg006 | τίς ὁ σωζόμενος πλούσιος
+
+### Dinarco — greco, oratoria, classica (3 opere)
+tlg0029.tlg004 | Κατὰ Δημοσθένους
+tlg0029.tlg005 | Κατὰ Ἀριστογείτονος
+tlg0029.tlg006 | Κατὰ Φιλοκλέους
+
+### Eliano — greco, erudizione, imperiale (3 opere)
+tlg0545.tlg001 | Περὶ ζῴων ἰδιότητος
+tlg0545.tlg002 | Ποικίλη ἱστορία
+tlg0545.tlg003 | ἐκ τῶν Αἰλιανοῦ ἀγροικικῶν ἐπιστολῶν
+
+### Apollodoro — greco, mitografia, imperiale (2 opere)
+tlg0548.tlg001 | Βιβλιοθήκη
+tlg0548.tlg002 | Ἐπιτομὴ
+
+### Basilio di Cesarea — greco, religione, tarda (2 opere)
+tlg2040.tlg002 | Πρὸς τοὺς νέους, ὅπως ἂν ἐξ Ἑλληνικῶν ὠφελοῖντο λόγων
+tlg2040.tlg004 | Epistulae
+
+### Epitteto — greco, filosofia, imperiale (2 opere)
+tlg0557.tlg004 | Gnomologium Epicteteum (e Stobaei libris 1-2)
+tlg0557.tlg005 | Gnomologium Epicteteum (e Stobaei libris 3-4)
+
+### Procopio — greco, storiografia, tarda (2 opere)
+tlg4029.tlg001 | Ὑπὲρ τῶν Πολέμων Λόγοι
+tlg4029.tlg002 | Ἀπόκρυφη Ἱστορία
+
+### Pseudo-Plutarco — greco, erudizione, imperiale (2 opere)
+tlg0094.tlg002 | περὶ Μουσικῆς
+tlg0094.tlg003 | Περὶ τῶν ἀρεσκόντων τοῖς φιλοσόφοις φυσικῶν δογμάτων
+
+### Apicio — latino, tecnica, imperiale (1 opera)
+phi2003.phi001 | De re coquinaria
+
+### Beda il Venerabile — latino, storiografia, tarda (1 opera)
+stoa0054.stoa006 | Historiam ecclesiasticam gentis Anglorum
+
+### Boezio — latino, filosofia, tarda (1 opera)
+stoa0058.stoa006 | De fide catholica
+
+### Celso — latino, medicina, imperiale (1 opera)
+phi0836.phi002 | De medicina
+
+### Columella — latino, tecnica, imperiale (1 opera)
+phi0845.phi002 | Res rustica
+
+### Curzio Rufo — latino, storiografia, imperiale (1 opera)
+phi0860.phi001 | Historiae Alexandri Magni
+
+### Floro — latino, storiografia, imperiale (1 opera)
+phi1242.phi001 | Epitome rerum Romanorum
+
+### Girolamo — latino, religione, tarda (1 opera)
+stoa0162.stoa004 | Epistulae. Selections.
+
+### Minucio Felice — latino, religione, tarda (1 opera)
+stoa0203.stoa001 | Octavius
+
+### Petronio — latino, romanzo, imperiale (1 opera)
+phi0972.phi001f | Fragmenta
+
+### Pseudo-Tertulliano — latino, religione, tarda (1 opera)
+stoa0276.stoa002 | Ad uxorem
+
+### Quinto Tullio Cicerone — latino, epistolografia, repubblicana (1 opera)
+phi0478.phi003 | Commentariolum petitionis
+
+### Seneca il Vecchio — latino, retorica, imperiale (1 opera)
+phi1014.phi004 | Fragmenta
+
+### Valerio Massimo — latino, erudizione, imperiale (1 opera)
+phi1038.phi001 | Facta et dicta memorabilia
+
+### Achille Tazio — greco, romanzo, imperiale (1 opera)
+tlg0532.tlg001 | τὰ κατὰ Λευκίππην καὶ Kλειτoφῶντα

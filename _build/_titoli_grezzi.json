@@ -1,0 +1,2278 @@
+{
+ "opere": [
+  {
+   "id": "tlg0284.tlg001",
+   "italiano": "Inno a Zeus",
+   "originale": "",
+   "motivo": "Primo degli inni in prosa (or. 43 K): in italiano la serie si cita come «Inno a…» (cfr. Garognoli, Inno ad Eracle di Elio Aristide, or. 40K); Treccani parla delle orazioni in onore di Zeus, Atena, Asclepio, Dioniso, Eracle, Posidone, Serapide."
+  },
+  {
+   "id": "tlg0284.tlg002",
+   "italiano": "Inno ad Atena",
+   "originale": "",
+   "motivo": "Or. 37 K, l'inno in prosa ad Atena: così è designato anche nella recensione BMCR all'Aristide di Miletti; il titolo greco è il solo nome della dea, ma in italiano non si cita mai «Athena»."
+  },
+  {
+   "id": "tlg0284.tlg003",
+   "italiano": "Discorso istmico a Poseidone",
+   "originale": "",
+   "motivo": "Or. 46 K, panegirico religioso pronunciato all'Istmo; «Istmico a Poseidone» circola tale e quale, ma il card guadagna col sostantivo esplicito perché ἰσθμικός da solo in italiano non dice nulla."
+  },
+  {
+   "id": "tlg0284.tlg004",
+   "italiano": "Inno a Dioniso",
+   "originale": "",
+   "motivo": "Or. 41 K, inno in prosa: stessa serie e stessa formula degli altri inni aristidei."
+  },
+  {
+   "id": "tlg0284.tlg005",
+   "italiano": "Inno a Eracle",
+   "originale": "Ἡρακλῆς",
+   "motivo": "TITOLO GUASTO: il catalogo ripete «Ἰσθμικὸς εἰς Ποσειδῶνα» di tlg003 perché l'etichetta CTS di Perseus è duplicata, ma il testo comincia «Ἡρακλῆς· ἀλλ' ὦ φίλτατε Ἡράκλεις…» — è l'inno a Eracle (or. 40 K), tradotto in italiano da E. Garognoli proprio come «Inno ad Eracle»."
+  },
+  {
+   "id": "tlg0284.tlg006",
+   "italiano": "Lalia per Asclepio",
+   "originale": "",
+   "motivo": "Or. 42 K: λαλιά è termine tecnico di genere (il discorso «di conversazione» premesso a un'occasione) che la retorica italiana conserva non tradotto, come «prolalia» e «meletē»."
+  },
+  {
+   "id": "tlg0284.tlg007",
+   "italiano": "Gli Asclepiadi",
+   "originale": "",
+   "motivo": "Or. 38 K, per i figli di Asclepio: il nome è già italianissimo (Asclepiadi), basta l'articolo."
+  },
+  {
+   "id": "tlg0284.tlg008",
+   "italiano": "Inno a Serapide",
+   "originale": "Εἰς τὸν Σάραπιν",
+   "motivo": "Or. 45 K; forma già attestata in italiano («l'inno a Serapide di Elio Aristide»). L'originale in catalogo va bene: lascio il campo compilato solo per confermare la grafia Σάραπιν, non Σέραπιν."
+  },
+  {
+   "id": "tlg0284.tlg009",
+   "italiano": "Al re",
+   "originale": "Εἰς βασιλέα",
+   "motivo": "Or. 35 K, encomio di un imperatore (βασιλεύς = l'imperatore romano); l'originale va ripulito perché «[sp.]» è la sigla editoriale di spurium, non parte del titolo: l'attribuzione dubbia è un dato di scheda, non una parola greca."
+  },
+  {
+   "id": "tlg0284.tlg010",
+   "italiano": "Genetliaco per Apella",
+   "originale": "",
+   "motivo": "Or. 30 K: «genetliaco» è il nome italiano corrente del γενεθλιακός, e la formula «per + nome» è quella con cui la Berardi intitola le orazioni d'occasione aristidee."
+  },
+  {
+   "id": "tlg0284.tlg011",
+   "italiano": "Epicedio per Eteoneo",
+   "originale": "Εἰς Ἐτεωνέα ἐπικήδειος",
+   "motivo": "Titolo italiano attestato letteralmente: E. Berardi, «Elio Aristide, Epicedio per Eteoneo, Epitafio per Alessandro», Alessandria 2006. L'originale va corretto solo nell'iniziale minuscola («εἰς»), refuso rispetto a tutte le altre righe."
+  },
+  {
+   "id": "tlg0284.tlg012",
+   "italiano": "Epitafio per Alessandro",
+   "originale": "",
+   "motivo": "Titolo italiano attestato letteralmente nello stesso volume Berardi 2006; Treccani lo cita come l'«Epitafio» per il maestro Alessandro di Cotieo."
+  },
+  {
+   "id": "tlg0284.tlg013",
+   "italiano": "Panatenaico",
+   "originale": "",
+   "motivo": "Titolo italiano consolidato e da manuale (Treccani; tesi e studi italiani lo chiamano sempre così): il grecismo è ormai parola italiana, come «Olimpico» per Lisia."
+  },
+  {
+   "id": "tlg0284.tlg014",
+   "italiano": "Encomio di Roma",
+   "originale": "",
+   "motivo": "Forma di Treccani, aderente al greco Ῥώμης ἐγκώμιον; in Italia circolano anche «Elogio di Roma» (Amato) e «A Roma» (Fontanella, Edizioni della Normale 2007), ma «Encomio di Roma» è la più trasparente e la più vicina all'originale della seconda fascia."
+  },
+  {
+   "id": "tlg0284.tlg015",
+   "italiano": "Discorso politico smirneo",
+   "originale": "",
+   "motivo": "Or. 17 K: πολιτικός qui vale «civile, cittadino», e il discorso apre la serie degli otto «smirnei» che Treccani raggruppa sotto questo nome."
+  },
+  {
+   "id": "tlg0284.tlg016",
+   "italiano": "Discorso panegirico a Cizico per il tempio",
+   "originale": "",
+   "motivo": "Or. 27 K: resa piana e letterale del πανηγυρικός per l'inaugurazione del tempio di Adriano a Cizico; non esiste una formula abbreviata d'uso, quindi si tiene il titolo descrittivo per intero."
+  },
+  {
+   "id": "tlg0284.tlg017",
+   "italiano": "Sul mare Egeo",
+   "originale": "",
+   "motivo": "Or. 44 K; Treccani lo richiama come l'orazione «per l'Egeo». Preferisco «Sul mare Egeo» perché sulla scheda «Egeo» da solo si confonde con il re di Atene."
+  },
+  {
+   "id": "tlg0284.tlg018",
+   "italiano": "Sul pozzo di Asclepio",
+   "originale": "",
+   "motivo": "Or. 39 K, sul φρέαρ sacro dell'Asclepieo di Pergamo: resa letterale, l'unica in circolazione (varia solo la preposizione, «sul/nel»)."
+  },
+  {
+   "id": "tlg0284.tlg019",
+   "italiano": "Discorso eleusinio",
+   "originale": "",
+   "motivo": "Or. 22 K, sulla distruzione del santuario di Eleusi: «Eleusinio» da solo si legge come aggettivo etnico, per questo esplicito il sostantivo; da evitare «Inno a Eleusi», che circola su Wikipedia ma è falso (non è un inno e non è a una divinità)."
+  },
+  {
+   "id": "tlg0284.tlg020",
+   "italiano": "Monodia per Smirne",
+   "originale": "",
+   "motivo": "Or. 18 K, il lamento per il terremoto del 177: forma gemella della «Palinodia per Smirne», che è attestata alla lettera negli studi italiani."
+  },
+  {
+   "id": "tlg0284.tlg021",
+   "italiano": "Palinodia per Smirne",
+   "originale": "",
+   "motivo": "Titolo italiano attestato («la Palinodia per Smirne, Or. XX Keil»); il complemento greco sull'ἀνοικισμός resta nella seconda fascia, in italiano non si cita."
+  },
+  {
+   "id": "tlg0284.tlg022",
+   "italiano": "Discorso di saluto agli Smirnei",
+   "originale": "Προσφωνητικὸς Σμυρναϊκός",
+   "motivo": "Or. 21 K: il προσφωνητικός è il discorso d'indirizzo/di saluto. L'originale va corretto nell'accento — ossitono seguito da altra parola, quindi grave: Προσφωνητικὸς, come già «Σμυρναϊκὸς πολιτικός» nella riga tlg015."
+  },
+  {
+   "id": "tlg0284.tlg023",
+   "italiano": "Discorso sacro I",
+   "originale": "",
+   "motivo": "Gli Ἱεροὶ λόγοι sono in italiano i «Discorsi sacri» (traduzione Nicosia, e titolo di tutta la bibliografia italiana); il singolo libro si cita «Discorso sacro I»."
+  },
+  {
+   "id": "tlg0284.tlg024",
+   "italiano": "Discorso sacro II",
+   "originale": "",
+   "motivo": "Secondo libro dei Discorsi sacri: numerazione romana come da uso italiano."
+  },
+  {
+   "id": "tlg0284.tlg025",
+   "italiano": "Discorso sacro III",
+   "originale": "",
+   "motivo": "Terzo libro dei Discorsi sacri."
+  },
+  {
+   "id": "tlg0284.tlg026",
+   "italiano": "Discorso sacro IV",
+   "originale": "",
+   "motivo": "Quarto libro dei Discorsi sacri."
+  },
+  {
+   "id": "tlg0284.tlg027",
+   "italiano": "Discorso sacro V",
+   "originale": "",
+   "motivo": "Quinto libro dei Discorsi sacri."
+  },
+  {
+   "id": "tlg0284.tlg028",
+   "italiano": "Discorso sacro VI",
+   "originale": "",
+   "motivo": "Sesto libro dei Discorsi sacri, frammentario nella tradizione ma numerato come gli altri."
+  },
+  {
+   "id": "tlg0284.tlg029",
+   "italiano": "Sull'invio di rinforzi in Sicilia",
+   "originale": "",
+   "motivo": "Primo dei due «Discorsi siciliani» (orr. 5-6 K), che in italiano si descrivono come il dibattito sull'opportunità di inviare rinforzi alla spedizione ateniese."
+  },
+  {
+   "id": "tlg0284.tlg030",
+   "italiano": "Sulla tesi contraria",
+   "originale": "",
+   "motivo": "Secondo Discorso siciliano: εἰς τὸ ἐναντίον è l'etichetta retorica del discorso che sostiene la tesi opposta nell'antilogia; resa letterale, l'unica non fuorviante (Wikipedia ha «Sul contrario», che non significa niente)."
+  },
+  {
+   "id": "tlg0284.tlg031",
+   "italiano": "Sulla pace con gli Spartani",
+   "originale": "",
+   "motivo": "Declamazione storica: resa letterale del titolo greco, con l'etnico e non il toponimo perché Aristide fa parlare agli Ateniesi «i Lacedemoni»."
+  },
+  {
+   "id": "tlg0284.tlg032",
+   "italiano": "Sulla pace con gli Ateniesi",
+   "originale": "",
+   "motivo": "Discorso gemello del precedente, pronunciato però dalla parte spartana; resa letterale simmetrica."
+  },
+  {
+   "id": "tlg0284.tlg033",
+   "italiano": "Leuttrico I (in favore degli Spartani)",
+   "originale": "Λευκτρικὸς Α΄ (ὑπὲρ Λακεδαιμονίων πρῶτος)",
+   "motivo": "Treccani e la bibliografia italiana chiamano il ciclo «i Leuttrici» / «Discorsi Leuttrici»; l'originale va corretto perché il numerale greco vuole la keraia Α΄, non il punto latino «Α.»."
+  },
+  {
+   "id": "tlg0284.tlg034",
+   "italiano": "Leuttrico II (in favore dei Tebani)",
+   "originale": "Λευκτρικὸς Β΄ (ὑπὲρ Θηβαίων πρῶτος)",
+   "motivo": "Stesso ciclo; correzione del numerale in Β΄ con keraia."
+  },
+  {
+   "id": "tlg0284.tlg035",
+   "italiano": "Leuttrico III (in favore degli Spartani)",
+   "originale": "Λευκτρικὸς Γ΄ (ὑπὲρ Λακεδαιμονίων δεύτερος)",
+   "motivo": "Stesso ciclo; correzione del numerale in Γ΄ con keraia."
+  },
+  {
+   "id": "tlg0284.tlg036",
+   "italiano": "Leuttrico IV (in favore dei Tebani)",
+   "originale": "Λευκτρικὸς Δ΄ (ὑπὲρ Θηβαίων δεύτερος)",
+   "motivo": "Stesso ciclo; correzione del numerale in Δ΄ con keraia."
+  },
+  {
+   "id": "tlg0284.tlg037",
+   "italiano": "Leuttrico V (per la neutralità)",
+   "originale": "Λευκτρικὸς Ε΄ (ὑπὲρ μηδετέροις βοηθεῖν)",
+   "motivo": "Chiude il ciclo con la tesi di non soccorrere né gli uni né gli altri, cioè la neutralità; correzione del numerale in Ε΄ con keraia."
+  },
+  {
+   "id": "tlg0284.tlg038",
+   "italiano": "Discorso sull'alleanza I",
+   "originale": "Συμμαχικὸς Α΄",
+   "motivo": "Il συμμαχικός è il discorso «sull'alleanza» (come il Περὶ τῆς συμμαχίας demostenico); correzione del numerale in Α΄ con keraia."
+  },
+  {
+   "id": "tlg0284.tlg039",
+   "italiano": "Discorso sull'alleanza II (ai Tebani)",
+   "originale": "Συμμαχικὸς Β΄ (πρὸς Θηβαίους περὶ τῆς συμμαχίας)",
+   "motivo": "Secondo discorso del dittico, rivolto ai Tebani contro Filippo; correzione del numerale in Β΄ con keraia."
+  },
+  {
+   "id": "tlg0284.tlg040",
+   "italiano": "Discorso deliberativo sul divieto delle commedie",
+   "originale": "",
+   "motivo": "Or. 29 K: συμβουλευτικός è il genere deliberativo, e il tema è la richiesta agli Smirnei di non far rappresentare commedie; resa letterale del titolo descrittivo."
+  },
+  {
+   "id": "tlg0284.tlg041",
+   "italiano": "Lettera su Smirne",
+   "originale": "",
+   "motivo": "Or. 19 K, la lettera a Marco Aurelio e Commodo dopo il terremoto: resa letterale, unica in uso."
+  },
+  {
+   "id": "tlg0284.tlg042",
+   "italiano": "Alle città per la concordia",
+   "originale": "",
+   "motivo": "Forma di Treccani («le orazioni Alle città per la concordia»); ὁμόνοια è tecnicamente «concordia» nella pubblicistica greca d'età imperiale."
+  },
+  {
+   "id": "tlg0284.tlg043",
+   "italiano": "Rodiaco",
+   "originale": "Ῥοδιακός",
+   "motivo": "«Rodiaco» è la forma di Treccani, grecismo ormai italiano come «Panatenaico»; l'originale va ripulito dalla sigla editoriale «[sp.]», che segnala l'attribuzione dubbia e non appartiene al titolo."
+  },
+  {
+   "id": "tlg0284.tlg044",
+   "italiano": "Ai Rodii per la concordia",
+   "originale": "",
+   "motivo": "Forma di Treccani («Ai Rodî per la concordia»), con la grafia moderna «Rodii»; fa coppia con l'orazione precedente sulla concordia."
+  },
+  {
+   "id": "tlg0284.tlg045",
+   "italiano": "In difesa della retorica",
+   "originale": "",
+   "motivo": "Titolo italiano corrente e ripetutamente attestato negli studi («l'orazione In difesa della retorica»); è la prima delle tre orazioni note in italiano come «Discorsi platonici»."
+  },
+  {
+   "id": "tlg0284.tlg046",
+   "italiano": "In difesa dei quattro",
+   "originale": "",
+   "motivo": "Titolo italiano attestato (Treccani, «Difesa dei Quattro»; tesi e articoli, «In difesa dei quattro»): i quattro sono Milziade, Temistocle, Cimone e Pericle, difesi contro il Gorgia."
+  },
+  {
+   "id": "tlg0284.tlg047",
+   "italiano": "Epistola a Capitone",
+   "originale": "",
+   "motivo": "È il terzo dei «Discorsi platonici» e in italiano si cita così («l'Epistola a Capitone»), non «A Capitone»: la forma epistolare fa parte del nome d'uso."
+  },
+  {
+   "id": "tlg0284.tlg048",
+   "italiano": "Discorso egizio",
+   "originale": "",
+   "motivo": "Or. 36 K, l'indagine sulle piene del Nilo; «Egizio» da solo sulla scheda si leggerebbe come etnico, quindi esplicito il sostantivo come per l'Eleusinio."
+  },
+  {
+   "id": "tlg0284.tlg049",
+   "italiano": "Sull'affermazione in margine",
+   "originale": "",
+   "motivo": "Or. 28 K: è la resa con cui Miletti traduce παράφθεγμα (l'osservazione buttata lì di sfuggita, da cui nasce l'autodifesa); lo stesso studio la chiama descrittivamente «orazione sull'autoelogio»."
+  },
+  {
+   "id": "tlg0284.tlg050",
+   "italiano": "Contro i profanatori",
+   "originale": "",
+   "motivo": "Or. 34 K: ἐξορχεῖσθαι è «divulgare danzando», cioè profanare i misteri — qui i misteri dell'eloquenza; «Contro i profanatori» è la forma che ricorre negli studi italiani, mentre «Contro i danzatori» è un fraintendimento del verbo."
+  },
+  {
+   "id": "tlg0284.tlg051",
+   "italiano": "A coloro che lo accusano di non declamare",
+   "originale": "",
+   "motivo": "Or. 33 K: μελετᾶν è tecnicamente «tenere declamazioni» (μελέται), non «esercitarsi» in senso generico; resa letterale del titolo descrittivo."
+  },
+  {
+   "id": "tlg0284.tlg052",
+   "italiano": "Ambasceria ad Achille",
+   "originale": "",
+   "motivo": "Titolo italiano attestato alla lettera in E. Berardi («l'Ambasceria ad Achille, or. 16»): è la sola declamazione aristidea di argomento mitico, sul modello di Iliade IX."
+  },
+  {
+   "id": "tlg0284.tlg053",
+   "italiano": "Contro Demostene, sull'immunità",
+   "originale": "",
+   "motivo": "Declamazione (di paternità discussa) che ribatte alla demostenica Contro Leptine sostenendo la legge; πρός + accusativo vale «contro», e ἀτέλεια in italiano è l'«immunità» dalle liturgie."
+  },
+  {
+   "id": "tlg0284.tlg054",
+   "italiano": "Contro Leptine, in difesa dell'immunità",
+   "originale": "",
+   "motivo": "Discorso opposto al precedente: stesso titolo greco dell'orazione XX di Demostene, che in italiano è sempre «Contro Leptine», con l'aggiunta della tesi sostenuta (ὑπὲρ ἀτελείας)."
+  },
+  {
+   "id": "tlg0284.tlg055",
+   "italiano": "Discorso panegirico per l'acqua a Pergamo",
+   "originale": "",
+   "motivo": "Or. 53 K, per l'inaugurazione dell'acquedotto pergameno: titolo descrittivo senza forma abbreviata d'uso, quindi si rende per intero come per il panegirico di Cizico."
+  },
+  {
+   "id": "tlg0284.tlg056",
+   "italiano": "Sul discorso politico",
+   "originale": "",
+   "motivo": "Trattato retorico (Ars rhetorica I, attribuzione discussa): πολιτικὸς λόγος è il «discorso politico/civile», e con questo nome il trattato è citato negli studi italiani e nelle edizioni moderne."
+  },
+  {
+   "id": "stoa0275.stoa001",
+   "italiano": "Ai martiri",
+   "originale": "",
+   "motivo": "Resa costante delle traduzioni italiane (Città Nuova, Opere apologetiche vol. 1)."
+  },
+  {
+   "id": "stoa0275.stoa002",
+   "italiano": "Ai pagani",
+   "originale": "",
+   "motivo": "Titolo dell'edizione italiana di riferimento (Città Nuova) e della voce enciclopedica italiana; circola anche «Alle nazioni»."
+  },
+  {
+   "id": "stoa0275.stoa003",
+   "italiano": "A Scapula",
+   "originale": "",
+   "motivo": "L'indirizzo al proconsole d'Africa si volge normalmente in italiano (Città Nuova, Opere apologetiche vol. 1)."
+  },
+  {
+   "id": "stoa0275.stoa004",
+   "italiano": "Contro Ermogene",
+   "originale": "",
+   "motivo": "Titolo italiano corrente, con il nome dell'avversario italianizzato (edizione Città Nuova «Contro Ermogene»)."
+  },
+  {
+   "id": "stoa0275.stoa005",
+   "italiano": "Contro i Giudei",
+   "originale": "",
+   "motivo": "Resa d'uso nella manualistica italiana; Città Nuova preferisce «Polemica con gli ebrei/con i Giudei»."
+  },
+  {
+   "id": "stoa0275.stoa006",
+   "italiano": "Contro Marcione",
+   "originale": "",
+   "motivo": "Titolo dell'edizione italiana integrale (Città Nuova, Opere dottrinali: «Contro Marcione»)."
+  },
+  {
+   "id": "stoa0275.stoa007",
+   "italiano": "Contro Prassea",
+   "originale": "",
+   "motivo": "Titolo italiano corrente (Città Nuova, Opere dottrinali/4)."
+  },
+  {
+   "id": "stoa0275.stoa008",
+   "italiano": "Contro i Valentiniani",
+   "originale": "",
+   "motivo": "Resa italiana consolidata della serie polemica «Adversus»."
+  },
+  {
+   "id": "stoa0275.stoa009",
+   "italiano": "",
+   "originale": "",
+   "motivo": "L'uso italiano è il titolo latino, come indicato dal docente: nei manuali si cita «Apologeticum» (le traduzioni lo rendono «Apologetico», ma non è la forma di citazione)."
+  },
+  {
+   "id": "stoa0275.stoa010",
+   "italiano": "L'anima",
+   "originale": "",
+   "motivo": "Titolo delle traduzioni italiane correnti (Città Nuova, Opere dottrinali/4; ed. Menghi)."
+  },
+  {
+   "id": "stoa0275.stoa011",
+   "italiano": "Il battesimo",
+   "originale": "",
+   "motivo": "Titolo italiano corrente (Città Nuova, Opere catechetiche)."
+  },
+  {
+   "id": "stoa0275.stoa012",
+   "italiano": "La carne di Cristo",
+   "originale": "",
+   "motivo": "Titolo italiano corrente (Città Nuova, Opere dottrinali/3)."
+  },
+  {
+   "id": "stoa0275.stoa013",
+   "italiano": "La corona",
+   "originale": "",
+   "motivo": "Titolo italiano corrente (Città Nuova, Opere montaniste/1); si trova anche «La corona del soldato»."
+  },
+  {
+   "id": "stoa0275.stoa014",
+   "italiano": "L'eleganza delle donne",
+   "originale": "",
+   "motivo": "Titolo dell'edizione italiana più diffusa (Isetta, EDB Biblioteca patristica); Città Nuova ha «L'eleganza femminile»."
+  },
+  {
+   "id": "stoa0275.stoa015",
+   "italiano": "Esortazione alla castità",
+   "originale": "",
+   "motivo": "Titolo italiano corrente (Città Nuova, Opere montaniste/1)."
+  },
+  {
+   "id": "stoa0275.stoa016",
+   "italiano": "La fuga in tempo di persecuzione",
+   "originale": "",
+   "motivo": "Titolo dell'edizione italiana di riferimento (Città Nuova, Opere montaniste/1); variante diffusa «La fuga nella persecuzione»."
+  },
+  {
+   "id": "stoa0275.stoa017",
+   "italiano": "L'idolatria",
+   "originale": "",
+   "motivo": "Titolo italiano corrente (Città Nuova, Opere montaniste/1)."
+  },
+  {
+   "id": "stoa0275.stoa018",
+   "italiano": "Il digiuno contro gli psichici",
+   "originale": "",
+   "motivo": "Titolo dell'edizione italiana di riferimento (Città Nuova, Opere montaniste/2: «Il digiuno, contro gli psichici»)."
+  },
+  {
+   "id": "stoa0275.stoa019",
+   "italiano": "Le uniche nozze",
+   "originale": "",
+   "motivo": "Titolo italiano consolidato (Uglione, Corona Patrum; Città Nuova); «La monogamia» non è forma d'uso."
+  },
+  {
+   "id": "stoa0275.stoa020",
+   "italiano": "La preghiera",
+   "originale": "",
+   "motivo": "Titolo italiano corrente (Città Nuova, Opere catechetiche)."
+  },
+  {
+   "id": "stoa0275.stoa021",
+   "italiano": "La penitenza",
+   "originale": "",
+   "motivo": "Titolo italiano corrente (Città Nuova, Opere catechetiche)."
+  },
+  {
+   "id": "stoa0275.stoa022",
+   "italiano": "",
+   "originale": "",
+   "motivo": "In italiano l'opera si cita sempre «De pallio» (così le edizioni Marra, Costanza e la voce enciclopedica): le rese «Il pallio» (Città Nuova) e «Il mantello» (Cataudella) non si sono imposte."
+  },
+  {
+   "id": "stoa0275.stoa023",
+   "italiano": "La pazienza",
+   "originale": "",
+   "motivo": "Titolo italiano corrente (Città Nuova, Opere catechetiche)."
+  },
+  {
+   "id": "stoa0275.stoa024",
+   "italiano": "Le prescrizioni contro gli eretici",
+   "originale": "",
+   "motivo": "Forma italiana consolidata (anche voce enciclopedica omonima); variante «La prescrizione contro gli eretici»."
+  },
+  {
+   "id": "stoa0275.stoa025",
+   "italiano": "La pudicizia",
+   "originale": "",
+   "motivo": "Titolo italiano corrente (Città Nuova, Opere montaniste/2)."
+  },
+  {
+   "id": "stoa0275.stoa026",
+   "italiano": "La resurrezione della carne",
+   "originale": "",
+   "motivo": "Titolo italiano corrente (Città Nuova, Opere dottrinali/4); dove si segue il titolo dei codici (De resurrectione mortuorum) si trova «La resurrezione dei morti»."
+  },
+  {
+   "id": "stoa0275.stoa027",
+   "italiano": "Gli spettacoli",
+   "originale": "",
+   "motivo": "Titolo italiano corrente (Città Nuova, Opere catechetiche)."
+  },
+  {
+   "id": "stoa0275.stoa028",
+   "italiano": "La testimonianza dell'anima",
+   "originale": "",
+   "motivo": "Titolo italiano corrente (Città Nuova, Opere apologetiche vol. 1)."
+  },
+  {
+   "id": "stoa0275.stoa029",
+   "italiano": "Il velo delle vergini",
+   "originale": "",
+   "motivo": "Titolo dell'edizione italiana di riferimento (Città Nuova, Opere montaniste/2); variante «Le vergini velate»."
+  },
+  {
+   "id": "stoa0275.stoa030",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Titolo grecizzante coniato dall'autore (σκορπίακον, «antidoto contro lo scorpione»): in italiano si cita sempre «Scorpiace», e la resa «L'antidoto contro gli scorpioni» compare solo come glossa nelle traduzioni."
+  },
+  {
+   "id": "stoa0089.stoa001",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Raccolta editoriale che in italiano si cita con la forma latina «Carmina minora» (abbrev. carm. min.), non con l'intestazione dei codici qui in catalogo; «carmi minori» è designazione descrittiva, non titolo. Se si vuole la forma di citazione corrente, l'originale andrebbe normalizzato in «Carmina minora»."
+  },
+  {
+   "id": "stoa0089.stoa002",
+   "italiano": "La guerra gildonica",
+   "originale": "",
+   "motivo": "Resa corrente nella manualistica italiana e in Treccani («guerra gildonica»); anche «La guerra contro Gildone»."
+  },
+  {
+   "id": "stoa0089.stoa003",
+   "italiano": "La guerra gotica",
+   "originale": "",
+   "motivo": "Resa corrente in italiano (anche «La guerra dei Goti»); l'opera si cita pure come De bello Getico, ma il titolo in catalogo è quello di molte edizioni."
+  },
+  {
+   "id": "stoa0089.stoa004",
+   "italiano": "Il consolato di Stilicone",
+   "originale": "",
+   "motivo": "Resa italiana d'uso del panegirico consolare (anche «Panegirico per il consolato di Stilicone»)."
+  },
+  {
+   "id": "stoa0089.stoa005",
+   "italiano": "Il ratto di Proserpina",
+   "originale": "",
+   "motivo": "Titolo tradizionale delle traduzioni italiane; le edizioni recenti preferiscono «Il rapimento di Proserpina»."
+  },
+  {
+   "id": "stoa0089.stoa006",
+   "italiano": "Epitalamio per le nozze di Onorio Augusto",
+   "originale": "",
+   "motivo": "Formula italiana d'uso per gli epitalami claudianei (si cita anche «Epitalamio per le nozze di Onorio e Maria»)."
+  },
+  {
+   "id": "stoa0089.stoa007",
+   "italiano": "Fescennini per le nozze di Onorio Augusto",
+   "originale": "",
+   "motivo": "Formula italiana d'uso («versi fescennini per le nozze di Onorio»)."
+  },
+  {
+   "id": "stoa0089.stoa008",
+   "italiano": "Contro Eutropio",
+   "originale": "",
+   "motivo": "Resa italiana costante delle invettive claudianee (Treccani, manuali)."
+  },
+  {
+   "id": "stoa0089.stoa009",
+   "italiano": "Contro Rufino",
+   "originale": "",
+   "motivo": "Resa italiana costante delle invettive claudianee (Treccani, manuali)."
+  },
+  {
+   "id": "stoa0089.stoa010",
+   "italiano": "Panegirico per il terzo consolato di Onorio Augusto",
+   "originale": "",
+   "motivo": "I panegirici consolari si citano in italiano con la formula descrittiva «Panegirico per il … consolato di Onorio»."
+  },
+  {
+   "id": "stoa0089.stoa011",
+   "italiano": "Panegirico per il quarto consolato di Onorio Augusto",
+   "originale": "",
+   "motivo": "I panegirici consolari si citano in italiano con la formula descrittiva «Panegirico per il … consolato di Onorio»."
+  },
+  {
+   "id": "stoa0089.stoa012",
+   "italiano": "Panegirico per il sesto consolato di Onorio Augusto",
+   "originale": "",
+   "motivo": "I panegirici consolari si citano in italiano con la formula descrittiva «Panegirico per il … consolato di Onorio»."
+  },
+  {
+   "id": "stoa0089.stoa013",
+   "italiano": "Panegirico per il console Manlio Teodoro",
+   "originale": "",
+   "motivo": "Formula italiana d'uso, con il nome del console italianizzato (Flavio Mallio Teodoro)."
+  },
+  {
+   "id": "stoa0089.stoa014",
+   "italiano": "Panegirico per i consoli Probino e Olibrio",
+   "originale": "",
+   "motivo": "Formula italiana d'uso, con i nomi dei consoli italianizzati."
+  },
+  {
+   "id": "stoa0040.stoa011",
+   "italiano": "Lettere",
+   "originale": "Epistulae",
+   "motivo": "«Selections.» è una nota di catalogo Perseus (il testo è un'antologia), non parte del titolo: l'originale è Epistulae, e l'epistolario agostiniano in italiano si cita come «Lettere» (Nuova Biblioteca Agostiniana)."
+  },
+  {
+   "id": "tlg0031.tlg001",
+   "italiano": "Vangelo secondo Matteo",
+   "originale": "Κατὰ Ματθαῖον",
+   "motivo": "Titolo italiano corrente (CEI); in catalogo il nome era al nominativo e mal accentato, senza la formula «Κατὰ» del titolo tràdito."
+  },
+  {
+   "id": "tlg0031.tlg002",
+   "italiano": "Vangelo secondo Marco",
+   "originale": "Κατὰ Μᾶρκον",
+   "motivo": "Titolo italiano corrente; ripristinata la formula «Κατὰ» + accusativo perispomeno Μᾶρκον, al posto del nominativo mozzo."
+  },
+  {
+   "id": "tlg0031.tlg003",
+   "italiano": "Vangelo secondo Luca",
+   "originale": "Κατὰ Λουκᾶν",
+   "motivo": "Titolo italiano corrente; l'accusativo in catalogo tradiva la formula tagliata, va reintegrato «Κατὰ»."
+  },
+  {
+   "id": "tlg0031.tlg004",
+   "italiano": "Vangelo secondo Giovanni",
+   "originale": "Κατὰ Ἰωάννην",
+   "motivo": "Titolo italiano corrente; reintegrata la formula «Κατὰ» davanti all'accusativo rimasto isolato."
+  },
+  {
+   "id": "tlg0031.tlg005",
+   "italiano": "Atti degli Apostoli",
+   "originale": "Πράξεις Ἀποστόλων",
+   "motivo": "In catalogo c'era addirittura l'inglese «Acts» su un'opera greca: l'originale è Πράξεις Ἀποστόλων."
+  },
+  {
+   "id": "tlg0031.tlg006",
+   "italiano": "Lettera ai Romani",
+   "originale": "Πρὸς Ῥωμαίους",
+   "motivo": "Titolo italiano corrente; l'originale mancava di «Πρὸς» e dello spirito aspro su Ῥ."
+  },
+  {
+   "id": "tlg0031.tlg007",
+   "italiano": "Prima lettera ai Corinzi",
+   "originale": "Πρὸς Κορινθίους Α΄",
+   "motivo": "Titolo italiano corrente; reintegrato «Πρὸς» e normalizzato il numerale col segno greco Α΄."
+  },
+  {
+   "id": "tlg0031.tlg008",
+   "italiano": "Seconda lettera ai Corinzi",
+   "originale": "Πρὸς Κορινθίους Β΄",
+   "motivo": "Titolo italiano corrente; reintegrato «Πρὸς» e normalizzato il numerale col segno greco Β΄."
+  },
+  {
+   "id": "tlg0031.tlg009",
+   "italiano": "Lettera ai Galati",
+   "originale": "Πρὸς Γαλάτας",
+   "motivo": "Titolo italiano corrente; reintegrata la preposizione «Πρὸς» del titolo tràdito."
+  },
+  {
+   "id": "tlg0031.tlg010",
+   "italiano": "Lettera agli Efesini",
+   "originale": "Πρὸς Ἐφεσίους",
+   "motivo": "Titolo italiano corrente; reintegrata la preposizione «Πρὸς»."
+  },
+  {
+   "id": "tlg0031.tlg011",
+   "italiano": "Lettera ai Filippesi",
+   "originale": "Πρὸς Φιλιππησίους",
+   "motivo": "Titolo italiano corrente; l'originale in catalogo era guasto (Φιλιππηνίους), la forma tràdita è Πρὸς Φιλιππησίους."
+  },
+  {
+   "id": "tlg0031.tlg012",
+   "italiano": "Lettera ai Colossesi",
+   "originale": "Πρὸς Κολοσσαεῖς",
+   "motivo": "Titolo italiano corrente; corretta la grafia (Κολασσαείς è variante del Textus Receptus, mal accentata) in Πρὸς Κολοσσαεῖς."
+  },
+  {
+   "id": "tlg0031.tlg013",
+   "italiano": "Prima lettera ai Tessalonicesi",
+   "originale": "Πρὸς Θεσσαλονικεῖς Α΄",
+   "motivo": "Titolo italiano corrente; reintegrato «Πρὸς», corretto l'accusativo plurale (‑εῖς) e il numerale greco."
+  },
+  {
+   "id": "tlg0031.tlg014",
+   "italiano": "Seconda lettera ai Tessalonicesi",
+   "originale": "Πρὸς Θεσσαλονικεῖς Β΄",
+   "motivo": "Titolo italiano corrente; reintegrato «Πρὸς», corretto l'accusativo plurale (‑εῖς) e il numerale greco."
+  },
+  {
+   "id": "tlg0031.tlg015",
+   "italiano": "Prima lettera a Timoteo",
+   "originale": "Πρὸς Τιμόθεον Α΄",
+   "motivo": "Titolo italiano corrente; reintegrato «Πρὸς» e numerale col segno greco Α΄, in parallelo alla seconda."
+  },
+  {
+   "id": "tlg0031.tlg016",
+   "italiano": "Seconda lettera a Timoteo",
+   "originale": "Πρὸς Τιμόθεον Β΄",
+   "motivo": "Titolo italiano corrente; tolto il carattere «>» spurio, reintegrato «Πρὸς» e sostituita la B latina col numerale greco Β΄."
+  },
+  {
+   "id": "tlg0031.tlg017",
+   "italiano": "Lettera a Tito",
+   "originale": "Πρὸς Τίτον",
+   "motivo": "Titolo italiano corrente; reintegrata la preposizione «Πρὸς»."
+  },
+  {
+   "id": "tlg0031.tlg018",
+   "italiano": "Lettera a Filemone",
+   "originale": "Πρὸς Φιλήμονα",
+   "motivo": "Titolo italiano corrente; reintegrata la preposizione «Πρὸς»."
+  },
+  {
+   "id": "tlg0031.tlg019",
+   "italiano": "Lettera agli Ebrei",
+   "originale": "Πρὸς Ἑβραίους",
+   "motivo": "Titolo italiano corrente; reintegrata la preposizione «Πρὸς»."
+  },
+  {
+   "id": "tlg0031.tlg020",
+   "italiano": "Lettera di Giacomo",
+   "originale": "",
+   "motivo": "Titolo italiano corrente; il greco «Ἰακώβου» è già l'intestazione tràdita delle edizioni critiche (le lettere cattoliche portano il solo genitivo)."
+  },
+  {
+   "id": "tlg0031.tlg021",
+   "italiano": "Prima lettera di Pietro",
+   "originale": "Πέτρου Α΄",
+   "motivo": "Titolo italiano corrente; il greco va bene, si normalizza solo il numerale col segno greco Α΄ (in catalogo c'era l'apostrofo tipografico)."
+  },
+  {
+   "id": "tlg0031.tlg022",
+   "italiano": "Seconda lettera di Pietro",
+   "originale": "Πέτρου Β΄",
+   "motivo": "Titolo italiano corrente; in catalogo il numerale era una B latina, va sostituita col Β΄ greco."
+  },
+  {
+   "id": "tlg0031.tlg023",
+   "italiano": "Prima lettera di Giovanni",
+   "originale": "Ἰωάννου Α΄",
+   "motivo": "Titolo italiano corrente; normalizzato il numerale col segno greco Α΄."
+  },
+  {
+   "id": "tlg0031.tlg024",
+   "italiano": "Seconda lettera di Giovanni",
+   "originale": "Ἰωάννου Β΄",
+   "motivo": "Titolo italiano corrente; normalizzato il numerale col segno greco Β΄."
+  },
+  {
+   "id": "tlg0031.tlg025",
+   "italiano": "Terza lettera di Giovanni",
+   "originale": "Ἰωάννου Γ΄",
+   "motivo": "Titolo italiano corrente; normalizzato il numerale col segno greco Γ΄."
+  },
+  {
+   "id": "tlg0031.tlg026",
+   "italiano": "Lettera di Giuda",
+   "originale": "Ἰούδα",
+   "motivo": "Titolo italiano corrente; il genitivo in catalogo era guasto (Ἰούδου): Ἰούδας fa Ἰούδα."
+  },
+  {
+   "id": "tlg0031.tlg027",
+   "italiano": "Apocalisse",
+   "originale": "Ἀποκάλυψις Ἰωάννου",
+   "motivo": "In italiano si cita «Apocalisse» senza altro; l'originale tràdito porta però il nome dell'autore, Ἀποκάλυψις Ἰωάννου."
+  },
+  {
+   "id": "tlg0627.tlg001",
+   "italiano": "L'antica medicina",
+   "originale": "",
+   "motivo": "Titolo italiano consolidato (Treccani, edizione Vegetti); il greco in catalogo è nella forma attica, accanto alla ionica Περὶ ἀρχαίης ἰητρικῆς, ma è comunemente stampato così."
+  },
+  {
+   "id": "tlg0627.tlg003",
+   "italiano": "Prognostico",
+   "originale": "",
+   "motivo": "«Prognostico» è il titolo con cui l'opera si cita in italiano; il greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg0627.tlg004",
+   "italiano": "Il regime nelle malattie acute",
+   "originale": "",
+   "motivo": "Titolo italiano d'uso (anche «La dieta nelle malattie acute»); il greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg0627.tlg005",
+   "italiano": "Il regime nelle malattie acute (appendice spuria)",
+   "originale": "",
+   "motivo": "Stessa opera con la marca editoriale Νόθα, che in italiano si rende «appendice spuria»; il greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg0627.tlg006",
+   "italiano": "Epidemie",
+   "originale": "Ἐπιδημιῶν",
+   "motivo": "«Epidemie» è il titolo italiano corrente; il greco era mal accentato, il genitivo plurale di ἐπιδημία è perispomeno (ἐπιδημιῶν)."
+  },
+  {
+   "id": "tlg0627.tlg007",
+   "italiano": "Le ferite del capo",
+   "originale": "",
+   "motivo": "Titolo italiano d'uso (De capitis vulneribus); il greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg0627.tlg008",
+   "italiano": "L'officina del medico",
+   "originale": "",
+   "motivo": "Titolo italiano d'uso per il De officina medici (anche «l'ambulatorio del medico»); il greco ionico in catalogo è corretto."
+  },
+  {
+   "id": "tlg0627.tlg009",
+   "italiano": "Le fratture",
+   "originale": "",
+   "motivo": "Titolo italiano consolidato dei due trattati chirurgici gemelli; il greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg0627.tlg010",
+   "italiano": "Le articolazioni",
+   "originale": "",
+   "motivo": "Titolo italiano consolidato, gemello delle Fratture; il greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg0627.tlg011",
+   "italiano": "",
+   "originale": "",
+   "motivo": "In italiano il trattatello si cita col titolo greco traslitterato («Mochlico»/«Mochlicon»): la resa «La leva» compare solo sporadicamente e uno studente non la troverebbe sul manuale."
+  },
+  {
+   "id": "tlg0627.tlg012",
+   "italiano": "Aforismi",
+   "originale": "",
+   "motivo": "Titolo italiano corrente e notissimo; il greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg0627.tlg013",
+   "italiano": "Giuramento",
+   "originale": "Ὅρκος",
+   "motivo": "«Iusiurandum» è il titolo latino convenzionale delle edizioni su un'opera greca: l'originale è Ὅρκος, in italiano «Giuramento» (di Ippocrate)."
+  },
+  {
+   "id": "tlg0627.tlg027",
+   "italiano": "Il morbo sacro",
+   "originale": "",
+   "motivo": "Titolo italiano consolidato (anche «La malattia sacra»); il greco ionico in catalogo è corretto."
+  },
+  {
+   "id": "tlg0627.tlg028",
+   "italiano": "Le ulcere",
+   "originale": "",
+   "motivo": "Titolo italiano d'uso (De ulceribus); il greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg0627.tlg029",
+   "italiano": "Le emorroidi",
+   "originale": "",
+   "motivo": "Titolo italiano d'uso (De haemorrhoidibus); il greco in catalogo è corretto, con la vecchia grafia ῤῥ."
+  },
+  {
+   "id": "tlg0627.tlg030",
+   "italiano": "Le fistole",
+   "originale": "",
+   "motivo": "Titolo italiano d'uso (De fistulis); il greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg0627.tlg046",
+   "italiano": "Sul nutrimento",
+   "originale": "",
+   "motivo": "Titolo italiano d'uso per il De alimento (anche «L'alimento»); il greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg0627.tlg051",
+   "italiano": "Precetti",
+   "originale": "",
+   "motivo": "Titolo italiano d'uso (Praeceptiones); il greco in catalogo è corretto."
+  },
+  {
+   "id": "stoa0045.stoa001",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Il libretto si cita col nome della fanciulla, «Bissula»: non esiste resa italiana concorrente e tradurre il De sarebbe artificiale."
+  },
+  {
+   "id": "stoa0045.stoa002",
+   "italiano": "",
+   "originale": "",
+   "motivo": "In italiano si citano «i Caesares» (così anche la bibliografia italiana, «I Caesares di Ausonio»); «I Cesari» rimanderebbe alle Vite di Svetonio."
+  },
+  {
+   "id": "stoa0045.stoa003",
+   "italiano": "Centone nuziale",
+   "originale": "",
+   "motivo": "«Centone nuziale» è la resa corrente in italiano (Treccani parla dell'«osceno centone nuziale»), accanto al latino Cento nuptialis."
+  },
+  {
+   "id": "stoa0045.stoa004",
+   "italiano": "Commemorazione dei professori di Bordeaux",
+   "originale": "",
+   "motivo": "Il catalogo in versi dei maestri bordolesi si designa in italiano con questa formula; il titolo latino resta in seconda fascia."
+  },
+  {
+   "id": "stoa0045.stoa005",
+   "italiano": "Cupido messo in croce",
+   "originale": "",
+   "motivo": "È il titolo dell'edizione italiana corrente (Franzoi, Loffredo 2002), non un calco improvvisato."
+  },
+  {
+   "id": "stoa0045.stoa006",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Il poemetto sul podere avito si cita col titolo latino De herediolo; «il poderetto» è parafrasi descrittiva, non titolo d'uso."
+  },
+  {
+   "id": "stoa0045.stoa007",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Si cita «Eclogae / Eclogarum liber»: in italiano «Egloghe» evocherebbe il genere bucolico, estraneo a queste poesiole didascaliche."
+  },
+  {
+   "id": "stoa0045.stoa008",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Il grecismo latinizzato «Ephemeris» è entrato tale e quale nell'uso italiano («l'Ephemeris di Ausonio»)."
+  },
+  {
+   "id": "stoa0045.stoa009",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Si cita col titolo latino «Epicedion in patrem»; «epicedio per il padre» resta descrizione del genere, non titolo consolidato."
+  },
+  {
+   "id": "stoa0045.stoa010",
+   "italiano": "Epigrammi",
+   "originale": "",
+   "motivo": "Il liber epigrammaton si cita in italiano come «Epigrammi», al pari di quelli di Marziale."
+  },
+  {
+   "id": "stoa0045.stoa011",
+   "italiano": "Epistole",
+   "originale": "",
+   "motivo": "Edizioni e critica italiana usano «Epistole» (Decimo Magno Ausonio, Epistole)."
+  },
+  {
+   "id": "stoa0045.stoa012",
+   "italiano": "Epitaffi",
+   "originale": "",
+   "motivo": "Treccani elenca fra le opere gli «epitaffi» (degli eroi caduti a Troia): resa italiana corrente."
+  },
+  {
+   "id": "stoa0045.stoa013",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Si cita col titolo greco-latino «Genethliacon», come il Protrepticus: «genetliaco» in italiano nomina il genere, non l'opera."
+  },
+  {
+   "id": "stoa0045.stoa014",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Formula latina consolidata («Gratiarum actio ad Gratianum imperatorem»); «Ringraziamento» non è titolo d'uso."
+  },
+  {
+   "id": "stoa0045.stoa015",
+   "italiano": "",
+   "originale": "",
+   "motivo": "La bibliografia italiana lo chiama «il Griphus»; «enigma del numero tre» è parafrasi del contenuto, non titolo."
+  },
+  {
+   "id": "stoa0045.stoa016",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Si cita «Protrepticus ad nepotem»: il termine è tecnico e resta latino anche nei manuali italiani."
+  },
+  {
+   "id": "stoa0045.stoa017",
+   "italiano": "",
+   "originale": "",
+   "motivo": "È la rubrica editoriale della conclusione dei perduti Fasti (perciò le parentesi quadre), non un titolo che l'italiano traduca."
+  },
+  {
+   "id": "stoa0045.stoa018",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Anche le edizioni italiane portano il titolo latino (Cazzuffi 2014); «il gioco dei sette sapienti» è glossa esplicativa."
+  },
+  {
+   "id": "stoa0045.stoa019",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Il nome del fiume coincide in italiano: si cita «Mosella» (al più «La Mosella»), quindi la traduzione sarebbe una ripetizione."
+  },
+  {
+   "id": "stoa0045.stoa020",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Titolo tecnico latino (l'orazione in versi ropalici): nessuna resa italiana in circolazione."
+  },
+  {
+   "id": "stoa0045.stoa021",
+   "italiano": "Ordine delle città celebri",
+   "originale": "",
+   "motivo": "Resa dell'edizione italiana UTET (Pastorino), corrente accanto al latino Ordo urbium nobilium."
+  },
+  {
+   "id": "stoa0045.stoa022",
+   "italiano": "",
+   "originale": "",
+   "motivo": "«Parentalia» è il nome della festa romana dei defunti ed è passato intatto in italiano, come i Fasti."
+  },
+  {
+   "id": "stoa0045.stoa025",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Diminutivo d'autore che si cita in latino: «prefazioncelle» non esiste nell'uso italiano."
+  },
+  {
+   "id": "stoa0045.stoa026",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Le preghiere liminari si citano col titolo latino «Precationes»."
+  },
+  {
+   "id": "stoa0045.stoa027",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Si cita «Versus paschales (prosodici)»; «Versi pasquali» non è titolo affermato."
+  },
+  {
+   "id": "stoa0045.stoa028",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Grecismo tecnico entrato intatto nell'uso italiano: si cita «il Technopaegnion»."
+  },
+  {
+   "id": "tlg0551.tlg002",
+   "italiano": "Storia dei re",
+   "originale": "Βασιλική",
+   "motivo": "«ἐκ τῆς» è la formula degli estratti bizantini, non il titolo: il libro è la Βασιλική, in italiano il libro sull'età regia."
+  },
+  {
+   "id": "tlg0551.tlg003",
+   "italiano": "Storia italica",
+   "originale": "Ἰταλική",
+   "motivo": "Ripristinato il nominativo come negli altri libri; in italiano è il libro sulla conquista dell'Italia («storia italica»)."
+  },
+  {
+   "id": "tlg0551.tlg004",
+   "italiano": "Le guerre sannitiche",
+   "originale": "Σαυνιτική",
+   "motivo": "Formula italiana corrente (cfr. l'edizione «Appiano. Dalle guerre sannitiche», Scardigli); tolta la rubrica «ἐκ τῆς»."
+  },
+  {
+   "id": "tlg0551.tlg005",
+   "italiano": "La guerra celtica",
+   "originale": "Κελτική",
+   "motivo": "Il catalogo ha l'accento guasto (Κελτῖκης): il titolo è Κελτική, in italiano il libro sulle guerre coi Galli."
+  },
+  {
+   "id": "tlg0551.tlg006",
+   "italiano": "Storia della Sicilia e delle isole",
+   "originale": "Σικελικὴ καὶ Νησιωτική",
+   "motivo": "Accenti guasti nel catalogo (Σικελῖκης, νησιωτικής): ripristinato il nominativo corretto del libro doppio."
+  },
+  {
+   "id": "tlg0551.tlg007",
+   "italiano": "La guerra iberica",
+   "originale": "",
+   "motivo": "Treccani cita in italiano «la Guerra iberica»; il greco in catalogo è già corretto."
+  },
+  {
+   "id": "tlg0551.tlg008",
+   "italiano": "La guerra annibalica",
+   "originale": "",
+   "motivo": "Titolo italiano corrente registrato da Treccani per il libro annibaico."
+  },
+  {
+   "id": "tlg0551.tlg009",
+   "italiano": "La guerra libica",
+   "originale": "",
+   "motivo": "Treccani: «la Guerra libica», cioè lo scontro con Cartagine visto dall'Africa."
+  },
+  {
+   "id": "tlg0551.tlg010",
+   "italiano": "Storia numidica",
+   "originale": "Νομαδική",
+   "motivo": "«ἐκ τῆς» è la rubrica degli estratti: il titolo è Νομαδική, in italiano il libro sui Numidi."
+  },
+  {
+   "id": "tlg0551.tlg011",
+   "italiano": "Le guerre macedoniche",
+   "originale": "Μακεδονική",
+   "motivo": "Ripristinato il nominativo; in italiano il libro si designa con le guerre macedoniche."
+  },
+  {
+   "id": "tlg0551.tlg012",
+   "italiano": "La guerra illirica",
+   "originale": "",
+   "motivo": "Treccani: «la Guerra illirica»; il titolo greco in catalogo è già quello giusto."
+  },
+  {
+   "id": "tlg0551.tlg013",
+   "italiano": "La guerra siriaca",
+   "originale": "",
+   "motivo": "Treccani: «la Guerra siriaca» (la campagna contro Antioco III)."
+  },
+  {
+   "id": "tlg0551.tlg014",
+   "italiano": "La guerra mitridatica",
+   "originale": "",
+   "motivo": "Treccani registra «la Guerra mitridatica»; l'edizione Mondadori la intitola «Le guerre di Mitridate»."
+  },
+  {
+   "id": "tlg0551.tlg017",
+   "italiano": "Le guerre civili",
+   "originale": "Ἐμφύλια",
+   "motivo": "«Ἐμφυλίων Πρώτη» è l'intestazione del solo libro I, ma l'unità comprende i cinque libri: il titolo greco dell'opera è Ἐμφύλια."
+  },
+  {
+   "id": "tlg0035.tlg001",
+   "italiano": "Amore fuggitivo",
+   "originale": "",
+   "motivo": "Titolo con cui l'idillio circola in italiano (variante «Eros fuggitivo»), fin dalla tradizione poliziano-tassiana."
+  },
+  {
+   "id": "tlg0035.tlg002",
+   "italiano": "Europa",
+   "originale": "",
+   "motivo": "L'epillio si cita in italiano col nome dell'eroina, «Europa»."
+  },
+  {
+   "id": "tlg0035.tlg003",
+   "italiano": "Epitafio di Bione",
+   "originale": "",
+   "motivo": "Formula italiana consolidata per il compianto (di paternità discussa) sul poeta Bione."
+  },
+  {
+   "id": "tlg0035.tlg004",
+   "italiano": "Megara",
+   "originale": "",
+   "motivo": "Si cita in italiano col nome della moglie di Eracle, «Megara»."
+  },
+  {
+   "id": "tlg0035.tlg005",
+   "italiano": "",
+   "originale": "",
+   "motivo": "«Fragmenta» è etichetta editoriale moderna, non un titolo d'autore: non va né tradotta né retrovertita in greco."
+  },
+  {
+   "id": "tlg0081.tlg001",
+   "italiano": "Antichità romane",
+   "originale": "",
+   "motivo": "Titolo italiano corrente e consolidato per la Ῥωμαϊκὴ Ἀρχαιολογία; l'originale greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg0081.tlg002",
+   "italiano": "Sugli antichi oratori",
+   "originale": "",
+   "motivo": "Resa italiana corrente del De antiquis oratoribus, usata dai manuali (accanto alla variante «Sugli oratori attici»)."
+  },
+  {
+   "id": "tlg0081.tlg003",
+   "italiano": "Su Lisia",
+   "originale": "Περὶ Λυσίου",
+   "motivo": "La riga in catalogo riproduce un pezzo dell'incipit («Λυσίας... Συρακούσιος... πατρόθεν»), non il titolo: il titolo greco della sezione è Περὶ Λυσίου, in italiano «Su Lisia»."
+  },
+  {
+   "id": "tlg0081.tlg004",
+   "italiano": "Su Isocrate",
+   "originale": "Περὶ Ἰσοκράτους",
+   "motivo": "Come sopra: in catalogo c'è l'incipit (per giunta senza accento su Ἰσοκράτης); il titolo è Περὶ Ἰσοκράτους."
+  },
+  {
+   "id": "tlg0081.tlg005",
+   "italiano": "Su Iseo",
+   "originale": "Περὶ Ἰσαίου",
+   "motivo": "Anche qui il catalogo dà l'incipit e non il titolo, che nelle edizioni è Περὶ Ἰσαίου."
+  },
+  {
+   "id": "tlg0081.tlg006",
+   "italiano": "Sullo stile di Demostene",
+   "originale": "Περὶ τῆς Δημοσθένους λέξεως",
+   "motivo": "Titolo italiano d'uso per il De Demosthene; l'originale in catalogo è privo di spiriti e accenti (Περί, της) e va restituito in politonico."
+  },
+  {
+   "id": "tlg0081.tlg007",
+   "italiano": "Sugli antichi oratori, resti del libro II",
+   "originale": "Περὶ τῶν ἀρχαίων ῥητόρων (τοῦ β΄ λόγου λείψανα)",
+   "motivo": "Titolo latino editoriale su opera greca: sono i resti del secondo libro del Περὶ τῶν ἀρχαίων ῥητόρων, e il titolo è descrittivo, non tràdito."
+  },
+  {
+   "id": "tlg0081.tlg008",
+   "italiano": "Prima lettera ad Ammeo",
+   "originale": "",
+   "motivo": "È l'Epistula ad Ammaeum I, che in italiano si cita «Prima lettera ad Ammeo» per distinguerla dalla seconda (tlg011)."
+  },
+  {
+   "id": "tlg0081.tlg009",
+   "italiano": "Su Dinarco",
+   "originale": "",
+   "motivo": "Resa italiana corrente del De Dinarcho, uniforme agli altri opuscoli («Su Lisia», «Su Tucidide»)."
+  },
+  {
+   "id": "tlg0081.tlg010",
+   "italiano": "Su Tucidide",
+   "originale": "Περὶ Θουκυδίδου",
+   "motivo": "Il catalogo ha la grafia itacistica Θουκιδίδου: il nome si scrive Θουκυδίδης, con upsilon."
+  },
+  {
+   "id": "tlg0081.tlg011",
+   "italiano": "Seconda lettera ad Ammeo",
+   "originale": "Περὶ τῶν Θουκυδίδου ἰδιωμάτων πρὸς Ἀμμαῖον",
+   "motivo": "È l'Epistula ad Ammaeum II, citata in italiano come «Seconda lettera ad Ammeo»; corretta anche la grafia Θουκιδίδου → Θουκυδίδου."
+  },
+  {
+   "id": "tlg0081.tlg012",
+   "italiano": "Sulla composizione delle parole",
+   "originale": "",
+   "motivo": "Forma italiana più diffusa nei manuali per il De compositione verborum (l'edizione Donadi titola «La composizione stilistica», ma la citazione corrente è questa)."
+  },
+  {
+   "id": "tlg0081.tlg015",
+   "italiano": "Lettera a Pompeo Gemino",
+   "originale": "",
+   "motivo": "Il destinatario è Pompeo Gemino e così l'opera si cita in italiano; l'originale greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg2003.tlg001",
+   "italiano": "Panegirico in onore dell'imperatore Costanzo",
+   "originale": "",
+   "motivo": "Titolo italiano d'uso per l'ἐγκώμιον a Costanzo II (or. I)."
+  },
+  {
+   "id": "tlg2003.tlg002",
+   "italiano": "Elogio dell'imperatrice Eusebia",
+   "originale": "",
+   "motivo": "Resa italiana corrente dell'ἐγκώμιον per Eusebia (or. II/III a seconda delle numerazioni)."
+  },
+  {
+   "id": "tlg2003.tlg003",
+   "italiano": "Sulle gesta dell'imperatore, ovvero sulla regalità",
+   "originale": "",
+   "motivo": "Secondo panegirico a Costanzo, citato in italiano col titolo doppio che traduce il ἢ περὶ βασιλείας."
+  },
+  {
+   "id": "tlg2003.tlg005",
+   "italiano": "Lettera al senato e al popolo di Atene",
+   "originale": "",
+   "motivo": "L'orazione-manifesto del 361 si cita in italiano così (o «Lettera agli Ateniesi»); l'originale greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg2003.tlg006",
+   "italiano": "Lettera a Temistio",
+   "originale": "",
+   "motivo": "Forma italiana consolidata per l'epistola-orazione al filosofo Temistio."
+  },
+  {
+   "id": "tlg2003.tlg008",
+   "italiano": "Alla Madre degli dèi",
+   "originale": "",
+   "motivo": "Titolo italiano d'uso per l'inno-orazione alla Magna Mater."
+  },
+  {
+   "id": "tlg2003.tlg009",
+   "italiano": "Contro i cinici ignoranti",
+   "originale": "",
+   "motivo": "Resa italiana corrente di Εἰς τοὺς ἀπαιδεύτους κύνας (ἀπαίδευτοι = privi di παιδεία, «ignoranti/incolti»)."
+  },
+  {
+   "id": "tlg2003.tlg010",
+   "italiano": "I Cesari",
+   "originale": "",
+   "motivo": "La satira Συμπόσιον ἢ Κρόνια si cita universalmente in italiano come «I Cesari» (Caesares), dal contenuto."
+  },
+  {
+   "id": "tlg2003.tlg011",
+   "italiano": "Inno a Helios Re",
+   "originale": "",
+   "motivo": "Titolo italiano d'uso per il discorso dedicato a Salustio (anche «Discorso su Helios re»); l'originale greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg2003.tlg012",
+   "italiano": "",
+   "originale": "",
+   "motivo": "In italiano l'opera si cita col titolo greco traslitterato, «Misopogon»: le rese («Il nemico della barba») sono glosse esplicative, non titoli d'uso."
+  },
+  {
+   "id": "tlg2003.tlg013",
+   "italiano": "Lettere",
+   "originale": "Ἐπιστολαί",
+   "motivo": "Titolo latino su opera greca: l'epistolario di Giuliano è in greco (Ἐπιστολαί) e in italiano si cita «Lettere»."
+  },
+  {
+   "id": "tlg2003.tlg017",
+   "italiano": "Contro i Galilei",
+   "originale": "Κατὰ Γαλιλαίων",
+   "motivo": "Titolo latino convenzionale su opera greca: l'originale è Κατὰ Γαλιλαίων, in italiano «Contro i Galilei»."
+  },
+  {
+   "id": "tlg0017.tlg001",
+   "italiano": "Per l'eredità di Cleonimo",
+   "originale": "",
+   "motivo": "Formula consolidata delle orazioni ereditarie di Iseo («Per l'eredità di...»), attestata già nelle traduzioni ottocentesche."
+  },
+  {
+   "id": "tlg0017.tlg002",
+   "italiano": "Per l'eredità di Menecle",
+   "originale": "",
+   "motivo": "Stessa formula d'uso italiano per i λόγοι κληρικοί di Iseo."
+  },
+  {
+   "id": "tlg0017.tlg003",
+   "italiano": "Per l'eredità di Pirro",
+   "originale": "",
+   "motivo": "Formula consolidata; l'originale greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg0017.tlg004",
+   "italiano": "Per l'eredità di Nicostrato (epilogo)",
+   "originale": "",
+   "motivo": "Del discorso resta solo l'epilogo, indicazione che va conservata anche nel titolo italiano d'uso."
+  },
+  {
+   "id": "tlg0017.tlg005",
+   "italiano": "Per l'eredità di Diceogene",
+   "originale": "",
+   "motivo": "Δικαιογένης si italianizza in «Diceogene»; formula d'uso invariata."
+  },
+  {
+   "id": "tlg0017.tlg006",
+   "italiano": "Per l'eredità di Filottemone",
+   "originale": "",
+   "motivo": "Φιλοκτήμων dà in italiano «Filottemone» (assimilazione -κτ- > -tt-, come Filottete, Ettore)."
+  },
+  {
+   "id": "tlg0017.tlg007",
+   "italiano": "Per l'eredità di Apollodoro",
+   "originale": "Περὶ τοῦ Ἀπολλοδώρου κλήρου",
+   "motivo": "Il catalogo ha «Απολλοδώρου» senza spirito: va restituito Ἀπολλοδώρου."
+  },
+  {
+   "id": "tlg0017.tlg008",
+   "italiano": "Per l'eredità di Cirone",
+   "originale": "",
+   "motivo": "Κίρων dà «Cirone»; formula d'uso invariata."
+  },
+  {
+   "id": "tlg0017.tlg009",
+   "italiano": "Per l'eredità di Astifilo",
+   "originale": "",
+   "motivo": "Formula consolidata; l'originale greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg0017.tlg010",
+   "italiano": "Per l'eredità di Aristarco",
+   "originale": "",
+   "motivo": "L'uso italiano cita il discorso dal solo κλῆρος conteso, lasciando cadere il «πρὸς Ξεναίνετον» dell'intestazione greca."
+  },
+  {
+   "id": "tlg0017.tlg011",
+   "italiano": "Per l'eredità di Agnia",
+   "originale": "",
+   "motivo": "Ἁγνίας si italianizza in «Agnia», lo stesso κλῆρος del «Contro Macartato» demostenico."
+  },
+  {
+   "id": "tlg0017.tlg012",
+   "italiano": "In difesa di Eufileto",
+   "originale": "Ὑπὲρ Εὐφιλήτου",
+   "motivo": "Il catalogo ha «Υπὲρ» senza spirito aspro; in italiano l'orazione (tràdita da Dionigi) si cita «In difesa di Eufileto»."
+  },
+  {
+   "id": "tlg0028.tlg001",
+   "italiano": "Contro la matrigna, per avvelenamento",
+   "originale": "",
+   "motivo": "Titolo italiano d'uso (anche nella forma breve «Contro la matrigna»); φαρμακεία è l'accusa di veneficio."
+  },
+  {
+   "id": "tlg0028.tlg002",
+   "italiano": "Prima tetralogia",
+   "originale": "",
+   "motivo": "Le Τετραλογίαι si citano in italiano come Prima, Seconda e Terza tetralogia."
+  },
+  {
+   "id": "tlg0028.tlg003",
+   "italiano": "Seconda tetralogia",
+   "originale": "",
+   "motivo": "Numerazione italiana corrente della serie delle tetralogie."
+  },
+  {
+   "id": "tlg0028.tlg004",
+   "italiano": "Terza tetralogia",
+   "originale": "",
+   "motivo": "Numerazione italiana corrente della serie delle tetralogie."
+  },
+  {
+   "id": "tlg0028.tlg005",
+   "italiano": "Sull'omicidio di Erode",
+   "originale": "",
+   "motivo": "Titolo italiano d'uso del De caede Herodis (anche «Per l'uccisione di Erode»)."
+  },
+  {
+   "id": "tlg0028.tlg006",
+   "italiano": "Sul coreuta",
+   "originale": "",
+   "motivo": "Formula consolidata dell'oratoria attica in italiano, con il tecnicismo «coreuta» per χορευτής."
+  },
+  {
+   "id": "stoa0261.stoa0001",
+   "italiano": "Carmi",
+   "originale": "",
+   "motivo": "La raccolta poetica di Sidonio si cita correntemente in italiano come «Carmi» (edizioni e studi italiani usano questa forma)."
+  },
+  {
+   "id": "stoa0261.stoa0002",
+   "italiano": "Lettere, libri VIII-IX",
+   "originale": "Epistulae, libri VIII-IX",
+   "motivo": "Il titolo in catalogo è ibrido, con l'inglese «Books»: va uniformato al latino «libri», e in italiano l'epistolario si cita «Lettere»."
+  },
+  {
+   "id": "phi0692.phi001",
+   "italiano": "",
+   "originale": "",
+   "motivo": "In italiano si cita sempre «le Dirae»: la glossa «Le imprecazioni» compare nei manuali fra parentesi, non come titolo."
+  },
+  {
+   "id": "phi0692.phi002",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Il titolo è il nome della donna cantata: resta «Lydia» anche nelle edizioni italiane, tradurlo non avrebbe senso."
+  },
+  {
+   "id": "phi0692.phi003",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Manuali ed edizioni italiane dicono «il Culex»; «La zanzara» circola solo come glossa esplicativa."
+  },
+  {
+   "id": "phi0692.phi005",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Anche le traduzioni italiane conservano il titolo latino (Paravia: «Le Georgiche, la Copa e il Moretum»); «L'ostessa» è glossa."
+  },
+  {
+   "id": "phi0692.phi006",
+   "italiano": "Elegie a Mecenate",
+   "originale": "",
+   "motivo": "Titolo descrittivo, non nome proprio: la forma italiana «Elegie a Mecenate» è corrente negli studi accanto al latino."
+  },
+  {
+   "id": "phi0692.phi007",
+   "italiano": "",
+   "originale": "",
+   "motivo": "«Ciris» è il nome dell'uccello in cui è mutata Scilla: in italiano non esiste un traducente d'uso."
+  },
+  {
+   "id": "phi0692.phi008",
+   "italiano": "",
+   "originale": "",
+   "motivo": "«Priapea» è già la forma con cui l'italiano cita il gruppo di carmi priapei."
+  },
+  {
+   "id": "phi0692.phi009",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Titolo greco tradizionale ormai intraducibile: in italiano si dice «il Catalepton»."
+  },
+  {
+   "id": "phi0692.phi011",
+   "italiano": "",
+   "originale": "",
+   "motivo": "«Il Moretum» è insieme il nome del piatto e il titolo d'uso anche nelle traduzioni italiane; «La focaccia» è glossa."
+  },
+  {
+   "id": "phi0692.phi012",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Si cita col titolo latino: nessuna resa italiana («L'educazione dell'uomo onesto») è entrata nell'uso."
+  },
+  {
+   "id": "phi0692.phi013",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Titolo latino formulare (il «sì» e il «no» della disputa): l'italiano non ha una resa consolidata."
+  },
+  {
+   "id": "stoa0238.stoa001",
+   "italiano": "Le corone dei martiri",
+   "originale": "",
+   "motivo": "Titolo delle edizioni italiane correnti (Città Nuova, «Le corone dei martiri»); circola anche «Le corone»."
+  },
+  {
+   "id": "stoa0238.stoa002",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Nei manuali italiani è sempre «Psychomachia»; «La lotta per l'anima» compare solo come glossa fra parentesi."
+  },
+  {
+   "id": "stoa0238.stoa003",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Etichetta latina conservata anche dalle edizioni italiane («aggiunti la Praefatio e l'Epilogus», ed. Sciuto)."
+  },
+  {
+   "id": "stoa0238.stoa004",
+   "italiano": "Inni quotidiani",
+   "originale": "Liber Cathemerinon",
+   "motivo": "«Inni quotidiani» è il titolo delle traduzioni italiane; la forma corretta del latino è «Liber Cathemerinon», in parallelo al Liber Peristephanon."
+  },
+  {
+   "id": "stoa0238.stoa005",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Si cita col titolo latino «Apotheosis»; «Apoteosi» resta una glossa dei manuali, non un titolo d'uso."
+  },
+  {
+   "id": "stoa0238.stoa006",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Titolo grecizzante d'uso corrente in italiano; «L'origine del male» è solo la glossa esplicativa."
+  },
+  {
+   "id": "stoa0238.stoa007",
+   "italiano": "Contro Simmaco",
+   "originale": "",
+   "motivo": "Formula polemica consolidata in italiano, come «Contro Apione» o «Contro Celso»."
+  },
+  {
+   "id": "stoa0238.stoa008",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Titolo greco enigmatico («doppio nutrimento»): in italiano si cita sempre «Dittochaeon»."
+  },
+  {
+   "id": "stoa0238.stoa009",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Come la Praefatio, etichetta latina mantenuta nelle edizioni italiane di Prudenzio."
+  },
+  {
+   "id": "tlg0074.tlg001",
+   "italiano": "Anabasi di Alessandro",
+   "originale": "Ἀλεξάνδρου ἀνάβασις",
+   "motivo": "Titolo italiano delle edizioni correnti (Mondadori, BUR); «Anabasis» è il titolo latino convenzionale di un'opera greca."
+  },
+  {
+   "id": "tlg0074.tlg002",
+   "italiano": "Indiké",
+   "originale": "",
+   "motivo": "L'italiano cita «Indiké» (Sisti-Zambrini; «L'Indiké di Arriano»): traslitterazione diventata forma d'uso, più diffusa di «L'India»."
+  },
+  {
+   "id": "tlg0074.tlg003",
+   "italiano": "Cinegetico",
+   "originale": "",
+   "motivo": "Forma italiana d'uso, sul modello del Cinegetico senofonteo; «La caccia» è molto meno diffuso."
+  },
+  {
+   "id": "tlg0074.tlg004",
+   "italiano": "Periplo del Ponto Eusino",
+   "originale": "",
+   "motivo": "Titolo italiano consolidato (ed. Marenghi e bibliografia successiva)."
+  },
+  {
+   "id": "tlg0074.tlg005",
+   "italiano": "L'arte tattica",
+   "originale": "",
+   "motivo": "Titolo dell'edizione italiana con testo greco a fronte («L'arte tattica. Trattato di tecnica militare»)."
+  },
+  {
+   "id": "tlg0074.tlg006",
+   "italiano": "Schieramento contro gli Alani",
+   "originale": "",
+   "motivo": "Titolo italiano corrente, usato anche come titolo di volume."
+  },
+  {
+   "id": "tlg0638.tlg001",
+   "italiano": "Vita di Apollonio di Tiana",
+   "originale": "",
+   "motivo": "Titolo italiano universale dell'opera; il greco in catalogo è già quello giusto."
+  },
+  {
+   "id": "tlg0638.tlg003",
+   "italiano": "Vite dei sofisti",
+   "originale": "",
+   "motivo": "Titolo delle edizioni italiane (Sellerio) e degli studi."
+  },
+  {
+   "id": "tlg0638.tlg004",
+   "italiano": "Eroico",
+   "originale": "",
+   "motivo": "«Eroico» è la forma italiana corrente per il dialogo di Filostrato."
+  },
+  {
+   "id": "tlg0638.tlg005",
+   "italiano": "Nerone",
+   "originale": "",
+   "motivo": "Nome proprio con forma italiana d'uso immediata."
+  },
+  {
+   "id": "tlg0638.tlg006",
+   "italiano": "Lettere. Dialessi.",
+   "originale": "",
+   "motivo": "Entrambe le parti hanno resa italiana corrente: «Lettere» e «Dialessi»."
+  },
+  {
+   "id": "tlg0638.tlg007",
+   "italiano": "Sulla ginnastica",
+   "originale": "",
+   "motivo": "Resa italiana corrente (così Treccani); accanto circola il latino «Gymnasticus»."
+  },
+  {
+   "id": "tlg0030.tlg001",
+   "italiano": "Per Licofrone",
+   "originale": "",
+   "motivo": "Formula consolidata delle orazioni attiche in italiano (il greco suona «Apologia in difesa di Licofrone»)."
+  },
+  {
+   "id": "tlg0030.tlg002",
+   "italiano": "Contro Filippide",
+   "originale": "",
+   "motivo": "Titolo italiano consolidato dell'orazione."
+  },
+  {
+   "id": "tlg0030.tlg003",
+   "italiano": "Contro Atenogene",
+   "originale": "",
+   "motivo": "Titolo italiano consolidato, fra i più citati di Iperide."
+  },
+  {
+   "id": "tlg0030.tlg004",
+   "italiano": "Per Eussenippo",
+   "originale": "Ὑπὲρ Εὐξενίππου εἰσαγγελίας ἀπολογία πρὸς Πολύευκτον",
+   "motivo": "In italiano si cita «Per Eussenippo»; nel greco in catalogo lo spirito è sulla vocale sbagliata: «εἰσαγγελίας», non «ἐισαγγελίας»."
+  },
+  {
+   "id": "tlg0030.tlg005",
+   "italiano": "Contro Demostene",
+   "originale": "",
+   "motivo": "Formula d'uso; per esteso «Contro Demostene, per il denaro di Arpalo»."
+  },
+  {
+   "id": "tlg0030.tlg006",
+   "italiano": "Epitafio",
+   "originale": "",
+   "motivo": "L'orazione funebre di Iperide si cita in italiano come «Epitafio»."
+  },
+  {
+   "id": "tlg0027.tlg001",
+   "italiano": "Sui misteri",
+   "originale": "",
+   "motivo": "Titolo italiano consolidato dell'orazione."
+  },
+  {
+   "id": "tlg0027.tlg002",
+   "italiano": "Sul suo ritorno",
+   "originale": "",
+   "motivo": "Titolo italiano corrente nelle edizioni; circola anche «Sul proprio ritorno»."
+  },
+  {
+   "id": "tlg0027.tlg003",
+   "italiano": "Sulla pace con gli Spartani",
+   "originale": "",
+   "motivo": "Titolo italiano consolidato (edizioni e commenti recenti); variante «Sulla pace con i Lacedemoni»."
+  },
+  {
+   "id": "tlg0027.tlg004",
+   "italiano": "Contro Alcibiade",
+   "originale": "",
+   "motivo": "Formula consolidata delle orazioni attiche (l'orazione è peraltro ritenuta spuria)."
+  },
+  {
+   "id": "phi0426.phi001",
+   "italiano": "La guerra africana",
+   "originale": "",
+   "motivo": "In linea con «La guerra gallica» e «La guerra civile» del corpus cesariano; in latino circola anche «Bellum Africum»."
+  },
+  {
+   "id": "phi0428.phi001",
+   "italiano": "La guerra alessandrina",
+   "originale": "",
+   "motivo": "Titolo italiano corrente delle traduzioni del corpus cesariano; in latino anche «Bellum Alexandrinum»."
+  },
+  {
+   "id": "phi0430.phi001",
+   "italiano": "La guerra ispanica",
+   "originale": "",
+   "motivo": "Resa italiana corrente; circola anche «La guerra di Spagna» e il latino «Bellum Hispaniense»."
+  },
+  {
+   "id": "tlg0719.tlg001",
+   "italiano": "Sulle cause e i segni delle malattie acute",
+   "originale": "Περὶ αἰτίων καὶ σημείων ὀξέων παθῶν",
+   "motivo": "L'unica resa italiana in circolazione è quella della coppia acute/croniche (Puccinotti, «Delle cause, dei segni e della cura delle malattie acute e croniche»); corretto παθών → παθῶν, genitivo plurale di πάθος, com'è già in tlg002."
+  },
+  {
+   "id": "tlg0719.tlg002",
+   "italiano": "Sulle cause e i segni delle malattie croniche",
+   "originale": "",
+   "motivo": "Il greco in catalogo è già accentato bene; l'italiano fa coppia con tlg001 secondo la tradizione della versione italiana."
+  },
+  {
+   "id": "tlg0719.tlg003",
+   "italiano": "La cura delle malattie acute",
+   "originale": "",
+   "motivo": "θεραπευτικόν è reso con «cura» nella sola versione italiana esistente; il greco in catalogo è corretto."
+  },
+  {
+   "id": "tlg0719.tlg004",
+   "italiano": "La cura delle malattie croniche",
+   "originale": "Χρονίων νούσων θεραπευτικόν",
+   "motivo": "«θεραπευτικών» è guasto: il titolo è il neutro θεραπευτικόν, come in tlg003 e nelle edizioni (Perseus/CHLT: ΧΡΟΝΙΩΝ ΝΟΥΣΩΝ ΘΕΡΑΠΕΥΤΙΚΟΝ)."
+  },
+  {
+   "id": "tlg0526.tlg001",
+   "italiano": "Antichità giudaiche",
+   "originale": "",
+   "motivo": "Titolo con cui l'opera si cita in ogni manuale ed edizione italiana."
+  },
+  {
+   "id": "tlg0526.tlg002",
+   "italiano": "Autobiografia",
+   "originale": "",
+   "motivo": "In italiano si cita Autobiografia (o Vita); il greco Ἰωσήπου βίος resta autentico in seconda fascia."
+  },
+  {
+   "id": "tlg0526.tlg003",
+   "italiano": "Contro Apione",
+   "originale": "",
+   "motivo": "Il greco in catalogo è il titolo autentico; l'uso italiano (e la tradizione manoscritta secondaria) è invece «Contro Apione»."
+  },
+  {
+   "id": "tlg0526.tlg004",
+   "italiano": "La guerra giudaica",
+   "originale": "Ἱστορία Ἰουδαϊκοῦ πολέμου πρὸς Ῥωμαίους",
+   "motivo": "Il catalogo conserva solo il genitivo pendente della formula: ripristinata la formula intera con Ἱστορία."
+  },
+  {
+   "id": "tlg0036.tlg001",
+   "italiano": "Epitafio di Adone",
+   "originale": "Ἀδώνιδος ἐπιτάφιος",
+   "motivo": "Il titolo in catalogo è privo di spiriti e accenti: restituito il politonico."
+  },
+  {
+   "id": "tlg0036.tlg002",
+   "italiano": "Epitalamio di Achille e Deidamia",
+   "originale": "",
+   "motivo": "In italiano il carme si cita sempre come Epitalamio di Achille e Deidamia; «Μύρσων καὶ Λυκίδας» è la rubrica dei due interlocutori tramandata dai codici, quindi resta legittimamente in seconda fascia."
+  },
+  {
+   "id": "tlg0036.tlg003",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Raccolta di frammenti: in italiano si cita con l'etichetta latina delle edizioni, tradurla darebbe un titolo d'opera che non esiste."
+  },
+  {
+   "id": "tlg0555.tlg001",
+   "italiano": "Protrettico ai Greci",
+   "originale": "",
+   "motivo": "Titolo italiano corrente nelle edizioni e nei manuali di patristica."
+  },
+  {
+   "id": "tlg0555.tlg004",
+   "italiano": "Stromati",
+   "originale": "",
+   "motivo": "Forma italianizzata d'uso («Gli Stromati»); il greco Στρώματα resta sotto."
+  },
+  {
+   "id": "tlg0555.tlg006",
+   "italiano": "Quale ricco si salverà?",
+   "originale": "",
+   "motivo": "Resa italiana consolidata del Quis dives salvetur, diffusa anche nella variante «Quale ricco si salva?»."
+  },
+  {
+   "id": "tlg0029.tlg004",
+   "italiano": "Contro Demostene",
+   "originale": "",
+   "motivo": "Formula consolidata per le orazioni attiche in κατά + genitivo."
+  },
+  {
+   "id": "tlg0029.tlg005",
+   "italiano": "Contro Aristogitone",
+   "originale": "",
+   "motivo": "Formula consolidata per le orazioni attiche in κατά + genitivo."
+  },
+  {
+   "id": "tlg0029.tlg006",
+   "italiano": "Contro Filocle",
+   "originale": "",
+   "motivo": "Formula consolidata per le orazioni attiche in κατά + genitivo."
+  },
+  {
+   "id": "tlg0545.tlg001",
+   "italiano": "La natura degli animali",
+   "originale": "",
+   "motivo": "Titolo delle edizioni italiane correnti (De natura animalium)."
+  },
+  {
+   "id": "tlg0545.tlg002",
+   "italiano": "Storia varia",
+   "originale": "",
+   "motivo": "Resa corrente di Ποικίλη ἱστορία nelle edizioni italiane."
+  },
+  {
+   "id": "tlg0545.tlg003",
+   "italiano": "Lettere rustiche",
+   "originale": "",
+   "motivo": "Titolo dell'edizione italiana di riferimento (Drago 2023); il greco in catalogo è la rubrica di citazione «ἐκ τῶν… ἐπιστολῶν», autentica ma normalizzabile in Ἀγροικικαὶ ἐπιστολαί se si vuole il titolo secco."
+  },
+  {
+   "id": "tlg0548.tlg001",
+   "italiano": "Biblioteca",
+   "originale": "",
+   "motivo": "Titolo italiano corrente del manuale mitografico."
+  },
+  {
+   "id": "tlg0548.tlg002",
+   "italiano": "Epitome",
+   "originale": "Ἐπιτομή",
+   "motivo": "L'accento grave vale solo davanti ad altra parola: in isolamento l'ossitono è Ἐπιτομή."
+  },
+  {
+   "id": "tlg2040.tlg002",
+   "italiano": "Discorso ai giovani",
+   "originale": "",
+   "motivo": "Titolo italiano consolidato dall'edizione Naldini (Oratio ad adolescentes), che compendia la lunga formula greca."
+  },
+  {
+   "id": "tlg2040.tlg004",
+   "italiano": "Lettere",
+   "originale": "Ἐπιστολαί",
+   "motivo": "«Epistulae» è il titolo latino delle edizioni su un'opera greca: l'originale è Ἐπιστολαί."
+  },
+  {
+   "id": "tlg0557.tlg004",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Silloge moderna di estratti da Stobeo: si cita con l'etichetta latina dell'edizione (Schenkl), non ha titolo greco antico né un uso italiano."
+  },
+  {
+   "id": "tlg0557.tlg005",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Come la precedente: raccolta editoriale moderna, in italiano si cita col titolo latino dell'edizione."
+  },
+  {
+   "id": "tlg4029.tlg001",
+   "italiano": "Le guerre",
+   "originale": "",
+   "motivo": "Titolo delle edizioni italiane («Le guerre persiana, vandalica, gotica»); il greco in catalogo è la formula tramandata."
+  },
+  {
+   "id": "tlg4029.tlg002",
+   "italiano": "Storia segreta",
+   "originale": "Ἀνέκδοτα",
+   "motivo": "«Ἀπόκρυφη Ἱστορία» è greco moderno: il titolo antico, attestato dalla Suda, è Ἀνέκδοτα (lat. Historia arcana)."
+  },
+  {
+   "id": "tlg0094.tlg002",
+   "italiano": "La musica",
+   "originale": "",
+   "motivo": "Resa italiana corrente del De musica pseudoplutarcheo nelle traduzioni dei Moralia."
+  },
+  {
+   "id": "tlg0094.tlg003",
+   "italiano": "Opinioni dei filosofi sulla natura",
+   "originale": "",
+   "motivo": "Titolo della traduzione italiana completa dei Moralia (Bompiani 2017) per i Placita philosophorum."
+  },
+  {
+   "id": "phi2003.phi001",
+   "italiano": "L'arte culinaria",
+   "originale": "",
+   "motivo": "Titolo dell'edizione italiana più diffusa (Bompiani, cura di G. Carazzali); il latino resta in seconda fascia per chi cita De re coquinaria."
+  },
+  {
+   "id": "stoa0054.stoa006",
+   "italiano": "Storia ecclesiastica del popolo degli Inglesi",
+   "originale": "Historia ecclesiastica gentis Anglorum",
+   "motivo": "Il catalogo dà l'accusativo, residuo di una formula di citazione: il titolo va al nominativo."
+  },
+  {
+   "id": "stoa0058.stoa006",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Gli opuscoli teologici di Boezio in italiano si citano con i titoli latini (De Trinitate, Contra Eutychen, De fide catholica): non c'è un titolo italiano in uso, solo glosse esplicative."
+  },
+  {
+   "id": "phi0836.phi002",
+   "italiano": "Della medicina",
+   "originale": "",
+   "motivo": "Titolo della versione italiana di riferimento («Della medicina, libri otto», trad. Del Lungo)."
+  },
+  {
+   "id": "phi0845.phi002",
+   "italiano": "L'arte dell'agricoltura",
+   "originale": "",
+   "motivo": "Titolo dell'edizione Einaudi (trad. Calzecchi Onesti), ormai corrente in italiano per il De re rustica."
+  },
+  {
+   "id": "phi0860.phi001",
+   "italiano": "Storie di Alessandro Magno",
+   "originale": "",
+   "motivo": "Titolo italiano corrente nelle edizioni e nei manuali."
+  },
+  {
+   "id": "phi1242.phi001",
+   "italiano": "Epitome di storia romana",
+   "originale": "",
+   "motivo": "Titolo dell'edizione italiana (Rusconi, cura di Salomone Gaggero) e formula corrente nei manuali."
+  },
+  {
+   "id": "stoa0162.stoa004",
+   "italiano": "Lettere",
+   "originale": "Epistulae",
+   "motivo": "«Selections.» è una nota di catalogo bibliotecario, non parte del titolo; in italiano l'epistolario si cita come Lettere."
+  },
+  {
+   "id": "stoa0203.stoa001",
+   "italiano": "Ottavio",
+   "originale": "",
+   "motivo": "Titolo italiano consolidato del dialogo (edizione Pellegrino-Siniscalco-Rizzi e traduzioni successive)."
+  },
+  {
+   "id": "phi0972.phi001f",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Frammenti: in italiano si citano con l'etichetta latina delle edizioni, non con un titolo tradotto."
+  },
+  {
+   "id": "stoa0276.stoa002",
+   "italiano": "Alla moglie",
+   "originale": "",
+   "motivo": "Titolo della traduzione italiana (Città Nuova; anche «Alla sposa» nell'edizione Carpin)."
+  },
+  {
+   "id": "phi0478.phi003",
+   "italiano": "",
+   "originale": "",
+   "motivo": "L'operetta in italiano si cita sempre col titolo latino: le rese moderne («manualetto di campagna elettorale», «come vincere le elezioni») sono titoli editoriali, non uso corrente né reperibili sul manuale."
+  },
+  {
+   "id": "phi1014.phi004",
+   "italiano": "",
+   "originale": "",
+   "motivo": "Frammenti: si citano con l'etichetta latina delle edizioni."
+  },
+  {
+   "id": "phi1038.phi001",
+   "italiano": "Detti e fatti memorabili",
+   "originale": "",
+   "motivo": "Titolo italiano corrente (UTET), che inverte rispetto al latino l'ordine dei due termini."
+  },
+  {
+   "id": "tlg0532.tlg001",
+   "italiano": "Leucippe e Clitofonte",
+   "originale": "τὰ κατὰ Λευκίππην καὶ Κλειτοφῶντα",
+   "motivo": "In «Kλειτoφῶντα» il catalogo ha una K e una o latine al posto delle greche (omoglifi che rompono la ricerca): ripristinati i caratteri greci."
+  },
+  {
+   "id": "tlg7000.tlg001",
+   "italiano": "Antologia Palatina",
+   "originale": "Παλατινὴ Ἀνθολογία",
+   "motivo": "In italiano la raccolta si cita sempre «Antologia Palatina»; «Volume V» in catalogo è la numerazione del volume dell'edizione, non parte del titolo."
+  },
+  {
+   "id": "tlg0653.tlg001",
+   "italiano": "Fenomeni",
+   "originale": "",
+   "motivo": "Titolo italiano corrente del poema astronomico di Arato (anche «I Fenomeni»)."
+  },
+  {
+   "id": "tlg1389.tlg001",
+   "italiano": "Lessico dei dieci oratori",
+   "originale": "Λέξεις τῶν δέκα ῥητόρων",
+   "motivo": "«Lexicon in decem oratores Atticos» è il titolo latino delle edizioni di un'opera greca; in italiano si cita «Lessico dei dieci oratori (attici)»."
+  },
+  {
+   "id": "tlg0556.tlg001",
+   "italiano": "Trattato di tattica",
+   "originale": "",
+   "motivo": "Forma con cui il manuale circola in italiano (ed. Cascarino «Trattato di tattica»; ed. Sestili «Manuale di tattica»)."
+  },
+  {
+   "id": "tlg0008.tlg001",
+   "italiano": "I Deipnosofisti",
+   "originale": "",
+   "motivo": "L'uso italiano è la forma italianizzata «I Deipnosofisti» (ed. Salerno: «I dotti a banchetto»), distinta dal greco Δειπνοσοφισταί."
+  },
+  {
+   "id": "tlg4091.tlg001",
+   "italiano": "Descrizioni",
+   "originale": "",
+   "motivo": "Le ἐκφράσεις di statue si citano in italiano come «Descrizioni» (lat. Descriptiones), di regola insieme alle «Immagini» dei Filostrati."
+  },
+  {
+   "id": "tlg0554.tlg001",
+   "italiano": "Le avventure di Cherea e Calliroe",
+   "originale": "Τὰ περὶ Χαιρέαν καὶ Καλλιρρόην",
+   "motivo": "«De Chaerea et Callirhoe» è titolo latino d'edizione su romanzo greco; in italiano prevale «Le avventure di Cherea e Calliroe» (BUR: «Il romanzo di Calliroe»)."
+  },
+  {
+   "id": "tlg0385.tlg001",
+   "italiano": "Storia romana",
+   "originale": "Ῥωμαϊκὴ ἱστορία",
+   "motivo": "«(Books 36-55)» indica i libri contenuti nel volume dell'edizione ed è estraneo al titolo; in italiano l'opera è la «Storia romana»."
+  },
+  {
+   "id": "tlg4081.tlg001",
+   "italiano": "Il ratto di Elena",
+   "originale": "",
+   "motivo": "Titolo italiano consolidato dell'epillio di Colluto."
+  },
+  {
+   "id": "tlg0535.tlg001",
+   "italiano": "Sui dodici anni",
+   "originale": "",
+   "motivo": "Orazione citata in italiano come «Sui dodici anni» (Treccani: «Intorno ai dodici anni»); il greco tràdito Ὑπὲρ τῆς δωδεκαετίας resta in seconda fascia."
+  },
+  {
+   "id": "tlg0613.tlg001",
+   "italiano": "Sullo stile",
+   "originale": "",
+   "motivo": "Il Περὶ ἑρμηνείας è tramandato in italiano come «Sullo stile» (varianti «Lo stile», «Della locuzione»)."
+  },
+  {
+   "id": "tlg0004.tlg001",
+   "italiano": "Vite e dottrine dei più celebri filosofi",
+   "originale": "",
+   "motivo": "Titolo dell'edizione italiana di riferimento (Reale, Bompiani), che ricalca il greco; forma breve d'uso «Vite dei filosofi»."
+  },
+  {
+   "id": "tlg0612.tlg001",
+   "italiano": "Orazioni",
+   "originale": "Λόγοι",
+   "motivo": "«Orationes» è titolo latino su corpus greco: l'originale è Λόγοι; in italiano si citano le «Orazioni» (o «Discorsi») di Dione."
+  },
+  {
+   "id": "tlg0058.tlg001",
+   "italiano": "La difesa di una città assediata",
+   "originale": "",
+   "motivo": "Titolo dell'edizione italiana di riferimento (Bettalli, ETS 1990); nei manuali l'opera è citata anche come «Poliorcetica»."
+  },
+  {
+   "id": "tlg1799.tlg001",
+   "italiano": "Elementi",
+   "originale": "",
+   "motivo": "Titolo italiano universale del trattato euclideo («Gli Elementi»)."
+  },
+  {
+   "id": "tlg2018.tlg002",
+   "italiano": "Storia ecclesiastica",
+   "originale": "",
+   "motivo": "Resa italiana consolidata di Ἐκκλησιαστικὴ ἱστορία, usata da tutte le edizioni e dai manuali."
+  },
+  {
+   "id": "tlg0652.tlg001",
+   "italiano": "Immagini",
+   "originale": "",
+   "motivo": "Le Εἰκόνες di Filostrato Minore si citano in italiano come «Immagini»."
+  },
+  {
+   "id": "tlg1600.tlg001",
+   "italiano": "Immagini",
+   "originale": "",
+   "motivo": "Come per Filostrato Minore, le Εἰκόνες sono in italiano le «Immagini» (ed. Aragno, Abbondanza)."
+  },
+  {
+   "id": "tlg0057.tlg010",
+   "italiano": "Sulle facoltà naturali",
+   "originale": "Περὶ φυσικῶν δυνάμεων",
+   "motivo": "In catalogo «Περί» porta l'acuto invece del grave davanti alla parola seguente; il titolo italiano è quello dell'edizione Mondadori (UTET: «Le facoltà naturali»)."
+  },
+  {
+   "id": "tlg2934.tlg066",
+   "italiano": "Barlaam e Ioasaf",
+   "originale": "Βαρλαὰμ καὶ Ἰωάσαφ",
+   "motivo": "Accenti da correggere (ossitoni in grave davanti a parola seguente); in italiano il romanzo è «(Storia di) Barlaam e Ioasaf»."
+  },
+  {
+   "id": "tlg1216.tlg001",
+   "italiano": "Lettera di Barnaba",
+   "originale": "",
+   "motivo": "Resa italiana corrente, identica al nome con cui l'opera compare nelle raccolte dei Padri apostolici."
+  },
+  {
+   "id": "tlg0341.tlg002",
+   "italiano": "Alessandra",
+   "originale": "",
+   "motivo": "Il poema di Licofrone si cita in italiano come «Alessandra», forma italianizzata del nome proprio."
+  },
+  {
+   "id": "tlg0034.tlg001",
+   "italiano": "Contro Leocrate",
+   "originale": "",
+   "motivo": "Formula consolidata delle orazioni attiche: κατά + genitivo si rende «Contro…»."
+  },
+  {
+   "id": "tlg0560.tlg001",
+   "italiano": "Sul sublime",
+   "originale": "",
+   "motivo": "Titolo italiano corrente del Περὶ ὕψους; varianti in circolazione «Del sublime», «Il sublime», «Trattato del Sublime»."
+  },
+  {
+   "id": "tlg2045.tlg001",
+   "italiano": "Le Dionisiache",
+   "originale": "",
+   "motivo": "Titolo italiano consolidato del poema di Nonno (ed. BUR «Le Dionisiache»)."
+  },
+  {
+   "id": "tlg0648.tlg001",
+   "italiano": "Il generale",
+   "originale": "",
+   "motivo": "Titolo dell'edizione italiana di riferimento (Petrocelli, Dedalo: «Il generale. Manuale per l'esercizio del comando»); il greco Στρατηγικός resta in seconda fascia."
+  },
+  {
+   "id": "tlg0023.tlg001",
+   "italiano": "Alieutiche",
+   "originale": "",
+   "motivo": "Forma italianizzata d'uso nei manuali («le Alieutiche»); Treccani glossa il titolo con «La pesca»."
+  },
+  {
+   "id": "tlg0024.tlg001",
+   "italiano": "Cinegetiche",
+   "originale": "",
+   "motivo": "Come per le Alieutiche, forma italianizzata d'uso corrente; Treccani glossa «La caccia»."
+  },
+  {
+   "id": "tlg0655.tlg001",
+   "italiano": "Sofferenze d'amore",
+   "originale": "",
+   "motivo": "Resa italiana corrente di Ἐρωτικὰ παθήματα, usata da manuali e traduzioni."
+  },
+  {
+   "id": "tlg4036.tlg023",
+   "italiano": "Crestomazia",
+   "originale": "Χρηστομάθεια γραμματική",
+   "motivo": "In catalogo c'è il titolo inglese «Chrestomathy»: l'originale è greco e in italiano l'opera è la «Crestomazia», fonte principale per il Ciclo epico."
+  },
+  {
+   "id": "tlg2046.tlg001",
+   "italiano": "Posthomerica",
+   "originale": "Τὰ μεθ’ Ὅμηρον",
+   "motivo": "Nei manuali italiani il poema si cita col titolo convenzionale «Posthomerica» (anche «Postomeriche»; ed. Bompiani «Il seguito dell'Iliade»); nel greco va ripristinata la maiuscola iniziale."
+  },
+  {
+   "id": "tlg0641.tlg001",
+   "italiano": "Racconti efesii",
+   "originale": "",
+   "motivo": "Titolo italiano d'uso del romanzo (in alternativa «Efesiache»); il greco tràdito Τὰ κατὰ Ἀνθίαν καὶ Ἁβροκόμην resta in seconda fascia."
+  },
+  {
+   "id": "tlg0093.tlg009",
+   "italiano": "I caratteri",
+   "originale": "",
+   "motivo": "Titolo italiano universale dell'operetta teofrastea."
+  },
+  {
+   "id": "tlg0363.tlg007",
+   "italiano": "Tetrabiblos",
+   "originale": "",
+   "motivo": "In italiano l'opera si cita «Tetrabiblos» (ed. Valla: «Le previsioni astrologiche»), forma traslitterata distinta dal greco Τετράβιβλος."
+  },
+  {
+   "id": "tlg0647.tlg001",
+   "italiano": "La presa di Ilio",
+   "originale": "",
+   "motivo": "Resa italiana consolidata di Ἅλωσις Ἰλίου, titolo dell'epillio di Trifiodoro."
+  },
+  {
+   "id": "tlg3135.tlg001",
+   "italiano": "Epitome delle storie",
+   "originale": "",
+   "motivo": "Titolo italiano corrente dell'opera di Zonara (lat. Epitome historiarum), usato anche dalle traduzioni recenti."
+  }
+ ],
+ "correzioni": [
+  {
+   "id": "tlg0284.tlg040",
+   "italiano_corretto": "Sull'abrogazione della commedia",
+   "prova": "Esiste già il titolo italiano corrente, e non è quello proposto: M. Lamagna, «Addentrarsi in una tradizione manoscritta: il discorso di Elio Aristide Sull'abrogazione della commedia (or. 29 K.)», Koinonia 40 (2016), pp. 495-510, e il volume Elio Aristide. Sull'abrogazione della commedia (Orazione 29 Keil). Introduzione, testo critico, traduzione e commento, Satura Editrice, Napoli 2025 (scheda IRIS Unina, hdl 11588/1015474 e 11588/680670). «Discorso deliberativo sul divieto delle commedie» è la resa parola per parola di Συμβουλευτικὸς περὶ τοῦ μὴ δεῖν κωμῳδεῖν: non compare in nessun catalogo, e un insegnante che cerca l'unica edizione italiana esistente non lo trova."
+  },
+  {
+   "id": "tlg0284.tlg022",
+   "italiano_corretto": "Secondo discorso smirneo",
+   "prova": "Errore di destinatario, non solo di uso: Σμυρναϊκός vale «smirneo» (di/a Smirne), non «agli Smirnei», e il προσφωνητικός è il discorso di saluto al nuovo governatore, non alla cittadinanza — L. Miletti, «Sofisti, élites urbane e mediazioni politiche» (in «Signori delle città», Napoli), elenco delle orazioni cittadine: «21. Σμυρναϊκὸς II: nuovo elogio di Smirne per l'arrivo di un nuovo governatore nel 179 d.C.». La bibliografia italiana cita il gruppo come «i cinque discorsi smirnei (17-21)» (Miletti, PAN 13, 2024, p. 222) e numera Σμυρναϊκός I (or. 17) e II (or. 21). «Discorso di saluto agli Smirnei» non è reperibile da nessuna parte."
+  },
+  {
+   "id": "tlg0284.tlg039",
+   "italiano_corretto": "Discorso sull'alleanza II",
+   "prova": "La parentesi è falsamente distintiva: ANCHE il primo Simmachico è rivolto ai Tebani. La tradizione dà a entrambi lo stesso sottotitolo — Συμμαχικὸς αʹ [πρὸς Θηβαίους περὶ τῆς συμμαχίας] e Συμμαχικὸς βʹ [πρὸς Θηβαίους περὶ τῆς συμμαχίας] (elenco Keil/Dindorf, Wikipedia it. s.v. Publio Elio Aristide) — e la monografia italiana di riferimento è A. Capano, «Un nuovo Demostene per l'Impero romano. Elio Aristide e le meletai ai Tebani I e II sull'alleanza», Roma 2017: i Tebani valgono per il dittico intero. Scrivere «(ai Tebani)» solo sul II fa credere che il I abbia un altro destinatario."
+  },
+  {
+   "id": "tlg0284.tlg019",
+   "italiano_corretto": "Discorso per Eleusi",
+   "prova": "«Eleusinio» non è la forma italiana: l'aggettivo da Eleusi è «eleusino» (Treccani, Vocabolario, s.v. eleusino: «misteri eleusini»). La bibliografia italiana chiama l'or. 22 «l'Eleusino» e la intitola letteralmente «Il discorso per Eleusi (or. 22 Keil)» — L. Miletti, «Sofisti, élites urbane e mediazioni politiche», § 3, che scrive anche «il discorso 22 Eleusino», «l'Eleusino (22), con la deprecazione per lo stato di Eleusi devastata dai Costoboci» (PAN 13, 2024, p. 222) e traduce la subscriptio «L'orazione eleusina è stata scritta in un'ora circa a Smirne». «Discorso eleusinio» è un calco di Ἐλευσίνιος: irreperibile in italiano."
+  },
+  {
+   "id": "tlg0284.tlg030",
+   "italiano_corretto": "Contro l'invio di rinforzi in Sicilia",
+   "prova": "«Sulla tesi contraria» è la resa meccanica di Εἰς τὸ ἐναντίον e su una scheda non identifica nulla: non dice né l'argomento né che si tratta del secondo Siciliano. In italiano la coppia si cita come «i due discorsi siciliani» (orr. 5-6 K), antilogia sull'opportunità di inviare o no rinforzi alla spedizione ateniese del 414/13; il secondo sostiene la tesi contraria all'invio. Il titolo proposto qui è speculare a quello già dato a tlg029 («Sull'invio di rinforzi in Sicilia») e rende la coppia leggibile; in alternativa «Secondo discorso siciliano», ma allora va rinumerato anche tlg029 («Primo discorso siciliano»)."
+  },
+  {
+   "id": "tlg0284.tlg015",
+   "italiano_corretto": "Primo discorso smirneo",
+   "prova": "Nessuna fonte italiana usa «Discorso politico smirneo», che in italiano suona per giunta come «discorso di politica». La bibliografia parla dei «cinque discorsi smirnei (17-21)» e numera l'or. 17 come Σμυρναϊκός I: L. Miletti, «Sofisti, élites urbane e mediazioni politiche», elenco: «17. Σμυρναϊκὸς I: elogio di Smirne per un governatore in visita»; e PAN 13, 2024, p. 222: «attendono ancora traduzioni e commenti adeguati opere come i già citati cinque discorsi smirnei (17-21)». Il πολιτικός del titolo di Keil resta nella fascia greca."
+  },
+  {
+   "id": "tlg0284.tlg055",
+   "italiano_corretto": "Panegirico per l'acqua di Pergamo",
+   "prova": "«Discorso panegirico» non è forma italiana: «panegirico» è già il sostantivo che designa il genere (come «Panatenaico», «Elogio»), e l'accoppiata «discorso panegirico» è una doppia resa latineggiante che non compare in nessuna fonte. La forma effettivamente in uso negli studi italiani è «Panegirico per l'acqua di Pergamo» (così l'articolo italiano sull'Asclepieo di Pergamo, rosa.uniroma1.it/rosa01/medicina_nei_secoli/article/download/351/328, che cita l'or. LIII come «Panegirico per l'acqua di Pergamo», conservato solo nei paragrafi iniziali); Wikipedia it. (Publio Elio Aristide) ha la variante «Panegirico sull'acqua a Pergamo». Entrambe le forme attestate omettono «Discorso» e nessuna ha «per l'acqua a Pergamo» (il nesso corretto è «l'acqua di Pergamo», l'acquedotto pergameno; «a Pergamo» sarebbe complemento di luogo dell'orazione, non specificazione dell'acqua). Da confrontare con gli altri casi della lista, dove la scelta della forma d'uso è stata fatta correttamente (Treccani per «Rodiaco», «Alle città per la concordia», «Ai Rodî per la concordia»)."
+  },
+  {
+   "id": "stoa0089.stoa013",
+   "italiano_corretto": "Panegirico per il consolato di Manlio Teodoro",
+   "prova": "«Panegirico per il console Manlio Teodoro» e' un calco del dativo latino «Manlio Theodoro consuli» e non ha riscontro: la ricerca della stringa esatta non restituisce nulla, mentre l'italiano d'uso impiega sempre «consolato». Riscontri: P. Ravalico, «Claudiano, Panegirico per il consolato di Manlio Teodoro. Introduzione, traduzione e commento» (Universita di Trieste, arts.units.it/handle/11368/2908143); L. Cristante, «La praefatio (Carm. 16) del panegirico di Claudiano per il consolato di Mallio Teodoro» (Ist. editoriali e poligrafici internazionali); it.wikipedia, voce Claudio Claudiano: «Panegirico del consolato di Manlio Teodoro»; N. Berengani, 1736: «Il panegirico nel consolato di Flavio Mallio Teodoro». La forma corretta ristabilisce anche il parallelismo interno al catalogo con stoa010-012 («Panegirico per il terzo/quarto/sesto consolato di Onorio Augusto»). Il nome «Manlio Teodoro» va invece bene (Perseus: Panegyricus dictus Manlio Theodoro consuli; it.wikipedia lemma «Manlio Teodoro»), quindi la giustificazione che cita «Flavio Mallio Teodoro» e' incoerente col titolo proposto ma non impone di cambiare il nome."
+  },
+  {
+   "id": "tlg0551.tlg002",
+   "italiano_corretto": "Storia dell'età regia",
+   "prova": "«Storia dei re» non è attestato in nessuna fonte italiana: è la traduzione parola per parola di Βασιλικὴ (ἱστορία). Treccani (Enciclopedia Italiana, s.v. Appiano) registra il libro col titolo greco e lo glossa per contenuto: «il primo libro narra le gesta dei sette re, e perciò è intitolato Βασιλική»; Sapere.it, elencando gli argomenti dei 24 libri, apre con «età regia, storia italica, sannitica, celtica, siciliana e isolana...». La denominazione corrente in italiano è dunque «età regia» (o il titolo conservato Basilica), non «Storia dei re»: un docente che cercasse quest'ultimo in un manuale o in OPAC non troverebbe nulla."
+  },
+  {
+   "id": "tlg0551.tlg005",
+   "italiano_corretto": "Storia celtica",
+   "prova": "Il modulo «Guerra + aggettivo» in italiano è riservato ai libri conservati per intero: Treccani elenca «guerra iberica, annibalica, libica, illirica, siriaca, mitridatica» — la Κελτική non è in quella serie, perché non è un libro su una guerra. Sempre Treccani (Enciclopedia Italiana) la definisce «Κελτική, cioè la storia delle relazioni tra Roma e i popoli della Gallia», cioè un arco secolare dalle invasioni galliche a Cesare, non un singolo conflitto. La forma italiana attestata è «storia celtica» (Sapere.it: «età regia, storia italica, sannitica, celtica...»); Wikipedia it. usa «Le guerre galliche», al plurale. «La guerra celtica» è un calco costruito per analogia con «La guerra iberica» e non è reperibile."
+  },
+  {
+   "id": "tlg0551.tlg006",
+   "italiano_corretto": "Storia siciliana e isolana",
+   "prova": "La perifrasi «Storia della Sicilia e delle isole» è una resa parola per parola di Σικελικὴ καὶ Νησιωτική e non compare in nessun repertorio. La denominazione italiana d'uso è aggettivale: Sapere.it, nell'elenco degli argomenti dei 24 libri, ha «siciliana e isolana» (in altre fonti «siciliana e insulare»); Treccani (Enc. It.) cita il libro come «Σεικελική». La correzione mantiene inoltre la coerenza con gli altri titoli della stessa serie già accolti nel catalogo («Storia italica», «Storia numidica»), che seguono appunto il modulo «storia + aggettivo»."
+  },
+  {
+   "id": "tlg0017.tlg004",
+   "italiano_corretto": "Per l'eredità di Nicostrato",
+   "prova": "La giustificazione fraintende il termine tecnico dell'intestazione greca. Il titolo tràdito è «Περὶ τοῦ Νικοστράτου κλήρου <ἐπίλογος>» (così l'edizione greca in Perseus, doc 1999.01.0141 speech=4), ma qui ἐπίλογος NON significa che dell'orazione resti solo la perorazione: designa il discorso di sostegno pronunciato in seconda battuta (synonimo di δευτερολογία). La Loeb Classical Library intitola infatti la sezione «IV. On the Estate of Nicostratus — Supplementary Speech» (LCL 202, 1927), e la letteratura sugli oratori attici registra esplicitamente che «in Isaeus Speeches 2 and 4, terms for supporting speeches include epilogos ('afterword') and deuterologia ('second speech')» (Edwards, Isaeus). Il discorso, per giunta, ci è giunto INTERO: Perseus lo articola in 31 paragrafi più l'ipotesi, e il celebre passo sui finti eredi in lutto (§§ 7-10) sta nel corpo dell'orazione, non in un epilogo isolato. Quindi «resta solo l'epilogo» è falso e la parentesi «(epilogo)» in italiano suggerisce al docente un testo mutilo che non esiste. Il titolo italiano d'uso, quello che si trova in Wikipedia (elenco delle orazioni di Iseo) e nei cataloghi, è il semplice «Per l'eredità di Nicostrato», uniforme agli altri nove della serie. Se si volesse conservare l'indicazione tecnica, l'unica resa corretta sarebbe «(discorso supplementare)», non «(epilogo)»."
+  },
+  {
+   "id": "tlg0028.tlg001",
+   "italiano_corretto": "Per avvelenamento contro la matrigna",
+   "prova": "La forma proposta ricalca l'ordine del greco (κατὰ τῆς μητρυιᾶς φαρμακείας), ma la tradizione italiana inverte gli elementi e mette per primo il capo d'accusa. Il catalogo SBN/Librinlinea registra il volume come «Per avvelenamento contro la matrigna; Prima tetralogia; Seconda tetralogia; Sull'omicidio di Erode; Sul coreuta; Frammenti» (librinlinea.it/titolo/per-avvelenamento-contro-la-matrigna-p/TO01617945); la Società editrice Dante Alighieri, collana Traditio, pubblica «Antifonte, Per veneficio contro la matrigna», a cura di M. Marzi; e la citazione corrente in ambito didattico è «Antiph. Per avvelenamento, contro la matrigna I 14-20». Nessuna occorrenza della sequenza inversa: cercando «Contro la matrigna, per avvelenamento» in un catalogo di biblioteca non si intercetta il record. Resta valida la forma breve «Contro la matrigna» (Treccani, Wikipedia IT), ma il titolo esteso d'uso è quello con «Per avvelenamento» in testa."
+  },
+  {
+   "id": "tlg0638.tlg006",
+   "italiano_corretto": "Lettere. Dialexeis.",
+   "prova": "«Lettere» regge (Wikipedia IT elenca fra le opere di Filostrato le «Lettere», 73 epistole; l'antologia BUR «Lettere d'amore» di Alcifrone-Filostrato-Aristeneto, a cura di Conca-Zanetto, ne conferma l'uso). «Dialessi» invece non è attestato: la voce Treccani (Enciclopedia Italiana) su Filostrato elenca Vita di Apollonio, Vite dei sofisti, Eroico, Immagini e il trattato Sulla ginnastica, e non conosce «Dialessi»; la voce Wikipedia IT «Lucio Flavio Filostrato» elenca Vita di Apollonio, Vite dei sofisti, Eroico, Ginnastico, Lettere, Nerone — anche qui nessuna «Dialessi». Ricerche mirate su «dialessi» come titolo filostrateo e come termine retorico italiano (anche in area Massimo di Tiro / Dione di Prusa / Elio Aristide) non producono nessuna attestazione. Il secondo membro del titolo si cita in italiano con la forma originale traslitterata, «Dialexeis»: è un caso in cui la resa italiana va tolta, non coniata."
+  },
+  {
+   "id": "tlg0719.tlg001",
+   "italiano_corretto": "Delle cause e dei segni delle malattie acute",
+   "prova": "La giustificazione stessa ammette che «l'unica resa italiana in circolazione» è quella di Puccinotti — e allora va usata quella, non una traduzione nuova dal greco. Puccinotti (Livorno, Bertani Antonelli, 1843) intitola l'intera opera «Areteo di Cappadocia. Delle cause, dei segni e della cura delle malattie acute e croniche, libri otto»; la voce Wikipedia IT «Areteo di Cappadocia», descrivendo l'articolazione in otto libri, glossa esattamente «due intitolati De causis et signis acutorum morborum (Delle cause e dei segni delle malattie acute)». La forma italiana attestata è dunque con «Delle… e dei…», non «Sulle… e i…»: quest'ultima è un calco costruito su Περὶ αἰτιῶν καὶ σημείων ὀξέων παθῶν e non si trova né in catalogo né in bibliografia. Resta corretta la sistemazione del greco (παθών → παθῶν)."
+  },
+  {
+   "id": "stoa0054.stoa006",
+   "italiano_corretto": "Storia ecclesiastica degli Angli",
+   "prova": "«Storia ecclesiastica del popolo degli Inglesi» non è un titolo di nessuna edizione: è un calco della formula latina «gentis Anglorum» e in OPAC non restituisce nulla. Le due sole rese italiane realmente in catalogo sono «Storia ecclesiastica degli Angli» (Beda il Venerabile, Città Nuova, coll. Testi patristici, cura di G. Simonetti Abbolito, intr. B. Luiselli, ISBN 9788831130684) e «Storia degli Inglesi» (Fondazione Valla-Mondadori 2008-2010, ed. M. Lapidge, trad. P. Chiesa, ISBN 9788804594246). Wikipedia it. lemmatizza l'opera addirittura col latino «Historia ecclesiastica gentis Anglorum». Scelgo la forma Città Nuova perché conserva «ecclesiastica» ed è quella che un docente trova cercando in biblioteca; in alternativa, se si privilegia l'edizione critica di riferimento, «Storia degli Inglesi»."
+  },
+  {
+   "id": "tlg0545.tlg002",
+   "italiano_corretto": "Storie varie",
+   "prova": "La giustificazione dice «resa corrente nelle edizioni italiane», ma l'unica traduzione italiana moderna in commercio è Claudio Eliano, «Storie varie», a cura di Nigel Wilson, trad. Claudio Bevegni, Adelphi, Biblioteca Adelphi 323, 1996 (ISBN 9788845912122) — registrata così anche in SBN/CulturaItalia. Wikipedia it. per il resto cita l'opera col latino «Varia historia». «Storia varia» è forma da siti di versioni scolastiche, non titolo di edizione: chi la cerca in un catalogo di biblioteca non trova il libro. La coppia realmente d'uso è «Storie varie» (edizione) / «Varia historia» (citazione erudita)."
+  },
+  {
+   "id": "tlg0094.tlg003",
+   "italiano_corretto": "",
+   "prova": "«Opinioni dei filosofi sulla natura» non è verificabile in nessuna sede: la scheda editoriale e i contributi noti di «Plutarco. Tutti i Moralia» (Lelli-Pisani, Bompiani 2017) citano il trattato sempre come «Placita philosophorum» (p. es. i curatori M. Rocchi per Placita I e S. Prignano per Placita III), non con quella formula italiana; il sintagma «sulla natura» non compare in nessun titolo attestato. In italiano l'operetta pseudoplutarchea si cita per convenzione col titolo latino «Placita philosophorum» (così Perseus/Scaife e la manualistica), e l'unica resa italiana che circola è «Dottrine dei filosofi» (elenco dei Moralia in Wikipedia it.), mai con l'aggiunta «sulla natura». Meglio togliere la fascia italiana e lasciare il titolo di citazione; se si vuole comunque un italiano, usare «Dottrine dei filosofi»."
+  },
+  {
+   "id": "tlg0655.tlg001",
+   "italiano_corretto": "Pene d'amore",
+   "prova": "«Sofferenze d'amore» non è il titolo di nessuna edizione né di nessuna voce enciclopedica italiana: è un calco diretto di Ἐρωτικὰ παθήματα (e dell'inglese «Sufferings of Love»), reperibile solo in glosse divulgative online. Il test del catalogo lo boccia: in OPAC/librerie l'unica traduzione italiana corrente è «Pene d'amore», Partenio di Nicea, a cura di G. Paduano, Edizioni ETS, Pisa 1992 (ISBN 9788877416261), presente su IBS, Libraccio, Unilibro, Mondadori Store. L'altra edizione scientifica italiana esce col greco traslitterato: G. Spatafora, «Partenio di Nicea, Erotiká pathémata» (in catalogo SHARE/Unisalento). Treccani, dal canto suo, glossa l'opera «Avventure d'amore» (Enciclopedia Italiana, s.v. «Partenio di Nicea in Bitinia»). Nessuna delle tre fonti dà «Sofferenze d'amore»: il titolo proposto non è d'uso e va sostituito con la forma dell'edizione di riferimento."
+  },
+  {
+   "id": "tlg0535.tlg001",
+   "italiano_corretto": "Intorno ai dodici anni",
+   "prova": "«Sui dodici anni» ricalca il titolo inglese con cui l'opera compare in Perseus e nella Loeb («[Demades], On the Twelve Years», Minor Attic Orators, LCL 395), che è verosimilmente la fonte del catalogo: non trova riscontro in italiano. L'unica forma italiana attestata in una fonte consultabile da un insegnante è quella di Treccani, voce «Demade» (Enciclopedia Italiana), che parla di «Intorno ai 12 anni» a proposito del Περὶ δωδεκαετίας pseudodemadeo. Non esiste alcuna traduzione italiana dell'orazione, quindi non c'è titolo d'edizione a cui appoggiarsi: la forma da adottare è quella enciclopedica, l'unica che una ricerca su manuale o catalogo restituisca. Nota accessoria: la giustificazione stessa ammette la divergenza da Treccani ma tiene la forma non attestata."
+  }
+ ]
+}

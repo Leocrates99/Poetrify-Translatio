@@ -1,0 +1,61 @@
+# LOTTO 06 — 45 opere, 7 autori
+# riga: id | titolo così come sta oggi in catalogo
+
+### Appendix Vergiliana — latino, lirica, augustea (11 opere)
+phi0692.phi001 | Dirae
+phi0692.phi002 | Lydia
+phi0692.phi003 | Culex
+phi0692.phi005 | Copa
+phi0692.phi006 | Elegiae in Maecenatem
+phi0692.phi007 | Ciris
+phi0692.phi008 | Priapea
+phi0692.phi009 | Catalepton
+phi0692.phi011 | Moretum
+phi0692.phi012 | De institutione viri boni
+phi0692.phi013 | De est et non
+
+### Prudenzio — latino, religione, tarda (9 opere)
+stoa0238.stoa001 | Liber Peristephanon
+stoa0238.stoa002 | Psychomachia
+stoa0238.stoa003 | Praefatio
+stoa0238.stoa004 | Cathemerina
+stoa0238.stoa005 | Apotheosis
+stoa0238.stoa006 | Hamartigenia
+stoa0238.stoa007 | Contra orationem Symmachi
+stoa0238.stoa008 | Dittochaeon
+stoa0238.stoa009 | Epilogus
+
+### Arriano — greco, storiografia, imperiale (6 opere)
+tlg0074.tlg001 | Anabasis
+tlg0074.tlg002 | Ἰνδική
+tlg0074.tlg003 | Κυνηγετικός
+tlg0074.tlg004 | Περίπλους τοῦ Εὐξείνου Πόντου
+tlg0074.tlg005 | Τέχνη τακτική
+tlg0074.tlg006 | Ἔκταξις κατὰ Ἀλανῶν
+
+### Filostrato — greco, biografia, imperiale (6 opere)
+tlg0638.tlg001 | Τὰ ἐς τὸν Τυανέα Ἀπολλώνιον
+tlg0638.tlg003 | Βίοι Σοφιστῶν
+tlg0638.tlg004 | Ἡρωικός
+tlg0638.tlg005 | Νέρων
+tlg0638.tlg006 | Ἐπιστολαί. Διαλέξεις.
+tlg0638.tlg007 | Γυμναστικός
+
+### Iperide — greco, oratoria, classica (6 opere)
+tlg0030.tlg001 | Ἀπολογία ὑπὲρ Λυκόφρονος
+tlg0030.tlg002 | Κατὰ Φιλιππίδου
+tlg0030.tlg003 | Κατ᾽ Ἀθηνογένους
+tlg0030.tlg004 | Ὑπὲρ Εὐξενίππου ἐισαγγελίας ἀπολογία πρὸς Πολύευκτον
+tlg0030.tlg005 | Κατὰ Δημοσθένους ὑπὲρ τῶν Ἁρπαλείων
+tlg0030.tlg006 | Ἐπιτάφιος
+
+### Andocide — greco, oratoria, classica (4 opere)
+tlg0027.tlg001 | Περὶ τῶν μυστηρίων
+tlg0027.tlg002 | Περὶ τῆς ἑαυτοῦ καθόδου
+tlg0027.tlg003 | Περὶ τῆς πρὸς Λακεδαιμονίους εἰρήνης
+tlg0027.tlg004 | Κατὰ Ἀλκιβιάδου
+
+### Pseudo-Cesare — latino, storiografia, repubblicana (3 opere)
+phi0426.phi001 | De bello Africo
+phi0428.phi001 | De bello Alexandrino
+phi0430.phi001 | De bello Hispaniensi

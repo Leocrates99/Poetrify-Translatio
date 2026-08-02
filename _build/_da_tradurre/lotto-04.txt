@@ -1,0 +1,53 @@
+# LOTTO 04 — 45 opere, 3 autori
+# riga: id | titolo così come sta oggi in catalogo
+
+### Ausonio — latino, lirica, tarda (26 opere)
+stoa0045.stoa001 | De Bissula
+stoa0045.stoa002 | Caesares
+stoa0045.stoa003 | Cento nuptialis
+stoa0045.stoa004 | Commemoratio professorum Burdigalensium
+stoa0045.stoa005 | Cupido cruciatus
+stoa0045.stoa006 | De herediolo
+stoa0045.stoa007 | Eclogarum liber
+stoa0045.stoa008 | Ephemeris
+stoa0045.stoa009 | Epicedion in patrem
+stoa0045.stoa010 | Epigrammaton liber
+stoa0045.stoa011 | Epistulae
+stoa0045.stoa012 | Epitaphia
+stoa0045.stoa013 | Genethliacon ad Ausonium nepotem
+stoa0045.stoa014 | Gratiarum actio
+stoa0045.stoa015 | Griphus ternarii numeri
+stoa0045.stoa016 | Liber protrepticus ad nepotem
+stoa0045.stoa017 | [Libri de fastis] conclusio
+stoa0045.stoa018 | Ludus septem sapientum
+stoa0045.stoa019 | Mosella
+stoa0045.stoa020 | Oratio versibus rhopalicis
+stoa0045.stoa021 | Ordo urbium nobilium
+stoa0045.stoa022 | Parentalia
+stoa0045.stoa025 | Praefatiunculae
+stoa0045.stoa026 | Precationes
+stoa0045.stoa027 | Versus paschales
+stoa0045.stoa028 | Technopaegnion
+
+### Appiano — greco, storiografia, imperiale (14 opere)
+tlg0551.tlg002 | ἐκ τῆς βασιλικῆς
+tlg0551.tlg003 | ἐκ τῆς Ἰταλικῆς
+tlg0551.tlg004 | ἐκ τῆς Σαυνιτικῆς
+tlg0551.tlg005 | ἐκ τῆς Κελτῖκης
+tlg0551.tlg006 | ἐκ τῆς Σικελῖκης καὶ νησιωτικής
+tlg0551.tlg007 | Ἰβηρική
+tlg0551.tlg008 | Ἀννιβαϊκή
+tlg0551.tlg009 | Λιβυκή
+tlg0551.tlg010 | ἐκ τῆς Νομαδικῆς
+tlg0551.tlg011 | ἐκ τῆς Μακεδονικῆς
+tlg0551.tlg012 | Ἰλλυρική
+tlg0551.tlg013 | Συριακή
+tlg0551.tlg014 | Μιθριδάτειος
+tlg0551.tlg017 | Ἐμφυλίων Πρώτη
+
+### Mosco — greco, lirica, ellenistica (5 opere)
+tlg0035.tlg001 | Ἔρως δραπέτης
+tlg0035.tlg002 | Εὐρώπη
+tlg0035.tlg003 | Ἐπιτάφιος Βίωνος
+tlg0035.tlg004 | Μεγάρα
+tlg0035.tlg005 | Fragmenta

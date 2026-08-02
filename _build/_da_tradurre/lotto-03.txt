@@ -1,0 +1,51 @@
+# LOTTO 03 — 45 opere, 2 autori
+# riga: id | titolo così come sta oggi in catalogo
+
+### Nuovo Testamento — greco, religione, imperiale (27 opere)
+tlg0031.tlg001 | Ματθαίος
+tlg0031.tlg002 | Μάρκος
+tlg0031.tlg003 | Λουκᾶν
+tlg0031.tlg004 | Ἰωάννην
+tlg0031.tlg005 | Acts
+tlg0031.tlg006 | Ρωμαίους
+tlg0031.tlg007 | Κορίνθιους Α′
+tlg0031.tlg008 | Κορίνθιους Β′
+tlg0031.tlg009 | Γαλάτας
+tlg0031.tlg010 | Ἐφεσίους
+tlg0031.tlg011 | Φιλιππηνίους
+tlg0031.tlg012 | Κολασσαείς
+tlg0031.tlg013 | Θεσσαλονικείς Α′
+tlg0031.tlg014 | Θεσσαλονικείς Β′
+tlg0031.tlg015 | Τιμόθεον Α′
+tlg0031.tlg016 | >Τιμόθεον B′
+tlg0031.tlg017 | Τίτον
+tlg0031.tlg018 | Φιλήμονα
+tlg0031.tlg019 | Ἑβραίους
+tlg0031.tlg020 | Ἰακώβου
+tlg0031.tlg021 | Πέτρου Α′
+tlg0031.tlg022 | Πέτρου B′
+tlg0031.tlg023 | Ἰωάννου Α′
+tlg0031.tlg024 | Ἰωάννου Β′
+tlg0031.tlg025 | Ἰωάννου Γ′
+tlg0031.tlg026 | Ἰούδου
+tlg0031.tlg027 | Ἀποκάλυψις
+
+### Ippocrate — greco, medicina, classica (18 opere)
+tlg0627.tlg001 | Περὶ ἀρχαίας ἰατρικῆς
+tlg0627.tlg003 | Προγνωστικόν
+tlg0627.tlg004 | Περὶ διαίτης ὀξέων
+tlg0627.tlg005 | Περὶ διαίτης ὀξέων. Νόθα
+tlg0627.tlg006 | Ἐπιδημίων
+tlg0627.tlg007 | Περὶ τῶν ἐν κεφαλῇ τρωμάτων
+tlg0627.tlg008 | Κατ’ ἰητρεῖον
+tlg0627.tlg009 | Περὶ ἀγμῶν
+tlg0627.tlg010 | Περὶ ἄρθρων
+tlg0627.tlg011 | Μοχλικός
+tlg0627.tlg012 | Ἀφορισμοί
+tlg0627.tlg013 | Iusiurandum
+tlg0627.tlg027 | Περὶ ἱερῆς νούσου
+tlg0627.tlg028 | Περὶ ἑλκῶν
+tlg0627.tlg029 | Περὶ αἱμοῤῥοίδων
+tlg0627.tlg030 | Περὶ συρίγγων
+tlg0627.tlg046 | Περὶ τροφῆς
+tlg0627.tlg051 | Παραγγελίαι

@@ -1,0 +1,53 @@
+# LOTTO 02 — 45 opere, 3 autori
+# riga: id | titolo così come sta oggi in catalogo
+
+### Tertulliano — latino, religione, tarda (30 opere)
+stoa0275.stoa001 | Ad martyras
+stoa0275.stoa002 | Ad nationes libri duo
+stoa0275.stoa003 | Ad Scapulam
+stoa0275.stoa004 | Adversus Hermogenem
+stoa0275.stoa005 | Adversus Iudaeos liber
+stoa0275.stoa006 | Adversus Marcionem
+stoa0275.stoa007 | Adversus Praxean
+stoa0275.stoa008 | Adversus Valentinianos
+stoa0275.stoa009 | Apologeticum
+stoa0275.stoa010 | De anima
+stoa0275.stoa011 | De baptismo
+stoa0275.stoa012 | De carne Christi
+stoa0275.stoa013 | De corona
+stoa0275.stoa014 | De cultu feminarum
+stoa0275.stoa015 | De exhortatione castitatis liber
+stoa0275.stoa016 | De fuga in persecutione
+stoa0275.stoa017 | De idolatria
+stoa0275.stoa018 | De ieiunio adversus psychicos
+stoa0275.stoa019 | De monogamia
+stoa0275.stoa020 | De oratione
+stoa0275.stoa021 | De paenitentia
+stoa0275.stoa022 | De pallio
+stoa0275.stoa023 | De patientia
+stoa0275.stoa024 | De praescriptione haereticorum
+stoa0275.stoa025 | De pudicitia
+stoa0275.stoa026 | De resurrectione carnis
+stoa0275.stoa027 | De spectaculis
+stoa0275.stoa028 | De testimonio animae
+stoa0275.stoa029 | De virginibus velandis
+stoa0275.stoa030 | Scorpiace
+
+### Claudiano — latino, epica, tarda (14 opere)
+stoa0089.stoa001 | Carminum minorum corpusculum
+stoa0089.stoa002 | De bello Gildonico
+stoa0089.stoa003 | De bello Gothico
+stoa0089.stoa004 | De consulatu Stilichonis
+stoa0089.stoa005 | De raptu Proserpinae
+stoa0089.stoa006 | Epithalamium de nuptiis Honorii Augusti
+stoa0089.stoa007 | Fescennina de nuptiis Honorii Augusti
+stoa0089.stoa008 | In Eutropium
+stoa0089.stoa009 | In Rufinum
+stoa0089.stoa010 | Panegyricus de tertio consulatu Honorii Augusti
+stoa0089.stoa011 | Panegyricus de quarto consulatu Honorii Augusti
+stoa0089.stoa012 | Panegyricus de sexto consulatu Honorii Augusti
+stoa0089.stoa013 | Panegyricus dictus Manlio Theodoro consuli
+stoa0089.stoa014 | Panegyricus dictus Probino et Olybrio consulibus
+
+### Agostino — latino, religione, tarda (1 opera)
+stoa0040.stoa011 | Epistulae. Selections.

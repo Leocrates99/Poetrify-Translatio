@@ -1105,6 +1105,12 @@ GRC.update({
     "tlg0007.tlg141": "Se sia ben detto «vivi nascosto»",
 })
 
+# Una scheda che ne contiene due · il punto centrale è già il separatore del
+# catalogo (vedi le «Prolalia · Dioniso» di Luciano), e chiude senza il punto
+# fermo che in un titolo non ci va. La seconda parte resta traslitterata:
+# «Dialexeis» è la forma con cui la filologia italiana cita le Διαλέξεις.
+GRC.update({"tlg0638.tlg006": "Lettere · Dialexeis"})     # Filostrato
+
 # ── Titoli greci lunghi ma AUTENTICI ──────────────────────────────────────
 # Nessuno di questi era corrotto: sono i titoli veri, e sono lunghi perché il
 # greco li costruisce come una frase («Sull'uscita del bottissimo Sallustio,
@@ -1164,7 +1170,19 @@ GRC.update({
     "tlg0062.tlg071": "La podagra",
 })
 
-TITLES = {**LAT, **GRC}
+# ── Coda generata ─────────────────────────────────────────────────────────
+# I titoli degli autori minori stanno in un modulo A PARTE, generato da
+# _gen_titoli_resto.py. Tenerli separati serve a una cosa sola: qui sopra c'è
+# quello che è stato deciso a mano, sotto quello che si può rigenerare. Se un
+# giorno si rifà la passata automatica, non travolge nessuna scelta del docente
+# — e infatti quelle vincono, sempre.
+try:
+    from corpus_titles_resto import TITOLI_RESTO, ORIG_RESTO
+except ImportError:                                # non ancora generato
+    TITOLI_RESTO, ORIG_RESTO = {}, {}
+
+TITLES = {**TITOLI_RESTO, **LAT, **GRC}
+ORIG = {**ORIG_RESTO, **ORIG}
 
 
 def _stessa_stringa(a, b):

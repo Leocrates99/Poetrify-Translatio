@@ -1,0 +1,110 @@
+# LOTTO 08 — 36 opere, 36 autori
+# riga: id | titolo così come sta oggi in catalogo
+
+### Antologia Palatina — greco, antologia, ellenistica (1 opera)
+tlg7000.tlg001 | Ἀνθολογία, Volume V
+
+### Arato — greco, didascalica, ellenistica (1 opera)
+tlg0653.tlg001 | Φαινόμενα
+
+### Arpocrazione — greco, erudizione, imperiale (1 opera)
+tlg1389.tlg001 | Lexicon in decem oratores Atticos
+
+### Asclepiodoto — greco, tecnica, ellenistica (1 opera)
+tlg0556.tlg001 | Τέχνη τακτική
+
+### Ateneo — greco, erudizione, imperiale (1 opera)
+tlg0008.tlg001 | Δειπνοσοφισταί
+
+### Callistrato — greco, retorica, tarda (1 opera)
+tlg4091.tlg001 | Ἐκφράσεις
+
+### Caritone — greco, romanzo, imperiale (1 opera)
+tlg0554.tlg001 | De Chaerea et Callirhoe
+
+### Cassio Dione — greco, storiografia, imperiale (1 opera)
+tlg0385.tlg001 | Ῥωμαϊκὴ Ἱστορία (Books 36-55)
+
+### Colluto — greco, epica, tarda (1 opera)
+tlg4081.tlg001 | Ἁρπαγὴ Ἑλένης
+
+### Demade — greco, oratoria, classica (1 opera)
+tlg0535.tlg001 | Ὑπὲρ τῆς δωδεκαετίας
+
+### Demetrio Falereo — greco, retorica, ellenistica (1 opera)
+tlg0613.tlg001 | Περὶ ἑρμηνείας
+
+### Diogene Laerzio — greco, biografia, imperiale (1 opera)
+tlg0004.tlg001 | Βίοι καὶ γνῶμαι τῶν ἐν φιλοσοφίᾳ εὐδοκιμησάντων
+
+### Dione Crisostomo — greco, retorica, imperiale (1 opera)
+tlg0612.tlg001 | Orationes
+
+### Enea Tattico — greco, tecnica, classica (1 opera)
+tlg0058.tlg001 | Περὶ τοῦ πῶς χρὴ πολιορκουμένους ἀντέχειν
+
+### Euclide — greco, scienze, ellenistica (1 opera)
+tlg1799.tlg001 | Στοιχεῖα
+
+### Eusebio di Cesarea — greco, religione, tarda (1 opera)
+tlg2018.tlg002 | Ἐκκλησιαστικὴ ἱστορία
+
+### Filostrato minore — greco, retorica, imperiale (1 opera)
+tlg0652.tlg001 | Εἰκόνες
+
+### Filostrato sofista — greco, retorica, imperiale (1 opera)
+tlg1600.tlg001 | Εἰκόνες
+
+### Galeno — greco, medicina, imperiale (1 opera)
+tlg0057.tlg010 | Περί φυσικῶν δυνάμεων
+
+### Giovanni Damasceno — greco, religione, tarda (1 opera)
+tlg2934.tlg066 | Βαρλαάμ καί Ἰωάσαφ
+
+### Lettera di Barnaba — greco, religione, imperiale (1 opera)
+tlg1216.tlg001 | Βαρνάβα ἐπιστολή
+
+### Licofrone — greco, lirica, ellenistica (1 opera)
+tlg0341.tlg002 | Ἀλεξάνδρα
+
+### Licurgo — greco, oratoria, classica (1 opera)
+tlg0034.tlg001 | Κατὰ Λεωκράτους
+
+### Longino — greco, retorica, imperiale (1 opera)
+tlg0560.tlg001 | Περὶ ὕψους
+
+### Nonno di Panopoli — greco, epica, tarda (1 opera)
+tlg2045.tlg001 | Διονυσιακά
+
+### Onasandro — greco, tecnica, imperiale (1 opera)
+tlg0648.tlg001 | Στρατηγικός
+
+### Oppiano — greco, didascalica, imperiale (1 opera)
+tlg0023.tlg001 | Ἁλιευτικά
+
+### Oppiano di Apamea — greco, didascalica, imperiale (1 opera)
+tlg0024.tlg001 | Κυνηγετικά
+
+### Partenio — greco, mitografia, ellenistica (1 opera)
+tlg0655.tlg001 | Ἐρωτικὰ Παθήματα
+
+### Proclo — greco, filosofia, tarda (1 opera)
+tlg4036.tlg023 | Chrestomathy
+
+### Quinto Smirneo — greco, epica, tarda (1 opera)
+tlg2046.tlg001 | τὰ μεθ᾿ Ὅμηρον
+
+### Senofonte Efesio — greco, romanzo, imperiale (1 opera)
+tlg0641.tlg001 | Τὰ κατὰ Ἀνθίαν καὶ Ἁβροκόμην
+
+### Teofrasto — greco, scienze, ellenistica (1 opera)
+tlg0093.tlg009 | Χαρακτῆρες
+
+### Tolomeo — greco, scienze, imperiale (1 opera)
+tlg0363.tlg007 | Τετράβιβλος
+
+### Trifiodoro — greco, epica, tarda (1 opera)
+tlg0647.tlg001 | Ἅλωσις Ἰλίου
+
+### Zonara — greco, storiografia, tarda (1 opera)
+tlg3135.tlg001 | Ἐπιτομὴ Ἱστοριῶν

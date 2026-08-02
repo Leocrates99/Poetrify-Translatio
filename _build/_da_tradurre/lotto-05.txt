@@ -1,0 +1,57 @@
+# LOTTO 05 — 45 opere, 5 autori
+# riga: id | titolo così come sta oggi in catalogo
+
+### Dionigi di Alicarnasso — greco, retorica, ellenistica (13 opere)
+tlg0081.tlg001 | Ῥωμαϊκὴ Ἀρχαιολογία
+tlg0081.tlg002 | Περὶ τῶν ἀρχαίων ῥητόρων
+tlg0081.tlg003 | Λυσίας συρακούσιος πατρόθεν
+tlg0081.tlg004 | Ἰσοκρατης Ἀθηναῖος
+tlg0081.tlg005 | Ἰσαῖος Ἀθηναῖος
+tlg0081.tlg006 | Περί της Δημοσθένους λέξεως
+tlg0081.tlg007 | Libri secundi de antiquis oratoribus reliquiae
+tlg0081.tlg008 | Ἐπιστολὴ πρὸς Ἀμμαῖον
+tlg0081.tlg009 | Περὶ Δεινάρχου
+tlg0081.tlg010 | Περὶ Θουκιδίδου
+tlg0081.tlg011 | Περὶ τῶν Θουκιδίδου ἰδιωμάτων πρὸς Ἀμμαῖον
+tlg0081.tlg012 | Περὶ συνθέσεως ὀνομάτων
+tlg0081.tlg015 | Ἐπιστολὴ πρὸς Πομπήιον
+
+### Giuliano imperatore — greco, retorica, tarda (12 opere)
+tlg2003.tlg001 | Ἐγκώμιον εἰς τὸν αὐτοκράτορα Κωνστάντιον
+tlg2003.tlg002 | Εὐσεβίας τῆς βασιλίδος ἐγκώμιον
+tlg2003.tlg003 | Περὶ τῶν τοῦ αὐτοκράτορος πράξεων ἢ περὶ βασιλείας
+tlg2003.tlg005 | Ἀθηναίων τῇ βουλῇ καὶ τῷ δήμῳ
+tlg2003.tlg006 | Θεμιστίῳ φιλοσόφῳ
+tlg2003.tlg008 | Εἰς τὴν μητέρα τῶν θεῶν
+tlg2003.tlg009 | Εἰς τοὺς ἀπαιδεύτους κύνας
+tlg2003.tlg010 | Συμπόσιον ἢ Κρόνια
+tlg2003.tlg011 | Εἰς τὸν βασιλέα Ἥλιον πρὸς Σαλούστιον
+tlg2003.tlg012 | Μισοπώγων
+tlg2003.tlg013 | Epistolae
+tlg2003.tlg017 | Contra Galilaeos
+
+### Iseo — greco, oratoria, classica (12 opere)
+tlg0017.tlg001 | Περὶ τοῦ Κλεωνύμου κλήρου
+tlg0017.tlg002 | Περὶ τοῦ Μενεκλέους κλήρου
+tlg0017.tlg003 | Περὶ τοῦ Πύρρου κλήρου
+tlg0017.tlg004 | Περὶ τοῦ Νικοστράτου κλήρου (ἐπίλογος)
+tlg0017.tlg005 | Περὶ τοῦ Δικαιογένους κλήρου
+tlg0017.tlg006 | Περὶ τοῦ Φιλοκτήμονος κλήρου
+tlg0017.tlg007 | Περὶ τοῦ Απολλοδώρου κλήρου
+tlg0017.tlg008 | Περὶ τοῦ Κίρωνος κλήρου
+tlg0017.tlg009 | Περὶ τοῦ Ἀστυφίλου κλήρου
+tlg0017.tlg010 | Πρὸς Ξεναίνετον περὶ τοῦ Ἀριστάρχου κλήρου
+tlg0017.tlg011 | Περὶ τοῦ Ἁγνίου κλήρου
+tlg0017.tlg012 | Υπὲρ Εὐφιλήτου
+
+### Antifonte — greco, oratoria, classica (6 opere)
+tlg0028.tlg001 | Φαρμακείας κατὰ τῆς μητρυιᾶς
+tlg0028.tlg002 | Τετραλογία Α΄
+tlg0028.tlg003 | Τετραλογία Β΄
+tlg0028.tlg004 | Τετραλογία Γ΄
+tlg0028.tlg005 | Περὶ τοῦ Ἡρῷδου φόνου
+tlg0028.tlg006 | Περὶ τοῦ χορευτοῦ
+
+### Sidonio Apollinare — latino, lirica, tarda (2 opere)
+stoa0261.stoa0001 | Carmina
+stoa0261.stoa0002 | Epistulae, Books VIII-IX
