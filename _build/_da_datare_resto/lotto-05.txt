@@ -1,0 +1,68 @@
+# LOTTO 05 — 60 opere, 3 autori
+# riga: id | genere | titolo italiano | titolo originale
+
+### Ausonio — latino, tarda (26 opere)
+stoa0045.stoa001 | lirica | De Bissula | 
+stoa0045.stoa002 | lirica | Ausonii de XII Caesaribus per Suetonium Tranquillum scriptis | Caesares
+stoa0045.stoa003 | lirica | Cento Nuptialis | 
+stoa0045.stoa004 | lirica | Commemoratio Professorum Burdigalensium | 
+stoa0045.stoa005 | lirica | Cupido Cruciatus | 
+stoa0045.stoa006 | lirica | De Herediolo | 
+stoa0045.stoa007 | lirica | Eclogarum Liber | 
+stoa0045.stoa008 | lirica | Ephemeris | 
+stoa0045.stoa009 | lirica | Epicedion in Patrem | 
+stoa0045.stoa010 | lirica | Epigrammaton Liber | 
+stoa0045.stoa011 | lirica | Epistulae | 
+stoa0045.stoa012 | lirica | Epitaphia | 
+stoa0045.stoa013 | lirica | Genethliacon ad Ausonium Nepotem | 
+stoa0045.stoa014 | lirica | Gratiarum Actio | 
+stoa0045.stoa015 | lirica | Griphus Ternarii Numeri | 
+stoa0045.stoa016 | lirica | Liber Protrepticus ad Nepotem | 
+stoa0045.stoa017 | lirica | [Libri de Fastis] Conclusio | 
+stoa0045.stoa018 | lirica | Ludus Septem Sapientum | 
+stoa0045.stoa019 | lirica | Mosella | 
+stoa0045.stoa020 | lirica | Oratio Versibus Rhopalicis | 
+stoa0045.stoa021 | lirica | Ordo Urbium Nobilium | 
+stoa0045.stoa022 | lirica | Parentalia | 
+stoa0045.stoa025 | lirica | Praefatiunculae | 
+stoa0045.stoa026 | lirica | Precationes | 
+stoa0045.stoa027 | lirica | Versus Paschales Prosodic | 
+stoa0045.stoa028 | lirica | Technopaegnion | 
+
+### Cornelio Nepote — latino, repubblicana (25 opere)
+phi0588.abo001 | biografia | Vita di Milziade | Miltiades
+phi0588.abo002 | biografia | Vita di Temistocle | Themistocles
+phi0588.abo003 | biografia | Vita di Aristide | Aristides
+phi0588.abo004 | biografia | Vita di Pausania | Pausanias
+phi0588.abo005 | biografia | Vita di Cimone | Cimon
+phi0588.abo006 | biografia | Vita di Lisandro | Lysander
+phi0588.abo007 | biografia | Vita di Alcibiade | Alcibiades
+phi0588.abo008 | biografia | Vita di Trasibulo | Thrasybulus
+phi0588.abo009 | biografia | Vita di Conone | Conon
+phi0588.abo010 | biografia | Vita di Dione | Dion
+phi0588.abo011 | biografia | Iphicrates | 
+phi0588.abo012 | biografia | Chabrias | 
+phi0588.abo013 | biografia | Timotheus | 
+phi0588.abo014 | biografia | Datames | 
+phi0588.abo015 | biografia | Epaminondas | 
+phi0588.abo016 | biografia | Pelopidas | 
+phi0588.abo017 | biografia | Agesilaus | 
+phi0588.abo018 | biografia | Eumenes | 
+phi0588.abo019 | biografia | Phocion | 
+phi0588.abo020 | biografia | Timoleon | 
+phi0588.abo021 | biografia | De Regibus | 
+phi0588.abo022 | biografia | Hamilcar | 
+phi0588.abo023 | biografia | Hannibal | 
+phi0588.abo024 | biografia | Cato | 
+phi0588.abo025 | biografia | Atticus | 
+
+### Prudenzio — latino, tarda (9 opere)
+stoa0238.stoa001 | religione | Liber Peristephanon | 
+stoa0238.stoa002 | religione | Psychomachia | 
+stoa0238.stoa003 | religione | Praefatio | 
+stoa0238.stoa004 | religione | Cathemerina | 
+stoa0238.stoa005 | religione | Apotheosis | 
+stoa0238.stoa006 | religione | Hamartigenia | 
+stoa0238.stoa007 | religione | Contra Orationem Symmachia | 
+stoa0238.stoa008 | religione | Dittochaeon | 
+stoa0238.stoa009 | religione | Epilogus | 

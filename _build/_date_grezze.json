@@ -3701,6 +3701,3300 @@
    "anno": 395,
    "tipo": "fase",
    "base": "selezione da un epistolario mai pubblicato unitariamente: le 154 lettere vanno dagli anni del deserto di Calcide (ca. 370) fino al 419, poco prima della morte; l'anno e' mediano e vale come numero d'ordine"
+  },
+  {
+   "id": "tlg0062.tlg001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "declamazione retorica di scuola (coppia di prolusioni), nessun riferimento interno a fatti o persone databili"
+  },
+  {
+   "id": "tlg0062.tlg002",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "ecfrasi di un edificio termale; nessun appiglio cronologico interno"
+  },
+  {
+   "id": "tlg0062.tlg003",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "prolalia d'apertura per una conferenza pubblica: il pezzo non nomina luogo né occasione databili"
+  },
+  {
+   "id": "tlg0062.tlg004",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "prolalia; l'autore si dice non più giovane, ma l'accenno non si converte in una data"
+  },
+  {
+   "id": "tlg0062.tlg005",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "breve prolalia mitologica sull'ambra e i cigni dell'Eridano, priva di riferimenti databili"
+  },
+  {
+   "id": "tlg0062.tlg006",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "encomio paradossale di scuola sofistica: nessun aggancio a eventi o persone"
+  },
+  {
+   "id": "tlg0062.tlg007",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "l'incontro romano col platonico Nigrino è ricordo, non data; la collocazione «verso il 150» è congettura biografica sull'autore, non sull'opera"
+  },
+  {
+   "id": "tlg0062.tlg008",
+   "anno": 175,
+   "tipo": "fase",
+   "base": "commemorazione postuma: posteriore alla morte di Demonatte, quasi centenario, collocata verso il 170; la critica la assegna all'ultima fase del corpus. L'anno è solo posizione in quella successione"
+  },
+  {
+   "id": "tlg0062.tlg009",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "ecfrasi di una sala decorata, esercizio epidittico senza indizi cronologici"
+  },
+  {
+   "id": "tlg0062.tlg010",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "encomio della patria, di attribuzione discussa e privo di riferimenti databili"
+  },
+  {
+   "id": "tlg0062.tlg011",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "attribuzione a Luciano contestata; la dedica a un Quintillo non è identificabile con certezza e l'elenco di longevi non offre termini post quem sicuri"
+  },
+  {
+   "id": "tlg0062.tlg012",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "nessun riferimento interno databile: le proposte oscillano dagli anni 160 al dopo-180 senza convergenza"
+  },
+  {
+   "id": "tlg0062.tlg013",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "trattatello morale con soli exempla storici antichi, nessun appiglio contemporaneo"
+  },
+  {
+   "id": "tlg0062.tlg014",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "gioco grammaticale-giudiziario tra le lettere dell'alfabeto: nessun dato esterno"
+  },
+  {
+   "id": "tlg0062.tlg015",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "i filosofi in scena sono tipi, non contemporanei identificabili: nessuna data ricavabile"
+  },
+  {
+   "id": "tlg0062.tlg016",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "dialogo menippeo oltremondano, privo di riferimenti a fatti databili"
+  },
+  {
+   "id": "tlg0062.tlg017",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "dialogo teologico-satirico su fato e provvidenza, senza indizi cronologici"
+  },
+  {
+   "id": "tlg0062.tlg018",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "la disputa stoico-epicurea messa in scena non rinvia a un episodio datato"
+  },
+  {
+   "id": "tlg0062.tlg019",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "dialogo di ambientazione atemporale, nessun riferimento databile"
+  },
+  {
+   "id": "tlg0062.tlg020",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "dialogo mitologico (da non confondere con la prolalia «Prometeo nei discorsi»): nessun appiglio interno"
+  },
+  {
+   "id": "tlg0062.tlg021",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "satira menippea del volo celeste: le sette filosofiche bersagliate sono generiche, senza date"
+  },
+  {
+   "id": "tlg0062.tlg022",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "rifacimento comico del misantropo attico, senza riferimenti al presente databili"
+  },
+  {
+   "id": "tlg0062.tlg023",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "dialogo menippeo di sguardo dall'alto sulla vita umana: nessun dato cronologico"
+  },
+  {
+   "id": "tlg0062.tlg024",
+   "anno": 160,
+   "tipo": "fase",
+   "base": "nessuna data propria, ma è il precedente esplicito del «Pescatore», che ne mette in scena le conseguenze: l'anno indica solo il primo posto di quella coppia"
+  },
+  {
+   "id": "tlg0062.tlg025",
+   "anno": 161,
+   "tipo": "fase",
+   "base": "seguito dichiarato della «Vendita di vite»: i filosofi venduti tornano in vita per processarne l'autore. L'anno segna solo la posteriorità rispetto a quell'opera"
+  },
+  {
+   "id": "tlg0062.tlg026",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "il «quasi quarantenne» che lascia la Retorica per il Dialogo è topos di ascendenza platonica e finzione letteraria, non dato biografico: la cronologia che vi si appoggiava non regge"
+  },
+  {
+   "id": "tlg0062.tlg027",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "pamphlet sul culto tradizionale, senza riferimenti a fatti databili"
+  },
+  {
+   "id": "tlg0062.tlg028",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "il bibliomane deriso non è identificabile con un personaggio datato: nessun termine cronologico sicuro"
+  },
+  {
+   "id": "tlg0062.tlg029",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "prolalia autobiografica letta ai concittadini di Samosata; l'assegnazione a un ritorno in patria tardo è congettura, non data"
+  },
+  {
+   "id": "tlg0062.tlg030",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "dialogo paradossale sull'arte del parassita, privo di agganci esterni"
+  },
+  {
+   "id": "tlg0062.tlg031",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "racconti di prodigi affidati a personaggi tipici: nessun riferimento databile"
+  },
+  {
+   "id": "tlg0062.tlg032",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "scenetta mitologica del giudizio di Paride, senza indizi cronologici"
+  },
+  {
+   "id": "tlg0062.tlg033",
+   "anno": 170,
+   "tipo": "fase",
+   "base": "nessuna data propria, ma è l'opera cui replica e che ritratta l'«Apologia» (tlg059): l'anno la colloca soltanto prima di quella"
+  },
+  {
+   "id": "tlg0062.tlg034",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "dialogo tra Anacarsi e Solone di ambientazione arcaica, senza appigli sul presente"
+  },
+  {
+   "id": "tlg0062.tlg035",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "catabasi menippea, priva di riferimenti a fatti databili"
+  },
+  {
+   "id": "tlg0062.tlg036",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "diatriba sui riti funebri, senza agganci cronologici"
+  },
+  {
+   "id": "tlg0062.tlg037",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "il maestro deriso è stato identificato con vari sofisti contemporanei, ma nessuna identificazione regge fino a dare una data"
+  },
+  {
+   "id": "tlg0062.tlg038",
+   "anno": 180,
+   "tipo": "circa",
+   "base": "ricorda Marco Aurelio come imperatore defunto (m. 180) e Alessandro di Abonutico come morto da circa un decennio: composta dopo il 180, su richiesta del dedicatario Celso"
+  },
+  {
+   "id": "tlg0062.tlg039",
+   "anno": 163,
+   "tipo": "circa",
+   "base": "ritratto encomiastico di Pantea di Smirne, favorita di Lucio Vero, ad Antiochia durante la guerra partica: la critica converge sul 162-163"
+  },
+  {
+   "id": "tlg0062.tlg040",
+   "anno": 164,
+   "tipo": "circa",
+   "base": "replica immediata alle «Immagini», che cita e difende: stesso contesto antiocheno di Pantea e Lucio Vero, poco dopo il 163"
+  },
+  {
+   "id": "tlg0062.tlg041",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "trattato in dialetto ionico di paternità lucianea discussa; la descrizione del santuario di Hierapolis non contiene termini cronologici"
+  },
+  {
+   "id": "tlg0062.tlg042",
+   "anno": 165,
+   "tipo": "circa",
+   "base": "narra come testimone oculare il rogo di Peregrino ai giochi olimpici del 165 e si presenta come lettera scritta subito dopo l'evento"
+  },
+  {
+   "id": "tlg0062.tlg043",
+   "anno": 166,
+   "tipo": "fase",
+   "base": "si apre col fumo del rogo di Peregrino, dunque dopo il 165 e dopo il «De morte Peregrini» cui rinvia; l'anno segna solo questa posteriorità"
+  },
+  {
+   "id": "tlg0062.tlg044",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "gara di racconti d'amicizia tra un Greco e uno Scita: nessun riferimento a fatti databili"
+  },
+  {
+   "id": "tlg0062.tlg045",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "l'accostamento al gusto di Lucio Vero per la pantomima è congettura d'ambiente, non appiglio interno: il dialogo non contiene dati databili"
+  },
+  {
+   "id": "tlg0062.tlg046",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "satira dell'atticismo esasperato: il bersaglio non è identificabile con un personaggio datato"
+  },
+  {
+   "id": "tlg0062.tlg047",
+   "anno": 177,
+   "tipo": "circa",
+   "base": "satireggia la disputa per una delle cattedre imperiali di filosofia ad Atene, istituite da Marco Aurelio nel novembre 176: composta poco dopo"
+  },
+  {
+   "id": "tlg0062.tlg048",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "operetta in ionico di attribuzione contestata, senza riferimenti cronologici interni"
+  },
+  {
+   "id": "tlg0062.tlg049",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "invettiva contro un rivale rimasto anonimo: le identificazioni proposte non consentono di fissare una data"
+  },
+  {
+   "id": "tlg0062.tlg050",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "assemblea divina satirica sui culti stranieri, priva di agganci databili"
+  },
+  {
+   "id": "tlg0062.tlg051",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "declamazione su tema fittizio di scuola retorica: nessun dato esterno"
+  },
+  {
+   "id": "tlg0062.tlg052",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "declamazione su controversia scolastica, senza riferimenti a fatti reali databili"
+  },
+  {
+   "id": "tlg0062.tlg053",
+   "anno": 166,
+   "tipo": "circa",
+   "base": "critica gli storici che stanno scrivendo la guerra partica di Lucio Vero (161-166) a vicenda ancora fresca: la critica converge sul 165-166"
+  },
+  {
+   "id": "tlg0062.tlg054",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "prolalia sui serpenti della Libia: nessun riferimento databile"
+  },
+  {
+   "id": "tlg0062.tlg055",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "gruppo di pezzi saturnalizi (leggi ed epistole a Crono): la festa ricorre ogni anno e non data nulla"
+  },
+  {
+   "id": "tlg0062.tlg056",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "prolalia legata a una recita pubblica (Macedonia o Olimpia), occasione non databile"
+  },
+  {
+   "id": "tlg0062.tlg057",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "prolalia sul pittore Zeusi e su Antioco: gli exempla sono ellenistici, l'occasione non è databile"
+  },
+  {
+   "id": "tlg0062.tlg058",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "scusa erudita per un lapsus nel saluto mattutino a un potente non identificato: nessun dato cronologico"
+  },
+  {
+   "id": "tlg0062.tlg059",
+   "anno": 185,
+   "tipo": "fase",
+   "base": "ATTENZIONE, titolo italiano errato in catalogo: l'opera è l'«Apologia» (cfr. titleEn nel corpus). Difende esplicitamente il «De mercede conductis» e presuppone l'incarico ufficiale in Egitto, collocato nell'ultima fase della vita: l'anno segna solo questa posteriorità"
+  },
+  {
+   "id": "tlg0062.tlg060",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "prolalia sull'auleta Armonide, exemplum ellenistico: l'occasione della recita non è databile"
+  },
+  {
+   "id": "tlg0062.tlg061",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "dialoghetto con Esiodo sull'ispirazione poetica, di attribuzione discussa e privo di appigli"
+  },
+  {
+   "id": "tlg0062.tlg062",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "prolalia per una recita in Macedonia, con l'exemplum di Anacarsi e Tossari: l'occasione non è databile"
+  },
+  {
+   "id": "tlg0062.tlg063",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "ATTENZIONE, titolo italiano errato in catalogo: l'opera è l'«Ermotimo» (cfr. titleEn nel corpus). Il «quasi quarantenne» di §13 è topos letterario, non dato biografico: nessuna data ricavabile"
+  },
+  {
+   "id": "tlg0062.tlg064",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "prolalia di risposta a un complimento ricevuto, senza riferimenti a fatti databili"
+  },
+  {
+   "id": "tlg0062.tlg065",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "la nave alessandrina approdata al Pireo è cornice narrativa, non evento documentato: nessuna data"
+  },
+  {
+   "id": "tlg0062.tlg066",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "raccolta di dialoghetti forse composti in tempi diversi ma trasmessa come unità: nessun pezzo offre agganci databili"
+  },
+  {
+   "id": "tlg0062.tlg067",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "ATTENZIONE, titolo italiano duplicato in catalogo: l'opera è in realtà i «Dialoghi marini» (cfr. titleEn nel corpus). Raccolta priva di riferimenti databili"
+  },
+  {
+   "id": "tlg0062.tlg068",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "raccolta di scenette mitologiche, senza riferimenti a fatti o persone databili"
+  },
+  {
+   "id": "tlg0062.tlg069",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "raccolta di scenette di ambiente cortigianesco, di stampo comico: nessun aggancio cronologico"
+  },
+  {
+   "id": "tlg0062.tlg070",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "operetta grammaticale di paternità lucianea contestata, priva di indizi cronologici"
+  },
+  {
+   "id": "tlg0062.tlg071",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "tragedia parodica quasi certamente non lucianea, tramandata nel corpus e non databile"
+  },
+  {
+   "id": "tlg0284.tlg001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno in prosa a Zeus (Or. 43 Keil): la critica recente nega esplicitamente che le circostanze di composizione si possano fissare, le date proposte da Behr sono congetturali."
+  },
+  {
+   "id": "tlg0284.tlg002",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno in prosa ad Atena (Or. 37 Keil): nessun riferimento interno a persone o eventi, nessuna menzione esterna."
+  },
+  {
+   "id": "tlg0284.tlg003",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno istmico a Poseidone (Or. 46 Keil): l'occasione istmica non è agganciabile a nessun anno particolare."
+  },
+  {
+   "id": "tlg0284.tlg004",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno in prosa a Dioniso (Or. 41 Keil): privo di appigli cronologici interni ed esterni."
+  },
+  {
+   "id": "tlg0284.tlg005",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno in prosa (nel corpus TLG la posizione 5 è l'Ἡρακλῆς = Or. 40 Keil; il titolo nel file ripete quello del n. 3): in ogni caso privo di elementi datanti."
+  },
+  {
+   "id": "tlg0284.tlg006",
+   "anno": 177,
+   "tipo": "circa",
+   "base": "Λαλιά per Asclepio (Or. 42 Keil), pronunciata a Pergamo: la tradizione critica la assegna al 6 gennaio 177, data plausibile ma non certificata da alcun documento."
+  },
+  {
+   "id": "tlg0284.tlg007",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno agli Asclepiadi (Or. 38 Keil): nessun riferimento a eventi o persone databili."
+  },
+  {
+   "id": "tlg0284.tlg008",
+   "anno": 142,
+   "tipo": "fase",
+   "base": "Inno a Serapide (Or. 45 Keil): collocato concordemente fra le opere giovanili, subito dopo il viaggio in Egitto del 141/142; l'anno segna solo quel posto nella successione biografica, non una data documentata."
+  },
+  {
+   "id": "tlg0284.tlg009",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Εἰς βασιλέα (Or. 35 Keil), di paternità contestata da Keil in poi: le proposte oscillano fra Antonino Pio (144, se autentico), Filippo l'Arabo (244-249) e Gallieno (260) — un secolo di divario, nessuna ipotesi prevalente."
+  },
+  {
+   "id": "tlg0284.tlg010",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Discorso genetliaco per il giovane Apellas (Or. 30 Keil): il destinatario è noto solo da qui e il testo non allude ad alcun evento databile."
+  },
+  {
+   "id": "tlg0284.tlg011",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Epicedio per l'allievo Eteoneo (Or. 31 Keil): personaggio altrimenti ignoto, morte non databile."
+  },
+  {
+   "id": "tlg0284.tlg012",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "Epitafio per Alessandro di Cotieo (Or. 32 Keil), maestro di Aristide e precettore di Marco Aurelio: la sua morte è collocata dalla critica intorno al 150, e il discorso la segue immediatamente."
+  },
+  {
+   "id": "tlg0284.tlg013",
+   "anno": 155,
+   "tipo": "circa",
+   "base": "Panatenaico (Or. 1 Keil): Behr lo lega al soggiorno ateniese del 155 preannunciato nei Discorsi sacri; Oliver propone in alternativa il 167, ma la datazione al 155 è quella prevalente."
+  },
+  {
+   "id": "tlg0284.tlg014",
+   "anno": 155,
+   "tipo": "circa",
+   "base": "Encomio di Roma (Or. 26 Keil), pronunciato a Roma sotto Antonino Pio: la critica è divisa fra il primo soggiorno romano (143, Oliver) e il secondo (154/155), oggi più seguito."
+  },
+  {
+   "id": "tlg0284.tlg015",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Discorso politico smirneo (Or. 17 Keil): destinatario e data restano controversi — si è proposto il 157, ma anche una collocazione successiva al terremoto se il destinatario è un proconsole e non l'imperatore."
+  },
+  {
+   "id": "tlg0284.tlg016",
+   "anno": 166,
+   "tipo": "circa",
+   "base": "Panegirico di Cizico per il tempio (Or. 27 Keil): il discorso si rivolge ai due Augusti fratelli, dunque cade fra 161 e 169, e celebra il completamento del tempio di Adriano, posto al 166/167."
+  },
+  {
+   "id": "tlg0284.tlg017",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Λαλιά sul mare Egeo (Or. 44 Keil): pezzo d'occasione senza alcun riferimento databile."
+  },
+  {
+   "id": "tlg0284.tlg018",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno per il pozzo sacro dell'Asclepieo (Or. 39 Keil): si lega genericamente al soggiorno pergameno, che dura decenni, senza nessun appiglio a un anno."
+  },
+  {
+   "id": "tlg0284.tlg019",
+   "anno": 171,
+   "tipo": "circa",
+   "base": "Eleusinio (Or. 22 Keil): monodia per l'incendio del santuario di Eleusi da parte dei Costoboci nella tarda estate del 170, pronunciata a Smirne l'anno successivo."
+  },
+  {
+   "id": "tlg0284.tlg020",
+   "anno": 178,
+   "tipo": "circa",
+   "base": "Monodia per Smirne (Or. 18 Keil): composta alla prima notizia del terremoto che distrusse la città, datato per lo più al 178 (Behr sostiene l'inizio del 177)."
+  },
+  {
+   "id": "tlg0284.tlg021",
+   "anno": 179,
+   "tipo": "circa",
+   "base": "Palinodia per Smirne (Or. 20 Keil): composta dopo che gli imperatori concessero la ricostruzione, quindi nell'anno successivo al sisma del 178."
+  },
+  {
+   "id": "tlg0284.tlg022",
+   "anno": 180,
+   "tipo": "fase",
+   "base": "Prosfonetico smirneo (Or. 21 Keil): ultimo pezzo del ciclo smirneo, dopo la palinodia; l'anno dipende dall'identificazione del destinatario (180 se imperiale, 184 secondo l'ipotesi proconsolare) e vale solo come posto nella serie."
+  },
+  {
+   "id": "tlg0284.tlg023",
+   "anno": 171,
+   "tipo": "circa",
+   "base": "Discorsi sacri I (Or. 47 Keil): l'opera è unica, in sei libri redatti in un'unica campagna, e tutti i libri condividono la data di composizione — Behr 170/171, Weiss 175/176."
+  },
+  {
+   "id": "tlg0284.tlg024",
+   "anno": 171,
+   "tipo": "circa",
+   "base": "Discorsi sacri II (Or. 48 Keil): stessa data di composizione degli altri libri dell'unica opera in sei parti (Behr 170/171, Weiss 175/176)."
+  },
+  {
+   "id": "tlg0284.tlg025",
+   "anno": 171,
+   "tipo": "circa",
+   "base": "Discorsi sacri III (Or. 49 Keil): stessa data di composizione degli altri libri dell'unica opera in sei parti (Behr 170/171, Weiss 175/176)."
+  },
+  {
+   "id": "tlg0284.tlg026",
+   "anno": 171,
+   "tipo": "circa",
+   "base": "Discorsi sacri IV (Or. 50 Keil): stessa data di composizione degli altri libri dell'unica opera in sei parti (Behr 170/171, Weiss 175/176)."
+  },
+  {
+   "id": "tlg0284.tlg027",
+   "anno": 171,
+   "tipo": "circa",
+   "base": "Discorsi sacri V (Or. 51 Keil): stessa data di composizione degli altri libri dell'unica opera in sei parti (Behr 170/171, Weiss 175/176)."
+  },
+  {
+   "id": "tlg0284.tlg028",
+   "anno": 171,
+   "tipo": "circa",
+   "base": "Discorsi sacri VI (Or. 52 Keil), appendice frammentaria: appartiene alla stessa redazione unitaria degli altri libri (Behr 170/171, Weiss 175/176)."
+  },
+  {
+   "id": "tlg0284.tlg029",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Siciliano I (Or. 5 Keil): declamazione (μελέτη) su tema storico — l'invio dei rinforzi in Sicilia nel 415 a.C. — senza alcun aggancio alla biografia dell'autore."
+  },
+  {
+   "id": "tlg0284.tlg030",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Siciliano II (Or. 6 Keil): controdeclamazione della coppia siciliana, esercizio scolastico privo di appigli cronologici."
+  },
+  {
+   "id": "tlg0284.tlg031",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Sulla pace con gli Spartani (Or. 7 Keil): declamazione su tema della guerra del Peloponneso, senza riferimenti databili."
+  },
+  {
+   "id": "tlg0284.tlg032",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Sulla pace con gli Ateniesi (Or. 8 Keil): declamazione gemella della precedente, senza riferimenti databili."
+  },
+  {
+   "id": "tlg0284.tlg033",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Leuttrico I (Or. 11 Keil): fa parte del ciclo unitario di cinque declamazioni sul dibattito ateniese dopo Leuttra (371 a.C.), privo di qualsiasi aggancio alla vita dell'autore."
+  },
+  {
+   "id": "tlg0284.tlg034",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Leuttrico II (Or. 12 Keil): parte dello stesso ciclo di cinque declamazioni su Leuttra, non databile."
+  },
+  {
+   "id": "tlg0284.tlg035",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Leuttrico III (Or. 13 Keil): parte dello stesso ciclo di cinque declamazioni su Leuttra, non databile."
+  },
+  {
+   "id": "tlg0284.tlg036",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Leuttrico IV (Or. 14 Keil): parte dello stesso ciclo di cinque declamazioni su Leuttra, non databile."
+  },
+  {
+   "id": "tlg0284.tlg037",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Leuttrico V (Or. 15 Keil): parte dello stesso ciclo di cinque declamazioni su Leuttra, non databile."
+  },
+  {
+   "id": "tlg0284.tlg038",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Simmachico I (Or. 9 Keil): declamazione sull'alleanza con Tebe, tema storico di scuola senza appigli cronologici."
+  },
+  {
+   "id": "tlg0284.tlg039",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Simmachico II (Or. 10 Keil): controdeclamazione della coppia tebana, non databile."
+  },
+  {
+   "id": "tlg0284.tlg040",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Contro l'ammissione della commedia (Or. 29 Keil): discorso deliberativo rivolto agli Smirnei, senza riferimenti a eventi o magistrati databili."
+  },
+  {
+   "id": "tlg0284.tlg041",
+   "anno": 178,
+   "tipo": "circa",
+   "base": "Lettera agli imperatori su Smirne (Or. 19 Keil): scritta subito dopo il terremoto (178, per Behr inizio 177); Filostrato ne attesta l'effetto su Marco Aurelio, ma non l'anno."
+  },
+  {
+   "id": "tlg0284.tlg042",
+   "anno": 167,
+   "tipo": "circa",
+   "base": "Sulla concordia alle città d'Asia (Or. 23 Keil): la critica converge sul 167 in base alla situazione politica delle città asiatiche descritta nel discorso."
+  },
+  {
+   "id": "tlg0284.tlg043",
+   "anno": 142,
+   "tipo": "circa",
+   "base": "Rodiaco (Or. 25 Keil): consolazione ai Rodii dopo il terremoto che distrusse la città nel 142; l'autenticità aristidea è respinta da Keil in poi, ma l'occasione resta quel sisma."
+  },
+  {
+   "id": "tlg0284.tlg044",
+   "anno": 149,
+   "tipo": "fase",
+   "base": "Ai Rodii sulla concordia (Or. 24 Keil): posteriore al Rodiaco, inviato per lettera nel periodo in cui la malattia gli impediva di viaggiare (c. 144-152); l'anno indica solo quella posizione nella serie rodia."
+  },
+  {
+   "id": "tlg0284.tlg045",
+   "anno": 145,
+   "tipo": "fase",
+   "base": "A Platone, in difesa della retorica (Or. 2 Keil): primo dei tre scritti contro il Gorgia, precede la risposta a Capitone e l'Ὑπὲρ τῶν τεττάρων; l'anno è solo il primo posto di quella successione riconosciuta."
+  },
+  {
+   "id": "tlg0284.tlg046",
+   "anno": 147,
+   "tipo": "fase",
+   "base": "A Platone, in difesa dei Quattro (Or. 3 Keil): ultimo dei tre scritti antiplatonici, composto «alcuni anni dopo» il primo e dopo la lettera a Capitone che ne anticipa gli argomenti; l'anno è solo il terzo posto della serie."
+  },
+  {
+   "id": "tlg0284.tlg047",
+   "anno": 146,
+   "tipo": "fase",
+   "base": "A Capitone (Or. 4 Keil): risposta al platonico Capitone, intermedia fra i due scritti maggiori (posteriore all'Or. 2, anteriore all'Or. 3); l'anno è solo il secondo posto della serie."
+  },
+  {
+   "id": "tlg0284.tlg048",
+   "anno": 143,
+   "tipo": "fase",
+   "base": "Egizio (Or. 36 Keil): riferisce l'inchiesta sulle piene del Nilo condotta durante il viaggio in Egitto del 141/142, unico appiglio; la composizione è posteriore a quel viaggio ma senza anno fissato."
+  },
+  {
+   "id": "tlg0284.tlg049",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Sul παράφθεγμα (Or. 28 Keil): autodifesa per una frase di autoelogio pronunciata in un discorso precedente non identificabile con certezza."
+  },
+  {
+   "id": "tlg0284.tlg050",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Contro chi profana i misteri con la danza (Or. 34 Keil): polemica contro sofisti rivali anonimi, senza eventi o nomi databili."
+  },
+  {
+   "id": "tlg0284.tlg051",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "A chi lo accusa di non declamare (Or. 33 Keil): autodifesa professionale senza riferimenti a fatti databili."
+  },
+  {
+   "id": "tlg0284.tlg052",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Ambasceria ad Achille (Or. 16 Keil): declamazione su tema omerico, esercizio di scuola senza alcun aggancio cronologico."
+  },
+  {
+   "id": "tlg0284.tlg053",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Contro Demostene sull'ateleia: declamazione sul tema demostenico delle immunità, di paternità aristidea dubbia e senza appigli interni."
+  },
+  {
+   "id": "tlg0284.tlg054",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Contro Leptine a favore dell'ateleia: controdeclamazione della coppia leptinea, anch'essa di attribuzione dubbia e non databile."
+  },
+  {
+   "id": "tlg0284.tlg055",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Panegirico per l'acqua di Pergamo (Or. 53 Keil), trasmesso frammentario: nessun elemento datante, si suppone soltanto una vicinanza tematica all'inno per il pozzo dell'Asclepieo."
+  },
+  {
+   "id": "tlg0284.tlg056",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Ars rhetorica (Περὶ πολιτικοῦ λόγου): trattato trasmesso sotto il nome di Aristide ma generalmente ritenuto spurio, di età imperiale imprecisata."
+  },
+  {
+   "id": "phi1014.phi001",
+   "anno": 38,
+   "tipo": "circa",
+   "base": "Unica opera (Oratorum et rhetorum sententiae divisiones colores) scritta in vecchiaia su richiesta dei tre figli: i richiami più recenti seguono immediatamente la morte di Tiberio (37) e l'autore muore verso il 39."
+  },
+  {
+   "id": "phi1014.phi002",
+   "anno": 38,
+   "tipo": "circa",
+   "base": "Epitome tardoantica (IV-V sec.) dei libri perduti delle Controversiae: il testo abbreviato è però quello stesso, quindi porta la data di composizione dell'opera originale (c. 37-39)."
+  },
+  {
+   "id": "phi1014.phi003",
+   "anno": 38,
+   "tipo": "circa",
+   "base": "Seconda sezione della medesima raccolta delle Controversiae, redatta nella stessa campagna di vecchiaia: identica data di composizione (c. 37-39)."
+  },
+  {
+   "id": "phi1014.phi004",
+   "anno": 38,
+   "tipo": "circa",
+   "base": "Frammenti tràditi della stessa raccolta retorica (prefazioni e libri perduti): non hanno datazione autonoma e ricevono quella dell'opera (c. 37-39)."
+  },
+  {
+   "id": "tlg0013.tlg001",
+   "anno": -625,
+   "tipo": "fase",
+   "base": "Inno frammentario: West, ricostruendolo, non trova nulla di incompatibile con il tardo VII sec. per i paralleli omerici, e l'accoglienza di Dioniso in Olimpo è nota alla ceramica dal 600 ca.; l'anno è solo il suo posto fra gli inni maggiori."
+  },
+  {
+   "id": "tlg0013.tlg002",
+   "anno": -650,
+   "tipo": "fase",
+   "base": "Posto subito dopo l'Inno ad Afrodite nella cronologia relativa linguistica di Janko; il santuario eleusino vi appare ancora indipendente da Atene: seconda metà del VII sec., senza data."
+  },
+  {
+   "id": "tlg0013.tlg003",
+   "anno": -585,
+   "tipo": "fase",
+   "base": "Inno composito: il nucleo delio è arcaico (Tucidide 3,104 lo cita come omerico), la sezione pitica presuppone la Prima guerra sacra (c. 590) e la redazione unitaria è forse quella eseguita a Delo nel 523; l'anno colloca il testo trasmesso dopo la parte più recente."
+  },
+  {
+   "id": "tlg0013.tlg004",
+   "anno": -520,
+   "tipo": "fase",
+   "base": "Ultimo degli inni maggiori nella cronologia relativa di Janko, che lo porta alla fine del VI sec.; l'anno è solo questa posizione, non una data."
+  },
+  {
+   "id": "tlg0013.tlg005",
+   "anno": -675,
+   "tipo": "fase",
+   "base": "Il più arcaico degli inni maggiori: la sua dizione è la più vicina a quella dell'Iliade nella cronologia relativa linguistica (Janko), che apre con esso la serie."
+  },
+  {
+   "id": "tlg0013.tlg006",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Breve inno proemiale (21 versi) sulla nascita di Afrodite a Cipro, chiuso da una richiesta di vittoria in gara: nessun appiglio interno né testimonianza esterna."
+  },
+  {
+   "id": "tlg0013.tlg007",
+   "anno": -550,
+   "tipo": "fase",
+   "base": "La critica lo colloca fra VII e VI sec.: la vicenda dei pirati tirreni è la stessa nota alla ceramica attica (coppa di Exekias, c. 530), ma la dipendenza non è dimostrabile; l'anno indica la fase, non la data."
+  },
+  {
+   "id": "tlg0013.tlg008",
+   "anno": 450,
+   "tipo": "fase",
+   "base": "Corpo estraneo alla raccolta arcaica: lessico e teologia astrale lo portano alla tarda antichità e West (1970) lo assegna al neoplatonico Proclo, V sec. d.C.; l'attribuzione è discussa, ma la posizione in fondo alla serie no."
+  },
+  {
+   "id": "tlg0013.tlg009",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Proemio anonimo di 9 versi ad Artemide: nessun elemento interno databile, nessuna testimonianza esterna."
+  },
+  {
+   "id": "tlg0013.tlg010",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Proemio anonimo di 6 versi ad Afrodite Cipride: privo di qualunque appiglio cronologico."
+  },
+  {
+   "id": "tlg0013.tlg011",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Proemio anonimo di 5 versi ad Atena Poliade: nessun dato interno o esterno per collocarlo."
+  },
+  {
+   "id": "tlg0013.tlg012",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Proemio anonimo di 5 versi a Era: nessun appiglio cronologico."
+  },
+  {
+   "id": "tlg0013.tlg013",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Proemio di 3 versi che ricalca l'apertura e la chiusa dell'Inno II a Demetra: la dipendenza è chiara, la distanza cronologica no."
+  },
+  {
+   "id": "tlg0013.tlg014",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Proemio di 6 versi alla Madre degli dèi; il culto metroaco è attestato in Grecia dal VI sec., ma questo non data il testo."
+  },
+  {
+   "id": "tlg0013.tlg015",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Proemio di 9 versi a Eracle Cuor di leone: nessun elemento databile."
+  },
+  {
+   "id": "tlg0013.tlg016",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Proemio di 5 versi ad Asclepio: nessun appiglio interno né esterno."
+  },
+  {
+   "id": "tlg0013.tlg017",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Proemio di 5 versi ai Dioscuri, gemello dell'inno 33 ma più breve: nessun criterio per datare né l'uno né l'altro."
+  },
+  {
+   "id": "tlg0013.tlg018",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Proemio di 12 versi che riprende quasi alla lettera l'apertura dell'Inno IV a Ermes: c'è dipendenza, non c'è data."
+  },
+  {
+   "id": "tlg0013.tlg019",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno di 48 versi di ambiente arcadico; qualcuno lo abbassa al V sec. per la diffusione ateniese del culto di Pan dopo Maratona (490), ma l'argomento non è probante."
+  },
+  {
+   "id": "tlg0013.tlg020",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Proemio di 8 versi a Efesto: nessun elemento cronologico."
+  },
+  {
+   "id": "tlg0013.tlg021",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Proemio di 5 versi ad Apollo cantore: nessun appiglio interno o esterno."
+  },
+  {
+   "id": "tlg0013.tlg022",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Proemio di 7 versi a Poseidone di Elicona e Ege: nessun dato databile."
+  },
+  {
+   "id": "tlg0013.tlg023",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Proemio di 4 versi a Zeus: nessun appiglio cronologico."
+  },
+  {
+   "id": "tlg0013.tlg024",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Proemio di 5 versi a Estia pitica: nessun elemento databile."
+  },
+  {
+   "id": "tlg0013.tlg025",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Centone: i versi centrali vengono dalla Teogonia esiodea (94-97) e dall'Inno ad Apollo; è posteriore a entrambi, ma di quanto non si può dire."
+  },
+  {
+   "id": "tlg0013.tlg026",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno di 13 versi a Dioniso nutrito dalle ninfe di Nisa: nessun appiglio interno né testimonianza esterna."
+  },
+  {
+   "id": "tlg0013.tlg027",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno di 22 versi ad Artemide cacciatrice e al coro delfico: nessun elemento databile."
+  },
+  {
+   "id": "tlg0013.tlg028",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno di 18 versi sulla nascita di Atena dal capo di Zeus: nessun criterio cronologico interno o esterno."
+  },
+  {
+   "id": "tlg0013.tlg029",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno di 13 versi a Estia ed Ermes: nessun appiglio per collocarlo."
+  },
+  {
+   "id": "tlg0013.tlg030",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno di 19 versi alla Terra madre di tutti, di sapore esiodeo: la parentela con la Teogonia non basta a datarlo."
+  },
+  {
+   "id": "tlg0013.tlg031",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno di 19 versi a Helios; la critica oscilla tra età arcaica ed ellenistica senza argomenti dirimenti."
+  },
+  {
+   "id": "tlg0013.tlg032",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno di 20 versi a Selene; il dibattito arcaico/ellenistico è aperto: chi lo dice alessandrino e chi (Cassola) ne difende l'arcaicità, senza prove decisive."
+  },
+  {
+   "id": "tlg0013.tlg033",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Inno di 19 versi ai Dioscuri salvatori dei naviganti: nessun elemento interno databile."
+  },
+  {
+   "id": "tlg0031.tlg001",
+   "anno": 85,
+   "tipo": "fase",
+   "base": "Nella successione sinottica riconosciuta viene dopo Marco, che riusa (priorità marciana); Mt 22,7 allude alla città incendiata del 70 e Ignazio lo conosce già agli inizi del II sec.: l'anno è un posto fra i due estremi."
+  },
+  {
+   "id": "tlg0031.tlg002",
+   "anno": 70,
+   "tipo": "circa",
+   "base": "Primo dei vangeli nella priorità marciana; il discorso escatologico di Mc 13 presuppone la guerra giudaica e l'assedio di Gerusalemme, e la critica converge sugli anni intorno al 70."
+  },
+  {
+   "id": "tlg0031.tlg003",
+   "anno": 85,
+   "tipo": "fase",
+   "base": "Usa Marco e conosce l'esito del 70 (Lc 21,20, la città «accerchiata da eserciti»); è il primo dei due volumi dedicati a Teofilo, e l'anno segna questa posizione."
+  },
+  {
+   "id": "tlg0031.tlg004",
+   "anno": 100,
+   "tipo": "fase",
+   "base": "Ultimo dei quattro vangeli nella successione riconosciuta; il papiro P52 (prima metà del II sec.) fissa il termine ante quem, l'espulsione dalla sinagoga il post quem."
+  },
+  {
+   "id": "tlg0031.tlg005",
+   "anno": 90,
+   "tipo": "fase",
+   "base": "Secondo volume dell'opera lucana, scritto dopo il vangelo cui il proemio rinvia esplicitamente (At 1,1): l'anno è solo la sua posizione dopo il terzo vangelo."
+  },
+  {
+   "id": "tlg0031.tlg006",
+   "anno": 57,
+   "tipo": "circa",
+   "base": "Scritta da Corinto alla vigilia del viaggio a Gerusalemme con la colletta (Rm 15,25-26); la cronologia paolina è ancorata all'iscrizione delfica del proconsole Gallione (51/52)."
+  },
+  {
+   "id": "tlg0031.tlg007",
+   "anno": 54,
+   "tipo": "circa",
+   "base": "Spedita da Efeso, dove Paolo dichiara di restare fino a Pentecoste (1Cor 16,8), durante il soggiorno efesino dei primi anni '50."
+  },
+  {
+   "id": "tlg0031.tlg008",
+   "anno": 56,
+   "tipo": "circa",
+   "base": "Scritta dalla Macedonia dopo la «visita dolorosa», a un anno dall'avvio della colletta (2Cor 8-9): cade quindi l'anno successivo alla prima lettera ai Corinzi."
+  },
+  {
+   "id": "tlg0031.tlg009",
+   "anno": 54,
+   "tipo": "fase",
+   "base": "La data oscilla tra il 48/49 (ipotesi galata meridionale, prima dell'assemblea di Gerusalemme) e la metà degli anni '50; l'anno la colloca solo prima di Romani, che ne riprende e amplia l'argomentazione sulla giustificazione."
+  },
+  {
+   "id": "tlg0031.tlg010",
+   "anno": 90,
+   "tipo": "fase",
+   "base": "Deuteropaolina che rielabora Colossesi: viene dopo la morte di Paolo ed è già nota a Ignazio e Policarpo; l'anno segna questa posizione, non una data."
+  },
+  {
+   "id": "tlg0031.tlg011",
+   "anno": 61,
+   "tipo": "fase",
+   "base": "Lettera dal carcere: l'ipotesi tradizionale la assegna alla prigionia romana del 60-62 (il pretorio, «quelli della casa di Cesare»), quella alternativa a una prigionia efesina di metà anni '50."
+  },
+  {
+   "id": "tlg0031.tlg012",
+   "anno": 75,
+   "tipo": "fase",
+   "base": "Autenticità contestata per lingua e cristologia: se autentica viene dalla prigionia romana (60-62), se pseudepigrafa — come oggi si tende a ritenere — sta fra anni '70 e '80, comunque prima di Efesini che la riusa."
+  },
+  {
+   "id": "tlg0031.tlg013",
+   "anno": 50,
+   "tipo": "circa",
+   "base": "Il più antico scritto del Nuovo Testamento: composta poco dopo la fondazione della comunità, mentre Paolo è a Corinto sotto il proconsolato di Gallione (51/52 per l'iscrizione di Delfi)."
+  },
+  {
+   "id": "tlg0031.tlg014",
+   "anno": 85,
+   "tipo": "fase",
+   "base": "Dipende letterariamente dalla Prima ai Tessalonicesi, di cui ricalca struttura e formule: se pseudepigrafa (opinione oggi prevalente) va alla fine del I sec., se autentica al 51; l'anno registra solo la posizione dopo 1Tess."
+  },
+  {
+   "id": "tlg0031.tlg015",
+   "anno": 110,
+   "tipo": "fase",
+   "base": "Una delle tre Pastorali, composte insieme come corpus unitario: lingua, ministeri ecclesiastici già strutturati e antieresia le collocano agli inizi del II sec.; assenti dal canone di Marcione."
+  },
+  {
+   "id": "tlg0031.tlg016",
+   "anno": 110,
+   "tipo": "fase",
+   "base": "Stesso corpus pastorale di 1Timoteo e Tito, scritte insieme: non c'è ragione di assegnare loro anni diversi, e l'anno vale per tutte e tre."
+  },
+  {
+   "id": "tlg0031.tlg017",
+   "anno": 110,
+   "tipo": "fase",
+   "base": "Terza delle Pastorali, redatta con le due a Timoteo nello stesso corpus e nella stessa fase: inizio II sec."
+  },
+  {
+   "id": "tlg0031.tlg018",
+   "anno": 61,
+   "tipo": "fase",
+   "base": "Biglietto scritto dal carcere, dalla stessa prigionia di Filippesi: Roma 60-62 nell'ipotesi tradizionale, Efeso a metà anni '50 in quella alternativa."
+  },
+  {
+   "id": "tlg0031.tlg019",
+   "anno": 80,
+   "tipo": "fase",
+   "base": "Anonima e non paolina; la Prima lettera di Clemente (c. 96) già la utilizza e fissa il termine ante quem, mentre il post quem resta indeterminato."
+  },
+  {
+   "id": "tlg0031.tlg020",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Le proposte vanno dagli anni '40 (se davvero di Giacomo fratello del Signore) al 130 circa: nessun appiglio interno, nessuna dipendenza letteraria che la collochi in una successione."
+  },
+  {
+   "id": "tlg0031.tlg021",
+   "anno": 80,
+   "tipo": "fase",
+   "base": "Pseudepigrafa: «Babilonia» per Roma (1Pt 5,13) è uso posteriore al 70, e Policarpo la cita agli inizi del II sec.; l'anno è un posto fra i due termini."
+  },
+  {
+   "id": "tlg0031.tlg022",
+   "anno": 125,
+   "tipo": "fase",
+   "base": "Ultimo scritto del NT nella successione riconosciuta: riusa quasi per intero la lettera di Giuda e conosce già una raccolta di lettere paoline equiparata alle Scritture (2Pt 3,15-16)."
+  },
+  {
+   "id": "tlg0031.tlg023",
+   "anno": 100,
+   "tipo": "fase",
+   "base": "Posteriore al quarto vangelo, di cui presuppone lingua e teologia: sta nella stessa fase della comunità giovannea."
+  },
+  {
+   "id": "tlg0031.tlg024",
+   "anno": 100,
+   "tipo": "fase",
+   "base": "Stesso autore («il presbitero») e stessa fase della comunità giovannea di 1Gv: non c'è motivo di separarla dalle sorelle."
+  },
+  {
+   "id": "tlg0031.tlg025",
+   "anno": 100,
+   "tipo": "fase",
+   "base": "Terza del gruppo del «presbitero», inseparabile dalle altre due per lingua e situazione comunitaria: stessa fase, stesso anno."
+  },
+  {
+   "id": "tlg0031.tlg026",
+   "anno": 100,
+   "tipo": "fase",
+   "base": "In sé non databile; l'unico appiglio è che precede 2Pietro, che la riusa quasi per intero: l'anno è soltanto questa posizione relativa."
+  },
+  {
+   "id": "tlg0031.tlg027",
+   "anno": 95,
+   "tipo": "circa",
+   "base": "Ireneo (Adv. haer. 5,30,3) colloca la visione alla fine del regno di Domiziano (81-96), e le lettere alle sette Chiese d'Asia suppongono quel contesto."
+  },
+  {
+   "id": "phi2331.phi001",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi002",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi003",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi004",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi005",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi006",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi007",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi008",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi009",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi010",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi011",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi012",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi013",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi014",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi015",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi016",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi017",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi018",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi019",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi020",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi021",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi022",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria (dopo la lacuna 244-259): le dediche imperiali sono finzione letteraria e la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi023",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi024",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria, e anzi una delle vite più smaccatamente inventate: la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi025",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi026",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi027",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi028",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria: le dediche a Diocleziano e Costantino sono finzione letteraria e dopo Dessau (1889) la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi029",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria, e una delle vite di usurpatori più largamente fittizie: la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intero corpus a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "phi2331.phi030",
+   "anno": 395,
+   "tipo": "circa",
+   "base": "Parte della raccolta unitaria, con cui il corpus si chiude: la critica prevalente (Syme, Chastagnol, Paschoud) assegna l'intera Historia Augusta a un solo autore del 395-400 ca."
+  },
+  {
+   "id": "stoa0275.stoa001",
+   "anno": 197,
+   "tipo": "fase",
+   "base": "Esortazione a confessori in carcere, senza appigli esterni: la successione standard (CCL) la pone all'inizio del corpus, prima di Ad nationes e dell'Apologeticum; altri la collegano ai martiri del 203."
+  },
+  {
+   "id": "stoa0275.stoa002",
+   "anno": 197,
+   "tipo": "circa",
+   "base": "Presuppone la situazione seguita alla sconfitta di Clodio Albino (19 febbraio 197) e precede di poco l'Apologeticum, che ne rielabora il materiale."
+  },
+  {
+   "id": "stoa0275.stoa003",
+   "anno": 212,
+   "tipo": "certa",
+   "base": "Ricorda l'eclissi solare del 14 agosto 212 ed è indirizzata a Scapula, proconsole d'Africa nel 212-213."
+  },
+  {
+   "id": "stoa0275.stoa004",
+   "anno": 204,
+   "tipo": "fase",
+   "base": "Nessuna data: la successione standard lo colloca in fondo al blocco pre-montanista, e lo presuppongono il perduto De censu animae adversus Hermogenem e il De anima."
+  },
+  {
+   "id": "stoa0275.stoa005",
+   "anno": 201,
+   "tipo": "fase",
+   "base": "Nessun aggancio esterno: collocato nel blocco pre-montanista, ma i capp. 9-14 coincidono con Adversus Marcionem III e ne rendono discussa anche l'unità di composizione."
+  },
+  {
+   "id": "stoa0275.stoa006",
+   "anno": 208,
+   "tipo": "certa",
+   "base": "In I,15 l'autore dichiara di scrivere nel quindicesimo anno di Settimio Severo (207/208); il testo conservato è la terza edizione, completata poco dopo."
+  },
+  {
+   "id": "stoa0275.stoa007",
+   "anno": 213,
+   "tipo": "fase",
+   "base": "Nessuna data: la successione lo pone nel gruppo montanista, dopo la rottura con gli «psychici» e dopo la vicenda romana di Prassea."
+  },
+  {
+   "id": "stoa0275.stoa008",
+   "anno": 208,
+   "tipo": "fase",
+   "base": "Nessun aggancio esterno: dipende da Ireneo e la successione standard lo colloca subito dopo l'Adversus Marcionem."
+  },
+  {
+   "id": "stoa0275.stoa009",
+   "anno": 197,
+   "tipo": "circa",
+   "base": "Allude alla guerra civile appena conclusa contro Clodio Albino e alla situazione severiana: la critica converge sull'autunno del 197."
+  },
+  {
+   "id": "stoa0275.stoa010",
+   "anno": 210,
+   "tipo": "fase",
+   "base": "Nessuna data: rinvia al perduto De censu animae e la successione lo colloca nel blocco montanista (Waszink: 210-213)."
+  },
+  {
+   "id": "stoa0275.stoa011",
+   "anno": 200,
+   "tipo": "fase",
+   "base": "Nessuna data: appartiene al gruppo catechetico pre-montanista; la polemica con la maestra «Quintilla» non offre appigli cronologici."
+  },
+  {
+   "id": "stoa0275.stoa012",
+   "anno": 211,
+   "tipo": "fase",
+   "base": "Nessuna data: il De resurrectione carnis lo cita come già scritto, e la successione lo pone nel blocco montanista."
+  },
+  {
+   "id": "stoa0275.stoa013",
+   "anno": 208,
+   "tipo": "circa",
+   "base": "Nasce dal rifiuto della corona da parte di un soldato durante un donativo imperiale: l'occasione è datata dalla critica al 208, da altri al 211 (avvento di Caracalla e Geta)."
+  },
+  {
+   "id": "stoa0275.stoa014",
+   "anno": 202,
+   "tipo": "fase",
+   "base": "Nessuna data: i due libri stanno nel blocco pre-montanista e sono forse di momenti diversi, ma non contengono allusioni databili."
+  },
+  {
+   "id": "stoa0275.stoa015",
+   "anno": 212,
+   "tipo": "fase",
+   "base": "Nessuna data: si colloca a metà della scala di rigore sulle seconde nozze, fra Ad uxorem (pre-montanista) e De monogamia (montanista)."
+  },
+  {
+   "id": "stoa0275.stoa016",
+   "anno": 213,
+   "tipo": "fase",
+   "base": "Nessuna data: il rigorismo è già montanista e la successione lo pone dopo la rottura con gli «psychici», forse in rapporto alla persecuzione di Scapula."
+  },
+  {
+   "id": "stoa0275.stoa017",
+   "anno": 211,
+   "tipo": "fase",
+   "base": "Nessuna data: collocato per convenzione nel blocco montanista, ma l'edizione Waszink-van Winden discute proposte che vanno dal 197 al 212."
+  },
+  {
+   "id": "stoa0275.stoa018",
+   "anno": 218,
+   "tipo": "fase",
+   "base": "Nessuna data: polemica montanista contro gli «psychici», posta dalla successione dopo il De monogamia e prima del De pudicitia."
+  },
+  {
+   "id": "stoa0275.stoa019",
+   "anno": 217,
+   "tipo": "circa",
+   "base": "Contiene un computo di circa 160 anni dai fatti evangelici: preso alla lettera porta al 217, data comunemente accolta."
+  },
+  {
+   "id": "stoa0275.stoa020",
+   "anno": 200,
+   "tipo": "fase",
+   "base": "Nessuna data: commento al Padre nostro del gruppo catechetico pre-montanista, affine a De baptismo e De paenitentia."
+  },
+  {
+   "id": "stoa0275.stoa021",
+   "anno": 202,
+   "tipo": "fase",
+   "base": "Nessuna data: ammette ancora la seconda penitenza, il che lo colloca prima della svolta rigorista del De pudicitia."
+  },
+  {
+   "id": "stoa0275.stoa022",
+   "anno": 210,
+   "tipo": "circa",
+   "base": "L'accenno alla «triplice virtù» del potere presente è riferito ai tre Augusti (Severo, Caracalla e Geta), dunque 209-211; Barnes propone invece il 205."
+  },
+  {
+   "id": "stoa0275.stoa023",
+   "anno": 201,
+   "tipo": "fase",
+   "base": "Nessuna data: trattato morale del gruppo catechetico pre-montanista, senza allusioni a eventi esterni."
+  },
+  {
+   "id": "stoa0275.stoa024",
+   "anno": 199,
+   "tipo": "fase",
+   "base": "Nessuna data: apre il blocco pre-montanista e i trattati antieretici successivi lo presuppongono; Barnes lo abbassa al 203 ca."
+  },
+  {
+   "id": "stoa0275.stoa025",
+   "anno": 220,
+   "tipo": "fase",
+   "base": "Nessuna data: reazione all'editto penitenziale di un vescovo, e la successione ne fa l'ultima opera superstite, dopo De monogamia e De ieiunio."
+  },
+  {
+   "id": "stoa0275.stoa026",
+   "anno": 212,
+   "tipo": "fase",
+   "base": "Nessuna data: si presenta come seguito del De carne Christi, che cita come già pubblicato."
+  },
+  {
+   "id": "stoa0275.stoa027",
+   "anno": 200,
+   "tipo": "fase",
+   "base": "Nessuna data: catechesi pre-montanista sui giochi, priva di allusioni a eventi databili."
+  },
+  {
+   "id": "stoa0275.stoa028",
+   "anno": 198,
+   "tipo": "circa",
+   "base": "Svolge in forma autonoma l'argomento dell'anima naturalmente cristiana dell'Apologeticum, da cui dipende: dunque poco dopo il 197."
+  },
+  {
+   "id": "stoa0275.stoa029",
+   "anno": 214,
+   "tipo": "fase",
+   "base": "Nessuna data: l'autore rinvia a una precedente redazione greca perduta, e il tono già montanista lo colloca dopo la rottura con la Chiesa cartaginese."
+  },
+  {
+   "id": "stoa0275.stoa030",
+   "anno": 211,
+   "tipo": "fase",
+   "base": "Nessuna data: la cronologia standard lo pone nel blocco montanista, mentre Barnes lo riporta alla persecuzione del 203-204; l'occasione persecutoria non è identificabile."
+  },
+  {
+   "id": "stoa0045.stoa001",
+   "anno": 371,
+   "tipo": "circa",
+   "base": "la fanciulla alamanna Bissula è preda della campagna del 368, ma nei versi appare già del tutto romanizzata: la composizione non può essere anteriore al 371-372"
+  },
+  {
+   "id": "stoa0045.stoa002",
+   "anno": 379,
+   "tipo": "fase",
+   "base": "nessun riferimento interno datante; dedicata al figlio Esperio e affine per materia ai Fasti (prima edizione fine 379), la critica la colloca in quella fase; opera poi ampliata in una seconda redazione"
+  },
+  {
+   "id": "stoa0045.stoa003",
+   "anno": 374,
+   "tipo": "circa",
+   "base": "composto per ordine di Valentiniano I (morto nel 375) per nozze celebrate a corte, di norma identificate con quelle di Graziano del 374"
+  },
+  {
+   "id": "stoa0045.stoa004",
+   "anno": 385,
+   "tipo": "fase",
+   "base": "nessuna data interna: è il seguito e completamento dei Parentalia (posteriori al 379-382) e si colloca negli ultimi anni bordolesi, c. 385-390"
+  },
+  {
+   "id": "stoa0045.stoa005",
+   "anno": 383,
+   "tipo": "fase",
+   "base": "nessuna data: il quadro visto nel triclinio di Zoilo a Treviri e la dedica a Proculo Gregorio la collocano nella fase treverica (380-383)"
+  },
+  {
+   "id": "stoa0045.stoa006",
+   "anno": 379,
+   "tipo": "circa",
+   "base": "descrive il poderetto ereditato dal padre, morto nel 378, dopo il ritiro dalla carriera di corte: la critica lo data attorno al 379"
+  },
+  {
+   "id": "stoa0045.stoa007",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "silloge di pezzi didascalici, astronomici e calendariali di varia provenienza, la cui unità e in parte la paternità sono discusse: nessun appiglio cronologico"
+  },
+  {
+   "id": "stoa0045.stoa008",
+   "anno": 366,
+   "tipo": "fase",
+   "base": "nessuna data interna: descrive la giornata privata a Bordeaux e viene collocata prima della chiamata a corte a Treviri (367)"
+  },
+  {
+   "id": "stoa0045.stoa009",
+   "anno": 378,
+   "tipo": "circa",
+   "base": "compianto per il padre Giulio Ausonio, morto novantenne nel 378: composto subito dopo la morte"
+  },
+  {
+   "id": "stoa0045.stoa010",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "raccolta di oltre cento epigrammi di epoche diverse, dagli anni della scuola alla vecchiaia e in due redazioni: non esiste una data di composizione unitaria"
+  },
+  {
+   "id": "stoa0045.stoa011",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "lettere in versi scritte lungo decenni, fino al carteggio con Paolino di Nola (389-394): la raccolta non ha una data propria e le singole lettere solo in parte sono databili"
+  },
+  {
+   "id": "stoa0045.stoa012",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "epitafi degli eroi troiani tradotti e rifatti dal greco: nessun riferimento interno né testimonianza esterna che li dati"
+  },
+  {
+   "id": "stoa0045.stoa013",
+   "anno": 387,
+   "tipo": "circa",
+   "base": "carme natalizio per il nipote Ausonio, che il computo interno (sexta trieteris) dice ormai adolescente: la critica lo colloca nel 387"
+  },
+  {
+   "id": "stoa0045.stoa014",
+   "anno": 379,
+   "tipo": "certa",
+   "base": "discorso di ringraziamento pronunciato a Treviri davanti a Graziano per il consolato ottenuto nel 379"
+  },
+  {
+   "id": "stoa0045.stoa015",
+   "anno": 368,
+   "tipo": "circa",
+   "base": "la prefazione a Simmaco dichiara che il carme nacque a tavola, in accampamento, durante la spedizione germanica (368); la dedica e la diffusione sono più tarde"
+  },
+  {
+   "id": "stoa0045.stoa016",
+   "anno": 380,
+   "tipo": "circa",
+   "base": "esortazione allo studio rivolta al nipote ancora bambino: la critica la data attorno al 380"
+  },
+  {
+   "id": "stoa0045.stoa017",
+   "anno": 379,
+   "tipo": "circa",
+   "base": "dei Fasti, perduti, resta la sola conclusione: la prima edizione fu dedicata al figlio Esperio alla fine del 379 (una seconda a Gregorio nel 383)"
+  },
+  {
+   "id": "stoa0045.stoa018",
+   "anno": 390,
+   "tipo": "certa",
+   "base": "la prefazione è intestata «Ausonius consul Drepanio proconsuli»: Pacato Drepanio fu proconsole d'Africa nel 390"
+  },
+  {
+   "id": "stoa0045.stoa019",
+   "anno": 371,
+   "tipo": "circa",
+   "base": "il viaggio lungo la Mosella segue le campagne renane di Valentiniano I e Graziano: la critica converge sul 371 o pochissimo prima"
+  },
+  {
+   "id": "stoa0045.stoa020",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "breve preghiera in versi ropalici, di occasione ignota e paternità discussa: nessun elemento datante"
+  },
+  {
+   "id": "stoa0045.stoa021",
+   "anno": 389,
+   "tipo": "circa",
+   "base": "il catalogo delle città presuppone la caduta dell'usurpatore Massimo (388) e l'autore vi parla da ex console: composto fra 388 e 390"
+  },
+  {
+   "id": "stoa0045.stoa022",
+   "anno": 380,
+   "tipo": "circa",
+   "base": "composti dopo il consolato del 379; nel compianto per la moglie Sabina il poeta si dichiara vedovo da trentasei anni"
+  },
+  {
+   "id": "stoa0045.stoa025",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "gruppo di prefazioni a opere e destinatari diversi (dal lettore a Siagrio, a Teodosio, a Pacato), scritte in anni distanti fra loro: la serie non ha una data propria"
+  },
+  {
+   "id": "stoa0045.stoa026",
+   "anno": 379,
+   "tipo": "certa",
+   "base": "la Precatio consulis designati è recitata alla vigilia delle calende di gennaio del 379, all'assunzione del consolato"
+  },
+  {
+   "id": "stoa0045.stoa027",
+   "anno": 368,
+   "tipo": "circa",
+   "base": "il carme pasquale paragona la Trinità ai tre Augusti (Valentiniano I, Valente e Graziano, Augusto dal 367): Pasqua del 368 o 369, a corte durante la campagna alamannica"
+  },
+  {
+   "id": "stoa0045.stoa028",
+   "anno": 390,
+   "tipo": "circa",
+   "base": "dedicato dapprima a Paolino (prima del 389), fu riofferto con una sezione aggiunta a Pacato proconsole d'Africa nel 390"
+  },
+  {
+   "id": "phi0588.abo001",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo002",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo003",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo004",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo005",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo006",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo007",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo008",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo009",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo010",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo011",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo012",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo013",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo014",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "stessa data dell'intero De viris illustribus (35-34 a.C., vivente Attico); alcuni assegnano il Datames alla seconda edizione, posteriore al 32 a.C."
+  },
+  {
+   "id": "phi0588.abo015",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo016",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo017",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo018",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo019",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo020",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "vita del libro sui condottieri stranieri del De viris illustribus, pubblicato vivente Attico (morto nel 32 a.C.), probabilmente nel 35-34 a.C.; la singola vita non ha data propria"
+  },
+  {
+   "id": "phi0588.abo021",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "estratto del De viris illustribus, pubblicato vivente Attico (35-34 a.C.); alcuni assegnano il De regibus alla seconda edizione, posteriore al 32 a.C."
+  },
+  {
+   "id": "phi0588.abo022",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "stessa data dell'intero De viris illustribus (35-34 a.C., vivente Attico); alcuni assegnano l'Hamilcar alla seconda edizione, posteriore al 32 a.C."
+  },
+  {
+   "id": "phi0588.abo023",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "stessa data dell'intero De viris illustribus (35-34 a.C., vivente Attico); alcuni assegnano l'Hannibal alla seconda edizione, posteriore al 32 a.C."
+  },
+  {
+   "id": "phi0588.abo024",
+   "anno": -34,
+   "tipo": "circa",
+   "base": "profilo tratto dal libro De Latinis historicis della stessa opera (35-34 a.C.); Nepote rimanda a un Cato in volume separato, scritto per Attico e perduto"
+  },
+  {
+   "id": "phi0588.abo025",
+   "anno": -32,
+   "tipo": "circa",
+   "base": "la biografia, iniziata mentre Attico era vivo, fu completata dopo la sua morte (marzo 32 a.C.), che l'opera stessa racconta insieme ai funerali"
+  },
+  {
+   "id": "stoa0238.stoa001",
+   "anno": 403,
+   "tipo": "circa",
+   "base": "parte dei carmi (VII, IX, XI-XII, XIV) presuppone il viaggio a Roma e la visita ai sepolcri dei martiri (401-402); la raccolta confluisce nell'edizione complessiva del 405"
+  },
+  {
+   "id": "stoa0238.stoa002",
+   "anno": 405,
+   "tipo": "circa",
+   "base": "non figura nel catalogo delle opere che l'autore dà nella Praefatio del 404-405: la critica la colloca attorno a quella data o poco dopo"
+  },
+  {
+   "id": "stoa0238.stoa003",
+   "anno": 405,
+   "tipo": "certa",
+   "base": "l'autore dichiara di scrivere nel cinquantasettesimo anno d'età, essendo nato sotto il consolato di Salia (348): la prefazione data l'edizione complessiva al 404-405"
+  },
+  {
+   "id": "stoa0238.stoa004",
+   "anno": 396,
+   "tipo": "fase",
+   "base": "nessun riferimento datante: i dodici inni aprono il catalogo delle opere nella Praefatio e sono ritenuti la produzione più antica, raccolta prima dell'edizione del 405"
+  },
+  {
+   "id": "stoa0238.stoa005",
+   "anno": 400,
+   "tipo": "fase",
+   "base": "nessuna data interna: nella tradizione manoscritta è il libro I della trilogia esametrica (Apotheosis-Hamartigenia-Psychomachia) e precede l'edizione del 405"
+  },
+  {
+   "id": "stoa0238.stoa006",
+   "anno": 401,
+   "tipo": "fase",
+   "base": "nessuna data interna: nella tradizione manoscritta è il libro II della trilogia esametrica, dopo l'Apotheosis e prima dell'edizione del 405"
+  },
+  {
+   "id": "stoa0238.stoa007",
+   "anno": 402,
+   "tipo": "circa",
+   "base": "il libro II celebra la vittoria di Stilicone a Pollenzo (402) e chiede l'abolizione dei giochi gladiatori: opera del 402-403"
+  },
+  {
+   "id": "stoa0238.stoa008",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "serie di tetrastici per un ciclo di immagini bibliche: non compare nel catalogo della Praefatio e non offre alcun riferimento interno o esterno che la dati"
+  },
+  {
+   "id": "stoa0238.stoa009",
+   "anno": 405,
+   "tipo": "circa",
+   "base": "chiude l'edizione complessiva aperta dalla Praefatio, che l'autore data al proprio cinquantasettesimo anno (404-405)"
+  },
+  {
+   "id": "tlg0627.tlg001",
+   "anno": -420,
+   "tipo": "fase",
+   "base": "Strato più antico del corpus (fine V sec. a.C.): polemica contro la medicina «per ipotesi» di stampo presocratico-sofistico; nessun appiglio cronologico, l'anno segna solo la posizione nel primo strato."
+  },
+  {
+   "id": "tlg0627.tlg002",
+   "anno": -420,
+   "tipo": "fase",
+   "base": "Primo strato del corpus (fine V sec. a.C.): etnografia medica affine a Erodoto e allo stesso ambiente del Morbo sacro; nessuna data."
+  },
+  {
+   "id": "tlg0627.tlg003",
+   "anno": -415,
+   "tipo": "fase",
+   "base": "Nucleo coo più antico (fine V sec. a.C.), omogeneo per dottrina e lingua a Epidemie I e III; nessun appiglio interno."
+  },
+  {
+   "id": "tlg0627.tlg004",
+   "anno": -415,
+   "tipo": "fase",
+   "base": "Stesso strato di fine V sec. a.C., in polemica esplicita con le Sentenze cnidie: solo collocazione relativa, nessuna data."
+  },
+  {
+   "id": "tlg0627.tlg005",
+   "anno": -380,
+   "tipo": "fase",
+   "base": "Appendice antica (νόθα) al Περὶ διαίτης ὀξέων: l'unico appiglio è la sua posteriorità rispetto al trattato genuino."
+  },
+  {
+   "id": "tlg0627.tlg006",
+   "anno": -410,
+   "tipo": "circa",
+   "base": "Le epidemie di Taso registrate nei libri I e III sono collocate dalla critica intorno al 410 a.C.; la raccolta è però stratificata (libri II, IV-VII più tardi, IV sec.)."
+  },
+  {
+   "id": "tlg0627.tlg007",
+   "anno": -410,
+   "tipo": "fase",
+   "base": "Gruppo dei trattati chirurgici (fine V-inizio IV sec. a.C.), omogeneo per lingua e tecnica operatoria; nessuna data."
+  },
+  {
+   "id": "tlg0627.tlg008",
+   "anno": -410,
+   "tipo": "fase",
+   "base": "Stesso gruppo chirurgico di fine V-inizio IV sec. a.C.; nessun appiglio cronologico interno."
+  },
+  {
+   "id": "tlg0627.tlg009",
+   "anno": -410,
+   "tipo": "fase",
+   "base": "Stesso gruppo chirurgico di fine V-inizio IV sec. a.C., strettamente solidale con il Περὶ ἄρθρων."
+  },
+  {
+   "id": "tlg0627.tlg010",
+   "anno": -410,
+   "tipo": "fase",
+   "base": "Stesso gruppo chirurgico di fine V-inizio IV sec. a.C., trasmesso in coppia con il Περὶ ἀγμῶν."
+  },
+  {
+   "id": "tlg0627.tlg011",
+   "anno": -395,
+   "tipo": "fase",
+   "base": "Epitome che riassume Περὶ ἀγμῶν e Περὶ ἄρθρων: per definizione posteriore ai due trattati che compendia."
+  },
+  {
+   "id": "tlg0627.tlg012",
+   "anno": -380,
+   "tipo": "fase",
+   "base": "Compilazione che riusa materiale del Prognostico e del Regime nelle malattie acute, dunque posteriore; già nota a Diocle nel IV sec. a.C."
+  },
+  {
+   "id": "tlg0627.tlg013",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Datazione controversa dalla fine del V sec. a.C. all'età ellenistica (tesi pitagorica di Edelstein): nessun appiglio interno né esterno."
+  },
+  {
+   "id": "tlg0627.tlg027",
+   "anno": -415,
+   "tipo": "fase",
+   "base": "Stesso ambiente (e per molti stessa mano) di Arie acque luoghi, fine V sec. a.C.: polemica razionalistica contro purificatori e ciarlatani."
+  },
+  {
+   "id": "tlg0627.tlg028",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Trattatello chirurgico privo di appigli interni; la critica non converge né su una data né su uno strato del corpus."
+  },
+  {
+   "id": "tlg0627.tlg029",
+   "anno": -350,
+   "tipo": "fase",
+   "base": "Assegnato con il Περὶ συρίγγων a un unico autore del IV sec. a.C.: solo collocazione di strato, nessuna data."
+  },
+  {
+   "id": "tlg0627.tlg030",
+   "anno": -350,
+   "tipo": "fase",
+   "base": "Assegnato con il Περὶ αἱμοῤῥοίδων a un unico autore del IV sec. a.C.: solo collocazione di strato, nessuna data."
+  },
+  {
+   "id": "tlg0627.tlg046",
+   "anno": 50,
+   "tipo": "fase",
+   "base": "Scritto tardo di impronta eraclitea e stoica; dopo Diller (1936) è assegnato allo strato post-posidonio della scuola pneumatica, fra le ultime aggregazioni al corpus."
+  },
+  {
+   "id": "tlg0627.tlg051",
+   "anno": 100,
+   "tipo": "fase",
+   "base": "Greco tardo e contorto: la critica lo colloca fra I e II sec. d.C., nello strato più recente confluito nel corpus."
+  },
+  {
+   "id": "stoa0089.stoa001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Silloge di carmi d'occasione composti in anni diversi lungo tutta la carriera (c. 395-404): la raccolta come tale non ha una data di composizione unitaria."
+  },
+  {
+   "id": "stoa0089.stoa002",
+   "anno": 398,
+   "tipo": "certa",
+   "base": "Legato alla guerra contro Gildo, la cui rivolta fu domata nell'estate del 398: il poema (libro I, incompiuto) è di quell'anno."
+  },
+  {
+   "id": "stoa0089.stoa003",
+   "anno": 402,
+   "tipo": "certa",
+   "base": "Celebra la vittoria di Stilicone su Alarico a Pollenzo (aprile 402) e fu recitato a Roma nello stesso anno."
+  },
+  {
+   "id": "stoa0089.stoa004",
+   "anno": 400,
+   "tipo": "certa",
+   "base": "Per il consolato di Stilicone: libri I-II recitati a Milano nel gennaio 400, libro III a Roma nel corso dello stesso anno."
+  },
+  {
+   "id": "stoa0089.stoa005",
+   "anno": 396,
+   "tipo": "fase",
+   "base": "Poema incompiuto composto a più riprese: la prefazione del libro II è per Florentino, prefetto di Roma nel 395-397, mentre il libro III è collocato sensibilmente più tardi; l'anno segna l'avvio, non la data dell'opera."
+  },
+  {
+   "id": "stoa0089.stoa006",
+   "anno": 398,
+   "tipo": "certa",
+   "base": "Per le nozze di Onorio con Maria, figlia di Stilicone, celebrate all'inizio del 398."
+  },
+  {
+   "id": "stoa0089.stoa007",
+   "anno": 398,
+   "tipo": "certa",
+   "base": "Carmi nuziali per la stessa occasione delle nozze di Onorio e Maria, inizio 398."
+  },
+  {
+   "id": "stoa0089.stoa008",
+   "anno": 399,
+   "tipo": "certa",
+   "base": "Invettiva contro Eutropio console nel 399; il libro II segue la sua caduta, avvenuta nello stesso anno."
+  },
+  {
+   "id": "stoa0089.stoa009",
+   "anno": 397,
+   "tipo": "circa",
+   "base": "Il libro I segue l'uccisione di Rufino (27 novembre 395); il libro II, con cui l'opera si chiude, fu recitato a Milano nel 397."
+  },
+  {
+   "id": "stoa0089.stoa010",
+   "anno": 396,
+   "tipo": "certa",
+   "base": "Panegirico per il terzo consolato di Onorio, assunto il 1° gennaio 396."
+  },
+  {
+   "id": "stoa0089.stoa011",
+   "anno": 398,
+   "tipo": "certa",
+   "base": "Panegirico per il quarto consolato di Onorio, assunto il 1° gennaio 398."
+  },
+  {
+   "id": "stoa0089.stoa012",
+   "anno": 404,
+   "tipo": "certa",
+   "base": "Panegirico per il sesto consolato di Onorio, celebrato a Roma il 1° gennaio 404: ultimo componimento databile del poeta."
+  },
+  {
+   "id": "stoa0089.stoa013",
+   "anno": 399,
+   "tipo": "certa",
+   "base": "Panegirico per Manlio Teodoro, console nel 399."
+  },
+  {
+   "id": "stoa0089.stoa014",
+   "anno": 395,
+   "tipo": "certa",
+   "base": "Per il consolato dei fratelli Probino e Olibrio, entrati in carica il 1° gennaio 395: esordio latino di Claudiano."
+  },
+  {
+   "id": "tlg0551.tlg002",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "Sezione dell'unica Ῥωμαϊκά in 24 libri: il proemio conta già 900 anni di Roma (≈147 d.C.) e l'autore ignora i fatti del 162-165; tutte le parti hanno la stessa data di composizione."
+  },
+  {
+   "id": "tlg0551.tlg003",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "Sezione dell'unica Ῥωμαϊκά in 24 libri: il proemio conta già 900 anni di Roma (≈147 d.C.) e l'autore ignora i fatti del 162-165; tutte le parti hanno la stessa data di composizione."
+  },
+  {
+   "id": "tlg0551.tlg004",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "Sezione dell'unica Ῥωμαϊκά in 24 libri: il proemio conta già 900 anni di Roma (≈147 d.C.) e l'autore ignora i fatti del 162-165; tutte le parti hanno la stessa data di composizione."
+  },
+  {
+   "id": "tlg0551.tlg005",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "Sezione dell'unica Ῥωμαϊκά in 24 libri: il proemio conta già 900 anni di Roma (≈147 d.C.) e l'autore ignora i fatti del 162-165; tutte le parti hanno la stessa data di composizione."
+  },
+  {
+   "id": "tlg0551.tlg006",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "Sezione dell'unica Ῥωμαϊκά in 24 libri: il proemio conta già 900 anni di Roma (≈147 d.C.) e l'autore ignora i fatti del 162-165; tutte le parti hanno la stessa data di composizione."
+  },
+  {
+   "id": "tlg0551.tlg007",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "Sezione dell'unica Ῥωμαϊκά in 24 libri: il proemio conta già 900 anni di Roma (≈147 d.C.) e l'autore ignora i fatti del 162-165; tutte le parti hanno la stessa data di composizione."
+  },
+  {
+   "id": "tlg0551.tlg008",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "Sezione dell'unica Ῥωμαϊκά in 24 libri: il proemio conta già 900 anni di Roma (≈147 d.C.) e l'autore ignora i fatti del 162-165; tutte le parti hanno la stessa data di composizione."
+  },
+  {
+   "id": "tlg0551.tlg009",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "Sezione dell'unica Ῥωμαϊκά in 24 libri: il proemio conta già 900 anni di Roma (≈147 d.C.) e l'autore ignora i fatti del 162-165; tutte le parti hanno la stessa data di composizione."
+  },
+  {
+   "id": "tlg0551.tlg010",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "Sezione dell'unica Ῥωμαϊκά in 24 libri: il proemio conta già 900 anni di Roma (≈147 d.C.) e l'autore ignora i fatti del 162-165; tutte le parti hanno la stessa data di composizione."
+  },
+  {
+   "id": "tlg0551.tlg011",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "Sezione dell'unica Ῥωμαϊκά in 24 libri: il proemio conta già 900 anni di Roma (≈147 d.C.) e l'autore ignora i fatti del 162-165; tutte le parti hanno la stessa data di composizione."
+  },
+  {
+   "id": "tlg0551.tlg012",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "Sezione dell'unica Ῥωμαϊκά in 24 libri: il proemio conta già 900 anni di Roma (≈147 d.C.) e l'autore ignora i fatti del 162-165; tutte le parti hanno la stessa data di composizione."
+  },
+  {
+   "id": "tlg0551.tlg013",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "Sezione dell'unica Ῥωμαϊκά in 24 libri: il proemio conta già 900 anni di Roma (≈147 d.C.) e l'autore ignora i fatti del 162-165; tutte le parti hanno la stessa data di composizione."
+  },
+  {
+   "id": "tlg0551.tlg014",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "Sezione dell'unica Ῥωμαϊκά in 24 libri: il proemio conta già 900 anni di Roma (≈147 d.C.) e l'autore ignora i fatti del 162-165; tutte le parti hanno la stessa data di composizione."
+  },
+  {
+   "id": "tlg0551.tlg017",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "Sezione dell'unica Ῥωμαϊκά in 24 libri (Guerre civili I): il proemio conta già 900 anni di Roma (≈147 d.C.) e l'autore ignora i fatti del 162-165; tutte le parti hanno la stessa data di composizione."
+  },
+  {
+   "id": "tlg0081.tlg001",
+   "anno": -7,
+   "tipo": "certa",
+   "base": "L'autore dichiara (I 7) di essere giunto in Italia alla fine della guerra civile, nel 30 a.C., e di aver lavorato ventidue anni: pubblicazione nel 7 a.C."
+  },
+  {
+   "id": "tlg0081.tlg002",
+   "anno": -25,
+   "tipo": "fase",
+   "base": "Prefazione del primo libro Sugli antichi oratori, pubblicato in blocco con i tre saggi che seguono: gruppo più antico degli opuscoli retorici romani, senza data."
+  },
+  {
+   "id": "tlg0081.tlg003",
+   "anno": -25,
+   "tipo": "fase",
+   "base": "Parte del primo libro Sugli antichi oratori, pubblicato insieme alla prefazione e ai saggi su Isocrate e Iseo: stessa data degli altri pezzi del gruppo iniziale."
+  },
+  {
+   "id": "tlg0081.tlg004",
+   "anno": -25,
+   "tipo": "fase",
+   "base": "Parte del primo libro Sugli antichi oratori, edito in blocco con Lisia e Iseo: stessa data del gruppo iniziale degli opuscoli."
+  },
+  {
+   "id": "tlg0081.tlg005",
+   "anno": -25,
+   "tipo": "fase",
+   "base": "Parte del primo libro Sugli antichi oratori, edito in blocco con Lisia e Isocrate: stessa data del gruppo iniziale degli opuscoli."
+  },
+  {
+   "id": "tlg0081.tlg015",
+   "anno": -20,
+   "tipo": "fase",
+   "base": "Risponde alle obiezioni di Pompeo Gemino sui giudizi già espressi negli opuscoli sugli oratori e nel Perì mimēseōs: presuppone dunque il gruppo iniziale."
+  },
+  {
+   "id": "tlg0081.tlg012",
+   "anno": -18,
+   "tipo": "fase",
+   "base": "Dono di compleanno al discepolo Rufo Metilio; appartiene al gruppo mediano degli opuscoli, congetturalmente fra il 20 e il 10 a.C."
+  },
+  {
+   "id": "tlg0081.tlg006",
+   "anno": -17,
+   "tipo": "fase",
+   "base": "Secondo libro Sugli antichi oratori, con rinvio al Perì synthéseōs: gruppo mediano, posteriore ai saggi su Lisia, Isocrate e Iseo."
+  },
+  {
+   "id": "tlg0081.tlg007",
+   "anno": -17,
+   "tipo": "fase",
+   "base": "Frammenti dello stesso secondo libro Sugli antichi oratori cui appartiene il saggio su Demostene: identica data di composizione."
+  },
+  {
+   "id": "tlg0081.tlg008",
+   "anno": -15,
+   "tipo": "fase",
+   "base": "Nega che Demostene dipenda dalla Retorica di Aristotele e presuppone il saggio già scritto su Demostene: gruppo mediano."
+  },
+  {
+   "id": "tlg0081.tlg009",
+   "anno": -12,
+   "tipo": "fase",
+   "base": "Saggio bibliografico sull'autenticità delle orazioni, che integra la serie sugli oratori attici; la sua collocazione è la più discussa dell'intero gruppo."
+  },
+  {
+   "id": "tlg0081.tlg010",
+   "anno": -5,
+   "tipo": "fase",
+   "base": "Dedicato a Q. Elio Tuberone (console nell'11 a.C.); appartiene al gruppo tardo degli opuscoli, posteriore ai saggi sugli oratori."
+  },
+  {
+   "id": "tlg0081.tlg011",
+   "anno": -4,
+   "tipo": "fase",
+   "base": "Lettera d'accompagnamento inviata subito dopo il Perì Thoukydídou, di cui costituisce l'appendice: posteriorità dichiarata dall'autore stesso."
+  },
+  {
+   "id": "tlg2003.tlg001",
+   "anno": 356,
+   "tipo": "circa",
+   "base": "Primo panegirico per Costanzo II, composto dopo la nomina a Cesare (6 nov. 355); la critica lo colloca tra il 355 e il 356, quando Giuliano era già in Gallia."
+  },
+  {
+   "id": "tlg2003.tlg002",
+   "anno": 356,
+   "tipo": "circa",
+   "base": "Ringrazia l'imperatrice Eusebia per l'appoggio ricevuto nei due anni precedenti: posteriore alla nomina a Cesare (nov. 355) e anteriore all'inizio del 357."
+  },
+  {
+   "id": "tlg2003.tlg003",
+   "anno": 358,
+   "tipo": "circa",
+   "base": "Secondo panegirico per Costanzo, scritto in Gallia durante il cesarato; la critica lo colloca nel 358/359, dopo le prime campagne renane."
+  },
+  {
+   "id": "tlg2003.tlg004",
+   "anno": 358,
+   "tipo": "circa",
+   "base": "Occasionato dal richiamo di Salustio dalla Gallia ordinato da Costanzo, evento collocato tra il 358 e il 359."
+  },
+  {
+   "id": "tlg2003.tlg005",
+   "anno": 361,
+   "tipo": "certa",
+   "base": "Manifesto pubblico inviato da Naisso nell'autunno del 361, durante la marcia contro Costanzo II e prima della morte di questi (3 nov. 361)."
+  },
+  {
+   "id": "tlg2003.tlg006",
+   "anno": 362,
+   "tipo": "circa",
+   "base": "Datazione contesa: si è proposta l'ascesa a Cesare (355) e, con maggior favore nella critica recente, quella ad Augusto (361/362); si adotta la seconda."
+  },
+  {
+   "id": "tlg2003.tlg007",
+   "anno": 362,
+   "tipo": "circa",
+   "base": "Replica a una conferenza del cinico Eraclio ascoltata di persona a Costantinopoli: primavera del 362, primo anno di regno da Augusto."
+  },
+  {
+   "id": "tlg2003.tlg008",
+   "anno": 362,
+   "tipo": "circa",
+   "base": "Composto di getto in una notte per la festa di Cibele (fine marzo 362) a Costantinopoli, come Giuliano stesso dichiara."
+  },
+  {
+   "id": "tlg2003.tlg009",
+   "anno": 362,
+   "tipo": "circa",
+   "base": "Polemica antiCinica composta a Costantinopoli nell'estate del 362, coppia complementare dell'orazione a Eraclio."
+  },
+  {
+   "id": "tlg2003.tlg010",
+   "anno": 362,
+   "tipo": "circa",
+   "base": "Satira scritta ad Antiochia per i Kronia/Saturnali del dicembre 362, come indica il titolo stesso e il riferimento alla festa."
+  },
+  {
+   "id": "tlg2003.tlg011",
+   "anno": 362,
+   "tipo": "circa",
+   "base": "Composto ad Antiochia in tre notti per la festa del Sole Invitto (25 dicembre 362) e dedicato a Salustio."
+  },
+  {
+   "id": "tlg2003.tlg012",
+   "anno": 363,
+   "tipo": "certa",
+   "base": "Affisso ad Antiochia nel febbraio/marzo 363, poco prima della partenza per la Persia: reagisce agli scherni degli Antiocheni dell'inverno 362/363."
+  },
+  {
+   "id": "tlg2003.tlg013",
+   "anno": 362,
+   "tipo": "circa",
+   "base": "Raccolta di lettere scritte dal cesarato (355) alla morte in Persia (giugno 363), addensate nel biennio da Augusto: si indica l'anno centrale del blocco."
+  },
+  {
+   "id": "tlg2003.tlg017",
+   "anno": 362,
+   "tipo": "circa",
+   "base": "Composto ad Antiochia nelle lunghe notti dell'inverno 362/363, poco prima della campagna persiana; lo attesta Libanio."
+  },
+  {
+   "id": "tlg0017.tlg001",
+   "anno": -355,
+   "tipo": "circa",
+   "base": "Nessuna data esplicita: i riferimenti interni la collocano tra il 360 e il 353 a.C., si adotta il punto centrale della forbice."
+  },
+  {
+   "id": "tlg0017.tlg002",
+   "anno": -354,
+   "tipo": "circa",
+   "base": "La critica converge sul 354 a.C. circa in base ai computi genealogici interni."
+  },
+  {
+   "id": "tlg0017.tlg003",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Nessun appiglio cronologico interno; i repertori la dichiarano di data ignota, giudicandola solo genericamente tarda nel corpus."
+  },
+  {
+   "id": "tlg0017.tlg004",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Conservata solo nell'epilogo: data incerta per unanime ammissione dei repertori, nessun riferimento databile superstite."
+  },
+  {
+   "id": "tlg0017.tlg005",
+   "anno": -389,
+   "tipo": "circa",
+   "base": "Il testatore cadde a Cnido e da allora il testo conta 22 anni: se la battaglia è quella del 412 il processo è del 390/389 (soluzione prevalente), se quella del 394 sarebbe del 372."
+  },
+  {
+   "id": "tlg0017.tlg006",
+   "anno": -364,
+   "tipo": "certa",
+   "base": "Il §14 dichiara trascorsi cinquantadue anni dalla partenza della spedizione ateniese per la Sicilia (415 a.C.): il processo cade nel 364/363."
+  },
+  {
+   "id": "tlg0017.tlg007",
+   "anno": -353,
+   "tipo": "circa",
+   "base": "La critica converge sul 353 a.C. circa in base ai dati prosopografici e genealogici del discorso."
+  },
+  {
+   "id": "tlg0017.tlg008",
+   "anno": -375,
+   "tipo": "circa",
+   "base": "Datazione approssimativa ricavata per via indiretta dai computi generazionali: intorno al 375 a.C."
+  },
+  {
+   "id": "tlg0017.tlg009",
+   "anno": -369,
+   "tipo": "circa",
+   "base": "Datazione approssimativa ricavata dalle indicazioni interne sulle campagne militari del defunto: intorno al 369 a.C."
+  },
+  {
+   "id": "tlg0017.tlg010",
+   "anno": -374,
+   "tipo": "circa",
+   "base": "I riferimenti interni collocano il processo tra il 377 e il 371 a.C.: si adotta il punto centrale della forbice."
+  },
+  {
+   "id": "tlg0017.tlg011",
+   "anno": -359,
+   "tipo": "circa",
+   "base": "La causa di maltrattamento dell'orfano è riferita dalla critica al 359 a.C. sulla base della vicenda ereditaria di Agnia, nota anche da Demostene."
+  },
+  {
+   "id": "tlg0017.tlg012",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Frammento conservato da Dionigi di Alicarnasso: riguarda una revisione delle liste demiche, spesso ma non sicuramente identificata con la diapsephisis generale del 346/5 a.C.; i repertori dichiarano la data incerta."
+  },
+  {
+   "id": "phi0692.phi001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Le Dirae si fingono ambientate nelle confische triumvirali (41-40 a.C.), ma la critica discute se il dato sia storico o finzione letteraria: nessuna data di composizione accertabile."
+  },
+  {
+   "id": "phi0692.phi002",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Lydia è trasmessa in blocco con le Dirae e ne condivide l'anonimato e l'assenza di ogni appiglio cronologico."
+  },
+  {
+   "id": "phi0692.phi003",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Il Culex era già letto come opera giovanile di Virgilio in età neroniana (Lucano, Stazio, Marziale, Svetonio): questo è solo un terminus ante quem, la data di composizione resta contesa fra età augustea e tiberiana."
+  },
+  {
+   "id": "phi0692.phi005",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "La Copa è attribuita per tradizione al Virgilio giovane, ma la critica non ha raggiunto alcun accordo: nessun elemento interno la data."
+  },
+  {
+   "id": "phi0692.phi006",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Elegiae in Maecenatem: il compianto presuppone la morte di Mecenate (8 a.C.) come terminus post quem, ma la critica recente la considera un falso retrospettivo di età neroniana, senza consenso."
+  },
+  {
+   "id": "phi0692.phi007",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "La Ciris è il pezzo più discusso dell'Appendix: le proposte oscillano fra età augustea e piena età imperiale, senza alcun elemento dirimente."
+  },
+  {
+   "id": "phi0692.phi008",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "I tre Priapea sono componimenti anonimi di occasione, privi di qualsiasi riferimento databile."
+  },
+  {
+   "id": "phi0692.phi011",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Il Moretum è un idillio anonimo, forse rifacimento di un modello greco: nessun appiglio interno né esterno per datarlo."
+  },
+  {
+   "id": "phi0692.phi012",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Il Vir bonus è trasmesso anche nel corpus di Ausonio (IV sec.): la doppia tradizione lascia indecisa sia la paternità sia l'epoca di composizione."
+  },
+  {
+   "id": "phi0692.phi013",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Est et Non circola parimenti fra le ecloghe di Ausonio (IV sec.) e nell'Appendix: attribuzione e data restano contese."
+  },
+  {
+   "id": "stoa0058.stoa001",
+   "anno": 524,
+   "tipo": "circa",
+   "base": "Scritta in carcere a Pavia dopo l'arresto per alto tradimento (523) e prima dell'esecuzione (524/526)."
+  },
+  {
+   "id": "stoa0058.stoa003",
+   "anno": 521,
+   "tipo": "fase",
+   "base": "Non datata. Successione riconosciuta degli Opuscula sacra: solo il Contra Eutychen è databile (512/513), gli altri stanno fra quello e la Consolatio (523/524); questo terzo opuscolo, indirizzato a Giovanni Diacono, si colloca nella serie accanto al De Trinitate."
+  },
+  {
+   "id": "stoa0058.stoa006",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Trattato adespoto nella tradizione, la cui paternità boeziana è stata a lungo contestata: nessun elemento interno o esterno lo colloca nel tempo."
+  },
+  {
+   "id": "stoa0058.stoa023",
+   "anno": 512,
+   "tipo": "circa",
+   "base": "Risponde alla lettera dei vescovi orientali sulla cristologia letta a Roma nell'autunno del 512: composto fra la fine del 512 e l'inizio del 513, unico opuscolo databile con precisione."
+  },
+  {
+   "id": "stoa0058.stoa025",
+   "anno": 519,
+   "tipo": "fase",
+   "base": "Non datato. Apre la serie degli Opuscula sacra nell'ordine tradizionale ed è posto dalla critica fra il Contra Eutychen (512/513) e la Consolatio (523/524): l'anno indica solo il posto nella successione."
+  },
+  {
+   "id": "stoa0058.stoa028",
+   "anno": 520,
+   "tipo": "fase",
+   "base": "Breve supplemento al De Trinitate, indirizzato allo stesso Giovanni Diacono: nella successione riconosciuta degli opuscoli segue immediatamente quello, ma nessuna data lo fissa."
+  },
+  {
+   "id": "tlg0028.tlg001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Nessun riferimento databile nel testo: le proposte oscillano fra «prima del 421» e il 419-414 a.C.; molti la giudicano la più antica delle orazioni conservate, ma è un giudizio stilistico, non una data."
+  },
+  {
+   "id": "tlg0028.tlg002",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Esercitazione retorica su un caso immaginario: nessun fatto databile vi è menzionato e la stessa autenticità antifontea è discussa."
+  },
+  {
+   "id": "tlg0028.tlg003",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Come le altre due tetralogie, è un modello di scuola su caso fittizio: privo di ogni riferimento cronologico."
+  },
+  {
+   "id": "tlg0028.tlg004",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Terza tetralogia, esercizio su caso immaginario: nessun appiglio interno; le tre tetralogie condividono la medesima indatabilità."
+  },
+  {
+   "id": "tlg0028.tlg005",
+   "anno": -416,
+   "tipo": "circa",
+   "base": "Il parlante era bambino alla rivolta di Lesbo (428/427) ed è appena adulto, mentre il disastro di Sicilia è ancora futuro: la critica converge sul 417-415 a.C."
+  },
+  {
+   "id": "tlg0028.tlg006",
+   "anno": -419,
+   "tipo": "circa",
+   "base": "Il processo davanti all'Areopago è legato alla coregia per le Targelie: la datazione prevalente è l'autunno del 419 a.C., altri lo abbassano al 412."
+  },
+  {
+   "id": "tlg0074.tlg001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Nessun appiglio interno decisivo: la critica oscilla fra una composizione negli anni 120 e una negli anni 140 d.C., senza convergenza."
+  },
+  {
+   "id": "tlg0074.tlg002",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Seguito dichiarato dell'Anabasi, di cui è appendice: ne condivide esattamente la datazione, e quella non è determinabile."
+  },
+  {
+   "id": "tlg0074.tlg003",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Trattato di caccia concepito come integrazione del Cinegetico di Senofonte: nessun elemento interno o esterno ne fissa la composizione."
+  },
+  {
+   "id": "tlg0074.tlg004",
+   "anno": 131,
+   "tipo": "circa",
+   "base": "Relazione ufficiale indirizzata ad Adriano durante il governatorato di Cappadocia; il testo dà per avvenuta la morte del re Coti del Bosforo, del 131/132."
+  },
+  {
+   "id": "tlg0074.tlg005",
+   "anno": 136,
+   "tipo": "certa",
+   "base": "L'autore data l'opera al ventesimo anno di regno di Adriano (Tact. 44,3), cioè fra l'agosto 136 e l'agosto 137."
+  },
+  {
+   "id": "tlg0074.tlg006",
+   "anno": 135,
+   "tipo": "circa",
+   "base": "Ordine di battaglia redatto da Arriano legato di Cappadocia contro l'invasione degli Alani, datata al 135 d.C."
+  },
+  {
+   "id": "tlg0638.tlg001",
+   "anno": 220,
+   "tipo": "circa",
+   "base": "Commissionata da Giulia Domna († 217) e conclusa dopo la sua morte; è già citata nelle Vite dei sofisti: la critica la colloca negli anni Venti del III secolo."
+  },
+  {
+   "id": "tlg0638.tlg003",
+   "anno": 237,
+   "tipo": "circa",
+   "base": "Dedicata a Gordiano quando era proconsole d'Africa: la dedica si colloca fra il 230 e il 238, di norma nel 237/238, poco prima della sua acclamazione imperiale."
+  },
+  {
+   "id": "tlg0638.tlg004",
+   "anno": 225,
+   "tipo": "circa",
+   "base": "Posteriore al 217 (vi si ricorda la seconda vittoria olimpica dell'atleta Helix) e forse allusivo a fatti tessali di età severiana: la critica recente lo colloca negli anni Venti, abbandonando la vecchia data del 213/214 legata alla visita di Caracalla alla tomba di Achille."
+  },
+  {
+   "id": "tlg0638.tlg005",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Dialogo di paternità incerta, trasmesso anche nel corpus lucianeo e da molti assegnato a un altro Filostrato: nessun elemento ne fissa la composizione."
+  },
+  {
+   "id": "tlg0638.tlg006",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Raccolta di lettere e declamazioni di formazione redazionale, priva di riferimenti a fatti databili."
+  },
+  {
+   "id": "tlg0638.tlg007",
+   "anno": 230,
+   "tipo": "fase",
+   "base": "Nessuna data: si sa solo che è posteriore alle vittorie dell'atleta Helix (217 e 219), elogiato al culmine della fama, e la critica lo colloca fra le opere tarde, dopo le Vite dei sofisti o accanto ad esse; l'anno indica solo questo posto nella successione."
+  },
+  {
+   "id": "tlg0030.tlg001",
+   "anno": -333,
+   "tipo": "circa",
+   "base": "Processo per eisangelia contro Licofrone, che vi ricorda il proprio comando di ipparco a Lemno: la critica lo colloca attorno al 333, con proposte comprese tra 338 e 333."
+  },
+  {
+   "id": "tlg0030.tlg002",
+   "anno": -336,
+   "tipo": "circa",
+   "base": "Graphé paranómon per gli onori ai pròedroi: posteriore a Cheronea (338) e con Filippo da poco morto o ancora vivo; processo del 336/335."
+  },
+  {
+   "id": "tlg0030.tlg003",
+   "anno": -330,
+   "tipo": "circa",
+   "base": "Causa privata contro Atenogene, riparato a Trezene dopo Cheronea: la critica la colloca tra il 330 e il 324."
+  },
+  {
+   "id": "tlg0030.tlg004",
+   "anno": -330,
+   "tipo": "circa",
+   "base": "Difesa di Eussenippo in un'eisangelia: la critica converge sul 330 circa, con oscillazioni fino al 324."
+  },
+  {
+   "id": "tlg0030.tlg005",
+   "anno": -323,
+   "tipo": "certa",
+   "base": "Pronunciata al processo per l'affare di Arpalo, istruito dall'Areopago nella primavera del 323."
+  },
+  {
+   "id": "tlg0030.tlg006",
+   "anno": -322,
+   "tipo": "certa",
+   "base": "Epitafio per Leostene e i caduti del primo anno della guerra lamiaca: funerale pubblico dell'inverno 323/322."
+  },
+  {
+   "id": "tlg0557.tlg001",
+   "anno": 108,
+   "tipo": "circa",
+   "base": "Appunti presi da Arriano alle lezioni di Nicopoli, frequentate attorno al 107-109; la data di pubblicazione non è documentata."
+  },
+  {
+   "id": "tlg0557.tlg002",
+   "anno": 110,
+   "tipo": "fase",
+   "base": "Epitome delle Diatribe compilata da Arriano: nella successione delle sue redazioni viene dopo la raccolta maggiore, ma non ha data propria."
+  },
+  {
+   "id": "tlg0557.tlg003",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Frammenti di materiale scolastico trasmessi indirettamente (Stobeo, Marco Aurelio, Aulo Gellio): nessuna data di composizione autonoma."
+  },
+  {
+   "id": "tlg0557.tlg004",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Estratti gnomici messi insieme nell'Anthologion di Stobeo (V sec. d.C.): antologia posteriore, non un'opera composta da Epitteto o da Arriano."
+  },
+  {
+   "id": "tlg0557.tlg005",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Come la sezione precedente: florilegio ricavato dai libri 3-4 di Stobeo, senza data di composizione propria."
+  },
+  {
+   "id": "tlg0035.tlg001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Idillio privo di appigli interni; l'unico dato è il floruit del poeta (Siracusa, metà del II sec. a.C.), che data l'autore e non il carme."
+  },
+  {
+   "id": "tlg0035.tlg002",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Epillio senza riferimenti databili: nessun elemento per collocarlo entro la carriera di Mosco."
+  },
+  {
+   "id": "tlg0035.tlg003",
+   "anno": -100,
+   "tipo": "fase",
+   "base": "Non è di Mosco: lo compone un allievo alla morte di Bione, che vi è compianto; l'anno segna solo questa posizione, subito dopo Bione (collocato attorno al 100 a.C.)."
+  },
+  {
+   "id": "tlg0035.tlg004",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Carme anonimo trasmesso nel corpus bucolico sotto il nome di Mosco: autore e data ignoti."
+  },
+  {
+   "id": "tlg0035.tlg005",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Frammenti ricavati da citazioni indirette e florilegi: nessun appiglio cronologico."
+  },
+  {
+   "id": "tlg0027.tlg001",
+   "anno": -400,
+   "tipo": "circa",
+   "base": "Difesa nel processo per empietà intentato da Cefisio dopo il rientro ad Atene: la critica lo colloca nel 400, alcuni nel 399."
+  },
+  {
+   "id": "tlg0027.tlg002",
+   "anno": -410,
+   "tipo": "fase",
+   "base": "L'unico termine sicuro è la caduta dei Quattrocento (settembre 411), a cui l'orazione è posteriore; le proposte oscillano tra il 410 e il 407."
+  },
+  {
+   "id": "tlg0027.tlg003",
+   "anno": -392,
+   "tipo": "circa",
+   "base": "Pronunciata al ritorno dall'ambasceria a Sparta, durante le trattative di pace del 392/391."
+  },
+  {
+   "id": "tlg0027.tlg004",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Orazione spuria, esercizio retorico di scuola messo sotto il nome di Andocide: mano e data ignote."
+  },
+  {
+   "id": "tlg0719.tlg001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Prima coppia di libri dell'unica opera in otto libri di Areteo: nessun appiglio interno e la stessa età dell'autore oscilla tra la metà del I e la metà del II sec. d.C."
+  },
+  {
+   "id": "tlg0719.tlg002",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Seconda coppia di libri della stessa opera unitaria: condivide con le altre parti l'assenza di qualsiasi elemento di datazione."
+  },
+  {
+   "id": "tlg0719.tlg003",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Sezione terapeutica della medesima opera in otto libri: non è composizione autonoma e non ha data documentata."
+  },
+  {
+   "id": "tlg0719.tlg004",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Ultima parte dell'unico trattato areteo: stessa composizione delle altre tre, priva di riferimenti databili."
+  },
+  {
+   "id": "tlg0555.tlg001",
+   "anno": 195,
+   "tipo": "fase",
+   "base": "Primo membro della successione riconosciuta Protrettico-Pedagogo-Stromati-Quis dives salvetur, redatto ad Alessandria prima della fuga del 202; l'insieme cade tra 195 e 210."
+  },
+  {
+   "id": "tlg0555.tlg004",
+   "anno": 200,
+   "tipo": "circa",
+   "base": "Il libro I contiene una cronologia che si arresta alla morte di Commodo (192), terminus post quem; la redazione è collocata tra il 198 e il 203."
+  },
+  {
+   "id": "tlg0555.tlg006",
+   "anno": 205,
+   "tipo": "fase",
+   "base": "Omelia senza appigli interni: nella successione delle opere clementine viene dopo gli Stromati, entro l'arco 195-210."
+  },
+  {
+   "id": "tlg0555.tlg008",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Frammento omiletico di attribuzione discussa, trasmesso fuori contesto: nessun elemento per datarlo."
+  },
+  {
+   "id": "tlg0526.tlg001",
+   "anno": 93,
+   "tipo": "certa",
+   "base": "L'autore dichiara di averla conclusa nel tredicesimo anno di Domiziano e nel cinquantaseiesimo della propria vita (AJ XX,267): 93/94."
+  },
+  {
+   "id": "tlg0526.tlg002",
+   "anno": 95,
+   "tipo": "fase",
+   "base": "Appendice all'Archeologia (93/94), dunque posteriore ad essa; il richiamo alla morte di Agrippa II non consente una data precisa."
+  },
+  {
+   "id": "tlg0526.tlg003",
+   "anno": 97,
+   "tipo": "fase",
+   "base": "Rimanda all'Archeologia come già pubblicata (93/94): ultima opera conservata di Giuseppe, senza data propria."
+  },
+  {
+   "id": "tlg0526.tlg004",
+   "anno": 78,
+   "tipo": "circa",
+   "base": "Consegnata a Vespasiano e Tito, quindi prima della morte di Vespasiano (79); la critica colloca la redazione greca tra il 75 e il 79."
+  },
+  {
+   "id": "phi0426.phi001",
+   "anno": -46,
+   "tipo": "fase",
+   "base": "Racconto della campagna d'Africa del 47/46 dovuto a un partecipante: l'anno segna la campagna narrata nella successione del corpus caesarianum, non una data di composizione documentata."
+  },
+  {
+   "id": "phi0428.phi001",
+   "anno": -47,
+   "tipo": "fase",
+   "base": "Copre la guerra alessandrina e le operazioni del 48/47: l'anno indica la posizione nella successione del corpus; l'autore, forse Irzio, scrive dopo la morte di Cesare senza data accertata."
+  },
+  {
+   "id": "phi0430.phi001",
+   "anno": -45,
+   "tipo": "fase",
+   "base": "Narra la campagna di Munda (45) per mano di un testimone oculare: l'anno è quello degli eventi, la composizione non è documentata."
+  },
+  {
+   "id": "phi1020.phi001",
+   "anno": 92,
+   "tipo": "circa",
+   "base": "Dodici anni di lavoro dichiarati nell'epilogo (XII,811); la pubblicazione è collocata attorno al 91/92."
+  },
+  {
+   "id": "phi1020.phi002",
+   "anno": 95,
+   "tipo": "circa",
+   "base": "Raccolta uscita a libri tra il 92 e il 96: il libro IV celebra il diciassettesimo consolato di Domiziano (95), il V è postumo."
+  },
+  {
+   "id": "phi1020.phi003",
+   "anno": 96,
+   "tipo": "circa",
+   "base": "Iniziata dopo la Tebaide e detta in corso in Silvae IV,7 (95); rimasta incompiuta alla morte del poeta, attorno al 96."
+  },
+  {
+   "id": "tlg0036.tlg001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Nessun appiglio interno: si conosce solo il floruit di Bione (attorno al 100 a.C.), che data il poeta e non il carme."
+  },
+  {
+   "id": "tlg0036.tlg002",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Frammento di epitalamio in forma di dialogo bucolico, di attribuzione discussa: nessun elemento cronologico."
+  },
+  {
+   "id": "tlg0036.tlg003",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Frammenti tramandati da citazioni indirette e florilegi: privi di data."
+  },
+  {
+   "id": "tlg0029.tlg004",
+   "anno": -323,
+   "tipo": "certa",
+   "base": "Logografia per i processi dell'affare di Arpalo, celebrati ad Atene nel 323 dopo l'inchiesta dell'Areopago."
+  },
+  {
+   "id": "tlg0029.tlg005",
+   "anno": -323,
+   "tipo": "certa",
+   "base": "Scritta per lo stesso ciclo di processi arpalici del 323: unico episodio giudiziario a cui appartengono le tre orazioni superstiti."
+  },
+  {
+   "id": "tlg0029.tlg006",
+   "anno": -323,
+   "tipo": "certa",
+   "base": "Terza logografia dei processi dell'affare di Arpalo, primavera-estate del 323."
+  },
+  {
+   "id": "tlg0545.tlg001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Nessun riferimento databile nell'opera; le opere di Eliano non si collocano singolarmente entro il suo arco di vita (c. 170-235)."
+  },
+  {
+   "id": "tlg0545.tlg002",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Miscellanea erudita priva di appigli cronologici interni: non è databile né in assoluto né rispetto alle altre opere di Eliano."
+  },
+  {
+   "id": "tlg0545.tlg003",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Lettere fittizie di ambiente agreste, esercizio letterario senza alcun riferimento databile."
+  },
+  {
+   "id": "stoa0261.stoa0001",
+   "anno": 469,
+   "tipo": "circa",
+   "base": "Raccolta chiusa dopo il panegirico ad Antemio, recitato a Roma il 1° gennaio 468, e prima dell'elezione episcopale: pubblicazione attorno al 469."
+  },
+  {
+   "id": "stoa0261.stoa0002",
+   "anno": 481,
+   "tipo": "circa",
+   "base": "Libri aggiunti alla raccolta epistolare dopo i primi sette (c. 477/478); per il libro IX si propone il 481/482."
+  },
+  {
+   "id": "tlg0548.tlg001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Manuale mitografico di autore ignoto (non Apollodoro di Atene): collocato genericamente tra I e II sec. d.C., senza appigli interni."
+  },
+  {
+   "id": "tlg0548.tlg002",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Compendio della parte finale perduta della stessa Biblioteca: non ha data propria e l'opera da cui deriva non è databile."
+  },
+  {
+   "id": "tlg2040.tlg002",
+   "anno": 370,
+   "tipo": "circa",
+   "base": "Opuscolo della maturità, collocato dalla critica attorno al 370, negli anni dell'episcopato (370-379); nessuna data interna."
+  },
+  {
+   "id": "tlg2040.tlg004",
+   "anno": 368,
+   "tipo": "fase",
+   "base": "Corpus di lettere scritte lungo tutta la carriera (c. 357-378): l'anno indica il centro dell'arco, non una composizione unitaria; le singole lettere si datano una per una."
+  },
+  {
+   "id": "tlg4029.tlg001",
+   "anno": 551,
+   "tipo": "circa",
+   "base": "I primi sette libri pubblicati nel 550/551, l'ottavo aggiunto nel 553."
+  },
+  {
+   "id": "tlg4029.tlg002",
+   "anno": 550,
+   "tipo": "circa",
+   "base": "L'autore dichiara trascorsi trentadue anni dall'inizio del potere di Giustiniano (518), cioè il 550; una parte della critica propone il 558/559."
+  },
+  {
+   "id": "tlg0094.tlg002",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Dialogo non plutarcheo, di autore ignoto: nessun appiglio interno, la critica oscilla tra II e III sec. d.C."
+  },
+  {
+   "id": "tlg0094.tlg003",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Epitome dossografica derivata dalla raccolta di Aezio e messa sotto il nome di Plutarco: compilatore e data ignoti."
+  },
+  {
+   "id": "stoa0023.stoa001",
+   "anno": 391,
+   "tipo": "circa",
+   "base": "Pubblicata a Roma attorno al 390/391; gli ultimi libri non contengono allusioni posteriori ai primi anni Novanta."
+  },
+  {
+   "id": "phi2003.phi001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "Ricettario anonimo di redazione tardoantica (IV-V sec.) messo sotto il nome del gastronomo Apicio, vissuto sotto Tiberio: nessun elemento per datare la raccolta."
+  },
+  {
+   "id": "phi1254.phi001",
+   "anno": 180,
+   "tipo": "circa",
+   "base": "Compilate lungo più anni a partire dal soggiorno ateniese e pubblicate attorno al 177-180, negli ultimi anni di Marco Aurelio."
+  },
+  {
+   "id": "stoa0054.stoa006",
+   "anno": 731,
+   "tipo": "certa",
+   "base": "la narrazione si arresta al 731 e Beda stesso data l'opera a quell'anno nel capitolo conclusivo (V 24), con il recapitolamento cronologico"
+  },
+  {
+   "id": "stoa0079.stoa001",
+   "anno": -160,
+   "tipo": "circa",
+   "base": "opera della vecchiaia di Catone (m. 149 a.C.), collocata dalla critica verso il 160 a.C.; nessuna data documentata"
+  },
+  {
+   "id": "phi0836.phi002",
+   "anno": 30,
+   "tipo": "circa",
+   "base": "sezione medica dell'enciclopedia Artes, composta sotto Tiberio: i medici più recenti nominati sono di età augusteo-tiberiana"
+  },
+  {
+   "id": "phi0845.phi002",
+   "anno": 62,
+   "tipo": "circa",
+   "base": "nomina come contemporanei personaggi di età neroniana; la critica colloca il trattato fra il 60 e il 65 d.C."
+  },
+  {
+   "id": "phi0860.phi001",
+   "anno": 45,
+   "tipo": "circa",
+   "base": "datazione controversa (sono state proposte date da Augusto ai Severi); la critica prevalente accoglie l'età claudia, per la digressione sul nuovo principe che riporta l'ordine (X 9)"
+  },
+  {
+   "id": "phi0975.phi001",
+   "anno": 35,
+   "tipo": "circa",
+   "base": "i cinque libri uscirono a più riprese fra Tiberio e Claudio; il prologo del III allude alla persecuzione subita al tempo di Seiano (caduto nel 31 d.C.)"
+  },
+  {
+   "id": "phi1242.phi001",
+   "anno": 135,
+   "tipo": "circa",
+   "base": "la prefazione conta «poco meno di duecento anni» da Augusto e ricorda Traiano come principe che ha ridato vigore all'impero: epitome di età adrianea"
+  },
+  {
+   "id": "stoa0203.stoa001",
+   "anno": 210,
+   "tipo": "fase",
+   "base": "nessuna data propria: tutto dipende dal rapporto con l'Apologeticum di Tertulliano (197), da cui la critica recente lo fa dipendere; l'anno indica solo questa posizione, la tesi opposta della priorità di Minucio porterebbe verso il 166"
+  },
+  {
+   "id": "phi0978.phi001",
+   "anno": 77,
+   "tipo": "certa",
+   "base": "la prefazione è dedicata a Tito e datata dal suo sesto consolato (77 d.C.)"
+  },
+  {
+   "id": "stoa0276.stoa002",
+   "anno": 200,
+   "tipo": "circa",
+   "base": "scritto pre-montanista di Tertulliano (l'etichetta pseudo- non è accolta): la cronologia tertullianea lo colloca fra il 198 e il 203"
+  },
+  {
+   "id": "phi0478.phi003",
+   "anno": -64,
+   "tipo": "circa",
+   "base": "si presenta come manuale per la campagna consolare di Marco Cicerone del 64 a.C.; l'autenticità è discussa e alcuni lo ritengono esercizio retorico di età imperiale"
+  },
+  {
+   "id": "phi1345.phi001",
+   "anno": 92,
+   "tipo": "circa",
+   "base": "composto in età domizianea: Marziale nel IV libro (88 d.C.) lo dice al lavoro sul poema, Plinio ne parla come cosa compiuta"
+  },
+  {
+   "id": "phi1035.phi001",
+   "anno": 80,
+   "tipo": "circa",
+   "base": "il proemio si rivolge a Vespasiano e allude alla presa di Gerusalemme (70) e all'eruzione del Vesuvio (79); Quintiliano intorno al 95 ne piange la morte recente e il poema resta incompiuto"
+  },
+  {
+   "id": "phi1038.phi001",
+   "anno": 31,
+   "tipo": "circa",
+   "base": "dedicata a Tiberio; l'invettiva contro un nemico pubblico (VI 9) è letta come riferita a Seiano, caduto nel 31 d.C."
+  },
+  {
+   "id": "phi1056.phi001",
+   "anno": -25,
+   "tipo": "circa",
+   "base": "dedicato a Ottaviano già Augusto, dunque dopo il 27 a.C.; la critica colloca il trattato fra il 30 e il 20 a.C."
+  },
+  {
+   "id": "tlg0532.tlg001",
+   "anno": 160,
+   "tipo": "circa",
+   "base": "i papiri (P.Oxy. 3836) fissano il termine ante quem al II-inizio III secolo; la critica colloca il romanzo verso la metà del II secolo d.C."
+  },
+  {
+   "id": "tlg0090.tlg001",
+   "anno": 250,
+   "tipo": "fase",
+   "base": "nessuna data propria: cita spesso Tolomeo e chiama ancora Bisanzio la città non ancora rifondata come Costantinopoli (328), dunque sta fra i due termini; l'anno indica solo questa posizione"
+  },
+  {
+   "id": "tlg7000.tlg001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "raccolta di epigrammi di autori diversi, dal VII secolo a.C. all'età bizantina, riunita da Costantino Cefala intorno al 900: non ha una data di composizione unica, si datano semmai i singoli pezzi"
+  },
+  {
+   "id": "tlg0653.tlg001",
+   "anno": -275,
+   "tipo": "circa",
+   "base": "composto alla corte di Antigono Gonata in Macedonia, dove Arato giunse intorno al 276 a.C."
+  },
+  {
+   "id": "tlg1389.tlg001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "lessico privo di appigli interni; discussa è la data dello stesso autore (dal II al IV secolo, secondo che lo si identifichi con il precettore di Lucio Vero o lo si faccia dipendere da Ateneo)"
+  },
+  {
+   "id": "tlg0556.tlg001",
+   "anno": -50,
+   "tipo": "fase",
+   "base": "nessuna data propria: il manuale si colloca dopo l'insegnamento di Posidonio, di cui l'autore fu allievo, e prima dei trattati tattici di Eliano e Arriano che ne dipendono"
+  },
+  {
+   "id": "tlg0008.tlg001",
+   "anno": 200,
+   "tipo": "circa",
+   "base": "nomina Commodo come già morto (192) e altri personaggi severiani: l'opera si colloca nei primissimi anni del III secolo"
+  },
+  {
+   "id": "tlg4091.tlg001",
+   "anno": 300,
+   "tipo": "fase",
+   "base": "nessun appiglio interno: le descrizioni imitano le Immagini di Filostrato e le sono quindi posteriori; la critica oscilla fra III e IV secolo e l'anno indica solo questa posizione"
+  },
+  {
+   "id": "tlg0554.tlg001",
+   "anno": 50,
+   "tipo": "circa",
+   "base": "i papiri fissano il termine ante quem intorno al 200; la critica recente lo considera il più antico romanzo greco conservato e lo colloca alla metà del I secolo d.C."
+  },
+  {
+   "id": "tlg0385.tlg001",
+   "anno": 229,
+   "tipo": "circa",
+   "base": "Dione dichiara dieci anni di raccolta e dodici di stesura; la narrazione arriva al 229, anno del suo secondo consolato. Opera unica: stessa data per tutti i libri"
+  },
+  {
+   "id": "tlg4081.tlg001",
+   "anno": 500,
+   "tipo": "circa",
+   "base": "la Suda dice l'autore attivo sotto Anastasio I (491-518): è l'unico appiglio e riguarda l'autore, non il poemetto"
+  },
+  {
+   "id": "tlg0535.tlg001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "orazione unanimemente ritenuta spuria, esercizio retorico di età posteriore attribuito a Demade: non c'è appiglio né interno né esterno per collocarla"
+  },
+  {
+   "id": "tlg0613.tlg001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "l'attribuzione a Demetrio Falereo è caduta e le proposte di datazione vanno dal III secolo a.C. al I d.C. senza convergenza: nessun appiglio interno decisivo"
+  },
+  {
+   "id": "tlg0060.tlg001",
+   "anno": -30,
+   "tipo": "circa",
+   "base": "l'autore dichiara trent'anni di lavoro e allude a fatti fino agli anni 30 a.C. (deificazione di Cesare, colonia di Tauromenio): opera unica, stessa data per tutti i libri"
+  },
+  {
+   "id": "tlg0004.tlg001",
+   "anno": 230,
+   "tipo": "circa",
+   "base": "gli ultimi filosofi nominati sono Sesto Empirico e il suo discepolo Saturnino: l'opera si colloca nella prima metà del III secolo"
+  },
+  {
+   "id": "tlg0612.tlg001",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "corpus di ottanta discorsi pronunciati in tempi e luoghi diversi lungo tutta la carriera, da Vespasiano a Traiano: la raccolta non ha una data unica, si datano semmai i singoli discorsi"
+  },
+  {
+   "id": "tlg0058.tlg001",
+   "anno": -350,
+   "tipo": "circa",
+   "base": "gli episodi più recenti citati risalgono agli anni 360-350 a.C.: il manuale si colloca intorno al 350"
+  },
+  {
+   "id": "tlg1799.tlg001",
+   "anno": -300,
+   "tipo": "circa",
+   "base": "Proclo colloca Euclide sotto Tolemeo I; l'opera si data convenzionalmente intorno al 300 a.C., senza appigli interni"
+  },
+  {
+   "id": "tlg2018.tlg002",
+   "anno": 325,
+   "tipo": "circa",
+   "base": "l'opera ebbe più redazioni; l'ultima registra la sconfitta di Licinio (324) e si colloca intorno al 325"
+  },
+  {
+   "id": "tlg0652.tlg001",
+   "anno": 250,
+   "tipo": "fase",
+   "base": "nessuna data propria: nel proemio l'autore si dichiara nipote dell'autore delle prime Immagini, e l'anno indica solo la distanza di due generazioni da quell'opera"
+  },
+  {
+   "id": "tlg1600.tlg001",
+   "anno": 220,
+   "tipo": "circa",
+   "base": "opera del Filostrato attivo nel circolo severiano di Giulia Domna; la critica la colloca fra la fine del II e i primi decenni del III secolo"
+  },
+  {
+   "id": "tlg0057.tlg010",
+   "anno": 165,
+   "tipo": "fase",
+   "base": "nessuna data propria: nella cronologia galenica ricostruita dal De libris propriis il trattato appartiene al primo soggiorno romano (162-166), prima dei grandi scritti anatomici"
+  },
+  {
+   "id": "tlg2934.tlg066",
+   "anno": 1000,
+   "tipo": "circa",
+   "base": "l'attribuzione a Giovanni Damasceno è falsa: la redazione greca risale a Eutimio l'Athonita (m. 1028), che la trasse dal georgiano intorno all'anno Mille"
+  },
+  {
+   "id": "tlg1216.tlg001",
+   "anno": 130,
+   "tipo": "circa",
+   "base": "il c. 16 allude alla ricostruzione del tempio: la critica prevalente colloca lo scritto in età adrianea, verso il 130-132; altri propongono gli anni 70-79"
+  },
+  {
+   "id": "tlg0341.tlg002",
+   "anno": -270,
+   "tipo": "circa",
+   "base": "attribuita a Licofrone di Calcide alla corte di Tolemeo II; i «passi romani» (1226-1282, 1446-1450), letti da alcuni come allusione a Flaminino, fanno propendere altri per il 190 a.C. circa: la datazione resta discussa"
+  },
+  {
+   "id": "tlg0034.tlg001",
+   "anno": -330,
+   "tipo": "certa",
+   "base": "orazione pronunciata al processo contro Leocrate nel 330 a.C., sei anni dopo Cheronea come l'orazione stessa ricorda"
+  },
+  {
+   "id": "tlg0560.tlg001",
+   "anno": 50,
+   "tipo": "circa",
+   "base": "il trattato replica all'opera omonima di Cecilio di Calatte (età augustea) e la critica prevalente lo colloca nel I secolo d.C.; l'attribuzione a Cassio Longino (III sec.) è respinta"
+  },
+  {
+   "id": "tlg0561.tlg001",
+   "anno": 200,
+   "tipo": "circa",
+   "base": "nessun appiglio interno: lingua, gusto e collocazione nella Seconda Sofistica portano la critica alla fine del II - inizio III secolo d.C."
+  },
+  {
+   "id": "tlg0562.tlg001",
+   "anno": 175,
+   "tipo": "circa",
+   "base": "le sottoscrizioni dei libri I e II lo collocano in campagna fra i Quadi e a Carnunto (172-175); l'opera fu scritta a più riprese negli ultimi dieci anni di vita"
+  },
+  {
+   "id": "tlg2045.tlg001",
+   "anno": 450,
+   "tipo": "circa",
+   "base": "il poema presuppone autori del IV secolo ed è imitato dai poeti della scuola nonniana: la critica lo colloca alla metà del V secolo"
+  },
+  {
+   "id": "tlg0648.tlg001",
+   "anno": 55,
+   "tipo": "circa",
+   "base": "dedicato a Quinto Veranio, console nel 49 e legato in Britannia fino alla morte nel 57: il trattato cade in quegli anni"
+  },
+  {
+   "id": "tlg0023.tlg001",
+   "anno": 178,
+   "tipo": "circa",
+   "base": "dedicato a Marco Aurelio e a Commodo associato all'impero: fra il 177 e il 180"
+  },
+  {
+   "id": "tlg0024.tlg001",
+   "anno": 214,
+   "tipo": "circa",
+   "base": "dedicato a Caracalla come unico Augusto: fra il 212 e il 217"
+  },
+  {
+   "id": "tlg0655.tlg001",
+   "anno": -30,
+   "tipo": "circa",
+   "base": "dedicata a Cornelio Gallo, morto nel 26 a.C.: la raccolta è anteriore a quella data e si colloca negli anni 40-30 a.C."
+  },
+  {
+   "id": "tlg0525.tlg001",
+   "anno": 175,
+   "tipo": "circa",
+   "base": "al libro V l'autore conta 217 anni dalla distruzione di Corinto, cioè il 174 d.C.; l'opera fu scritta a più riprese fra il 155 e il 180"
+  },
+  {
+   "id": "tlg4036.tlg023",
+   "anno": 0,
+   "tipo": "non-databile",
+   "base": "opera nota solo dall'epitome di Fozio e di autore incerto (un grammatico alessandrino del II-III secolo oppure il neoplatonico del V): nessun elemento per datarla"
+  },
+  {
+   "id": "tlg2046.tlg001",
+   "anno": 280,
+   "tipo": "circa",
+   "base": "la critica recente colloca il poema nel III secolo avanzato, abbandonando la vecchia datazione alla rinascita pagana di Giuliano (IV secolo)"
+  },
+  {
+   "id": "tlg0641.tlg001",
+   "anno": 150,
+   "tipo": "circa",
+   "base": "la menzione dell'irenarca, carica attestata dall'età adrianea, e la tradizione papiracea collocano il romanzo nel II secolo d.C."
+  },
+  {
+   "id": "tlg0099.tlg001",
+   "anno": 20,
+   "tipo": "circa",
+   "base": "l'opera fu rivista a lungo e registra fatti fino agli anni 20 d.C. (la morte di Giuba II, 23): la redazione finale cade in quel torno d'anni"
+  },
+  {
+   "id": "tlg0093.tlg009",
+   "anno": -319,
+   "tipo": "circa",
+   "base": "le allusioni a vicende ateniesi del 319 a.C. sono l'unico appiglio; il proemio che dà all'autore 99 anni è spurio"
+  },
+  {
+   "id": "tlg0363.tlg007",
+   "anno": 160,
+   "tipo": "fase",
+   "base": "nessuna data propria: il proemio rinvia alla Sintassi matematica come già composta (c. 150 d.C.), e l'anno indica solo questa posteriorità"
+  },
+  {
+   "id": "tlg0647.tlg001",
+   "anno": 250,
+   "tipo": "circa",
+   "base": "il papiro P.Oxy. 2946 (III-inizio IV secolo) fissa il termine ante quem e ha portato la critica a collocare il poemetto nel III secolo, abbandonando la vecchia data post-nonniana"
+  },
+  {
+   "id": "tlg3135.tlg001",
+   "anno": 1145,
+   "tipo": "circa",
+   "base": "l'epitome si arresta alla morte di Alessio I Comneno (1118) e fu composta nel ritiro monastico dell'autore, verso la metà del XII secolo"
   }
  ],
  "mancanti": [],
@@ -3764,6 +7058,138 @@
    "anno_corretto": 158,
    "tipo_corretto": "circa",
    "prova": "Anno dedotto dai fasti d'Africa (Avito 157/8, Massimo 158/9): convergenza, non documento."
+  },
+  {
+   "id": "phi1014.phi003",
+   "anno_corretto": 38,
+   "tipo_corretto": "circa",
+   "prova": "L'anno regge (stessa campagna di vecchiaia, c. 37-40), ma la voce descrive l'opera SBAGLIATA: phi1014.phi003 e' le Suasoriae - il corpus stesso la intitola «Suasorie / Suasoriae» (100 unita, 10.161 parole) - non «la seconda sezione della medesima raccolta delle Controversiae». Le suasoriae sono l'altra sezione, di genere diverso (tema deliberativo, non giudiziario), dell'unica raccolta Oratorum et rhetorum sententiae divisiones colores: 10 libri di controversiae + almeno un libro di suasoriae, superstite e mutilo in principio. Stampata cosi', la nota insegna una classificazione falsa: va riscritta (data invariata)."
+  },
+  {
+   "id": "phi1014.phi001",
+   "anno_corretto": 38,
+   "tipo_corretto": "circa",
+   "prova": "L'anno regge (composizione in vecchiaia dopo la morte di Tiberio nel 37 e prima della morte dell'autore, c. 39/40; Winterbottom, Loeb: «in his old age, probably not long before 40 A.D.»), ma la giustificazione apre con un falso: «Unica opera». Seneca il Vecchio scrisse anche le Historiae ab initio bellorum civilium, perdute, lasciate incompiute e pubblicate dal figlio (Sen. De vita patris, fr.). Correggere in «unica opera superstite» - errore vistoso per un corpus destinato al liceo, dove la storia perduta e' notizia manualistica."
+  },
+  {
+   "id": "tlg0031.tlg007",
+   "anno_corretto": 55,
+   "tipo_corretto": "circa",
+   "prova": "Il 54 non e' falso in assoluto (la forbice corrente e' 54-55), ma e' incoerente con le voci vicine dello stesso corpus e le rende contraddittorie: 2Cor (tlg0031.tlg008) e' datata 56 con la motivazione «cade quindi l'anno successivo alla prima lettera ai Corinzi» - ma da 54 a 56 corrono due anni - e Rm (tlg0031.tlg006) e' datata 57. La catena che il corpus presuppone e' quella standard 1Cor 55 (primavera, da Efeso, 1Cor 16,8) -> 2Cor 56 (dalla Macedonia, dopo la visita dolorosa) -> Rm 57 (da Corinto, Rm 15,25-26). Portando 1Cor a 55 la sequenza 55/56/57 torna e la motivazione di 2Cor diventa vera."
+  },
+  {
+   "id": "stoa0275.stoa013",
+   "anno_corretto": 211,
+   "tipo_corretto": "circa",
+   "prova": "Inversione fra maggioranza e minoranza: il numero adottato è l'ipotesi revisionista, non la datazione corrente. Il 211 è la data tradizionale e tuttora standard del De corona: il donativo è quello per l'avvento di Caracalla e Geta dopo la morte di Settimio Severo (4 febbraio 211), e le patrologie collocano l'operetta all'agosto-settembre 211 (Altaner-Graef, «De corona (211)»; «written probably during August or September of 211, apropos of the act of a Christian soldier who had refused to put on a crown»). Il 208 è la proposta di T. D. Barnes (Tertullian: A Historical and Literary Study, 1971), accolta solo parzialmente: la recensione sul Journal of Theological Studies registra che il De corona è «habitually dated to 211», e che «it might have been composed in 208 - or even 205», cioè 208 e 205 sono le alternative, non la communis opinio. Prova interna dello sbaglio: la giustificazione identifica correttamente l'aggancio storico («avvento di Caracalla e Geta»), che vale il 211, ma lo relega fra i «da altri», assegnando il titolo di «critica» all'ipotesi di minoranza. Il tipo «circa» resta corretto, perché il donativo non è datato con precisione né dalla fonte né dai testimoni esterni."
+  },
+  {
+   "id": "stoa0275.stoa006",
+   "anno_corretto": 208,
+   "tipo_corretto": "circa",
+   "prova": "L'anno è accettabile, il grado di certezza no: «certa» non è sostenibile e va declassato a «circa». (1) L'aggancio interno è un anno REGNALE, non un anno giuliano: Adv. Marc. I,15 dichiara il quindicesimo anno di Severo, che regna dal 9 aprile 193, dunque aprile 207 - aprile 208. La giustificazione stessa lo scrive «(207/208)»: una data che la propria prova esprime come alternativa fra due anni non può essere etichettata «certa». (2) L'affermazione «il testo conservato è la terza edizione, completata poco dopo» è inesatta e aggrava il problema: la cronologia standard (CCL II, riprodotta in tertullian.org/chronology) assegna al 207-208 i libri I-III e colloca i libri IV-V della terza edizione nel 208-212. L'opera trasmessa è quindi un cantiere pluriennale in tre redazioni successive (c. 207-212), non un testo licenziato in un anno determinato; l'aggancio del quindicesimo anno data il punto di stesura del libro I, non l'opera. (3) Il confronto interno al corpus conferma la sperequazione: Ad Scapulam (stoa003) merita «certa» perché poggia su un evento astronomico di giorno preciso (eclissi del 14 agosto 212) più il proconsolato attestato di Scapula; Adversus Marcionem non ha nulla di equivalente. Si mantiene 208, anno comunemente associato al quindicesimo anno severiano e inizio della redazione superstite."
+  },
+  {
+   "id": "stoa0045.stoa018",
+   "anno_corretto": 390,
+   "tipo_corretto": "circa",
+   "prova": "L'anno regge, la qualifica «certa» no. L'unico ancoraggio e l'intestazione «Ausonius consul Drepanio proconsuli»: Pacato Drepanio e attestato proconsole d'Africa da un unico punto documentario (una costituzione del 4 febbraio 390), che fissa un momento della carica ma non i suoi estremi - il proconsolato africano poteva scavalcare 389/390 o 390/391. In piu l'indirizzo data la DEDICA, non la composizione dei 230 versi: la critica scrive infatti «dedicated to Pacatus in 390», non «written in 390», e il Ludus e materia scolastica che puo essere assai anteriore all'invio. Prova interna al blocco stesso: il Technopaegnion (stoa028) poggia sulla identica evidenza - stesso dedicatario, stesso anno, stessa lettera di offerta - ed e correttamente marcato «circa». Le due vere «certa» ausoniane si reggono su ben altro: la Gratiarum actio su un'occasione pubblica documentata, le Precationes su rubriche di trasmissione che danno il giorno. Qui siamo davanti a una convergenza prosopografica, da declassare."
+  },
+  {
+   "id": "stoa0045.stoa022",
+   "anno_corretto": 382,
+   "tipo_corretto": "circa",
+   "prova": "Il 380 e la data di UN SOLO carme estesa all'intera raccolta. Ho verificato il dato nel testo del corpus: Par. 9 su Attusia Lucana Sabina recita «perque novem caelebs te fleo Olympiadas» - nove olimpiadi, cioe i trentasei anni di vedovanza citati nella giustificazione - e porta quel singolo componimento al 379/380. Ma i Parentalia furono composti a intervalli e contengono materiale piu tardo: la cronologia standard (Evelyn White, seguita dalla letteratura successiva) data Par. 4,31 al 379 ma Par. 24,5 e 16 al 382, e conclude che l'opera «fu forse effettivamente terminata nel 382»; il libro fu poi emesso insieme ai Professores, che la stessa cronologia colloca al 385 o dopo. Concorre l'evidenza interna che ho letto nel corpus: vi e compianto il nipote Pastor, terzogenito di Esperio, morto gia fanciullo, il che spinge in avanti. Una raccolta non puo portare la data di un suo carme iniziale se ne contiene di posteriori: 382 e la correzione minima difendibile (l'anno dell'ultimo riferimento databile e del completamento), restando «circa» perche la pubblicazione con i Professores puo essere ancora piu tarda."
+  },
+  {
+   "id": "stoa0238.stoa003",
+   "anno_corretto": 405,
+   "tipo_corretto": "circa",
+   "prova": "L'anno resta 405 (data convenzionale dell'edizione complessiva, coerente con stoa002 e stoa009), ma il tipo NON puo essere «certa»: la prova e solo autobiografica e biennale, non documentaria. Il testo della Praefatio (verificato nel corpus, data/corpus/la/stoa0238.stoa003.json, unita 1.1-1.3) dice «Per quinquennia iam decem, / ni fallor, fuimus; septimus insuper / annum cardo rotat»: e un cinquantasettesimo ANNO DI VITA in corso, non un anno di calendario; combinato con la nascita «Salia consule» (v. 24 = 348 d.C.), da un intervallo 404-405 a seconda del compleanno e della lettura di «septimus... cardo rotat» (56 compiuti o 57 compiuti). La critica infatti oscilla: le fonti danno «404/5» o «405», e la stessa giustificazione addotta scrive «404-405», contraddicendo l'etichetta «certa». Nessun documento esterno (consolato, recita, atto pubblico) fissa l'anno: e una convergenza, quindi «circa». N.B. gli altri 34 record reggono: verificata sul posto la corrispondenza ID-opera in data/corpus (phi0588.abo019 Phocion, abo020 Timoleon, abo021 De regibus, abo022 Hamilcar, abo023 Hannibal, abo024 Cato, abo025 Atticus; stoa0238.stoa001 Peristephanon, stoa002 Psychomachia — davvero assente dal catalogo della Praefatio —, stoa007 Contra Symmachum, stoa009 Epilogus; tutti i 13 Claudiani; tlg0551.tlg002-011 = sezioni etniche della sola Rhomaika); tlg0627.tlg006 contiene SOLO i libri 1 e 3 (loci 1.x e 3.x, ed. Jones 1923), cioe proprio le costituzioni tasie datate al 410 a.C., quindi -410 «circa» regge e la riserva sulla stratificazione non tocca il testo qui presente; le «certe» claudianee sono tutte ancorate a consolati o a recite documentate (395, 396, 398, 399, 400, 402, 404), In Eutropium I e II restano entrambe entro il 399 (consolato e caduta di Eutropio nello stesso anno), la prima edizione nepotiana 35-34 a.C. e il supplemento all'Atticus dopo il marzo 32 a.C. sono confermati, e per Appiano il proemio (900 anni = ~147 d.C.), la procuratela post-147 e il silenzio sui fatti post-162 delimitano una finestra 147-161 di cui 150 «circa» e il centro."
+  },
+  {
+   "id": "tlg2003.tlg006",
+   "anno_corretto": 356,
+   "tipo_corretto": "circa",
+   "prova": "Epistula ad Themistium (identificazione tlg006 confermata dal catalogo Perseus). Il rapporto fra le due ipotesi è ROVESCIATO nella giustificazione: la data bassa è quella dei VECCHI studi (Geffcken, Bidez, poi Dagron), che la ponevano fra l'annuncio della morte di Costanzo (3 nov. 361) e l'ingresso a Costantinopoli (11 dic. 361); la critica RECENTE riporta la composizione al principio del 356, subito dopo la nomina a Cesare (6 nov. 355) e la lettera di congratulazioni di Temistio — Barnes-Vander Spoel (GRBS 1981: corpo della lettera nel 356, ultimi due paragrafi aggiunti al momento dell'invio fra il 360 e il 361), Bradbury (GRBS 1987: nel 361 sarebbe assurdo che Temistio parli dei successi di Giuliano come 'filosofia del portico' e lo dia per affacciato solo ora alla vita attiva), Errington, Swain (Cambridge 2013). Inoltre il numero 362 non è sostenuto da NESSUNA delle due ipotesi: la data alta è 355/356, quella bassa è novembre-dicembre 361. Si adotti 356 'circa', segnalando in nota la proposta alternativa del 361."
+  },
+  {
+   "id": "tlg2003.tlg013",
+   "anno_corretto": 362,
+   "tipo_corretto": "fase",
+   "prova": "Non è un'opera composta in un anno ma l'EPISTOLARIO: le lettere coprono l'intero arco d'attività di Giuliano, dal cesarato (355) alla morte in Persia (giugno 363). Assegnare un anno singolo con tipo 'circa' significa presentare come data d'opera quello che è di fatto il floruit dell'autore — la giustificazione stessa lo ammette ('si indica l'anno centrale del blocco'). La raccolta va marcata come fase (355-363, con forte addensamento nel biennio da Augusto, 361-363); si tenga 362 solo come anno-perno per l'ordinamento, non come data di composizione."
+  },
+  {
+   "id": "tlg0028.tlg006",
+   "anno_corretto": -419,
+   "tipo_corretto": "circa",
+   "prova": "Anno e tipo reggono (Targelie; 419 datazione prevalente, 412 minoritaria), ma la prova che verrebbe stampata contiene un errore giuridico netto: il processo del corego per la morte del corista Diodoto è un caso di omicidio INVOLONTARIO (l'accusa stessa concede l'assenza di dolo) e si celebrava davanti al PALLADIO, non all'Areopago, competente per l'omicidio volontario. Sostituire 'Il processo davanti all'Areopago' con 'Il processo davanti al Palladio'; il resto della giustificazione e la data restano validi."
+  },
+  {
+   "id": "phi0860.phi001",
+   "anno_corretto": 41,
+   "tipo_corretto": "fase",
+   "prova": "È il caso-scuola della data-floruit travestita da data d'opera. Il 45 non è proposto da nessuno: è il mezzo del regno di Claudio. L'unico appiglio realmente argomentato è la notte del 24/25 gennaio 41 (uccisione di Caligola, Claudio proclamato dai pretoriani), riconosciuta dietro la digressione di X 9 sul principe che scongiura la guerra civile — e vale come terminus post quem, non come data. Al di sopra la forbice resta enorme (dall'età augustea ai Severi; limite alto vago dato dalla prosperità di Tiro sotto Roma), e la formulazione corrente della critica prevalente è che «many modern scholars now accept a date in the middle to late part of the first century AD as a likely FLORUIT for Curtius» (Baynham): floruit dell'autore, non pubblicazione dell'opera — e comunque un arco che arriva ai Flavi, ben oltre il 45. Non c'è dunque quella convergenza che «circa» dichiara (nel file: «la critica converge, ma per via indiretta»). Va a «fase», così l'interfaccia non stampa un anno che non esiste, con 41 come posto d'ordine (il t.p.q. della digressione)."
+  },
+  {
+   "id": "phi0975.phi001",
+   "anno_corretto": 40,
+   "tipo_corretto": "fase",
+   "prova": "Non esiste una data delle Fabulae: i cinque libri uscirono a scaglioni su tre o quattro regni. Libri I-II prima della caduta di Seiano (31); libro III poco dopo il 31 (dal tono con cui ne parla, come di chi non ha più nulla da temere); libri IV-V in vecchiaia, sotto Claudio (41-54) o Nerone (54-68). Il 35 data al più il libro III e ignora metà del corpus — la giustificazione stessa lo ammette («uscirono a più riprese fra Tiberio e Claudio»), il che è la definizione di «fase» data nell'intestazione di corpus_opere.py («nessuna data: il numero è solo un posto in una successione relativa»). Il corpus tratta già così esattamente questa forma: phi0474.phi056/057/058 (Cicerone, epistolari) «nessuna data di composizione... si dà l'anno medio» e phi0474.phi035 (Filippiche) «non hanno una data: sono 14 orazioni scaglionate» — entrambe «fase». Anno d'ordine 40 = medio dell'arco c. 25-55 (il 35 lo schiaccia sul solo libro III)."
+  },
+  {
+   "id": "tlg0034.tlg001",
+   "anno_corretto": -330,
+   "tipo_corretto": "circa",
+   "prova": "Non è una data documentata e il calcolo addotto non torna: l'orazione non dice «sei anni dopo Cheronea» (sarebbe il 332) — al §58 i sei anni sono quelli dell'assenza di Leocrate, mentre al §45 egli passa davanti alle tombe di Cheronea «l'ottavo anno» (ὀγδόῳ ἔτει), cioè nel 331/330. Non esiste arconte né documento: gli editori oscillano fra 331 e 330 (Roisman-Edwards, Clarendon 2019: «probably in 331»). Convergenza, dunque «circa», non «certa»."
+  },
+  {
+   "id": "tlg0099.tlg001",
+   "anno_corretto": 23,
+   "tipo_corretto": "circa",
+   "prova": "L'anno indicato precede il terminus post quem che la stessa nota cita: l'ultimo fatto databile è la morte di Giuba II (23 d.C.), data per recentissima in XVII 3,7. La redazione finale non può essere del 20: cade nel 23 o poco oltre, quando Strabone muore (23-24 d.C.)."
+  },
+  {
+   "id": "tlg0525.tlg001",
+   "anno_corretto": 175,
+   "tipo_corretto": "circa",
+   "prova": "L'anno regge, la prova no: in V 1,2 i 217 anni si contano dalla RIFONDAZIONE coloniale di Corinto (44 a.C., «ἀφ' οὗ τὴν γῆν παρὰ βασιλέως ἔχουσιν»), non dalla distruzione del 146, che darebbe il 71 d.C. e non il 174. Corretto: 44 a.C. + 217 = 174 d.C. per il libro V; opera scritta a più riprese fra il 155 e il 180."
+  },
+  {
+   "id": "phi1038.phi001",
+   "anno_corretto": 31,
+   "tipo_corretto": "circa",
+   "prova": "L'anno regge, il rimando è sbagliato: l'invettiva contro il «nemico pubblico» letta come riferita a Seiano non è in VI 9 (che tratta i mutamenti di fortuna) ma in IX 11 ext. 4. Dedica a Tiberio nel proemio; la caduta di Seiano è dell'ottobre 31 d.C., quindi l'opera si chiude in quel torno d'anni."
+  },
+  {
+   "id": "phi1056.phi001",
+   "anno_corretto": -25,
+   "tipo_corretto": "circa",
+   "prova": "L'anno regge, l'argomento è rovesciato: Vitruvio non chiama mai «Augusto» il dedicatario (solo «imperator Caesar», I pr. 1), e proprio l'assenza del titolo è usata da parte della critica per datare PRIMA del 27 a.C. Gli appigli reali sono la mediazione della sorella Ottavia (I pr. 2) e il «divus Caesar» (II 9,15): la critica converge sul 30-20 a.C."
+  },
+  {
+   "id": "phi1035.phi001",
+   "anno_corretto": 80,
+   "tipo_corretto": "circa",
+   "prova": "L'anno regge, la prova è internamente impossibile: nel proemio Vespasiano è vivo (muore nel giugno 79) e vi si allude a Gerusalemme del 70 («Solymo nigrantem pulvere fratrem», I 13), mentre l'eruzione del Vesuvio compare in IV 507 («prorupti... Vesevi»), fuori dal proemio. Il poema attraversa il 79 e resta incompiuto: Quintiliano ne piange la morte recente verso il 95."
+  },
+  {
+   "id": "tlg1600.tlg001",
+   "anno_corretto": 220,
+   "tipo_corretto": "circa",
+   "prova": "L'opera è le Immagini (Εἰκόνες), non la Vita di Apollonio: la prova addotta è il floruit del Filostrato di Giulia Domna, che commissionò quella e non questa. Le Immagini descrivono una pinacoteca napoletana e non hanno appigli interni; l'attribuzione oscilla fra il «Vecchio» (probabilmente Filostrato di Lemno) e l'Ateniese, e la critica le colloca nei primi decenni del III secolo."
+  },
+  {
+   "id": "tlg0093.tlg009",
+   "anno_corretto": -319,
+   "tipo_corretto": "fase",
+   "prova": "La giustificazione poggia su una premessa falsa: il 319 NON è «l'unico appiglio», e le allusioni non convergono su un anno solo. Diggle (Theophrastus, Characters, CGLC 2022, Introd. §3 «Date», pp. 16-19, che condensa Diggle 2004: 27-37) censisce almeno tre schizzi databili e li colloca in momenti DIVERSI: (a) VIII 6 (il Logopoiós: Poliperconte e «il re» hanno sconfitto e catturato Cassandro) — la lotta Poliperconte/Cassandro dura dal 319 al 309, e poiché si nomina UN solo re le uniche date drammatiche plausibili sono 317/16-316/15 (cattura di Alessandro IV) oppure 310/09 (Eracle proclamato re), non il 319; (b) XXIII 3-5 (l'Alazṓn: Alessandro, Antipatro, la carestia) — qui sì «the date of composition is not likely to be much later than 319», ma vale per QUESTO schizzo; (c) XXVI (l'Oligarchikós) — data drammatica in regime democratico, quindi ante 322 o nel breve 318/17. Conclusione esplicita di Diggle: è impossibile assegnare una data di composizione unica all'intera raccolta, e la data di pubblicazione è indeterminabile; gli schizzi furono scritti «nella parte finale del IV secolo», forse lungo tutta la carriera di insegnamento di Teofrasto (scolarcato 322-288/7) e poi rilavorati per la pubblicazione. Il «circa -319» stampa quindi come data puntuale dell'OPERA quello che è al più il terminus di UN capitolo su trenta. Regge invece la parte sul proemio: l'esordio che dà all'autore 99 anni (che porterebbe al 288/7 ca.) è spurio. Correzione: tipo «fase» — raccolta composta per stratificazione nel tardo IV sec. a.C. (schizzi databili tra ca. 320 e 310), con -319 mantenuto come ancoraggio iniziale della fase, non come anno di composizione."
+  },
+  {
+   "id": "tlg0647.tlg001",
+   "anno_corretto": 280,
+   "tipo_corretto": "circa",
+   "prova": "Il ragionamento è corretto ma il numero cade fuori dalla forbice che quel ragionamento produce. P.Oxy. XLI 2946 (vv. 391-402, datato fine III / inizio IV sec.) dà SOLO un terminus ante quem di ca. 300, e non essendo autografo non misura la distanza dalla composizione; il terminus post quem manca del tutto (resta l'argomento metrico di Cameron 1970, che colloca Trifiodoro prima di Nonno, più il rapporto con i Posthomerica di Quinto Smirneo). La critica non colloca il poemetto «nel III secolo» genericamente, ma nella sua seconda metà: Brill's New Pauly s.v. Triphiodorus, «Greek epic poet, 2nd half of 3rd cent. AD»; la letteratura specialistica successiva al papiro (Miguélez-Cavero, Triphiodorus, The Sack of Troy. A General Study and a Commentary, De Gruyter 2013, e le relative recensioni) parla di «late third century» / «end of the third or the beginning of the fourth century». Il 250 è la mediana secca del secolo — cioè, di fatto, il floruit convenzionale dell'AUTORE arrotondato a metà secolo e travestito da data dell'opera — e cade prima dell'intervallo effettivamente sostenuto dalle fonti (275-300 ca.). Correzione: 280 «circa», punto interno alla sovrapposizione tra «2ª metà del III sec.» (BNP) e «fine III sec.» (critica post-papiro), e comunque a monte del t.a.q. papiraceo di ca. 300."
   }
  ],
  "conteggi": {

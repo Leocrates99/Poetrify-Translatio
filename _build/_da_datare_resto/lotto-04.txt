@@ -1,0 +1,66 @@
+# LOTTO 04 — 60 opere, 2 autori
+# riga: id | genere | titolo italiano | titolo originale
+
+### Historia Augusta — latino, tarda (30 opere)
+phi2331.phi001 | storiografia | Vita di Adriano | Hadrianus
+phi2331.phi002 | storiografia | Vita di Elio Cesare | Aelius
+phi2331.phi003 | storiografia | Vita di Antonino Pio | Antoninus Pius
+phi2331.phi004 | storiografia | Vita di Marco Aurelio | Marcus Antoninus Philosophus
+phi2331.phi005 | storiografia | Vita di Lucio Vero | Verus
+phi2331.phi006 | storiografia | Vita di Avidio Cassio | Avidius Cassius
+phi2331.phi007 | storiografia | Vita di Commodo | Commodus Antoninus
+phi2331.phi008 | storiografia | Vita di Pertinace | Helvius Pertinax
+phi2331.phi009 | storiografia | Vita di Didio Giuliano | Didius Iulianus
+phi2331.phi010 | storiografia | Vita di Settimio Severo | Severus
+phi2331.phi011 | storiografia | Vita di Pescennio Nigro | Pescennius Niger
+phi2331.phi012 | storiografia | Vita di Clodio Albino | Clodius Albinus
+phi2331.phi013 | storiografia | Vita di Caracalla | Antoninus Caracalla
+phi2331.phi014 | storiografia | Vita di Geta | Antoninus Geta
+phi2331.phi015 | storiografia | Vita di Macrino | Opilius Macrinus
+phi2331.phi016 | storiografia | Vita di Diadumeniano | Diadumenus Antoninus
+phi2331.phi017 | storiografia | Vita di Eliogabalo | Antoninus Heliogabalus
+phi2331.phi018 | storiografia | Vita di Alessandro Severo | Alexander Severus
+phi2331.phi019 | storiografia | I due Massimini | Maximini duo
+phi2331.phi020 | storiografia | I tre Gordiani | Gordiani tres
+phi2331.phi021 | storiografia | Vita di Massimo e Balbino | Maximus et Balbinus
+phi2331.phi022 | storiografia | I due Valeriani | Valeriani duo
+phi2331.phi023 | storiografia | I due Gallieni | Gallieni duo
+phi2331.phi024 | storiografia | I trenta tiranni | Tyranni triginta
+phi2331.phi025 | storiografia | Il divo Claudio | Divus Claudius
+phi2331.phi026 | storiografia | Il divo Aureliano | Divus Aurelianus
+phi2331.phi027 | storiografia | Vita di Tacito | Tacitus
+phi2331.phi028 | storiografia | Vita di Probo | Probus
+phi2331.phi029 | storiografia | Vita di Firmo, Saturnino, Proculo e Bonoso | Firmus, Saturninus, Proculus et Bonosus
+phi2331.phi030 | storiografia | Vita di Caro, Carino e Numeriano | Carus et Carinus et Numerianus
+
+### Tertulliano — latino, tarda (30 opere)
+stoa0275.stoa001 | religione | Ad Martyras | 
+stoa0275.stoa002 | religione | Ad Nationes | Ad Nationes Libri Duo
+stoa0275.stoa003 | religione | Ad Scapulam | 
+stoa0275.stoa004 | religione | Adversus Hermogenem | 
+stoa0275.stoa005 | religione | Adversus Iudaeos liber | 
+stoa0275.stoa006 | religione | Adversus Marcionem | 
+stoa0275.stoa007 | religione | Adversus Praxean | 
+stoa0275.stoa008 | religione | Adversus Valentinianos | 
+stoa0275.stoa009 | religione | Apologeticum | 
+stoa0275.stoa010 | religione | De Anima | 
+stoa0275.stoa011 | religione | De Baptismo | 
+stoa0275.stoa012 | religione | De Carne Christi | 
+stoa0275.stoa013 | religione | De Corona | 
+stoa0275.stoa014 | religione | De Cultu Feminarum | 
+stoa0275.stoa015 | religione | De Exhortatione Castitatis Liber | 
+stoa0275.stoa016 | religione | De Fuga in Persecutione | 
+stoa0275.stoa017 | religione | De Idolotria | De idolatria
+stoa0275.stoa018 | religione | De ieiunio adversus psychicos | 
+stoa0275.stoa019 | religione | De Monogamia | 
+stoa0275.stoa020 | religione | De Oratione | 
+stoa0275.stoa021 | religione | De Paenitentia | 
+stoa0275.stoa022 | religione | De Pallio | 
+stoa0275.stoa023 | religione | De Patientia | 
+stoa0275.stoa024 | religione | De Praescriptionibus Hereticorum | 
+stoa0275.stoa025 | religione | De Pudicitia | 
+stoa0275.stoa026 | religione | De Resurrectione Carnis | De Carnis Resurrectione
+stoa0275.stoa027 | religione | De Spectaculis, Tertullian, Apology, De spectaculis | De Spectaculis
+stoa0275.stoa028 | religione | De Testimionio Animae | 
+stoa0275.stoa029 | religione | De Virginibus Velandis | 
+stoa0275.stoa030 | religione | De Scorpiace | Scorpiace

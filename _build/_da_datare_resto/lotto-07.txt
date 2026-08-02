@@ -1,0 +1,76 @@
+# LOTTO 07 — 60 opere, 7 autori
+# riga: id | genere | titolo italiano | titolo originale
+
+### Giuliano imperatore — greco, tarda (14 opere)
+tlg2003.tlg001 | retorica | Ἐγκώμιον εἰς τὸν αὐτοκράτορα Κωνστάντιον | Panegyric in Honor of the Emperor Constantinus
+tlg2003.tlg002 | retorica | Εὐσεβίας τῆς βασιλίδος ἐγκώμιον | Panegyric on the Empress Eusebia
+tlg2003.tlg003 | retorica | Περὶ τῶν τοῦ αὐτοκράτορος πράξεων ἢ περὶ βασιλείας | The Heroic Deeds of the Emperor Constantius, or on Kingship
+tlg2003.tlg004 | retorica | Ἐπὶ τῇ ἐξόδῳ τοῦ ἀγαθωτάτου Σαλουστίου παραμυθητικὸς εἰς ἑαυτόν | A Consolation to Himself Upon the Departure of the Excellent Sallust
+tlg2003.tlg005 | retorica | Ἀθηναίων τῇ βουλῇ καὶ τῷ δήμῳ | Letter to the Senate and the People of Athens
+tlg2003.tlg006 | retorica | Θεμιστίῳ φιλοσόφῳ | Letter to Themistius the Philosopher
+tlg2003.tlg007 | retorica | Πρὸς Ἡράκλειον κυνικὸν περὶ τοῦ πῶς κυνιστέον καὶ εἰ πρέπει τῷ κυνὶ μύθους πλάττειν | To the Cynic Heracleios
+tlg2003.tlg008 | retorica | Εἰς τὴν μητέρα τῶν θεῶν | Hymn to the Mother of the Gods
+tlg2003.tlg009 | retorica | Εἰς τοὺς ἀπαιδεύτους κύνας | To the Uneducated Cynics
+tlg2003.tlg010 | retorica | Συμπόσιον ἢ Κρόνια | The Caesars
+tlg2003.tlg011 | retorica | Εἰς τὸν βασιλέα Ἥλιον πρὸς Σαλούστιον | Hymn to King Helios Dedicated to Sallust
+tlg2003.tlg012 | retorica | Μισοπώγων | Misopogon
+tlg2003.tlg013 | retorica | Epistolae | 
+tlg2003.tlg017 | retorica | Contra Galilaeos | Κατὰ Γαλιλαίων
+
+### Iseo — greco, classica (12 opere)
+tlg0017.tlg001 | oratoria | Περὶ τοῦ Κλεωνύμου κλήρου | On The Estate of Cleonymus
+tlg0017.tlg002 | oratoria | Περὶ τοῦ Μενεκλέους κλήρου | On the Estate of Menecles
+tlg0017.tlg003 | oratoria | Περὶ τοῦ Πύρρου κλήρου | On The Estate Of Pyrrhus
+tlg0017.tlg004 | oratoria | Περὶ τοῦ Νικοστράτου κλήρου (ἐπίλογος) | On the Estate of Nicostratus
+tlg0017.tlg005 | oratoria | Περὶ τοῦ Δικαιογένους κλήρου | On the Estate of Dicaeogenes
+tlg0017.tlg006 | oratoria | Περὶ τοῦ Φιλοκτήμονος κλήρου | On the Estate of Philoctemon
+tlg0017.tlg007 | oratoria | Περὶ τοῦ Απολλοδώρου κλήρου | On The Estate of Apollodorus
+tlg0017.tlg008 | oratoria | Περὶ τοῦ Κίρωνος κλήρου | On The Estate of Ciron
+tlg0017.tlg009 | oratoria | Περὶ τοῦ Ἀστυφίλου κλήρου | On the Estate of Astyphilus
+tlg0017.tlg010 | oratoria | Πρὸς Ξεναίνετον περὶ τοῦ Ἀριστάρχου κλήρου | On The Estate of Aristarchus
+tlg0017.tlg011 | oratoria | Περὶ τοῦ Ἁγνίου κλήρου | On the Estate of Hagnias
+tlg0017.tlg012 | oratoria | Υπὲρ Εὐφιλήτου | On Behalf of Euphiletus
+
+### Appendix Vergiliana — latino, augustea (10 opere)
+phi0692.phi001 | lirica | Dirae, Appendix Vergiliana | 
+phi0692.phi002 | lirica | Lydia, Appendix Vergiliana | 
+phi0692.phi003 | lirica | Culex, Appendix Vergiliana | 
+phi0692.phi005 | lirica | Copa, Appendix Vergiliana | 
+phi0692.phi006 | lirica | Appendix Vergiliana | 
+phi0692.phi007 | lirica | Appendix Vergiliana | 
+phi0692.phi008 | lirica | Appendix Vergiliana | 
+phi0692.phi011 | lirica | Moretum, Appendix Vergiliana | 
+phi0692.phi012 | lirica | De Institutione Viri Boni, Appendix Vergiliana | 
+phi0692.phi013 | lirica | De Est et Non, Appendix Vergiliana | 
+
+### Boezio — latino, tarda (6 opere)
+stoa0058.stoa001 | filosofia | La consolazione della filosofia | De consolatione philosophiae
+stoa0058.stoa003 | filosofia | Quomodo Substantiae in Eo Quod Sint Bonae Sint Cum Non Sint Substantialia Bona | 
+stoa0058.stoa006 | filosofia | De Fide Catholica | 
+stoa0058.stoa023 | filosofia | Liber De Persona et Duabus Naturis Contra Eutychen Et Nestorium | 
+stoa0058.stoa025 | filosofia | Quomodo Trinitas Unus Deus Ac Non Tres Dii (De Trinitate) | 
+stoa0058.stoa028 | filosofia | Utrum Pater Et Filius Ac Spiritus Sanctus De Divinitate Substantialiter Praedicentur Liber | 
+
+### Antifonte — greco, classica (6 opere)
+tlg0028.tlg001 | oratoria | Φαρμακείας κατὰ τῆς μητρυιᾶς | Against the Stepmother for Poisoning
+tlg0028.tlg002 | oratoria | Τετραλογία Α΄ | The First Tetralogy
+tlg0028.tlg003 | oratoria | Τετραλογία Β΄ | The Second Tetralogy
+tlg0028.tlg004 | oratoria | Τετραλογία Γ΄ | The Third Tetralogy
+tlg0028.tlg005 | oratoria | Περὶ τοῦ Ἡρῷδου φόνου | On the murder of Herodes
+tlg0028.tlg006 | oratoria | Περὶ τοῦ χορευτοῦ | On the Choreutes
+
+### Arriano — greco, imperiale (6 opere)
+tlg0074.tlg001 | storiografia | Anabasis | Ἀλεξάνδρου Ἀνάβασις
+tlg0074.tlg002 | storiografia | Ἰνδική | Indica
+tlg0074.tlg003 | storiografia | Κυνηγετικός | Cynegeticus
+tlg0074.tlg004 | storiografia | Περίπλους τοῦ Εὐξείνου Πόντου | Periplus Ponti Euxini
+tlg0074.tlg005 | storiografia | Τέχνη τακτική | Tactica
+tlg0074.tlg006 | storiografia | Ἔκταξις κατὰ Ἀλανῶν | Acies Contra Alanos
+
+### Filostrato — greco, imperiale (6 opere)
+tlg0638.tlg001 | biografia | Τὰ ἐς τὸν Τυανέα Ἀπολλώνιον | Life of Apollonius of Tyana
+tlg0638.tlg003 | biografia | Βίοι Σοφιστῶν | Lives of the Sophists
+tlg0638.tlg004 | biografia | Ἡρωικός | Heroicus
+tlg0638.tlg005 | biografia | Νέρων | Nero
+tlg0638.tlg006 | biografia | Ἐπιστολαί. Διαλέξεις. | Epistulae et dialexeis
+tlg0638.tlg007 | biografia | Γυμναστικός | De Gymnastica

@@ -1,0 +1,75 @@
+# LOTTO 01 — 71 opere, 1 autori
+# riga: id | genere | titolo italiano | titolo originale
+
+### Luciano — greco, imperiale (71 opere)
+tlg0062.tlg001 | satira | Falaride | Φάλαρις
+tlg0062.tlg002 | satira | Ippia o il bagno | Ἱππίας ἢ Βαλανεῖον
+tlg0062.tlg003 | satira | Prolalia · Dioniso | Προλαλιά. Διόνυσος
+tlg0062.tlg004 | satira | Prolalia · Eracle | Προλαλιά. Ἡρακλῆς
+tlg0062.tlg005 | satira | L'ambra o i cigni | Περὶ τοῦ Ἡλέκτρου ἢ Κύκνων
+tlg0062.tlg006 | satira | Elogio della mosca | Μυίας Ἐγκώμιον
+tlg0062.tlg007 | satira | Nigrino | Νιγρίνου Φιλοσοφία
+tlg0062.tlg008 | satira | Vita di Demonatte | Δημώνακτος Βίος
+tlg0062.tlg009 | satira | La sala | Περὶ τοῦ Οἴκου
+tlg0062.tlg010 | satira | Elogio della patria | Πατρίδος Ἐγκώμιον
+tlg0062.tlg011 | satira | I longevi | Μακρόβιοι
+tlg0062.tlg012 | satira | Storia vera | Ἀληθῶν Διηγημάτων
+tlg0062.tlg013 | satira | Non credere facilmente alla calunnia | Περὶ τοῦ μὴ ῥᾳδίως πιστεύειν Διαβολῇ
+tlg0062.tlg014 | satira | Il processo delle consonanti | Δίκη Συμφώνων
+tlg0062.tlg015 | satira | Il convito o i Lapiti | Συμπόσιον ἢ Λαπίθαι
+tlg0062.tlg016 | satira | La traversata o il tiranno | Κατάπλους ἢ Τύραννος
+tlg0062.tlg017 | satira | Zeus confutato | Ζεὺς ἐλεγχόμενος
+tlg0062.tlg018 | satira | Zeus tragico | Ζεὺς Τραγῳδός
+tlg0062.tlg019 | satira | Il sogno o il gallo | Ὄνειρος ἢ Ἀλεκτρυών
+tlg0062.tlg020 | satira | Prometeo | Προμηθεύς
+tlg0062.tlg021 | satira | Icaromenippo | Ἰκαρομένιππος ἢ Ὑπερνέφελος
+tlg0062.tlg022 | satira | Timone | Τίμων
+tlg0062.tlg023 | satira | Caronte | Χάρων ἢ Ἐπισκοποῦντες
+tlg0062.tlg024 | satira | Vendita di vite all'incanto | Βίων Πρᾶσις
+tlg0062.tlg025 | satira | I redivivi o il pescatore | Ἀναβιοῦντες ἢ Ἁλιεύς
+tlg0062.tlg026 | satira | La doppia accusa | Δὶς κατηγορούμενος
+tlg0062.tlg027 | satira | I sacrifici | Περὶ Θυσιῶν
+tlg0062.tlg028 | satira | Contro l'ignorante bibliomane | Πρὸς τὸν ἀπαίδευτον καὶ πολλὰ βιβλία ὠνούμενον
+tlg0062.tlg029 | satira | Il sogno, ovvero la vita di Luciano | Περὶ τοῦ Ἐνυπνίου ἤτοι Βίος Λουκιανοῦ
+tlg0062.tlg030 | satira | Il parassita | Περὶ τοῦ Παρασίτου ὅτι Τέχνη ἡ Παρασιτική
+tlg0062.tlg031 | satira | L'amico della menzogna | Φιλοψευδὴς ἢ Ἀπιστῶν
+tlg0062.tlg032 | satira | Il giudizio delle dee | Θεῶν Κρίσις
+tlg0062.tlg033 | satira | Su quelli che stanno a servizio | Περὶ τῶν ἐν Μισθῷ συνόντων
+tlg0062.tlg034 | satira | Anacarsi o sulla ginnastica | Ἀνάχαρσις ἢ Περὶ Γυμνασίων
+tlg0062.tlg035 | satira | Menippo o la negromanzia | Μένιππος ἢ Νεκυομαντεία
+tlg0062.tlg036 | satira | Il lutto | Περὶ Πένθους
+tlg0062.tlg037 | satira | Il maestro di retorica | Ῥητόρων Διδάσκαλος
+tlg0062.tlg038 | satira | Alessandro o il falso profeta | Ἀλέξανδρος ἢ Ψευδόμαντις
+tlg0062.tlg039 | satira | Le immagini | Εἰκόνες
+tlg0062.tlg040 | satira | In difesa delle immagini | Ὑπὲρ τῶν Εἰκόνων
+tlg0062.tlg041 | satira | La dea siria | Περὶ τῆς Συρίης Θεοῦ
+tlg0062.tlg042 | satira | La morte di Peregrino | Περὶ τῆς Περεγρίνου Τελευτῆς
+tlg0062.tlg043 | satira | I fuggitivi | Δραπέται
+tlg0062.tlg044 | satira | Tossari o l'amicizia | Τόξαρις ἢ Φιλία
+tlg0062.tlg045 | satira | La danza | Περὶ Ὀρχήσεως
+tlg0062.tlg046 | satira | Lessifane | Λεξιφάνης
+tlg0062.tlg047 | satira | L'eunuco | Εὐνοῦχος
+tlg0062.tlg048 | satira | L'astrologia | Περὶ τῆς Ἀστρολογίας
+tlg0062.tlg049 | satira | Lo pseudologista | Ψευδολογιστής
+tlg0062.tlg050 | satira | L'assemblea degli dèi | Θεῶν Ἐκκλησία
+tlg0062.tlg051 | satira | Il tirannicida | Τυραννοκτόνος
+tlg0062.tlg052 | satira | Il diseredato | Ἀποκηρυττόμενος
+tlg0062.tlg053 | satira | Come si deve scrivere la storia | Πῶς δεῖ ἱστορίαν συγγράφειν
+tlg0062.tlg054 | satira | I dipsadi | Περὶ τῶν διψάδων
+tlg0062.tlg055 | satira | Le Saturnali | Τὰ πρὸς Κρόνον
+tlg0062.tlg056 | satira | Erodoto o Aezione | Ἡρόδοτος ἢ Ἀετίων
+tlg0062.tlg057 | satira | Zeusi o Antioco | Ζεῦξις ἢ Ἀντίοχος
+tlg0062.tlg058 | satira | Per un lapsus nel saluto | Ὑπέρ τοῦ ἐν τῇ προσαγορεύσει πταισμάτως
+tlg0062.tlg059 | satira | Armonide | Ἁρμονίδης
+tlg0062.tlg060 | satira | Armonide | Ἁρμονίδης
+tlg0062.tlg061 | satira | Dialogo con Esiodo | Διάλογος πρὸς Ἡσίοδον
+tlg0062.tlg062 | satira | Lo Scita o il prosseno | Σκύθης ἢ πρόξενος
+tlg0062.tlg063 | satira | Lo Scita o il prosseno | Σκύθης ἢ πρόξενος
+tlg0062.tlg064 | satira | A chi disse «sei un Prometeo nei discorsi» | Πρὸς τὸν εἰπόντα, Προμηθεὺς εἴ εἶ ἐν λόγοις
+tlg0062.tlg065 | satira | La nave o i desideri | Πλοῖον ἢΕυχαί
+tlg0062.tlg066 | satira | Dialoghi dei morti | Νεκρικοὶ διάλογοι
+tlg0062.tlg067 | satira | Dialoghi degli dèi | Θεῶν διάλογοι
+tlg0062.tlg068 | satira | Dialoghi degli dèi | Θεῶν διάλογοι
+tlg0062.tlg069 | satira | Dialoghi delle cortigiane | Ἑταιρικοὶ διάλογοι
+tlg0062.tlg070 | satira | Il falso sofista o il solecista | Ψευδοσοφιστής ἢ Σολοικιστής
+tlg0062.tlg071 | satira | La podagra | Ποδάγρα

@@ -1,0 +1,102 @@
+# LOTTO 08 — 60 opere, 20 autori
+# riga: id | genere | titolo italiano | titolo originale
+
+### Iperide — greco, classica (6 opere)
+tlg0030.tlg001 | oratoria | Ἀπολογία ὑπὲρ Λυκόφρονος | In Defence of Lycophron
+tlg0030.tlg002 | oratoria | Κατὰ Φιλιππίδου | Against Philippides
+tlg0030.tlg003 | oratoria | Κατ᾽ Ἀθηνογένους | Against Athenogenes
+tlg0030.tlg004 | oratoria | Ὑπὲρ Εὐξενίππου ἐισαγγελίας ἀπολογία πρὸς Πολύευκτον | In Defence of Euxenippus
+tlg0030.tlg005 | oratoria | Κατὰ Δημοσθένους ὑπὲρ τῶν Ἁρπαλείων | Against Demosthenes
+tlg0030.tlg006 | oratoria | Ἐπιτάφιος | Funeral Oration
+
+### Epitteto — greco, imperiale (5 opere)
+tlg0557.tlg001 | filosofia | Diatribe | Ἀρριανοῦ τῶν Ἐπικτήτου Διατριβῶν
+tlg0557.tlg002 | filosofia | Manuale | Ἐγχειρίδιον
+tlg0557.tlg003 | filosofia | Dissertationum Epictetearum sive ab Arriano sive ab aliis digestarum fragmenta | Fragments
+tlg0557.tlg004 | filosofia | Gnomologium Epicteteum (e Stobaei libris 1-2) | Gnomology (Books 1-2)
+tlg0557.tlg005 | filosofia | Gnomologium Epicteteum (e Stobaei libris 3-4) | Gnomology (Books 3-4)
+
+### Mosco — greco, ellenistica (5 opere)
+tlg0035.tlg001 | lirica | Ἔρως δραπέτης | Eros Drapeta
+tlg0035.tlg002 | lirica | Εὐρώπη | Europa
+tlg0035.tlg003 | lirica | Ἐπιτάφιος Βίωνος | Epitaphius Bios
+tlg0035.tlg004 | lirica | Μεγάρα | Megara
+tlg0035.tlg005 | lirica | Fragmenta | 
+
+### Andocide — greco, classica (4 opere)
+tlg0027.tlg001 | oratoria | Περὶ τῶν μυστηρίων | On the Mysteries
+tlg0027.tlg002 | oratoria | Περὶ τῆς ἑαυτοῦ καθόδου | On His Return
+tlg0027.tlg003 | oratoria | Περὶ τῆς πρὸς Λακεδαιμονίους εἰρήνης | On the Peace with Sparta
+tlg0027.tlg004 | oratoria | Κατὰ Ἀλκιβιάδου | Against Alcibiades
+
+### Areteo — greco, imperiale (4 opere)
+tlg0719.tlg001 | medicina | Περὶ αἰτίων καὶ σημείων ὀξέων παθών | De causis et signis acutorum morborum libri duo
+tlg0719.tlg002 | medicina | Περὶ αἰτίων καὶ σημείων χρονίων παθῶν | De causis et signis diuturnorum morborum libri duo
+tlg0719.tlg003 | medicina | Ὀξέων νούσων θεραπευτικόν | De curatione acutorum morborum libri duo
+tlg0719.tlg004 | medicina | Χρονίων νούσων θεραπευτικών | De curatione diuturnorum morborum libri duo
+
+### Clemente Alessandrino — greco, imperiale (4 opere)
+tlg0555.tlg001 | religione | Προτρεπτικὸς πρὸς Ἕλληνας | Protrepticus
+tlg0555.tlg004 | religione | Στρώματα | Stromata
+tlg0555.tlg006 | religione | τίς ὁ σωζόμενος πλούσιος | Quis Dis Salvetur
+tlg0555.tlg008 | religione | ὁ Προτρεπτικὸς εἰς ὑπομονὴν ἢ πρὸς τοὺς νεωστὶ βεβαπτισμένους (Fr. 44) | Exhortation to Endurance or To the Newly Baptized (Fragment 44)
+
+### Flavio Giuseppe — greco, imperiale (4 opere)
+tlg0526.tlg001 | storiografia | Ἰουδαϊκὴ ἀρχαιολογία | Jewish Antiquities
+tlg0526.tlg002 | storiografia | Ἰωσήπου βίος | Life of Josephus
+tlg0526.tlg003 | storiografia | περὶ ἀρχαιότητος Ἰουδαίων | Against Apion
+tlg0526.tlg004 | storiografia | Ἰουδαϊκοῦ πολέμου πρὸς Ῥωμαίους | The Jewish War
+
+### Pseudo-Cesare — latino, repubblicana (3 opere)
+phi0426.phi001 | storiografia | De Bello Africo | 
+phi0428.phi001 | storiografia | De Bello Alexandrino | 
+phi0430.phi001 | storiografia | De Bello Hispaniensi | 
+
+### Stazio — latino, imperiale (3 opere)
+phi1020.phi001 | epica | Thebais | 
+phi1020.phi002 | epica | Silvae | 
+phi1020.phi003 | epica | Achilleis | 
+
+### Bione — greco, ellenistica (3 opere)
+tlg0036.tlg001 | lirica | Αδώνιδος επιτάφιος | Epitaphius Adonis
+tlg0036.tlg002 | lirica | Μύρσων καὶ Λυκίδας | Epithalamium Achillis et Deidameiae
+tlg0036.tlg003 | lirica | Fragmenta | 
+
+### Dinarco — greco, classica (3 opere)
+tlg0029.tlg004 | oratoria | Κατὰ Δημοσθένους | Against Demosthenes
+tlg0029.tlg005 | oratoria | Κατὰ Ἀριστογείτονος | Against Aristogiton
+tlg0029.tlg006 | oratoria | Κατὰ Φιλοκλέους | Against Philocles
+
+### Eliano — greco, imperiale (3 opere)
+tlg0545.tlg001 | erudizione | Περὶ ζῴων ἰδιότητος | De Natura Animalium
+tlg0545.tlg002 | erudizione | Ποικίλη ἱστορία | Varia Historia
+tlg0545.tlg003 | erudizione | ἐκ τῶν Αἰλιανοῦ ἀγροικικῶν ἐπιστολῶν | Epistulae Rusticae
+
+### Sidonio Apollinare — latino, tarda (2 opere)
+stoa0261.stoa0001 | lirica | Carmina | 
+stoa0261.stoa0002 | lirica | Epistulae, Books VIII-IX | 
+
+### Apollodoro — greco, imperiale (2 opere)
+tlg0548.tlg001 | mitografia | Βιβλιοθήκη | Library
+tlg0548.tlg002 | mitografia | Ἐπιτομὴ | Epitome
+
+### Basilio di Cesarea — greco, tarda (2 opere)
+tlg2040.tlg002 | religione | Πρὸς τοὺς νέους, ὅπως ἂν ἐξ Ἑλληνικῶν ὠφελοῖντο λόγων | De legendis gentilium libris
+tlg2040.tlg004 | religione | Epistulae | 
+
+### Procopio — greco, tarda (2 opere)
+tlg4029.tlg001 | storiografia | Ὑπὲρ τῶν Πολέμων Λόγοι | De Bellis
+tlg4029.tlg002 | storiografia | Ἀπόκρυφη Ἱστορία | Historia Arcana
+
+### Pseudo-Plutarco — greco, imperiale (2 opere)
+tlg0094.tlg002 | erudizione | περὶ Μουσικῆς | De musica
+tlg0094.tlg003 | erudizione | Περὶ τῶν ἀρεσκόντων τοῖς φιλοσόφοις φυσικῶν δογμάτων | Placita Philosophorum
+
+### Ammiano Marcellino — latino, tarda (1 opera)
+stoa0023.stoa001 | storiografia | Storie | Res Gestae
+
+### Apicio — latino, imperiale (1 opera)
+phi2003.phi001 | tecnica | De Re Coquinaria | 
+
+### Aulo Gellio — latino, imperiale (1 opera)
+phi1254.phi001 | erudizione | Le notti attiche | Noctes Atticae

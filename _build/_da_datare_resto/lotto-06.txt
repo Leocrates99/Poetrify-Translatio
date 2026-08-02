@@ -1,0 +1,70 @@
+# LOTTO 06 — 60 opere, 4 autori
+# riga: id | genere | titolo italiano | titolo originale
+
+### Ippocrate — greco, classica (19 opere)
+tlg0627.tlg001 | medicina | Περὶ ἀρχαίας ἰατρικῆς | De prisca medicina
+tlg0627.tlg002 | medicina | Περὶ ἀέρων, ὑδάτων, τόπων | De aere, aquis, locis
+tlg0627.tlg003 | medicina | Προγνωστικόν | Prognosticon
+tlg0627.tlg004 | medicina | Περὶ διαίτης ὀξέων | De diaeta in morbis acutis
+tlg0627.tlg005 | medicina | Περὶ διαίτης ὀξέων. Νόθα | De diaeta acutorum
+tlg0627.tlg006 | medicina | Ἐπιδημίων | De morbis popularibus
+tlg0627.tlg007 | medicina | Περὶ τῶν ἐν κεφαλῇ τρωμάτων | De capitis vulneribus
+tlg0627.tlg008 | medicina | Κατ’ ἰητρεῖον | De officina medici
+tlg0627.tlg009 | medicina | Περὶ ἀγμῶν | De fracturis
+tlg0627.tlg010 | medicina | Περὶ ἄρθρων | De articulis
+tlg0627.tlg011 | medicina | Μοχλικός | Vectiarius
+tlg0627.tlg012 | medicina | Ἀφορισμοί | Aphorismi
+tlg0627.tlg013 | medicina | Iusiurandum | Jusjurandum
+tlg0627.tlg027 | medicina | Περὶ ἱερῆς νούσου | De morbo sacro
+tlg0627.tlg028 | medicina | Περὶ ἑλκῶν | De ulceribus
+tlg0627.tlg029 | medicina | Περὶ αἱμοῤῥοίδων | De haemorrhoidibus
+tlg0627.tlg030 | medicina | Περὶ συρίγγων | De fistulis
+tlg0627.tlg046 | medicina | Περὶ τροφῆς | De alimento
+tlg0627.tlg051 | medicina | Παραγγελίαι | Praeceptiones
+
+### Claudiano — latino, tarda (14 opere)
+stoa0089.stoa001 | epica | Carminum minorum corpusculum | 
+stoa0089.stoa002 | epica | de bello Gildonico | 
+stoa0089.stoa003 | epica | de Bello Gothico | 
+stoa0089.stoa004 | epica | de consulatu Stilichonis | 
+stoa0089.stoa005 | epica | de raptu Proserpinae | 
+stoa0089.stoa006 | epica | Epithalamium de nuptiis Honorii Augusti | 
+stoa0089.stoa007 | epica | Fescinnina de nuptiis Honorii Augusti | 
+stoa0089.stoa008 | epica | In Eutropium | 
+stoa0089.stoa009 | epica | In Rufinum | 
+stoa0089.stoa010 | epica | Panegyricus de tertio consulatu Honorii Augusti | 
+stoa0089.stoa011 | epica | Panegyricus de quarto consulatu Honorii Augusti | 
+stoa0089.stoa012 | epica | Panegyricus de sexto consulatu Honorii Augusti | 
+stoa0089.stoa013 | epica | Panegyricus dictus Manlio Theodoro consuli | 
+stoa0089.stoa014 | epica | Panegyricus dictus Probino et Olybrio consulibus | 
+
+### Appiano — greco, imperiale (14 opere)
+tlg0551.tlg002 | storiografia | ἐκ τῆς βασιλικῆς | Kings
+tlg0551.tlg003 | storiografia | ἐκ τῆς Ἰταλικῆς | Italy
+tlg0551.tlg004 | storiografia | ἐκ τῆς Σαυνιτικῆς | Samnite History
+tlg0551.tlg005 | storiografia | ἐκ τῆς Κελτῖκης | Gallic History
+tlg0551.tlg006 | storiografia | ἐκ τῆς Σικελῖκης καὶ νησιωτικής | Sicily and the Other Islands
+tlg0551.tlg007 | storiografia | Ἰβηρική | Wars in Spain
+tlg0551.tlg008 | storiografia | Ἀννιβαϊκή | Hannibalic War
+tlg0551.tlg009 | storiografia | Λιβυκή | Punic Wars
+tlg0551.tlg010 | storiografia | ἐκ τῆς Νομαδικῆς | Numidian Affairs
+tlg0551.tlg011 | storiografia | ἐκ τῆς Μακεδονικῆς | Macedonian Affairs
+tlg0551.tlg012 | storiografia | Ἰλλυρική | Illyrian Wars
+tlg0551.tlg013 | storiografia | Συριακή | Syrian Wars
+tlg0551.tlg014 | storiografia | Μιθριδάτειος | Mithridatic Wars
+tlg0551.tlg017 | storiografia | Ἐμφυλίων Πρώτη | Civil Wars
+
+### Dionigi di Alicarnasso — greco, ellenistica (13 opere)
+tlg0081.tlg001 | retorica | Ῥωμαϊκὴ Ἀρχαιολογία | Antiquitates Romanae
+tlg0081.tlg002 | retorica | Περὶ τῶν ἀρχαίων ῥητόρων | De antiquis oratoribus
+tlg0081.tlg003 | retorica | Λυσίας συρακούσιος πατρόθεν | De Lysia
+tlg0081.tlg004 | retorica | Ἰσοκρατης Ἀθηναῖος | De Isocrate
+tlg0081.tlg005 | retorica | Ἰσαῖος Ἀθηναῖος | De Isaeo
+tlg0081.tlg006 | retorica | Περί της Δημοσθένους λέξεως | De Demosthene
+tlg0081.tlg007 | retorica | Libri secundi de antiquis oratoribus reliquiae | 
+tlg0081.tlg008 | retorica | Ἐπιστολὴ πρὸς Ἀμμαῖον | Ad Ammaeum
+tlg0081.tlg009 | retorica | Περὶ Δεινάρχου | De Dinarcho
+tlg0081.tlg010 | retorica | Περὶ Θουκιδίδου | De Thucydide
+tlg0081.tlg011 | retorica | Περὶ τῶν Θουκιδίδου ἰδιωμάτων πρὸς Ἀμμαῖον | De Thucydidis idiomatibus
+tlg0081.tlg012 | retorica | Περὶ συνθέσεως ὀνομάτων | De Compositione Verborum
+tlg0081.tlg015 | retorica | Ἐπιστολὴ πρὸς Πομπήιον | Epistula ad Pompeium Geminum

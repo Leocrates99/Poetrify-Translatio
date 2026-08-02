@@ -1,0 +1,66 @@
+# LOTTO 03 — 60 opere, 2 autori
+# riga: id | genere | titolo italiano | titolo originale
+
+### Inni omerici — greco, arcaica (33 opere)
+tlg0013.tlg001 | epica | Inno a Dioniso | εἰς Διόνυσον
+tlg0013.tlg002 | epica | Inno a Demetra | εἰς Δημήτραν
+tlg0013.tlg003 | epica | Inno ad Apollo | εἰς Ἀπόλλωνα
+tlg0013.tlg004 | epica | Inno a Ermes | εἰς Ἑρμῆν
+tlg0013.tlg005 | epica | Inno ad Afrodite | εἰς Ἀφροδίτην
+tlg0013.tlg006 | epica | Inno ad Afrodite (VI) | Hymn 6 to Aphrodite
+tlg0013.tlg007 | epica | Inno a Dioniso (VII) | Hymn 7 to Dionysus
+tlg0013.tlg008 | epica | Inno ad Ares | Hymn 8 to Ares
+tlg0013.tlg009 | epica | Inno ad Artemide | Hymn 9 to Artemis
+tlg0013.tlg010 | epica | Inno ad Afrodite (X) | Hymn 10 to Aphrodite
+tlg0013.tlg011 | epica | Inno ad Atena | Hymn 11 to Athena
+tlg0013.tlg012 | epica | Inno a Era | Hymn 12 to Hera
+tlg0013.tlg013 | epica | Inno a Demetra (XIII) | Hymn 13 to Demeter
+tlg0013.tlg014 | epica | Inno alla Madre degli dèi | Hymn 14 to the Mother of the Gods
+tlg0013.tlg015 | epica | Inno a Eracle | Hymn 15 to Heracles
+tlg0013.tlg016 | epica | Inno ad Asclepio | Hymn 16 to Asclepius
+tlg0013.tlg017 | epica | Inno ai Dioscuri | Hymn 17 To the Dioscuri
+tlg0013.tlg018 | epica | Inno a Ermes (XVIII) | Hymn 18 to Hermes
+tlg0013.tlg019 | epica | Inno a Pan | Hymn 19 to Pan
+tlg0013.tlg020 | epica | Inno a Efesto | Hymn 20 to Hephaestus
+tlg0013.tlg021 | epica | Inno ad Apollo (XXI) | Hymn 21 to Apollo
+tlg0013.tlg022 | epica | Inno a Poseidone | Hymn 22 to Poseidon
+tlg0013.tlg023 | epica | Hymn 23 to Zeus | 
+tlg0013.tlg024 | epica | Hymn 24 to Hestia | 
+tlg0013.tlg025 | epica | HHymn 25 to the Muses and Apollo | Hymn 25 To the Muses and Apollo
+tlg0013.tlg026 | epica | Hymn 26 to Dionysus | 
+tlg0013.tlg027 | epica | Hymn 27 to Artemis | 
+tlg0013.tlg028 | epica | Hymn 28 to Athena | 
+tlg0013.tlg029 | epica | Hymn 29 to Hestia | 
+tlg0013.tlg030 | epica | Hymn 30 to Earth | 
+tlg0013.tlg031 | epica | Hymn 31 to Helios | 
+tlg0013.tlg032 | epica | Hymn 32 to Selene | 
+tlg0013.tlg033 | epica | Hymn 33 to the Dioscuri | 
+
+### Nuovo Testamento — greco, imperiale (27 opere)
+tlg0031.tlg001 | religione | Ματθαίος | Matthew
+tlg0031.tlg002 | religione | Μάρκος | Mark
+tlg0031.tlg003 | religione | Λουκᾶν | Luke
+tlg0031.tlg004 | religione | Ἰωάννην | John
+tlg0031.tlg005 | religione | Acts | 
+tlg0031.tlg006 | religione | Ρωμαίους | Romans
+tlg0031.tlg007 | religione | Κορίνθιους Α′ | 1 Corinthians
+tlg0031.tlg008 | religione | Κορίνθιους Β′ | 2 Corinthians
+tlg0031.tlg009 | religione | Γαλάτας | Galatians
+tlg0031.tlg010 | religione | Ἐφεσίους | Ephesians
+tlg0031.tlg011 | religione | Φιλιππηνίους | Philippians
+tlg0031.tlg012 | religione | Κολασσαείς | Colossians
+tlg0031.tlg013 | religione | Θεσσαλονικείς Α′ | 1 Thessalonians
+tlg0031.tlg014 | religione | Θεσσαλονικείς Β′ | 2 Thessalonians
+tlg0031.tlg015 | religione | Τιμόθεον Α′ | 1 Timothy
+tlg0031.tlg016 | religione | >Τιμόθεον B′ | 2 Timothy
+tlg0031.tlg017 | religione | Τίτον | Titus
+tlg0031.tlg018 | religione | Φιλήμονα | Philemon
+tlg0031.tlg019 | religione | Ἑβραίους | Hebrews
+tlg0031.tlg020 | religione | Ἰακώβου | James
+tlg0031.tlg021 | religione | Πέτρου Α′ | 1 Peter
+tlg0031.tlg022 | religione | Πέτρου B′ | 2 Peter
+tlg0031.tlg023 | religione | Ἰωάννου Α′ | 1 John
+tlg0031.tlg024 | religione | Ἰωάννου Β′ | 2 John
+tlg0031.tlg025 | religione | Ἰωάννου Γ′ | 3 John
+tlg0031.tlg026 | religione | Ἰούδου | Jude
+tlg0031.tlg027 | religione | Ἀποκάλυψις | Revelation

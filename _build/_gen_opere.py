@@ -28,15 +28,25 @@ def carica(percorso):
 
 
 def main():
-    if len(sys.argv) > 1:
-        d = carica(sys.argv[1])
-        with open(GREZZE, "w", encoding="utf-8") as fh:
-            json.dump(d, fh, ensure_ascii=False, indent=1)
-    elif os.path.exists(GREZZE):
+    # Le passate si ACCUMULANO: la prima ha datato il canone liceale, la seconda
+    # tutto il resto. Rigenerare con la sola seconda cancellerebbe la prima, che
+    # è la cosa peggiore che possa fare uno script di build — quindi il grezzo
+    # si rilegge e si fonde, con le voci nuove che vincono su quelle vecchie.
+    d = {"opere": [], "correzioni": []}
+    if os.path.exists(GREZZE):
         with open(GREZZE, encoding="utf-8") as fh:
             d = json.load(fh)
-    else:
-        d = {"opere": [], "correzioni": []}
+
+    for percorso in sys.argv[1:]:
+        nuovo = carica(percorso)
+        visti = {o["id"] for o in nuovo.get("opere", [])}
+        d["opere"] = [o for o in d["opere"] if o["id"] not in visti] + nuovo.get("opere", [])
+        idc = {c["id"] for c in nuovo.get("correzioni", [])}
+        d["correzioni"] = [c for c in d["correzioni"] if c["id"] not in idc] + nuovo.get("correzioni", [])
+
+    if len(sys.argv) > 1:
+        with open(GREZZE, "w", encoding="utf-8") as fh:
+            json.dump(d, fh, ensure_ascii=False, indent=1)
 
     date = {}
     for o in d.get("opere", []):
@@ -53,6 +63,10 @@ def main():
                              prova or base)
             corrette += 1
 
+    # «non-databile» è una risposta, non un buco: si conta e si dichiara, ma non
+    # entra nella tabella — l'opera resta senza data e l'interfaccia la mette in
+    # coda nell'ordine tradizionale.
+    indatabili = sum(1 for o in d.get("opere", []) if o.get("tipo") == "non-databile")
     conteggi = {t: sum(1 for v in date.values() if v[1] == t) for t in sorted(TIPI)}
 
     righe = []
@@ -81,7 +95,13 @@ ordinano ma non mostrano una data, perché stamparla la farebbe passare per tale
 
 Anni NEGATIVI = avanti Cristo.
 
-%d opere datate — certa %d · circa %d · fase %d.
+Le opere per cui la datazione è stata esaminata e dichiarata IMPOSSIBILE non
+stanno qui: restano senza data e l'interfaccia le mette in coda nell'ordine
+tradizionale. Assenza esaminata e assenza non esaminata si somigliano nel dato
+ma non nel significato — il registro di chi le ha valutate sta in
+_build/_date_grezze.json.
+
+%d opere datate — certa %d · circa %d · fase %d · non databili %d.
 """
 
 # id opera → (anno, tipo, su che cosa si regge)
@@ -93,15 +113,15 @@ DATE = {
 def data_per(work_id):
     """(anno, tipo, base) oppure None se l'opera non è stata datata."""
     return DATE.get(work_id)
-''' % (len(date), conteggi["certa"], conteggi["circa"], conteggi["fase"],
+''' % (len(date), conteggi["certa"], conteggi["circa"], conteggi["fase"], indatabili,
        "\n".join(righe) if righe else "    # (ancora vuota)")
 
     with open(os.path.join(HERE, "corpus_opere.py"), "w", encoding="utf-8") as fh:
         fh.write(testo)
 
     print("scritto corpus_opere.py: %d opere datate" % len(date))
-    print("   certa %d · circa %d · fase %d · correzioni applicate %d"
-          % (conteggi["certa"], conteggi["circa"], conteggi["fase"], corrette))
+    print("   certa %d · circa %d · fase %d" % (conteggi["certa"], conteggi["circa"], conteggi["fase"]))
+    print("   dichiarate NON databili: %d · correzioni applicate: %d" % (indatabili, corrette))
 
 
 if __name__ == "__main__":

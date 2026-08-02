@@ -1,0 +1,176 @@
+# LOTTO 09 — 58 opere, 58 autori
+# riga: id | genere | titolo italiano | titolo originale
+
+### Beda il Venerabile — latino, tarda (1 opera)
+stoa0054.stoa006 | storiografia | Historiam ecclesiasticam gentis Anglorum | 
+
+### Catone — latino, arcaica (1 opera)
+stoa0079.stoa001 | tecnica | L'agricoltura | De agri cultura
+
+### Celso — latino, imperiale (1 opera)
+phi0836.phi002 | medicina | De Medicina | 
+
+### Columella — latino, imperiale (1 opera)
+phi0845.phi002 | tecnica | Res Rustica. Books I-IX | Res Rustica
+
+### Curzio Rufo — latino, imperiale (1 opera)
+phi0860.phi001 | storiografia | Historiarum Alexandri Magni, Historiarum Alexandri Magni Macedonis libri qui supersunt | Historiarum Alexandri Magni
+
+### Fedro — latino, imperiale (1 opera)
+phi0975.phi001 | favola | Favole | Fabulae Aesopiae
+
+### Floro — latino, imperiale (1 opera)
+phi1242.phi001 | storiografia | Epitome Rerum Romanorum | 
+
+### Minucio Felice — latino, tarda (1 opera)
+stoa0203.stoa001 | religione | Octavius | 
+
+### Plinio il Vecchio — latino, imperiale (1 opera)
+phi0978.phi001 | scienze | Storia naturale | Naturalis Historia, C. Plini Secundi naturalis historiae libri XXXVII
+
+### Pseudo-Tertulliano — latino, tarda (1 opera)
+stoa0276.stoa002 | religione | Ad Uxorem | 
+
+### Quinto Tullio Cicerone — latino, repubblicana (1 opera)
+phi0478.phi003 | epistolografia | Commentariolum Petitionis | 
+
+### Silio Italico — latino, imperiale (1 opera)
+phi1345.phi001 | epica | Punica | 
+
+### Valerio Flacco — latino, imperiale (1 opera)
+phi1035.phi001 | epica | Argonautica | 
+
+### Valerio Massimo — latino, imperiale (1 opera)
+phi1038.phi001 | erudizione | Facta et Dicta Memorabilia | 
+
+### Vitruvio — latino, augustea (1 opera)
+phi1056.phi001 | tecnica | De architectura | 
+
+### Achille Tazio — greco, imperiale (1 opera)
+tlg0532.tlg001 | romanzo | τὰ κατὰ Λευκίππην καὶ Kλειτoφῶντα | Leucippe and Clitophon
+
+### Agatemero — greco, imperiale (1 opera)
+tlg0090.tlg001 | geografia | Geographiae informatio, Geographi graeci minores Volumen Secundum | Geographiae informatio
+
+### Antologia Palatina — greco, ellenistica (1 opera)
+tlg7000.tlg001 | antologia | Ἀνθολογία, Volume V | Greek Anthology
+
+### Arato — greco, ellenistica (1 opera)
+tlg0653.tlg001 | didascalica | Φαινόμενα | Phaenomena
+
+### Arpocrazione — greco, imperiale (1 opera)
+tlg1389.tlg001 | erudizione | Lexicon in decem oratores Atticos | 
+
+### Asclepiodoto — greco, ellenistica (1 opera)
+tlg0556.tlg001 | tecnica | Τέχνη τακτική | Tactica
+
+### Ateneo — greco, imperiale (1 opera)
+tlg0008.tlg001 | erudizione | Δειπνοσοφισταί | Deipnosophistae
+
+### Callistrato — greco, tarda (1 opera)
+tlg4091.tlg001 | retorica | Ἐκφράσεις | Descriptiones
+
+### Caritone — greco, imperiale (1 opera)
+tlg0554.tlg001 | romanzo | De Chaerea et Callirhoe | 
+
+### Cassio Dione — greco, imperiale (1 opera)
+tlg0385.tlg001 | storiografia | Ῥωμαϊκὴ Ἱστορία (Books 36-55) | Historia Romana
+
+### Colluto — greco, tarda (1 opera)
+tlg4081.tlg001 | epica | Ἁρπαγὴ Ἑλένης | The Rape of Helen
+
+### Demade — greco, classica (1 opera)
+tlg0535.tlg001 | oratoria | Ὑπὲρ τῆς δωδεκαετίας | On the Twelve Years
+
+### Demetrio Falereo — greco, ellenistica (1 opera)
+tlg0613.tlg001 | retorica | Περὶ ἑρμηνείας | Libro de Elocutione
+
+### Diodoro Siculo — greco, ellenistica (1 opera)
+tlg0060.tlg001 | storiografia | Biblioteca storica | Βιβλιοθήκη Ἱστορική (Books 18-20)
+
+### Diogene Laerzio — greco, imperiale (1 opera)
+tlg0004.tlg001 | biografia | Βίοι καὶ γνῶμαι τῶν ἐν φιλοσοφίᾳ εὐδοκιμησάντων | Vitae philosophorum
+
+### Dione Crisostomo — greco, imperiale (1 opera)
+tlg0612.tlg001 | retorica | Orationes | 
+
+### Enea Tattico — greco, classica (1 opera)
+tlg0058.tlg001 | tecnica | Περὶ τοῦ πῶς χρὴ πολιορκουμένους ἀντέχειν | Poliorcetica
+
+### Euclide — greco, ellenistica (1 opera)
+tlg1799.tlg001 | scienze | Στοιχεῖα | Elementa
+
+### Eusebio di Cesarea — greco, tarda (1 opera)
+tlg2018.tlg002 | religione | Ἐκκλησιαστικὴ ἱστορία | Ecclesiastical History
+
+### Filostrato minore — greco, imperiale (1 opera)
+tlg0652.tlg001 | retorica | Εἰκόνες | Imagines
+
+### Filostrato sofista — greco, imperiale (1 opera)
+tlg1600.tlg001 | retorica | Εἰκόνες | Imagines
+
+### Galeno — greco, imperiale (1 opera)
+tlg0057.tlg010 | medicina | Περί φυσικῶν δυνάμεων | De naturalibus facultatibus
+
+### Giovanni Damasceno — greco, tarda (1 opera)
+tlg2934.tlg066 | religione | Βαρλαάμ καί Ἰωάσαφ | Vita Barlaam et Joasaph
+
+### Lettera di Barnaba — greco, imperiale (1 opera)
+tlg1216.tlg001 | religione | Βαρνάβα ἐπιστολή | The Epistle of Barnabas
+
+### Licofrone — greco, ellenistica (1 opera)
+tlg0341.tlg002 | lirica | Ἀλεξάνδρα | Alexandra
+
+### Licurgo — greco, classica (1 opera)
+tlg0034.tlg001 | oratoria | Κατὰ Λεωκράτους | Against Leocrates
+
+### Longino — greco, imperiale (1 opera)
+tlg0560.tlg001 | retorica | Περὶ ὕψους | On the Sublime
+
+### Longo Sofista — greco, imperiale (1 opera)
+tlg0561.tlg001 | romanzo | Dafni e Cloe | Δάφνις καὶ Χλόη
+
+### Marco Aurelio — greco, imperiale (1 opera)
+tlg0562.tlg001 | filosofia | A se stesso | Τὰ εἰς ἑαυτόν
+
+### Nonno di Panopoli — greco, tarda (1 opera)
+tlg2045.tlg001 | epica | Διονυσιακά | Dionysiaca
+
+### Onasandro — greco, imperiale (1 opera)
+tlg0648.tlg001 | tecnica | Στρατηγικός | Strategicus
+
+### Oppiano — greco, imperiale (1 opera)
+tlg0023.tlg001 | didascalica | Ἁλιευτικά | Halieutica
+
+### Oppiano di Apamea — greco, imperiale (1 opera)
+tlg0024.tlg001 | didascalica | Κυνηγετικά | Cynegetica
+
+### Partenio — greco, ellenistica (1 opera)
+tlg0655.tlg001 | mitografia | Ἐρωτικὰ Παθήματα | Narrationes Amatoriae
+
+### Pausania — greco, imperiale (1 opera)
+tlg0525.tlg001 | geografia | Periegesi della Grecia | Ἑλλάδος Περιηγήσεως
+
+### Proclo — greco, tarda (1 opera)
+tlg4036.tlg023 | filosofia | Chrestomathy | 
+
+### Quinto Smirneo — greco, tarda (1 opera)
+tlg2046.tlg001 | epica | τὰ μεθ᾿ Ὅμηρον | Fall of Troy
+
+### Senofonte Efesio — greco, imperiale (1 opera)
+tlg0641.tlg001 | romanzo | Τὰ κατὰ Ἀνθίαν καὶ Ἁβροκόμην | Ephesiaca
+
+### Strabone — greco, imperiale (1 opera)
+tlg0099.tlg001 | geografia | Geografia | Γεωγραφικά
+
+### Teofrasto — greco, ellenistica (1 opera)
+tlg0093.tlg009 | scienze | Χαρακτῆρες | Characters
+
+### Tolomeo — greco, imperiale (1 opera)
+tlg0363.tlg007 | scienze | Τετράβιβλος | Tetrabiblos
+
+### Trifiodoro — greco, tarda (1 opera)
+tlg0647.tlg001 | epica | Ἅλωσις Ἰλίου | The Taking of Ilios
+
+### Zonara — greco, tarda (1 opera)
+tlg3135.tlg001 | storiografia | Ἐπιτομὴ Ἱστοριῶν | Epitome historiarum (Vol. 1)

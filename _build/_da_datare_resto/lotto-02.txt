@@ -1,0 +1,66 @@
+# LOTTO 02 — 60 opere, 2 autori
+# riga: id | genere | titolo italiano | titolo originale
+
+### Elio Aristide — greco, imperiale (56 opere)
+tlg0284.tlg001 | retorica | Εἰς Δία | Orationes 1
+tlg0284.tlg002 | retorica | Ἀθηνᾶ | Orationes 2
+tlg0284.tlg003 | retorica | Ἰσθμικὸς εἰς Ποσειδῶνα | Orationes 3
+tlg0284.tlg004 | retorica | Διόνυσος | Orationes 4
+tlg0284.tlg005 | retorica | Ἰσθμικὸς εἰς Ποσειδῶνα | Orationes 5
+tlg0284.tlg006 | retorica | Λαλιὰ εἰς Ἀσκληπιόν | Orationes 6
+tlg0284.tlg007 | retorica | Ἀσκληπιάδαι | Orationes 7
+tlg0284.tlg008 | retorica | Εἰς τὸν Σάραπιν | Orationes 8
+tlg0284.tlg009 | retorica | Εἰς βασιλέα [sp.] | Orationes 9
+tlg0284.tlg010 | retorica | Ἀπελλᾶ γενεθλιακός | Orationes 10
+tlg0284.tlg011 | retorica | εἰς Ἐτεωνέα ἐπικήδειος | Orationes 11
+tlg0284.tlg012 | retorica | Ἐπὶ Ἀλεξάνδρῳ ἐπιτάφιος | Orationes 12
+tlg0284.tlg013 | retorica | Παναθηναϊκός | Orationes 13
+tlg0284.tlg014 | retorica | Ῥώμης ἐγκώμιον | Orationes 14
+tlg0284.tlg015 | retorica | Σμυρναϊκὸς πολιτικός | Orationes 15
+tlg0284.tlg016 | retorica | Πανηγυρικὸς ἐν Κυζίκῳ περὶ τοῦ ναοῦ | Orationes 16
+tlg0284.tlg017 | retorica | Εἰς τὸ Αἰγαῖον πέλαγος | Orationes 17
+tlg0284.tlg018 | retorica | Εἰς τὸ φρέαρ τοῦ Ἀσκληπιοῦ | Orationes 18
+tlg0284.tlg019 | retorica | Ἐλευσίνιος | Orationes 19
+tlg0284.tlg020 | retorica | Μονῳδία ἐπὶ Σμύρνῃ | Orationes 20
+tlg0284.tlg021 | retorica | Παλινῳδία ἐπὶ Σμύρνῃ καὶ τῷ ταύτης ἀνοικισμῷ | Orationes 21
+tlg0284.tlg022 | retorica | Προσφωνητικός Σμυρναϊκός | Orationes 22
+tlg0284.tlg023 | retorica | Ἱεροὶ λόγοι πρῶτος | Orationes 23
+tlg0284.tlg024 | retorica | Ἱεροὶ λόγοι δεύτερος | Orationes 24
+tlg0284.tlg025 | retorica | Ἱεροὶ λόγοι τρίτος | Orationes 25
+tlg0284.tlg026 | retorica | Ἱεροὶ λόγοι τέταρτος | Orationes 26
+tlg0284.tlg027 | retorica | Ἱεροὶ λόγοι πέμπτος | Orationes 27
+tlg0284.tlg028 | retorica | Ἱεροὶ λόγοι ἕκτος | Orationes 28
+tlg0284.tlg029 | retorica | Περὶ τοῦ πέμπειν βοήθειαν τοῖς ἐν Σικελίᾳ | Orationes 29
+tlg0284.tlg030 | retorica | Εἰς τὸ ἐναντίον | Orationes 30
+tlg0284.tlg031 | retorica | Ὑπὲρ τῆς πρὸς Λακεδαιμονίους εἰρήνης | Orationes 31
+tlg0284.tlg032 | retorica | Ὑπὲρ τῆς πρὸς Ἀθηναίους εἰρήνης | Orationes 32
+tlg0284.tlg033 | retorica | Λευκτρικὸς Α. (ὑπὲρ Λακεδαιμονίων πρῶτος) | Orationes 33
+tlg0284.tlg034 | retorica | Λευκτρικὸς Β. (ὑπὲρ Θηβαίων πρῶτος) | Orationes 34
+tlg0284.tlg035 | retorica | Λευκτρικὸς Γ. (ὑπὲρ Λακεδαιμονίων δεύτερος) | Orationes 35
+tlg0284.tlg036 | retorica | Λευκτρικὸς Δ. (ὑπὲρ Θηβαίων δεύτερος) | Orationes 36
+tlg0284.tlg037 | retorica | Λευκτρικὸς Ε. (ὑπὲρ μηδετέροις βοηθεῖν) | Orationes 37
+tlg0284.tlg038 | retorica | Συμμαχικὸς Α. | Orationes 38
+tlg0284.tlg039 | retorica | Συμμαχικὸς Β. (πρὸς Θηβαίους περὶ τῆς συμμαχίας) | Orationes 39
+tlg0284.tlg040 | retorica | Συμβουλευτικὸς περὶ τοῦ μὴ δεῖν κωμῳδεῖν | Orationes 40
+tlg0284.tlg041 | retorica | Ἐπιστολὴ περὶ Σμύρνης | Orationes 41
+tlg0284.tlg042 | retorica | Περὶ ὁμονοίας ταῖς πόλεσιν | Orationes 42
+tlg0284.tlg043 | retorica | Ῥοδιακός [sp.] | Orationes 43
+tlg0284.tlg044 | retorica | Ῥοδίοις περὶ ὁμονοίας | Orationes 44
+tlg0284.tlg045 | retorica | Πρὸς Πλάτωνα περὶ ῥητορικῆς | Orationes 45
+tlg0284.tlg046 | retorica | Πρὸς Πλάτωνα ὑπὲρ τῶν τεττάρων | Orationes 46
+tlg0284.tlg047 | retorica | Πρὸς Καπίτωνα | Orationes 47
+tlg0284.tlg048 | retorica | Αἰγύπτιος | Orationes 48
+tlg0284.tlg049 | retorica | Περὶ τοῦ παραφθέγματος | Orationes 49
+tlg0284.tlg050 | retorica | Κατὰ τῶν ἐξορχουμένων | Orationes 50
+tlg0284.tlg051 | retorica | Πρὸς τοὺς αἰτιωμένους ὅτι μὴ μελετῴη | Orationes 51
+tlg0284.tlg052 | retorica | Πρεσβευτικὸς πρὸς Ἀχιλλέα | Orationes 52
+tlg0284.tlg053 | retorica | Πρὸς Δημοσθένη περὶ ἀτελείας | Orationes 53
+tlg0284.tlg054 | retorica | Πρὸς Λεπτίνην ὑπὲρ ἀτελείας | Orationes 54
+tlg0284.tlg055 | retorica | Πανηγυρικὸς ἐπὶ τῷ ὕδατι ἐν Περγάμῳ | Orationes 55
+tlg0284.tlg056 | retorica | Περὶ πολιτικοῦ λόγου | Ars Rhetorica
+
+### Seneca il Vecchio — latino, imperiale (4 opere)
+phi1014.phi001 | retorica | Controversie | Controversiae
+phi1014.phi002 | retorica | Controversie · estratti | Excerpta Controversiae
+phi1014.phi003 | retorica | Suasorie | Suasoriae
+phi1014.phi004 | retorica | Fragmenta | 
