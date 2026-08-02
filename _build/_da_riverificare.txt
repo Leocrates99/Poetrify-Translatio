@@ -1,0 +1,221 @@
+phi0426.phi001 | Pseudo-Cesare | La guerra africana | De bello Africo
+phi0428.phi001 | Pseudo-Cesare | La guerra alessandrina | De bello Alexandrino
+phi0430.phi001 | Pseudo-Cesare | La guerra ispanica | De bello Hispaniensi
+phi0478.phi003 | Quinto Tullio Cicerone | Commentariolum petitionis | 
+phi0692.phi006 | Appendix Vergiliana | Elegie a Mecenate | Elegiae in Maecenatem
+phi0836.phi002 | Celso | Della medicina | De medicina
+phi0845.phi002 | Columella | L'arte dell'agricoltura | Res rustica
+phi0860.phi001 | Curzio Rufo | Storie di Alessandro Magno | Historiae Alexandri Magni
+phi0972.phi001f | Petronio | Fragmenta | 
+phi1014.phi004 | Seneca il Vecchio | Fragmenta | 
+phi1038.phi001 | Valerio Massimo | Detti e fatti memorabili | Facta et dicta memorabilia
+phi1242.phi001 | Floro | Epitome di storia romana | Epitome rerum Romanorum
+phi2003.phi001 | Apicio | L'arte culinaria | De re coquinaria
+stoa0045.stoa001 | Ausonio | De Bissula | 
+stoa0045.stoa002 | Ausonio | Caesares | 
+stoa0045.stoa003 | Ausonio | Centone nuziale | Cento nuptialis
+stoa0045.stoa004 | Ausonio | Commemorazione dei professori di Bordeaux | Commemoratio professorum Burdigalensium
+stoa0045.stoa005 | Ausonio | Cupido messo in croce | Cupido cruciatus
+stoa0045.stoa006 | Ausonio | De herediolo | 
+stoa0045.stoa007 | Ausonio | Eclogarum liber | 
+stoa0045.stoa008 | Ausonio | Ephemeris | 
+stoa0045.stoa009 | Ausonio | Epicedion in patrem | 
+stoa0045.stoa010 | Ausonio | Epigrammi | Epigrammaton liber
+stoa0045.stoa011 | Ausonio | Epistole | Epistulae
+stoa0045.stoa012 | Ausonio | Epitaffi | Epitaphia
+stoa0045.stoa013 | Ausonio | Genethliacon ad Ausonium nepotem | 
+stoa0045.stoa014 | Ausonio | Gratiarum actio | 
+stoa0045.stoa015 | Ausonio | Griphus ternarii numeri | 
+stoa0045.stoa016 | Ausonio | Liber protrepticus ad nepotem | 
+stoa0045.stoa017 | Ausonio | [Libri de fastis] conclusio | 
+stoa0045.stoa018 | Ausonio | Ludus septem sapientum | 
+stoa0045.stoa019 | Ausonio | Mosella | 
+stoa0045.stoa020 | Ausonio | Oratio versibus rhopalicis | 
+stoa0045.stoa021 | Ausonio | Ordine delle città celebri | Ordo urbium nobilium
+stoa0045.stoa022 | Ausonio | Parentalia | 
+stoa0045.stoa025 | Ausonio | Praefatiunculae | 
+stoa0045.stoa026 | Ausonio | Precationes | 
+stoa0045.stoa027 | Ausonio | Versus paschales | 
+stoa0045.stoa028 | Ausonio | Technopaegnion | 
+stoa0054.stoa006 | Beda il Venerabile | Storia ecclesiastica degli Angli | Historia ecclesiastica gentis Anglorum
+stoa0058.stoa006 | Boezio | De fide catholica | 
+stoa0162.stoa004 | Girolamo | Lettere | Epistulae
+stoa0203.stoa001 | Minucio Felice | Ottavio | Octavius
+stoa0238.stoa001 | Prudenzio | Le corone dei martiri | Liber Peristephanon
+stoa0238.stoa004 | Prudenzio | Inni quotidiani | Liber Cathemerinon
+stoa0238.stoa007 | Prudenzio | Contro Simmaco | Contra orationem Symmachi
+stoa0261.stoa0001 | Sidonio Apollinare | Carmi | Carmina
+stoa0261.stoa0002 | Sidonio Apollinare | Lettere, libri VIII-IX | Epistulae, libri VIII-IX
+stoa0276.stoa002 | Pseudo-Tertulliano | Alla moglie | Ad uxorem
+tlg0004.tlg001 | Diogene Laerzio | Vite e dottrine dei più celebri filosofi | Βίοι καὶ γνῶμαι τῶν ἐν φιλοσοφίᾳ εὐδοκιμησάντων
+tlg0008.tlg001 | Ateneo | I Deipnosofisti | Δειπνοσοφισταί
+tlg0017.tlg011 | Iseo | Per l'eredità di Agnia | Περὶ τοῦ Ἁγνίου κλήρου
+tlg0017.tlg012 | Iseo | In difesa di Eufileto | Ὑπὲρ Εὐφιλήτου
+tlg0023.tlg001 | Oppiano | Alieutiche | Ἁλιευτικά
+tlg0024.tlg001 | Oppiano di Apamea | Cinegetiche | Κυνηγετικά
+tlg0027.tlg001 | Andocide | Sui misteri | Περὶ τῶν μυστηρίων
+tlg0027.tlg002 | Andocide | Sul suo ritorno | Περὶ τῆς ἑαυτοῦ καθόδου
+tlg0027.tlg003 | Andocide | Sulla pace con gli Spartani | Περὶ τῆς πρὸς Λακεδαιμονίους εἰρήνης
+tlg0027.tlg004 | Andocide | Contro Alcibiade | Κατὰ Ἀλκιβιάδου
+tlg0028.tlg001 | Antifonte | Per avvelenamento contro la matrigna | Φαρμακείας κατὰ τῆς μητρυιᾶς
+tlg0028.tlg002 | Antifonte | Prima tetralogia | Τετραλογία Α΄
+tlg0028.tlg003 | Antifonte | Seconda tetralogia | Τετραλογία Β΄
+tlg0028.tlg004 | Antifonte | Terza tetralogia | Τετραλογία Γ΄
+tlg0028.tlg005 | Antifonte | Sull'omicidio di Erode | Περὶ τοῦ Ἡρῷδου φόνου
+tlg0028.tlg006 | Antifonte | Sul coreuta | Περὶ τοῦ χορευτοῦ
+tlg0029.tlg004 | Dinarco | Contro Demostene | Κατὰ Δημοσθένους
+tlg0029.tlg005 | Dinarco | Contro Aristogitone | Κατὰ Ἀριστογείτονος
+tlg0029.tlg006 | Dinarco | Contro Filocle | Κατὰ Φιλοκλέους
+tlg0030.tlg001 | Iperide | Per Licofrone | Ἀπολογία ὑπὲρ Λυκόφρονος
+tlg0030.tlg002 | Iperide | Contro Filippide | Κατὰ Φιλιππίδου
+tlg0030.tlg003 | Iperide | Contro Atenogene | Κατ᾽ Ἀθηνογένους
+tlg0030.tlg004 | Iperide | Per Eussenippo | Ὑπὲρ Εὐξενίππου εἰσαγγελίας ἀπολογία πρὸς Πολύευκτον
+tlg0030.tlg005 | Iperide | Contro Demostene | Κατὰ Δημοσθένους ὑπὲρ τῶν Ἁρπαλείων
+tlg0030.tlg006 | Iperide | Epitafio | Ἐπιτάφιος
+tlg0034.tlg001 | Licurgo | Contro Leocrate | Κατὰ Λεωκράτους
+tlg0035.tlg001 | Mosco | Amore fuggitivo | Ἔρως δραπέτης
+tlg0035.tlg002 | Mosco | Europa | Εὐρώπη
+tlg0035.tlg003 | Mosco | Epitafio di Bione | Ἐπιτάφιος Βίωνος
+tlg0035.tlg004 | Mosco | Megara | Μεγάρα
+tlg0035.tlg005 | Mosco | Fragmenta | 
+tlg0036.tlg001 | Bione | Epitafio di Adone | Ἀδώνιδος ἐπιτάφιος
+tlg0036.tlg002 | Bione | Epitalamio di Achille e Deidamia | Μύρσων καὶ Λυκίδας
+tlg0036.tlg003 | Bione | Fragmenta | 
+tlg0057.tlg010 | Galeno | Sulle facoltà naturali | Περὶ φυσικῶν δυνάμεων
+tlg0058.tlg001 | Enea Tattico | La difesa di una città assediata | Περὶ τοῦ πῶς χρὴ πολιορκουμένους ἀντέχειν
+tlg0074.tlg001 | Arriano | Anabasi di Alessandro | Ἀλεξάνδρου ἀνάβασις
+tlg0074.tlg002 | Arriano | Indiké | Ἰνδική
+tlg0074.tlg003 | Arriano | Cinegetico | Κυνηγετικός
+tlg0074.tlg004 | Arriano | Periplo del Ponto Eusino | Περίπλους τοῦ Εὐξείνου Πόντου
+tlg0074.tlg005 | Arriano | L'arte tattica | Τέχνη τακτική
+tlg0074.tlg006 | Arriano | Schieramento contro gli Alani | Ἔκταξις κατὰ Ἀλανῶν
+tlg0093.tlg009 | Teofrasto | I caratteri | Χαρακτῆρες
+tlg0094.tlg002 | Pseudo-Plutarco | La musica | περὶ Μουσικῆς
+tlg0094.tlg003 | Pseudo-Plutarco | Περὶ τῶν ἀρεσκόντων τοῖς φιλοσόφοις φυσικῶν δογμάτων | 
+tlg0284.tlg001 | Elio Aristide | Inno a Zeus | Εἰς Δία
+tlg0284.tlg002 | Elio Aristide | Inno ad Atena | Ἀθηνᾶ
+tlg0284.tlg003 | Elio Aristide | Discorso istmico a Poseidone | Ἰσθμικὸς εἰς Ποσειδῶνα
+tlg0284.tlg004 | Elio Aristide | Inno a Dioniso | Διόνυσος
+tlg0284.tlg005 | Elio Aristide | Inno a Eracle | Ἡρακλῆς
+tlg0284.tlg006 | Elio Aristide | Lalia per Asclepio | Λαλιὰ εἰς Ἀσκληπιόν
+tlg0284.tlg007 | Elio Aristide | Gli Asclepiadi | Ἀσκληπιάδαι
+tlg0284.tlg008 | Elio Aristide | Inno a Serapide | Εἰς τὸν Σάραπιν
+tlg0284.tlg009 | Elio Aristide | Al re | Εἰς βασιλέα
+tlg0284.tlg010 | Elio Aristide | Genetliaco per Apella | Ἀπελλᾶ γενεθλιακός
+tlg0284.tlg011 | Elio Aristide | Epicedio per Eteoneo | Εἰς Ἐτεωνέα ἐπικήδειος
+tlg0284.tlg012 | Elio Aristide | Epitafio per Alessandro | Ἐπὶ Ἀλεξάνδρῳ ἐπιτάφιος
+tlg0284.tlg013 | Elio Aristide | Panatenaico | Παναθηναϊκός
+tlg0284.tlg014 | Elio Aristide | Encomio di Roma | Ῥώμης ἐγκώμιον
+tlg0284.tlg015 | Elio Aristide | Primo discorso smirneo | Σμυρναϊκὸς πολιτικός
+tlg0284.tlg016 | Elio Aristide | Discorso panegirico a Cizico per il tempio | Πανηγυρικὸς ἐν Κυζίκῳ περὶ τοῦ ναοῦ
+tlg0284.tlg017 | Elio Aristide | Sul mare Egeo | Εἰς τὸ Αἰγαῖον πέλαγος
+tlg0284.tlg018 | Elio Aristide | Sul pozzo di Asclepio | Εἰς τὸ φρέαρ τοῦ Ἀσκληπιοῦ
+tlg0284.tlg019 | Elio Aristide | Discorso per Eleusi | Ἐλευσίνιος
+tlg0284.tlg020 | Elio Aristide | Monodia per Smirne | Μονῳδία ἐπὶ Σμύρνῃ
+tlg0284.tlg021 | Elio Aristide | Palinodia per Smirne | Παλινῳδία ἐπὶ Σμύρνῃ καὶ τῷ ταύτης ἀνοικισμῷ
+tlg0284.tlg022 | Elio Aristide | Secondo discorso smirneo | Προσφωνητικὸς Σμυρναϊκός
+tlg0284.tlg023 | Elio Aristide | Discorso sacro I | Ἱεροὶ λόγοι πρῶτος
+tlg0284.tlg024 | Elio Aristide | Discorso sacro II | Ἱεροὶ λόγοι δεύτερος
+tlg0284.tlg025 | Elio Aristide | Discorso sacro III | Ἱεροὶ λόγοι τρίτος
+tlg0284.tlg026 | Elio Aristide | Discorso sacro IV | Ἱεροὶ λόγοι τέταρτος
+tlg0284.tlg027 | Elio Aristide | Discorso sacro V | Ἱεροὶ λόγοι πέμπτος
+tlg0284.tlg028 | Elio Aristide | Discorso sacro VI | Ἱεροὶ λόγοι ἕκτος
+tlg0284.tlg029 | Elio Aristide | Sull'invio di rinforzi in Sicilia | Περὶ τοῦ πέμπειν βοήθειαν τοῖς ἐν Σικελίᾳ
+tlg0284.tlg030 | Elio Aristide | Contro l'invio di rinforzi in Sicilia | Εἰς τὸ ἐναντίον
+tlg0284.tlg031 | Elio Aristide | Sulla pace con gli Spartani | Ὑπὲρ τῆς πρὸς Λακεδαιμονίους εἰρήνης
+tlg0284.tlg032 | Elio Aristide | Sulla pace con gli Ateniesi | Ὑπὲρ τῆς πρὸς Ἀθηναίους εἰρήνης
+tlg0284.tlg033 | Elio Aristide | Leuttrico I (in favore degli Spartani) | Λευκτρικὸς Α΄ (ὑπὲρ Λακεδαιμονίων πρῶτος)
+tlg0284.tlg034 | Elio Aristide | Leuttrico II (in favore dei Tebani) | Λευκτρικὸς Β΄ (ὑπὲρ Θηβαίων πρῶτος)
+tlg0284.tlg035 | Elio Aristide | Leuttrico III (in favore degli Spartani) | Λευκτρικὸς Γ΄ (ὑπὲρ Λακεδαιμονίων δεύτερος)
+tlg0284.tlg036 | Elio Aristide | Leuttrico IV (in favore dei Tebani) | Λευκτρικὸς Δ΄ (ὑπὲρ Θηβαίων δεύτερος)
+tlg0284.tlg037 | Elio Aristide | Leuttrico V (per la neutralità) | Λευκτρικὸς Ε΄ (ὑπὲρ μηδετέροις βοηθεῖν)
+tlg0284.tlg038 | Elio Aristide | Discorso sull'alleanza I | Συμμαχικὸς Α΄
+tlg0284.tlg039 | Elio Aristide | Discorso sull'alleanza II | Συμμαχικὸς Β΄ (πρὸς Θηβαίους περὶ τῆς συμμαχίας)
+tlg0284.tlg040 | Elio Aristide | Sull'abrogazione della commedia | Συμβουλευτικὸς περὶ τοῦ μὴ δεῖν κωμῳδεῖν
+tlg0284.tlg041 | Elio Aristide | Lettera su Smirne | Ἐπιστολὴ περὶ Σμύρνης
+tlg0284.tlg042 | Elio Aristide | Alle città per la concordia | Περὶ ὁμονοίας ταῖς πόλεσιν
+tlg0284.tlg043 | Elio Aristide | Rodiaco | Ῥοδιακός
+tlg0284.tlg044 | Elio Aristide | Ai Rodii per la concordia | Ῥοδίοις περὶ ὁμονοίας
+tlg0284.tlg045 | Elio Aristide | In difesa della retorica | Πρὸς Πλάτωνα περὶ ῥητορικῆς
+tlg0284.tlg046 | Elio Aristide | In difesa dei quattro | Πρὸς Πλάτωνα ὑπὲρ τῶν τεττάρων
+tlg0284.tlg047 | Elio Aristide | Epistola a Capitone | Πρὸς Καπίτωνα
+tlg0284.tlg048 | Elio Aristide | Discorso egizio | Αἰγύπτιος
+tlg0284.tlg049 | Elio Aristide | Sull'affermazione in margine | Περὶ τοῦ παραφθέγματος
+tlg0284.tlg050 | Elio Aristide | Contro i profanatori | Κατὰ τῶν ἐξορχουμένων
+tlg0284.tlg051 | Elio Aristide | A coloro che lo accusano di non declamare | Πρὸς τοὺς αἰτιωμένους ὅτι μὴ μελετῴη
+tlg0284.tlg052 | Elio Aristide | Ambasceria ad Achille | Πρεσβευτικὸς πρὸς Ἀχιλλέα
+tlg0284.tlg053 | Elio Aristide | Contro Demostene, sull'immunità | Πρὸς Δημοσθένη περὶ ἀτελείας
+tlg0284.tlg054 | Elio Aristide | Contro Leptine, in difesa dell'immunità | Πρὸς Λεπτίνην ὑπὲρ ἀτελείας
+tlg0284.tlg055 | Elio Aristide | Panegirico per l'acqua di Pergamo | Πανηγυρικὸς ἐπὶ τῷ ὕδατι ἐν Περγάμῳ
+tlg0284.tlg056 | Elio Aristide | Sul discorso politico | Περὶ πολιτικοῦ λόγου
+tlg0341.tlg002 | Licofrone | Alessandra | Ἀλεξάνδρα
+tlg0363.tlg007 | Tolomeo | Tetrabiblos | Τετράβιβλος
+tlg0385.tlg001 | Cassio Dione | Storia romana | Ῥωμαϊκὴ ἱστορία
+tlg0526.tlg001 | Flavio Giuseppe | Antichità giudaiche | Ἰουδαϊκὴ ἀρχαιολογία
+tlg0526.tlg002 | Flavio Giuseppe | Autobiografia | Ἰωσήπου βίος
+tlg0526.tlg003 | Flavio Giuseppe | Contro Apione | περὶ ἀρχαιότητος Ἰουδαίων
+tlg0526.tlg004 | Flavio Giuseppe | La guerra giudaica | Ἱστορία Ἰουδαϊκοῦ πολέμου πρὸς Ῥωμαίους
+tlg0532.tlg001 | Achille Tazio | Leucippe e Clitofonte | τὰ κατὰ Λευκίππην καὶ Κλειτοφῶντα
+tlg0535.tlg001 | Demade | Intorno ai dodici anni | Ὑπὲρ τῆς δωδεκαετίας
+tlg0545.tlg001 | Eliano | La natura degli animali | Περὶ ζῴων ἰδιότητος
+tlg0545.tlg002 | Eliano | Storie varie | Ποικίλη ἱστορία
+tlg0545.tlg003 | Eliano | Lettere rustiche | ἐκ τῶν Αἰλιανοῦ ἀγροικικῶν ἐπιστολῶν
+tlg0548.tlg001 | Apollodoro | Biblioteca | Βιβλιοθήκη
+tlg0548.tlg002 | Apollodoro | Epitome | Ἐπιτομή
+tlg0551.tlg002 | Appiano | Storia dell'età regia | Βασιλική
+tlg0551.tlg003 | Appiano | Storia italica | Ἰταλική
+tlg0551.tlg004 | Appiano | Le guerre sannitiche | Σαυνιτική
+tlg0551.tlg005 | Appiano | Storia celtica | Κελτική
+tlg0551.tlg006 | Appiano | Storia siciliana e isolana | Σικελικὴ καὶ Νησιωτική
+tlg0551.tlg007 | Appiano | La guerra iberica | Ἰβηρική
+tlg0551.tlg008 | Appiano | La guerra annibalica | Ἀννιβαϊκή
+tlg0551.tlg009 | Appiano | La guerra libica | Λιβυκή
+tlg0551.tlg010 | Appiano | Storia numidica | Νομαδική
+tlg0551.tlg011 | Appiano | Le guerre macedoniche | Μακεδονική
+tlg0551.tlg012 | Appiano | La guerra illirica | Ἰλλυρική
+tlg0551.tlg013 | Appiano | La guerra siriaca | Συριακή
+tlg0551.tlg014 | Appiano | La guerra mitridatica | Μιθριδάτειος
+tlg0551.tlg017 | Appiano | Le guerre civili | Ἐμφύλια
+tlg0554.tlg001 | Caritone | Le avventure di Cherea e Calliroe | Τὰ περὶ Χαιρέαν καὶ Καλλιρρόην
+tlg0555.tlg001 | Clemente Alessandrino | Protrettico ai Greci | Προτρεπτικὸς πρὸς Ἕλληνας
+tlg0555.tlg004 | Clemente Alessandrino | Stromati | Στρώματα
+tlg0555.tlg006 | Clemente Alessandrino | Quale ricco si salverà? | τίς ὁ σωζόμενος πλούσιος
+tlg0556.tlg001 | Asclepiodoto | Trattato di tattica | Τέχνη τακτική
+tlg0557.tlg004 | Epitteto | Gnomologium Epicteteum (e Stobaei libris 1-2) | 
+tlg0557.tlg005 | Epitteto | Gnomologium Epicteteum (e Stobaei libris 3-4) | 
+tlg0560.tlg001 | Longino | Sul sublime | Περὶ ὕψους
+tlg0612.tlg001 | Dione Crisostomo | Orazioni | Λόγοι
+tlg0613.tlg001 | Demetrio Falereo | Sullo stile | Περὶ ἑρμηνείας
+tlg0638.tlg001 | Filostrato | Vita di Apollonio di Tiana | Τὰ ἐς τὸν Τυανέα Ἀπολλώνιον
+tlg0638.tlg003 | Filostrato | Vite dei sofisti | Βίοι Σοφιστῶν
+tlg0638.tlg004 | Filostrato | Eroico | Ἡρωικός
+tlg0638.tlg005 | Filostrato | Nerone | Νέρων
+tlg0638.tlg006 | Filostrato | Lettere · Dialexeis | Ἐπιστολαί. Διαλέξεις.
+tlg0638.tlg007 | Filostrato | Sulla ginnastica | Γυμναστικός
+tlg0641.tlg001 | Senofonte Efesio | Racconti efesii | Τὰ κατὰ Ἀνθίαν καὶ Ἁβροκόμην
+tlg0647.tlg001 | Trifiodoro | La presa di Ilio | Ἅλωσις Ἰλίου
+tlg0648.tlg001 | Onasandro | Il generale | Στρατηγικός
+tlg0652.tlg001 | Filostrato minore | Immagini | Εἰκόνες
+tlg0653.tlg001 | Arato | Fenomeni | Φαινόμενα
+tlg0655.tlg001 | Partenio | Pene d'amore | Ἐρωτικὰ Παθήματα
+tlg0719.tlg001 | Areteo | Delle cause e dei segni delle malattie acute | Περὶ αἰτίων καὶ σημείων ὀξέων παθῶν
+tlg0719.tlg002 | Areteo | Sulle cause e i segni delle malattie croniche | Περὶ αἰτίων καὶ σημείων χρονίων παθῶν
+tlg0719.tlg003 | Areteo | La cura delle malattie acute | Ὀξέων νούσων θεραπευτικόν
+tlg0719.tlg004 | Areteo | La cura delle malattie croniche | Χρονίων νούσων θεραπευτικόν
+tlg1216.tlg001 | Lettera di Barnaba | Lettera di Barnaba | Βαρνάβα ἐπιστολή
+tlg1389.tlg001 | Arpocrazione | Lessico dei dieci oratori | Λέξεις τῶν δέκα ῥητόρων
+tlg1600.tlg001 | Filostrato sofista | Immagini | Εἰκόνες
+tlg1799.tlg001 | Euclide | Elementi | Στοιχεῖα
+tlg2018.tlg002 | Eusebio di Cesarea | Storia ecclesiastica | Ἐκκλησιαστικὴ ἱστορία
+tlg2040.tlg002 | Basilio di Cesarea | Discorso ai giovani | Πρὸς τοὺς νέους, ὅπως ἂν ἐξ Ἑλληνικῶν ὠφελοῖντο λόγων
+tlg2040.tlg004 | Basilio di Cesarea | Lettere | Ἐπιστολαί
+tlg2045.tlg001 | Nonno di Panopoli | Le Dionisiache | Διονυσιακά
+tlg2046.tlg001 | Quinto Smirneo | Posthomerica | Τὰ μεθ’ Ὅμηρον
+tlg2934.tlg066 | Giovanni Damasceno | Barlaam e Ioasaf | Βαρλαὰμ καὶ Ἰωάσαφ
+tlg3135.tlg001 | Zonara | Epitome delle storie | Ἐπιτομὴ Ἱστοριῶν
+tlg4029.tlg001 | Procopio | Le guerre | Ὑπὲρ τῶν Πολέμων Λόγοι
+tlg4029.tlg002 | Procopio | Storia segreta | Ἀνέκδοτα
+tlg4036.tlg023 | Proclo | Crestomazia | Χρηστομάθεια γραμματική
+tlg4081.tlg001 | Colluto | Il ratto di Elena | Ἁρπαγὴ Ἑλένης
+tlg4091.tlg001 | Callistrato | Descrizioni | Ἐκφράσεις
+tlg7000.tlg001 | Antologia Palatina | Antologia Palatina | Παλατινὴ Ἀνθολογία

@@ -301,6 +301,14 @@ FUSIONI = {
     "stoa0255": "phi1017",     # Seneca · Dialogi → Seneca
     "phi0428": "phi0426",      # Pseudo-Cesare · Bellum Alexandrinum
     "phi0430": "phi0426",      # Pseudo-Cesare · Bellum Hispaniense
+    # Il textgroup «Pseudo-Tertulliano» contiene UNA SOLA opera, l'Ad uxorem —
+    # che di Tertulliano è autentica (c. 203). Lo dice il file stesso: l'edizione
+    # è l'Oehler delle opere GENUINE e l'incipit è «Dignum duxi, dilectissima
+    # mihi in domino conserva…». Lo «pseudo» viene solo dal gruppo in cui
+    # Perseus l'ha collocata, e intanto fra le 30 opere di Tertulliano quella
+    # mancava. Fondendo, l'opera torna dove le altre la aspettavano e il
+    # catalogo perde un autore che non è mai esistito.
+    "stoa0276": "stoa0275",    # Pseudo-Tertulliano · Ad uxorem → Tertulliano
 }
 
 

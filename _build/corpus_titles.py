@@ -491,6 +491,29 @@ ORIG = {
     # il catalogo ha attaccato quello del VOLUME che la conteneva («Geographi
     # graeci minores Volumen Secundum»), cioè la collana, non il testo.
     "tlg0090.tlg001": "Γεωγραφίας ὑποτύπωσις",
+
+    # Filostrato · la scheda ne contiene due, e i punti fermi sono la
+    # punteggiatura del catalogatore, non parte dei due titoli. Si separano col
+    # punto centrale, come già fa la prima fascia.
+    "tlg0638.tlg006": "Ἐπιστολαί · Διαλέξεις",
+
+    # Asclepiodoto · il titolo greco era quello di ARRIANO. «Τέχνη τακτική» sta
+    # identico sulla Tattica di Arriano (tlg0074.tlg005), e da lì è slittato:
+    # l'opera di Asclepiodoto si intitola «Τακτικὰ κεφάλαια». È il difetto
+    # peggiore che possa avere la seconda fascia — non un titolo impreciso, ma
+    # il titolo di un altro autore.
+    "tlg0556.tlg001": "Τακτικὰ κεφάλαια",
+    # Antifonte · la prima orazione tetralogica porta il titolo per esteso.
+    "tlg0028.tlg005": "Περὶ τοῦ Ἡρῴδου φόνου",
+    "tlg0094.tlg003": "Περὶ τῶν ἀρεσκόντων τοῖς φιλοσόφοις φυσικῶν δογμάτων",
+
+    # Le tre etichette slittate: anche la seconda fascia portava il titolo del
+    # vicino, quindi va rifatta con l'originale dell'opera che c'è davvero.
+    "tlg0062.tlg059": "Ἀπολογία",
+    "tlg0062.tlg063": "Ἑρμότιμος ἢ περὶ αἱρέσεων",
+    "tlg0062.tlg067": "Ἐνάλιοι διάλογοι",
+    "phi0474.phi045": "Academica posteriora",
+    "phi0474.phi046": "Lucullus",
 }
 
 # ══════════════════════════════════════════════════════════════════════════
@@ -1105,6 +1128,70 @@ GRC.update({
     "tlg0007.tlg141": "Se sia ben detto «vivi nascosto»",
 })
 
+# ── ETICHETTE SLITTATE · tre opere che non esistevano in catalogo ─────────
+# Trovate cercando i titoli RIPETUTI dentro uno stesso autore. In tre coppie di
+# Luciano e in una di Cicerone la stessa etichetta stava su due schede vicine, e
+# ogni volta una delle due portava un testo diverso: l'incipit lo diceva alla
+# prima riga. Le opere nascoste sotto il nome del vicino erano
+#   · l'«Apologia» (l'incipit si rivolge a Sabino, non parla di Armonide)
+#   · l'«Ermotimo», 581 passi e 14.229 parole — fra le più lunghe di Luciano
+#   · i «Dialoghi marini» (attacca Doride con Galatea, non gli dèi)
+# e nessuna delle tre si trovava cercandola per nome: il testo c'era, il titolo
+# no. Per Cicerone l'etichetta duplicata era il titolo del VOLUME Teubner, che
+# contiene entrambe le Accademiche.
+# I tre titoli di Luciano si correggono DENTRO la sua sezione, più in basso: le
+# tabelle si sovrappongono in ordine di scrittura, e una riga messa qui verrebbe
+# riscritta da quella. È il difetto che questa nota esiste per non far ripetere.
+LAT.update({
+    "phi0474.phi045": "Accademiche seconde (Varrone)",
+    "phi0474.phi046": "Lucullo (Accademiche prime)",
+})
+
+# ── Esito della RIVERIFICA (agosto 2026) ──────────────────────────────────
+# Ventisei rilievi su 221 opere, cercando due difetti che una verifica
+# linguistica non intercetta: se il titolo sta sull'opera GIUSTA, e se dichiara
+# onestamente QUANTA opera contiene la scheda. Tre famiglie:
+#
+#  · la scheda contiene MENO di quanto il titolo prometta. Columella ha solo i
+#    libri I-IX dei dodici, l'epistolario di Girolamo è un florilegio di 18
+#    lettere su oltre 150, Cassio Dione arriva a metà. Il titolo intero su una
+#    porzione non è un'imprecisione: manda a cercare in un testo che non c'è.
+#  · l'opera è SPURIA e il catalogo non lo diceva. La quarta orazione di
+#    Andocide, il «Sul sublime» che di Longino non è, l'Epitafio di Bione che
+#    piange un poeta di cui l'autore si dichiara discepolo — e Mosco era di una
+#    generazione prima. Il catalogo la marca già altrove (Pseudo-Cesare): qui
+#    mancava.
+#  · due schede con lo STESSO titolo. Dinarco e Iperide hanno entrambi un
+#    «Contro Demostene», e non sono opere lontane che si distinguono da sé: sono
+#    due requisitorie dello stesso processo, l'affare di Arpalo. Il greco
+#    conserva il discrimine, la fascia italiana lo perdeva.
+GRC.update({
+    "tlg0027.tlg004": "Contro Alcibiade (spuria)",          # Andocide
+    "tlg0028.tlg005": "Sull'uccisione di Erode",            # Antifonte
+    "tlg0030.tlg005": "Contro Demostene, per il denaro di Arpalo",   # Iperide
+    "tlg0035.tlg003": "Epitafio di Bione (Pseudo-Mosco)",
+    "tlg0094.tlg003": "Placita philosophorum",              # Pseudo-Plutarco
+    "tlg0284.tlg009": "Al re (spurio)",                     # Elio Aristide
+    "tlg0284.tlg015": "Discorso smirneo politico",          # non «Primo»: gli smirnei sono cinque
+    "tlg0284.tlg022": "Discorso smirneo di saluto",
+    "tlg0284.tlg043": "Rodiaco (spurio)",
+    "tlg0284.tlg056": "Sul discorso politico (Arte retorica I)",
+    "tlg0385.tlg001": "Storia romana (libri 36-55)",        # Cassio Dione
+    "tlg0535.tlg001": "Intorno ai dodici anni (spurio)",    # Demade
+    "tlg0548.tlg002": "Epitome della Biblioteca",           # Apollodoro
+    "tlg0560.tlg001": "Sul sublime (Anonimo)",              # non Longino
+    "tlg0613.tlg001": "Sullo stile (Pseudo-Demetrio)",
+    "tlg1600.tlg001": "Immagini (Filostrato Maggiore)",
+    "tlg2934.tlg066": "Barlaam e Ioasaf (spurio)",
+    "tlg3135.tlg001": "Epitome delle storie (libri I-V)",   # Zonara
+    "tlg4036.tlg023": "Crestomazia · riassunto dei Canti Ciprii",    # Proclo
+    "tlg7000.tlg001": "Antologia Greca",
+})
+LAT.update({
+    "phi0845.phi002": "L'arte dell'agricoltura, libri I-IX",   # Columella
+    "stoa0162.stoa004": "Lettere (scelta)",                    # Girolamo · 18 su 150+
+})
+
 # Una scheda che ne contiene due · il punto centrale è già il separatore del
 # catalogo (vedi le «Prolalia · Dioniso» di Luciano), e chiude senza il punto
 # fermo che in un titolo non ci va. La seconda parte resta traslitterata:
@@ -1159,12 +1246,16 @@ GRC.update({
     "tlg0062.tlg053": "Come si deve scrivere la storia",
     "tlg0062.tlg054": "I dipsadi",                "tlg0062.tlg055": "Le Saturnali",
     "tlg0062.tlg056": "Erodoto o Aezione",        "tlg0062.tlg057": "Zeusi o Antioco",
-    "tlg0062.tlg058": "Per un lapsus nel saluto", "tlg0062.tlg059": "Armonide",
+    # tlg059, tlg063 e tlg067 portavano il titolo del vicino: l'incipit li
+    # smentiva (Sabino invece di Armonide, Ermotimo invece dello Scita, Doride
+    # e Galatea invece degli dèi). Vedi la nota «ETICHETTE SLITTATE» più sopra.
+    "tlg0062.tlg058": "Per un lapsus nel saluto", "tlg0062.tlg059": "Apologia",
     "tlg0062.tlg060": "Armonide",                 "tlg0062.tlg061": "Dialogo con Esiodo",
-    "tlg0062.tlg062": "Lo Scita o il prosseno",   "tlg0062.tlg063": "Lo Scita o il prosseno",
+    "tlg0062.tlg062": "Lo Scita o il prosseno",
+    "tlg0062.tlg063": "Ermotimo o le sette filosofiche",
     "tlg0062.tlg064": "A chi disse «sei un Prometeo nei discorsi»",
     "tlg0062.tlg065": "La nave o i desideri",     "tlg0062.tlg066": "Dialoghi dei morti",
-    "tlg0062.tlg067": "Dialoghi degli dèi",       "tlg0062.tlg068": "Dialoghi degli dèi",
+    "tlg0062.tlg067": "Dialoghi marini",          "tlg0062.tlg068": "Dialoghi degli dèi",
     "tlg0062.tlg069": "Dialoghi delle cortigiane",
     "tlg0062.tlg070": "Il falso sofista o il solecista",
     "tlg0062.tlg071": "La podagra",
