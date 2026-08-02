@@ -61,6 +61,38 @@ LICENSE = "CC BY-SA (Perseus Digital Library)"
 GREEK_CH = re.compile(r"[Ͱ-Ͽἀ-῿]")
 LATIN_CH = re.compile(r"[A-Za-z]")
 
+# ── Etichetta breve dell'edizione ─────────────────────────────────────────
+# La stringa della fonte è una citazione bibliografica intera («Callimachus.
+# Callimachi Hymni et Epigrammata. Wilamowitz-Moellendorff, Ulrich von, editor.
+# Berlin: Weidmann, 1897.»): illeggibile su una scheda. Serve a distinguere due
+# testimoni della STESSA opera, e per quello bastano il curatore e l'anno.
+# Il cognome NON si può cercare fermandosi al punto: i nomi dei curatori sono
+# pieni di punti che non chiudono nulla («Mair, A. W.», «Parry, Edward St.
+# John»), e un confine di frase ingenuo taglia lì. Si cerca invece all'indietro
+# dal marcatore «editor.», ammettendo qualunque carattere per una cinquantina di
+# posizioni: abbastanza per due curatori, troppo poco per risalire al titolo e
+# scambiare l'AUTORE per il curatore («Seneca, Lucius Annaeus. Tragoediae.
+# Peiper, Rudolf; …»). E si prende il PRIMO cognome della lista, non l'ultimo.
+_CURATORE = re.compile(r"[.;]\s([A-ZÀ-Þ][A-Za-zÀ-ÿ'’-]+(?:-[A-ZÀ-Þ][A-Za-zÀ-ÿ'’-]+)*),"
+                       r"[\s\S]{0,50}?\beditors?\.")
+_ANNO_ED = re.compile(r"\b(1[5-9]\d\d|20\d\d)\b")
+
+
+def etichetta_edizione(citazione):
+    """«Wilamowitz-Moellendorff 1897» da una citazione bibliografica intera.
+
+    Torna None quando la citazione non dichiara un curatore: meglio nessuna
+    etichetta che una sbagliata, perché questa riga serve proprio a dire quale
+    dei due testimoni si sta leggendo."""
+    if not citazione:
+        return None
+    m = _CURATORE.search(citazione)
+    if not m:
+        return None
+    nome = " ".join(m.group(1).split())
+    anni = _ANNO_ED.findall(citazione)
+    return "%s %s" % (nome, anni[-1]) if anni else nome
+
 # ── Maiuscola dopo il punto fermo ─────────────────────────────────────────
 # Le edizioni Perseus lasciano quasi sempre la minuscola dopo il punto: è la
 # consuetudine delle edizioni critiche, ma su una pagina di lettura si legge
@@ -723,6 +755,7 @@ def process_work(repo_dir, repo_name, lang, tag, urn_ns, tg, wk, author):
         "titleEn": title_en,
         "genre": genre, "epoch": epoch, "inferred": inferred,
         "year": anno, "yearKind": anno_tipo, "yearNote": anno_base,
+        "edition": etichetta_edizione(edition),
         "kind": kind,
         "source": {"urn": f"urn:cts:{urn_ns}:{key}", "repo": repo_name,
                    "file": fname, "edition": edition, "license": LICENSE},
@@ -832,10 +865,38 @@ def build_index(docs):
         "titleState": d.get("titleState"), "titleEn": d.get("titleEn"),
         "genre": d["genre"], "epoch": d["epoch"], "inferred": d["inferred"],
         "year": d.get("year"), "yearKind": d.get("yearKind"), "yearNote": d.get("yearNote"),
+        "edition": d.get("edition"),
         "kind": d["kind"], "citation": d["citation"],
         "units": d["stats"]["units"], "words": d["stats"]["words"],
     } for d in docs]
     works.sort(key=lambda w: (w["lang"] != "la", w["author"], w["title"]))
+
+    # ── Più testimoni della STESSA opera ──────────────────────────────────
+    # Quando la fonte porta un'opera in due edizioni le dà due schede, e in
+    # catalogo escono due card identiche: Callimacho aveva due «Epigrammi»
+    # indistinguibili, uno Wilamowitz 1897 e uno Loeb 1921. Cancellarne una
+    # butterebbe un testimone; tenerle così mente. Si marcano come varianti
+    # della stessa opera, e l'interfaccia ne fa UNA card con il selettore
+    # dell'edizione. Il raggruppamento è per autore + titolo originale, che è
+    # ciò che identifica l'opera al di là di quale editore l'abbia stampata.
+    # Il titolo uguale NON basta a fare due testimoni. Gli Inni omerici hanno
+    # tre «εἰς Διόνυσον» e tre «εἰς Ἀφροδίτην», che non sono edizioni diverse di
+    # un inno ma inni DIVERSI allo stesso dio: il primo raggruppamento li aveva
+    # fusi tutti. Il discriminante è l'edizione — un editore non stampa due
+    # volte lo stesso testo nello stesso volume, quindi due testimoni della
+    # stessa opera portano per forza etichette diverse, e tutti e tre gli inni a
+    # Dioniso portano «Evelyn-White 1914».
+    gruppi = {}
+    for w in works:
+        chiave = (w["authorId"], " ".join((w.get("titleOrig") or w["title"]).split()).casefold())
+        gruppi.setdefault(chiave, []).append(w)
+    for (tg, _t), membri in gruppi.items():
+        edizioni = [w.get("edition") for w in membri]
+        if len(membri) < 2 or None in edizioni or len(set(edizioni)) != len(edizioni):
+            continue
+        vid = "%s::%s" % (tg, membri[0]["id"].split(".")[-1])
+        for w in membri:
+            w["vgroup"] = vid
 
     authors = {}
     for w in works:

@@ -446,6 +446,30 @@ body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
   font-family: var(--font-mono); background: transparent;
   border: 1px solid var(--brass); color: var(--brass); padding: 1px 7px;
 }
+/* Selettore d'edizione · compare solo sulle poche opere arrivate in più stampe.
+   Sta sotto un filetto d'ottone perché è apparato d'edizione, non un filtro
+   dell'interfaccia: dice CHE TESTO si sta per aprire. `role="button"` sulla
+   card impedisce l'annidamento dei pulsanti, e il filetto separa i due piani
+   di clic — la card apre, le targhette scelgono. */
+.catcard .edsel {
+  display: flex; align-items: center; gap: 5px; flex-wrap: wrap;
+  margin-top: 10px; padding-top: 9px; border-top: 1px solid var(--brass);
+}
+.catcard .edsel .edlab {
+  font-family: var(--font-ui); font-size: 9px; font-weight: 700;
+  letter-spacing: .09em; text-transform: uppercase; color: var(--brass);
+  margin-right: 1px;
+}
+.catcard .edsel button {
+  font-family: var(--font-ui); font-size: 10.5px; font-weight: 600;
+  padding: 2px 8px; border-radius: var(--radius-pill);
+  border: 1px solid var(--rule); background: var(--paper); color: var(--sepia);
+  transition: border-color .13s, color .13s, background .13s;
+}
+.catcard .edsel button:hover { border-color: var(--brass); color: var(--ink); }
+.catcard .edsel button[aria-pressed="true"] {
+  background: var(--brass); border-color: var(--brass); color: var(--on-primary);
+}
 /* La riga che dichiara su cosa si regge l'ordine cronologico. */
 .sortnote {
   font-family: var(--font-ui); font-size: 11px; color: var(--sepia);
@@ -809,6 +833,8 @@ const state = {
      con `'trad'` cablato Orazio usciva in ordine tradizionale pur avendo tutte
      e sei le opere datate. */
   sort: null,           // ordinamento delle opere nello sfoglio
+  edizione: {},         // per le opere con più testimoni: quale si sta leggendo
+  gruppi: {}, grezza: [],
   alpha: null,          // iniziale selezionata nella striscia degli autori
   searchMode: 'kwic',   // 'kwic' (concordanza) | 'estesi'
   modeForced: false,    // true quando la vista l'ha scelta l'utente
@@ -1524,7 +1550,19 @@ function paintWorks(list) {
   const host = document.getElementById('worklist');
   if (!host) return;
   host.innerHTML = '';
-  state.filtered = list || state.index.works.filter(inBranch);
+  /* Più testimoni della stessa opera fanno UNA card, non due. Il gruppo si
+     collassa sul primo membro e gli altri restano appesi in `state.gruppi`,
+     dove il selettore d'edizione va a prenderli. Si collassa QUI e non al
+     disegno, così i conteggi («60 di 1.122») restano onesti: un'opera in due
+     edizioni è un'opera. */
+  const grezza = list || state.index.works.filter(inBranch);
+  state.gruppi = {};
+  for (const w of grezza) if (w.vgroup) (state.gruppi[w.vgroup] ||= []).push(w);
+  /* La lista grezza si conserva: cambiando edizione si ridisegna, e ridisegnare
+     a partire da quella GIÀ collassata farebbe sparire il secondo testimone —
+     il selettore si mangerebbe l'alternativa che è lì per offrire. */
+  state.grezza = grezza;
+  state.filtered = grezza.filter(w => !w.vgroup || state.gruppi[w.vgroup][0].id === w.id);
   state.shown = 0;
 
   const grid = el('div', 'catalog'); grid.id = 'catgrid';
@@ -1587,7 +1625,21 @@ function appendChunk() {
      'orig'    l'uso italiano È l'originale → una fascia sola, niente ripetizione
      'assente' non curato: originale in testa, inglese sotto marcato «en»       */
 function workCard(w) {
-  const card = el('button', `catcard ${w.lang}`);
+  /* Quando l'opera ha più testimoni la card ospita dei pulsanti, e un pulsante
+     dentro un pulsante non è HTML valido: in quel caso soltanto la card diventa
+     un div con `role="button"` e la tastiera gestita a mano — lo stesso schema
+     già usato dalle schede dei risultati di ricerca. */
+  const testimoni = (w.vgroup && state.gruppi) ? (state.gruppi[w.vgroup] || []) : [];
+  const piuStampe = testimoni.length > 1;
+  /* Il testimone attivo si sceglie PRIMA di comporre la scheda: le targhette
+     dei conteggi vengono da lui, non dal primo del gruppo. Altrimenti la card
+     offrirebbe la Loeb e continuerebbe a dichiarare i passi di Wilamowitz. */
+  const attivo = piuStampe
+    ? (testimoni.find(t => t.id === (state.edizione[w.vgroup] || testimoni[0].id)) || testimoni[0])
+    : w;
+  const card = piuStampe
+    ? el('div', `catcard ${w.lang}`)
+    : el('button', `catcard ${w.lang}`);
   const st = w.titleState || 'assente';
   const anticoInTesta = (st !== 'it');
 
@@ -1636,8 +1688,40 @@ function workCard(w) {
       meta.appendChild(p);
     }
   }
-  meta.appendChild(el('span', null, w.kind === 'versi' ? `${nf.format(w.units)} versi` : `${nf.format(w.units)} passi`));
+  meta.appendChild(el('span', null, attivo.kind === 'versi'
+    ? `${nf.format(attivo.units)} versi` : `${nf.format(attivo.units)} passi`));
   card.appendChild(meta);
+
+  if (piuStampe) {
+    /* SELETTORE D'EDIZIONE · l'opera è arrivata in più stampe, e nessuna delle
+       due è «quella giusta»: cambiano le lezioni e a volte il numero dei pezzi
+       (di Callimaco, 293 epigrammi in Wilamowitz e 305 nella Loeb). Invece di
+       sceglierne una e buttare l'altra, si dichiara che sono due e si lascia
+       decidere a chi legge. La scelta cambia anche i conteggi qui sopra: se
+       restassero fermi sul primo testimone, la card mentirebbe sull'edizione
+       che sta offrendo. */
+    const sel = el('div', 'edsel');
+    const et = el('span', 'edlab', 'Edizione');
+    et.title = 'La stessa opera in più stampe: cambia il testo, non l’opera';
+    sel.appendChild(et);
+    for (const t of testimoni) {
+      const b = el('button', null, t.edition || 'senza indicazione');
+      b.setAttribute('aria-pressed', String(t.id === attivo.id));
+      b.title = `${nf.format(t.units)} ${t.kind === 'versi' ? 'versi' : 'passi'}`;
+      b.onclick = (ev) => { ev.stopPropagation(); state.edizione[w.vgroup] = t.id; paintWorks(state.grezza); };
+      sel.appendChild(b);
+    }
+    card.appendChild(sel);
+
+    card.setAttribute('role', 'button');
+    card.tabIndex = 0;
+    card.onclick = () => openWork(attivo.id);
+    card.onkeydown = (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openWork(attivo.id); }
+    };
+    return card;
+  }
+
   card.onclick = () => openWork(w.id);
   return card;
 }
@@ -1709,6 +1793,12 @@ function renderReader(doc, books, bookKey, targetLoc) {
   if (doc.year != null && doc.yearKind !== 'fase') {
     kick.push(`${doc.yearKind === 'circa' ? 'ca. ' : ''}${Math.abs(doc.year)} ${doc.year < 0 ? 'a.C.' : 'd.C.'}`);
   }
+  /* Se l'opera ha più testimoni, il lettore deve sapere quale ha davanti: senza,
+     chi ha scelto la Loeb dalla scheda perde traccia di dove sia finito, e due
+     lezioni diverse dello stesso verso diventano un mistero. Sulle opere a
+     testimone unico non si dice nulla — sarebbe apparato per nessuno. */
+  const inCat = state.index && state.index.works.find(x => x.id === doc.id);
+  if (inCat && inCat.vgroup && doc.edition) kick.push(`ed. ${doc.edition}`);
   const rk = el('div', 'rk', kick.join(' · '));
   if (doc.yearNote) rk.title = doc.yearNote;
   head.appendChild(rk);
