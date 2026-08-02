@@ -1860,12 +1860,17 @@ async function openWork(id, targetLoc) {
   if (targetLoc) book = targetLoc.includes('.') ? targetLoc.split('.')[0] : '·';
   if (!keys.includes(book)) book = keys[0];
   state.book = book;
-  /* Arrivando da una ricerca o da una citazione si mostra il LIBRO INTERO: il
-     passo cercato può stare in qualunque componimento, e aprire isolati su
-     quello sbagliato lo farebbe sparire. Aprendo l'opera dal catalogo si parte
-     comunque dall'insieme — la selezione è un gesto di chi legge, non uno stato
-     che si porta dietro da un'opera all'altra. */
-  state.carme = null;
+  /* Arrivando da una ricerca o da una citazione ci si apre SUL COMPONIMENTO che
+     contiene il passo, non sul libro intero. Il locus cercato porta già quel
+     numero — «1.5.1» dice libro 1, elegia 5, verso 1 — e usarlo consegna il
+     testo nella sua unità di senso: chi cerca una parola in Tibullo vuole
+     leggere l'elegia in cui sta, non ottocento versi da cui ripescarla.
+     Se il libro non ha livello intermedio, o se quel numero non esiste,
+     `renderReader` ricade da sé sull'insieme (controlla `carmi.has`).
+     Aprendo dal catalogo si parte sempre dall'insieme: la selezione è un gesto
+     di chi legge, non uno stato che si trascina da un'opera all'altra. */
+  const seg = targetLoc ? targetLoc.split('.') : [];
+  state.carme = seg.length >= 3 ? seg[1] : null;
   renderReader(doc, books, book, targetLoc);
   // Il segnalibro si posa all'apertura e si aggiorna a ogni cambio di libro:
   // l'unica cosa che una biblioteca deve ricordare al posto di chi legge.
