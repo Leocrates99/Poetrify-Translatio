@@ -10,17 +10,17 @@
    "senza_uid": 0
   },
   "②": {
-   "fusi": 654,
-   "con_campi_e_sensi": 654,
-   "non_fusi": 5348
+   "fusi": 1034,
+   "con_campi_e_sensi": 1034,
+   "non_fusi": 4968
   },
   "③": {
-   "fusi": 654,
-   "tr_en_e_it": 654
+   "fusi": 1034,
+   "tr_en_e_it": 1034
   },
   "⑤": {
-   "fusi": 654,
-   "prov_completa": 654
+   "fusi": 1034,
+   "prov_completa": 1034
   },
   "④": {
    "attesi": 5981,
@@ -56,13 +56,13 @@
  },
  "fail": {
   "②": [
-   "5348 lemmi SENZA record fuso (S.2 non eseguita)"
+   "4968 lemmi SENZA record fuso (S.2 non eseguita)"
   ],
   "③": [
-   "5348 lemmi senza record fuso → nessun tr"
+   "4968 lemmi senza record fuso → nessun tr"
   ],
   "⑤": [
-   "5348 lemmi senza record fuso → nessuna prov"
+   "4968 lemmi senza record fuso → nessuna prov"
   ]
  }
 }

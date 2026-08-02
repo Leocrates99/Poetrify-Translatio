@@ -1,0 +1,290 @@
+[
+ {
+  "autore": "Eschilo",
+  "nota": "tragedia greca · le didascalie danno spesso l'anno esatto di rappresentazione",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\eschilo.txt",
+  "n": 7
+ },
+ {
+  "autore": "Sofocle",
+  "nota": "tragedia greca · alcune date certe (Filottete 409, Edipo a Colono postumo 401), altre congetturali",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\sofocle.txt",
+  "n": 8
+ },
+ {
+  "autore": "Euripide",
+  "nota": "tragedia greca · molte date certe da didascalie e scoli",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\euripide.txt",
+  "n": 19
+ },
+ {
+  "autore": "Aristofane",
+  "nota": "commedia antica · quasi tutte le date di rappresentazione sono note",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\aristofane.txt",
+  "n": 11
+ },
+ {
+  "autore": "Plauto",
+  "nota": "palliata · date incerte, si va per fasce; alcune ancorate (Stichus 200, Pseudolus 191)",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\plauto.txt",
+  "n": 20
+ },
+ {
+  "autore": "Terenzio",
+  "nota": "palliata · le didascalie danno l'anno esatto di ciascuna delle sei commedie",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\terenzio.txt",
+  "n": 6
+ },
+ {
+  "autore": "Cicerone",
+  "nota": "opera datatissima: orazioni per il processo, trattati per le lettere e i proemi",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\cicerone.txt",
+  "n": 59
+ },
+ {
+  "autore": "Cesare",
+  "nota": "Bellum Gallicum e Bellum civile, composizione ben circoscritta",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\cesare.txt",
+  "n": 2
+ },
+ {
+  "autore": "Sallustio",
+  "nota": "monografie databili con precisione",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\sallustio.txt",
+  "n": 3
+ },
+ {
+  "autore": "Virgilio",
+  "nota": "Bucoliche, Georgiche, Eneide: cronologia canonica e sicura",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\virgilio.txt",
+  "n": 3
+ },
+ {
+  "autore": "Orazio",
+  "nota": "raccolte datate per libro (Satire, Epodi, Odi I-III e IV, Epistole)",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\orazio.txt",
+  "n": 6
+ },
+ {
+  "autore": "Ovidio",
+  "nota": "dalle opere amatorie all'esilio, cronologia ben ricostruita",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\ovidio.txt",
+  "n": 10
+ },
+ {
+  "autore": "Livio",
+  "nota": "Ab urbe condita a decadi, composizione lunga",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\livio.txt",
+  "n": 47
+ },
+ {
+  "autore": "Seneca",
+  "nota": "Dialogi databili singolarmente; Lettere a Lucilio 62-65; tragedie incerte",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\seneca.txt",
+  "n": 24
+ },
+ {
+  "autore": "Tacito",
+  "nota": "Agricola e Germania 98, poi Historiae e Annales",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\tacito.txt",
+  "n": 5
+ },
+ {
+  "autore": "Lucrezio",
+  "nota": "opera unica",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\lucrezio.txt",
+  "n": 1
+ },
+ {
+  "autore": "Catullo",
+  "nota": "liber unico",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\catullo.txt",
+  "n": 1
+ },
+ {
+  "autore": "Tibullo",
+  "nota": "libri di elegie",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\tibullo.txt",
+  "n": 2
+ },
+ {
+  "autore": "Properzio",
+  "nota": "libri di elegie",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\properzio.txt",
+  "n": 1
+ },
+ {
+  "autore": "Quintiliano",
+  "nota": "Institutio oratoria, composizione circoscritta",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\quintiliano.txt",
+  "n": 1
+ },
+ {
+  "autore": "Marziale",
+  "nota": "libri di epigrammi, quasi tutti datati anno per anno",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\marziale.txt",
+  "n": 1
+ },
+ {
+  "autore": "Giovenale",
+  "nota": "satire per libri",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\giovenale.txt",
+  "n": 1
+ },
+ {
+  "autore": "Petronio",
+  "nota": "opera unica",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\petronio.txt",
+  "n": 2
+ },
+ {
+  "autore": "Lucano",
+  "nota": "opera unica, incompiuta",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\lucano.txt",
+  "n": 1
+ },
+ {
+  "autore": "Persio",
+  "nota": "opera unica",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\persio.txt",
+  "n": 1
+ },
+ {
+  "autore": "Svetonio",
+  "nota": "De vita Caesarum",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\svetonio.txt",
+  "n": 12
+ },
+ {
+  "autore": "Apuleio",
+  "nota": "Apologia databile al processo, Metamorfosi più tarda",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\apuleio.txt",
+  "n": 3
+ },
+ {
+  "autore": "Plinio il Giovane",
+  "nota": "libri di epistole, pubblicati a scaglioni",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\plinio-il-giovane.txt",
+  "n": 1
+ },
+ {
+  "autore": "Agostino",
+  "nota": "opere databili con precisione dalle Retractationes",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\agostino.txt",
+  "n": 1
+ },
+ {
+  "autore": "Girolamo",
+  "nota": "opere databili",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\girolamo.txt",
+  "n": 1
+ },
+ {
+  "autore": "Erodoto",
+  "nota": "opera unica",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\erodoto.txt",
+  "n": 1
+ },
+ {
+  "autore": "Tucidide",
+  "nota": "opera unica",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\tucidide.txt",
+  "n": 1
+ },
+ {
+  "autore": "Senofonte",
+  "nota": "cronologia relativa ricostruita",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\senofonte.txt",
+  "n": 14
+ },
+ {
+  "autore": "Lisia",
+  "nota": "orazioni databili dal processo",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\lisia.txt",
+  "n": 34
+ },
+ {
+  "autore": "Isocrate",
+  "nota": "orazioni e discorsi databili",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\isocrate.txt",
+  "n": 30
+ },
+ {
+  "autore": "Demostene",
+  "nota": "orazioni datatissime dal contesto politico",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\demostene.txt",
+  "n": 63
+ },
+ {
+  "autore": "Eschine",
+  "nota": "tre orazioni, date certe",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\eschine.txt",
+  "n": 3
+ },
+ {
+  "autore": "Platone",
+  "nota": "NESSUNA data certa: si usano le tre fasi canoniche (giovanile, matura, tarda) e si ordina per fase",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\platone.txt",
+  "n": 36
+ },
+ {
+  "autore": "Aristotele",
+  "nota": "cronologia interna discussa: si ordina per fase e per gruppo di trattati",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\aristotele.txt",
+  "n": 9
+ },
+ {
+  "autore": "Polibio",
+  "nota": "opera unica",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\polibio.txt",
+  "n": 1
+ },
+ {
+  "autore": "Teocrito",
+  "nota": "Idilli, cronologia relativa incerta",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\teocrito.txt",
+  "n": 2
+ },
+ {
+  "autore": "Callimaco",
+  "nota": "cronologia relativa incerta",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\callimaco.txt",
+  "n": 8
+ },
+ {
+  "autore": "Apollonio Rodio",
+  "nota": "opera unica",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\apollonio-rodio.txt",
+  "n": 1
+ },
+ {
+  "autore": "Plutarco",
+  "nota": "Vite e Moralia, cronologia relativa poco determinabile",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\plutarco.txt",
+  "n": 142
+ },
+ {
+  "autore": "Omero",
+  "nota": "opera di tradizione orale: si dà la fascia convenzionale",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\omero.txt",
+  "n": 3
+ },
+ {
+  "autore": "Esiodo",
+  "nota": "cronologia relativa fra Teogonia e Opere",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\esiodo.txt",
+  "n": 3
+ },
+ {
+  "autore": "Pindaro",
+  "nota": "epinici datati dalla vittoria celebrata",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\pindaro.txt",
+  "n": 4
+ },
+ {
+  "autore": "Bacchilide",
+  "nota": "epinici datati dalla vittoria celebrata",
+  "file": "C:\\Users\\fasci\\Downloads\\Leonardo-Claude\\03_Digital-Humanities\\Poetrify-SPA-Dizionario\\_build\\_da_datare\\bacchilide.txt",
+  "n": 2
+ }
+]

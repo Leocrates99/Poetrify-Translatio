@@ -1,6 +1,6 @@
 {
- "imported": 1166,
- "rejected": 60,
+ "imported": 1122,
+ "rejected": 104,
  "unmapped_textgroups": [],
  "rejects": [
   {
@@ -9,16 +9,234 @@
    "author": "Cicerone"
   },
   {
-   "id": "phi0692.phi009",
-   "title": "phi0692.phi009",
-   "reason": "XML illeggibile: mismatched tag: line 409, column 27",
-   "author": "Appendix Vergiliana"
+   "id": "phi0660.phi003",
+   "reason": "doppione: sono le elegie di Sulpicia, già in phi0660.phi001 a 3.13-3.18",
+   "author": "Tibullo"
   },
   {
-   "id": "phi0972.phi001p",
-   "title": "phi0972.phi001p",
-   "reason": "XML illeggibile: not well-formed (invalid token): line 526, column 1",
-   "author": "Petronio"
+   "id": "phi0914.phi0011",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00110",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00111s",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00112s",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00113s",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00114s",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00115s",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00116s",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00117s",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00118s",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00119s",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi0012",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00120s",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00121",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00122",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00123",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00124",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00125",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00126",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00127",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00128",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00129",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi0013",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00130",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00131",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00132",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00133",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00134",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00135",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00136",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00137",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00138",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00139",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi0014",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00140",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00141",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00142",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00143",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00144",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi00145",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi0015",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi0016",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi0017",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi0018",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
+  },
+  {
+   "id": "phi0914.phi0019",
+   "reason": "doppione della fonte: lo stesso testo è già in phi0914.phi001",
+   "author": "Livio"
   },
   {
    "id": "phi1221.phi007",
