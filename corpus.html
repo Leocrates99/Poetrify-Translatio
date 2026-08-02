@@ -619,6 +619,35 @@ body[data-lang="grc"] .reader-head .rtitle-orig { font-family: var(--font-classi
   padding: 5px 11px; border-radius: var(--radius-md); border: 1.5px solid var(--rule); background: transparent; color: var(--ink); transition: all .13s;
 }
 .book-nav button:hover { border-color: var(--accent); }
+/* Sotto-indice dei componimenti · stessa forma della navigazione dei libri, un
+   gradino più piccola: è lo stesso gesto a una scala minore, e inventarle un
+   aspetto proprio avrebbe fatto sembrare due cose diverse ciò che è la stessa. */
+.poem-nav { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 10px; }
+.poem-nav .blabel { margin-right: 4px; align-self: center; }
+.poem-nav button {
+  font-family: var(--font-ui); font-size: 11.5px; font-weight: 600; min-width: 27px;
+  padding: 3px 8px; border-radius: var(--radius-md); border: 1px solid var(--rule-soft);
+  background: transparent; color: var(--sepia); transition: all .13s;
+}
+.poem-nav button:hover { border-color: var(--brass); color: var(--ink); }
+/* Intestazione del componimento · dà il RESPIRO che separa due poesie. Il
+   filetto corto d'ottone la lega all'apparato d'edizione senza farne un titolo:
+   il titolo qui non c'è, perché le elegie non ne hanno. */
+.carme-h {
+  display: flex; align-items: center; gap: 10px;
+  /* L'intestazione fissa è alta 68px: senza questo margine il salto dal
+     sotto-indice parcheggia il numero del carme sotto la testata, e si arriva
+     su un componimento senza vederne l'inizio. */
+  margin: 30px 0 12px; scroll-margin-top: 88px;
+}
+.carme-h:first-child { margin-top: 4px; }
+.carme-h .cn {
+  font-family: var(--font-display); font-size: 20px; font-weight: 700;
+  color: var(--brass); line-height: 1; font-variant-numeric: lining-nums;
+}
+.carme-h::after {
+  content: ''; flex: 1; height: 1px; background: var(--brass); opacity: .3;
+}
 .book-nav button[aria-current="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
 
 .scroll {
@@ -1748,6 +1777,35 @@ function booksOf(doc) {
   return map;
 }
 function lastSeg(loc) { const p = loc.split('.'); return p[p.length - 1]; }
+
+/* I COMPONIMENTI DENTRO IL LIBRO ─────────────────────────────────────────
+   Un libro di elegie non è un testo: è una raccolta di testi. In Tibullo il
+   locus «1.1.1» vale libro.elegia.verso, e il lettore stampava solo l'ultimo
+   segmento — il numero di verso, che riparte da 1 a ogni elegia. Sulla pagina
+   si leggeva «…70, 75, 1, 5, 10» senza che nulla dicesse che lì era finito un
+   componimento e ne era cominciato un altro: due poesie diverse saldate in una.
+
+   Il livello intermedio esiste quando il locus ha tre segmenti o più. Le unità
+   che ne hanno meno (righe di titolo, didascalie sceniche) non aprono un
+   componimento nuovo: restano attaccate a quello in corso, altrimenti una sola
+   riga anomala spezzerebbe l'elegia in due.
+
+   Vale per i versi. In prosa il locus è già stampato per esteso su ogni
+   paragrafo, quindi la struttura si vede: qui si rimedia dove NON si vedeva. */
+function carmiDelLibro(units, versi) {
+  if (!versi) return null;
+  const m = new Map();
+  let corrente = null;
+  for (const u of units) {
+    const p = u.loc.split('.');
+    if (p.length >= 3) corrente = p[1];
+    if (corrente === null) return null;        // il libro non ha livello intermedio
+    if (!m.has(corrente)) m.set(corrente, []);
+    m.get(corrente).push(u);
+  }
+  return m.size > 1 ? m : null;
+}
+const idCarme = (libro, carme) => 'c' + String(libro).replace(/\./g, '-') + '-' + carme;
 function closeMobileBrowser() {
   document.getElementById('browser').classList.remove('open');
   document.getElementById('mobtoggle').setAttribute('aria-expanded', 'false');
@@ -1846,6 +1904,56 @@ function renderReader(doc, books, bookKey, targetLoc) {
   const byLoc = Object.create(null);
   for (const u of units) byLoc[u.loc] = u.t;
 
+  /* Componimenti del libro · la chiave si calcola una volta per tutte le unità,
+     non a ogni blocco disegnato: il confronto «sono passato al carme dopo?» deve
+     reggere anche fra la fine di un blocco e l'inizio del successivo. */
+  const inVersi = doc.kind === 'versi';
+  const carmi = carmiDelLibro(units, inVersi);
+  let disegnaFinoA = null;          // lo riempie drawUpTo, definito più sotto
+  const chiavi = [];
+  if (carmi) {
+    let cur = null;
+    for (const u of units) {
+      const p = u.loc.split('.');
+      if (p.length >= 3) cur = p[1];
+      chiavi.push(cur);
+    }
+    /* SOTTO-INDICE · un libro di Marziale sono cento epigrammi, e senza questa
+       riga per arrivare al novantesimo si scorre. L'etichetta non nomina il
+       tipo di componimento: le stesse tre cifre di locus reggono elegie, odi ed
+       epigrammi, e in qualche opera mal classificata perfino capitoli di prosa —
+       dire «carme» sarebbe giusto quasi sempre, e quel «quasi» non serve. */
+    const sub = el('div', 'poem-nav');
+    const lab = el('span', 'blabel', 'Dentro il libro');
+    lab.title = 'I componimenti di questo libro, uno per numero';
+    sub.appendChild(lab);
+    for (const [k, righe] of carmi) {
+      const b = el('button', null, k);
+      b.title = `${nf.format(righe.length)} ${inVersi ? 'versi' : 'passi'}`;
+      /* Il salto deve prima DISEGNARE. La lettura è incrementale a blocchi di
+         300 versi, e il primo libro di Properzio ne ha ottocento: le voci dalla
+         decima in poi puntavano a un'ancora non ancora esistente e il clic non
+         faceva niente — un indice che non porta da nessuna parte è peggio di
+         nessun indice. `disegnaFinoA` si popola più sotto, quando drawUpTo
+         esiste; il salto è comunque asincrono perché il nodo va prima attaccato
+         al documento. */
+      const primo = units.indexOf(righe[0]);
+      b.onclick = () => {
+        if (disegnaFinoA) disegnaFinoA(primo + righe.length + 30);
+        requestAnimationFrame(() => {
+          const t = document.getElementById(idCarme(bookKey, k));
+          if (!t) return;
+          // Il moto qui comunica «ti sto portando altrove nello stesso testo»;
+          // per chi ha chiesto meno movimento quel messaggio non vale la nausea.
+          const dolce = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          t.scrollIntoView({ behavior: dolce ? 'smooth' : 'auto', block: 'start' });
+        });
+      };
+      sub.appendChild(b);
+    }
+    wrap.appendChild(sub);
+  }
+
   /* Anche la lettura è INCREMENTALE: un libro di Livio sono migliaia di unità,
      e disegnarle tutte a ogni clic bloccava la pagina per secondi. Si disegna a
      blocchi; se si arriva da una ricerca, si disegna comunque fin dove sta il
@@ -1861,7 +1969,18 @@ function renderReader(doc, books, bookKey, targetLoc) {
     const end = Math.min(n, units.length);
     if (end <= drawn) return;
     const frag = document.createDocumentFragment();
-    for (let i = drawn; i < end; i++) frag.appendChild(renderUnit(doc, units[i]));
+    for (let i = drawn; i < end; i++) {
+      if (carmi && (i === 0 || chiavi[i] !== chiavi[i - 1])) {
+        /* Intestazione del componimento: SOLO il numero, come nelle edizioni.
+           Un sostantivo sarebbe una classificazione, e su un catalogo di mille
+           opere le classificazioni sbagliano. Il numero no. */
+        const h = el('div', 'carme-h');
+        h.id = idCarme(bookKey, chiavi[i]);
+        h.appendChild(el('span', 'cn', chiavi[i]));
+        frag.appendChild(h);
+      }
+      frag.appendChild(renderUnit(doc, units[i]));
+    }
     scroll.insertBefore(frag, sentinel);
     drawn = end;
     const left = units.length - drawn;
@@ -1869,6 +1988,7 @@ function renderReader(doc, books, bookKey, targetLoc) {
     tailBtn.hidden = !left;
     tailBtn.textContent = left > READ_CHUNK ? `Mostra altre ${nf.format(READ_CHUNK)}` : 'Mostra le ultime';
   };
+  disegnaFinoA = drawUpTo;          // ora il sotto-indice può far disegnare
   tailBtn.onclick = () => drawUpTo(drawn + READ_CHUNK);
   scroll.appendChild(sentinel);
   const targetIdx = targetLoc ? units.findIndex(u => u.loc === targetLoc) : -1;
