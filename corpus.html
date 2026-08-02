@@ -622,7 +622,32 @@ body[data-lang="grc"] .reader-head .rtitle-orig { font-family: var(--font-classi
 /* Sotto-indice dei componimenti · stessa forma della navigazione dei libri, un
    gradino più piccola: è lo stesso gesto a una scala minore, e inventarle un
    aspetto proprio avrebbe fatto sembrare due cose diverse ciò che è la stessa. */
-.poem-nav { display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 10px; }
+/* Un libro di Marziale sono 119 epigrammi, uno di Livio sessanta capitoli: a
+   ruota libera la striscia diventa un muro di dieci righe che spinge il testo
+   sotto la piega. Si limita in altezza e scorre — resta un solo componente,
+   invece di un secondo controllo per gli indici lunghi. */
+.poem-nav {
+  display: flex; flex-wrap: wrap; gap: 4px; margin: 4px 0 10px;
+  max-height: 76px; overflow-y: auto; align-content: flex-start;
+}
+/* Passo fra un componimento e il successivo · chiude la colonna di lettura, che
+   è dove si arriva quando si è finito. Il numero in mezzo dice a che punto si è
+   senza dover risalire alla striscia. */
+.carme-passo {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin: 26px 0 6px; padding-top: 14px; border-top: 1px solid var(--rule-soft);
+}
+.carme-passo button {
+  font-family: var(--font-ui); font-size: 13px; font-weight: 600;
+  padding: 7px 14px; border-radius: var(--radius-md);
+  border: 1px solid var(--rule); background: transparent; color: var(--ink);
+  transition: border-color .13s, color .13s;
+}
+.carme-passo button:hover:not([disabled]) { border-color: var(--accent); color: var(--accent); }
+.carme-passo button[disabled] { opacity: .32; cursor: default; }
+.carme-passo .quale {
+  font-family: var(--font-mono); font-size: 11px; color: var(--sepia);
+}
 .poem-nav .blabel { margin-right: 4px; align-self: center; }
 .poem-nav button {
   font-family: var(--font-ui); font-size: 11.5px; font-weight: 600; min-width: 27px;
@@ -630,6 +655,12 @@ body[data-lang="grc"] .reader-head .rtitle-orig { font-family: var(--font-classi
   background: transparent; color: var(--sepia); transition: all .13s;
 }
 .poem-nav button:hover { border-color: var(--brass); color: var(--ink); }
+/* La voce che rimette insieme sta in testa e si nomina per esteso: è l'unica
+   che non è un numero, e deve leggersi come l'uscita dall'isolamento. */
+.poem-nav button.tutti { min-width: 0; font-weight: 700; }
+.poem-nav button[aria-pressed="true"] {
+  background: var(--brass); border-color: var(--brass); color: var(--on-primary);
+}
 /* Intestazione del componimento · dà il RESPIRO che separa due poesie. Il
    filetto corto d'ottone la lega all'apparato d'edizione senza farne un titolo:
    il titolo qui non c'è, perché le elegie non ne hanno. */
@@ -862,6 +893,7 @@ const state = {
      con `'trad'` cablato Orazio usciva in ordine tradizionale pur avendo tutte
      e sei le opere datate. */
   sort: null,           // ordinamento delle opere nello sfoglio
+  carme: null,          // componimento o capitolo isolato; null = tutto il libro
   edizione: {},         // per le opere con più testimoni: quale si sta leggendo
   gruppi: {}, grezza: [],
   alpha: null,          // iniziale selezionata nella striscia degli autori
@@ -1790,10 +1822,13 @@ function lastSeg(loc) { const p = loc.split('.'); return p[p.length - 1]; }
    componimento nuovo: restano attaccate a quello in corso, altrimenti una sola
    riga anomala spezzerebbe l'elegia in due.
 
-   Vale per i versi. In prosa il locus è già stampato per esteso su ogni
-   paragrafo, quindi la struttura si vede: qui si rimedia dove NON si vedeva. */
-function carmiDelLibro(units, versi) {
-  if (!versi) return null;
+   Vale ANCHE per la prosa. Lì il locus è già stampato per esteso su ogni
+   paragrafo, quindi la struttura si vedeva — ma vedere non è consultare: per
+   leggere il solo capitolo 20 del primo libro di Cesare bisognava scorrere
+   cinquanta paragrafi contando i numeri. Il livello intermedio è lo stesso
+   (libro.capitolo.paragrafo), e non c'è ragione che lo stesso gesto si comporti
+   diversamente perché sotto c'è prosa invece che versi. */
+function carmiDelLibro(units) {
   const m = new Map();
   let corrente = null;
   for (const u of units) {
@@ -1825,6 +1860,12 @@ async function openWork(id, targetLoc) {
   if (targetLoc) book = targetLoc.includes('.') ? targetLoc.split('.')[0] : '·';
   if (!keys.includes(book)) book = keys[0];
   state.book = book;
+  /* Arrivando da una ricerca o da una citazione si mostra il LIBRO INTERO: il
+     passo cercato può stare in qualunque componimento, e aprire isolati su
+     quello sbagliato lo farebbe sparire. Aprendo l'opera dal catalogo si parte
+     comunque dall'insieme — la selezione è un gesto di chi legge, non uno stato
+     che si porta dietro da un'opera all'altra. */
+  state.carme = null;
   renderReader(doc, books, book, targetLoc);
   // Il segnalibro si posa all'apertura e si aggiorna a ogni cambio di libro:
   // l'unica cosa che una biblioteca deve ricordare al posto di chi legge.
@@ -1874,10 +1915,13 @@ function renderReader(doc, books, bookKey, targetLoc) {
   abtn.onclick = () => openAuthor(doc.authorId);
   by.appendChild(abtn);
   head.appendChild(by);
+  /* La provenienza si compone qui ma si appende IN FONDO alla colonna di
+     lettura. Stava fra il titolo e la navigazione, e quaranta pixel di URN e
+     licenza spingevano il testo sotto la piega: è apparato che serve DOPO —
+     quando si cita — non prima di leggere la prima riga. */
   const src = el('div', 'src');
   src.innerHTML = `Fonte: <a href="https://scaife.perseus.org/library/${encodeURIComponent(doc.source.urn)}/" target="_blank" rel="noopener">${escapeHtml(doc.source.urn)}</a> · ${escapeHtml(doc.source.license)}`
     + (doc.source.edition ? `<br>Edizione: ${escapeHtml(doc.source.edition)}` : '');
-  head.appendChild(src);
   wrap.appendChild(head);
 
   if (keys.length > 1) {
@@ -1887,7 +1931,9 @@ function renderReader(doc, books, bookKey, targetLoc) {
       const b = el('button', null, k);
       if (k === bookKey) b.setAttribute('aria-current', 'true');
       b.onclick = () => {
-        state.book = k; renderReader(doc, books, k);
+        // cambiando libro il componimento scelto non vale più: i numeri
+        // ripartono, e «5» nel libro II è un'altra poesia
+        state.book = k; state.carme = null; renderReader(doc, books, k);
         segnaLettura(doc, k, doc.units.length, 0);
         window.scrollTo({ top: 0, behavior: 'smooth' });
       };
@@ -1900,16 +1946,26 @@ function renderReader(doc, books, bookKey, targetLoc) {
   // La pagina dichiara lang="it": senza questo, uno screen reader legge l'Iliade
   // con la pronuncia italiana. Marca il ramo di lettura con la lingua vera.
   scroll.lang = doc.lang === 'grc' ? 'grc' : 'la';
-  const units = books.get(bookKey);
+  const tutteLeUnita = books.get(bookKey);
+  const inVersi = doc.kind === 'versi';
+  const carmi = carmiDelLibro(tutteLeUnita);
+
+  /* IL SOTTO-INDICE È UN SELETTORE, non un salto.
+     Un salto porta dentro il libro intero e lascia il componimento in mezzo agli
+     altri: per leggere l'elegia I,5 da sola bisognava sapere dove finiva. Qui
+     invece la voce ISOLA — mostra quel testo e basta — e «Tutto il libro» rimette
+     insieme. Una regola sola, prevedibile: la voce filtra, non naviga.
+     Vale per i versi come per la prosa: un capitolo di Cesare si consulta come
+     un'elegia di Tibullo, e non c'è ragione che due gesti identici si comportino
+     in modo diverso perché sotto c'è prosa invece che versi. */
+  const carmeAttivo = (carmi && state.carme && carmi.has(state.carme)) ? state.carme : null;
+  const units = carmeAttivo ? carmi.get(carmeAttivo) : tutteLeUnita;
   const byLoc = Object.create(null);
   for (const u of units) byLoc[u.loc] = u.t;
 
-  /* Componimenti del libro · la chiave si calcola una volta per tutte le unità,
-     non a ogni blocco disegnato: il confronto «sono passato al carme dopo?» deve
-     reggere anche fra la fine di un blocco e l'inizio del successivo. */
-  const inVersi = doc.kind === 'versi';
-  const carmi = carmiDelLibro(units, inVersi);
-  let disegnaFinoA = null;          // lo riempie drawUpTo, definito più sotto
+  /* La chiave si calcola una volta per tutte le unità, non a ogni blocco: il
+     confronto «sono passato al componimento dopo?» deve reggere anche fra la
+     fine di un blocco disegnato e l'inizio del successivo. */
   const chiavi = [];
   if (carmi) {
     let cur = null;
@@ -1918,36 +1974,28 @@ function renderReader(doc, books, bookKey, targetLoc) {
       if (p.length >= 3) cur = p[1];
       chiavi.push(cur);
     }
-    /* SOTTO-INDICE · un libro di Marziale sono cento epigrammi, e senza questa
-       riga per arrivare al novantesimo si scorre. L'etichetta non nomina il
-       tipo di componimento: le stesse tre cifre di locus reggono elegie, odi ed
-       epigrammi, e in qualche opera mal classificata perfino capitoli di prosa —
-       dire «carme» sarebbe giusto quasi sempre, e quel «quasi» non serve. */
+
     const sub = el('div', 'poem-nav');
-    const lab = el('span', 'blabel', 'Dentro il libro');
-    lab.title = 'I componimenti di questo libro, uno per numero';
+    const lab = el('span', 'blabel', inVersi ? 'Componimento' : 'Capitolo');
+    lab.title = inVersi
+      ? 'Scegline uno per leggerlo da solo, o «Tutto il libro» per l’insieme'
+      : 'Scegline uno per leggerlo da solo, o «Tutto il libro» per l’insieme';
     sub.appendChild(lab);
+
+    const tutti = el('button', 'tutti', 'Tutto il libro');
+    tutti.setAttribute('aria-pressed', String(carmeAttivo === null));
+    tutti.title = `${nf.format(carmi.size)} in tutto`;
+    tutti.onclick = () => { state.carme = null; renderReader(doc, books, bookKey); window.scrollTo({ top: 0 }); };
+    sub.appendChild(tutti);
+
     for (const [k, righe] of carmi) {
       const b = el('button', null, k);
+      b.setAttribute('aria-pressed', String(k === carmeAttivo));
       b.title = `${nf.format(righe.length)} ${inVersi ? 'versi' : 'passi'}`;
-      /* Il salto deve prima DISEGNARE. La lettura è incrementale a blocchi di
-         300 versi, e il primo libro di Properzio ne ha ottocento: le voci dalla
-         decima in poi puntavano a un'ancora non ancora esistente e il clic non
-         faceva niente — un indice che non porta da nessuna parte è peggio di
-         nessun indice. `disegnaFinoA` si popola più sotto, quando drawUpTo
-         esiste; il salto è comunque asincrono perché il nodo va prima attaccato
-         al documento. */
-      const primo = units.indexOf(righe[0]);
       b.onclick = () => {
-        if (disegnaFinoA) disegnaFinoA(primo + righe.length + 30);
-        requestAnimationFrame(() => {
-          const t = document.getElementById(idCarme(bookKey, k));
-          if (!t) return;
-          // Il moto qui comunica «ti sto portando altrove nello stesso testo»;
-          // per chi ha chiesto meno movimento quel messaggio non vale la nausea.
-          const dolce = !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          t.scrollIntoView({ behavior: dolce ? 'smooth' : 'auto', block: 'start' });
-        });
+        state.carme = k; renderReader(doc, books, bookKey);
+        segnaLettura(doc, bookKey, doc.units.length, 0);
+        window.scrollTo({ top: 0 });
       };
       sub.appendChild(b);
     }
@@ -1988,7 +2036,6 @@ function renderReader(doc, books, bookKey, targetLoc) {
     tailBtn.hidden = !left;
     tailBtn.textContent = left > READ_CHUNK ? `Mostra altre ${nf.format(READ_CHUNK)}` : 'Mostra le ultime';
   };
-  disegnaFinoA = drawUpTo;          // ora il sotto-indice può far disegnare
   tailBtn.onclick = () => drawUpTo(drawn + READ_CHUNK);
   scroll.appendChild(sentinel);
   const targetIdx = targetLoc ? units.findIndex(u => u.loc === targetLoc) : -1;
@@ -2015,6 +2062,36 @@ function renderReader(doc, books, bookKey, targetLoc) {
   });
   wrap.appendChild(scroll);
   wrap.appendChild(tail);
+
+  /* PRECEDENTE / SUCCESSIVO · quando si legge un componimento isolato, il gesto
+     che serve subito dopo è passare al prossimo. Senza, si torna ogni volta
+     alla striscia a cercare il numero dopo quello appena letto — e in Marziale
+     sono centodiciannove. Compare solo nella lettura isolata: sul libro intero
+     il successivo è già la riga sotto. */
+  if (carmeAttivo && carmi) {
+    const ordine = [...carmi.keys()];
+    const i = ordine.indexOf(carmeAttivo);
+    const passo = el('div', 'carme-passo');
+    const vai = (k, testo, dove) => {
+      const b = el('button', dove, testo);
+      b.disabled = !k;
+      if (k) b.onclick = () => {
+        state.carme = k; renderReader(doc, books, bookKey); window.scrollTo({ top: 0 });
+      };
+      return b;
+    };
+    passo.appendChild(vai(ordine[i - 1], '← precedente', 'prec'));
+    /* Qui va la POSIZIONE, non il numero del componimento: i due divergono ogni
+       volta che il libro si apre con una prefazione. Marziale I comincia con
+       «pr», quindi l'ultimo epigramma porta il numero 118 ed è il 119º — e
+       «118 di 119» faceva sembrare che ne mancasse uno. Il numero proprio del
+       componimento sta già nella sua intestazione. */
+    passo.appendChild(el('span', 'quale', `${i + 1} di ${ordine.length}`));
+    passo.appendChild(vai(ordine[i + 1], 'successivo →', 'succ'));
+    wrap.appendChild(passo);
+  }
+
+  wrap.appendChild(src);
   $stage.innerHTML = ''; $stage.appendChild(wrap);
 
   if (readerIO) readerIO.disconnect();
