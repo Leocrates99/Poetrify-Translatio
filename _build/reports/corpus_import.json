@@ -1,12 +1,17 @@
 {
- "imported": 1121,
- "rejected": 105,
+ "imported": 1120,
+ "rejected": 106,
  "unmapped_textgroups": [],
  "rejects": [
   {
    "id": "phi0474.phi044",
    "reason": "nessuna edizione in lingua originale",
    "author": "Cicerone"
+  },
+  {
+   "id": "phi0660.phi003",
+   "reason": "doppione: sono le elegie di Sulpicia, già in phi0660.phi001 a 3.13-3.18",
+   "author": "Tibullo"
   },
   {
    "id": "phi0692.phi009",

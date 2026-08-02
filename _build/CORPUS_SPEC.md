@@ -26,12 +26,12 @@ edizioni critiche recenti (sotto copyright). Quello che importiamo *è* il corpu
 
 | | |
 |---|---|
-| **Opere importate** | **1.121** (350 latine · 771 greche) |
+| **Opere importate** | **1.120** (349 latine · 771 greche) |
 | **Autori** | **150**, tutti con nome italiano e classificazione |
-| **Parole** | **15.477.230** in **614.919** unità citabili |
-| **Peso** | testi 195,5 MB + indice 28,7 MB = **224 MB**; sito totale **431 MB** su 1.024 |
-| **Indice** | 704.752 forme distinte · 3.970.422 coppie forma-opera · 65 spicchi |
-| **Scartate** | 105: 57 solo-traduzioni · **45 doppioni di Livio** · 2 XML rotti · 1 bilingue |
+| **Parole** | **15.476.974** in **614.879** unità citabili |
+| **Peso** | testi 166,8 MB + indice 28,7 MB = **195 MB**; sito totale **431 MB** su 1.024 |
+| **Indice** | 704.752 forme distinte · 3.970.217 coppie forma-opera · 65 spicchi |
+| **Scartate** | 106: 57 solo-traduzioni · **46 doppioni** (45 di Livio, 1 di Sulpicia) · 2 XML rotti · 1 bilingue |
 
 Prove di ricerca superate:
 `virtus` → 187 opere ristrette, Cicerone in testa con 44 ·
@@ -40,10 +40,37 @@ Prove di ricerca superate:
 secondo: Cesare 1,1,1. È la prova che l'architettura a due stadi funziona — l'indice
 restringe, il browser conferma.
 
-> **Il conteggio scende da 1.166 a 1.121 e non è una perdita.** Livio era importato due
+> **Il conteggio scende da 1.166 a 1.120 e non è una perdita.** Livio era importato due
 > volte (§1-ter): togliendo i 45 doppioni si perdono 494.723 parole di testo ridondante
-> e se ne guadagnano 11.917 di testo che prima non entrava affatto. Le opere latine
-> passano da 395 a 350; le greche non si toccano.
+> e se ne guadagnano 11.917 di testo che prima non entrava affatto. Il quarantaseiesimo
+> scarto è Sulpicia (§1-quater). Le opere latine passano da 395 a 349; le greche non si
+> toccano.
+
+### 1-quater · Le sovrapposizioni che NON sono doppioni d'import (1 ago 2026)
+
+Una scansione a 5-grammi su tutte le opere ha trovato, oltre a Livio, tre coppie ad alto
+contenimento. **Nessuna nasce da un difetto del codice** — hanno tutte il loro
+`__cts__.xml` — ma per chi cerca il sintomo è identico: lo stesso testo due volte.
+Vanno decise una per una, e le tre decisioni sono diverse:
+
+| Coppia | Contenimento | Decisione |
+|---|---|---|
+| Tibullo *Elegie* ⊃ *Carmina omnia* | **0,960** | **potata**: sono le sei elegie di Sulpicia, già in III 13-18 |
+| Ausonio *Eclogarum liber* ⊃ AV *De institutione viri boni* | 0,800 | **tenuta** |
+| idem ⊃ AV *De est et non* | 0,639 | **tenuta** |
+
+La differenza è di natura, non di soglia. La scheda di Sulpicia ripeteva lo **stesso**
+testo dello **stesso** autore rinumerandolo da 1 a 6 sotto il titolo «Carmina omnia»:
+insegnava una citazione che non esiste. Le due dell'Appendix Vergiliana no — sono la
+stessa poesia sotto **due attribuzioni diverse**, con varianti reali («nihil est hominum»
+contro «nil est, hominum»): cancellarle toglierebbe dal catalogo un fatto di tradizione.
+Restano dunque, col difetto dichiarato che il loro file non ha marcatura di verso
+(`body` → `head` + un solo `<p>`) e la scheda esce con una unità sola e il locus vuoto.
+Irreparabile dalla fonte: la versione citabile per verso è quella ausoniana.
+
+> **Non usare il contenimento come regola automatica.** A soglia 0,60 cadrebbero anche
+> nove delle dieci periochae di Livio e le due dell'Appendix Vergiliana. La sovrapposizione
+> dice dove guardare, non che cosa fare.
 
 ### 1-ter · Livio, e i due difetti che ha scoperchiato (1 ago 2026)
 

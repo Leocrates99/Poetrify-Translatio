@@ -28,7 +28,7 @@ LE TRE RISPOSTE POSSIBILI (contratto con l'interfaccia)
     id assente              → non curato: 1ª fascia originale, 2ª fascia inglese
                               marcato «en» (ripiego dichiarato, mai inventato)
 
-Quest'ultimo caso è la maggioranza del corpus, ed è giusto così: dei 1.121 testi
+Quest'ultimo caso è la maggioranza del corpus, ed è giusto così: dei 1.120 testi
 importati la coda è fatta di trattati medici, omelie e scoli che nessuno cercherà
 mai per titolo italiano. Qui si cura **il canone che si legge a scuola**.
 
@@ -231,8 +231,9 @@ LAT.update({
     "phi0914.phi001fr": "Periochae dei libri XLVI-CXLII",
 })
 LAT.update({
-    "phi0660.phi001": "Elegie",                   # Tibullo
-    "phi0660.phi003": None,                       # Corpus Tibullianum
+    "phi0660.phi001": "Elegie",                   # Tibullo · e con lui tutto il
+    # Corpus Tibullianum, comprese in III le sei elegie di Sulpicia (3.13-3.18):
+    # la scheda che le ripeteva a parte è in ESCLUSE (import_corpus.py).
     "phi0620.phi001": "Elegie",                   # Properzio
 })
 LAT.update({
@@ -531,8 +532,18 @@ ORIG.update({
     "phi0426.phi001": "De bello Africo",           # Pseudo-Cesare
     "phi0428.phi001": "De bello Alexandrino",
     "phi0430.phi001": "De bello Hispaniensi",
-    "phi0660.phi003": "Carmina omnia",             # Corpus Tibullianum
-    "phi0692.phi012": "De institutione viri boni", # Appendix Vergiliana
+    # Appendix Vergiliana · il nome della RACCOLTA appiccicato al titolo di ogni
+    # pezzo. Non è una variante: il <head> di ciascun file porta il titolo nudo
+    # («Dirae», «Culex»), il suffisso sta nel <title>, che è la rubrica del
+    # catalogo. Le testate di phi012 e phi013 restano quelle tràdite: «De
+    # institutione viri boni» non è una rubrica inventata, e la tradizione
+    # ausoniana intitola per conto suo la stessa poesia «De viro bono».
+    "phi0692.phi001": "Dirae",
+    "phi0692.phi002": "Lydia",
+    "phi0692.phi003": "Culex",
+    "phi0692.phi005": "Copa",
+    "phi0692.phi011": "Moretum",
+    "phi0692.phi012": "De institutione viri boni",
     "phi0692.phi013": "De est et non",
 
     # ── ETÀ AUGUSTEA ─────────────────────────────────────────────────────

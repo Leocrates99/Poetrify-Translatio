@@ -97,6 +97,19 @@ ESCLUSE = {
               [f"phi0914.phi001{n}s" for n in range(11, 21)])     # periochae XI-XX
 }
 
+# Sulpicia · il secondo caso, e non è un difetto d'import ma una scheda che si
+# sovrappone da sé. phi0660.phi003 sono le sei elegie della sola poetessa latina
+# di cui resti l'opera, e stanno GIÀ dentro «Elegie» di Tibullo ai loci
+# 3.13.1-3.18.6: il Corpus Tibullianum le tramanda nel suo terzo libro. La
+# scheda a parte le rinumerava da 1 a 6 sotto il titolo «Carmina omnia», che è
+# falso due volte — non sono i carmi di nessuno per intero — e insegnava una
+# citazione («Sulpicia 1,1») che non esiste in nessuna edizione. Potandola,
+# Sulpicia resta leggibile con il locus canonico e trovabile per nome: il suo
+# nome è nel testo di Tibullo, a 3.8.1 e a 3.16.4.
+ESCLUSE["phi0660.phi003"] = (
+    "doppione: sono le elegie di Sulpicia, già in phi0660.phi001 a 3.13-3.18"
+)
+
 
 # ══════════════════════════════════════════════════════════════════════════
 # Parsing TEI — nucleo collaudato sul nucleo scolastico (non toccare a cuor
