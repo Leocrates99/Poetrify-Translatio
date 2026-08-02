@@ -2508,7 +2508,12 @@ function inviaTavolo() {
     loc: unaSola ? list[0].loc : '',
     src: unaSola && list[0].urn ? `${list[0].urn}:${list[0].loc}` : '',
     tipo: list.every(p => p.kind === 'versi') ? 'poesia' : 'prosa',
-    passi: list.map(p => ({ autore: p.autore, opera: p.opera, loc: p.loc })),
+    /* Ogni passo porta anche l'ID DELL'OPERA, non solo il riferimento leggibile.
+       Senza, dall'altra parte la provenienza resta una stringa da leggere e non
+       un indirizzo da riaprire: il Translator poteva stampare «Tibullo, Elegie
+       1.5.1» ma non ricostruire dove fosse. È lo stesso vicolo cieco che aveva
+       il tavolo prima di avere il riferimento cliccabile. */
+    passi: list.map(p => ({ id: p.id, autore: p.autore, opera: p.opera, loc: p.loc })),
   };
   try { localStorage.setItem(CONSEGNA_KEY, JSON.stringify(consegna)); }
   catch { toast('Non riesco a preparare la consegna'); return; }

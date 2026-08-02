@@ -7246,6 +7246,22 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
 .corpus-bridge .cb-btn:hover { filter: brightness(1.08); }
 .corpus-bridge .cb-btn[disabled] { opacity: .45; cursor: default; }
 .corpus-bridge .cb-btn:focus-visible { outline: 2px solid var(--dacc, var(--primary)); outline-offset: 2px; }
+/* Raccolta dal tavolo · le vie di ritorno vanno a capo sotto l'etichetta, non
+   in fila con essa: sei riferimenti su una riga sola diventerebbero una fascia
+   che spinge giu' il resto del passo «Autore & opera». */
+.corpus-bridge.raccolta { align-items: flex-start; flex-direction: column; gap: 7px; }
+.corpus-bridge .cb-rifs { display: flex; flex-wrap: wrap; gap: 5px; }
+/* Ogni riferimento e' un pulsante ma resta scritto come un riferimento: qui
+   sotto c'e' un testo antico, e una fila di bottoni pieni sarebbe rumore. Il
+   colore d'accento e la sottolineatura arrivano al passaggio e al focus. */
+.corpus-bridge .cb-rif {
+  font-family: var(--font-mono); font-size: 10.5px; color: var(--sepia);
+  background: var(--paper); border: 1px solid var(--rule);
+  border-radius: var(--radius-sm); padding: 3px 8px; cursor: pointer;
+  transition: border-color .13s, color .13s;
+}
+.corpus-bridge .cb-rif:hover { border-color: var(--dacc, var(--primary)); color: var(--ink); }
+.corpus-bridge .cb-rif:focus-visible { outline: 2px solid var(--dacc, var(--primary)); outline-offset: 2px; }
 .guided-lettura-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -38013,11 +38029,18 @@ function corpusWorkFromUrn(urn) {
   return { opera: seg[3], loc: seg.length > 4 ? seg[4] : '' };
 }
 
-function apriPassoNelCorpus() {
-  const rif = corpusWorkFromUrn(state.meta.fonteUrn);
-  if (!rif) return;
-  const q = new URLSearchParams({ opera: rif.opera });
-  if (rif.loc) q.set('loc', rif.loc);
+/* Riapre un passo nel Corpus. Senza argomenti prende la provenienza del brano
+   corrente (il caso di un testo solo); con (opera, loc) riapre UNO dei passi di
+   una raccolta importata dal tavolo. Il Corpus, ricevendo il locus, atterra nel
+   componimento o nel capitolo che lo contiene, non sul libro intero. */
+function apriPassoNelCorpus(opera, loc) {
+  if (!opera) {
+    const rif = corpusWorkFromUrn(state.meta.fonteUrn);
+    if (!rif) return;
+    opera = rif.opera; loc = rif.loc;
+  }
+  const q = new URLSearchParams({ opera: opera });
+  if (loc) q.set('loc', loc);
   window.open('corpus.html?' + q.toString(), '_blank');
 }
 
@@ -38034,6 +38057,26 @@ function riconosciNelCorpus() {
 /* Il blocco che compare sotto «Autore & opera»: una riga sola, che cambia
    faccia a seconda che la provenienza sia nota o da scoprire. */
 function corpusBridgeHtml() {
+  /* RACCOLTA DAL TAVOLO · piu' passi, quindi piu' vie di ritorno: una per
+     ciascuno. Il campo `fonteUrn` ne descrive uno solo, e con sei passi gli
+     altri cinque restavano senza strada — la loro provenienza era stampata nel
+     sottotitolo, leggibile e morta. Ognuno riapre nel proprio componimento. */
+  const passi = Array.isArray(state.meta.passiCorpus) ? state.meta.passiCorpus : [];
+  if (passi.length > 1) {
+    /* Id e locus finiscono dentro una stringa JS dentro un attributo HTML, e
+       `escapeHtml` non protegge da quel secondo livello: un apice chiuderebbe
+       la stringa. Si riducono al solo alfabeto che possono davvero avere
+       (`phi0660.phi001`, `1.5.1`) invece di fidarsi che non contengano altro. */
+    const sicuro = (s) => String(s || '').replace(/[^\w.:-]/g, '');
+    const voci = passi.map(p => `<button type="button" class="cb-rif"
+        onclick="apriPassoNelCorpus('${sicuro(p.id)}','${sicuro(p.loc)}')"
+        title="Rileggi questo passo nel Corpus">${escapeHtml(`${p.autore}, ${p.opera} ${p.loc}`)}</button>`).join('');
+    return `<div class="corpus-bridge known raccolta">
+      <span class="cb-label">${passi.length} passi dal Corpus — rileggili uno per uno</span>
+      <div class="cb-rifs">${voci}</div>
+    </div>`;
+  }
+
   const rif = corpusWorkFromUrn(state.meta.fonteUrn);
   if (rif) {
     return `<div class="corpus-bridge known">
@@ -38087,6 +38130,15 @@ function importTavoloDalCorpus(lang) {
      parola d'autore, e il glossario si riempirebbe di nomi propri. */
   if (Array.isArray(c.passi) && c.passi.length > 1) {
     state.meta.sottotitolo = c.passi.map(p => `${p.autore}, ${p.opera} ${p.loc}`).join(' · ');
+  }
+  /* La provenienza dei singoli passi si conserva anche come DATO, non solo come
+     riga da leggere nel sottotitolo: e' cio' che permette di riaprirli uno per
+     uno nel Corpus. Con una raccolta di sei passi il campo `fonteUrn` ne puo'
+     descrivere uno solo, e gli altri cinque restavano senza strada di ritorno. */
+  if (Array.isArray(c.passi)) {
+    state.meta.passiCorpus = c.passi.filter(p => p && p.id).map(p => ({
+      id: p.id, autore: p.autore || '', opera: p.opera || '', loc: p.loc || '',
+    }));
   }
 
   state.sentences = splitTextIntoSentences(c.testo).map(makeSentence);
