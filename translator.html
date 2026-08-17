@@ -11538,12 +11538,11 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
       </div>
     </div>
 
-    <!-- QUICK-BAR · seconda riga della topbar. Contiene i tre segmented control
-         per modalità · approccio · profilo. È l'UNICO punto in pagina per
-         cambiare queste tre impostazioni: tutti i pulsanti ridondanti
-         (sidebar "Approccio", chip profilo, switch-mode inline) sono stati
-         rimossi a favore di questa barra sempre presente. -->
-    <div class="quick-bar" id="quick-bar" role="toolbar" aria-label="Controlli rapidi: modalità, approccio, profilo">
+    <!-- QUICK-BAR · nasce qui nell'header ma arrangeChrome() la sposta SEMPRE
+         nel menù laterale (sezione «Impostazioni»), su ogni schermo. Contiene i
+         tre segmented control Metodo · Vista · Guida: è l'unico punto in pagina
+         per cambiare questi tre assi. -->
+    <div class="quick-bar" id="quick-bar" role="toolbar" aria-label="Controlli rapidi: metodo, vista, guida">
       <!-- popolato da JS in renderQuickBar() -->
     </div>
   </header>
@@ -11555,9 +11554,9 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
       <div class="sidebar-section-label">Officina di traduzione</div>
       <ul class="tab-list" id="tab-list"></ul>
 
-      <!-- Slot riempiti SOLO su mobile/tablet (arrangeChrome sposta qui la quick-bar
-           delle impostazioni e il popover "Dati del brano"). Su desktop restano
-           vuoti e nascosti: quei controlli vivono nell'header. -->
+      <!-- Slot riempiti da arrangeChrome() su OGNI schermo (la quick-bar delle
+           impostazioni e il popover "Dati del brano" vivono QUI, nel menù
+           laterale: l'header resta minimale). -->
       <div class="drawer-only sidebar-section-label">Impostazioni</div>
       <div class="drawer-only drawer-slot" id="drawer-settings-slot"></div>
       <div class="drawer-only sidebar-section-label">Dati del brano</div>
@@ -11819,7 +11818,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 <div class="modal-backdrop" id="modal-approach">
   <div class="modal" style="max-width: 1080px;">
     <h3 class="modal-title">🎯 Scegli l'approccio traduttivo</h3>
-    <p class="modal-subtitle">Tre strategie diverse di fronte allo stesso brano: ognuna ha pro e contro. Puoi cambiare in qualsiasi momento dal pulsante «Approccio» in alto a destra.</p>
+    <p class="modal-subtitle">Tre strategie diverse di fronte allo stesso brano: ognuna ha pro e contro. Puoi cambiare in qualsiasi momento (tasto <kbd>A</kbd>, o dalla palette dei comandi <kbd>Ctrl+K</kbd>).</p>
     <div class="approach-grid" id="approach-grid"></div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeApproachModal()">Annulla / mantieni selezione corrente</button>
@@ -27504,7 +27503,7 @@ function renderSidebarTabs() {
       { num: 2, letter: 'B', icon: 'tree', title: 'Analisi guidata', group: 'lavoro',
         enabled: !!state.meta.testoOriginale,
         hasContent: state.sentences.length > 0,
-        badge: state.sentences.length > 0 ? `${Math.min(state.guidedStep || 1, 6)}/6` : '·' },
+        badge: state.sentences.length > 0 ? `${Math.min(state.guidedStep || 1, 9)}/9` : '·' },
       { num: 5, sub: 'bozza', letter: 'E', icon: 'pencil', title: 'Bozza', group: 'traduzione',
         enabled: !!state.meta.testoOriginale, onclick: "goToTraduzione('bozza')",
         hasContent: hasTranslation, hideForMedie: true },
@@ -27956,7 +27955,7 @@ function renderStep1Html() {
     <div class="method-note" style="margin-bottom:18px;">
       <strong>Modalità ${isGuided ? 'guidata' : 'libera'}</strong> ·
       ${isGuided ? `analisi in ${getVisibleGuidedSteps().length} tappe successive (${getVisibleGuidedSteps().map(s => s.label.toLowerCase()).join(' → ')})` : 'navighi liberamente fra le tre stanze di analisi'} ·
-      <em>cambi modalità dalla barra in alto.</em>
+      <em>cambi modalità dai Controlli rapidi (menù laterale · Impostazioni).</em>
     </div>`;
   return sectionHeader('A', 'Brano originale', "il punto di partenza è il testo. L'analisi successiva dialogherà sempre con l'originale.")
     + modeBanner
@@ -30322,7 +30321,7 @@ function renderApproachBanner() {
   const d = APPROACH_DESCRIPTORS[a] || APPROACH_DESCRIPTORS.attuale;
   return `<div class="approach-banner">
     <span class="approach-banner-label">${d.icon} <strong>Approccio:</strong> ${escapeHtml(d.title)}</span>
-    <span class="approach-banner-hint" style="font-size:11px;color:var(--sepia);font-style:italic;">cambi dalla barra in alto · tasto <kbd>a</kbd> per la scheda descrittiva</span>
+    <span class="approach-banner-hint" style="font-size:11px;color:var(--sepia);font-style:italic;">cambi dai Controlli rapidi (menù laterale · Impostazioni) · tasto <kbd>a</kbd> per la scheda descrittiva</span>
   </div>`;
 }
 
@@ -30715,7 +30714,7 @@ function transferProjectLanguage(id) {
 }
 
 /* ============================================
-   WIZARD GUIDATO — 6 tappe successive
+   WIZARD GUIDATO — 9 tappe in 4 fasi (Lettura · Analisi · Traduzione · Versione)
    ============================================ */
 /* ════════════════════════════════════════════════════════════════════════════
    MODALITÀ GUIDATA · 4 macro-fasi (Lettura · Analisi · Traduzione · Versione)
@@ -30942,7 +30941,7 @@ function renderGuidedFirstRun() {
       ? 'Il sistema prenderà <strong>ogni verso</strong> come unità d\'analisi, rispettando gli a capo del testo così come l\'hai inserito.'
       : 'Il sistema dividerà il testo <strong>sul punto fermo</strong>, lasciando interi i punti di abbreviazione (<em>M. Tullius</em> resta una cosa sola). Punto interrogativo, esclamativo e punto e virgola <strong>non</strong> separano: se ti servono come confine, dividi a mano.'
     } Potrai comunque modificare la segmentazione prima di passare alle tappe successive.</p>
-    <p class="muted-text" style="margin-top:6px;font-size:12px;font-style:italic;">Per uscire dalla modalità guidata: usa il segmented control «Modalità» nella barra in alto.</p>
+    <p class="muted-text" style="margin-top:6px;font-size:12px;font-style:italic;">Per uscire dalla modalità guidata: usa il segmented «Guida» nei Controlli rapidi (menù laterale · Impostazioni).</p>
     <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap;">
       <button class="btn btn-primary" onclick="startGuidedSegmentation()">▶ Segmenta automaticamente e comincia</button>
     </div>
@@ -38579,7 +38578,7 @@ const APPROACH_DESCRIPTORS = {
     ],
     cons: [
       'Richiede di "fidarsi" del metodo, contro l\'istinto di analizzare la prima frase parola per parola',
-      'I 3 step sono lineari: per saltare avanti serve concludere lo step',
+      'Le 7 fasi chiedono disciplina: sono liberamente navigabili, ma il metodo rende se le segui in ordine',
       'Non sostituisce la rifinitura manuale di costrutti complessi (ablativi assoluti, perifrastiche)',
     ],
   },
