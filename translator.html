@@ -35380,7 +35380,9 @@ function _renderSyntaxTreeBarre(sentence) {
 
   /* Il predicato verbale: se non è già un sintagma, lo si sintetizza dai verbi
      a forma finita della grammatica (sono le àncore del metodo). */
-  const barre = logic.map(e => ({ id: e.id, padre: e.padre || '', funzione: e.funzione, phrase: e.phrase || '', tokenIndices: (e.tokenIndices || []).slice() }));
+  const barre = logic.map(e => ({ id: e.id, padre: e.padre || '', funzione: e.funzione, phrase: e.phrase || '',
+    isAttributivo: !!e.isAttributivo, attribuitoA: e.attribuitoA || '',
+    tokenIndices: (e.tokenIndices || []).slice() }));
   const haPredicato = barre.some(b => (b.funzione || '').toLowerCase() === 'predicato verbale');
   if (!haPredicato) {
     (sentence.grammar || []).filter(g => g && g.partOfSpeech === 'Verbo' && g.verboForma === 'Forma finita' && g.tokenIndex != null)
@@ -35400,7 +35402,12 @@ function _renderSyntaxTreeBarre(sentence) {
     if (f.includes('predicativo')) return 3;
     return 4;
   };
+  /* GRUPPO: sono «di gruppo» i tre ruoli classici (attributo, apposizione,
+     specificazione) E QUALSIASI complemento marcato in posizione attributiva
+     (⌖ isAttributivo): il metodo dice che S e O portano con sé anche i
+     complementi in posizione attributiva a loro dipendenti. */
   const isGruppo = b => {
+    if (b.isAttributivo) return true;
     const f = (b.funzione || '').toLowerCase();
     return f === 'attributo' || f === 'apposizione' || f.includes('specificazione');
   };
@@ -35416,14 +35423,28 @@ function _renderSyntaxTreeBarre(sentence) {
     figliParticipiali.get(f.padre).push(f);
   });
 
-  /* I membri del gruppo si agganciano all'àncora (S oppure O) più VICINA nel
-     testo: senza un legame esplicito nel dato, l'adiacenza dei token è il
-     criterio più onesto. Se non c'è nessuna àncora, restano fra i complementi. */
+  /* AGGANCIO DEL GRUPPO — il DATO esplicito vince sull'euristica:
+     1) chi ha ⌖ attribuitoA valido sta sotto QUEL sintagma, chiunque sia
+        (anche un complemento, anche un figlio participiale);
+     2) i tre ruoli classici senza legame esplicito ripiegano sull'àncora
+        (S oppure O) più VICINA nel testo: l'adiacenza dei token resta il
+        criterio più onesto quando il dato manca;
+     3) chi non trova nessuno resta fra i complementi, in coda. */
   const liberi = barre.filter(b => !eFiglio(b));
+  const gruppoEsplicito = new Map();       // id del capo → [membri del gruppo]
+  const daEuristica = [];
+  liberi.filter(isGruppo).forEach(g => {
+    if (g.attribuitoA && idValidi.has(g.attribuitoA) && g.attribuitoA !== g.id) {
+      if (!gruppoEsplicito.has(g.attribuitoA)) gruppoEsplicito.set(g.attribuitoA, []);
+      gruppoEsplicito.get(g.attribuitoA).push(g);
+    } else daEuristica.push(g);
+  });
+  const inGruppoEsplicito = new Set([].concat.apply([], Array.from(gruppoEsplicito.values())).map(g => g.id));
+
   const ancore = liberi.filter(b => !isGruppo(b) && (rango(b) === 0 || rango(b) === 2));
   const figliDi = new Map();
   const sciolti = [];
-  liberi.filter(isGruppo).forEach(g => {
+  daEuristica.forEach(g => {
     let migliore = null, distanza = Infinity;
     ancore.forEach(a => {
       const d = Math.min.apply(null, g.tokenIndices.map(gi => Math.min.apply(null, a.tokenIndices.map(ai => Math.abs(gi - ai)))));
@@ -35444,35 +35465,46 @@ function _renderSyntaxTreeBarre(sentence) {
     const pct = Math.max(16, Math.round(nTok / maxTok * 100));
     const frase = b.phrase || b.tokenIndices.slice().sort((x, y) => x - y).map(testoDi).filter(Boolean).join(' ');
     const rientro = profondita ? ` style="padding-left:${Math.min(profondita, 4) * 26}px"` : '';
+    const marchio = b.isAttributivo ? '⌖ ' : (profondita ? '↳ ' : '');
     return `<div class="barre-row${gruppo ? ' barre-gruppo' : ''}${profondita ? ' barre-annidato' : ''}"${rientro}>
       <div class="barre-bar" style="width:${pct}%;background:${c.bg};border:1.5px solid ${c.border};border-left:5px solid ${c.strong};color:${c.text}">
-        <span class="barre-fn">${profondita ? '↳ ' : ''}${escapeHtml(b.funzione)}${b._sintetico ? ' <em>(dalla grammatica)</em>' : ''}</span>
+        <span class="barre-fn">${marchio}${escapeHtml(b.funzione)}${b._sintetico ? ' <em>(dalla grammatica)</em>' : ''}</span>
         <span class="barre-phrase">${escapeHtml(frase)}</span>
       </div>
       <span class="barre-count" title="estensione del sintagma in token">${nTok} tok</span>
     </div>`;
   };
 
-  /* Dopo ogni barra: prima i FIGLI participiali (rientro crescente, ricorsivo),
-     poi — solo al livello 0 — i membri del gruppo di S/O. Tetto di profondità
-     a difesa da catene assurde. */
+  /* Dopo ogni barra: prima i FIGLI participiali (rientro crescente), poi il suo
+     GRUPPO — legami ⌖ espliciti a qualunque profondità, euristica solo per le
+     àncore S/O di livello 0. Il registro dei «visti» impedisce che un legame
+     circolare nei dati (attribuitoA non ha anti-ciclo) blocchi il rendering:
+     nessuna barra viene mai emessa due volte. */
   let corpo = '';
+  const visti = new Set();
   const emetti = (b, gruppo, profondita) => {
+    if (b.id && visti.has(b.id)) return;
+    if (b.id) visti.add(b.id);
     corpo += riga(b, gruppo, profondita);
     if (profondita < 4) {
       (figliParticipiali.get(b.id) || []).sort((a, z) => primo(a) - primo(z))
         .forEach(f => emetti(f, false, profondita + 1));
+      (gruppoEsplicito.get(b.id) || []).sort((a, z) => primo(a) - primo(z))
+        .forEach(g => emetti(g, true, profondita));
     }
   };
   principali.forEach(b => {
     emetti(b, false, 0);
     (figliDi.get(b) || []).sort((a, z) => primo(a) - primo(z)).forEach(g => emetti(g, true, 0));
   });
+  /* Rete finale: membri di gruppo il cui capo non è mai stato emesso (capo a
+     sua volta dentro un ciclo o dato anomalo) escono comunque, in coda. */
+  barre.forEach(b => { if (b.id && !visti.has(b.id) && inGruppoEsplicito.has(b.id)) emetti(b, true, 0); });
 
   return `<div class="syntax-tree-wrap">
     <div class="syntax-tree-header"><span class="syntax-tree-title">Stemma a barre · S·V·O·C</span>${_barreToggleBtn()}</div>
     <div class="stemma-barre">${corpo}</div>
-    <div class="barre-legenda muted-text">Le barre sono in ordine <strong>S · V · O · complementi</strong> (l'ordo italiano, non quello del testo); la lunghezza è l'estensione del sintagma in token. I <strong>gruppi</strong> di soggetto e oggetto stanno rientrati sotto la loro àncora.</div>
+    <div class="barre-legenda muted-text">Le barre sono in ordine <strong>S · V · O · complementi</strong> (l'ordo italiano, non quello del testo); la lunghezza è l'estensione del sintagma in token. I <strong>gruppi</strong> di soggetto e oggetto stanno rientrati sotto la loro àncora; i complementi in <strong>posizione attributiva</strong> (⌖) stanno sotto il sintagma a cui li hai riferiti; «↳» segna i sintagmi agganciati a un participiale.</div>
   </div>`;
 }
 
@@ -36537,10 +36569,34 @@ function renderAggancioParticipiale(sentenceId, entry) {
     </div>`;
 }
 
+/* ── RICONOSCIMENTO della posizione attributiva ─────────────────────────────
+   Il segnale classico è l'INCASTONATURA: i token del complemento stanno
+   DENTRO lo span di un altro sintagma («magnae virtutis» dentro «vir …
+   fortis»), o vi sono immediatamente adiacenti. Si SUGGERISCE soltanto, con
+   la stella: la classificazione resta dello studente. */
+function suggerisciCapoAttributivo(sentence, entry) {
+  const miei = entry.tokenIndices || [];
+  if (!miei.length) return null;
+  const mMin = Math.min.apply(null, miei), mMax = Math.max.apply(null, miei);
+  let migliore = null, punteggio = 0, distanza = Infinity;
+  (sentence.logic || []).forEach(e => {
+    if (!e || e.id === entry.id || !(e.tokenIndices || []).length) return;
+    const eMin = Math.min.apply(null, e.tokenIndices), eMax = Math.max.apply(null, e.tokenIndices);
+    let p = 0;
+    if (mMin > eMin && mMax < eMax) p = 2;                              // incastonato nello span
+    else if (mMin - eMax === 2 || eMin - mMax === 2) p = 1;             // parola adiacente
+    if (!p) return;
+    const d = Math.min(Math.abs(mMin - eMax), Math.abs(eMin - mMax));
+    if (p > punteggio || (p === punteggio && d < distanza)) { migliore = e; punteggio = p; distanza = d; }
+  });
+  return migliore ? { capo: migliore, incastonato: punteggio === 2 } : null;
+}
+
 function renderAttributivoBlock(sentenceId, entry) {
   const sentence = state.sentences.find(s => s.id === sentenceId);
   if (!sentence) return '';
   const isAttr = !!entry.isAttributivo;
+  const sugg = suggerisciCapoAttributivo(sentence, entry);
   // Possibili "capi": tutte le altre voci logiche della stessa frase, ordinate per posizione
   const candidates = (sentence.logic || [])
     .filter(e => e.id !== entry.id)
@@ -36551,7 +36607,7 @@ function renderAttributivoBlock(sentenceId, entry) {
     }))
     .sort((a, b) => a.sortKey - b.sortKey);
   const opts = candidates.map(c =>
-    `<option value="${c.id}" ${entry.attribuitoA === c.id ? 'selected' : ''}>${escapeHtml(c.label)}</option>`
+    `<option value="${c.id}" ${entry.attribuitoA === c.id ? 'selected' : ''}>${sugg && sugg.capo.id === c.id ? '★ ' : ''}${escapeHtml(c.label)}</option>`
   ).join('');
   return `
     <div class="field-block attributivo-block ${isAttr ? 'is-active' : ''}" style="grid-column: 1/-1;">
@@ -36560,6 +36616,10 @@ function renderAttributivoBlock(sentenceId, entry) {
                onchange="updateLogicField('${sentenceId}','${entry.id}','isAttributivo', this.checked)">
         <span class="attributivo-label">⌖ <strong>Posizione attributiva</strong> · riferito a un altro sintagma</span>
       </label>
+      ${!isAttr && sugg && sugg.incastonato ? `
+        <div class="attributivo-hint"><span class="star">★</span> Questo blocco è <strong>incastonato</strong> dentro
+        «${escapeHtml((sugg.capo.phrase || sugg.capo.funzione || '').substring(0, 40))}»: probabile posizione attributiva.</div>
+      ` : ''}
       ${isAttr ? `
         <div class="attributivo-dropdown">
           <label class="field-block-label" style="font-size: 10px;">Sintagma a cui si riferisce</label>
@@ -36567,7 +36627,7 @@ function renderAttributivoBlock(sentenceId, entry) {
             <option value="">— scegli il sintagma capo —</option>
             ${opts || '<option disabled>nessun altro sintagma in questa frase</option>'}
           </select>
-          <div class="attributivo-hint">Indica il blocco di complemento a cui questo si lega (utile per ricostruire l'ordo verborum in italiano).</div>
+          <div class="attributivo-hint">${sugg ? `<span class="star">★</span> Suggerito: i token di questo blocco ${sugg.incastonato ? 'stanno dentro' : 'affiancano'} quel sintagma. ` : ''}Indica il blocco a cui questo si lega: nello <strong>stemma a barre</strong> comparirà rientrato sotto di lui.</div>
         </div>
       ` : ''}
     </div>`;

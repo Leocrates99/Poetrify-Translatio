@@ -64,6 +64,20 @@ Le voci logiche hanno ora il campo opzionale **`padre`**: l'id del sintagma
   i suoi contatori secondari attorno a queste regioni sono rumore. Fanno fede
   `node --check` e `brace_check` (invariato a 11).
 
+### Posizione attributiva rinforzata (classificazione + stemma — fatto)
+- **Riconoscimento**: `suggerisciCapoAttributivo` individua il capo probabile per
+  **incastonatura** (i token del complemento dentro lo span di un altro sintagma) o
+  adiacenza di parola. Nel blocco ⌖: hint «probabile posizione attributiva» già a
+  interruttore spento quando c'è incastonatura, e **★** sull'opzione suggerita nel
+  menù dei capi. Si suggerisce soltanto: la classificazione resta dello studente.
+- **Stemma a barre**: il **dato esplicito vince sull'euristica** — chi ha ⌖
+  `attribuitoA` valido sta sotto *quel* sintagma, **qualunque sia la sua funzione**
+  (anche un complemento di qualità, non solo attributo/apposizione/specificazione) e a
+  qualunque profondità; l'adiacenza resta solo come ripiego per i tre ruoli classici
+  senza legame esplicito. Marcatura «⌖» sulle barre attributive; registro dei «visti»
+  contro i legami circolari (`attribuitoA` non ha anti-ciclo): nessuna barra è emessa
+  due volte, un ciclo nei dati non blocca il rendering.
+
 ## 3 · Resta da fare (deciso dal docente: «in seguito»)
 
 1. **Guida «pro»**: agganciare il modello della guida alla versione completata nel vero
