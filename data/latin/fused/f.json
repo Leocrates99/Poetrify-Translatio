@@ -1,0 +1,10965 @@
+{
+"lat:faba": {
+"campi": [
+{
+"campo": "fava (legume)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"bean",
+"horse-bean (Vicia faba)"
+],
+"it": [
+"fava",
+"fava (pianta e seme, Vicia faba)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "oggetto a forma di fava",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"bean-shaped object",
+"grain (of wheat)",
+"pellet",
+"bead"
+],
+"it": [
+"oggetto a forma di fava",
+"chicco (di grano)",
+"pallina",
+"granello"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"bean",
+"pellet"
+],
+"it": [
+"fava",
+"chicco"
+]
+},
+"applicazione": [
+"Anche come unità di misura (Veg.). Ricorre in numerosi proverbi, es. istaec in me cudetur faba, «la toccherà a me pagarne le spese» (Ter.)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fabella": {
+"campi": [
+{
+"campo": "breve racconto",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"brief narrative",
+"short story",
+"little tale"
+],
+"it": [
+"raccontino",
+"breve narrazione",
+"storiella"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "favola, apologo",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"short fable",
+"apologue"
+],
+"it": [
+"favola",
+"apologo (breve favola esopica)"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "breve componimento teatrale",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"short play",
+"little drama"
+],
+"it": [
+"breve commedia",
+"breve pièce teatrale"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"short story",
+"fable",
+"short play"
+],
+"it": [
+"storiella",
+"favola",
+"breve commedia"
+]
+},
+"applicazione": [
+"Diminutivo di fabula. Proverbiale narrare fabellam asello, «raccontare una favola a un asinello» (Hor.)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fabius": {
+"campi": [
+{
+"campo": "gens romana Fabia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"Fabius (name of a Roman gens and its members)"
+],
+"it": [
+"Fabio (nome di una gens romana e dei suoi membri)"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Fabius",
+"(Roman gens)"
+],
+"it": [
+"Fabio",
+"(gens romana)"
+]
+},
+"applicazione": [
+"Nome proprio. Fra i membri illustri: Fabio Pittore (storico), Q. Fabio Massimo il Temporeggiatore (Cunctator) della seconda guerra punica, M. Fabio Quintiliano. Dall'aggettivo derivato Fabius / Fabianus, a, um = «dei Fabii, fabiano»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fabrica": {
+"campi": [
+{
+"campo": "officina, bottega",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"workshop",
+"artisan's shop",
+"factory"
+],
+"it": [
+"officina",
+"bottega (del fabbro, dell'artigiano)",
+"fabbrica"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "arte e mestiere dell'artigiano",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"craft",
+"trade",
+"art (esp. metalworking)",
+"workmanship"
+],
+"it": [
+"arte",
+"mestiere",
+"tecnica (spec. fabbrile, lavorazione dei metalli)",
+"abilità artigianale"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "costruzione, struttura",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"construction",
+"building",
+"structure",
+"any skilful fabric"
+],
+"it": [
+"costruzione",
+"edificio",
+"struttura",
+"fabbricato (ogni abile produzione)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "espediente, inganno",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"crafty device",
+"trick",
+"stratagem"
+],
+"it": [
+"espediente",
+"artificio",
+"stratagemma",
+"inganno"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"workshop",
+"craft",
+"construction",
+"trick"
+],
+"it": [
+"officina",
+"arte fabbrile",
+"costruzione",
+"espediente"
+]
+},
+"applicazione": [
+"Nella commedia (Plaut., Ter.) assume il senso di «trucco, macchinazione»: fabricam fingere, «ordire un inganno»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fabricatio": {
+"campi": [
+{
+"campo": "costruzione, fabbricazione",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a making",
+"framing",
+"structure",
+"manner of construction",
+"something made"
+],
+"it": [
+"il fabbricare",
+"costruzione",
+"struttura",
+"modo di costruzione"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "struttura del discorso",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"structure (of speech)",
+"skilful construction"
+],
+"it": [
+"struttura (del discorso)",
+"abile costruzione"
+]
+},
+"registro": "retorico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"structure",
+"construction",
+"a making"
+],
+"it": [
+"costruzione",
+"fabbricazione",
+"struttura"
+]
+},
+"applicazione": [
+"Al plurale (fabricationes) indica opere di costruzione, edifici (Vitr.)."
+],
+"divergenze": [
+"Whitaker aggiunge un senso tecnico raro 'factory-mark' (marchio di fabbrica, in Caligola) assente da L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fabricator": {
+"campi": [
+{
+"campo": "artefice, costruttore",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"artificer",
+"framer",
+"maker",
+"builder",
+"fabricator",
+"contriver"
+],
+"it": [
+"artefice",
+"costruttore",
+"fabbricatore",
+"artigiano",
+"creatore"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "autore, artefice (in senso figurato)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"author",
+"contriver (fig.)",
+"forger"
+],
+"it": [
+"autore",
+"artefice (fig.)",
+"fautore"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"maker",
+"builder",
+"fashioner",
+"artificer"
+],
+"it": [
+"artefice",
+"costruttore",
+"fabbricatore"
+]
+},
+"applicazione": [
+"fabricator mundi = il creatore/artefice del mondo (il demiurgo, Dio).",
+"Puo indicare anche il fabbricante di statue degli dei (deorum fabricator)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fabula": {
+"campi": [
+{
+"campo": "racconto, diceria, chiacchiera",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"narration",
+"narrative",
+"account",
+"story",
+"common talk",
+"the talk of the town",
+"conversation"
+],
+"it": [
+"racconto",
+"narrazione",
+"storia",
+"diceria",
+"chiacchiera",
+"conversazione"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "finzione narrativa, favola",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"fictitious narrative",
+"tale",
+"fable",
+"fictional story"
+],
+"it": [
+"finzione narrativa",
+"favola",
+"racconto fittizio",
+"apologo"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "opera drammatica, dramma",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"drama",
+"play",
+"stage-play"
+],
+"it": [
+"dramma",
+"opera teatrale",
+"commedia"
+]
+},
+"registro": "teatrale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"story",
+"tale",
+"fable",
+"play"
+],
+"it": [
+"racconto",
+"favola",
+"storia",
+"dramma"
+]
+},
+"applicazione": [
+"fabulae! (esclamazione) = sciocchezze!, storie!, fandonie!",
+"Lupus in fabula = si dice di chi compare proprio mentre se ne parla (come 'parli del diavolo...').",
+"in fabula esse / fabula fieri = essere sulla bocca di tutti, diventare oggetto di chiacchiere.",
+"fabulam dare / docere = mettere in scena un dramma."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:facetiae": {
+"campi": [
+{
+"campo": "arguzia, spirito",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"wit",
+"witty sayings",
+"witticisms",
+"pleasantry",
+"drollery",
+"humor",
+"facetiousness"
+],
+"it": [
+"arguzia",
+"spirito",
+"facezie",
+"battute di spirito",
+"umorismo",
+"spiritosaggini"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"wit",
+"witticisms",
+"jokes"
+],
+"it": [
+"arguzie",
+"facezie",
+"battute"
+]
+},
+"applicazione": [
+"Plurale con senso proprio: attestato solo al plurale, indica i motti e le battute di spirito."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:facilitas": {
+"campi": [
+{
+"campo": "facilita, agevolezza",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"easiness",
+"ease",
+"facility"
+],
+"it": [
+"facilita",
+"agevolezza",
+"scioltezza"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "affabilita, cortesia",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"good-nature",
+"courteousness",
+"affability",
+"willingness",
+"readiness"
+],
+"it": [
+"affabilita",
+"cortesia",
+"bonarieta",
+"disponibilita",
+"condiscendenza"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "scioltezza di eloquio",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"facility of speech",
+"fluency of expression"
+],
+"it": [
+"scioltezza d'eloquio",
+"facilita di parola",
+"fluidita"
+]
+},
+"registro": "retorico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "leggerezza, superficialita",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"levity",
+"heedlessness"
+],
+"it": [
+"leggerezza",
+"superficialita",
+"condiscendenza eccessiva"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"easiness",
+"good nature",
+"fluency",
+"levity"
+],
+"it": [
+"facilita",
+"affabilita",
+"cortesia",
+"leggerezza"
+]
+},
+"applicazione": [
+"Il valore morale (affabilita vs. leggerezza) si determina dal contesto: la stessa 'facilita' di carattere e virtu (cortesia) o difetto (arrendevolezza)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:facinus": {
+"campi": [
+{
+"campo": "misfatto, delitto",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"misdeed",
+"outrage",
+"villainy",
+"crime",
+"evil deed"
+],
+"it": [
+"misfatto",
+"delitto",
+"crimine",
+"scelleratezza",
+"malefatta"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "azione, impresa",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"deed",
+"act",
+"action",
+"exploit"
+],
+"it": [
+"azione",
+"atto",
+"impresa",
+"gesto"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"crime",
+"outrage",
+"deed",
+"misdeed"
+],
+"it": [
+"misfatto",
+"delitto",
+"crimine",
+"azione"
+]
+},
+"applicazione": [
+"In eta classica prevale il senso negativo (delitto); il valore neutro 'azione' si coglie da attributi (facinus maximum, praeclarissimum, pulcherrimum).",
+"O facinus indignum! = che azione indegna! (frequente in esclamazioni).",
+"facinus facere / committere / admittere = commettere un delitto."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:factio": {
+"campi": [
+{
+"campo": "fazione, partito",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"faction",
+"party",
+"political party",
+"clique",
+"cabal"
+],
+"it": [
+"fazione",
+"partito",
+"consorteria",
+"cricca",
+"spirito di parte"
+]
+},
+"registro": "politico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "gruppo, classe, scuola",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"company",
+"class",
+"order",
+"sect",
+"school"
+],
+"it": [
+"gruppo",
+"classe",
+"scuola",
+"setta",
+"associazione"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "il fare, facolta (giuridica)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"a making",
+"doing",
+"preparing",
+"right of making (a will)"
+],
+"it": [
+"il fare",
+"atto di fare",
+"facolta (di far testamento)"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "squadra di aurighi (nel circo)",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"team of charioteers",
+"racing faction"
+],
+"it": [
+"squadra di aurighi",
+"fazione del circo"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"party",
+"faction",
+"company",
+"clique"
+],
+"it": [
+"fazione",
+"partito",
+"gruppo",
+"cricca"
+]
+},
+"applicazione": [
+"testamenti factio = capacita/diritto di fare testamento (o di ricevere per testamento).",
+"Presso i Romani repubblicani 'factio' ha spesso connotazione negativa (oligarchia, congrega ristretta), in opposizione a 'optimates'."
+],
+"divergenze": [
+"Whitaker registra solo il valore politico e l'astratto 'partisanship' (spirito di parte); L&S esplicita anche il senso tecnico circense (squadre di aurighi per colore) e quello giuridico raro."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:factum": {
+"campi": [
+{
+"campo": "fatto, azione",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"fact",
+"deed",
+"act",
+"action",
+"achievement"
+],
+"it": [
+"fatto",
+"azione",
+"atto",
+"impresa"
+]
+},
+"registro": "generale",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"deed",
+"act",
+"fact",
+"achievement"
+],
+"it": [
+"fatto",
+"azione",
+"atto",
+"impresa"
+]
+},
+"applicazione": [
+"E il participio neutro sostantivato di 'facio': indica cio che e stato fatto, l'azione compiuta."
+],
+"divergenze": [
+"La voce di L&S e solo un rimando ('v. facio fin.'): i sensi qui riportati derivano da Whitaker."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:facula": {
+"campi": [
+{
+"campo": "piccola fiaccola",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"little torch",
+"small torch",
+"torch of splinter"
+],
+"it": [
+"fiaccola (piccola)",
+"fiaccolina",
+"facella",
+"torcia"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"little torch"
+],
+"it": [
+"fiaccola",
+"facella",
+"torcia"
+]
+},
+"applicazione": [
+"Uso figurato (Plauto): faculam adlucere = far luce con una fiaccolina (della Fortuna)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:facultas": {
+"campi": [
+{
+"campo": "possibilita, opportunita, facolta",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"capability",
+"possibility",
+"power",
+"means",
+"opportunity",
+"chance"
+],
+"it": [
+"possibilita",
+"facolta",
+"opportunita",
+"occasione",
+"potere (di fare)"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "abilita, capacita di fare",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"skill",
+"ability",
+"aptitude",
+"proficiency"
+],
+"it": [
+"abilita",
+"capacita",
+"attitudine",
+"perizia"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "abbondanza, mezzi, ricchezze",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"abundance",
+"plenty",
+"supply",
+"store",
+"resources",
+"riches",
+"property"
+],
+"it": [
+"abbondanza",
+"copia",
+"scorta",
+"mezzi",
+"risorse",
+"beni",
+"patrimonio"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"opportunity",
+"ability",
+"means",
+"resources"
+],
+"it": [
+"possibilita",
+"facolta",
+"abilita",
+"mezzi"
+]
+},
+"applicazione": [
+"Regge il genitivo del gerundio (facultas dicendi, fugae, manendi = la possibilita/capacita di parlare, di fuggire, di restare); anche ad + acc., ut + congiuntivo o (raro, poet.) l'infinito.",
+"facultas dicendi = padronanza oratoria; con ellissi di 'dicendi', 'facultas' vale da sola 'facondia'.",
+"Al plurale (facultates) assume di norma il senso concreto di 'beni, mezzi, patrimonio, sostanze'.",
+"pro facultate = in proporzione ai propri mezzi (o alle proprie capacita)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:facundia": {
+"campi": [
+{
+"campo": "eloquenza",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"eloquence",
+"fluency"
+],
+"it": [
+"eloquenza",
+"facondia",
+"scioltezza nel parlare"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"eloquence",
+"fluency"
+],
+"it": [
+"eloquenza",
+"facondia"
+]
+},
+"applicazione": [
+"Per metonimia puo designare la persona eloquente stessa (Ov. Pont. 1,2,69).",
+"Attestato soprattutto dall'eta augustea in poi; assente in Cicerone, Cesare e Livio."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:faecula": {
+"campi": [
+{
+"campo": "tartaro del vino (condimento/medicamento)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"burnt tartar",
+"salt of tartar",
+"lees of wine (used as a condiment or medicine)"
+],
+"it": [
+"tartaro (deposito crostoso del vino)",
+"feccia del vino cotta",
+"sale di tartaro"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"burnt tartar",
+"salt of tartar"
+],
+"it": [
+"tartaro",
+"sale di tartaro"
+]
+},
+"applicazione": [
+"Diminutivo di faex; impiegato come condimento oppure come farmaco."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:faeneratio": {
+"campi": [
+{
+"campo": "prestito a interesse",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a lending on interest",
+"usury",
+"money-lending"
+],
+"it": [
+"prestito a interesse",
+"usura",
+"attivita di prestatore"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"lending on interest",
+"usury"
+],
+"it": [
+"prestito a interesse",
+"usura"
+]
+},
+"applicazione": [],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:faenerator": {
+"campi": [
+{
+"campo": "prestatore di denaro",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"one who lends on interest",
+"money-lender",
+"capitalist"
+],
+"it": [
+"prestatore di denaro a interesse",
+"creditore",
+"capitalista"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"usurer"
+],
+"it": [
+"usuraio",
+"strozzino"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"money-lender",
+"usurer"
+],
+"it": [
+"prestatore di denaro",
+"usuraio"
+]
+},
+"applicazione": [
+"L&S segnala un'idea secondaria odiosa: il termine scivola facilmente verso 'usuraio'."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:faenilia": {
+"campi": [
+{
+"campo": "fienile",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a hay-loft"
+],
+"it": [
+"fienile",
+"deposito per il fieno"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"hay-loft"
+],
+"it": [
+"fienile"
+]
+},
+"applicazione": [
+"Sostantivo neutro plurale, derivato da faenum."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:faenum": {
+"campi": [
+{
+"campo": "fieno",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"hay"
+],
+"it": [
+"fieno"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "fieno greco (pianta)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"fenugreek"
+],
+"it": [
+"fieno greco"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"hay",
+"fenugreek"
+],
+"it": [
+"fieno",
+"fieno greco"
+]
+},
+"applicazione": [
+"Nell'espressione 'faenum Graecum' (anche in una sola parola, faenumgraecum) vale 'fieno greco'.",
+"Proverbiale: 'faenum habet in cornu' = 'e un tipo pericoloso' (l'immagine e quella del bue incline a incornare, con le corna fasciate di fieno) (Hor. S. 1,4,34)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:faenus": {
+"campi": [
+{
+"campo": "interesse (frutto del capitale prestato)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"interest",
+"usury",
+"the proceeds of capital lent out"
+],
+"it": [
+"interesse",
+"frutto del capitale prestato",
+"usura"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "capitale prestato a interesse",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"capital lent on interest"
+],
+"it": [
+"capitale dato in prestito a interesse"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"seed (that lent to the soil)"
+],
+"it": [
+"seme (cio che si affida in prestito alla terra)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "guadagno, profitto",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"gain",
+"profit",
+"advantage"
+],
+"it": [
+"guadagno",
+"profitto",
+"vantaggio"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"interest",
+"profit",
+"gain"
+],
+"it": [
+"interesse",
+"profitto",
+"guadagno"
+]
+},
+"applicazione": [
+"Etimologicamente 'cio che e prodotto' (radice fe-/feo): di qui il senso originario di frutto/interesse del denaro, con l'immagine della terra che rende 'cum faenore', con usura.",
+"Locuzioni: 'magno faenore' = con grande profitto; 'grandi faenore' = a interesse elevato."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:faex": {
+"campi": [
+{
+"campo": "feccia, sedimento, deposito",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"grounds",
+"sediment",
+"lees",
+"dregs of liquids"
+],
+"it": [
+"feccia",
+"sedimento",
+"deposito (di liquidi)",
+"fondo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"burnt tartar",
+"salt of tartar"
+],
+"it": [
+"tartaro",
+"sale di tartaro"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"the brine of pickles"
+],
+"it": [
+"salamoia (delle conserve)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"sediment, dregs, impurities of other things"
+],
+"it": [
+"impurita, scorie (di sale, rame, antimonio)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"paint or wash for the face",
+"rouge"
+],
+"it": [
+"belletto",
+"cosmetico per il viso"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "feccia della societa, plebaglia",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"dregs of society",
+"the lowest class"
+],
+"it": [
+"feccia del popolo",
+"plebaglia",
+"infima parte della societa"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"dregs",
+"sediment",
+"lees"
+],
+"it": [
+"feccia",
+"sedimento",
+"deposito"
+]
+},
+"applicazione": [
+"Scherzosamente, gli ultimi resti del proprio denaro, il fondo della borsa (Mart. 14,13,1).",
+"'de faece haurire' = attingere dal fondo, cioe dalla parte peggiore (Cic. Brut. 69,244)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fagus": {
+"campi": [
+{
+"campo": "faggio (albero)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a beech-tree"
+],
+"it": [
+"faggio"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"beech tree"
+],
+"it": [
+"faggio"
+]
+},
+"applicazione": [
+"Nome femminile della seconda declinazione, come di norma i nomi d'albero."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fala": {
+"campi": [
+{
+"campo": "impalcatura, torre d'assedio",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a scaffolding of boards or planks",
+"a scaffold",
+"a siege structure from which missiles were thrown"
+],
+"it": [
+"impalcatura di tavole",
+"palco di legno",
+"torre d'assedio (da cui si scagliavano proiettili contro la citta)"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "colonna della spina del Circo",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"one of the seven wooden pillars in the spina of the Circus"
+],
+"it": [
+"una delle sette colonne di legno nella spina del Circo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"wooden tower",
+"wooden pillar"
+],
+"it": [
+"torre di legno",
+"colonna di legno"
+]
+},
+"applicazione": [
+"Proverbiale: 'subire sub falas' (Plaut. Most. 2,1,10)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:falarica": {
+"campi": [
+{
+"campo": "arma da lancio incendiaria",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"falarica",
+"heavy incendiary missile hurled by catapult (wrapped with tow and pitch and set on fire)"
+],
+"it": [
+"falarica (dardo pesante avvolto di stoppa e pece, incendiato e scagliato dalla catapulta)",
+"giavellotto incendiario da assedio"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"similar missile thrown by hand",
+"hand-hurled spear"
+],
+"it": [
+"falarica lanciata a mano",
+"asta simile scagliata a mano"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"falarica",
+"heavy incendiary missile",
+"siege javelin"
+],
+"it": [
+"falarica",
+"dardo incendiario",
+"giavellotto da assedio"
+]
+},
+"applicazione": [
+"Termine tecnico dell'arte militare (Livio, Virgilio): l'incendiaria scagliata dalla catapulta e, per estensione, quella lanciata a mano."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:falcarius": {
+"campi": [
+{
+"campo": "artigiano di falci",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"sickle-maker",
+"scythe-maker"
+],
+"it": [
+"fabbricante di falci",
+"fabbro di falci e roncole"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"sickle-maker",
+"scythe-maker"
+],
+"it": [
+"fabbricante di falci",
+"artefice di falci"
+]
+},
+"applicazione": [
+"In Cicerone (Cat. 1,4,8) inter falcarios indica il quartiere/vicolo dei fabbricanti di falci a Roma."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fallacia": {
+"campi": [
+{
+"campo": "inganno, artificio",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"deceit",
+"trick",
+"artifice",
+"stratagem",
+"craft",
+"intrigue"
+],
+"it": [
+"inganno",
+"trucco",
+"artificio",
+"stratagemma",
+"raggiro",
+"frode"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "carattere ingannevole (di cose)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"deceptiveness",
+"misleading quality (of a thing)"
+],
+"it": [
+"insidia",
+"carattere ingannevole (di una cosa)",
+"inganno insito"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"deceit",
+"trick",
+"stratagem"
+],
+"it": [
+"inganno",
+"trucco",
+"raggiro"
+]
+},
+"applicazione": [
+"In Cicerone attestata solo al plurale; il singolare abbonda in Plauto e Terenzio, nel linguaggio della commedia (le fallaciae del servo).",
+"Proverbiale: fallacia alia aliam trudit (Ter. And.), un inganno ne trascina un altro."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:falsum": {
+"campi": [
+{
+"campo": "falsità, menzogna",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"untruth",
+"falsehood",
+"fraud",
+"deceit"
+],
+"it": [
+"falsità",
+"menzogna",
+"il falso",
+"frode",
+"inganno"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"falsehood",
+"untruth",
+"fraud"
+],
+"it": [
+"falsità",
+"menzogna",
+"il falso"
+]
+},
+"applicazione": [
+"Sostantivato del participio falsus; spesso contrapposto a verum (vera an falsa; vero distinguere falsum)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:falx": {
+"campi": [
+{
+"campo": "falce (attrezzo agricolo)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"sickle",
+"reaping-hook",
+"pruning-hook",
+"scythe",
+"pruning knife"
+],
+"it": [
+"falce",
+"falcetto",
+"roncola",
+"falce potatoia"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "falce da guerra / uncino da assedio",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"military implement shaped like a sickle",
+"hook used in sieges to pull down walls",
+"curved blade",
+"chariot scythe"
+],
+"it": [
+"uncino falcato da assedio (per abbattere le mura)",
+"falce murale",
+"lama ricurva",
+"falce dei carri falcati"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"sickle",
+"scythe",
+"siege hook"
+],
+"it": [
+"falce",
+"roncola",
+"uncino da assedio"
+]
+},
+"applicazione": [
+"muralis falx (Caes. B.G. 3,14): l'uncino falcato applicato a pertiche per demolire le mura.",
+"Al plurale designa anche le falci montate sui carri da guerra (currus falcati)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fama": {
+"campi": [
+{
+"campo": "voce, diceria, notizia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"talk of the multitude",
+"rumor",
+"report",
+"common talk",
+"saying",
+"news"
+],
+"it": [
+"voce",
+"diceria",
+"notizia",
+"il si dice",
+"rumore che circola"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"tradition",
+"handed-down account"
+],
+"it": [
+"tradizione",
+"racconto tramandato",
+"leggenda"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "reputazione, fama",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"public opinion",
+"reputation",
+"character",
+"good name",
+"fame"
+],
+"it": [
+"opinione pubblica",
+"reputazione",
+"nome",
+"fama",
+"buona fama"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"ill repute",
+"bad reputation",
+"scandal"
+],
+"it": [
+"cattiva fama",
+"discredito",
+"malignità"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"rumor",
+"reputation",
+"fame"
+],
+"it": [
+"voce, diceria",
+"reputazione",
+"fama"
+]
+},
+"applicazione": [
+"Costruzioni tipiche: ut fama est / fama ferebat, seguite da prop. infinitiva o da de + ablativo per il contenuto della notizia.",
+"La qualita (buona o cattiva) e resa da bona/mala fama; bona fama vale spesso 'buon nome, gloria'.",
+"Personificata come dea Fama, figlia della Terra, velocissima e onniveggente (Verg. Aen. 4,173 ss.)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fames": {
+"campi": [
+{
+"campo": "fame, appetito",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"hunger"
+],
+"it": [
+"fame",
+"appetito"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "carestia, miseria",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"famine",
+"dearth"
+],
+"it": [
+"carestia",
+"penuria di viveri"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"poverty",
+"indigence",
+"want"
+],
+"it": [
+"indigenza",
+"miseria",
+"bisogno"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "brama, avidita",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"violent longing",
+"greediness",
+"greed",
+"avidity",
+"craving"
+],
+"it": [
+"brama",
+"avidita",
+"sete (di ricchezze)",
+"cupidigia"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "poverta di espressione",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"poverty of expression",
+"bareness of style"
+],
+"it": [
+"povertà espressiva",
+"aridità di stile"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"hunger",
+"famine",
+"greed"
+],
+"it": [
+"fame",
+"carestia",
+"brama"
+]
+},
+"applicazione": [
+"Ablativo poetico fame (Lucr., Verg. Aen. 6,421).",
+"In senso traslato regge il genitivo dell'oggetto bramato: auri fames, la fame dell'oro (celebre auri sacra fames, Verg. Aen. 3,57).",
+"Personificata come dea Fames (Verg. Aen. 6,276; Ov. Met. 8,784)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:familiaritas": {
+"campi": [
+{
+"campo": "intimità, amicizia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"familiarity",
+"intimacy",
+"familiar intercourse",
+"friendship",
+"intimate acquaintance"
+],
+"it": [
+"intimità",
+"familiarità",
+"dimestichezza",
+"amicizia intima",
+"consuetudine"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "cerchia degli intimi",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"intimate acquaintances",
+"close friends",
+"inner circle"
+],
+"it": [
+"gli intimi",
+"gli amici stretti",
+"la cerchia dei familiari"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"intimacy",
+"close friendship",
+"familiarity"
+],
+"it": [
+"intimità",
+"amicizia intima",
+"dimestichezza"
+]
+},
+"applicazione": [
+"Locuzioni frequenti: summa familiaritas (grande intimità); in alicuius familiaritatem venire / se insinuare (entrare nell'intimità di qualcuno).",
+"Al plurale concreto vale gli amici, gli intimi (Suet. Tib. 51)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:famula": {
+"campi": [
+{
+"campo": "serva, ancella",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"female slave",
+"maid",
+"handmaiden",
+"maid-servant"
+],
+"it": [
+"schiava",
+"serva",
+"ancella",
+"domestica"
+]
+},
+"registro": "concreto",
+"fonti": [
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"temple attendant",
+"handmaid of a deity"
+],
+"it": [
+"ancella del tempio",
+"serva di una divinità"
+]
+},
+"registro": "religioso",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"female slave",
+"maid",
+"handmaiden"
+],
+"it": [
+"serva",
+"ancella",
+"schiava"
+]
+},
+"applicazione": [
+"Femminile di famulus; in poesia anche l'ancella votata al servizio di un dio o di un tempio."
+],
+"divergenze": [
+"L&S rinvia soltanto alla voce famulus (II.); le glosse specifiche, incluso l'uso religioso di 'ancella del tempio', vengono da Whitaker."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:famulatus": {
+"campi": [
+{
+"campo": "servitù, schiavitù",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"servitude",
+"slavery",
+"service",
+"obedience"
+],
+"it": [
+"servitù",
+"schiavitù",
+"condizione servile",
+"asservimento"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"servitude",
+"slavery",
+"service"
+],
+"it": [
+"servitù",
+"schiavitù",
+"asservimento"
+]
+},
+"applicazione": [
+"Costruzione tipica in famulatu esse, essere in condizione di servitù; usato anche in senso morale (famulatus voluptati, asservimento al piacere, Cic. Off. 3,33,117)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fanum": {
+"campi": [
+{
+"campo": "luogo sacro",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"sanctuary",
+"temple",
+"shrine",
+"consecrated place"
+],
+"it": [
+"santuario",
+"tempio",
+"luogo consacrato a una divinità"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"sanctuary",
+"temple",
+"shrine"
+],
+"it": [
+"santuario",
+"tempio"
+]
+},
+"applicazione": [
+"Propriamente il luogo consacrato (locus templo effatus, sacratus), spesso in coppia con aris, delubris, templis.",
+"Regge il genitivo della divinità: fanum Junonis, Herculis, Dianae."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:far": {
+"campi": [
+{
+"campo": "cereale (farro)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"spelt",
+"husked wheat",
+"a sort of grain"
+],
+"it": [
+"farro",
+"spelta"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"corn",
+"grain (in general)"
+],
+"it": [
+"biade",
+"messi",
+"frumento (al plurale, in senso collettivo)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "semola, farina grossa",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"coarse meal",
+"grits"
+],
+"it": [
+"semola",
+"farina grossa",
+"farro macinato"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "farro sacrificale",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"sacrificial meal",
+"salted meal (mola salsa)"
+],
+"it": [
+"farro sacrificale",
+"farro salato dei sacrifici (mola salsa)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"spelt",
+"grain",
+"coarse meal",
+"grits"
+],
+"it": [
+"farro",
+"biade",
+"semola"
+]
+},
+"applicazione": [
+"Al plurale (farra) vale spesso 'biade, messi, frumento' in senso collettivo.",
+"far pium / salsa farra = la mola salsa, il farro salato usato nei sacrifici e nelle nozze.",
+"far caninum (Giov.) = pane grossolano, 'pane da cani'."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:farina": {
+"campi": [
+{
+"campo": "farina",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"ground corn",
+"meal",
+"flour"
+],
+"it": [
+"farina",
+"farina di grano"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "polvere, pulviscolo",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"dust",
+"powder (of a substance ground fine)"
+],
+"it": [
+"polvere",
+"pulviscolo (di sostanze polverizzate)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "natura, indole",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"stuff (one is made of)",
+"nature",
+"quality"
+],
+"it": [
+"stoffa",
+"pasta (di cui uno è fatto)",
+"natura",
+"indole"
+]
+},
+"registro": "figurato",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"flour",
+"meal",
+"powder"
+],
+"it": [
+"farina",
+"polvere"
+]
+},
+"applicazione": [
+"nostrae farinae (Pers.) = 'della nostra pasta, della nostra risma'."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:farrago": {
+"campi": [
+{
+"campo": "foraggio misto",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"mixed fodder for cattle",
+"mash"
+],
+"it": [
+"farragine",
+"foraggio misto (per il bestiame)",
+"miscuglio di biade da foraggio"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "miscuglio, guazzabuglio",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"medley",
+"hodge-podge",
+"mixture"
+],
+"it": [
+"miscuglio",
+"guazzabuglio",
+"farragine (di cose disparate)"
+]
+},
+"registro": "figurato",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "inezia, bagatella",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"trifle"
+],
+"it": [
+"inezia",
+"bagatella",
+"cosa da poco"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"mixed fodder",
+"medley",
+"hodge-podge"
+],
+"it": [
+"foraggio misto",
+"miscuglio",
+"guazzabuglio"
+]
+},
+"applicazione": [],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fartor": {
+"campi": [
+{
+"campo": "ingrassatore di polli",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"stuffer",
+"fattener of fowls",
+"poulterer"
+],
+"it": [
+"ingrassatore di polli",
+"chi rimpinza il pollame",
+"pollaiolo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "salsicciaio",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"sausage-maker"
+],
+"it": [
+"salsicciaio"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "suggeritore di nomi (nomenclatore)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"prompter of names",
+"one who whispers the names of visitors to a candidate"
+],
+"it": [
+"suggeritore di nomi",
+"chi sussurra all'orecchio del candidato i nomi dei salutatori (nomenclatore)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"stuffer/fattener of fowls",
+"poulterer"
+],
+"it": [
+"ingrassatore di polli",
+"pollaiolo"
+]
+},
+"applicazione": [
+"Il senso di 'salsicciaio' (Plaut. Truc.) è controverso nella tradizione del testo."
+],
+"divergenze": [
+"Whitaker non registra il lemma; la resa poggia interamente su L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fascia": {
+"campi": [
+{
+"campo": "fascia, benda",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"band",
+"bandage",
+"swathe",
+"girth",
+"strip"
+],
+"it": [
+"fascia",
+"benda",
+"fasciatura",
+"striscia"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"fillet",
+"headband",
+"diadem",
+"sash"
+],
+"it": [
+"benda per il capo",
+"fascia (per il seno o la fronte)",
+"diadema",
+"sciarpa"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "usi traslati e tecnici",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"streak of cloud",
+"band of cloud"
+],
+"it": [
+"striscia di nuvole",
+"fascia di nubi"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"casing of a door",
+"listel (band round a pillar)"
+],
+"it": [
+"cornice, stipite di una porta",
+"listello (fascia di una colonna)"
+]
+},
+"registro": "tecnico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"zone (of the earth)"
+],
+"it": [
+"zona, fascia (della terra)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"band",
+"bandage",
+"fillet"
+],
+"it": [
+"fascia",
+"benda"
+]
+},
+"applicazione": [
+"non es nostrae fasciae (Petr.) = 'non sei della nostra risma/condizione'."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fasciculus": {
+"campi": [
+{
+"campo": "fascetto, pacchetto",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"small bundle",
+"packet",
+"little bundle"
+],
+"it": [
+"fascetto",
+"pacchetto",
+"fascicolo (di lettere, libri)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"bunch (of flowers)",
+"nosegay"
+],
+"it": [
+"mazzetto (di fiori)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"small bundle",
+"packet",
+"bunch"
+],
+"it": [
+"fascetto",
+"pacchetto",
+"mazzetto"
+]
+},
+"applicazione": [
+"Frequente per 'pacco, plico di lettere' (fasciculus epistolarum, litterarum)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fascinum": {
+"campi": [
+{
+"campo": "malia, malocchio",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"bewitching",
+"witchcraft",
+"the evil eye"
+],
+"it": [
+"malia",
+"malocchio",
+"incantesimo",
+"stregoneria"
+]
+},
+"registro": "magico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "membro virile (fallo)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"membrum virile",
+"phallus (as amulet)"
+],
+"it": [
+"membro virile",
+"fallo (portato come amuleto contro il malocchio)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "conchiglia marina",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"a kind of sea-shell"
+],
+"it": [
+"una specie di conchiglia marina"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"bewitching",
+"witchcraft",
+"phallus (amulet)"
+],
+"it": [
+"malia",
+"malocchio",
+"fallo"
+]
+},
+"applicazione": [
+"Anche nella forma maschile fascinus, i; personificato come divinità (Fascinus, il Fallo, Plin.)."
+],
+"divergenze": [
+"Whitaker non registra il lemma; la resa poggia interamente su L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fasciola": {
+"campi": [
+{
+"campo": "fascetta, piccola benda",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"small bandage (for the legs)",
+"little bandage"
+],
+"it": [
+"fascetta",
+"piccola benda (per le gambe)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"little bandage",
+"small bandage for the legs"
+],
+"it": [
+"fascetta",
+"piccola benda"
+]
+},
+"applicazione": [],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fascis": {
+"campi": [
+{
+"campo": "fascio, fastello",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"bundle (of wood, twigs, reeds)",
+"fagot",
+"fascine"
+],
+"it": [
+"fascio",
+"fastello (di legna, sterpi, canne)",
+"fascina"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"packet",
+"parcel"
+],
+"it": [
+"pacco",
+"involto",
+"plico"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"burden",
+"load"
+],
+"it": [
+"peso",
+"carico",
+"fardello"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "fasci littori",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"fasces (a bundle of rods with an axe, carried by lictors before the highest magistrates)"
+],
+"it": [
+"fasci (littori: verghe con la scure, portati dai littori davanti ai sommi magistrati)"
+]
+},
+"registro": "politico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "carica, magistratura",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"high office",
+"the consulship",
+"magistracy",
+"power"
+],
+"it": [
+"alta carica",
+"magistratura",
+"consolato",
+"potere"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"bundle",
+"fagot",
+"fasces",
+"high office"
+],
+"it": [
+"fascio",
+"fastello",
+"fasci littori",
+"carica"
+]
+},
+"applicazione": [
+"Al plurale (fasces) indica i fasci littori, insegna dei sommi magistrati (verghe e scure).",
+"fasces submittere / demittere = abbassare i fasci in segno di rispetto o di riconosciuta inferiorità.",
+"Per metonimia (poet.) fasces = la suprema carica, spec. il consolato."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fastidium": {
+"campi": [
+{
+"campo": "nausea, disgusto (spec. per il cibo)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"loathing",
+"squeamishness",
+"distaste for food",
+"nausea"
+],
+"it": [
+"nausea",
+"disgusto",
+"ripugnanza per il cibo",
+"inappetenza"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"daintiness",
+"fastidious taste",
+"delicacy"
+],
+"it": [
+"schifiltosità",
+"gusto difficile",
+"delicatezza di palato"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "avversione, ripugnanza, disgusto (morale)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"dislike",
+"aversion",
+"disgust",
+"fastidiousness"
+],
+"it": [
+"avversione",
+"ripugnanza",
+"disgusto",
+"insofferenza"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "sdegno, alterigia, superbia",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"scornful contempt",
+"haughtiness",
+"pride"
+],
+"it": [
+"sdegno sprezzante",
+"alterigia",
+"superbia"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"loathing",
+"disgust",
+"fastidiousness",
+"haughtiness"
+],
+"it": [
+"nausea",
+"avversione",
+"schifiltosità",
+"alterigia"
+]
+},
+"applicazione": [
+"Spesso al plurale (fastidia) con senso proprio: le ripugnanze, i disgusti (Hor. S. 2,4,78; Verg. E. 4,61).",
+"In senso morale regge il genitivo della cosa sgradita (fastidium audiendi, domesticarum rerum)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fastigium": {
+"campi": [
+{
+"campo": "frontone, timpano, colmo del tetto",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"gable",
+"pediment",
+"gable end"
+],
+"it": [
+"frontone",
+"timpano",
+"fastigio"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"roof",
+"roof of a house"
+],
+"it": [
+"tetto",
+"colmo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "sommità, cima, vetta (estremità)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"top",
+"height",
+"summit",
+"sharp point",
+"tip"
+],
+"it": [
+"sommità",
+"cima",
+"vetta",
+"punta"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"lower part",
+"depth"
+],
+"it": [
+"parte inferiore",
+"profondità (di una fossa)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "pendio, declivio, inclinazione",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"slope",
+"declivity",
+"descent"
+],
+"it": [
+"pendio",
+"declivio",
+"inclinazione"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "apice, culmine, dignità suprema",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"highest degree",
+"summit",
+"exalted rank",
+"dignity"
+],
+"it": [
+"apice",
+"culmine",
+"rango elevato",
+"dignità"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "punto principale, tratto essenziale (di discorso o genere)",
+"rank": 5,
+"sensi": [
+{
+"tr": {
+"en": [
+"leading point",
+"chief head",
+"principal kind"
+],
+"it": [
+"punto capitale",
+"tratto essenziale",
+"sorta principale"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"gable",
+"summit",
+"slope",
+"pinnacle"
+],
+"it": [
+"frontone",
+"sommità",
+"pendio",
+"apice"
+]
+},
+"applicazione": [
+"Metonimicamente vale 'tetto' (Verg. A. 8,491); il frontone come segno d'onore concesso a Cesare (fastigium in domo).",
+"'summa fastigia rerum' (Verg. A. 1,342) = i tratti essenziali, i punti salienti."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fatigatio": {
+"campi": [
+{
+"campo": "stanchezza, spossatezza, fatica",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"weariness",
+"fatigue",
+"exhaustion"
+],
+"it": [
+"stanchezza",
+"spossatezza",
+"sfinimento"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "scherno, canzonatura",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"jeer",
+"banter",
+"raillery"
+],
+"it": [
+"scherno",
+"canzonatura",
+"beffa"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"weariness",
+"fatigue",
+"exhaustion"
+],
+"it": [
+"stanchezza",
+"spossatezza",
+"fatica"
+]
+},
+"applicazione": [
+"Più forte di lassitudo; propriamente post-augusteo (in Cic. e Caes. prevale defatigatio)."
+],
+"divergenze": [
+"Whitaker aggiunge un uso '(anche del terreno)', esaurimento del suolo, che non emerge esplicitamente dai loci citati da L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fatuitas": {
+"campi": [
+{
+"campo": "stoltezza, sciocchezza",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"foolishness",
+"folly",
+"silliness",
+"fatuity"
+],
+"it": [
+"stoltezza",
+"sciocchezza",
+"stupidità",
+"fatuità"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"foolishness",
+"folly"
+],
+"it": [
+"stoltezza",
+"sciocchezza"
+]
+},
+"applicazione": [],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fatum": {
+"campi": [
+{
+"campo": "fato, destino",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"fate",
+"destiny",
+"the ordained order of causes"
+],
+"it": [
+"fato",
+"destino",
+"sorte prestabilita"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "sciagura, rovina, morte",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"doom",
+"death",
+"calamity",
+"mishap",
+"natural term of life"
+],
+"it": [
+"rovina",
+"morte",
+"sciagura",
+"fine naturale della vita"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "volontà degli dèi; le Parche",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"will of the gods",
+"the Fates (personified)"
+],
+"it": [
+"volere degli dèi",
+"le Parche (personificate)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "oracolo, vaticinio, predizione",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"prophetic declaration",
+"oracle",
+"prediction",
+"utterance"
+],
+"it": [
+"responso profetico",
+"oracolo",
+"vaticinio",
+"predizione"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"fate",
+"destiny",
+"doom",
+"oracle"
+],
+"it": [
+"fato",
+"destino",
+"rovina",
+"oracolo"
+]
+},
+"applicazione": [
+"Termine filosofico (Cic.) per l'εἱμαρμένη stoica: l'ordine e la serie eterna delle cause.",
+"Costruito con ut / ne (fato natus est ut...); al plurale Fata = le Parche, divinità personificate.",
+"Etimologicamente 'ciò che è detto' (da for): di qui il senso originario di oracolo."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fauces": {
+"campi": [
+{
+"campo": "gola, fauci, gozzo",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"throat",
+"gullet",
+"pharynx",
+"jaws"
+],
+"it": [
+"gola",
+"fauci",
+"gozzo",
+"faringe"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"jaws (of danger)",
+"grip",
+"clutches"
+],
+"it": [
+"morsa",
+"stretta",
+"artigli (fig.)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "passo, gola, stretto, imboccatura",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"narrow pass",
+"defile",
+"inlet",
+"outlet",
+"entrance",
+"mouth"
+],
+"it": [
+"passo stretto",
+"gola",
+"stretto",
+"imboccatura",
+"ingresso"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "voragine, abisso (della terra)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"gulf",
+"abyss",
+"jaws of the earth"
+],
+"it": [
+"voragine",
+"abisso",
+"fauci della terra"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"throat",
+"gullet",
+"narrow pass",
+"gorge"
+],
+"it": [
+"gola",
+"fauci",
+"passo",
+"stretto"
+]
+},
+"applicazione": [
+"Sostantivo di regola plurale (fauces, faucium); nominativo sing. faux raro e tardo, ablativo sing. fauce nei poeti.",
+"In senso figurato 'faucibus teneri / premi' = essere alla gola, stretto d'assedio; 'ex faucibus eripere' = strappare dalle fauci del pericolo."
+],
+"divergenze": [
+"Whitaker non fornisce glosse per questo lemma: la resa si fonda interamente su L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:faunus": {
+"campi": [
+{
+"campo": "Fauno (divinità)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"Faunus",
+"rustic god",
+"deity of forest and herdsmen"
+],
+"it": [
+"Fauno",
+"dio rustico",
+"nume dei campi e dei pastori"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "i Fauni (divinità silvestri)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"Fauns",
+"sylvan deities",
+"Pans"
+],
+"it": [
+"i Fauni",
+"divinità silvestri",
+"Pani"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Faunus",
+"rustic god",
+"Fauns"
+],
+"it": [
+"Fauno",
+"dio rustico",
+"Fauni"
+]
+},
+"applicazione": [
+"Figlio di Pico, nipote di Saturno, padre di Latino; protettore dell'agricoltura e dei pastori e datore di oracoli.",
+"Assimilato a Pan (con corna e piedi caprini); al plurale Fauni = i Pani, divinità dei boschi."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:faustitas": {
+"campi": [
+{
+"campo": "prosperità, felicità, condizione favorevole",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"happy condition",
+"favorable circumstances",
+"happiness",
+"prosperity"
+],
+"it": [
+"prosperità",
+"felicità",
+"condizione propizia",
+"buona sorte"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "Faustità (dea della fertilità)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"Faustitas (personified Fertility of the soil)"
+],
+"it": [
+"Faustità (Fertilità del suolo personificata)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"prosperity",
+"happiness",
+"Faustitas"
+],
+"it": [
+"prosperità",
+"felicità",
+"Faustità"
+]
+},
+"applicazione": [
+"Attestato solo in Hor. C. 4,5,18 (alma Faustitas), come fertilità/prosperità del suolo personificata."
+],
+"divergenze": [
+"Whitaker non fornisce glosse: la resa si fonda su L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fautor": {
+"campi": [
+{
+"campo": "sostenitore, fautore, patrono",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"favorer",
+"furtherer",
+"promoter",
+"patron",
+"maintainer"
+],
+"it": [
+"fautore",
+"sostenitore",
+"promotore",
+"patrono"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"admirer",
+"supporter",
+"partisan"
+],
+"it": [
+"ammiratore",
+"partigiano",
+"seguace"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"favorer",
+"promoter",
+"patron",
+"supporter"
+],
+"it": [
+"fautore",
+"sostenitore",
+"patrono",
+"promotore"
+]
+},
+"applicazione": [
+"Regge il genitivo (fautor dignitatis, laudis) o il dativo (fautorem tibi me); anche in uso assoluto.",
+"Forma non contratta arcaica favitor."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fautrix": {
+"campi": [
+{
+"campo": "protettrice, patrona, sostenitrice",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"patroness",
+"protectress",
+"female supporter"
+],
+"it": [
+"protettrice",
+"patrona",
+"sostenitrice"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"patroness",
+"protectress",
+"supporter"
+],
+"it": [
+"protettrice",
+"patrona",
+"sostenitrice"
+]
+},
+"applicazione": [
+"Femminile di fautor; regge il genitivo o il dativo (fautrix suorum; auctoritati fautrix), anche con in e ablativo."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:favilla": {
+"campi": [
+{
+"campo": "cenere ardente, braci",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"hot cinders",
+"glowing ashes",
+"embers"
+],
+"it": [
+"cenere ardente",
+"braci",
+"faville"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"the still-glowing ashes of the dead"
+],
+"it": [
+"cenere ancora calda del rogo",
+"ceneri del defunto"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "scintilla, primo germe",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a glimmering spark",
+"beginning",
+"origin"
+],
+"it": [
+"scintilla",
+"primo germe",
+"inizio"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"glowing ashes",
+"embers",
+"spark"
+],
+"it": [
+"cenere ardente",
+"braci",
+"scintilla"
+]
+},
+"applicazione": [
+"Voce prevalentemente poetica e propria della prosa post-augustea.",
+"Al plurale spesso per la cenere ancora calda del rogo funebre."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:favonius": {
+"campi": [
+{
+"campo": "vento di ponente (Zefiro)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the west wind",
+"Zephyr"
+],
+"it": [
+"Favonio",
+"vento di ponente",
+"zefiro"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "nome proprio di persona",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"Favonius (a Roman name; esp. M. Favonius, imitator of Cato)"
+],
+"it": [
+"Favonio (nome romano; spec. M. Favonio, imitatore di Catone)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"west wind",
+"Zephyr"
+],
+"it": [
+"Favonio",
+"vento di ponente"
+]
+},
+"applicazione": [
+"Vento primaverile che promuoveva la vegetazione, identificato con lo Zephyrus greco."
+],
+"divergenze": [
+"Whitaker aggiunge la glossa moderna «hair dryer» (asciugacapelli, per l'omonimia con il föhn): estranea al latino e qui ignorata."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:favor": {
+"campi": [
+{
+"campo": "favore, benevolenza",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"favor",
+"good-will",
+"inclination",
+"partiality"
+],
+"it": [
+"favore",
+"benevolenza",
+"simpatia",
+"parzialità"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"favor of the law (favoris causa; favor libertatis)"
+],
+"it": [
+"favore (del diritto)",
+"favor libertatis"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "applauso, acclamazione",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"acclamation",
+"applause",
+"approbation"
+],
+"it": [
+"applauso",
+"acclamazione",
+"consenso"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"favor",
+"good-will",
+"applause"
+],
+"it": [
+"favore",
+"benevolenza",
+"applauso"
+]
+},
+"applicazione": [
+"Spesso favore politico o di parte (populi, plebis, militum favor).",
+"«favoris causa»: laddove la legge propende per un dato diritto o istituto."
+],
+"divergenze": [
+"Whitaker registra anche «bias» (parzialità), sfumatura già compresa nel favore di parte di L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:favus": {
+"campi": [
+{
+"campo": "favo (di miele)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a honey-comb"
+],
+"it": [
+"favo",
+"favo di miele"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "pietra esagonale da pavimento",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a hexagonal stone in a pavement"
+],
+"it": [
+"pietra esagonale (di pavimentazione)",
+"mattonella esagonale"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"honeycomb"
+],
+"it": [
+"favo"
+]
+},
+"applicazione": [],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fax": {
+"campi": [
+{
+"campo": "torcia, fiaccola",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"torch",
+"firebrand",
+"flambeau",
+"link"
+],
+"it": [
+"torcia",
+"fiaccola",
+"tizzone"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"nuptial torch; (by metonymy) wedding, marriage"
+],
+"it": [
+"fiaccola nuziale",
+"(per metonimia) nozze",
+"matrimonio"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"funeral torch"
+],
+"it": [
+"fiaccola funebre"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "incitamento, ardore, causa di rovina",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"that which inflames or incites",
+"incitement",
+"stimulus",
+"cause of ruin"
+],
+"it": [
+"incitamento",
+"stimolo",
+"sprone",
+"causa di rovina"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"flame of love",
+"fire of passion",
+"torment"
+],
+"it": [
+"fiamma d'amore",
+"ardore della passione",
+"tormento"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"that which illuminates or makes conspicuous"
+],
+"it": [
+"ciò che rischiara",
+"ciò che mette in luce"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "corpo luminoso celeste, meteora",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"light of the heavenly bodies (sun, moon)"
+],
+"it": [
+"luce degli astri",
+"luce del sole o della luna"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"fiery meteor",
+"fire-ball",
+"shooting-star",
+"comet",
+"lightning"
+],
+"it": [
+"meteora infuocata",
+"bolide",
+"stella cadente",
+"cometa",
+"fulmine"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"torch",
+"firebrand",
+"incitement"
+],
+"it": [
+"torcia",
+"fiaccola",
+"incitamento"
+]
+},
+"applicazione": [
+"Al plurale (faces) spesso nell'uso concreto: portare, gettare, accendere fiaccole.",
+"«face nuptiali» / «face sollemni»: per metonimia valgono le nozze.",
+"«prima fax (noctis)»: sul far della notte, al primo accendersi delle fiaccole (post-classico)."
+],
+"divergenze": [
+"Whitaker condensa in «flame of love» e «torment» le sfumature tropiche che L&S articola come incitamento, ardore e causa di rovina."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:febricula": {
+"campi": [
+{
+"campo": "febbre lieve",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a slight fever",
+"feverishness"
+],
+"it": [
+"febbriciattola",
+"febbre lieve",
+"leggero stato febbrile"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"slight fever",
+"feverishness"
+],
+"it": [
+"febbriciattola",
+"febbre lieve"
+]
+},
+"applicazione": [
+"Diminutivo di febris: «febriculam habere», avere un po' di febbre."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:febris": {
+"campi": [
+{
+"campo": "febbre",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a fever",
+"attack of fever"
+],
+"it": [
+"febbre",
+"accesso febbrile"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"Febris, the Fever-goddess (personified)"
+],
+"it": [
+"Febbre (divinità personificata, con templi a Roma)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "tormento, inquietudine",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a source of uneasiness",
+"torment"
+],
+"it": [
+"tormento",
+"fonte d'inquietudine",
+"cruccio"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"fever",
+"attack of fever"
+],
+"it": [
+"febbre",
+"accesso febbrile"
+]
+},
+"applicazione": [
+"«febrim habere», aver la febbre; «febri carere / liberari», esser libero dalla febbre.",
+"Al plurale (febres) per le febbri intermittenti (tertianae, quartanae)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fecunditas": {
+"campi": [
+{
+"campo": "fecondità, fertilità",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"fruitfulness",
+"fertility",
+"fecundity"
+],
+"it": [
+"fecondità",
+"fertilità"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "abbondanza, copia",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"plenty",
+"abundance"
+],
+"it": [
+"abbondanza",
+"copia",
+"gran numero"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "fecondità dell'ingegno o dello stile",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"fecundity of talent or style",
+"richness"
+],
+"it": [
+"fecondità dell'ingegno",
+"ricchezza dello stile"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"fruitfulness",
+"fertility",
+"abundance"
+],
+"it": [
+"fecondità",
+"fertilità"
+]
+},
+"applicazione": [
+"Riferito a terre, donne e animali; per estensione a copia di uomini o di opere."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fel": {
+"campi": [
+{
+"campo": "fiele, bile; cistifellea",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"gall",
+"bile",
+"gall-bladder"
+],
+"it": [
+"fiele",
+"bile",
+"cistifellea"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "veleno",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"poisonous liquid",
+"poison",
+"venom"
+],
+"it": [
+"liquido velenoso",
+"veleno"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "amarezza, astio",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"bitterness",
+"acrimony",
+"animosity"
+],
+"it": [
+"amarezza",
+"astio",
+"acredine",
+"rancore"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"gall",
+"bile",
+"bitterness"
+],
+"it": [
+"fiele",
+"bile",
+"amarezza"
+]
+},
+"applicazione": [
+"La bile era ritenuta sede dell'ira e del rancore (Verg. A. 8, 220).",
+"«fel terrae»: la centaurea minore (Fumaria officinalis).",
+"L'uso tropico ricorre solo nei poeti (in buona prosa si preferisce bilis)."
+],
+"divergenze": [
+"Whitaker attribuisce a «fel» anche glosse animali e figurate («cat», «marten/ferret/polecat», «mouser», «inveigler/seducer/tom-cat», «thief») che spettano in realtà a «feles»: qui escluse."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:feles": {
+"campi": [
+{
+"campo": "gatto; piccolo carnivoro",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a cat"
+],
+"it": [
+"gatto",
+"gatta"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"a marten",
+"ferret",
+"polecat"
+],
+"it": [
+"martora",
+"furetto",
+"puzzola"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "adescatore, seduttore",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"one who inveigles",
+"mouser",
+"seducer"
+],
+"it": [
+"adescatore",
+"seduttore",
+"insinuante predatore"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"cat",
+"marten",
+"seducer"
+],
+"it": [
+"gatto",
+"martora",
+"seduttore"
+]
+},
+"applicazione": [
+"«feles virginalis / virginaria»: chi insidia le fanciulle (Plauto)."
+],
+"divergenze": [
+"Whitaker non fornisce glosse per questo lemma; le rese «cat/marten/mouser/seducer/thief» figurano per errore sotto «fel»."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:felicitas": {
+"campi": [
+{
+"campo": "felicità, buona sorte, successo",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"happiness",
+"felicity",
+"good fortune",
+"luck"
+],
+"it": [
+"felicità",
+"buona sorte",
+"fortuna"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"success",
+"prosperity",
+"good fortune (in war, in exploits)"
+],
+"it": [
+"successo",
+"prosperità",
+"buona riuscita"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "fertilità, fecondità",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"fruitfulness",
+"fertility"
+],
+"it": [
+"fertilità",
+"fecondità"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "Felicità (divinità personificata)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"Felicity personified as a deity"
+],
+"it": [
+"la Felicità (divinità)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"happiness",
+"good fortune",
+"success",
+"fertility"
+],
+"it": [
+"felicità",
+"buona sorte",
+"successo"
+]
+},
+"applicazione": [
+"Al plurale con valore proprio: felicitates = fortune, circostanze prospere (bonae felicitates, Ter.).",
+"felicitas rerum gestarum = il successo delle imprese; annoverata da Cicerone (de Imp. Pomp.) tra le doti del comandante supremo."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:femella": {
+"campi": [
+{
+"campo": "giovane donna, ragazza",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"young female",
+"girl",
+"young woman"
+],
+"it": [
+"giovane donna",
+"ragazza",
+"fanciulla"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"young woman",
+"girl"
+],
+"it": [
+"giovane donna",
+"ragazza"
+]
+},
+"applicazione": [
+"Diminutivo di femina; attestato in Catullo con sfumatura affettiva."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:femina": {
+"campi": [
+{
+"campo": "donna, femmina (essere umano)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"woman",
+"female (human)"
+],
+"it": [
+"donna",
+"femmina"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"effeminate man (term of reproach)"
+],
+"it": [
+"uomo effeminato",
+"femminuccia (come ingiuria)"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "femmina (animale)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"female (of animals)",
+"she-"
+],
+"it": [
+"femmina (di animale)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "femmina (piante, minerali, meccanica)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"female (of plants and minerals, the milder or passive kind)"
+],
+"it": [
+"femmina (di piante e minerali, la varietà più tenera o passiva)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "genere femminile (grammatica)",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"the feminine gender"
+],
+"it": [
+"il genere femminile"
+]
+},
+"registro": "grammaticale",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"woman",
+"female"
+],
+"it": [
+"donna",
+"femmina"
+]
+},
+"applicazione": [
+"Usato in funzione aggettivale per marcare il sesso: lupus femina, sus femina, cardo femina = il maschio/la femmina di una coppia.",
+"Applicato a uomini come insulto = effeminato, imbelle."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:femur": {
+"campi": [
+{
+"campo": "coscia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"thigh",
+"upper part of the thigh"
+],
+"it": [
+"coscia",
+"femore"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "femore del triglifo (architettura)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"the space between the grooves of a triglyph",
+"flat band of a triglyph"
+],
+"it": [
+"femore (spazio tra le scanalature del triglifo)"
+]
+},
+"registro": "tecnico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "lombi, discendenza (latino ecclesiastico)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"the loins (of ancestry)"
+],
+"it": [
+"lombi",
+"discendenza"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"thigh",
+"femur"
+],
+"it": [
+"coscia",
+"femore"
+]
+},
+"applicazione": [
+"Declinazione oscillante tra 3ª (femoris/feminis) e forme miste; plurale femora o femina.",
+"Locuzione lessicalizzata femur bubulum = pianta altrimenti sconosciuta (Plin.)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fenestra": {
+"campi": [
+{
+"campo": "finestra, apertura per la luce",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"window",
+"opening in the wall to admit light"
+],
+"it": [
+"finestra",
+"apertura"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "feritoia, breccia, foro",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"loop-hole (for arrows)",
+"breach made in a wall by besiegers",
+"recess of a window"
+],
+"it": [
+"feritoia",
+"breccia",
+"vano della finestra"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"orifice",
+"hole (of the ears, of the senses)"
+],
+"it": [
+"foro",
+"orifizio (delle orecchie, dei sensi)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "occasione, via d'accesso (traslato)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"entrance",
+"admission",
+"inlet",
+"opportunity",
+"occasion"
+],
+"it": [
+"via d'accesso",
+"occasione",
+"spiraglio",
+"appiglio"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"window",
+"opening",
+"opportunity"
+],
+"it": [
+"finestra",
+"apertura",
+"occasione"
+]
+},
+"applicazione": [
+"fenestram aperire / patefacere ad + acc. = aprire la via a, dare occasione a (fenestram ad nequitiam patefacere)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fera": {
+"campi": [
+{
+"campo": "belva, animale selvatico",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"wild beast",
+"wild animal"
+],
+"it": [
+"belva",
+"fiera",
+"animale selvatico"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"wild beast",
+"wild animal"
+],
+"it": [
+"belva",
+"fiera"
+]
+},
+"applicazione": [
+"Sostantivazione del femminile di ferus (bestia); L&S rinvia infatti a ferus."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:ferculum": {
+"campi": [
+{
+"campo": "portata, vivanda",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"dish (on which food is served)",
+"course",
+"mess of food",
+"food"
+],
+"it": [
+"portata",
+"vivanda",
+"piatto"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "barella, feretro, lettiga",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"frame",
+"barrow",
+"litter",
+"bier (for carrying spoils or the images of the gods in processions)"
+],
+"it": [
+"barella",
+"feretro",
+"lettiga",
+"portantina (per spoglie o immagini divine nelle processioni)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"dish",
+"course",
+"litter",
+"bier"
+],
+"it": [
+"portata",
+"vivanda",
+"barella",
+"feretro"
+]
+},
+"applicazione": [
+"Forma non contratta fericulum (Sen.). Il senso di base (ciò su cui si porta qualcosa) si specifica secondo il contesto in feretro/lettiga o in portata."
+],
+"divergenze": [
+"Whitaker aggiunge le glosse 'food/bread' (cibo/pane) e 'bier (Ecc)': la prima estende il senso di 'portata', la seconda coincide col valore di feretro di L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:ferentarius": {
+"campi": [
+{
+"campo": "soldato armato alla leggera, schermagliatore",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"light-armed soldier",
+"skirmisher (fighting with missile weapons)"
+],
+"it": [
+"soldato armato alla leggera",
+"feritore",
+"schermagliatore"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "chi è pronto ad aiutare (traslato)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"one who is active or ready",
+"a ready helper"
+],
+"it": [
+"chi è pronto (ad aiutare)",
+"aiutante sollecito"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"light-armed soldier",
+"skirmisher"
+],
+"it": [
+"soldato armato alla leggera",
+"schermagliatore"
+]
+},
+"applicazione": [
+"Sinonimo di rorarius; al singolare con valore collettivo (Tac.).",
+"ferentarius amicus (Plaut.) = amico pronto a dare man forte."
+],
+"divergenze": [
+"Whitaker registra solo il valore militare, non il traslato 'chi è pronto ad aiutare' presente in L&S (Plaut.)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:ferentinum": {
+"campi": [
+{
+"campo": "Ferentino (toponimo)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"Ferentinum (a town of the Hernici in Latium, on the Via Latina; also a town in Etruria, birthplace of Otho)"
+],
+"it": [
+"Ferentino (città degli Ernici nel Lazio, sulla Via Latina; anche città dell'Etruria, patria di Otone)"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Ferentinum (town)"
+],
+"it": [
+"Ferentino"
+]
+},
+"applicazione": [
+"Usato per antonomasia a indicare una piccola, appartata cittadina di provincia (Hor. Ep. 1, 17, 8).",
+"Derivati: Ferentinus/Ferentinas (aggettivo), Ferentinates (gli abitanti)."
+],
+"divergenze": [
+"Whitaker non fornisce glossa: il senso poggia interamente su L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:feretrius": {
+"campi": [
+{
+"campo": "Feretrio (epiteto di Giove)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"Feretrius, a surname of Jupiter (the subduer of enemies, to whom the spolia opima were offered)"
+],
+"it": [
+"Feretrio (epiteto di Giove, domatore dei nemici, cui si offrivano le spolia opima)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Feretrius (epithet of Jupiter)"
+],
+"it": [
+"Feretrio (epiteto di Giove)"
+]
+},
+"applicazione": [
+"Detto per traslato anche di Amore (Amor Feretrius), cui si dedicano le spoglie."
+],
+"divergenze": [
+"Whitaker glossa 'bier' (feretro), confondendo la voce con feretrum; L&S documenta invece esclusivamente l'epiteto divino Feretrius."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:feretrum": {
+"campi": [
+{
+"campo": "feretro, lettiga funebre",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"bier",
+"litter",
+"funeral bier"
+],
+"it": [
+"feretro",
+"bara",
+"lettiga funebre"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"bier",
+"litter"
+],
+"it": [
+"feretro",
+"bara",
+"lettiga funebre"
+]
+},
+"applicazione": [
+"Prestito dal greco phéretron; serviva a trasportare i corpi dei morti, ma anche i trofei e le effigi nel corteo trionfale.",
+"L'equivalente latino puro e' ferculum; il termine e' prevalentemente poetico."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:feriae": {
+"campi": [
+{
+"campo": "feste, giorni festivi",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"holidays",
+"festivals",
+"days of rest",
+"festival day"
+],
+"it": [
+"feste",
+"giorni festivi",
+"ferie",
+"giorni di festa religiosa"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "riposo, tregua, ozio",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"rest",
+"peace",
+"leisure"
+],
+"it": [
+"riposo",
+"tregua",
+"ozio"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "feria, giorno della settimana",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"weekday",
+"day of the week"
+],
+"it": [
+"feria",
+"giorno feriale (della settimana)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"holidays",
+"festival",
+"rest"
+],
+"it": [
+"feste",
+"giorni festivi",
+"riposo"
+]
+},
+"applicazione": [
+"Usato normalmente al plurale (pluralia tantum); le feste pubbliche si distinguevano in stativae (fisse), conceptivae (mobili) e imperativae (straordinarie).",
+"Locuzione comica: esuriales feriae = tenere il digiuno; proverbiale feriis caret necessitas = la necessita' non conosce festivi.",
+"In latino tardo/ecclesiastico compare il singolare feria e, con l'ordinale, indica il giorno della settimana (feria quinta = giovedi')."
+],
+"divergenze": [
+"Whitaker aggiunge il senso di 'fiera/mercato' (legato ai grandi mercati tenuti durante le feste) e quello ecclesiastico di 'giorno feriale' (feria quinta = giovedi'), che in L&S emerge solo dal singolare tardo."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:feritas": {
+"campi": [
+{
+"campo": "ferocia, natura selvaggia (di uomini e bestie)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"wildness",
+"fierceness",
+"savageness",
+"ferocity",
+"brutality"
+],
+"it": [
+"ferocia",
+"selvatichezza",
+"natura selvaggia",
+"barbarie",
+"brutalita'"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "asprezza, rozzezza (di cose)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"wildness",
+"roughness",
+"harshness"
+],
+"it": [
+"asprezza",
+"natura selvatica",
+"rozzezza"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"wildness",
+"ferocity",
+"savagery"
+],
+"it": [
+"ferocia",
+"selvatichezza",
+"barbarie"
+]
+},
+"applicazione": [
+"Riferito a bestie e uomini indica lo stato selvaggio, primitivo (ex feritate ad justitiam transducere = trarre dallo stato selvaggio alla giustizia).",
+"Per traslato poetico e postclassico si dice di luoghi (feritas loci), di piante (mitigata arboris) e del vino/mosto (nimia musti)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fermentum": {
+"campi": [
+{
+"campo": "lievito, fermento",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"leaven",
+"yeast",
+"ferment",
+"leavening"
+],
+"it": [
+"lievito",
+"fermento"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "birra, bevanda fermentata",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"malt liquor",
+"beer",
+"fermented drink"
+],
+"it": [
+"birra",
+"bevanda fermentata (d'orzo)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "ammendante che allenta il terreno",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"that which loosens the soil"
+],
+"it": [
+"sostanza che smuove il terreno",
+"ammendante"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "collera, stizza (traslato)",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"anger",
+"passion",
+"ferment",
+"cause of vexation"
+],
+"it": [
+"collera",
+"ira",
+"fermento (fig.)",
+"stizza"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"leaven",
+"yeast",
+"ferment"
+],
+"it": [
+"lievito",
+"fermento"
+]
+},
+"applicazione": [
+"In senso proprio: panis sine fermento = pane azzimo, non lievitato.",
+"In senso traslato 'essere in fermento' (in fermento esse) vale 'essere adirato, gonfio di rabbia'."
+],
+"divergenze": [
+"Whitaker registra anche il valore verbale 'inacidire/guastare' (sour/spoil), assente in L&S per il sostantivo."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:ferocia": {
+"campi": [
+{
+"campo": "ardimento, fierezza (in senso buono)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"spirit",
+"courage",
+"bravery",
+"high spirit"
+],
+"it": [
+"ardimento",
+"fierezza",
+"coraggio",
+"animosita'"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "ferocia, tracotanza (in senso cattivo)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"fierceness",
+"ferocity",
+"savageness",
+"insolence"
+],
+"it": [
+"ferocia",
+"insolenza",
+"arroganza",
+"tracotanza"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "asprezza (del vino, traslato)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"harshness",
+"roughness"
+],
+"it": [
+"asprezza (del vino)",
+"durezza"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"fierceness",
+"spirit",
+"ferocity"
+],
+"it": [
+"fierezza",
+"ferocia",
+"ardimento"
+]
+},
+"applicazione": [
+"Vox media: puo' valere positivamente 'ardore, coraggio guerriero' (ferociam animi in vultu retinens) o negativamente 'tracotanza, arroganza'."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:ferocitas": {
+"campi": [
+{
+"campo": "coraggio, ardimento (in senso buono)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"courage",
+"spirit",
+"high spirit"
+],
+"it": [
+"coraggio",
+"ardimento",
+"fierezza"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "ferocia, indomabilita' (in senso cattivo)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"fierceness",
+"savageness",
+"ferocity",
+"aggressiveness"
+],
+"it": [
+"ferocia",
+"indomabilita'",
+"tracotanza",
+"aggressivita'"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"fierceness",
+"courage",
+"ferocity"
+],
+"it": [
+"ferocia",
+"ardimento",
+"fierezza"
+]
+},
+"applicazione": [
+"Sinonimo di ferocia; come questa e' vox media (coraggio o ferocia secondo il contesto).",
+"Si dice anche di animali indomiti (equi ferocitate exsultantes, bestiarum ferocitas)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:feronia": {
+"campi": [
+{
+"campo": "Feronia, antica divinita' italica",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"Feronia (an old Italian/Sabine goddess)"
+],
+"it": [
+"Feronia (antica divinita' italica/sabina)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Feronia"
+],
+"it": [
+"Feronia"
+]
+},
+"applicazione": [
+"Nome proprio: antica divinita' sabino-italica legata a Tellus, patrona dei liberti; le erano dedicati boschi sacri, sede di grandi mercati durante le sue feste; in eta' piu' tarda identificata con Giunone."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:ferraria": {
+"campi": [
+{
+"campo": "miniera di ferro",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"iron mine",
+"iron-works"
+],
+"it": [
+"miniera di ferro"
+]
+},
+"registro": "concreto",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"iron mine"
+],
+"it": [
+"miniera di ferro"
+]
+},
+"applicazione": [
+"Femminile sostantivato dell'aggettivo ferrarius (sottinteso fodina/officina)."
+],
+"divergenze": [
+"L&S non fornisce una glossa diretta ma rinvia a ferrarius; il significato 'miniera di ferro' e' dato da Whitaker."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:ferrugo": {
+"campi": [
+{
+"campo": "ruggine del ferro",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"iron-rust",
+"rust"
+],
+"it": [
+"ruggine (del ferro)",
+"ruggine"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "colore fosco, tinta cupa del ferro arrugginito",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"dark-red",
+"dark-chestnut",
+"dusky color",
+"sea-green"
+],
+"it": [
+"colore ruggine",
+"bruno-rossastro",
+"colore fosco/scuro",
+"verde-mare"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "invidia (traslato)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"envy"
+],
+"it": [
+"invidia"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"iron-rust",
+"dusky color"
+],
+"it": [
+"ruggine",
+"colore fosco"
+]
+},
+"applicazione": [
+"Il colore 'ferrugineo' indica una tinta cupa e scura, usata per porpora, chiome, briglie e i regni infernali.",
+"In senso traslato 'invidia', per analogia con aerugo."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:ferrum": {
+"campi": [
+{
+"campo": "ferro (metallo)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"iron"
+],
+"it": [
+"ferro (metallo)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "spada, arma, ferro",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"sword",
+"weapon",
+"blade",
+"arms"
+],
+"it": [
+"spada",
+"ferro",
+"arma",
+"armi"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "strumento di ferro, arnese",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"any iron implement",
+"iron tool"
+],
+"it": [
+"strumento di ferro",
+"arnese di ferro (aratro, scure, stilo, forbici, ferro per capelli)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "durezza di cuore, eta' del ferro (traslato)",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"hard-heartedness",
+"cruelty",
+"the iron age",
+"firmness"
+],
+"it": [
+"durezza di cuore",
+"crudelta'",
+"eta' del ferro",
+"fermezza"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"iron",
+"sword",
+"weapon"
+],
+"it": [
+"ferro",
+"spada",
+"arma"
+]
+},
+"applicazione": [
+"Frequentissima la metonimia per 'spada' e, in senso lato, per 'armi/guerra': decernere ferro = decidere con le armi.",
+"Endiadi ferrum et ignis / igni ferroque = 'a ferro e fuoco', per indicare devastazione totale.",
+"Per traslato poetico indica durezza di cuore (durior ferro) o l'eta' del ferro."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fertilitas": {
+"campi": [
+{
+"campo": "fertilità del suolo e degli esseri viventi",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"fruitfulness",
+"fertility",
+"abundance"
+],
+"it": [
+"fertilità",
+"fecondità",
+"produttività"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"fruitfulness (of animals)",
+"prolificness"
+],
+"it": [
+"fecondità (degli animali)",
+"prolificità"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "ricchezza produttiva (in senso figurato)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"productivity",
+"richness (of talent or art)"
+],
+"it": [
+"ricchezza",
+"vena feconda",
+"prolificità artistica"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"fruitfulness",
+"fertility",
+"abundance"
+],
+"it": [
+"fertilità",
+"fecondità",
+"abbondanza"
+]
+},
+"applicazione": [
+"Regge spesso un genitivo di ciò che è fertile: fertilitas terrae 'la fertilità della terra', frugum et vitium olearumque 'di messi, viti e olivi'.",
+"In senso concreto anche riferito alla capacità riproduttiva degli animali (fertilitas animalium ad generandum)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:ferula": {
+"campi": [
+{
+"campo": "pianta della ferula e sue parti vegetali",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"giant fennel",
+"the plant ferula"
+],
+"it": [
+"ferula (pianta)",
+"finocchio gigante"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"slender branch of a tree"
+],
+"it": [
+"ramoscello sottile",
+"fuscello"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "bastone da cammino e da sostegno",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"staff",
+"walking-stick"
+],
+"it": [
+"bastone",
+"bastone da passeggio"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "verga e sferza per punire",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"rod",
+"whip (to punish slaves or schoolboys)"
+],
+"it": [
+"verga",
+"sferza",
+"bacchetta (per punire)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"goad (for driving cattle)"
+],
+"it": [
+"pungolo (per gli animali da tiro)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "usi tecnici e medici",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"splint for broken bones"
+],
+"it": [
+"stecca (per fratture)"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"giant fennel",
+"staff",
+"rod"
+],
+"it": [
+"ferula (pianta)",
+"bastone",
+"verga"
+]
+},
+"applicazione": [
+"Nel mito è la canna della ferula (in ferula) in cui Prometeo custodì il fuoco rubato al cielo.",
+"Attributo iconografico di Silvano; in Cels. anche stecca per ricomporre le ossa."
+],
+"divergenze": [
+"Whitaker riduce la voce a 'stick, rod'; L&S documenta l'ampio ventaglio (pianta, ramo, bastone, sferza, pungolo, stecca, corno del cerbiatto)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fervor": {
+"campi": [
+{
+"campo": "calore ardente ed ebollizione",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"boiling heat",
+"raging heat",
+"violent heat"
+],
+"it": [
+"calore ardente",
+"bollore",
+"ardore (del calore)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"boiling",
+"fermenting",
+"ferment"
+],
+"it": [
+"ebollizione",
+"fermentazione"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "ardore e veemenza dell'animo",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"ardor",
+"vehemence",
+"passion",
+"fury"
+],
+"it": [
+"ardore",
+"foga",
+"veemenza",
+"passione"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"agitation (of the sea)",
+"disturbed state"
+],
+"it": [
+"agitazione (del mare)",
+"stato tempestoso"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"boiling heat",
+"ardor",
+"passion"
+],
+"it": [
+"calore ardente",
+"ardore",
+"passione"
+]
+},
+"applicazione": [
+"Il senso figurato ricorre spesso con un genitivo dell'organo o dell'età: fervor animi 'ardore dell'animo', fervor aetatis 'l'impeto della giovinezza'.",
+"Al plurale (fervores) indica sia le vampe del sole sia gli impeti dei vizi."
+],
+"divergenze": [
+"Whitaker aggiunge 'intoxication', sfumatura non attestata separatamente in L&S ma riconducibile all'ardore passionale."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:festinatio": {
+"campi": [
+{
+"campo": "fretta e rapidità nell'agire",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"haste",
+"hurry",
+"speed",
+"dispatch"
+],
+"it": [
+"fretta",
+"premura",
+"sollecitudine",
+"rapidità"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"haste",
+"hurry",
+"speed"
+],
+"it": [
+"fretta",
+"premura",
+"rapidità"
+]
+},
+"applicazione": [
+"Attestato al singolare e al plurale; al plurale (festinationes) indica gli eccessi di fretta da evitare (ne nimias celeritates suscipiamus).",
+"Spesso in coppia con celeritas per rafforzare l'idea di premura."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:festivitas": {
+"campi": [
+{
+"campo": "allegria e gaiezza festosa",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"festive gayety",
+"festivity",
+"mirth",
+"merriment",
+"joy"
+],
+"it": [
+"allegria festosa",
+"gaiezza",
+"brio",
+"letizia"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "arguzia e brio dell'eloquio",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"humor",
+"pleasantry",
+"jocoseness",
+"wit"
+],
+"it": [
+"arguzia",
+"spiritosaggine",
+"vivacità (dell'eloquio)",
+"grazia faceta"
+]
+},
+"registro": "retorico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "amabilità e affabilità di modi",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"pleasant demeanor",
+"kindness",
+"affability"
+],
+"it": [
+"amabilità",
+"affabilità",
+"cortesia dei modi"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"heart's delight (term of endearment)"
+],
+"it": [
+"delizia (come vezzeggiativo)",
+"gioia mia"
+]
+},
+"registro": "affettivo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "festa e ricorrenza solenne",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"festival",
+"feast"
+],
+"it": [
+"festa",
+"festività",
+"ricorrenza solenne"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"festivity",
+"mirth",
+"wit",
+"charm"
+],
+"it": [
+"allegria festosa",
+"brio",
+"arguzia",
+"amabilità"
+]
+},
+"applicazione": [
+"In Plauto vale come vezzeggiativo rivolto alla persona amata (mea festivitas 'gioia mia').",
+"In ambito retorico-ciceroniano indica lo spirito arguto del discorso, accanto a facetiae, lepor, sal.",
+"Il senso di 'festa, ricorrenza' è tardo (Codice Teodosiano); al plurale designa le festività solenni."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:festum": {
+"campi": [
+{
+"campo": "giorno di festa e celebrazione festiva",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"holiday",
+"festival",
+"feast",
+"festal banquet"
+],
+"it": [
+"giorno di festa",
+"festività",
+"festa",
+"banchetto festivo"
+]
+},
+"registro": "generale",
+"fonti": [
+"Whitaker",
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"holiday",
+"festival",
+"feast"
+],
+"it": [
+"giorno di festa",
+"festività",
+"festa"
+]
+},
+"applicazione": [
+"Ricorre spesso al plurale (festa) per indicare le celebrazioni: festis Quinquatribus 'durante le feste dei Quinquatri'.",
+"In latino cristiano/tardo indica il giorno commemorativo di un santo o di un evento (spesso al plurale)."
+],
+"divergenze": [
+"La voce integrale di L&S non è disponibile; si è usata la voce breve (lewis_elem), integrata dalle glosse di Whitaker."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fetor": {
+"campi": [
+{
+"campo": "cattivo odore e fetore",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"offensive smell",
+"stench",
+"stink",
+"foul smell"
+],
+"it": [
+"fetore",
+"puzza",
+"cattivo odore",
+"lezzo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "sozzura in senso figurato",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"foulness",
+"noisomeness"
+],
+"it": [
+"sozzura",
+"turpitudine",
+"corruzione"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"stench",
+"foul smell",
+"foulness"
+],
+"it": [
+"fetore",
+"puzza",
+"sozzura"
+]
+},
+"applicazione": [
+"Al plurale (fetores) indica singoli cattivi odori, es. fetores oris 'l'alito cattivo'.",
+"In senso figurato si applica al ributtante: reconditorum verborum fetores 'il lezzo di parole ricercate', fetor haereticae pestis 'il fetore dell'eresia'."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fetura": {
+"campi": [
+{
+"campo": "generazione e parto degli animali",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"bringing forth of young",
+"breeding",
+"bearing",
+"parturition"
+],
+"it": [
+"riproduzione",
+"figliatura",
+"il partorire",
+"l'allevare"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"gestation",
+"carrying young"
+],
+"it": [
+"gestazione",
+"gravidanza (degli animali)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "prole e nidiata",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"young",
+"offspring",
+"brood",
+"litter"
+],
+"it": [
+"prole",
+"nidiata",
+"figliata",
+"i piccoli"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"young shoots (of vine)"
+],
+"it": [
+"germogli (della vite)",
+"nuovi tralci"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "produzione di opere letterarie (figurato)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"production (of a literary work)"
+],
+"it": [
+"produzione (di opere letterarie)",
+"parto dell'ingegno"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"breeding",
+"offspring",
+"brood"
+],
+"it": [
+"figliatura",
+"prole",
+"nidiata"
+]
+},
+"applicazione": [
+"Indica sia l'atto del generare (dal concepimento al parto) sia, per concretizzazione, il frutto stesso (la prole, la nidiata).",
+"In Plinio, per metafora, il 'parto' di libri composti da uno scrittore (proxima fetura)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fibra": {
+"campi": [
+{
+"campo": "fibra e filamento vegetale o animale",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"fibre",
+"filament"
+],
+"it": [
+"fibra",
+"filamento",
+"fibrilla"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"root-fibre",
+"rootlet"
+],
+"it": [
+"radichetta",
+"barba della radice"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "viscere e interiora",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"entrails",
+"lobe (of the liver)"
+],
+"it": [
+"viscere",
+"interiora",
+"lobo (del fegato)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "viscere della terra (figurato)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"inner parts (of the earth)"
+],
+"it": [
+"viscere (della terra)",
+"profondità"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"fibre",
+"filament",
+"entrails"
+],
+"it": [
+"fibra",
+"filamento",
+"viscere"
+]
+},
+"applicazione": [
+"Nel linguaggio anatomico indica i lobi del fegato o del polmone (fibra iecoris), spesso nel contesto della divinazione dagli exta.",
+"In poesia il plurale fibrae vale 'viscere, interiora' delle vittime sacrificali, considerate portatrici di presagi."
+],
+"divergenze": [
+"Whitaker registra anche 'leaf, blade (of grasses)'; L&S privilegia i sensi di fibra radicale e di viscere."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fibula": {
+"campi": [
+{
+"campo": "fermaglio e spilla per allacciare",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"clasp",
+"buckle",
+"brooch",
+"pin"
+],
+"it": [
+"fibbia",
+"fermaglio",
+"spilla",
+"fermaglio da veste"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "grappa e legatura in edilizia",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"brace",
+"clamp (joining beams)"
+],
+"it": [
+"grappa",
+"chiavarda",
+"legatura (di travi)"
+]
+},
+"registro": "tecnico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "strumenti chirurgici",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"surgical clasp (to close a wound)"
+],
+"it": [
+"agrafe chirurgica",
+"graffetta (per suturare ferite)"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"fibula (infibulation pin)"
+],
+"it": [
+"fibula (per l'infibulazione)"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"clasp",
+"buckle",
+"brooch"
+],
+"it": [
+"fibbia",
+"fermaglio",
+"spilla"
+]
+},
+"applicazione": [
+"Come fermaglio da veste, spesso d'oro e con gemme, era concessa come onorificenza militare ai soldati benemeriti.",
+"In edilizia (Cesare, Vitruvio) designa le grappe che tenevano unite le travi; in medicina la graffetta per suturare o l'ago dell'infibulazione."
+],
+"divergenze": [
+"Whitaker limita la voce a 'clasp, buckle, brooch'; L&S documenta anche gli usi edilizi e chirurgici."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:ficedula": {
+"campi": [
+{
+"campo": "ornitologia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"fig-pecker",
+"becafico",
+"small bird (Motacilla ficedula)"
+],
+"it": [
+"beccafico",
+"piccolo uccello che si nutre di fichi e uva"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"fig-pecker",
+"becafico"
+],
+"it": [
+"beccafico"
+]
+},
+"applicazione": [
+"Varianti grafiche attestate: ficetula, ficecula.",
+"Considerato una prelibatezza in autunno, quando si ingrassa cibandosi di fichi e uva."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fictor": {
+"campi": [
+{
+"campo": "arti plastiche",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"one who makes images of clay, wood, wax",
+"image-maker",
+"statuary",
+"modeller"
+],
+"it": [
+"plasticatore",
+"modellatore di immagini (in creta, cera, legno)",
+"scultore"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "artefice, creatore",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"maker",
+"former",
+"creator",
+"one who devises or makes"
+],
+"it": [
+"artefice",
+"creatore",
+"colui che plasma o forma"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "culto",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"baker of offering-cakes"
+],
+"it": [
+"chi plasma le focacce sacrificali",
+"confezionatore di focacce rituali"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "inganno, finzione",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"feigner",
+"contriver of falsehood"
+],
+"it": [
+"simulatore",
+"artefice di menzogne"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"image-maker",
+"modeller",
+"maker",
+"feigner"
+],
+"it": [
+"plasticatore",
+"modellatore",
+"artefice",
+"simulatore"
+]
+},
+"applicazione": [
+"Il senso di 'artefice/creatore' regge il genitivo di ciò che si plasma (fictor legum, somniorum).",
+"L'accezione 'inganno' emerge nel nesso virgiliano fandi fictor Ulixes, 'Ulisse artefice del parlare / ordìtore di parole'."
+],
+"divergenze": [
+"Whitaker riduce tutto alla glossa generica 'one who devises or makes'; L&S articola il senso concreto di modellatore/scultore, quello rituale (focacce sacre) e quello traslato di simulatore."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fictrix": {
+"campi": [
+{
+"campo": "artefice, creatrice",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"she that forms or fashions",
+"female fashioner",
+"creatrix"
+],
+"it": [
+"colei che forma o plasma",
+"artefice (femm.)",
+"creatrice"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"she that fashions",
+"creatrix"
+],
+"it": [
+"colei che plasma",
+"artefice"
+]
+},
+"applicazione": [
+"Femminile di fictor; in Cicerone è la provvidenza divina 'fictrix et moderatrix' della materia universale."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fidelitas": {
+"campi": [
+{
+"campo": "fedeltà",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"faithfulness",
+"trustiness",
+"firm adherence",
+"fidelity"
+],
+"it": [
+"fedeltà",
+"lealtà",
+"ferma adesione",
+"affidabilità"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"faithfulness",
+"fidelity",
+"loyalty"
+],
+"it": [
+"fedeltà",
+"lealtà"
+]
+},
+"applicazione": [
+"Intesa come fedeltà mostrata nei fatti (in acts); frequentissima in Cicerone.",
+"Si costruisce con erga + accusativo per indicare l'oggetto della lealtà (erga patriam fidelitas)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fidentia": {
+"campi": [
+{
+"campo": "fiducia in sé",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"confidence",
+"self-confidence",
+"boldness",
+"assurance"
+],
+"it": [
+"fiducia in sé",
+"sicurezza",
+"franchezza dell'animo"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"self-confidence",
+"confidence"
+],
+"it": [
+"fiducia in sé",
+"sicurezza"
+]
+},
+"applicazione": [
+"Termine filosofico coniato da Cicerone come parte della fortitudo: la sicurezza per cui l'animo ripone in sé molta fiducia in imprese grandi e oneste.",
+"Ha per contrario diffidentia; va distinta da audacia (opposta ma affine, e comunque vizio)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fidicen": {
+"campi": [
+{
+"campo": "musica",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"lute-player",
+"lyre-player",
+"lyrist",
+"minstrel",
+"harper"
+],
+"it": [
+"citaredo",
+"suonatore di lira",
+"suonatore di cetra"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "poesia",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"lyric poet",
+"writer of lyric poetry"
+],
+"it": [
+"poeta lirico",
+"lirico"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"lyre-player",
+"lyric poet"
+],
+"it": [
+"suonatore di lira",
+"poeta lirico"
+]
+},
+"applicazione": [
+"Il senso 'poeta lirico' è un traslato poetico (Orazio si dice Romanae fidicen lyrae); regge il genitivo dello strumento/musa evocati."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fidicina": {
+"campi": [
+{
+"campo": "musica",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"female lute-player",
+"female lyrist",
+"harpist"
+],
+"it": [
+"suonatrice di lira",
+"citarista (donna)",
+"suonatrice di cetra"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"female lyre-player"
+],
+"it": [
+"suonatrice di lira"
+]
+},
+"applicazione": [
+"Femminile di fidicen; frequente nella commedia (Plauto, Terenzio), spesso figura di schiava musicante."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fidiculae": {
+"campi": [
+{
+"campo": "musica",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"small stringed instrument",
+"small lute",
+"small cithern"
+],
+"it": [
+"piccolo strumento a corde",
+"piccola lira",
+"piccola cetra"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "astronomia",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"the Lyre (constellation)"
+],
+"it": [
+"la Lira (costellazione)"
+]
+},
+"registro": "astronomico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "tortura",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"cord",
+"line",
+"instrument of torture"
+],
+"it": [
+"corda",
+"fune",
+"strumento di tortura"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"small lyre",
+"the Lyre (constellation)",
+"instrument of torture"
+],
+"it": [
+"piccola lira",
+"costellazione della Lira",
+"strumento di tortura"
+]
+},
+"applicazione": [
+"Di norma al plurale; la forma singolare fidicula è rara.",
+"Il senso 'strumento di tortura' è postclassico (post-augusteo), spesso in serie con eculei e cruces.",
+"Come costellazione equivale a Fides / Lyra."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fidius": {
+"campi": [
+{
+"campo": "religione",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"surname of Jupiter (god of good faith)",
+"epithet of Hercules"
+],
+"it": [
+"Fidio (epiteto di Giove, dio della buona fede)",
+"epiteto di Ercole"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Fidius (Jupiter as god of faith)"
+],
+"it": [
+"Fidio (Giove garante della fede giurata)"
+]
+},
+"applicazione": [
+"Giove Fidio, identificato col sabino Sancus (gr. Zeus Pistios).",
+"Ricorre soprattutto nella formula asseverativa medius fidius / mediusfidius ('per il dio della verità!', 'come è vero il cielo!', 'certissimamente!'), spesso univerbata."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fiducia": {
+"campi": [
+{
+"campo": "fiducia, affidamento",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"trust",
+"confidence",
+"reliance",
+"assurance"
+],
+"it": [
+"fiducia",
+"affidamento",
+"sicurezza",
+"fede riposta"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "coraggio, sicurezza di sé",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"self-confidence",
+"boldness",
+"courage"
+],
+"it": [
+"fiducia in sé",
+"audacia",
+"baldanza",
+"coraggio"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "lealtà",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"trustiness",
+"fidelity"
+],
+"it": [
+"fedeltà",
+"lealtà",
+"affidabilità"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "diritto",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"deposit",
+"pledge",
+"security",
+"pawn",
+"mortgage",
+"fiduciary contract"
+],
+"it": [
+"fiducia (contratto)",
+"deposito fiduciario",
+"pegno",
+"garanzia",
+"ipoteca"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"trust",
+"confidence",
+"courage",
+"pledge"
+],
+"it": [
+"fiducia",
+"affidamento",
+"coraggio",
+"pegno"
+]
+},
+"applicazione": [
+"Regge il genitivo dell'oggetto su cui si fa affidamento (fiducia loci, fiducia sui, fiducia formae).",
+"Con la fiducia riposta in un'altra persona può usarsi anche l'aggettivo possessivo al posto del genitivo (mea fiducia per mei fiducia).",
+"Come termine giuridico designa ciò che è affidato a un altro a condizione di restituzione (fiduciam accipere, committere; iudicium fiduciae; formula UT INTER BONOS BENE AGIER)."
+],
+"divergenze": [
+"Whitaker registra i sensi 'trust/confidence' e 'courage' ma non il tecnicismo giuridico (deposito/pegno fiduciario) né l'accezione oggettiva di 'lealtà', entrambi documentati da L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:finiens": {
+"campi": [
+{
+"campo": "orizzonte (cerchio che delimita la vista)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the horizon",
+"bounding circle"
+],
+"it": [
+"l'orizzonte",
+"il cerchio che delimita la vista"
+]
+},
+"registro": "astronomico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"horizon"
+],
+"it": [
+"orizzonte"
+]
+},
+"applicazione": [
+"Participio presente di finio sostantivato: finiens circulus, o semplicemente finiens, indica in astronomia l'orizzonte, cioe il cerchio che limita il campo visivo."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:finis": {
+"campi": [
+{
+"campo": "confine, limite, termine (spaziale)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"boundary",
+"limit",
+"border"
+],
+"it": [
+"confine",
+"limite",
+"termine"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"starting-point (in a race)"
+],
+"it": [
+"linea di partenza (nella corsa)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "territorio, terre, paese (al plurale)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"territory",
+"land",
+"country"
+],
+"it": [
+"territorio",
+"terre",
+"paese",
+"confini (di un popolo)"
+]
+},
+"registro": "geografico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "limite, misura, freno (astratto)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"limit",
+"bound"
+],
+"it": [
+"limite",
+"confine (figurato)",
+"misura",
+"freno"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "fine, conclusione, scopo, meta",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"end",
+"conclusion",
+"goal",
+"purpose"
+],
+"it": [
+"fine",
+"conclusione",
+"termine",
+"scopo",
+"meta"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"boundary",
+"limit",
+"end",
+"territory"
+],
+"it": [
+"confine",
+"limite",
+"fine",
+"territorio"
+]
+},
+"applicazione": [
+"Al plurale fines vale 'confini' e per estensione 'territorio, terre di un popolo' (senso proprio del plurale, frequentissimo in Cesare).",
+"Uso avverbiale/preposizionale raro fine o fini + genitivo = 'fino a, fino all'altezza di': fine genus 'fino al ginocchio', pectoris fine 'fino al petto'.",
+"Locuzioni: finem facere alicui rei 'porre fine a qualcosa'; quem ad finem 'fin dove'.",
+"Genere di norma maschile; femminile arcaico, poetico o post-classico e quasi solo al singolare."
+],
+"divergenze": [
+"Il testo di L&S qui e troncato in corrispondenza del senso 'come tau-epsilon-lambda-omicron-sigma (fine, scopo)'; Whitaker conferma e mette sullo stesso piano 'boundary, end, limit, goal' e segnala esplicitamente il plurale territoriale."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:finitor": {
+"campi": [
+{
+"campo": "chi (o cio che) traccia i confini",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"surveyor",
+"one who determines boundaries"
+],
+"it": [
+"agrimensore",
+"chi fissa i confini"
+]
+},
+"registro": "tecnico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"the horizon (bounding circle)"
+],
+"it": [
+"l'orizzonte (cerchio che delimita)"
+]
+},
+"registro": "astronomico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "chi pone fine",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"one who ends",
+"finisher"
+],
+"it": [
+"chi pone fine",
+"colui che chiude"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"surveyor",
+"boundary-setter",
+"horizon"
+],
+"it": [
+"agrimensore",
+"chi fissa i confini",
+"orizzonte"
+]
+},
+"applicazione": [
+"Nel senso tecnico e sinonimo di decempedator e metator (l'agrimensore inviato a delimitare i terreni).",
+"Il valore 'chi pone fine' e attestato solo in poesia (Stazio, riferito a Plutone: o cunctis finitor maxime rerum)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:firmamen": {
+"campi": [
+{
+"campo": "sostegno, puntello",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"prop",
+"support",
+"stay"
+],
+"it": [
+"sostegno",
+"puntello",
+"appoggio"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"support",
+"prop"
+],
+"it": [
+"sostegno",
+"puntello"
+]
+},
+"applicazione": [
+"Forma poetica per firmamentum (Ovidio, Seneca tragico)."
+],
+"divergenze": [
+"Whitaker aggiunge la resa astratta 'strengthening' (rafforzamento); L&S attesta solo il valore concreto di 'sostegno, puntello'."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:firmamentum": {
+"campi": [
+{
+"campo": "sostegno, fondamento, baluardo (figurato)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"support",
+"mainstay",
+"stay",
+"bulwark"
+],
+"it": [
+"sostegno",
+"fondamento",
+"baluardo",
+"appoggio"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "sostegno, puntello, rinforzo (concreto)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"support",
+"prop",
+"strengthening"
+],
+"it": [
+"sostegno",
+"puntello",
+"rinforzo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "punto cardine dell'argomentazione",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"chief support of an argument",
+"main point"
+],
+"it": [
+"punto cardine dell'argomentazione",
+"argomento principale"
+]
+},
+"registro": "retorico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "firmamento, volta celeste",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"the firmament",
+"the sky fixed above the earth"
+],
+"it": [
+"il firmamento",
+"la volta celeste"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"support",
+"mainstay",
+"prop",
+"firmament"
+],
+"it": [
+"sostegno",
+"fondamento",
+"puntello",
+"firmamento"
+]
+},
+"applicazione": [
+"L&S segnala che l'uso figurato ('sostegno dello Stato, di una causa, dell'accusa') e il piu frequente, specie in Cicerone.",
+"Al plurale firmamenta = i puntelli, i sostegni (anche figurati: auspicia et senatum firmamenta rei publicae).",
+"Come termine tecnico della retorica designa il punto d'appoggio principale dell'argomentazione (il greco to sun-echon).",
+"Il senso 'firmamento, cielo' e proprio del latino tardo e cristiano (Tertulliano, Agostino)."
+],
+"divergenze": [
+"La resa 'support group' di Whitaker e imprecisa: L&S non attesta un valore collettivo di 'gruppo di sostenitori', ma solo il concetto di sostegno (eventualmente al plurale come insieme di puntelli)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:firmator": {
+"campi": [
+{
+"campo": "chi consolida, chi stabilisce",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"confirmer",
+"establisher"
+],
+"it": [
+"chi consolida",
+"chi rende saldo",
+"garante",
+"chi stabilisce"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"confirmer",
+"establisher"
+],
+"it": [
+"consolidatore",
+"garante",
+"chi rende saldo"
+]
+},
+"applicazione": [
+"Termine post-augusteo e assai raro; regge il dativo o il genitivo dell'oggetto reso saldo: paci firmator 'garante della pace', disciplinae militaris firmator 'chi consolida la disciplina militare'."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:firmitas": {
+"campi": [
+{
+"campo": "solidita, robustezza (fisica)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"firmness",
+"durability",
+"strength"
+],
+"it": [
+"solidita",
+"robustezza",
+"resistenza"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "fermezza, costanza (d'animo)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"firmness",
+"steadfastness",
+"stability",
+"constancy"
+],
+"it": [
+"fermezza",
+"costanza",
+"saldezza d'animo",
+"tenuta"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"firmness",
+"strength",
+"stability"
+],
+"it": [
+"solidita",
+"fermezza",
+"costanza"
+]
+},
+"applicazione": [
+"Sinonimi: constantia, firmitudo, perseverantia.",
+"Al plurale firmitates = le proprieta di solidita, le doti di resistenza (Vitruvio)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:firmitudo": {
+"campi": [
+{
+"campo": "solidita, robustezza (fisica)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"firmness",
+"durability",
+"strength"
+],
+"it": [
+"solidita",
+"robustezza",
+"resistenza"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "fermezza, costanza (d'animo)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"firmness",
+"constancy",
+"stability",
+"strength of mind"
+],
+"it": [
+"fermezza",
+"costanza",
+"saldezza d'animo",
+"forza morale"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"firmness",
+"strength",
+"stability"
+],
+"it": [
+"solidita",
+"fermezza",
+"costanza"
+]
+},
+"applicazione": [
+"Sinonimo meno frequente di firmitas, ma comunque classico (Cesare, Cicerone)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fiscella": {
+"campi": [
+{
+"campo": "cestello di vimini",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"small wicker basket (for fruit, cheese)"
+],
+"it": [
+"cestello di vimini",
+"piccolo canestro (per frutta, formaggi)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"cheese-mould",
+"cheese-form"
+],
+"it": [
+"fuscella",
+"forma per il formaggio"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"muzzle (for cattle)"
+],
+"it": [
+"museruola (per il bestiame)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"small wicker basket"
+],
+"it": [
+"cestello di vimini",
+"piccolo canestro"
+]
+},
+"applicazione": [
+"Diminutivo di fiscina; intrecciato di giunchi o vinchi sottili (sinonimi: fiscina, qualus, canistrum, calathus, sporta, corbis).",
+"Usato anche come forma per premere il formaggio e come museruola per gli animali."
+],
+"divergenze": [
+"Whitaker registra solo il valore base di 'cestello di vimini'; L&S documenta anche gli usi come forma per il formaggio e come museruola."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fiscina": {
+"campi": [
+{
+"campo": "cesto di vimini",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"small wicker basket (for fruit, figs, wine)"
+],
+"it": [
+"cesto di vimini",
+"sporta",
+"piccolo canestro (per frutta, fichi)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"muzzle"
+],
+"it": [
+"museruola"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"small wicker basket"
+],
+"it": [
+"cesto di vimini",
+"sporta"
+]
+},
+"applicazione": [
+"Intrecciato di giunchi, vinchi o ginestra; usato anche per foglie e strame e come museruola (sinonimi in fiscella)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fiscus": {
+"campi": [
+{
+"campo": "denaro ed erario",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"money-bag",
+"purse",
+"money-basket"
+],
+"it": [
+"borsa",
+"sacchetto per il denaro",
+"borsellino"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"public chest",
+"state treasury",
+"public revenues"
+],
+"it": [
+"erario",
+"cassa dello Stato",
+"tesoro pubblico",
+"pubbliche entrate"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"imperial treasury",
+"imperial revenues",
+"emperor's privy purse",
+"imperial exchequer"
+],
+"it": [
+"fisco imperiale",
+"cassa privata dell'imperatore",
+"erario del principe"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "cesto di vimini",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"basket",
+"frail woven of twigs or rushes"
+],
+"it": [
+"cesto di vimini",
+"paniere intrecciato",
+"sporta (per le olive nel torchio)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"purse",
+"money-bag",
+"treasury",
+"imperial exchequer"
+],
+"it": [
+"borsa",
+"erario",
+"fisco",
+"tesoro imperiale"
+]
+},
+"applicazione": [
+"Nell'eta imperiale si oppone ad aerarium: fiscus = cassa del principe, aerarium = erario dello Stato (Suet., Plin. Pan.).",
+"Locuzioni giuridiche: res fisci est = e proprieta del fisco; bona in fiscum cogere = confiscare i beni a favore del fisco.",
+"Il senso primario di 'cesto' e raro; nettamente prevalente e quello finanziario, gia in Cicerone."
+],
+"divergenze": [
+"Whitaker registra solo 'money-bag, purse' e 'imperial exchequer', tacendo sia il senso concreto originario di 'cesto' sia quello repubblicano di 'erario pubblico', entrambi ampiamente documentati in L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fissio": {
+"campi": [
+{
+"campo": "divisione, spaccatura",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a cleaving",
+"dividing",
+"splitting"
+],
+"it": [
+"il fendere",
+"divisione",
+"spaccatura",
+"fenditura"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"cleaving",
+"dividing",
+"splitting"
+],
+"it": [
+"fenditura",
+"divisione",
+"spaccatura"
+]
+},
+"applicazione": [
+"Nomen actionis da findo: indica l'atto o il processo del fendere; documentato con genitivo oggettivo (fissio glebarum = lo spezzarsi delle zolle, Cic. N. D.)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fissum": {
+"campi": [
+{
+"campo": "fenditura",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"cleft",
+"fissure",
+"split"
+],
+"it": [
+"fenditura",
+"spaccatura",
+"taglio",
+"crepa"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"cleft",
+"fissure",
+"split"
+],
+"it": [
+"fenditura",
+"spaccatura",
+"taglio"
+]
+},
+"applicazione": [
+"Sostantivazione del participio neutro di findo (fissus): designa il risultato del fendere, la fessura aperta."
+],
+"divergenze": [
+"La voce 'ls' e un semplice rimando (v. findo, in fine) senza testo proprio; la resa poggia sul valore participiale di findo. Whitaker non registra il lemma."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fistuca": {
+"campi": [
+{
+"campo": "strumento per costipare",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"an instrument for ramming down",
+"rammer",
+"beetle",
+"mallet"
+],
+"it": [
+"battipalo",
+"mazzapicchio",
+"maglio",
+"costipatore"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"rammer",
+"beetle",
+"mallet"
+],
+"it": [
+"battipalo",
+"mazzapicchio",
+"maglio"
+]
+},
+"applicazione": [
+"Termine tecnico dell'edilizia e dell'agricoltura (Cesare, Catone, Plinio): l'attrezzo con cui si battono e si conficcano nel suolo pali o pietre."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fistula": {
+"campi": [
+{
+"campo": "condotto, tubo",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"pipe",
+"tube",
+"water-pipe"
+],
+"it": [
+"tubo",
+"condotto",
+"tubatura",
+"conduttura d'acqua (di piombo)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"wind-pipe and gullet",
+"tubular vessels (of the lungs, teeth)",
+"blow-hole of the whale"
+],
+"it": [
+"trachea",
+"esofago",
+"vasi tubulari (dei polmoni, dei denti)",
+"sfiatatoio della balena"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "canna e strumenti di canna",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a hollow reed-stalk",
+"reed",
+"cane"
+],
+"it": [
+"canna",
+"stelo cavo di canna"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"reed-pipe",
+"shepherd's pipe",
+"pipes of Pan",
+"the Greek syrinx"
+],
+"it": [
+"flauto di canna",
+"zampogna",
+"siringa (gr. syrinx)",
+"flauto di Pan"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"pitch-pipe (fistula eburneola), for giving the tone to an orator"
+],
+"it": [
+"zufolo d'avorio per dare il tono all'oratore"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"a writing-reed"
+],
+"it": [
+"canna da scrivere",
+"calamo"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "medico-chirurgico",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"a sort of ulcer",
+"a fistula"
+],
+"it": [
+"fistola",
+"piaga fistolosa"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"a catheter"
+],
+"it": [
+"catetere",
+"cannula"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "utensili e macchine",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"a shoemaker's punch (fistula sutoria)"
+],
+"it": [
+"lesina del calzolaio",
+"punteruolo da calzolaio"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"a sort of hand-mill for grinding corn (fistula farraria)"
+],
+"it": [
+"macina a mano per il grano",
+"mola da grano"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"pipe",
+"tube",
+"shepherd's pipe",
+"fistula (ulcer)"
+],
+"it": [
+"tubo",
+"condotto",
+"zampogna",
+"fistola"
+]
+},
+"applicazione": [
+"Molti sensi vivono in sintagmi specializzati: fistula eburneola (zufolo dell'oratore), fistula sutoria (lesina), fistula farraria / serrata (macina a mano).",
+"Locuzione comica ciceroniana: sine ulla pastoricia fistula (auferre) = (guadagnarsi l'applauso) senza essere fischiato via, come un cattivo suonatore di zampogna (Att. 1, 16, 11)."
+],
+"divergenze": [
+"Whitaker riduce il lemma a 'shepherd's pipe / tube / waterpipe', ignorando la ricchissima ramificazione tecnica di L&S (usi anatomici, medici, chirurgici e degli utensili)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:fistulator": {
+"campi": [
+{
+"campo": "suonatore di flauto",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a player on the shepherd's pipe",
+"a piper",
+"one who plays the reed-pipe"
+],
+"it": [
+"suonatore di flauto",
+"flautista",
+"zampognaro",
+"suonatore di siringa"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"piper",
+"player on the pipe"
+],
+"it": [
+"suonatore di flauto",
+"flautista",
+"zampognaro"
+]
+},
+"applicazione": [
+"Nomen agentis da fistula: nell'aneddoto ciceroniano (de Or. 3, 61) e il servo che, col suo zufolo, dava all'oratore il tono di voce."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:flabellum": {
+"campi": [
+{
+"campo": "ventaglio",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a small fan",
+"fly-flap"
+],
+"it": [
+"ventaglio",
+"ventola",
+"scacciamosche"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "cio che attizza (figurato)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"fan (that stirs up, of sedition)"
+],
+"it": [
+"cio che attizza",
+"soffietto (della sedizione)",
+"strumento che alimenta (la rivolta)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"small fan",
+"fly-flap"
+],
+"it": [
+"ventaglio",
+"ventola",
+"scacciamosche"
+]
+},
+"applicazione": [
+"Uso figurato in Cicerone (Fl. 23, 54): lingua quasi flabello seditionis = la lingua che, come un ventaglio, ravviva il fuoco della sedizione."
+],
+"divergenze": [
+"Whitaker registra solo il senso proprio 'small fan'; l'estensione traslata e attestata da L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:flabra": {
+"campi": [
+{
+"campo": "soffi di vento",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"blasts (of wind)",
+"gusts",
+"breezes",
+"winds"
+],
+"it": [
+"soffi (di vento)",
+"raffiche",
+"folate",
+"brezze",
+"venti"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"blasts",
+"breezes",
+"winds"
+],
+"it": [
+"soffi",
+"raffiche",
+"venti"
+]
+},
+"applicazione": [
+"Voce poetica, usata al plurale (Lucrezio, Virgilio, Properzio): flabra ventorum = i soffi dei venti; per concretizzazione vale 'i venti' stessi."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:flagellum": {
+"campi": [
+{
+"campo": "frusta, sferza",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a whip",
+"scourge",
+"lash"
+],
+"it": [
+"frusta",
+"flagello",
+"sferza",
+"staffile"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a riding-whip",
+"a whip for driving cattle"
+],
+"it": [
+"scudiscio da cavallo",
+"frusta per condurre il bestiame"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "germoglio, tralcio",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a young branch or shoot",
+"a vine-shoot"
+],
+"it": [
+"giovane germoglio",
+"tralcio",
+"pollone della vite"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "altri usi traslati concreti",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"the thong of a javelin"
+],
+"it": [
+"correggia (amentum) del giavellotto",
+"cinghia di lancio"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"the arm of a polypus",
+"tentacle"
+],
+"it": [
+"braccio del polpo",
+"tentacolo"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a threshing-flail (late Lat.)"
+],
+"it": [
+"correggiato",
+"coreggiato da trebbia"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"a tuft of hair"
+],
+"it": [
+"ciuffo di capelli"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "pungolo interiore (figurato)",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"the lash or stings of conscience",
+"the goad of love"
+],
+"it": [
+"sferza (della coscienza)",
+"pungolo (dell'amore)",
+"assillo interiore"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"whip",
+"scourge",
+"lash"
+],
+"it": [
+"frusta",
+"flagello",
+"sferza"
+]
+},
+"applicazione": [
+"Diminutivo di flagrum: L&S nota che indica una frusta piu dura della scutica.",
+"Ablativo strumentale al plurale: flagellis caedere / sectari = colpire, inseguire a colpi di frusta (Orazio).",
+"I sensi traslati concreti nascono per somiglianza di forma (oggetto lungo e flessibile): tralcio, correggia, tentacolo, correggiato."
+],
+"divergenze": [
+"Whitaker copre i primi quattro valori (frusta, correggia del giavellotto, tralcio, tentacolo) ma tace il correggiato da trebbia, il ciuffo di capelli e l'uso figurato del 'pungolo' della coscienza, presenti in L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:flagitatio": {
+"campi": [
+{
+"campo": "richiesta insistente",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"an earnest request or demand",
+"importunity",
+"importunate request"
+],
+"it": [
+"richiesta insistente",
+"sollecitazione pressante",
+"pretesa importuna",
+"reiterata istanza"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"earnest demand",
+"importunity",
+"urgent request"
+],
+"it": [
+"richiesta insistente",
+"sollecitazione pressante",
+"pretesa importuna"
+]
+},
+"applicazione": [
+"Nomen actionis da flagito, raro ma classico. Al plurale (flagitationes) indica le pressioni, le reiterate sollecitazioni: crebrae populi flagitationes = le assidue pressioni del popolo (Tac. A. 13, 50)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+}
+}

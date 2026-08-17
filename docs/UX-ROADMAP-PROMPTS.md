@@ -4,7 +4,7 @@ Serie di **7 prompt** (Passi 0→6) per **completare** la migrazione UX/UI già 
 
 ## Stato reale della migrazione (lug 2026)
 
-La migrazione è il **§8 del «Protocollo UX/UI»** (`03_Digital-Humanities/_Protocollo-UX-UI/`), in corso sul branch **`migrazione-protocollo-ux`**. **Già committato:**
+La migrazione è il **§8 del «Protocollo UX/UI»** (`05 - Officina/05.01 Protocollo UX-UI/`), in corso sul branch **`migrazione-protocollo-ux`**. **Già committato:**
 
 - **`shared/poetrify-tokens.css`** — fonte unica dei token (colori, accenti-lingua `--dacc`/`--accent`, ottone `--brass`, superfici calde, semantici con varianti testo `--*-ink` a norma AA, raggi, scala 8pt, ombre, tipografia). Debiti sanati **D1/D2/D3/D4/D7/D8/D10**.
 - **`shared/poetrify-theme.js`** — IIFE condiviso, API `window.PoetrifyTheme.{toggle,set,current}`, attributo `data-inject-toggle`, dark **stateful** su `:root[data-theme="dark"]` (su `<html>`) + **script anti-flash** in `<head>`.
@@ -56,7 +56,7 @@ La migrazione è il **§8 del «Protocollo UX/UI»** (`03_Digital-Humanities/_Pr
 
 ## Passo 0 — Ricognizione residua della migrazione (read-only)
 
-> Incolla questo prompt in una **nuova sessione Claude Code** aperta sul repo `Poetrify-SPA-Dizionario` (working copy: `Leonardo-Claude/03_Digital-Humanities/Poetrify-SPA-Dizionario`; repo GitHub `Leocrates99/Poetrify-Translatio`), branch di lavoro **`migrazione-protocollo-ux`**.
+> Incolla questo prompt in una **nuova sessione Claude Code** aperta sul repo `Poetrify-SPA-Dizionario` (working copy: `Leonardo-Claude/04 - Prodotti Digitali/04.01 Dizionario`; repo GitHub `Leocrates99/Poetrify-Translatio`), branch di lavoro **`migrazione-protocollo-ux`**.
 
 ### Obiettivo
 Fotografare lo **stato reale** della migrazione UX/UI (Protocollo §8) leggendo il sorgente, **senza toccare una riga di codice**, e depositare il risultato in **`docs/UX-STATO-MIGRAZIONE.md`**. Il report deve dire, pagina per pagina, cosa è già fatto e cosa resta, così da dimensionare con precisione i passi 1-6 della sequenza. È l'unico deliverable; nessun refactor, nessun aggancio, nessuna correzione qui.
@@ -75,7 +75,7 @@ Stato già committato sul branch (da **verificare**, non dare per scontato):
 - Validatori del translator (la «terna»): **`_build/brace_check.py`**, **`_build/balance.py`**, **`_build/check_refs.py`**.
 - Stato dichiarato: app/corpus/dictionary agganciati a `shared/` + `[data-theme]`; **translator ha ricevuto solo il rename namespace D5** (`--poetrify-*` → `--*`) e **NON è ancora linkato a `shared/`**. Il layer componenti condiviso (`shared/poetrify-components.css`) **non esiste ancora**. Il **cache-bust `?v=N`** sui `<link>`/`<script>` shared è **assente** ovunque.
 
-La **Definition of Done** del progetto è già scritta: `03_Digital-Humanities/_Protocollo-UX-UI/CHECKLIST.md` (con `PROTOCOLLO.md` §1-§9). Non creare DoD parallele.
+La **Definition of Done** del progetto è già scritta: `05 - Officina/05.01 Protocollo UX-UI/CHECKLIST.md` (con `PROTOCOLLO.md` §1-§9). Non creare DoD parallele.
 
 ⚠️ Nomi VIETATI (non esistono, non usarli mai): `poetrify-variables.css`, `poetrify-ui.css`, `modules/ui/shell.js`, `mountShell`. La cartella `modules/ui/` è vuota: ignorala.
 
@@ -96,7 +96,7 @@ La **Definition of Done** del progetto è già scritta: `03_Digital-Humanities/_
 - Usa esclusivamente i nomi reali (`shared/poetrify-tokens.css`, `shared/poetrify-theme.js`, `PoetrifyTheme`, `data-inject-toggle`, `:root[data-theme]` su `<html>`, `body[data-lang]` la|grc, `_build/brace_check.py`+`balance.py`+`check_refs.py`). Zero nomi vietati.
 - Invariante colore=lingua e ottone-neutro: qui non si applica (non si modifica), ma verificane la **presenza** come dato del report.
 
-### Definition of Done → `03_Digital-Humanities/_Protocollo-UX-UI/CHECKLIST.md`
+### Definition of Done → `05 - Officina/05.01 Protocollo UX-UI/CHECKLIST.md`
 Questo è un passo diagnostico: la maggior parte delle voci di CHECKLIST si spunta nei passi 1-6. Voci pertinenti **ora**:
 - [x] «leggi dal sorgente / duplicato ≠ divergente»: la classificazione token inline è fatta sul codice reale.
 - [x] «armonizzazione totale come lente»: il report copre **tutte e 4** le superfici (+ index), non un sottoinsieme.
@@ -115,7 +115,7 @@ Questo è un passo diagnostico: la maggior parte delle voci di CHECKLIST si spun
 
 ## Passo 1 — Translator su `shared/`: dedup token, verifica cablaggio tema, terna
 
-> Repo: **Leocrates99/Poetrify-Translatio**, working copy in `Leonardo-Claude/03_Digital-Humanities/Poetrify-SPA-Dizionario`. Sito STATICO multi-pagina su GitHub Pages, **nessun build step**. Branch di lavoro: **`migrazione-protocollo-ux`**. `translator.html` è ~2 MB / ~40.000 righe: **non leggerlo mai intero**, solo grep mirati e `sed -n`/Read su intervalli.
+> Repo: **Leocrates99/Poetrify-Translatio**, working copy in `Leonardo-Claude/04 - Prodotti Digitali/04.01 Dizionario`. Sito STATICO multi-pagina su GitHub Pages, **nessun build step**. Branch di lavoro: **`migrazione-protocollo-ux`**. `translator.html` è ~2 MB / ~40.000 righe: **non leggerlo mai intero**, solo grep mirati e `sed -n`/Read su intervalli.
 
 ### Obiettivo
 Portare a compimento la migrazione di `translator.html` al design system condiviso `shared/`, che è l'ultima pagina rimasta. **Attenzione: il grosso è già fatto e committato** (vedi Contesto). Il lavoro residuo reale di questo passo è:
@@ -144,7 +144,7 @@ Nomi/pattern REALI da usare (mai i nomi vecchi):
 - JS condiviso IIFE `shared/poetrify-theme.js` con API su `window.Poetrify*`. NIENTE ES module, NIENTE `modules/ui/shell.js`, NIENTE `mountShell`.
 - Lingua = colore: `body[data-lang]` con doppio valore `la|latino` (rosso) / `grc|greco` (blu), ottone `--brass` per il neutro.
 - Validatori: **`_build/brace_check.py` + `_build/balance.py` + `_build/check_refs.py`** (la «terna» del translator).
-- DoD: **`_Protocollo-UX-UI/CHECKLIST.md`** (in `03_Digital-Humanities/_Protocollo-UX-UI`) — è già la Definition of Done, **non crearne una parallela**.
+- DoD: **`_Protocollo-UX-UI/CHECKLIST.md`** (in `05 - Officina/05.01 Protocollo UX-UI`) — è già la Definition of Done, **non crearne una parallela**.
 
 Elenco canonico dei token di `shared/poetrify-tokens.css` (56 nomi — questi vivono in `shared/`, quindi le loro ridefinizioni nell'inline `:root` di translator sono candidate alla rimozione se il valore coincide):
 `--primary --primary-dark --primary-pale --accent --accent-lat --accent-gr --dacc --dacc-pale --dacc-deep --dacc-border --brass --brass-light --paper --ivory --cream --parchment --parchment-edge --sepia --sepia-soft --ink --ink-soft --on-primary --mark --rule --rule-soft --success --success-ink --warning --warning-ink --danger --danger-ink --radius-sm --radius-md --radius-lg --radius-pill --sp-1 … --sp-7 --shadow --shadow-sm --shadow-lift --shadow-strong --transition --font-display --font-body --font-ui --font-mono --font-code --font-read --font-read-gr --font-classical --font-classical-size-boost`.
@@ -206,7 +206,7 @@ Non creare una DoD parallela: apri `_Protocollo-UX-UI/CHECKLIST.md` e verifica l
 
 ### Contesto essenziale (nomi e pattern REALI — usare solo questi)
 
-- **Repo:** `Leocrates99/Poetrify-Translatio`; working copy in `03_Digital-Humanities/Poetrify-SPA-Dizionario`. Sito **statico** multi-pagina su GitHub Pages, **nessun build step**. Branch di lavoro: **`migrazione-protocollo-ux`**.
+- **Repo:** `Leocrates99/Poetrify-Translatio`; working copy in `04 - Prodotti Digitali/04.01 Dizionario`. Sito **statico** multi-pagina su GitHub Pages, **nessun build step**. Branch di lavoro: **`migrazione-protocollo-ux`**.
 - **Le 4 superfici** (a radice) su cui agire: `app.html`, `dictionary.html`, `translator.html` (~2 MB, **mai leggere intero**: solo grep mirati), `corpus.html`. `index.html` **non** referenzia `shared/*` e **non** va toccato in questo passo.
 - **Fonte unica dei token:** `shared/poetrify-tokens.css` (NON «poetrify-variables.css»). **JS tema condiviso:** `shared/poetrify-theme.js`, IIFE che espone `window.PoetrifyTheme = {toggle, set, current}`, persiste su `localStorage 'poetrify-theme'`, e con l'attributo `data-inject-toggle` inietta il pulsante flottante solo dove serve. **Tema** su `:root[data-theme="dark"]` applicato a `<html>` + **script anti-flash** inline in `<head>`. **Lingua** su `body[data-lang]` con doppio valore `la|latino` / `grc|greco`. (Nessun ES module `modules/ui/shell.js`, nessun `mountShell`: quel pattern **non esiste** nel repo.)
 - **Stato reale VERIFICATO dei riferimenti shared (baseline, nessun `?v=` presente):**
@@ -216,7 +216,7 @@ Non creare una DoD parallela: apri `_Protocollo-UX-UI/CHECKLIST.md` e verifica l
   - `translator.html` → `<link ... href="shared/poetrify-tokens.css">` (~15) · `<script src="shared/poetrify-theme.js"></script>` (~17, **senza** `data-inject-toggle`)
   - Totale atteso: **8 riferimenti** (2 per pagina × 4 pagine). I numeri di riga sono orientativi: confermali con grep prima di editare.
 - **Validatori del translator (la «terna»):** `_build/brace_check.py`, `_build/balance.py`, `_build/check_refs.py`. Da eseguire **prima** (baseline) e **dopo** (net-0) ogni tocco a `translator.html`.
-- **Definition of Done** = `03_Digital-Humanities/_Protocollo-UX-UI/CHECKLIST.md` (non creare una DoD parallela).
+- **Definition of Done** = `05 - Officina/05.01 Protocollo UX-UI/CHECKLIST.md` (non creare una DoD parallela).
 
 ### Compiti (numerati, concreti)
 
@@ -234,7 +234,7 @@ Non creare una DoD parallela: apri `_Protocollo-UX-UI/CHECKLIST.md` e verifica l
 8. **Terna post-edit sul translator.** Riesegui i tre validatori su `translator.html`: l'esito deve essere **net-0** rispetto alla baseline del compito 2 (nessuna graffa/parentesi/ref rotta introdotta).
 9. **Documenta la regola del bump.** Registra la regola in modo che sopravviva alla sessione. Scegli il punto già canonico del progetto invece di inventare un file nuovo:
    - aggiungi una nota nel report di stato **`docs/UX-STATO-MIGRAZIONE.md`** (creato al Passo 0) sotto una sezione «Cache-bust `?v=N`»;
-   - e/o annota la regola come debito/convenzione nel **Protocollo UX/UI** (`03_Digital-Humanities/_Protocollo-UX-UI/PROTOCOLLO.md`, es. in §5 contratto token o §8 debiti), così che il Passo 6 possa trasformarla in check automatico.
+   - e/o annota la regola come debito/convenzione nel **Protocollo UX/UI** (`05 - Officina/05.01 Protocollo UX-UI/PROTOCOLLO.md`, es. in §5 contratto token o §8 debiti), così che il Passo 6 possa trasformarla in check automatico.
    - **Testo della regola (canonico):** «I file in `shared/*` sono versionati con una singola query-string `?v=N` replicata identica su tutti i loro riferimenti nelle 4 pagine (`app`, `dictionary`, `corpus`, `translator`). Ogni commit che modifica **qualsiasi** file `shared/*` incrementa `N` di 1 su **tutte e 4** le pagine **nello stesso commit** (proprietario unico della versione; vietati bump parziali o `N` divergenti tra pagine). Il valore corrente è `N=1`.»
 
 ### Guardrail
@@ -249,7 +249,7 @@ Non creare una DoD parallela: apri `_Protocollo-UX-UI/CHECKLIST.md` e verifica l
 
 ### Definition of Done
 
-Spunta le voci pertinenti di **`03_Digital-Humanities/_Protocollo-UX-UI/CHECKLIST.md`** (è la DoD; non crearne una parallela). In particolare per questo passo:
+Spunta le voci pertinenti di **`05 - Officina/05.01 Protocollo UX-UI/CHECKLIST.md`** (è la DoD; non crearne una parallela). In particolare per questo passo:
 
 - [ ] **Armonizzazione totale:** i riferimenti `shared/*` di tutte e 4 le pagine portano `?v=1`, identico e completo (8/8 riferimenti).
 - [ ] **Dark su `[data-theme]` + anti-flash:** invariati e ancora funzionanti (il cache-bust non deve rompere il caricamento di `poetrify-theme.js` né dello script anti-flash).
@@ -260,7 +260,7 @@ Spunta le voci pertinenti di **`03_Digital-Humanities/_Protocollo-UX-UI/CHECKLIS
 
 ### Consegna
 
-- **File toccati:** `app.html`, `dictionary.html`, `corpus.html`, `translator.html` (query-string `?v=1` sui riferimenti `shared/*`) + `docs/UX-STATO-MIGRAZIONE.md` e/o `03_Digital-Humanities/_Protocollo-UX-UI/PROTOCOLLO.md` (regola del bump).
+- **File toccati:** `app.html`, `dictionary.html`, `corpus.html`, `translator.html` (query-string `?v=1` sui riferimenti `shared/*`) + `docs/UX-STATO-MIGRAZIONE.md` e/o `05 - Officina/05.01 Protocollo UX-UI/PROTOCOLLO.md` (regola del bump).
 - **Messaggio commit (suggerito):**
 
   ```
@@ -288,7 +288,7 @@ Creare `shared/poetrify-components.css`, la FONTE UNICA delle classi-componente 
 Questo è il **Passo 3** della sequenza 0–6 della migrazione (Protocollo UX/UI §8). Restano dopo: **4** armonizzazione dei contenuti UX, **5** a11y residui per CHECKLIST, **6** governance (`_build/check_design_drift.py` + DoD + hook/CI).
 
 **Contesto essenziale (nomi e pattern REALI — usare SOLO questi)**
-- Repo `Leocrates99/Poetrify-Translatio`, working copy in `Leonardo-Claude/03_Digital-Humanities/Poetrify-SPA-Dizionario`. Sito **statico** multi-pagina su GitHub Pages, **nessun build step**. Branch di lavoro: **`migrazione-protocollo-ux`**.
+- Repo `Leocrates99/Poetrify-Translatio`, working copy in `Leonardo-Claude/04 - Prodotti Digitali/04.01 Dizionario`. Sito **statico** multi-pagina su GitHub Pages, **nessun build step**. Branch di lavoro: **`migrazione-protocollo-ux`**.
 - 4 superfici a radice: `app.html`, `dictionary.html`, `translator.html` (~2 MB — **mai leggere intero**: solo `grep` mirati e `_build/` per validare), `corpus.html`. (`index.html` è redirect/landing, fuori scope componenti.)
 - Token: **`shared/poetrify-tokens.css`** — FONTE UNICA dei token, già condivisa. (MAI il nome vecchio `poetrify-variables.css`.)
 - Componenti condivisi da CREARE: **`shared/poetrify-components.css`** (MAI `poetrify-ui.css`).
@@ -296,7 +296,7 @@ Questo è il **Passo 3** della sequenza 0–6 della migrazione (Protocollo UX/UI
 - Tema: dark unificato su **`:root[data-theme="dark"]`** su `<html>`, impostato prima del paint dallo script anti-flash inline in `<head>`. Il dark dei componenti va scritto solo come override su `:root[data-theme="dark"]`, mai su classi/media alternativi.
 - Colore = LINGUA: **`body[data-lang]`** con doppio valore in migrazione — `la|latino` (rosso, `--dacc:#A22E37`) e `grc|greco` (blu, `--dacc:#1800AC`); ottone `--brass` per il neutro bilingue. Le classi-componente non devono fissare il colore-lingua: lo ereditano dai token che seguono `body[data-lang]`.
 - Validatori translator (la «terna», già esistente): **`_build/brace_check.py`**, **`_build/balance.py`**, **`_build/check_refs.py`**. Baseline **prima**, net-**0** **dopo** ogni tocco al translator.
-- DoD = **`03_Digital-Humanities/_Protocollo-UX-UI/CHECKLIST.md`** (spuntala; non creare una DoD parallela).
+- DoD = **`05 - Officina/05.01 Protocollo UX-UI/CHECKLIST.md`** (spuntala; non creare una DoD parallela).
 
 **Token realmente disponibili in `shared/poetrify-tokens.css`** (usa questi, non inventarne): `--paper --ivory --cream --parchment --parchment-edge`, `--ink --ink-soft --sepia --sepia-soft`, `--rule --rule-soft`, `--primary --primary-dark --primary-pale --accent`, `--dacc --dacc-deep --dacc-pale --dacc-border`, **`--on-primary`** (testo su fondo pieno: bianco in light, scuro nel dark — è il rimpiazzo corretto degli `#fff` sulle targhette colorate), `--brass`, raggi `--radius-sm/md/lg`, scala `--sp-1..7`, ombre tinte, tipografia `--font-display/--font-body/--font-ui/--font-classical`, `--transition`.
 
@@ -334,7 +334,7 @@ Questo è il **Passo 3** della sequenza 0–6 della migrazione (Protocollo UX/UI
 - Una modifica non è «done» finché non vale su **tutte e 4** le superfici.
 - Cache-bust: il nuovo `<link>` nasce con `?v=N`; bump coordinato su tutti gli asset shared delle 4 pagine (regola formalizzata al Passo 6).
 
-**Definition of Done** — spunta su `03_Digital-Humanities/_Protocollo-UX-UI/CHECKLIST.md`; voci pertinenti a questo passo:
+**Definition of Done** — spunta su `05 - Officina/05.01 Protocollo UX-UI/CHECKLIST.md`; voci pertinenti a questo passo:
 - [ ] Token/tipografia: i componenti consumano **solo** token di `poetrify-tokens.css` (nessun hex inline residuo; palette PoS promossa a token o costante documentata).
 - [ ] Colore & contrasto AA: targhette/chip usano `--on-primary`; contrasto verificato su fondo pieno anche nel dark.
 - [ ] Dark su `[data-theme]` + anti-flash: override componenti solo su `:root[data-theme="dark"]`; nessun flash.
@@ -363,13 +363,13 @@ Passo 3 — `shared/poetrify-components.css` esiste già, è estratto dal ramo c
 Rimandi alla sequenza della migrazione: 0 ricognizione · 1 translator su shared/ · 2 cache-bust · **3 layer componenti** · **4 questo passo** · 5 a11y residui · 6 governance. NON anticipare il Passo 5 (a11y: focus-ring, role/aria, skip-link, 44px, `lang` per-porzione, gate come `role="dialog"`): qui si tocca il *contenuto/markup semantico* dei controlli, non il loro comportamento a11y completo — se un ritocco al markup rende gratuito un attributo `aria`/`role`, mettilo, ma la copertura a11y sistematica è il Passo 5.
 
 **Contesto essenziale (nomi e pattern REALI — usa SOLO questi)**
-- Sito STATICO multi-pagina su GitHub Pages, NESSUN build step. Repo `Leocrates99/Poetrify-Translatio`, working copy in `Leonardo-Claude/03_Digital-Humanities/Poetrify-SPA-Dizionario`. Branch di lavoro: **`migrazione-protocollo-ux`**.
+- Sito STATICO multi-pagina su GitHub Pages, NESSUN build step. Repo `Leocrates99/Poetrify-Translatio`, working copy in `Leonardo-Claude/04 - Prodotti Digitali/04.01 Dizionario`. Branch di lavoro: **`migrazione-protocollo-ux`**.
 - Token: **`shared/poetrify-tokens.css`** (fonte unica; NON esiste alcun «poetrify-variables.css»).
 - Componenti: **`shared/poetrify-components.css`** (dal Passo 3; NON esiste alcun «poetrify-ui.css»).
 - JS condiviso: **`shared/poetrify-theme.js`**, IIFE, espone `window.PoetrifyTheme` con `toggle()/set()/current()`; inietta il pulsante flottante SOLO dove c'è `data-inject-toggle` (app, corpus); dove il toggle è proprio (dictionary, translator) si LINKA senza `data-inject-toggle` e il bottone è cablato a `PoetrifyTheme.toggle()/set()`. Script anti-flash inline in `<head>`. Dark unificato su `:root[data-theme="dark"]` su `<html>`. Eventuali nuovi comportamenti condivisi seguono lo stesso stile IIFE `shared/poetrify-*.js` con API su `window.Poetrify*` + attributi `data-*` — NIENTE ES module «modules/ui/shell.js», NIENTE funzione «mountShell», NON usare `modules/ui/` (è vuota).
 - Colore = LINGUA, SEMPRE con etichetta testuale (WCAG 1.4.1): `body[data-lang]` con doppio valore in migrazione `la|latino` (rosso `#A22E37`, dark `#e58a90`) e `grc|greco` (blu `#1800AC`, dark `#8b7dff`); ottone `--brass` (`#9c6b3c`) come neutro per le sezioni bilingui.
 - `translator.html` è ~2 MB: **mai leggerlo intero**, usa grep mirati. Ogni tocco al translator passa la **terna** di validatori: `_build/brace_check.py` + `_build/balance.py` + `_build/check_refs.py` (baseline PRIMA, net-0 DOPO).
-- **Definition of Done = `03_Digital-Humanities/_Protocollo-UX-UI/CHECKLIST.md`** (è già la DoD ufficiale; NON crearne una parallela). La migrazione è il §8 del `PROTOCOLLO.md`.
+- **Definition of Done = `05 - Officina/05.01 Protocollo UX-UI/CHECKLIST.md`** (è già la DoD ufficiale; NON crearne una parallela). La migrazione è il §8 del `PROTOCOLLO.md`.
 
 **Compiti** (numerati, concreti; ogni compito va applicato a TUTTE e 4 le superfici pertinenti)
 
@@ -401,7 +401,7 @@ Rimandi alla sequenza della migrazione: 0 ricognizione · 1 translator su shared
 - Repo dell'utente: a lavoro finito **commit + push** sul branch `migrazione-protocollo-ux` senza chiedere conferma (= deploy Pages). Decisioni UX non ovvie (es. wording finale del gate, forma del controllo lingua unico) vanno archiviate nel canone via skill `aisthesis`.
 
 **Definition of Done**
-Spunta `03_Digital-Humanities/_Protocollo-UX-UI/CHECKLIST.md` (è la DoD; non crearne un'altra). Voci pertinenti a questo passo:
+Spunta `05 - Officina/05.01 Protocollo UX-UI/CHECKLIST.md` (è la DoD; non crearne un'altra). Voci pertinenti a questo passo:
 - Token & tipografia: nessun colore/spacing/tipo hardcoded reintrodotto; tutto via i token di `shared/poetrify-tokens.css`.
 - Colore & contrasto AA: lingua sempre con etichetta; testo su superfici calde ≥ 4.5:1 (usa le varianti `--*-ink` dove serve).
 - Dark su `[data-theme]` + anti-flash: intatti su tutte e quattro le pagine dopo le modifiche.
@@ -437,7 +437,7 @@ Chiudere le voci di accessibilità della `_Protocollo-UX-UI/CHECKLIST.md` ancora
 Passo 3 (il layer `shared/poetrify-components.css` esiste già ed è linkato dopo i token nelle 4 pagine: le classi-componente su cui appoggiare il focus-ring e la semantica gate/tab sono al loro posto) e Passo 4 (header unico, contratto di navigazione, un solo controllo lingua, copy unico del gate e barra di ricerca condivisa sono già cablati, quindi qui si decorano superfici stabili). A monte servono anche il Passo 1 (translator agganciato a `shared/`) e il Passo 2 (cache-bust `?v=N` sui `<link>`/`<script>` shared). Riferimento alla sequenza allineata 0→6 della mappa di migrazione.
 
 **Contesto essenziale (nomi e pattern REALI — usare solo questi)**
-- Repo `Leocrates99/Poetrify-Translatio`, working copy in `03_Digital-Humanities/Poetrify-SPA-Dizionario`. Sito **statico multi-pagina**, nessun build step. Branch di lavoro: **`migrazione-protocollo-ux`**.
+- Repo `Leocrates99/Poetrify-Translatio`, working copy in `04 - Prodotti Digitali/04.01 Dizionario`. Sito **statico multi-pagina**, nessun build step. Branch di lavoro: **`migrazione-protocollo-ux`**.
 - Token: **`shared/poetrify-tokens.css`** = fonte unica dei token (brand/accenti-lingua, `--brass` ottone, superfici calde, semantici con `-ink`, raggi `--radius-sm/md/lg`, scala 8pt `--sp-1..7`, tipografia `--font-display`/`--font-body`/`--font-ui`/`--font-classical`, `--transition`, reduced-motion). Dark unificato su `:root[data-theme="dark"]` applicato a `<html>`.
 - Componenti condivisi: **`shared/poetrify-components.css`** (classi che consumano SOLO i token: card `.lx-item` con bordo-PoS, header `.pf-header`, gate lingua, chip PoS, targhetta categoria). È qui che vive la CSS del focus-ring e degli stati a11y statici.
 - JS condiviso: IIFE in **`shared/poetrify-*.js`** con API su `window.Poetrify*` + attributi `data-*`. Il tema è **`shared/poetrify-theme.js`** → `window.PoetrifyTheme.{toggle,set,current}`, persiste su `localStorage 'poetrify-theme'`, con `data-inject-toggle` inietta il pulsante flottante `#poetrify-theme-toggle` (glifi ☾/☀, `aria-pressed`) **solo** dove manca un toggle proprio (app, corpus); dove il toggle è proprio (dictionary, translator) si LINKA senza `data-inject-toggle` e si cabla il bottone a `PoetrifyTheme`. **NON** esistono ES module `modules/ui/shell.js` né funzione `mountShell`: la cartella `modules/ui/` è vuota, non usarla. Il comportamento nuovo (focus-trap del gate, gestione `Esc`/return-focus) va in un IIFE `shared/poetrify-*.js` nello stesso stile.
@@ -513,7 +513,7 @@ Rendere la migrazione UX/UI *auto-difesa*: nessuno deve poter riaprire la deriva
 Passi 1-5 completati: translator agganciato a `shared/` (1), cache-bust `?v=N` presente su tutte e 4 le pagine (2), `shared/poetrify-components.css` estratto dal dizionario e linkato (3), contenuti UX armonizzati (4), a11y residui chiusi (5). Questo è l'ultimo passo (6) della sequenza 0-6.
 
 **Contesto essenziale (nomi e pattern REALI — usa SOLO questi)**
-- Repo: `Leocrates99/Poetrify-Translatio`. Working copy: `Leonardo-Claude/03_Digital-Humanities/Poetrify-SPA-Dizionario`. Sito **statico** multi-pagina su GitHub Pages, **nessun build step**. Branch di lavoro: **`migrazione-protocollo-ux`** (push diretto, niente branch-protection).
+- Repo: `Leocrates99/Poetrify-Translatio`. Working copy: `Leonardo-Claude/04 - Prodotti Digitali/04.01 Dizionario`. Sito **statico** multi-pagina su GitHub Pages, **nessun build step**. Branch di lavoro: **`migrazione-protocollo-ux`** (push diretto, niente branch-protection).
 - 4 superfici a radice: `app.html`, `dictionary.html` (ramo **canone**), `translator.html` (~2 MB, **mai leggere intero**: solo grep mirati), `corpus.html`.
 - Token, fonte unica: `shared/poetrify-tokens.css` (brand/accenti-lingua `--primary`/`--accent`/`--dacc`, `--brass` ottone neutro, superfici calde `--paper`/`--ivory`/`--cream`/`--parchment`, semantici con varianti testo `--success-ink`/`--warning-ink`/`--danger-ink`, raggi `--radius-sm/md/lg`, scala 8pt `--sp-1..7`, tipografia `--font-display`/`--font-body`/`--font-ui`/`--font-classical`, `--transition`). Dark unificato su `:root[data-theme="dark"]` su `<html>`.
 - Componenti condivisi: `shared/poetrify-components.css` (creato al passo 3: `.lx-item` card con bordo-PoS, header/topbar `.pf-header`, gate lingua, chip PoS, targhetta categoria; consuma **solo** i token). Linkato **dopo** i token nelle 4 pagine.

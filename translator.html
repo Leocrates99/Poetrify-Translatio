@@ -4166,6 +4166,22 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: var(--font-c
   gap: 4px 14px;
 }
 .archive-card-meta em { font-style: italic; color: var(--ink-soft); }
+.resume-card-percorso { font-size: .95em; opacity: .8; }
+/* Badge del percorso: dice con quale metodo — e quindi con quale metro — il
+   brano è stato lavorato. Neutro: il colore in Poetrify è la lingua. */
+.percorso-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 1px 8px;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--parchment);
+  color: var(--ink-soft);
+  font-size: 11px;
+  letter-spacing: .01em;
+  white-space: nowrap;
+}
 .archive-card-progress {
   display: flex;
   align-items: center;
@@ -12468,6 +12484,9 @@ const PERCORSI = {
     /* La playlist è per ora DESCRITTIVA (alimenta card e banner); diventerà
        guida del motore col refactor playlist-driven dello scheletro. */
     playlist: ['Verbi', 'Proposizioni', 'Soggetto', 'Oggetto', 'Preposizionali', 'Altri complementi', 'Ordo e brutta', 'Bella copia'],
+    /* Il metro: la grammatica completa NON conta — lo scheletro chiede i verbi,
+       non la morfologia di ogni parola; la bella copia sì, è il compito. */
+    metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'sintagmi', 'brutta', 'bella'],
     preset: { metodo: 'valenziale', vista: 'intero', mode: 'free' },
     disponibile: true,
   },
@@ -12476,6 +12495,8 @@ const PERCORSI = {
     scopo: 'La prima versione, con la voce del docente accanto a ogni tappa.',
     tempo: '≈8 min a frase le prime volte', minPerFrase: 8,
     playlist: ['Pre-lettura', 'Frasi', 'Verbi', 'Connettivi', 'Sintassi', 'Sintagmi', 'Grammatica', 'Brutta', 'Bella copia'],
+    /* Le nove tappe passano anche dalla grammatica: qui conta. */
+    metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'sintagmi', 'grammatica', 'brutta', 'bella'],
     preset: { metodo: 'strati', vista: 'frase', mode: 'guided' },
     disponibile: true,
   },
@@ -12487,6 +12508,8 @@ const PERCORSI = {
     scopo: 'Allenati al ritmo della verifica, a casa: struttura e resa, senza la morfologia completa.',
     tempo: '≈2-3 min a frase', minPerFrase: 2.5,
     playlist: ['Analisi automatica', 'Verbi', 'Proposizioni', 'Ordo e brutta', 'Bella copia'],
+    /* Sotto verifica non si fa la morfologia: struttura e resa. */
+    metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'brutta', 'bella'],
     preset: { metodo: 'strati', vista: 'intero', mode: 'free' },
     disponibile: false,
   },
@@ -12495,6 +12518,8 @@ const PERCORSI = {
     scopo: 'Rivedere la struttura di una versione, senza tradurla.',
     tempo: '10-15 min in tutto', minPerFrase: 1,
     playlist: ['Verbi', 'Proposizioni', 'Stemma a barre'],
+    /* Un ripasso e' compiuto SENZA una riga di traduzione: e' il suo scopo. */
+    metro: ['testo', 'frasi', 'verbi', 'proposizioni'],
     preset: { metodo: 'valenziale', vista: 'intero', mode: 'free' },
     disponibile: false,
   },
@@ -30527,34 +30552,89 @@ function renderAnalysisContent(sentence) {
 // null → risolto a runtime sulla lingua del progetto corrente.
 let archiveFilters = { status: 'all', search: '', sort: 'updated-desc', lingua: null };
 
-function projectStatus(p) {
-  if (!p.meta || !p.meta.testoOriginale) return 'todo';
-  if (!p.sentences || p.sentences.length === 0) return 'todo';
-  const total = p.sentences.length;
-  const done = p.sentences.filter(s =>
-    (s.grammar || []).length > 0 &&
-    (s.logic || []).length > 0 &&
-    (s.periodale || []).length > 0
-  ).length;
-  if (done === total) return 'done';
-  const any = p.sentences.some(s => (s.grammar||[]).length || (s.logic||[]).length || (s.periodale||[]).length);
-  return any ? 'progress' : 'todo';
+/* ════════════════════════════════════════════════════════════════════════════
+   CONTABILITÀ PARAMETRICA · ogni versione misurata col metro del SUO percorso
+   ────────────────────────────────────────────────────────────────────────────
+   Il metro storico pesava solo le tre analisi a strati (grammatica · logica ·
+   periodo) e ignorava la traduzione: un brano fatto col metodo valenziale non
+   risultava MAI completo, e un Ripasso — che per definizione non si traduce —
+   nemmeno (audit docs/PERCORSI-TRADUTTIVI.md).
+   Ora ogni percorso dichiara il proprio `metro`: l'elenco dei moduli che per
+   LUI contano. Un Ripasso è completo con verbi e proposizioni; una Versione
+   per casa vuole anche i sintagmi e la bella copia.
+   La FIRMA di projectStatus/projectCompletion non cambia: i venti punti di
+   chiamata (Panoramica, Archivio, card di ripresa, export…) non si toccano.
+   I progetti SENZA percorso — quelli anteriori ai percorsi — restano al metro
+   storico: si misura ciò che si sa, non ciò che si presume.
+   ════════════════════════════════════════════════════════════════════════════ */
+function _quotaFrasi(p, test) {
+  const ss = p.sentences || [];
+  if (!ss.length) return 0;
+  return ss.filter(s => { try { return !!test(s); } catch (e) { return false; } }).length / ss.length;
+}
+
+/* `frase` = predicato per singola frase (i moduli d'analisi); `quota` = misura
+   sull'intero progetto. Chi ha `frase` deriva `quota` da sé: così la barra di
+   completamento e il semaforo delle fasi non possono più divergere. */
+const MODULI_METRO = {
+  testo:        { label: 'Brano',        peso: 10, fase: 'scomp',   quota: p => (p.meta && p.meta.testoOriginale) ? 1 : 0 },
+  frasi:        { label: 'Frasi',        peso: 10, fase: 'scomp',   quota: p => (p.sentences || []).length ? 1 : 0 },
+  verbi:        { label: 'Verbi',        peso: 15, fase: 'analisi', frase: s => (s.grammar || []).some(g => g && g.partOfSpeech === 'Verbo') },
+  proposizioni: { label: 'Proposizioni', peso: 15, fase: 'analisi', frase: s => (s.periodale || []).length },
+  sintagmi:     { label: 'Sintagmi',     peso: 20, fase: 'analisi', frase: s => (s.logic || []).length },
+  grammatica:   { label: 'Grammatica',   peso: 15, fase: 'analisi', frase: s => (s.grammar || []).length },
+  brutta:       { label: 'Brutta',       peso: 15, fase: 'trad',    frase: s => String(s.translation || s.translationFinal || '').trim() || (s.ordoVerborum || []).length },
+  bella:        { label: 'Bella copia',  peso: 15, fase: 'trad',    quota: p => String((p.meta && p.meta.traduzioneBella) || '').trim() ? 1 : 0 },
+};
+Object.keys(MODULI_METRO).forEach(k => {
+  const m = MODULI_METRO[k];
+  if (!m.quota && m.frase) m.quota = p => _quotaFrasi(p, m.frase);
+});
+
+/* Il metro storico, per i progetti senza percorso: identico a prima. */
+const METRO_STORICO = ['testo', 'frasi', 'grammatica', 'sintagmi', 'proposizioni'];
+
+function metroDi(p) {
+  const sc = schedaPercorso(p && p.percorso);
+  return (sc && Array.isArray(sc.metro) && sc.metro.length) ? sc.metro : METRO_STORICO;
+}
+
+/** Dettaglio per modulo: utile a spiegare PERCHÉ una versione non è completa. */
+function dettaglioMetro(p) {
+  return metroDi(p).map(k => {
+    const m = MODULI_METRO[k];
+    if (!m) return null;
+    const q = Math.max(0, Math.min(1, m.quota(p) || 0));
+    return { chiave: k, label: m.label, quota: q, fatto: q >= 1 };
+  }).filter(Boolean);
 }
 
 function projectCompletion(p) {
-  if (!p.meta || !p.meta.testoOriginale) return 0;
+  if (!p || !p.meta || !p.meta.testoOriginale) return 0;
+  /* La chiusura dichiarata dallo studente vale più di ogni conteggio: se ha
+     detto «ho finito», la versione è finita. */
+  if (p.meta.completatoAt) return 100;
   let score = 0, weight = 0;
-  weight += 10; score += 10; // testo presente
-  weight += 20; if ((p.sentences || []).length > 0) score += 20;
-  const total = (p.sentences || []).length;
-  if (total > 0) {
-    const g = p.sentences.filter(s => (s.grammar || []).length).length / total;
-    const l = p.sentences.filter(s => (s.logic || []).length).length / total;
-    const pp = p.sentences.filter(s => (s.periodale || []).length).length / total;
-    weight += 70;
-    score += Math.round((g * 25) + (l * 25) + (pp * 20));
-  }
+  dettaglioMetro(p).forEach(d => {
+    const peso = (MODULI_METRO[d.chiave] || {}).peso || 10;
+    weight += peso;
+    score += peso * d.quota;
+  });
+  if (!weight) return 0;
   return Math.min(100, Math.round((score / weight) * 100));
+}
+
+function projectStatus(p) {
+  if (!p || !p.meta || !p.meta.testoOriginale) return 'todo';
+  if (!p.sentences || p.sentences.length === 0) return 'todo';
+  if (p.meta.completatoAt) return 'done';
+  const d = dettaglioMetro(p);
+  /* Si escludono dal giudizio i due moduli d'ingresso (testo e frasi): esserci
+     arrivati non è «aver cominciato l'analisi». */
+  const sostanza = d.filter(x => x.chiave !== 'testo' && x.chiave !== 'frasi');
+  if (!sostanza.length) return 'progress';
+  if (sostanza.every(x => x.fatto)) return 'done';
+  return sostanza.some(x => x.quota > 0) ? 'progress' : 'todo';
 }
 
 /* Avanzamento per FASE (semaforo): scomposizione · analisi · traduzione.
@@ -30566,12 +30646,19 @@ function projectPhases(p) {
   const total = sents.length;
   const hasText = !!(p && p.meta && p.meta.testoOriginale);
   const scomp = total > 0 ? 'done' : (hasText ? 'progress' : 'todo');
-  const analDone = sents.filter(s => (s.grammar||[]).length && (s.logic||[]).length && (s.periodale||[]).length).length;
-  const analAny  = sents.filter(s => (s.grammar||[]).length || (s.logic||[]).length || (s.periodale||[]).length).length;
+  /* I moduli d'analisi sono quelli che il PERCORSO chiede: un brano fatto con
+     lo scheletro non deve restare «in corso» per una morfologia mai promessa. */
+  const analMod = metroDi(p).map(k => MODULI_METRO[k]).filter(m => m && m.fase === 'analisi' && m.frase);
+  const soddisfa = (s, m) => { try { return !!m.frase(s); } catch (e) { return false; } };
+  const analDone = analMod.length ? sents.filter(s => analMod.every(m => soddisfa(s, m))).length : total;
+  const analAny  = analMod.length ? sents.filter(s => analMod.some(m => soddisfa(s, m))).length : 0;
   const analisi = total === 0 ? 'todo' : (analDone === total ? 'done' : (analAny > 0 ? 'progress' : 'todo'));
+  const tradMod = metroDi(p).filter(k => (MODULI_METRO[k] || {}).fase === 'trad');
   const tradCount = sents.filter(s => s.translation || s.translationFinal || (s.ordoVerborum||[]).length).length;
   const tradMeta = !!(p && p.meta && (p.meta.traduzioneBella || p.meta.traduzione));
-  const trad = ((total > 0 && tradCount === total) || (p && p.meta && p.meta.traduzioneBella)) ? 'done'
+  /* Un percorso che non prevede traduzione (il Ripasso) ha la fase già chiusa. */
+  const trad = !tradMod.length ? 'done'
+             : ((total > 0 && tradCount === total) || (p && p.meta && p.meta.traduzioneBella)) ? 'done'
              : (tradCount > 0 || tradMeta) ? 'progress' : 'todo';
   return { scomp, analisi, trad, analDone, total };
 }
@@ -30642,7 +30729,13 @@ function timeAgoLabel(iso) {
    generico «apri». È il senso della home — ritrovare il proprio lavoro. */
 const WORK_STEP_NAMES = { 1: 'Brano', 2: 'Scomposizione', 3: 'Analisi', 5: 'Traduzione' };
 function resumePointLabel(p) {
-  if (projectStatus(p) === 'done') return 'completato · rileggi la bella copia';
+  /* Anche la ripresa parla la lingua del percorso: un Ripasso è compiuto senza
+     traduzione, e non si rimanda a una bella copia che non prevede. */
+  if (projectStatus(p) === 'done') {
+    return metroDi(p).indexOf('bella') >= 0
+      ? 'completato · rileggi la bella copia'
+      : 'completato · rivedi la struttura';
+  }
   const step = workStepOf(p);
   const nome = WORK_STEP_NAMES[step] || 'Brano';
   const tot = (p.sentences || []).length;
@@ -30684,11 +30777,20 @@ function renderPanoramicaHtml() {
     const main = who || p.meta.titolo || 'Senza titolo';
     const nfr = (p.sentences || []).length;
     const quando = timeAgoLabel(p.meta.updatedAt);
+    /* Qui basta l'icona: la card di ripresa è stretta e il nome del percorso
+       ruberebbe la riga all'autore. Il nome sta nel tooltip, col metro. */
+    const scP = schedaPercorso(p.percorso);
     const sub = [quando, `${nfr} fras${nfr === 1 ? 'e' : 'i'}`].filter(Boolean).join(' · ');
+    const mancaP = dettaglioMetro(p).filter(d => !d.fatto).map(d => d.label);
+    const tipP = [
+      isCurrent ? 'Torna al brano aperto' : 'Riprendi questo brano',
+      scP ? `Percorso: ${scP.nome}` : '',
+      p.meta.completatoAt ? 'Versione conclusa' : (mancaP.length ? `Manca: ${mancaP.join(' · ')}` : 'Tutto fatto'),
+    ].filter(Boolean).join(' — ');
     return `
-      <button class="resume-card" data-status="${status}" onclick="openProject('${p.id}')" title="${isCurrent ? 'Torna al brano aperto' : 'Riprendi questo brano'}">
+      <button class="resume-card" data-status="${status}" onclick="openProject('${p.id}')" title="${escapeHtml(tipP)}">
         <span class="resume-card-row">
-          <span class="resume-card-title">${escapeHtml(main)}</span>
+          <span class="resume-card-title">${scP ? `<span class="resume-card-percorso" aria-hidden="true">${scP.icona}</span> ` : ''}${escapeHtml(main)}</span>
           <span class="resume-card-meta">${escapeHtml(sub)}</span>
           ${isCurrent ? '<span class="current-tag">in lavorazione</span>' : ''}
         </span>
@@ -30833,6 +30935,17 @@ function renderArchiveCard(p) {
   const wordCount = projectWordCount(p);
   const sentenceCount = (p.sentences || []).length;
 
+  /* Percorso e metro: la barra dice «quanto», il titolo dice «di che cosa» —
+     senza questo un 60% resta un numero senza appello. */
+  const perc = schedaPercorso(p.percorso);
+  const percBadge = perc
+    ? `<span class="percorso-badge" title="Percorso · ${escapeHtml(perc.scopo)}">${perc.icona} ${escapeHtml(perc.nome)}</span>`
+    : '';
+  const mancanti = dettaglioMetro(p).filter(d => !d.fatto).map(d => d.label);
+  const metroTitle = (perc ? `Metro «${perc.nome}» — ` : '')
+    + (p.meta.completatoAt ? 'versione conclusa'
+      : mancanti.length ? `manca: ${mancanti.join(' · ')}` : 'tutto fatto');
+
   const ph = projectPhases(p);
   const phaseChip = (st, label) => `<span class="phase-chip" data-state="${st}"><span class="phase-dot"></span>${label}</span>`;
   const phasesHtml = `<div class="archive-card-phases" aria-label="Avanzamento per fase">`
@@ -30851,13 +30964,14 @@ function renderArchiveCard(p) {
           ${isCurrent ? '<span class="current-tag">in lavorazione</span>' : ''}
         </h4>
         <div class="archive-card-meta">
+          ${percBadge}
           ${p.meta.autore ? `<span><em>${escapeHtml(p.meta.autore)}</em></span>` : ''}
           ${p.meta.opera ? `<span>${escapeHtml(p.meta.opera)}</span>` : ''}
-          <span>${sentenceCount} frase${sentenceCount === 1 ? '' : 'i'}</span>
+          <span>${sentenceCount} ${sentenceCount === 1 ? 'frase' : 'frasi'}</span>
           <span>${wordCount} parole</span>
           <span>aggiornato ${dateStr}</span>
         </div>
-        <div class="archive-card-progress">
+        <div class="archive-card-progress" title="${escapeHtml(metroTitle)}">
           <div class="archive-card-progress-bar">
             <div class="archive-card-progress-fill" style="width:${completion}%;"></div>
           </div>
@@ -31440,7 +31554,7 @@ function renderGuidedStep1() {
         <button class="btn btn-brand-soft btn-sm" onclick="addSentence()">+ Aggiungi frase</button>
         <button class="btn btn-ghost btn-sm" onclick="resplitSentences()">↻ Risegmenta automaticamente</button>
       </div>
-      <span class="muted-text">${state.sentences.length} frase${state.sentences.length === 1 ? '' : 'i'}</span>
+      <span class="muted-text">${state.sentences.length} ${state.sentences.length === 1 ? 'frase' : 'frasi'}</span>
     </div>
     <div class="sentence-list" id="sentence-list">${sentenceList}</div>`;
 }
