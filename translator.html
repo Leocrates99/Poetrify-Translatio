@@ -4348,6 +4348,33 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: var(--font-c
 .am-piano-k { display: block; font-family: var(--font-ui); font-size: 9.5px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--sepia); }
 .am-piano ol { margin: 7px 0 0 16px; font-family: var(--font-ui); font-size: 11.5px; line-height: 1.75; color: var(--ink-soft); }
 
+/* ── CARD DEL PERCORSO · il confronto in superficie, non nei tooltip ────────
+   La miniatura del nastro fa VEDERE la playlist: quante tappe sono, e quali.
+   Il percorso non ha mai un colore proprio — il colore resta della lingua. */
+.avvio-modo.apc { position: relative; }
+.apc-flag {
+  align-self: flex-start; margin-bottom: 4px; padding: 2px 9px; border-radius: 999px;
+  font-family: var(--font-ui); font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--paper); background: var(--lang-accent);
+}
+.apc-flag-prima { background: var(--sepia); }
+.apc-tempo {
+  font-family: var(--font-ui); font-size: 11px; color: var(--sepia); margin-top: 3px;
+}
+.apc-tempo strong { color: var(--ink); font-weight: 700; }
+.apc-nastro { display: flex; flex-wrap: wrap; align-items: center; gap: 3px; margin-top: 8px; }
+.apc-nodo {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-family: var(--font-ui); font-size: 10.5px; line-height: 1.5; color: var(--ink-soft);
+  white-space: nowrap;
+}
+.apc-pallino {
+  width: 6px; height: 6px; border-radius: 50%; flex: none;
+  background: var(--lang-accent); opacity: 0.55;
+}
+.avvio-modo.sel .apc-pallino { opacity: 1; }
+.apc-filo { width: 9px; height: 1px; background: var(--rule); flex: none; }
+
 .avvio-azioni { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 22px; }
 
 /* ── HOME DI RAMO (Π) · due vie in testa, numeri di stato in fondo ──────────
@@ -12437,7 +12464,7 @@ const PERCORSI = {
   'versione-casa': {
     nome: 'Versione per casa', icona: '📖',
     scopo: 'Il compito assegnato: il metodo per intero, con calma.',
-    tempo: '≈5 min a frase',
+    tempo: '≈5 min a frase', minPerFrase: 5,
     /* La playlist è per ora DESCRITTIVA (alimenta card e banner); diventerà
        guida del motore col refactor playlist-driven dello scheletro. */
     playlist: ['Verbi', 'Proposizioni', 'Soggetto', 'Oggetto', 'Preposizionali', 'Altri complementi', 'Ordo e brutta', 'Bella copia'],
@@ -12447,7 +12474,7 @@ const PERCORSI = {
   'passo-passo': {
     nome: 'Passo dopo passo', icona: '🧭',
     scopo: 'La prima versione, con la voce del docente accanto a ogni tappa.',
-    tempo: '≈8 min a frase le prime volte',
+    tempo: '≈8 min a frase le prime volte', minPerFrase: 8,
     playlist: ['Pre-lettura', 'Frasi', 'Verbi', 'Connettivi', 'Sintassi', 'Sintagmi', 'Grammatica', 'Brutta', 'Bella copia'],
     preset: { metodo: 'strati', vista: 'frase', mode: 'guided' },
     disponibile: true,
@@ -12458,7 +12485,7 @@ const PERCORSI = {
   'simulazione': {
     nome: 'Simulazione di compito', icona: '⏱',
     scopo: 'Allenati al ritmo della verifica, a casa: struttura e resa, senza la morfologia completa.',
-    tempo: '≈2-3 min a frase',
+    tempo: '≈2-3 min a frase', minPerFrase: 2.5,
     playlist: ['Analisi automatica', 'Verbi', 'Proposizioni', 'Ordo e brutta', 'Bella copia'],
     preset: { metodo: 'strati', vista: 'intero', mode: 'free' },
     disponibile: false,
@@ -12466,7 +12493,7 @@ const PERCORSI = {
   'ripasso': {
     nome: 'Ripasso lampo', icona: '⚡',
     scopo: 'Rivedere la struttura di una versione, senza tradurla.',
-    tempo: '10-15 min in tutto',
+    tempo: '10-15 min in tutto', minPerFrase: 1,
     playlist: ['Verbi', 'Proposizioni', 'Stemma a barre'],
     preset: { metodo: 'valenziale', vista: 'intero', mode: 'free' },
     disponibile: false,
@@ -12479,6 +12506,34 @@ const PERCORSO_DEFAULT = 'versione-casa';
    essere applicato ai progetti creati in questa entrata (import dal corpus o
    nuovo brano). Resta un CONSIGLIO: l'utente potrà cambiarlo. */
 let _percorsoDaUrl = '';
+
+/* Stima sul brano REALE, non una promessa generica: «14 frasi: circa 40 minuti».
+   Il tempo è un'informazione, non una minaccia — si dice una volta, alla soglia. */
+function stimaPercorso(chiave, nFrasi) {
+  const sc = schedaPercorso(chiave);
+  if (!sc || !sc.minPerFrase || !nFrasi) return '';
+  const min = Math.round(sc.minPerFrase * nFrasi);
+  if (min < 20) return 'circa ' + (Math.round(min / 5) * 5 || 5) + ' minuti';
+  if (min < 60) return 'circa ' + (Math.round(min / 10) * 10) + ' minuti';
+  const ore = Math.floor(min / 60), resto = Math.round((min % 60) / 30) * 30;
+  return 'circa ' + ore + (resto ? '½' : '') + (ore === 1 && !resto ? ' ora' : ' ore');
+}
+
+/* Ha già portato a termine almeno una versione? Da questo dipende quale card
+   sia il default evidenziato: al primo ingresso il percorso giusto è quello
+   che il metodo lo SPIEGA, non quello più efficiente. */
+function haGiaConclusoUnaVersione() {
+  try {
+    return loadAllProjects().some(p => p && p.meta &&
+      (p.meta.completatoAt || String(p.meta.traduzioneBella || '').trim()));
+  } catch (e) { return false; }
+}
+
+/** Il percorso proposto per default in un nuovo avvio. */
+function percorsoProposto() {
+  if (_percorsoDaUrl && schedaPercorso(_percorsoDaUrl)) return _percorsoDaUrl;
+  return haGiaConclusoUnaVersione() ? PERCORSO_DEFAULT : 'passo-passo';
+}
 
 /** La scheda del percorso, o null se la chiave non esiste. */
 function schedaPercorso(chiave) {
@@ -27699,7 +27754,7 @@ function startAvvio(lang) {
     passo: 1, lingua: l, origine: null,
     autore: '', opera: '', loc: '',
     manualeId: '', versione: '', pagina: '',
-    testo: '', modo: 'guided'
+    testo: '', percorso: percorsoProposto()
   };
   renderAll();
 }
@@ -27774,7 +27829,7 @@ function avvioApriOcr() {
 }
 
 /* Solo qui nasce il progetto. */
-function avvioCrea(modo) {
+function avvioCrea() {
   if (!avvio) return;
   const a = avvio;
   if (!String(a.testo || '').trim()) { showToast('Serve almeno il testo per cominciare'); return; }
@@ -27795,7 +27850,9 @@ function avvioCrea(modo) {
     if (String(a.versione || '').trim()) state.meta.versioneNum = String(a.versione).trim();
     if (String(a.pagina || '').trim()) state.meta.pagina = String(a.pagina).trim();
   }
-  state.mode = (modo === 'guided') ? 'guided' : 'free';
+  /* Il percorso scelto registra sé stesso E deriva gli assi (metodo/vista/guida):
+     una sola scelta, nessun controllo tecnico da toccare a mano. */
+  applicaPercorso(avvio.percorso || PERCORSO_DEFAULT);
   state.guidedStep = 1;
   state.sentences = splitTextIntoSentences(a.testo).map(makeSentence);
   maybeAutoClosedClass();
@@ -27910,25 +27967,45 @@ function avvioPasso2() {
     </div>`;
 }
 
+/* PASSO 3 · «Perché traduci oggi?» — la scelta del PERCORSO.
+   Prima si chiedeva solo Guidata/Libera: l'asse più caratterizzante (il metodo
+   del docente) non veniva mai proposto, e le differenze vivevano in tooltip
+   invisibili al tocco. Ora le card portano il confronto in superficie —
+   identiche su PC e telefono — con la MINIATURA DEL NASTRO (la playlist si
+   vede) e il tempo stimato SUL BRANO REALE.
+   Si mostrano solo i percorsi COSTRUITI: niente card che promettono flussi
+   inesistenti (audit docs/PERCORSI-TRADUTTIVI.md). */
 function avvioPasso3() {
-  const tappe = getVisibleGuidedSteps();
-  const piano = tappe.map((s, i) => `<li>${escapeHtml(s.label)}</li>`).join('');
   const n = avvioFrasi();
-  const scelta = (id, tit, desc, corpo) => `
-    <button class="avvio-modo ${avvio.modo === id ? 'sel' : ''}" onclick="avvioCampo('modo','${id}'); renderAll();">
-      <span class="am-t">${tit}</span>
-      <span class="am-d">${desc}</span>
-      ${corpo}
-    </button>`;
+  const primaVolta = !haGiaConclusoUnaVersione();
+  const chiavi = percorsiDisponibili();
+  const card = (k) => {
+    const sc = PERCORSI[k];
+    const sel = avvio.percorso === k;
+    const consigliato = _percorsoDaUrl === k;
+    const suggerito = !consigliato && primaVolta && k === 'passo-passo';
+    const stima = stimaPercorso(k, n);
+    const nastro = sc.playlist.map(lab =>
+      `<span class="apc-nodo"><span class="apc-pallino" aria-hidden="true"></span>${escapeHtml(lab)}</span>`
+    ).join('<span class="apc-filo" aria-hidden="true"></span>');
+    return `
+      <button class="avvio-modo apc ${sel ? 'sel' : ''}" onclick="avvioCampo('percorso','${k}'); renderAll();"
+              aria-pressed="${sel ? 'true' : 'false'}">
+        ${consigliato ? '<span class="apc-flag">consigliato per questo compito</span>'
+          : suggerito ? '<span class="apc-flag apc-flag-prima">è la tua prima volta: qui il metodo te lo spiego io</span>' : ''}
+        <span class="am-t">${sc.icona} ${escapeHtml(sc.nome)}</span>
+        <span class="am-d">${escapeHtml(sc.scopo)}</span>
+        <span class="apc-tempo">${escapeHtml(sc.tempo)}${stima ? ` · su questo brano: <strong>${escapeHtml(stima)}</strong>` : ''}</span>
+        <span class="am-piano">
+          <span class="am-piano-k">Il percorso · ${sc.playlist.length} tappe</span>
+          <span class="apc-nastro">${nastro}</span>
+        </span>
+      </button>`;
+  };
   return `<div class="avvio-corpo">
-      <h2 class="avvio-domanda">Come vuoi affrontarlo?</h2>
-      <p class="avvio-sotto">${escapeHtml(avvioTitolo())} — ${n} fras${n === 1 ? 'e' : 'i'}.</p>
-      <div class="avvio-modi">
-        ${scelta('guided', 'Guidata', "Ti accompagno tappa per tappa: prima l'ossatura del periodo, poi il dettaglio, infine la traduzione.",
-          `<span class="am-piano"><span class="am-piano-k">Il percorso · ${tappe.length} tappe</span><ol>${piano}</ol></span>`)}
-        ${scelta('free', 'Libera', 'Vai dove vuoi, nell\'ordine che preferisci. Le stanze restano tutte aperte.',
-          `<span class="am-piano"><span class="am-piano-k">Le stanze</span><ol><li>Scomposizione</li><li>Grammaticale</li><li>Logica</li><li>Sintattico-periodale</li></ol></span>`)}
-      </div>
+      <h2 class="avvio-domanda">Perché traduci oggi?</h2>
+      <p class="avvio-sotto">${escapeHtml(avvioTitolo())} — ${n} fras${n === 1 ? 'e' : 'i'}. Scegli la strada: <strong>puoi cambiarla anche dopo, il lavoro fatto resta</strong>.</p>
+      <div class="avvio-modi">${chiavi.map(card).join('')}</div>
       <div class="avvio-azioni">
         <button class="btn btn-primary" onclick="avvioVai(4)">Continua →</button>
         <button class="btn btn-ghost" onclick="avvioVai(2)">← Indietro</button>
@@ -27991,14 +28068,15 @@ function renderNastroTappe() {
    dove si cominciava. Qui si dichiara il primo passo, si riepiloga il brano e
    si mostra il piano — poi si entra sapendo dove si è. */
 function avvioPasso4() {
-  const guidata = avvio.modo === 'guided';
-  const tappe = guidata ? getVisibleGuidedSteps().map(s => s.label)
-                        : ['Brano', 'Scomposizione', 'Analisi', 'Bozza', 'Bella copia'];
+  const sc = schedaPercorso(avvio.percorso) || PERCORSI[PERCORSO_DEFAULT];
+  const guidata = sc.preset && sc.preset.mode === 'guided';
+  const tappe = sc.playlist.slice();
   const prima = guidata ? 'pre-lettura' : 'scomposizione';
   const spiega = guidata
     ? 'Leggi il brano per intero una prima volta: non serve capire tutto, serve sentire dove respira il periodo.'
-    : 'Il testo è pronto. Si parte dividendolo in frasi: da lì potrai muoverti fra le stanze nell\'ordine che preferisci.';
+    : 'Il testo è pronto. Si parte dividendolo in frasi: da lì si costruisce l\'ossatura del periodo.';
   const n = avvioFrasi();
+  const stima = stimaPercorso(avvio.percorso, n);
   const nodi = tappe.map((lab, i) => {
     const cls = i === 0 ? 'ora' : '';
     return `<span class="nastro-nodo statico ${cls}"><span class="nastro-cerchio">${i + 1}</span>${escapeHtml(lab)}</span>`;
@@ -28010,11 +28088,12 @@ function avvioPasso4() {
       <div class="soglia-recap">
         <span>${escapeHtml(avvioTitolo())}</span>
         <span>${n} fras${n === 1 ? 'e' : 'i'}</span>
-        <span>modalità ${guidata ? 'guidata' : 'libera'}</span>
+        <span>${escapeHtml(sc.icona + ' ' + sc.nome)}</span>
+        ${stima ? `<span>${escapeHtml(stima)}</span>` : ''}
       </div>
       <nav class="nastro soglia-nastro" aria-label="Il piano del lavoro">${nodi}</nav>
       <div class="avvio-azioni" style="justify-content:center;">
-        <button class="btn btn-primary" onclick="avvioCrea('${avvio.modo}')">Entra nel banco →</button>
+        <button class="btn btn-primary" onclick="avvioCrea()">Entra nel banco →</button>
         <button class="btn btn-ghost" onclick="avvioVai(3)">← Indietro</button>
       </div>
     </div>`;
