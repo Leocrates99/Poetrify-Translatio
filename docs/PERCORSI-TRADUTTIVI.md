@@ -1,0 +1,171 @@
+# Audit · I percorsi traduttivi e la loro declinazione UX/UI
+
+> **Domanda del docente:** concepire in maniera strutturata, funzionante, efficiente,
+> intuitiva e *spedita* i possibili percorsi di approccio e metodo traduttivi, con la
+> relativa declinazione UX/UI.
+> **Metodo:** ricognizione a 4 lenti sul codice reale (con riferimenti di riga) →
+> progettazione → doppia critica avversariale (didattica/carico cognitivo · fattibilità
+> nel monolite). Luglio 2026. Documento-fonte per le sessioni future.
+
+---
+
+## 1 · Diagnosi: tre motori, non tre percorsi
+
+Il translator ha **4 assi vivi** — Lingua (gate) · Metodo (strati/valenziale) · Vista
+(frase/intero) · Guida (libera/guidata) — più un quinto asse *fantasma* (`approach`,
+ormai solo derivato). Ma delle 8 combinazioni memorizzabili, i percorsi di rendering
+reali sono **4**, e non sono declinazioni di uno stesso motore: sono **tre macchine
+separate** che implementano la stessa pedagogia con stati, stepper e contabilità propri:
+
+| Percorso reale | Motore | Carattere |
+|---|---|---|
+| «attuale» (strati + frase) | 3 stanze per frase + tab unificato | il più rifinito; ~25-30 clic di navigazione per 5 frasi |
+| «integrale» (strati + intero) | brano intero taggabile, batch, auto-analisi | il più **spedito** (~8-10 clic), ma senza stemma a barre |
+| scheletro (valenziale) | 7 fasi brano-wide | l'unico con nastro completo analisi→ordo→brutta→E |
+| guidata (wizard) | 9 tappe in 4 fasi, renderer propri | il più lungo (≥24 clic di solo posizionamento) |
+
+### I guasti trovati (verificati riga per riga)
+
+| Sev. | Guasto | Dove |
+|---|---|---|
+| 🔴 | **La didattica del metodo è muta per tutti.** L'abolizione del Profilo ha inchiodato `data-level='avanzato'`, e la regola CSS residua `body:not([data-level="base"]) … display:none` (≈4511-4535) nasconde **per sempre** `.wizard-instructions`, `.field-hint`, `.attributivo-hint` e ~15 classi: le istruzioni del wizard (GUIDED_STEPS_META, ≈30726-30761), la regola dei 5 valori del participio, l'hint ⌖ d'incastonatura — il cuore «la classificazione insegna» — non sono visibili a **nessuno studente**. | CSS ≈4511-4535 |
+| 🔴 | Lo studente **non incontra mai il metodo del docente**: l'avvio chiede solo Guidata/Libera; il valenziale si scopre solo da un segmented 🦴 con tooltip; il modale descrittivo («a») **non ha nemmeno la scheda dello scheletro**. | avvio ≈27592 · modale ≈38630-38666 |
+| 🔴 | **«Frase-per-frase» è codice morto raggiungibile**: la card del modale lo offre ancora, ma il click attiva silenziosamente guidata+attuale (percorso diverso da quello appena letto); ~250 righe di renderer irraggiungibile (≈30226-30308). | modale + dispatcher ≈28061 |
+| 🟠 | **Controlli cliccabili senza effetto**: Vista attiva ma inerte col valenziale (toast di conferma sul nulla); Metodo cliccabile ma inerte in guidata. L'ortogonalità dichiarata dei 3 assi non esiste. | setVista/setMetodo ≈38596-38614 |
+| 🟠 | **Doppia pedagogia non riconciliata**: scheletro (7 fasi) e wizard (9 tappe) insegnano quasi la stessa progressione con due macchine a stati che possono coesistere in conflitto nello stesso progetto. | ≈28143 · ≈30726 |
+| 🟠 | **Su telefono non esiste alcun posto** dove leggere le differenze fra i percorsi: tooltip invisibili al tocco, modale solo da tastiera, quick-bar nel drawer. | — |
+| 🟠 | Lo **stemma a barre** (la vista canonica del metodo) è terzo nel ciclo dei toggle, mai default, e **non esiste proprio** nel percorso integrale. | ≈35276 |
+| 🟠 | La **contabilità** (projectStatus/Completion) misura solo le tre analisi a strati: i brani fatti con lo scheletro non risultano mai «completi». | ≈30338-30366 |
+| 🟡 | **Copy fossile** in ≥6 punti: badge «6/6» su 9 tappe, scheletro descritto «3 step» quando le fasi sono 7, «pulsante in alto a destra» rimosso, aria-label col «profilo», tag `<\strong>` spezzato (≈31222), onboarding spento e stale. | vari |
+| 🟡 | `setLingua` è una **funzione orfana** (mai chiamata): non esiste un controllo per cambiare lingua in corsa. | ≈38261-38279 |
+| 🟡 | Nel percorso scheletro la fase 1 mostra il select del participio **ma scarta `f.hint`**: proprio il percorso del metodo perde la regola del metodo. | renderScheletroVerbQuick |
+
+**Il paradosso di fondo:** il pregio maggiore — il **modello dati unico per frase**, che
+rende sicuro cambiare percorso a metà versione — non è comunicato da nessuna superficie.
+
+---
+
+## 2 · La visione: un motore, una famiglia di percorsi
+
+> **UN MOTORE, PIÙ PERCORSI.** Si definisce una **catena canonica di layer-moduli** e ogni
+> percorso è una **playlist** di quei moduli più tre manopole: *dose degli hint* (piena /
+> compressa) · *guida* (voce del docente sopra la fase: on/off) · *granularità* (per frase /
+> brano intero). I percorsi si distinguono per **SCOPO e TEMPO** dichiarati («Simulazione
+> di compito · ~2-3 min a frase»), **mai per bravura** (fasce abolite). Gli assi tecnici
+> Metodo/Vista/Guida **spariscono dalla UI** come scelte autonome: diventano stato interno
+> derivato dal percorso — muoiono le combinazioni inerti e i quattro vocabolari sovrapposti.
+> Il **nastro delle tappe** (già il pezzo UX più riuscito) rende la playlist: *il nastro È
+> il percorso*.
+
+### La catena canonica dei layer
+
+```
+L0 Pre-lettura · L1 Verbi (finiti/non finiti + participio 5 valori) · L2 Proposizioni/connettivi
+L3 Soggetto+gruppo · L4 Oggetto+gruppo · L5 Preposizionali · L6 Altri complementi
+L7 Grammatica completa · L8 Stemma a barre S·V·O·C · L9 Ordo S·V·O·C → brutta · L10 Bella copia
+```
+
+Le 7 fasi dello scheletro **sono già l'implementazione canonica** di L1-L6+L9; il wizard
+vi si fonde come **overlay-guida** (i suoi testi didattici tornano visibili e diventano la
+«voce del docente» richiudibile sopra ogni fase).
+
+---
+
+## 3 · La famiglia dei percorsi
+
+*Nomi rivisti dalla critica didattica: per scopo, in parole da studente. «La versione» →
+**Versione per casa**; «Compito in classe» → **Simulazione di compito** (durante una
+verifica reale l'app è vietata: la promessa onesta è l'allenamento); «Pro con
+ramificazioni» → **Versione d'autore**.*
+
+| Percorso | Per | Playlist | Tempo | Stato |
+|---|---|---|---|---|
+| **Versione per casa** *(default)* | il compito assegnato: metodo pieno | L1→L2→L3→L4→L5→L6 (+L8 a fianco, default barre) →L9→L10 | 45-90′ (8-12 frasi) | **esiste**: è lo scheletro, da rendere playlist-driven |
+| **Passo dopo passo** | prima versione / voce del docente accanto | L0 + le stesse fasi **con guida attiva** + L7 facoltativa + L10 con rilettura | 60-120′, cala con l'abitudine | fusione wizard→motore (interim: `mode=guided` com'è, con le istruzioni sbloccate) |
+| **Simulazione di compito** | allenarsi al ritmo della verifica, a casa | ⚡auto-analizza → L1 (brano intero) → L2 → L9→L10; L3-L6 solo dove la brutta inceppa | ~2-3′ a frase; ~10 clic di struttura | da comporre (auto-analizza integrale + fasi 1-2 + seed ordo) |
+| **Ripasso lampo** | prima della verifica: struttura senza tradurre | L1→L2→**L8 come traguardo visivo**; chiusura «Visto ✓» senza bella | 10-15′ | da comporre; entry point naturale: **dall'Archivio**, non dall'avvio |
+| **Leggere tanto** | mole (Cesare/Senofonte a capitoli): ritmo e senso | ciclo stretto per frase: L1 lampo → brutta immediata → avanti; dizionario a fianco | 2-3′ a frase | nuovo; v1 **senza** trapianto del pattern L2 dal laboratorio |
+| **Versione d'autore** | la «guida pro» rimandata: il testo apre i bivi | come Versione per casa + **nodi condizionali dai dati**: participio→bivio dei 5 valori; valore proprio→tappa ⚓; incastonatura→tappa ⌖ | 60-90′ su brano denso | nuovo (solo il branching: i predicati esistono già tutti) |
+
+### Routing — un gesto, parole oneste
+
+- **All'avvio, 3 card** (non 6: choice overload per un quindicenne): *Versione per casa ·
+  Simulazione di compito · Passo dopo passo*, più «altri percorsi». Ogni card: icona, scopo,
+  **miniatura del nastro** (la playlist si vede), **tempo per unità** («~2-3 min a frase») —
+  e **alla soglia la stima calcolata sul brano reale** («14 frasi: circa 40 minuti»).
+- **Regola di primo ingresso**: finché non c'è una versione completata, il default
+  evidenziato è *Passo dopo passo* («è la tua prima volta: qui il metodo te lo spiega»).
+- **In corsa**: pill «Percorso: …» che riapre il pannello card (v1 mobile: nel banner di
+  contesto della tab C + soglia; topbar quando il CSS regge). Sostituisce i 3 segmented,
+  il modale «a» e i doppioni della palette.
+- **Prescrivibilità del docente**: `?percorso=` nel deep-link (con filo esplicito verso
+  `importPassoDalCorpus`, perché `?text=` oggi ha precedenza assoluta) come **default
+  marcato**; l'export e la bella **stampano il percorso usato e la copertura dei moduli**
+  («Percorso: Simulazione di compito · L1 L2 L9») — il contrasto all'abuso del percorso
+  corto non è il blocco, è la **visibilità**.
+- **Cambio sicuro e onesto**: «Cambi strada: il lavoro fatto resta» — ma al passaggio verso
+  un percorso più ricco le tappe a valle (L9, L10) passano allo stato terzo **«da
+  rivedere»**: vero per i dati E per la testa.
+- **Rientro selettivo** (il micro-gesto che mancava): dalla brutta di frase, «analizza i
+  gruppi di questa frase» apre l'editor logico condiviso in overlay.
+
+### Declinazione UX/UI trasversale
+
+- **Parole da studente, sempre**: banditi «attuale», «integrale», «approccio»,
+  «frase-per-frase» da ogni superficie utente.
+- **La scelta si legge, non si scopre**: mai differenze affidate a tooltip o a modali da
+  tastiera; card identiche su PC e telefono.
+- **Nastro unico** per qualunque percorso (muore il doppio stepper); la tappa corrente
+  dice sempre cosa fare e cosa viene dopo.
+- **DNA invariato**: pergamena, colore = lingua; il percorso ha icona e nome, **mai un
+  colore proprio** (il colore resta della lingua).
+- **Onestà dei controlli**: mai un controllo cliccabile senza effetto; ciò che il percorso
+  non usa non si mostra.
+- **Didattica visibile e dosata**: gli hint del metodo sbloccati, poi dosati per scopo
+  (distesi in Passo dopo passo e Versione d'autore, compressi a ℹ nei rapidi) — mai spenti.
+- **Il tempo è un'informazione, non una minaccia**: niente countdown; in Simulazione il
+  progresso è «frasi fatte N/M» (timer eliminato dalla v1).
+- **Copy come contratto**: ogni testo che nomina posizioni o conteggi si genera dalla
+  scheda-percorso, così le parole migrano coi meccanismi e non fossilizzano.
+
+---
+
+## 4 · Ordine dei lavori (riconciliato dalle due critiche)
+
+| # | Intervento | Rischio | Nota |
+|---|---|---|---|
+| 1 | **Sblocco didattico MIRATO**: neutralizzare la regola CSS ≈4511-4535 **solo** per `.wizard-instructions` + hint del metodo (participio/⌖/aggancio), **con rilettura del copy riesumato**; emettere `f.hint` nel quick-menu verbi dello scheletro | nullo | valore massimo; ogni percorso futuro ne dipende. NON strappare l'intera regola: metà delle classi porta copy dell'era del profilo |
+| 2 | **Bonifica copy fossile**: 6/6→9, «3 step»→7 fasi, `<\strong>` ≈31222, aria-label, riferimenti a controlli rimossi | nullo | |
+| 3 | **Campo `percorso` nel modello + migrazione 3→4 conservativa** (valenziale→Versione per casa · guided→Passo dopo passo · resto→Versione per casa) + `?percorso=` nel bootstrap col filo verso `importPassoDalCorpus` | basso | la catena di migrazioni esistente è esemplare: è idraulica sicura |
+| 4 | **Scheda-percorso unica + card all'avvio — prima ondata ONESTA**: solo percorsi che sono puri preset sugli assi esistenti (Versione per casa · Passo dopo passo interim). Miniatura del nastro, tempo per-frase, stima alla soglia, regola di primo ingresso, percorso stampato nell'export | basso | **niente card vaporware**: una card entra nel pannello solo quando il percorso esiste |
+| 5 | **Contabilità parametrica**: projectStatus/Completion leggono `p.percorso` a firma invariata (i ~18 call-site non si toccano) + badge di percorso in Archivio | basso | i brani scheletro finalmente «completi» col loro metro |
+| 6 | **Semantica del cambio percorso**: stato terzo «da rivedere» sulle tappe a valle | basso | va costruito PRIMA di pubblicare più card |
+| 7 | **Refactor scheletro playlist-driven** (voce che il progetto sottostimava): STEPS parametrico dalla scheda, azione terminale dichiarata, seed dell'ordo agganciato alla tappa L9 e non alla fase fissa 7 | medio | prerequisito vero dei percorsi rapidi |
+| 8 | **Collaudo mobile delle superfici di lavoro** (fase scheletro con 12 frasi, stemma, integrale) con criteri misurabili | — | decide le varianti mobile dei percorsi rapidi |
+| 9 | **Percorsi rapidi**: Simulazione di compito + Ripasso lampo (entry dall'Archivio), col micro-gesto di rientro selettivo | medio | ora davvero componibili |
+| 10 | **Pill «Percorso» + estinzioni** a commit separati per superficie; **rimozione del ramo morto frase-per-frase come commit isolato di sole delezioni con whitelist scritta prima** (cosa resta in migrazione per compat, cosa cade) + terna | medio | fuori dal percorso critico: è igiene |
+| 11 | **Fusione guidata→motore** a micro-passi collaudabili (nastro unico → sidebar → macchina a stati unica); la card Passo dopo passo smette di essere interim solo a fusione compiuta | **alto** | l'unico refactor grosso: in coda, blindato |
+| 12 | **Stemma a barre trasversale** (nell'integrale/Simulazione; default del ciclo nei percorsi di metodo) · poi **Leggere tanto** v1 (senza trapianto lab) · infine **Versione d'autore** (branching sopra `PARTICIPIO_VALORE_REGOLE`, `sintagmaConParticipioProprio`, `suggerisciCapoAttributivo`) | basso/nuovo | chiude la promessa della guida pro |
+
+### Tagli deliberati (prima ondata)
+
+- «Leggere tanto» e «Versione d'autore» **fuori dal pannello card finché non esistono**.
+- Ripasso lampo non è un modo di *iniziare* una versione: il suo ingresso è l'**Archivio**.
+- Timer in Simulazione: eliminato (resta «frasi fatte N/M»).
+- Escalation/de-escalation suggerite: dopo la contabilità parametrica.
+- Motore-playlist L0-L10 come **modello concettuale**, non engine astratto subito
+  (framework prematuro): si parte parametrizzando lo scheletro.
+
+---
+
+## 5 · Perché così
+
+La domanda chiedeva percorsi «strutturati, strutturali, funzionanti, efficienti, intuitivi,
+spediti». La risposta strutturale è **una sola catena di moduli** con playlist per scopo:
+- *strutturata*: la scheda-percorso è l'unica fonte di verità (card, pill, nastro, export);
+- *funzionante*: si compone da pezzi già vivi (scheletro, auto-analizza, seed ordo, stemma);
+- *efficiente*: nessun renderer duplicato; il wizard si fonde invece di raddoppiare;
+- *intuitiva*: si sceglie per scopo con parole da studente, e la playlist si vede;
+- *spedita*: Simulazione ~10 clic di struttura; Ripasso 10-15′; e il percorso pieno
+  resta il default culturale, difeso dalla visibilità (export col percorso stampato),
+  non da divieti.
