@@ -4508,13 +4508,19 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: var(--font-c
    La pulizia di base globale dei 162 helper-text arriva nella Fase 2; qui
    differenziamo la densità per livello.
    ============================================ */
-/* Sotto-scritte/aiuti verbosi e RIPETITIVI: mostrati SOLO a Base (dove guidano
-   davvero il principiante). Da Intermedio in su l'interfaccia resta pulita: le
-   istruzioni essenziali restano nei tooltip/title. NON tocchiamo gli avvisi
-   utili (.case-warning-hint), le note tantum, né i sottotitoli dei modali. */
+/* Sotto-scritte/aiuti verbosi e RIPETITIVI: erano mostrati SOLO a Base — ma il
+   Profilo è stato ABOLITO e data-level è inchiodato ad 'avanzato': questa regola
+   nascondeva quindi TUTTO a TUTTI, comprese le istruzioni del wizard e la
+   didattica del metodo (audit docs/PERCORSI-TRADUTTIVI.md, guasto n.1).
+   SBLOCCO MIRATO: escono dalla lista i quattro selettori che portano la VOCE del
+   metodo — .wizard-instructions (le istruzioni del docente sulle tappe),
+   .field-hint (la regola dei 5 valori del participio), .attributivo-hint
+   (⌖ posizione attributiva e incastonatura), .suggestion-hint (i suggerimenti ★).
+   Il resto RESTA nascosto in attesa della rilettura del copy (era pensato per
+   il vecchio livello Base e in parte è stantio): si sbloccherà selettore per
+   selettore, non a strappo. */
 body:not([data-level="base"]) .method-note,
 body:not([data-level="base"]) .subsection-hint,
-body:not([data-level="base"]) .wizard-instructions,
 body:not([data-level="base"]) .integrale-hint,
 body:not([data-level="base"]) .approach-banner-hint,
 body:not([data-level="base"]) .batch-bar-hint,
@@ -4523,12 +4529,9 @@ body:not([data-level="base"]) .token-grammar-hint,
 body:not([data-level="base"]) .periodale-action-hint,
 body:not([data-level="base"]) .inline-translation-hint,
 body:not([data-level="base"]) .deduced-hint,
-body:not([data-level="base"]) .attributivo-hint,
 body:not([data-level="base"]) .periodale-bridge-hint,
 body:not([data-level="base"]) .prop-insight-hint,
-body:not([data-level="base"]) .suggestion-hint,
 body:not([data-level="base"]) .lemma-hint,
-body:not([data-level="base"]) .field-hint,
 body:not([data-level="base"]) .unified-layer-hints,
 body:not([data-level="base"]) .section-title p {
   display: none !important;
@@ -28534,12 +28537,15 @@ function renderScheletroVerbQuick(sentenceId, verb, lang, isActive) {
       </select></label>` : '';
   // Campi morfologici (riordinati per lingua), escluso il select Forma
   const schema = scheletroVerbFields(lang, verb);
+  /* f.hint NON si scarta più: la fase 1 è proprio il luogo del metodo, e la
+     regola del participio (5 valori → sintagma proprio o elemento interno)
+     deve insegnare QUI, dove lo studente classifica (audit PERCORSI, guasto). */
   const selects = schema.map(f =>
     `<label class="schel-vq-field"><span>${escapeHtml(f.label)}</span>
       <select class="field-select" onchange="updateGrammarField('${sentenceId}','${verb.id}','${f.key}', this.value)">
         <option value="">—</option>
         ${f.options.map(o => `<option value="${escapeHtml(o)}" ${verb[f.key] === o ? 'selected' : ''}>${escapeHtml(o)}</option>`).join('')}
-      </select></label>`).join('');
+      </select>${f.hint ? `<span class="field-hint">${escapeHtml(f.hint)}</span>` : ''}</label>`).join('');
   const lemmaInput = `<label class="schel-vq-field schel-vq-lemma"><span>Lemma / paradigma</span>
     <input class="field-input ${isGreek ? 'greek' : ''}" type="text" value="${escapeHtml(verb.lemma || '')}"
            oninput="updateGrammarField('${sentenceId}','${verb.id}','lemma', this.value)" placeholder="${isGreek ? 'λύω, λύσω…' : 'amo, -as, -avi…'}"></label>`;
@@ -30752,7 +30758,7 @@ const GUIDED_STEPS_META = [
   /* ── FASE C · TRADUZIONE ───────────────────────────────────────────────── */
   { num: 8, phase: 'traduzione', label: 'Brutta',
     title: 'Traduzione · brutta copia con il dizionario',
-    instructions: 'Apri il dizionario (Ctrl+6 o pulsante ↗ Dizionario) e <strong>cerca le parole necessarie</strong>: sostantivi/aggettivi/pronomi al nominativo singolare maschile; verbi alla 1ª persona singolare presente indicativo; avverbi/preposizioni/congiunzioni invariabili. <strong>Scegli la traduzione contestualmente coerente</strong> col genere della versione e con i termini delle altre parole. Scrivi la resa di lavoro frase per frase.' },
+    instructions: 'Apri il dizionario (scheda <strong>F · Dizionario</strong> nella barra laterale, oppure il ponte <strong>↗ Dizionario</strong> accanto al lemma) e <strong>cerca le parole necessarie</strong>: sostantivi/aggettivi/pronomi al nominativo singolare maschile; verbi alla 1ª persona singolare presente indicativo; avverbi/preposizioni/congiunzioni invariabili. <strong>Scegli la traduzione contestualmente coerente</strong> col genere della versione e con i termini delle altre parole. Scrivi la resa di lavoro frase per frase.' },
 
   /* ── FASE D · VERSIONE ─────────────────────────────────────────────────── */
   { num: 9, phase: 'versione', label: 'Bella copia',
