@@ -47,17 +47,28 @@ Ciclo viste: **2.0 → classica → barre**.
   per caso e per preposizione reggente (`scheletroFuncOptionsHtml`).
 - **Gruppi di S e O**: le fasi 3-4 li prevedono esplicitamente (menù isolato per fase).
 
+### Annidamento dei sintagmi sotto i participiali (schema v3 — fatto)
+Le voci logiche hanno ora il campo opzionale **`padre`**: l'id del sintagma
+**participiale** (con participio *predicativo, congiunto o assoluto*) da cui dipendono.
+- **Editor**: nel pannello del sintagma compare «⚓ Agganciato al sintagma participiale»
+  (`renderAggancioParticipiale`) — solo quando nella frase *esiste* un participiale;
+  àncore = sintagmi che contengono un participio a valore proprio
+  (`sintagmaConParticipioProprio`); **anti-ciclo** su tutta la catena. Il riepilogo
+  compresso mostra «⚓ → àncora».
+- **Stemma a barre**: le voci con `padre` escono dall'ordinamento S·V·O·C e compaiono
+  **rientrate sotto il loro participiale** (ricorsivo, marcate «↳», tetto profondità 4).
+- **Migrazione 2→3** (`MIGRAZIONI[2]`): sanifica soltanto — `padre` pendente, autoreferenza
+  o ciclo vengono rimossi; idempotente. Attributivo e sostantivato **non** sono àncore:
+  per il metodo restano interni al sintagma del nome.
+- Nota validatori: `balance.py` era già sfasato a monte (unterminated string preesistente);
+  i suoi contatori secondari attorno a queste regioni sono rumore. Fanno fede
+  `node --check` e `brace_check` (invariato a 11).
+
 ## 3 · Resta da fare (deciso dal docente: «in seguito»)
 
 1. **Guida «pro»**: agganciare il modello della guida alla versione completata nel vero
    metodo (semplificato), col discorso delle **ramificazioni** — la versione pro.
-2. **Aggancio di sintagmi ai sintagmi participiali**: oggi il dato logico è piatto
-   (`tokenIndices` per entry); l'«agganciare ulteriori sintagmi» di predicativo/
-   congiunto/assoluto è affidato all'analisi del periodo (participiale = proposizione).
-   Un eventuale **annidamento nel dato logico** (campo `padre`) è un cambio di schema:
-   da progettare con migrazione (v3) e da riflettere nella vista a barre (indentazione
-   multipla).
-3. **Menù a tendina**: verificare se fuori dallo scheletro (metodo a strati) resti
+2. **Menù a tendina**: verificare se fuori dallo scheletro (metodo a strati) resti
    qualche picker non-tendina da uniformare su desktop.
-4. **Complementi minori in secondo piano**: nella vista a barre i gruppi sono già
+3. **Complementi minori in secondo piano**: nella vista a barre i gruppi sono già
    attenuati; valutare lo stesso trattamento per i complementi «minori» nella fase 6.

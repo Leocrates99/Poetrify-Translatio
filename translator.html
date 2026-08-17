@@ -12412,7 +12412,10 @@ function getMorphSchema(lang, entry) {
 const STORAGE_KEY = 'poetrify-translator-v1';
 /* Versione di schema dei progetti salvati. Incrementare quando si introducono
    campi/strutture nuove che richiedono una migrazione in lettura. */
-const SCHEMA_VERSION = 2;
+/* v3 · annidamento dei sintagmi: le voci logiche possono avere `padre` =
+   l'id del sintagma PARTICIPIALE (predicativo/congiunto/assoluto) a cui sono
+   agganciate. Campo additivo: chi legge piatto continua a funzionare. */
+const SCHEMA_VERSION = 3;
 
 /* ════════════════════════════════════════════════════════════════════════════
    NAVIGAZIONE · DUE ASSI DISTINTI
@@ -12649,6 +12652,30 @@ const MIGRAZIONI = {
       else { p.metodo = 'strati'; p.vista = 'frase'; }            // 'attuale' o ignoto
       p.approach = (p.metodo === 'valenziale') ? 'scheletro' : (p.vista === 'intero' ? 'integrale' : 'attuale');
     }
+    return p;
+  },
+  /* 2 → 3 · nasce `padre` sulle voci logiche (annidamento sotto i sintagmi
+     participiali). Non c'è nulla da trasformare nei dati vecchi: la migrazione
+     SANIFICA soltanto — un `padre` che punta a un id inesistente, a se stesso
+     o che formerebbe un ciclo viene rimosso, così il rendering non può mai
+     inseguire una catena rotta. Idempotente. */
+  2: function (p) {
+    (p.sentences || []).forEach(s => {
+      const logic = (s && Array.isArray(s.logic)) ? s.logic : [];
+      const ids = new Set(logic.map(e => e && e.id).filter(Boolean));
+      logic.forEach(e => {
+        if (!e || !e.padre) return;
+        if (!ids.has(e.padre) || e.padre === e.id) { delete e.padre; return; }
+        /* anti-ciclo: risalgo la catena; se rincontro l'entry, taglio qui */
+        let cur = e.padre, visti = new Set([e.id]), passi = 0;
+        while (cur && passi++ < 50) {
+          if (visti.has(cur)) { delete e.padre; break; }
+          visti.add(cur);
+          const su = logic.find(x => x && x.id === cur);
+          cur = su && su.padre;
+        }
+      });
+    });
     return p;
   },
 };
@@ -26697,6 +26724,12 @@ function makeLogicSummary(entry) {
   // La funzione (Soggetto / Compl. oggetto…) è ora nel rettangolino di
   // classificazione a sinistra: qui resta solo il dettaglio (attributivo, note).
   const parts = [];
+  if (entry.padre) {
+    const sentence = state.sentences.find(s => (s.logic || []).some(e => e.id === entry.id));
+    const padre = sentence ? (sentence.logic || []).find(e => e.id === entry.padre) : null;
+    const lbl = padre ? (padre.phrase || padre.funzione || '') : '';
+    parts.push(`<span class="entry-summary-attributivo" title="Agganciato al sintagma participiale${lbl ? ': ' + lbl : ''}">⚓ ${lbl ? escapeHtml(lbl.substring(0, 24)) + (lbl.length > 24 ? '…' : '') : 'participiale'}</span>`);
+  }
   if (entry.isAttributivo) {
     // Risolvi il sintagma capo: cerca la frase corrente
     let headLabel = '';
@@ -35347,7 +35380,7 @@ function _renderSyntaxTreeBarre(sentence) {
 
   /* Il predicato verbale: se non è già un sintagma, lo si sintetizza dai verbi
      a forma finita della grammatica (sono le àncore del metodo). */
-  const barre = logic.map(e => ({ funzione: e.funzione, phrase: e.phrase || '', tokenIndices: (e.tokenIndices || []).slice() }));
+  const barre = logic.map(e => ({ id: e.id, padre: e.padre || '', funzione: e.funzione, phrase: e.phrase || '', tokenIndices: (e.tokenIndices || []).slice() }));
   const haPredicato = barre.some(b => (b.funzione || '').toLowerCase() === 'predicato verbale');
   if (!haPredicato) {
     (sentence.grammar || []).filter(g => g && g.partOfSpeech === 'Verbo' && g.verboForma === 'Forma finita' && g.tokenIndex != null)
@@ -35372,13 +35405,25 @@ function _renderSyntaxTreeBarre(sentence) {
     return f === 'attributo' || f === 'apposizione' || f.includes('specificazione');
   };
 
+  /* ANNIDAMENTO ESPLICITO (v3): una barra con `padre` valido è FIGLIA del
+     sintagma participiale e sta sotto di lui, fuori dall'ordinamento S·V·O·C
+     e dall'aggancio automatico dei gruppi. */
+  const idValidi = new Set(barre.map(b => b.id).filter(Boolean));
+  const eFiglio = b => !!(b.padre && idValidi.has(b.padre) && b.padre !== b.id);
+  const figliParticipiali = new Map();
+  barre.filter(eFiglio).forEach(f => {
+    if (!figliParticipiali.has(f.padre)) figliParticipiali.set(f.padre, []);
+    figliParticipiali.get(f.padre).push(f);
+  });
+
   /* I membri del gruppo si agganciano all'àncora (S oppure O) più VICINA nel
      testo: senza un legame esplicito nel dato, l'adiacenza dei token è il
      criterio più onesto. Se non c'è nessuna àncora, restano fra i complementi. */
-  const ancore = barre.filter(b => !isGruppo(b) && (rango(b) === 0 || rango(b) === 2));
+  const liberi = barre.filter(b => !eFiglio(b));
+  const ancore = liberi.filter(b => !isGruppo(b) && (rango(b) === 0 || rango(b) === 2));
   const figliDi = new Map();
   const sciolti = [];
-  barre.filter(isGruppo).forEach(g => {
+  liberi.filter(isGruppo).forEach(g => {
     let migliore = null, distanza = Infinity;
     ancore.forEach(a => {
       const d = Math.min.apply(null, g.tokenIndices.map(gi => Math.min.apply(null, a.tokenIndices.map(ai => Math.abs(gi - ai)))));
@@ -35388,29 +35433,40 @@ function _renderSyntaxTreeBarre(sentence) {
     else sciolti.push(g);
   });
 
-  const principali = barre.filter(b => !isGruppo(b)).concat(sciolti)
+  const principali = liberi.filter(b => !isGruppo(b)).concat(sciolti)
     .sort((a, b) => (rango(a) - rango(b)) || (primo(a) - primo(b)));
 
   const maxTok = Math.max.apply(null, barre.map(b => b.tokenIndices.length));
-  const riga = (b, gruppo) => {
+  const riga = (b, gruppo, profondita) => {
     const gruppoCase = funzioneToCaseGroup(b.funzione);
     const c = CASE_EXPORT_PALETTE[gruppoCase] || CASE_EXPORT_PALETTE.neutro;
     const nTok = b.tokenIndices.length;
     const pct = Math.max(16, Math.round(nTok / maxTok * 100));
     const frase = b.phrase || b.tokenIndices.slice().sort((x, y) => x - y).map(testoDi).filter(Boolean).join(' ');
-    return `<div class="barre-row${gruppo ? ' barre-gruppo' : ''}">
+    const rientro = profondita ? ` style="padding-left:${Math.min(profondita, 4) * 26}px"` : '';
+    return `<div class="barre-row${gruppo ? ' barre-gruppo' : ''}${profondita ? ' barre-annidato' : ''}"${rientro}>
       <div class="barre-bar" style="width:${pct}%;background:${c.bg};border:1.5px solid ${c.border};border-left:5px solid ${c.strong};color:${c.text}">
-        <span class="barre-fn">${escapeHtml(b.funzione)}${b._sintetico ? ' <em>(dalla grammatica)</em>' : ''}</span>
+        <span class="barre-fn">${profondita ? '↳ ' : ''}${escapeHtml(b.funzione)}${b._sintetico ? ' <em>(dalla grammatica)</em>' : ''}</span>
         <span class="barre-phrase">${escapeHtml(frase)}</span>
       </div>
       <span class="barre-count" title="estensione del sintagma in token">${nTok} tok</span>
     </div>`;
   };
 
+  /* Dopo ogni barra: prima i FIGLI participiali (rientro crescente, ricorsivo),
+     poi — solo al livello 0 — i membri del gruppo di S/O. Tetto di profondità
+     a difesa da catene assurde. */
   let corpo = '';
+  const emetti = (b, gruppo, profondita) => {
+    corpo += riga(b, gruppo, profondita);
+    if (profondita < 4) {
+      (figliParticipiali.get(b.id) || []).sort((a, z) => primo(a) - primo(z))
+        .forEach(f => emetti(f, false, profondita + 1));
+    }
+  };
   principali.forEach(b => {
-    corpo += riga(b, false);
-    (figliDi.get(b) || []).sort((a, z) => primo(a) - primo(z)).forEach(g => { corpo += riga(g, true); });
+    emetti(b, false, 0);
+    (figliDi.get(b) || []).sort((a, z) => primo(a) - primo(z)).forEach(g => emetti(g, true, 0));
   });
 
   return `<div class="syntax-tree-wrap">
@@ -36304,6 +36360,7 @@ function renderLogicBody(sentenceId, entry, lang) {
         <div class="entry-fields">
           ${renderConditionalField(sentenceId, entry, { key: 'funzione', label: 'Funzione sintattica', options: FUNZIONI_LOGICHE }, 'logic')}
           ${renderAttributivoBlock(sentenceId, entry)}
+          ${renderAggancioParticipiale(sentenceId, entry)}
           <div class="field-block" style="grid-column: 1/-1;">
             <label class="field-block-label">Note (libere)</label>
             <input class="field-input" type="text" value="${escapeHtml(entry.note || '')}"
@@ -36422,6 +36479,64 @@ function renderDeducedFromGrammar(sentenceId, entry, entryType) {
    Un complemento in posizione attributiva si riferisce a un altro sintagma della stessa
    frase (es. genitivo di specificazione che attribuisce al nome reggente).
    Utile per lo scioglimento dell'ordo verborum quando si traduce in italiano. */
+/* ════════════════════════════════════════════════════════════════════════════
+   AGGANCIO AI SINTAGMI PARTICIPIALI (schema v3)
+   ────────────────────────────────────────────────────────────────────────────
+   La regola del metodo: un participio PREDICATIVO, CONGIUNTO o ASSOLUTO forma
+   un sintagma proprio che può agganciare ALTRI SINTAGMI (i suoi complementi
+   espansi). Qui l'aggancio diventa un dato: la voce logica figlia porta
+   `padre` = id del sintagma participiale. Attributivo e sostantivato NON
+   compaiono fra le àncore: per il metodo restano interni al sintagma del nome.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/** True se il sintagma contiene un participio che forma sintagma proprio. */
+function sintagmaConParticipioProprio(sentence, entry) {
+  const idx = new Set(entry.tokenIndices || []);
+  if (!idx.size) return false;
+  return (sentence.grammar || []).some(g =>
+    g && g.partOfSpeech === 'Verbo' && g.verboForma === 'Participio' &&
+    ['Predicativo', 'Congiunto', 'Assoluto'].includes(g.valoreParticipio) &&
+    idx.has(g.tokenIndex));
+}
+
+function sintagmiParticipialiDi(sentence) {
+  return (sentence.logic || []).filter(e => e && sintagmaConParticipioProprio(sentence, e));
+}
+
+/* Il candidato creerebbe un ciclo? Risalgo i padri dal candidato: se incontro
+   l'entry stessa, agganciarla lì la renderebbe antenata di se stessa. */
+function _aggancioCreaCiclo(sentence, entryId, candidatoId) {
+  let cur = candidatoId, passi = 0;
+  while (cur && passi++ < 50) {
+    if (cur === entryId) return true;
+    const su = (sentence.logic || []).find(x => x && x.id === cur);
+    cur = su && su.padre;
+  }
+  return false;
+}
+
+function renderAggancioParticipiale(sentenceId, entry) {
+  const sentence = state.sentences.find(s => s.id === sentenceId);
+  if (!sentence) return '';
+  const ancore = sintagmiParticipialiDi(sentence)
+    .filter(a => a.id !== entry.id && !_aggancioCreaCiclo(sentence, entry.id, a.id));
+  /* Il blocco compare solo quando nella frase ESISTE un sintagma participiale
+     a cui agganciarsi: niente rumore quando la regola non si applica. */
+  if (!ancore.length && !entry.padre) return '';
+  const opts = ancore.map(a =>
+    `<option value="${a.id}" ${entry.padre === a.id ? 'selected' : ''}>${escapeHtml(`${a.phrase || '(sintagma)'} · ${a.funzione || 'participiale'}`)}</option>`
+  ).join('');
+  return `
+    <div class="field-block attributivo-block ${entry.padre ? 'is-active' : ''}" style="grid-column: 1/-1;">
+      <label class="field-block-label" style="font-size: 10px;">⚓ Agganciato al sintagma participiale</label>
+      <select class="field-select" onchange="updateLogicField('${sentenceId}','${entry.id}','padre', this.value)">
+        <option value="">— nessun aggancio —</option>
+        ${opts}
+      </select>
+      <div class="attributivo-hint">Predicativo, congiunto e assoluto agganciano altri sintagmi: questo blocco dipenderà dal participio scelto (nello stemma a barre comparirà rientrato sotto di lui).</div>
+    </div>`;
+}
+
 function renderAttributivoBlock(sentenceId, entry) {
   const sentence = state.sentences.find(s => s.id === sentenceId);
   if (!sentence) return '';
