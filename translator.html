@@ -3713,6 +3713,27 @@ body[data-lang="greco"] .token-action-bar .target-word { font-family: var(--font
 /* ============================================
    SYNTAX TREE — albero simil-genealogico
    ============================================ */
+/* ── Stemma a barre · sintagmi allineati a sinistra, ordine S·V·O·C ─────────
+   La barra È il dato: la sua lunghezza mostra l'estensione del sintagma in
+   token. I gruppi di S e O rientrano sotto la loro àncora, in secondo piano. */
+.stemma-barre { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.barre-row { display: flex; align-items: center; gap: 8px; }
+.barre-row.barre-gruppo { padding-left: 26px; opacity: 0.88; }
+.barre-row.barre-gruppo .barre-bar { border-left-width: 3px !important; }
+.barre-bar {
+  display: flex; align-items: baseline; gap: 8px; min-width: 0;
+  padding: 6px 10px; border-radius: 6px;
+  font-family: var(--font-ui); transition: width var(--transition-base);
+}
+.barre-fn { font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap; }
+.barre-fn em { font-weight: 500; text-transform: none; letter-spacing: 0; opacity: 0.75; }
+.barre-phrase {
+  font-family: var(--font-classical); font-size: 13px; font-style: italic;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0;
+}
+.barre-count { flex: none; font-size: 10px; font-weight: 700; color: var(--sepia); font-variant-numeric: tabular-nums; }
+.barre-legenda { font-size: 11px; margin-top: 10px; line-height: 1.5; }
+
 .syntax-tree-wrap {
   background: var(--paper);
   border: 1px solid var(--rule-soft);
@@ -12048,6 +12069,7 @@ const TAXONOMIES = {
     verboTempoFinito: ['Presente', 'Imperfetto', 'Futuro semplice', 'Perfetto', 'Piuccheperfetto', 'Futuro anteriore'],
     verboTempoInfinito: ['Presente', 'Perfetto', 'Futuro'],
     verboTempoParticipio: ['Presente', 'Perfetto', 'Futuro'],
+    participioValore: ['Attributivo', 'Sostantivato', 'Predicativo', 'Congiunto', 'Assoluto'],
     verboModo: ['Indicativo', 'Congiuntivo', 'Imperativo'],
     verboDiatesi: ['Attiva', 'Passiva', 'Deponente', 'Semideponente'],
     verboPersona: ['1ª', '2ª', '3ª'],
@@ -12071,6 +12093,7 @@ const TAXONOMIES = {
     verboTempoFinito: ['Presente', 'Imperfetto', 'Futuro', 'Aoristo', 'Perfetto', 'Piuccheperfetto', 'Futuro anteriore'],
     verboTempoInfinito: ['Presente', 'Futuro', 'Aoristo', 'Perfetto'],
     verboTempoParticipio: ['Presente', 'Futuro', 'Aoristo', 'Perfetto'],
+    participioValore: ['Attributivo', 'Sostantivato', 'Predicativo', 'Congiunto', 'Assoluto'],
     verboModo: ['Indicativo', 'Congiuntivo', 'Ottativo', 'Imperativo'],
     verboDiatesi: ['Attiva', 'Media', 'Passiva', 'Medio-passiva', 'Deponente'],
     verboPersona: ['1ª', '2ª', '3ª'],
@@ -12259,7 +12282,7 @@ const PROPOSIZIONI = {
     'Oggettiva', 'Soggettiva', 'Dichiarativa', 'Interrogativa indiretta',
     'Relativa propria', 'Relativa impropria (causale)', 'Relativa impropria (finale)', 'Relativa impropria (consecutiva)', 'Relativa impropria (concessiva)', 'Relativa impropria (condizionale)',
     'Causale', 'Finale', 'Consecutiva', 'Temporale', 'Condizionale (protasi)', 'Concessiva', 'Comparativa', 'Modale', 'Strumentale',
-    'Infinitiva oggettiva (latino)', 'Infinitiva soggettiva (latino)', 'Ablativo assoluto (latino)', 'Perifrastica attiva (latino)', 'Perifrastica passiva (latino)',
+    'Infinitiva oggettiva (latino)', 'Infinitiva soggettiva (latino)', 'Ablativo assoluto (latino)', 'Participiale congiunta (latino)', 'Participiale predicativa (latino)', 'Perifrastica attiva (latino)', 'Perifrastica passiva (latino)',
     'Genitivo assoluto (greco)', 'Accusativo assoluto (greco)', 'Participiale congiunta (greco)', 'Participiale sostantivata (greco)', 'Participiale predicativa (greco)',
     'Completive con quin/quominus (latino)', 'Comparativo-ipotetica',
     'Altro / da specificare',
@@ -12269,6 +12292,19 @@ const PROPOSIZIONI = {
 };
 
 /* 2. SCHEMA ENGINE */
+/* I 5 valori del participio e la loro conseguenza sintattica (il metodo):
+   la distinzione-cardine è fra chi FORMA UN SINTAGMA PROPRIO (predicativo,
+   congiunto, assoluto — e questi tre agganciano anche altri sintagmi) e chi
+   resta ELEMENTO INTERNO al sintagma del nome (attributivo, sostantivato).
+   Tutti, in ogni caso, possono reggere i propri complementi. */
+const PARTICIPIO_VALORE_REGOLE = {
+  'Attributivo':  'Come un aggettivo: elemento INTERNO al sintagma del nome (non forma un sintagma proprio). Può reggere i suoi complementi.',
+  'Sostantivato': 'Vale come un NOME: elemento interno (o nucleo) del sintagma nominale. Può reggere i suoi complementi.',
+  'Predicativo':  'Forma un SINTAGMA PROPRIO legato al verbo. Regge complementi e può agganciare altri sintagmi.',
+  'Congiunto':    'Forma un SINTAGMA PROPRIO, concordato con un nome della frase (in analisi del periodo: participiale congiunta). Regge complementi e aggancia altri sintagmi.',
+  'Assoluto':     'Forma un SINTAGMA PROPRIO autonomo (lat. ablativo assoluto · gr. genitivo/accusativo assoluto). Regge complementi e aggancia altri sintagmi.',
+};
+
 function getMorphSchema(lang, entry) {
   const t = TAXONOMIES[lang];
   const part = entry.partOfSpeech;
@@ -12324,6 +12360,16 @@ function getMorphSchema(lang, entry) {
       fields.push({ key: 'genere', label: 'Genere', options: t.genere });
       fields.push({ key: 'numero', label: 'Numero', options: t.numero });
       fields.push({ key: 'caso', label: 'Caso', options: t.caso });
+      /* VALORE SINTATTICO del participio — i 5 valori del metodo. La regola che
+         il valore porta con sé (sintagma proprio o elemento interno) compare
+         come suggerimento sotto il selettore, così la classificazione INSEGNA:
+         · attributivo e sostantivato = elementi INTERNI al sintagma del nome;
+         · predicativo, congiunto e assoluto = SINTAGMA PROPRIO;
+         · tutti reggono complementi; predicativo, congiunto e assoluto
+           agganciano anche altri sintagmi. */
+      fields.push({ key: 'valoreParticipio', label: 'Valore sintattico',
+        options: t.participioValore,
+        hint: PARTICIPIO_VALORE_REGOLE[entry.valoreParticipio] || 'Scegli il valore: da esso dipende se il participio forma un sintagma proprio o resta dentro il sintagma del nome.' });
     } else if (forma === 'Gerundio') {
       fields.push({ key: 'caso', label: 'Caso', options: t.casoGerundio || t.caso });
     } else if (forma === 'Gerundivo') {
@@ -31354,6 +31400,7 @@ function renderVerbiPendingPanel(sentence, lang) {
           <option value="">— scegli —</option>
           ${f.options.map(opt => `<option value="${escapeHtml(opt)}" ${value === opt ? 'selected' : ''}>${escapeHtml(opt)}</option>`).join('')}
         </select>
+        ${f.hint ? `<div class="field-hint">${escapeHtml(f.hint)}</div>` : ''}
       </div>`;
     }
     return `<div>
@@ -35266,16 +35313,115 @@ function renderSyntaxTree(sentence, forceView) {
     periodoIpotPanel = renderPeriodoIpoteticoPanel(sentence, annotated);
   } catch (_) { periodoIpotPanel = ''; }
 
+  // forceView: se passato, impone la vista (es. «classic» nello scheletro);
+  // altrimenti segue il toggle globale (default v2).
+  const view = forceView || state.syntaxTreeView || 'v2';
+
+  /* La vista A BARRE lavora sui SINTAGMI dell'analisi logica, non sulle
+     proposizioni: va servita prima del controllo di vuoto sul periodale. */
+  if (view === 'barre') return periodoIpotPanel + _renderSyntaxTreeBarre(sentence);
+
   if (annotated.length === 0) {
     return periodoIpotPanel +
       `<div class="syntax-tree-wrap"><div class="syntax-tree-header"><span class="syntax-tree-title">Albero sintattico</span></div><div class="syntax-tree-empty">Nessuna proposizione ancora analizzata. Costruiscine almeno una col selettore qui sopra per veder crescere l'albero.</div></div>`;
   }
 
-  // forceView: se passato, impone la vista (es. «classic» nello scheletro);
-  // altrimenti segue il toggle globale (default v2).
-  const view = forceView || state.syntaxTreeView || 'v2';
   if (view === 'classic') return periodoIpotPanel + _renderSyntaxTreeClassic(sentence, annotated);
   return periodoIpotPanel + _renderSyntaxTreeV2(sentence, annotated);
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   STEMMA A BARRE · i sintagmi come barre allineate a sinistra
+   ────────────────────────────────────────────────────────────────────────────
+   Ogni sintagma dell'analisi logica è una barra: la LUNGHEZZA è proporzionale
+   alla sua estensione in token, così il colpo d'occhio dice subito quanto un
+   sintagma «pesa» nella frase. L'ordine è quello del metodo — S · V · O · C —
+   non quello del testo: è la frase già riordinata nell'ordo italiano.
+   I GRUPPI di S e O (attributi, apposizioni, specificazioni) stanno sotto la
+   loro àncora, rientrati e in secondo piano; i complementi minori in coda.
+   ════════════════════════════════════════════════════════════════════════════ */
+function _renderSyntaxTreeBarre(sentence) {
+  const logic = (sentence.logic || []).filter(e => e && e.funzione && (e.tokenIndices || []).length);
+  const toks = tokenizeSentence(sentence.original);
+  const testoDi = idx => { const t = toks.find(x => x.idx === idx); return t ? t.text : ''; };
+
+  /* Il predicato verbale: se non è già un sintagma, lo si sintetizza dai verbi
+     a forma finita della grammatica (sono le àncore del metodo). */
+  const barre = logic.map(e => ({ funzione: e.funzione, phrase: e.phrase || '', tokenIndices: (e.tokenIndices || []).slice() }));
+  const haPredicato = barre.some(b => (b.funzione || '').toLowerCase() === 'predicato verbale');
+  if (!haPredicato) {
+    (sentence.grammar || []).filter(g => g && g.partOfSpeech === 'Verbo' && g.verboForma === 'Forma finita' && g.tokenIndex != null)
+      .forEach(g => barre.push({ funzione: 'Predicato verbale', phrase: g.word || testoDi(g.tokenIndex), tokenIndices: [g.tokenIndex], _sintetico: true }));
+  }
+  if (!barre.length) {
+    return `<div class="syntax-tree-wrap"><div class="syntax-tree-header"><span class="syntax-tree-title">Stemma a barre · S·V·O·C</span>${_barreToggleBtn()}</div>
+      <div class="syntax-tree-empty">Nessun sintagma ancora isolato nell'analisi logica: individua soggetto, predicato e complementi per vedere le barre.</div></div>`;
+  }
+
+  const primo = b => Math.min.apply(null, b.tokenIndices);
+  const rango = b => {
+    const f = (b.funzione || '').toLowerCase();
+    if (f.startsWith('soggetto')) return 0;
+    if (f === 'predicato verbale' || f === 'copula' || f === 'predicato nominale' || f === 'parte nominale') return 1;
+    if (f === 'complemento oggetto') return 2;
+    if (f.includes('predicativo')) return 3;
+    return 4;
+  };
+  const isGruppo = b => {
+    const f = (b.funzione || '').toLowerCase();
+    return f === 'attributo' || f === 'apposizione' || f.includes('specificazione');
+  };
+
+  /* I membri del gruppo si agganciano all'àncora (S oppure O) più VICINA nel
+     testo: senza un legame esplicito nel dato, l'adiacenza dei token è il
+     criterio più onesto. Se non c'è nessuna àncora, restano fra i complementi. */
+  const ancore = barre.filter(b => !isGruppo(b) && (rango(b) === 0 || rango(b) === 2));
+  const figliDi = new Map();
+  const sciolti = [];
+  barre.filter(isGruppo).forEach(g => {
+    let migliore = null, distanza = Infinity;
+    ancore.forEach(a => {
+      const d = Math.min.apply(null, g.tokenIndices.map(gi => Math.min.apply(null, a.tokenIndices.map(ai => Math.abs(gi - ai)))));
+      if (d < distanza) { distanza = d; migliore = a; }
+    });
+    if (migliore) { if (!figliDi.has(migliore)) figliDi.set(migliore, []); figliDi.get(migliore).push(g); }
+    else sciolti.push(g);
+  });
+
+  const principali = barre.filter(b => !isGruppo(b)).concat(sciolti)
+    .sort((a, b) => (rango(a) - rango(b)) || (primo(a) - primo(b)));
+
+  const maxTok = Math.max.apply(null, barre.map(b => b.tokenIndices.length));
+  const riga = (b, gruppo) => {
+    const gruppoCase = funzioneToCaseGroup(b.funzione);
+    const c = CASE_EXPORT_PALETTE[gruppoCase] || CASE_EXPORT_PALETTE.neutro;
+    const nTok = b.tokenIndices.length;
+    const pct = Math.max(16, Math.round(nTok / maxTok * 100));
+    const frase = b.phrase || b.tokenIndices.slice().sort((x, y) => x - y).map(testoDi).filter(Boolean).join(' ');
+    return `<div class="barre-row${gruppo ? ' barre-gruppo' : ''}">
+      <div class="barre-bar" style="width:${pct}%;background:${c.bg};border:1.5px solid ${c.border};border-left:5px solid ${c.strong};color:${c.text}">
+        <span class="barre-fn">${escapeHtml(b.funzione)}${b._sintetico ? ' <em>(dalla grammatica)</em>' : ''}</span>
+        <span class="barre-phrase">${escapeHtml(frase)}</span>
+      </div>
+      <span class="barre-count" title="estensione del sintagma in token">${nTok} tok</span>
+    </div>`;
+  };
+
+  let corpo = '';
+  principali.forEach(b => {
+    corpo += riga(b, false);
+    (figliDi.get(b) || []).sort((a, z) => primo(a) - primo(z)).forEach(g => { corpo += riga(g, true); });
+  });
+
+  return `<div class="syntax-tree-wrap">
+    <div class="syntax-tree-header"><span class="syntax-tree-title">Stemma a barre · S·V·O·C</span>${_barreToggleBtn()}</div>
+    <div class="stemma-barre">${corpo}</div>
+    <div class="barre-legenda muted-text">Le barre sono in ordine <strong>S · V · O · complementi</strong> (l'ordo italiano, non quello del testo); la lunghezza è l'estensione del sintagma in token. I <strong>gruppi</strong> di soggetto e oggetto stanno rientrati sotto la loro àncora.</div>
+  </div>`;
+}
+
+function _barreToggleBtn() {
+  return `<button class="btn btn-ghost btn-sm" onclick="toggleSyntaxTreeView()" title="Passa alla vista 2.0 (diagramma)">🔁 Vista 2.0</button>`;
 }
 
 /* === VISTA 2.0 · diagramma verticale per livelli con frecce SVG === */
@@ -35428,9 +35574,11 @@ function renderPeriodoIpoteticoPanel(sentence, annotated) {
   }).join('');
 }
 
-/* Toggle fra vista 2.0 e vista classica */
+/* Ciclo fra le tre viste dello stemma: 2.0 (diagramma) → classica → barre.
+   Ogni bottone dice la vista SUCCESSIVA, non quella corrente. */
 function toggleSyntaxTreeView() {
-  state.syntaxTreeView = (state.syntaxTreeView === 'classic') ? 'v2' : 'classic';
+  const v = state.syntaxTreeView || 'v2';
+  state.syntaxTreeView = v === 'v2' ? 'classic' : v === 'classic' ? 'barre' : 'v2';
   persistCurrent();
   renderEditor();
 }
@@ -35474,7 +35622,7 @@ function _renderSyntaxTreeClassic(sentence, annotated) {
   const legend = PERIODALE_LEVEL.slice(0, Math.min(8, annotated.reduce((m, p) => Math.max(m, p._level), 0) + 1))
     .map((c) => `<span class="swatch" style="background:${c.bg};border-color:${c.border};color:${c.color};">${c.letter}</span>`).join('');
   const toolbar = `<div class="syntax-tree-toolbar">
-    <button class="btn btn-ghost btn-sm" onclick="toggleSyntaxTreeView()" title="Alterna vista classica / vista 2.0">🔁 Vista 2.0 (diagramma)</button>
+    <button class="btn btn-ghost btn-sm" onclick="toggleSyntaxTreeView()" title="Passa allo stemma a barre S·V·O·C">🔁 Stemma a barre</button>
   </div>`;
   return `
     <div class="syntax-tree-wrap">
@@ -37296,6 +37444,7 @@ function renderConditionalField(sentenceId, entry, field, entryType) {
         ${controlHtml}
         ${toggleHtml}
       </div>
+      ${field.hint ? `<div class="field-hint">${escapeHtml(field.hint)}</div>` : ''}
     </div>`;
 }
 
