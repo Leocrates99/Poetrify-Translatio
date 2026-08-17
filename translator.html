@@ -12416,8 +12416,98 @@ const STORAGE_KEY = 'poetrify-translator-v1';
    campi/strutture nuove che richiedono una migrazione in lettura. */
 /* v3 · annidamento dei sintagmi: le voci logiche possono avere `padre` =
    l'id del sintagma PARTICIPIALE (predicativo/congiunto/assoluto) a cui sono
-   agganciate. Campo additivo: chi legge piatto continua a funzionare. */
-const SCHEMA_VERSION = 3;
+   agganciate. Campo additivo: chi legge piatto continua a funzionare.
+   v4 · il progetto ricorda con quale PERCORSO è stato lavorato (`percorso`). */
+const SCHEMA_VERSION = 4;
+
+/* ════════════════════════════════════════════════════════════════════════════
+   PERCORSI TRADUTTIVI · la scheda-percorso è la FONTE UNICA DI VERITÀ
+   ────────────────────────────────────────────────────────────────────────────
+   Audit docs/PERCORSI-TRADUTTIVI.md: i percorsi si distinguono per SCOPO e
+   TEMPO, mai per bravura (le fasce sono abolite). Un solo descrittore alimenta
+   card d'avvio, pannello in corsa, banner di contesto e riga stampata
+   nell'export: così le parole migrano insieme ai meccanismi e non fossilizzano.
+   Gli assi tecnici (metodo · vista · guida) diventano un PRESET del percorso:
+   restano nel modello, ma smettono di essere una scelta autonoma dell'utente.
+   `disponibile: false` = percorso progettato ma NON ancora costruito: la chiave
+   esiste (per migrazione e deep-link) ma NON deve comparire in nessuna
+   superficie — niente card vaporware.
+   ════════════════════════════════════════════════════════════════════════════ */
+const PERCORSI = {
+  'versione-casa': {
+    nome: 'Versione per casa', icona: '📖',
+    scopo: 'Il compito assegnato: il metodo per intero, con calma.',
+    tempo: '≈5 min a frase',
+    /* La playlist è per ora DESCRITTIVA (alimenta card e banner); diventerà
+       guida del motore col refactor playlist-driven dello scheletro. */
+    playlist: ['Verbi', 'Proposizioni', 'Soggetto', 'Oggetto', 'Preposizionali', 'Altri complementi', 'Ordo e brutta', 'Bella copia'],
+    preset: { metodo: 'valenziale', vista: 'intero', mode: 'free' },
+    disponibile: true,
+  },
+  'passo-passo': {
+    nome: 'Passo dopo passo', icona: '🧭',
+    scopo: 'La prima versione, con la voce del docente accanto a ogni tappa.',
+    tempo: '≈8 min a frase le prime volte',
+    playlist: ['Pre-lettura', 'Frasi', 'Verbi', 'Connettivi', 'Sintassi', 'Sintagmi', 'Grammatica', 'Brutta', 'Bella copia'],
+    preset: { metodo: 'strati', vista: 'frase', mode: 'guided' },
+    disponibile: true,
+  },
+  /* ── Progettati, non ancora costruiti (audit §3) ──────────────────────────
+     Richiedono il refactor dello scheletro playlist-driven: finché quello non
+     c'è, sarebbero card che promettono un flusso inesistente. */
+  'simulazione': {
+    nome: 'Simulazione di compito', icona: '⏱',
+    scopo: 'Allenati al ritmo della verifica, a casa: struttura e resa, senza la morfologia completa.',
+    tempo: '≈2-3 min a frase',
+    playlist: ['Analisi automatica', 'Verbi', 'Proposizioni', 'Ordo e brutta', 'Bella copia'],
+    preset: { metodo: 'strati', vista: 'intero', mode: 'free' },
+    disponibile: false,
+  },
+  'ripasso': {
+    nome: 'Ripasso lampo', icona: '⚡',
+    scopo: 'Rivedere la struttura di una versione, senza tradurla.',
+    tempo: '10-15 min in tutto',
+    playlist: ['Verbi', 'Proposizioni', 'Stemma a barre'],
+    preset: { metodo: 'valenziale', vista: 'intero', mode: 'free' },
+    disponibile: false,
+  },
+};
+
+const PERCORSO_DEFAULT = 'versione-casa';
+
+/* Percorso indicato dal docente via ?percorso=: sopravvive al bootstrap per
+   essere applicato ai progetti creati in questa entrata (import dal corpus o
+   nuovo brano). Resta un CONSIGLIO: l'utente potrà cambiarlo. */
+let _percorsoDaUrl = '';
+
+/** La scheda del percorso, o null se la chiave non esiste. */
+function schedaPercorso(chiave) {
+  return (chiave && Object.prototype.hasOwnProperty.call(PERCORSI, chiave)) ? PERCORSI[chiave] : null;
+}
+
+/** I percorsi mostrabili all'utente (mai i progettati-non-costruiti). */
+function percorsiDisponibili() {
+  return Object.keys(PERCORSI).filter(k => PERCORSI[k].disponibile);
+}
+
+/**
+ * Applica un percorso al progetto corrente: registra la scelta E ne deriva il
+ * preset degli assi. Non tocca i dati del lavoro: cambiare percorso a metà
+ * versione è sicuro (il modello per frase è unico).
+ * @returns {boolean} false se la chiave non esiste o il percorso non è costruito
+ */
+function applicaPercorso(chiave, opz) {
+  const sc = schedaPercorso(chiave);
+  if (!sc || (!sc.disponibile && !(opz && opz.forza))) return false;
+  state.percorso = chiave;
+  if (sc.preset) {
+    if (sc.preset.metodo) state.metodo = sc.preset.metodo;
+    if (sc.preset.vista) state.vista = sc.preset.vista;
+    if (sc.preset.mode) state.mode = sc.preset.mode;
+  }
+  if (typeof _syncApproach === 'function') _syncApproach();   // il dispatcher legge ancora `approach`
+  return true;
+}
 
 /* ════════════════════════════════════════════════════════════════════════════
    NAVIGAZIONE · DUE ASSI DISTINTI
@@ -12471,19 +12561,19 @@ const defaultState = () => ({
   mode: 'free',          // 'free' | 'guided'
   guidedStep: 1,         // 1..6
   guidedSentenceIdx: 0,  // current sentence within a guided substep
-  // Approccio traduttivo (scelto dall'utente all'avvio o in ogni momento):
-  //   'attuale'        — metodo attuale (frase corrente via tab, libertà di salto)
-  //   'integrale'      — analisi sull'intera versione: tokenizer mostra tutti i
-  //                      token, batch operativo sull'intero brano
-  //   'frase-per-frase'— wizard sequenziale: completa grammar+logic+sintassi+
-  //                      traduzione di una frase prima di passare alla successiva
-  // ASSI ORTOGONALI (riorganizzazione): la scelta di lavoro è scomposta in
+  // PERCORSO · la scelta che l'utente compie davvero (per SCOPO e TEMPO):
+  // vedi PERCORSI/schedaPercorso. Da esso si derivano gli assi qui sotto, che
+  // restano nel modello ma non sono più una scelta autonoma dell'utente.
+  // Vuoto = progetto anteriore ai percorsi (v3 o precedente): si misura col
+  // metro storico finché l'utente non ne sceglie uno.
+  percorso: '',
+  // ASSI (derivati dal percorso):
   //   · metodo  — COME si analizza
   //   · vista   — QUANTO testo si vede
-  //   · mode    — CON QUANTA disciplina (Guida: libera/guidata) [campo 'mode']
-  //   · profilo — CHI sei (medie/biennio/triennio) [localStorage]
+  //   · mode    — CON QUANTA disciplina (Guida: libera/guidata)
   // `approach` resta come valore DERIVATO da (metodo × vista) per il dispatcher
   // di rendering esistente, così la pipeline non cambia.
+  // (Il vecchio asse «profilo» è ABOLITO: servizio unico avanzato.)
   approach: 'attuale',
   metodo: 'strati',      // 'strati' (grammatica→logica→periodo) | 'valenziale' (Scheletro)
   vista: 'frase',        // 'frase' (frase corrente) | 'intero' (brano intero)
@@ -12678,6 +12768,24 @@ const MIGRAZIONI = {
         }
       });
     });
+    return p;
+  },
+  /* 3 → 4 · nasce `percorso`. Migrazione CONSERVATIVA: si assegna SOLO dove
+     l'inferenza dagli assi è sicura —
+       · mode 'guided'      → «Passo dopo passo» (era letteralmente quel flusso)
+       · metodo 'valenziale'→ «Versione per casa» (è lo scheletro, la sua playlist)
+     Tutto il resto resta SENZA percorso, di proposito: un progetto fatto per
+     strati non è «Versione per casa», e appiccicargli quell'etichetta sarebbe
+     inventare un dato. I progetti senza `percorso` continuano a essere misurati
+     col metro storico, finché non è l'utente a sceglierne uno.
+     (L'audit proponeva di assegnare il default a tutti: qui si preferisce non
+     scrivere ciò che non si sa — è la lettura più conservativa della stessa
+     regola.) Idempotente: un `percorso` già presente e valido non si tocca. */
+  3: function (p) {
+    if (p.percorso && schedaPercorso(p.percorso)) return p;
+    if (p.percorso && !schedaPercorso(p.percorso)) delete p.percorso;   // chiave ignota: via
+    if (p.mode === 'guided') p.percorso = 'passo-passo';
+    else if (p.metodo === 'valenziale') p.percorso = 'versione-casa';
     return p;
   },
 };
@@ -38325,6 +38433,9 @@ function importPassoDalCorpus(lang, testo, p) {
   state.sentences = splitTextIntoSentences(testo).map(makeSentence);
   maybeAutoClosedClass();          // classi chiuse riconosciute subito, come in confirmSetup
   archiveFilters.lingua = lang;    // il ramo resta quello del passo importato
+  /* Percorso consigliato dal docente nel link (?percorso=): si applica al
+     progetto appena creato, prima del salvataggio. */
+  if (_percorsoDaUrl) applicaPercorso(_percorsoDaUrl);
   state.currentStep = 2;           // dritti alla scomposizione: il testo c'è già
   persistCurrent();
   renderAll();
@@ -38493,6 +38604,9 @@ function confirmSetup() {
     state.sentences = splitTextIntoSentences(state.meta.testoOriginale).map(makeSentence);
   }
   maybeAutoClosedClass();   // classi chiuse (particelle/prep./cong./pronomi) auto all'import
+  /* Percorso consigliato dal docente (?percorso=): vale anche per il brano
+     creato a mano in questa entrata, non solo per l'import dal corpus. */
+  if (_percorsoDaUrl && !state.percorso) applicaPercorso(_percorsoDaUrl);
   state.currentStep = 2;
   persistCurrent();
   renderAll();
@@ -43050,6 +43164,13 @@ document.addEventListener('DOMContentLoaded', () => {
       p = new URLSearchParams(location.search);
       ul = (p.get('lang') || '').toLowerCase();
       txt = p.get('text') || '';
+      /* ?percorso= · il docente assegna la versione col percorso già impostato.
+         Si legge PRIMA di ogni ramo d'ingresso perché ?text= ha la precedenza
+         assoluta e il parametro andrebbe perso proprio nel caso d'uso del
+         docente. Vale solo per i percorsi costruiti: una chiave ignota o
+         progettata-non-costruita viene semplicemente ignorata. */
+      var pc = (p.get('percorso') || '').trim();
+      if (pc && schedaPercorso(pc) && PERCORSI[pc].disponibile) _percorsoDaUrl = pc;
     } catch (e) { p = null; }
     l = (ul === 'grc' || ul === 'greco') ? 'greco' : (ul === 'la' || ul === 'latino') ? 'latino' : null;
 
