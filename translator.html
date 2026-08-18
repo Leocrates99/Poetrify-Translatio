@@ -4349,6 +4349,9 @@ textarea[data-rivedere="1"] { border-style: dashed; border-color: var(--sepia); 
 /* ── NASTRO DELLE TAPPE · orientamento permanente dentro il banco ───────────
    Dice sempre tre cose: dove sei, cosa hai concluso, dove puoi tornare. */
 .nastro {
+  /* Appiccicato in cima all'area di lavoro: da quando e' l'unica navigazione
+     delle tappe, doverlo cercare scorrendo su sarebbe un difetto. */
+  position: sticky; top: 0; z-index: 12;
   display: flex; align-items: center; flex-wrap: wrap; gap: 0;
   padding: 10px 14px; margin: 0 0 18px;
   background: var(--paper); border: 1px solid var(--rule-soft);
@@ -11603,7 +11606,12 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   .schel-order-btn,
   .batch-toggle-btn,
   .integrale-grouped-tab,
+  /* superfici della via guidata, misurate col punto 11: il tasto di
+     ripiegamento stava a 19px, sotto il minimo assoluto WCAG di 24. */
+  .auto-analyze-btn,
+  .inline-translation-collapse-btn,
   .ordo-chip-delete { min-height: 32px; }
+  .inline-translation-collapse-btn { min-width: 32px; }
   .ordo-chip-delete { min-width: 32px; }
   /* Il ✕ del blocco ordo passa da 18 a 32px: senza riservargli lo spazio
      finisce SOPRA l'etichetta della fonte, e il tocco va all'etichetta invece
@@ -11637,6 +11645,11 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   .app .ts-num,
   .app .archive-stat-label, .app .sigla, .app .status-badge, .app .current-tag,
   .app .barre-fn, .app .barre-fn em, .app .barre-count,
+  .app .inline-translation-count, .app .inline-translation-collapse-btn,
+  .app .periodale-bridge-label, .app .periodale-token-hint, .app .tree2-level-label,
+  .app .wizard-eyebrow, .app .wizard-eyebrow strong, .app .wizard-phase-tag,
+  .app .wizard-sentence-tab, .app .wizard-sentence-tab .done-mark,
+  .app .tree2-node-ruolo, .app .schel-trad-brutta label,
   .app .field-block-label { font-size: 11px; }
 }
 
@@ -12652,9 +12665,9 @@ const SCHEMA_VERSION = 4;
    ════════════════════════════════════════════════════════════════════════════ */
 const TAPPE = {
   /* ── Fuori dallo scheletro: altre schede, altro motore ─────────────────── */
-  brano:      { label: 'Brano',       sede: 'brano',         modulo: 'testo' },
-  frasi:      { label: 'Frasi',       sede: 'scomposizione', modulo: 'frasi' },
-  bella:      { label: 'Bella copia', sede: 'traduzione',    modulo: 'bella' },
+  brano:      { label: 'Brano',       sede: 'brano',         modulo: 'testo', globale: true },
+  frasi:      { label: 'Frasi',       sede: 'scomposizione', modulo: 'frasi', globale: true },
+  bella:      { label: 'Bella copia', sede: 'traduzione',    modulo: 'bella', globale: true },
   /* ── Il wizard guidato: nove tappe, motore proprio (fusione al punto 11) ─ */
   prelettura: { label: 'Pre-lettura', sede: 'guidata' },
   connettivi: { label: 'Connettivi',  sede: 'guidata', modulo: 'proposizioni' },
@@ -12667,36 +12680,43 @@ const TAPPE = {
 
   /* ── Le fasi dello SCHELETRO · quelle che il motore sa disegnare ───────── */
   verbi: {
+  compiuta: function (f) { return (f.grammar || []).some(function (e) { return e && e.partOfSpeech === 'Verbo'; }); },
     label: 'Verbi', icona: '🎯', sede: 'scheletro', modulo: 'verbi',
     hint: 'Individua TUTTE le forme verbali del brano e distingui modo finito / non finito. I verbi finiti sono le àncore di ogni proposizione.',
     corpo: (ss, lang) => renderScheletroVerbi(ss, lang),
   },
   proposizioni: {
+  compiuta: function (f) { return (f.periodale || []).length > 0; },
     label: 'Proposizioni', icona: '✂️', sede: 'scheletro', modulo: 'proposizioni',
     hint: 'Spezza il periodo nelle proposizioni interne (per congiunzione o asindeto) e completa le corrispondenze sintattiche (ruolo · tipo · connettivo · dipendenza).',
     corpo: (ss, lang) => renderScheletroProposizioni(ss, lang),
   },
   soggetto: {
+  compiuta: function (f) { return (f.logic || []).some(function (e) { return e && /soggetto|parte nominale|predicat/i.test(e.funzione || ''); }); },
     label: 'Soggetto', icona: '🟦', sede: 'scheletro', modulo: 'sintagmi',
     hint: 'Individua il soggetto e il suo gruppo (attributi, apposizioni, specificazioni). Il menù è isolato a questa fase.',
     corpo: (ss, lang) => renderScheletroLogic(ss, lang, 'soggetto'),
   },
   oggetto: {
+  compiuta: function (f) { return (f.logic || []).some(function (e) { return e && /oggetto/i.test(e.funzione || ''); }); },
     label: 'Oggetto', icona: '🟧', sede: 'scheletro', modulo: 'sintagmi',
     hint: 'Individua il complemento oggetto e il suo gruppo. Il menù è isolato a questa fase.',
     corpo: (ss, lang) => renderScheletroLogic(ss, lang, 'oggetto'),
   },
   preposizionali: {
+  compiuta: function (f) { return (f.logic || []).some(function (e) { return e && /luogo|moto|origine|compagnia|argomento|fine|scopo/i.test(e.funzione || ''); }); },
     label: 'Preposizionali', icona: '🔗', sede: 'scheletro', modulo: 'sintagmi',
     hint: 'Individua i complementi RETTI DA PREPOSIZIONE (accusativo e ablativo). Il menù si organizza in base alla preposizione che regge il blocco selezionato.',
     corpo: (ss, lang) => renderScheletroLogic(ss, lang, 'preposizionali'),
   },
   altri: {
+  compiuta: function (f) { return (f.logic || []).length > 1; },
     label: 'Altri complementi', icona: '🟫', sede: 'scheletro', modulo: 'sintagmi',
     hint: 'Individua gli altri complementi a caso semplice, SENZA preposizione (genitivo, dativo e ablativo: mezzo, modo, causa, tempo, limitazione…). Il menù elenca solo questi.',
     corpo: (ss, lang) => renderScheletroLogic(ss, lang, 'altri'),
   },
   ordo: {
+  compiuta: function (f) { return (f.ordoVerborum || []).length > 0 || !!String(f.translation || '').trim(); },
     label: 'Ordo e brutta', icona: '✍️', sede: 'scheletro', modulo: 'brutta',
     hint: 'Riprendi i sintagmi e i verbi individuati e riordinali nell\'ordo verborum SVO italiano (soggetto · verbo · oggetto · complementi); scrivi la resa letterale (brutta) di ciascuno e portala nella sezione Traduzione.',
     corpo: (ss, lang) => renderScheletroTraduzione(ss, lang),
@@ -28739,6 +28759,117 @@ function avvioPasso3() {
    Vale per la modalità LIBERA: in quella guidata il wizard ha già il proprio
    stepper a fasi, cliccabile e con le tappe completate — un secondo indicatore
    sarebbe rumore, non orientamento. */
+/* ════════════════════════════════════════════════════════════════════════════
+   LA MACCHINA A STATI SOLA · dove vive una tappa, e come ci si arriva
+   ────────────────────────────────────────────────────────────────────────────
+   Fino a qui la navigazione era divisa in tre: `goToStep` per le schede,
+   `setScheletroTappa` per le fasi dello scheletro, `goToGuidedStep` per il
+   wizard. Tre cursori, tre nastri, e nessuno che sapesse dire «dove sono» in
+   un modo solo.
+   Qui si dichiara la regola: una tappa vive in una SEDE, e la sede dipende
+   dalla via che si sta percorrendo. Il resto — il nastro, il «sei qui», il
+   salto — ne discende.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/** Dove si svolge, ADESSO, la tappa `k`: dipende dalla via, non solo dal catalogo. */
+function sedeEffettiva(k) {
+  if (state.mode === 'guided' && GUIDATA[k]) return 'guidata';
+  const t = TAPPE[k];
+  if (!t) return '';
+  if (t.sede === 'scheletro' && getApproach() !== 'scheletro') {
+    /* Fuori dallo scheletro le fasi d'analisi vivono nella scheda C. */
+    return 'analisi';
+  }
+  return t.sede;
+}
+
+/** Il salto: un solo ingresso per andare a una tappa, ovunque essa viva. */
+function vaiAllaTappa(k) {
+  const sede = sedeEffettiva(k);
+  if (sede === 'guidata') {
+    /* Il wizard vive nella scheda B: senza questo, saltando a una tappa guidata
+       mentre si è sulla C non lo si raggiungeva mai — restava la superficie
+       vecchia, senza nastro e senza wizard. */
+    goToGuidedStep((tappeGuidateDi(state).findIndex(function (t) { return t.chiave === k; })) + 1);
+    if (state.currentStep !== 2) goToStep(2);
+    return;
+  }
+  if (sede === 'brano') { goToStep(1); return; }
+  if (sede === 'scomposizione') { goToStep(2); return; }
+  if (sede === 'scheletro') { setScheletroTappa(k); goToStep(3); renderAll(); return; }
+  if (sede === 'analisi') { goToStep(3); return; }
+  if (sede === 'traduzione') { goToTraduzione(k === 'bella' ? 'bella' : 'bozza'); return; }
+  goToStep(3);
+}
+
+/** La tappa su cui si è adesso, dedotta dalla superficie e dai cursori. */
+function tappaCorrente() {
+  if (state.mode === 'guided') return getTappaGuidata();
+  if (state.currentStep === 1) return 'brano';
+  if (state.currentStep === 2) return 'frasi';
+  if (state.currentStep === 3) {
+    if (getApproach() === 'scheletro') return getScheletroTappa();
+    return '';                       // la scheda C fuori dallo scheletro non è una tappa sola
+  }
+  if (state.currentStep === 5) return (state.traduzioneVista === 'bella') ? 'bella' : 'ordo';
+  return '';
+}
+
+/** Se una tappa è compiuta. Il predicato lo porta la tappa; il metro è il ripiego. */
+function tappaCompiuta(k) {
+  const t = TAPPE[k] || {};
+  const pred = (GUIDATA[k] && GUIDATA[k].compiuta) || t.compiuta;
+  const globale = (GUIDATA[k] && GUIDATA[k].globale) || t.globale;
+  if (typeof pred === 'function') {
+    if (globale) { try { return !!pred(); } catch (e) { return false; } }
+    const ss = state.sentences || [];
+    if (!ss.length) return false;
+    return ss.every(function (f) { try { return !!pred(f); } catch (e) { return false; } });
+  }
+  const m = MODULI_METRO[t.modulo];
+  if (m) { try { return (m.quota(state) || 0) >= 1; } catch (e) { return false; } }
+  return false;
+}
+
+/* ── IL NASTRO UNICO ───────────────────────────────────────────────────────
+   Uno solo, per qualunque via: mostra la playlist del percorso, segna dove sei
+   e che cosa hai concluso, e ci si clicca sopra per saltare. Prima ce n'erano
+   tre — il nastro del banco, lo stepper dello scheletro, lo stepper a fasi del
+   wizard — e nessuno dei tre diceva l'intero percorso.
+   «Brano» sta in testa fuori dalla playlist: il testo è il presupposto di ogni
+   percorso, non una tappa dell'uno o dell'altro. */
+function tappeDelNastro() {
+  const sc = schedaPercorso(state.percorso);
+  const pl = (sc && Array.isArray(sc.playlist) && sc.playlist.length)
+    ? sc.playlist.slice()
+    : ['frasi', 'verbi', 'proposizioni', 'soggetto', 'oggetto', 'preposizionali', 'altri', 'ordo', 'bella'];
+  return ['brano'].concat(pl.filter(function (k) { return TAPPE[k]; }));
+}
+
+function renderNastro() {
+  if (avvio) return '';
+  if (!(state.meta && state.meta.testoOriginale)) return '';
+  const chiavi = tappeDelNastro();
+  const ora = tappaCorrente();
+  let fatte = 0;
+  const nodi = chiavi.map(function (k, i) {
+    const compiuta = (k === 'brano') ? !!(state.meta && state.meta.testoOriginale) : tappaCompiuta(k);
+    if (compiuta) fatte++;
+    const corrente = (k === ora);
+    const cls = corrente ? 'ora' : (compiuta ? 'fatta' : '');
+    const segno = (compiuta && !corrente) ? '✓' : String(i + 1);
+    const et = escapeHtml(etichettaTappa(k));
+    return '<button class="nastro-nodo ' + cls + '" onclick="vaiAllaTappa(&#39;' + k + '&#39;)"'
+      + (corrente ? ' aria-current="step"' : '')
+      + ' aria-label="Tappa ' + (i + 1) + ' di ' + chiavi.length + ': ' + et
+      + (compiuta ? ' — conclusa' : '') + (corrente ? ' — sei qui' : '') + '">'
+      + '<span class="nastro-cerchio" aria-hidden="true">' + segno + '</span>' + et
+      + '</button>';
+  }).join('<span class="nastro-filo" aria-hidden="true"></span>');
+  return '<nav class="nastro" aria-label="Tappe del percorso">' + nodi
+    + '<span class="nastro-conto">' + fatte + '/' + chiavi.length + '</span></nav>';
+}
+
 function tappeLibere() {
   const f = projectPhases(state);
   const hasTesto = !!(state.meta && state.meta.testoOriginale);
@@ -28759,11 +28890,16 @@ function tappeLibere() {
 }
 
 function renderNastroTappe() {
-  /* Solo nel banco «libero» e solo quando c'è davvero un brano su cui orientarsi. */
+  /* Il nastro e' UNO: questa resta come porta d'ingresso del banco libero, ma
+     il disegno lo fa `renderNastro()`, lo stesso che serve la via guidata. */
   if (avvio) return '';
   if (state.mode === 'guided') return '';
   if (!isWorkStep(state.currentStep)) return '';
   if (!(state.meta && state.meta.testoOriginale)) return '';
+  return renderNastro();
+}
+
+function _renderNastroTappeVecchio() {
   const tappe = tappeLibere();
   const fatte = tappe.filter(t => t.fatta).length;
   const nodi = tappe.map((t, i) => {
@@ -29074,17 +29210,6 @@ function renderStep3HtmlScheletro() {
   const tappa = schedaTappa(corrente) || schedaTappa(SCHELETRO_CANONICO[0]);
   const ultima = i === chiavi.length - 1;
 
-  const stepperHtml = `<div class="scheletro-stepper">${chiavi.map((k, j) => {
-    const t = schedaTappa(k) || {};
-    const cls = j === i ? 'active' : (j < i ? 'done' : '');
-    return `<button class="scheletro-step ${cls}" onclick="setScheletroTappa('${k}')"
-      ${j === i ? 'aria-current="step"' : ''}
-      aria-label="Fase ${j + 1} di ${chiavi.length}: ${escapeHtml(t.label || k)}">
-      <span class="scheletro-step-num">${t.icona || ''}</span>
-      <span class="scheletro-step-label">${escapeHtml(t.label || k)}</span>
-    </button>`;
-  }).join('<span class="scheletro-step-sep">→</span>')}</div>`;
-
   const bodyHtml = (tappa && typeof tappa.corpo === 'function')
     ? tappa.corpo(sentences, lang)
     : '<div class="entry-empty">Questa tappa non è ancora costruita.</div>';
@@ -29101,10 +29226,10 @@ function renderStep3HtmlScheletro() {
       : `<button class="btn btn-primary btn-sm" onclick="setScheletroTappa('${chiavi[i + 1]}')">Fase successiva (${escapeHtml(etichettaTappa(chiavi[i + 1]))}) →</button>`}
   </div>`;
 
-  // La barra delle fasi va in CIMA al contenuto (subito sotto l'header), resta
-  // fissa (sticky) e — vivendo dentro l'editor — non scavalca il menù di sinistra.
-  return `<div class="scheletro-bar">${stepperHtml}</div>`
-    + sectionHeader('C', 'Analisi · lo scheletro del periodo', (tappa && tappa.hint) || '')
+  /* La barra delle fasi non c'e' piu': le stesse tappe stanno nel NASTRO
+     UNICO, in cima all'editor, insieme al resto del percorso. Due stepper per
+     la stessa informazione erano due grafiche che dicevano la stessa cosa. */
+  return sectionHeader('C', 'Analisi · lo scheletro del periodo', (tappa && tappa.hint) || '')
     + bodyHtml
     + navButtons;
 }
@@ -32036,40 +32161,9 @@ function renderGuidedWizard() {
   const currentPhase = GUIDED_PHASES[meta.phase] || GUIDED_PHASES.lettura;
   // Posizione 1-based fra le tappe visibili (per il "tappa X di N")
   const currentVisibleIdx = visibleSteps.findIndex(s => s.num === currentStep);
-  const currentVisiblePos = currentVisibleIdx + 1;
 
-  // Raggruppa le tappe per macro-fase mantenendo l'ordine visibile
-  const phasesOrdered = ['lettura', 'analisi', 'traduzione', 'versione'];
-  const phaseGroups = phasesOrdered.map(pk => ({
-    key: pk,
-    info: GUIDED_PHASES[pk],
-    steps: visibleSteps.filter(s => s.phase === pk),
-  })).filter(g => g.steps.length > 0);
 
-  // Stepper con label di fase + pillole step
-  const stepperHtml = phaseGroups.map(g => {
-    const phaseStepsHtml = g.steps.map(s => {
-      const isActive = s.num === currentStep;
-      const isDone = isGuidedStepCompleteAllSentences(s.num);
-      const visPos = visibleSteps.findIndex(v => v.num === s.num) + 1;
-      /* aria-current dice DOVE SI E'; il completamento entra nel nome accessibile
-         perche' finora viveva solo nel colore e in uno ::after. */
-      return `<button class="wizard-step phase-${g.key} ${isActive ? 'active' : ''} ${isDone ? 'completed' : ''}"
-        ${isActive ? 'aria-current="step"' : ''}
-        aria-label="Tappa ${visPos} di ${totalSteps}: ${escapeHtml(s.label)}${isDone ? ' — completata' : ''}${isActive ? ' — sei qui' : ''}"
-        onclick="goToGuidedStep(${s.num})">
-        <span class="wizard-step-num" aria-hidden="true">${visPos}</span>
-        <span class="wizard-step-label">${s.label}</span>
-      </button>`;
-    }).join('');
-    return `<div class="wizard-phase-group phase-${g.key}" style="--phase-color: ${g.info.color};">
-      <div class="wizard-phase-label">${g.info.letter} · ${g.info.label}<span class="wizard-phase-tag">${g.info.tag}</span></div>
-      <div class="wizard-phase-steps">${phaseStepsHtml}</div>
-    </div>`;
-  }).join('');
 
-  const completedCount = visibleSteps.filter(s => isGuidedStepCompleteAllSentences(s.num)).length;
-  const pct = Math.round((completedCount / totalSteps) * 100);
 
   // BANNER APPROCCIO · disponibile anche in modalità guidata.
   // L'utente può cambiare l'approccio traduttivo (integrale / attuale /
@@ -32081,13 +32175,13 @@ function renderGuidedWizard() {
     <div class="wizard-pane">
       <div class="wizard-header">
         <div>
-          <div class="wizard-eyebrow">Modalità guidata · Fase <strong>${currentPhase.letter}</strong> (${escapeHtml(currentPhase.label)}) · tappa ${currentVisiblePos} di ${totalSteps}</div>
+          <div class="wizard-eyebrow">Modalità guidata · Fase <strong>${currentPhase.letter}</strong> · ${escapeHtml(currentPhase.label)} <span class="wizard-phase-tag">${escapeHtml(currentPhase.tag)}</span></div>
           <h2 class="wizard-title" style="border-left: 4px solid ${currentPhase.color}; padding-left: 12px;">${escapeHtml(meta.title)}</h2>
         </div>
-        <div class="wizard-progress-pct"><strong>${completedCount}</strong>/${totalSteps} tappe completate · ${pct}%</div>
+
       </div>
       ${approachBannerInGuided}
-      <div class="wizard-stepper-grouped">${stepperHtml}</div>
+      ${renderNastro()}
       <div class="wizard-instructions">${meta.instructions}</div>
     </div>`;
 
