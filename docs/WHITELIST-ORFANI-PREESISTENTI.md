@@ -49,7 +49,7 @@ ogni congiunzione di ogni frase.
 **Ripristinata** accanto a «⚡ Completa proposizioni dai verbi», col conteggio
 dei candidati (`congDaConfermare`) e la scomparsa automatica quando non ne
 restano. Verificato: due congiunzioni confermate in un clic, il pulsante
-spariisce, la connBar continua a permettere la correzione una per una.
+sparisce, la connBar continua a permettere la correzione una per una.
 
 ## 3 · Le 18 delezioni, e perché ciascuna
 
@@ -58,7 +58,7 @@ spariisce, la connBar continua a permettere la correzione una per una.
 | `addPeriodaleEntry` | **modello dati superato**: creava una voce con `text` e `tokenIndices: []`, cioè pre-tokenizzatore; oggi tutta la macchina a valle (riquadri, sigle A₁/B₂, colori, ordine nell'albero) è ancorata ai `tokenIndices`. Mancava anche il campo `new-prop-text`: rimossa la forma intera, non solo il varco. Quattro vie di creazione vive, e il testo resta editabile nella scheda della proposizione |
 | `periodaleAnchorOf` | superata da `periodaleLevel` e da `renderTreeClusterRow`. **E non ha mai funzionato**: il guardiano è `ruolo === 'coordinata'` minuscolo, mentre il modello scrive `'Coordinata'` — la sorella viva controlla entrambe le forme, lei no |
 | `resumeProject` | alias di una riga su `openProject`, che è vivo e chiamato da tutte le vie utente |
-| `setLingua` *(verificata a mano)* | il ramo linguistico si scegli a monte, in `lingua.html`; 1 sola occorrenza in tutto il repo |
+| `setLingua` *(verificata a mano)* | il ramo linguistico si sceglie a monte, in `lingua.html`; 1 sola occorrenza in tutto il repo |
 | `isTokenBatchCandidate` | superata da `getTokenBatchState`, più ricca (`occupied`/`candidate`/`neutral`) e realmente usata dal renderer dei token |
 | `renderScheletroStep1` · `Step2` · `Step3` | i tre renderer della vecchia Fase 1-3 dello scheletro, sostituiti dai renderer per tappa |
 | `suggestPosFromDict` | wrapper di una riga su `lookupHighFreqDict`, che i chiamanti usano direttamente |
