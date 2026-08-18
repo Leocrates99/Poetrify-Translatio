@@ -13543,6 +13543,14 @@ function versioneProgetto(p) {
    dichiarata è già quella corrente (una build precedente può aver timbrato la
    versione senza scrivere tutti i campi). È idempotente e non inventa dati. */
 function _riparaCampiEssenziali(p) {
+  /* L'indice della frase corrente deve stare dentro l'elenco delle frasi:
+     fuori, la vista «frase corrente» non trova niente da mostrare. */
+  const nFrasi = Array.isArray(p.sentences) ? p.sentences.length : 0;
+  const idx = Number(p.currentSentenceIdx);
+  if (!nFrasi) p.currentSentenceIdx = 0;
+  else if (!Number.isFinite(idx) || idx < 0 || idx >= nFrasi) {
+    p.currentSentenceIdx = Math.max(0, Math.min(nFrasi - 1, Number.isFinite(idx) ? idx : 0));
+  }
   if (!Array.isArray(p.sentences)) p.sentences = [];
   /* INVARIANTE DELLE FRASI: grammar, logic, periodale e tokens sono SEMPRE
      array. Il resto dell'applicazione lo dà per scontato in una trentina di
@@ -30461,7 +30469,7 @@ function renderScheletroStep3(sentences, lang) {
       </div>
       <div class="scheletro-finish-actions">
         <button class="btn btn-primary btn-sm" onclick="scheletroAutoCompletePeriphery('${sentence.id}')" title="Marca preposizioni, articoli, congiunzioni, particelle e pronomi frequenti via dizionario di alta frequenza">⚡ Auto-completa periferia</button>
-        <button class="btn btn-ghost btn-sm" onclick="state.currentSentenceIdx=${sIdx}; setApproach('attuale')">↗ Apri in modalità Attuale</button>
+        <button class="btn btn-ghost btn-sm" onclick="state.currentSentenceIdx=${sIdx}; setApproach('attuale')" title="Apri questa frase da sola, con tutte le schede d'analisi">↗ Lavora solo su questa frase</button>
       </div>
     </div>`;
   }).join('');
@@ -31176,7 +31184,7 @@ function fpfAdvanceSentence() {
 function renderPillPercorso() {
   const sc = schedaPercorso(state.percorso);
   const testo = sc ? (sc.icona + ' ' + sc.nome) : '· scegli un percorso';
-  const adattato = sc && state.percorsoAdattato;
+  const adattato = sc && !assiCombaciano(sc);
   return '<button class="pill-percorso' + (adattato ? ' adattata' : '') + (sc ? '' : ' vuota') + '"'
     + ' onclick="apriPannelloPercorsi()"'
     + ' title="' + escapeHtml(sc ? (sc.scopo + ' · ' + sc.tempo) : 'Nessun percorso dichiarato per questo brano') + '">'
@@ -31230,8 +31238,14 @@ function chiudiPannelloPercorsi() {
 /* Scegliere dal pannello passa dal rito completo del punto 6: se il cambio
    mette in discussione del lavoro a valle, la domanda compare. */
 function scegliPercorsoDaPannello(chiave) {
-  if (chiave === state.percorso && !state.percorsoAdattato) { chiudiPannelloPercorsi(); return; }
+  const sc = schedaPercorso(chiave);
   chiudiPannelloPercorsi();
+  if (chiave === state.percorso) {
+    /* Sceglierlo di nuovo vuol dire «rimettimi nel percorso»: se gli assi sono
+       derivati si ripristina l'assetto, altrimenti non c'e' niente da fare. */
+    if (sc && !assiCombaciano(sc)) ripristinaAssiPercorso();
+    return;
+  }
   cambiaPercorso(chiave);
 }
 
