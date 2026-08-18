@@ -29197,22 +29197,6 @@ function renderNastroTappe() {
   return renderNastro();
 }
 
-function _renderNastroTappeVecchio() {
-  const tappe = tappeLibere();
-  const fatte = tappe.filter(t => t.fatta).length;
-  const nodi = tappe.map((t, i) => {
-    const cls = t.corrente ? 'ora' : (t.fatta ? 'fatta' : '');
-    const segno = t.fatta && !t.corrente ? '✓' : String(i + 1);
-    return `<button class="nastro-nodo ${cls}" onclick="${t.vai}"
-        ${t.corrente ? 'aria-current="step"' : ''}
-        aria-label="${escapeHtml(t.label)}${t.fatta ? ' — conclusa' : ''}${t.corrente ? ' — sei qui' : ''}">
-        <span class="nastro-cerchio" aria-hidden="true">${segno}</span>${escapeHtml(t.label)}
-      </button>`;
-  }).join('<span class="nastro-filo" aria-hidden="true"></span>');
-  return `<nav class="nastro" aria-label="Tappe del brano">${nodi}
-      <span class="nastro-conto">${fatte}/${tappe.length}</span>
-    </nav>`;
-}
 
 /* ════════════════════════════════════════════════════════════════════════════
    SOGLIA · l'attimo fra l'avvio e il banco
@@ -29467,9 +29451,29 @@ function renderStep3HtmlAttuale() {
 function getScheletroTappa() {
   const lista = tappeScheletroDi(state);
   if (state.scheletroTappa && lista.indexOf(state.scheletroTappa) >= 0) return state.scheletroTappa;
-  /* Compatibilità: prima era un numero sulle sette fasi canoniche. */
+
+  /* La tappa memorizzata non c'e' piu' nella playlist. Due casi diversissimi:
+     (a) una tappa CONDIZIONALE che e' sparita perche' il lavoro che chiedeva
+         e' stato fatto — succede stando proprio li' sopra. Si approda alla
+         tappa che VIENE DOPO nella playlist del percorso, non altrove;
+     (b) un cursore numerico legacy da tradurre.
+     Prima valeva solo (b), e da «Posizioni» si finiva su «Ordo e brutta»
+     saltandone quattro: il ripiego pensato per i brani vecchi sparava nel
+     vivo. */
+  const sc = schedaPercorso(state.percorso);
+  const completa = (sc && Array.isArray(sc.playlist)) ? sc.playlist : [];
+  const posa = completa.indexOf(state.scheletroTappa);
+  if (posa >= 0) {
+    for (let i = posa + 1; i < completa.length; i++) {
+      if (lista.indexOf(completa[i]) >= 0) return completa[i];
+    }
+    for (let i = posa - 1; i >= 0; i--) {
+      if (lista.indexOf(completa[i]) >= 0) return completa[i];
+    }
+  }
+
   const n = Number(state.scheletroStep);
-  if (n >= 1) {
+  if (n >= 1 && !state.scheletroTappa) {
     const vecchia = SCHELETRO_CANONICO[Math.min(n, SCHELETRO_CANONICO.length) - 1];
     if (lista.indexOf(vecchia) >= 0) return vecchia;
   }
@@ -31594,18 +31598,7 @@ function renderIntegraleGroupedEntries(sentences, level, lang) {
 
 /* ── APPROCCIO «frase per frase»: wizard sequenziale ────────────────────── */
 
-function setFrasePerFraseStep(stepNum) {
-  state.frasePerFraseStep = Math.max(1, Math.min(4, stepNum));
-  persistCurrent();
-  renderEditor();
-}
 
-function fpfAdvanceSentence() {
-  state.currentSentenceIdx = Math.min(state.sentences.length - 1, (state.currentSentenceIdx || 0) + 1);
-  state.frasePerFraseStep = 1;
-  persistCurrent();
-  renderEditor();
-}
 
 /* Banner di servizio con info sull'approccio attivo.
    ESTINTO (punto 10). Diceva «Approccio: Integrale» — una parola che non è
@@ -34169,6 +34162,12 @@ function renderTranslationHtml() {
     return sectionHeader('E', 'Bella copia', 'la resa finale del brano, rifinita dalle bozze')
       + `<div class="method-note"><strong>Metodo.</strong> La bella copia complessiva è la resa destinata al lettore: puoi comporla assemblando le belle copie delle singole frasi («Compila da frasi») e poi armonizzarla — collegamenti, scorrevolezza, registro.</div>`
       + `<div class="translation-global">` + globalHeader + bellaGlobalRow + `</div>`
+      /* La chiusura della versione sta QUI, dove la versione finisce. Prima
+         viveva solo dentro il ramo «frase per frase», che era raggiungibile
+         quasi da nessuno ed e' stato cancellato al punto 10: il pannello se
+         n'era andato con lui, e con esso l'unico modo di segnare una versione
+         come consegnata. */
+      + renderChiusuraVersione()
       + `<div class="flex-between" style="margin-top: 18px;">
           <button class="btn btn-ghost btn-sm" onclick="goToTraduzione('bozza')">← Torna alla bozza</button>
           <button class="btn btn-brand-soft btn-sm" onclick="openExportModal()">📤 Esporta traduzione</button>
