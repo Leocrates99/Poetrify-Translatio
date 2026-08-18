@@ -12995,6 +12995,7 @@ function cambiaPercorso(nuovo, opz) {
   state.percorsoAdattato = false;
   _marcaDaRivedere(state, esito);
   _registraCambio(state, esito);
+  approdaAlPercorso();
   persistCurrent();
   if (typeof renderAll === 'function') renderAll();
   if (!opz.muto && typeof showToast === 'function') {
@@ -28396,51 +28397,45 @@ function renderSidebarTabs() {
   // Bella copia = resa complessiva finale. Entrambe portano alla scheda E,
   // con vista diversa (state.traduzioneVista).
   const bellaDone = !!((state.meta.traduzioneBella || '').trim());
+  /* UN SOLO elenco. Cambia solo la sezione «lavoro» — perche' in guidata le
+     tappe stanno tutte dentro il wizard, mentre nel banco libero la
+     scomposizione e l'analisi sono due schede — e il resto e' comune.
+     Il badge e' il COMPLETAMENTO del percorso, lo stesso numero del nastro:
+     prima in guidata era la posizione, e due badge identici a vedersi
+     contavano cose diverse. */
+  const haTesto = !!state.meta.testoOriginale;
+  const conto = contoTappe();
+  const badgeTappe = state.sentences.length > 0 ? (conto.fatte + '/' + conto.totale) : '\u00b7';
+
+  const lavoro = [
+    { num: 1, letter: 'A', icon: 'file', title: 'Brano', group: 'lavoro', enabled: true,
+      hasContent: haTesto },
+  ];
   if (state.mode === 'guided') {
-    tabs = [
-      { num: 1, letter: 'A', icon: 'file', title: 'Brano', group: 'lavoro', enabled: true,
-        hasContent: !!state.meta.testoOriginale },
-      { num: 2, letter: 'B', icon: 'tree', title: 'Analisi guidata', group: 'lavoro',
-        enabled: !!state.meta.testoOriginale,
-        hasContent: state.sentences.length > 0,
-        badge: state.sentences.length > 0
-          ? `${numeroTappaGuidata()}/${tappeGuidateDi(state).length}` : '·' },
-      { num: 5, sub: 'bozza', letter: 'E', icon: 'pencil', title: 'Bozza', group: 'traduzione',
-        enabled: !!state.meta.testoOriginale, onclick: "goToTraduzione('bozza')",
-        hasContent: hasTranslation, hideForMedie: true },
-      { num: 5, sub: 'bella', letter: 'E', icon: 'book', title: 'Bella copia', group: 'traduzione',
-        enabled: !!state.meta.testoOriginale, onclick: "goToTraduzione('bella')",
-        hasContent: bellaDone, hideForMedie: true },
-      { num: 4, letter: 'D', icon: 'folder', title: 'Archivio', group: 'strumenti', enabled: true,
-        hasContent: archiveCount > 0, badge: archiveCount },
-      { num: 6, letter: 'F', icon: 'book2', title: 'Dizionario', group: 'strumenti', enabled: true,
-        hasContent: true, badge: '' },
-    ];
+    lavoro.push({ num: 2, letter: 'B', icon: 'tree', title: 'Analisi guidata', group: 'lavoro',
+      enabled: haTesto, hasContent: state.sentences.length > 0, badge: badgeTappe });
   } else {
-    tabs = [
-      { num: 1, letter: 'A', icon: 'file', title: 'Brano', group: 'lavoro', enabled: true,
-        hasContent: !!state.meta.testoOriginale },
-      { num: 2, letter: 'B', icon: 'scissors', title: 'Scomposizione', group: 'lavoro',
-        enabled: !!state.meta.testoOriginale,
-        hasContent: state.sentences.length > 0 },
-      { num: 3, letter: 'C', icon: 'tree', title: 'Analisi', group: 'lavoro',
-        enabled: state.sentences.length > 0,
-        /* Guardie necessarie: una frase può non avere ancora nessuna delle tre
-           analisi (lavoro appena cominciato, o brano importato da un backup):
-           senza `|| []` la sidebar si rompeva e con essa l'intera pagina. */
-        hasContent: state.sentences.some(s => (s.grammar || []).length || (s.logic || []).length || (s.periodale || []).length) },
-      { num: 5, sub: 'bozza', letter: 'E', icon: 'pencil', title: 'Bozza', group: 'traduzione',
-        enabled: !!state.meta.testoOriginale, onclick: "goToTraduzione('bozza')",
-        hasContent: hasTranslation, hideForMedie: true },
-      { num: 5, sub: 'bella', letter: 'E', icon: 'book', title: 'Bella copia', group: 'traduzione',
-        enabled: !!state.meta.testoOriginale, onclick: "goToTraduzione('bella')",
-        hasContent: bellaDone, hideForMedie: true },
-      { num: 4, letter: 'D', icon: 'folder', title: 'Archivio', group: 'strumenti', enabled: true,
-        hasContent: archiveCount > 0, badge: archiveCount },
-      { num: 6, letter: 'F', icon: 'book2', title: 'Dizionario', group: 'strumenti', enabled: true,
-        hasContent: true, badge: '' },
-    ];
+    lavoro.push({ num: 2, letter: 'B', icon: 'scissors', title: 'Scomposizione', group: 'lavoro',
+      enabled: haTesto, hasContent: state.sentences.length > 0 });
+    lavoro.push({ num: 3, letter: 'C', icon: 'tree', title: 'Analisi', group: 'lavoro',
+      enabled: state.sentences.length > 0, badge: badgeTappe,
+      /* Guardie necessarie: una frase può non avere ancora nessuna delle tre
+         analisi (lavoro appena cominciato, o brano importato da un backup):
+         senza `|| []` la sidebar si rompeva e con essa l'intera pagina. */
+      hasContent: state.sentences.some(s => (s.grammar || []).length || (s.logic || []).length || (s.periodale || []).length) });
   }
+
+  tabs = lavoro.concat([
+    { num: 5, sub: 'bozza', letter: 'E', icon: 'pencil', title: 'Bozza', group: 'traduzione',
+      enabled: haTesto, onclick: "goToTraduzione('bozza')", hasContent: hasTranslation },
+    { num: 5, sub: 'bella', letter: 'E', icon: 'book', title: 'Bella copia', group: 'traduzione',
+      enabled: haTesto, onclick: "goToTraduzione('bella')", hasContent: bellaDone },
+    { num: 4, letter: 'D', icon: 'folder', title: 'Archivio', group: 'strumenti', enabled: true,
+      hasContent: archiveCount > 0, badge: archiveCount },
+    { num: 6, letter: 'F', icon: 'book2', title: 'Dizionario', group: 'strumenti', enabled: true,
+      hasContent: true, badge: '' },
+  ]);
+
   // Vista d'insieme (Π = Panoramica): sempre disponibile, in testa alla nav.
   tabs.unshift({ num: 7, letter: 'Π', icon: 'dashboard', title: 'Panoramica', group: 'home', enabled: true, hasContent: true, badge: '' });
   // Navigazione raggruppata per funzione (sezioni con titolo), ispirata al
@@ -28802,9 +28797,31 @@ function vaiAllaTappa(k) {
   goToStep(3);
 }
 
+/* La superficie corrente e' una casa valida per la via che si sta percorrendo?
+   In guidata il wizard sta nella scheda B; fuori, le tappe d'analisi stanno
+   nella C. Le schede A ed E vanno bene per entrambe. */
+function superficieCoerente() {
+  const passo = state.currentStep;
+  if (passo === 1 || passo === 5 || passo === 4 || passo === 6 || passo === 7) return true;
+  return (state.mode === 'guided') ? (passo === 2) : (passo === 2 || passo === 3);
+}
+
+/** Fa approdare chi ha appena cambiato strada sulla tappa in corso del nuovo
+    percorso — ma solo se dove si trova non va piu' bene. */
+function approdaAlPercorso() {
+  if (avvio) return;
+  if (!(state.meta && state.meta.testoOriginale)) return;
+  if (superficieCoerente()) return;
+  const k = (state.mode === 'guided') ? getTappaGuidata() : getScheletroTappa();
+  if (k) vaiAllaTappa(k);
+}
+
 /** La tappa su cui si è adesso, dedotta dalla superficie e dai cursori. */
 function tappaCorrente() {
-  if (state.mode === 'guided') return getTappaGuidata();
+  /* In via guidata il cursore del wizard vale solo QUANDO si e' nel wizard:
+     stando sulla scheda del brano, «sei qui» e' il brano, non la tappa che si
+     riprendera' tornando indietro. */
+  if (state.mode === 'guided' && state.currentStep === 2) return getTappaGuidata();
   if (state.currentStep === 1) return 'brano';
   if (state.currentStep === 2) return 'frasi';
   if (state.currentStep === 3) {
@@ -28844,6 +28861,18 @@ function tappeDelNastro() {
     ? sc.playlist.slice()
     : ['frasi', 'verbi', 'proposizioni', 'soggetto', 'oggetto', 'preposizionali', 'altri', 'ordo', 'bella'];
   return ['brano'].concat(pl.filter(function (k) { return TAPPE[k]; }));
+}
+
+/** Quante tappe del percorso sono concluse, su quante. Fonte unica: la usano
+    il nastro e il badge della sidebar, che prima contavano cose diverse. */
+function contoTappe() {
+  const chiavi = tappeDelNastro();
+  let fatte = 0;
+  chiavi.forEach(function (k) {
+    const c = (k === 'brano') ? !!(state.meta && state.meta.testoOriginale) : tappaCompiuta(k);
+    if (c) fatte++;
+  });
+  return { fatte: fatte, totale: chiavi.length };
 }
 
 function renderNastro() {
@@ -28893,9 +28922,12 @@ function renderNastroTappe() {
   /* Il nastro e' UNO: questa resta come porta d'ingresso del banco libero, ma
      il disegno lo fa `renderNastro()`, lo stesso che serve la via guidata. */
   if (avvio) return '';
-  if (state.mode === 'guided') return '';
   if (!isWorkStep(state.currentStep)) return '';
   if (!(state.meta && state.meta.testoOriginale)) return '';
+  /* In via guidata il wizard porta gia' il nastro dentro di se': qui si
+     disegna per le ALTRE schede, dove prima non compariva affatto. La
+     guardia «mai in guidata» serviva quando il wizard aveva uno stepper suo. */
+  if (state.mode === 'guided' && state.currentStep === 2) return '';
   return renderNastro();
 }
 
@@ -31422,6 +31454,7 @@ function ripristinaAssiPercorso() {
   if (!sc) return;
   applicaPercorso(state.percorso, { forza: true });
   state.percorsoAdattato = false;
+  approdaAlPercorso();
   persistCurrent();
   renderAll();
   if (typeof showToast === 'function') showToast(`${sc.icona} ${sc.nome} · assetto ripristinato`);
