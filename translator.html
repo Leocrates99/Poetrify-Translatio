@@ -160,7 +160,6 @@
 :root[data-theme="dark"] body .integrale-hint,
 :root[data-theme="dark"] body .deduced-hint,
 :root[data-theme="dark"] body .sintagmi-flow-banner,
-:root[data-theme="dark"] body .approach-banner {
   background: var(--cream);
   color: var(--ink);
 }
@@ -262,7 +261,6 @@ body[data-lang="latino"] .tab-item.active {
 
 /* 4. Banner della frase corrente */
 body[data-lang="latino"] .current-sentence-banner,
-body[data-lang="latino"] .fpf-sentence-banner {
   border-left-color: var(--lang-accent);
 }
 
@@ -288,10 +286,8 @@ body[data-lang="latino"] .section-letter {
        accanto agli altri stati della tappa (cerca «.wizard-step.active»). */
 
 /* 7. Approach banner della scheda C */
-body[data-lang="latino"] .approach-banner {
   border-left-color: var(--lang-accent);
 }
-body[data-lang="latino"] .approach-banner-label strong { color: var(--lang-accent); }
 
 /* 8. Lemma section nella grammar entry */
 body[data-lang="latino"] .lemma-final {
@@ -389,7 +385,6 @@ textarea.greek, textarea.field-input.greek,
 .bridge-result-lemma.greek,
 .integrale-sentence-text.greek,
 .integrale-sentence-block-text.greek,
-.fpf-overview-orig.greek,
 .guided-traduzione-orig.greek .text {
   font-family: var(--font-classical) !important;
   font-style: normal !important;
@@ -4678,7 +4673,6 @@ textarea[data-rivedere="1"] { border-style: dashed; border-color: var(--sepia); 
 body:not([data-level="base"]) .method-note,
 body:not([data-level="base"]) .subsection-hint,
 body:not([data-level="base"]) .integrale-hint,
-body:not([data-level="base"]) .approach-banner-hint,
 body:not([data-level="base"]) .batch-bar-hint,
 body:not([data-level="base"]) .sintagmi-step-hint,
 body:not([data-level="base"]) .token-grammar-hint,
@@ -6787,7 +6781,6 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
 }
 
 /* ─── BANNER APPROCCIO · sticky in cima alla scheda C ───────────────────── */
-.approach-banner {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -6802,8 +6795,6 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   font-size: 12px;
   flex-wrap: wrap;
 }
-.approach-banner-label { color: var(--ink); }
-.approach-banner-label strong { color: var(--primary); margin-right: 4px; }
 
 /* ─── MODALITÀ INTEGRALE · NUOVO layout · tokenizer versione intera ──────
  * Mostra TUTTI i token del brano senza scrolling interno: si lascia che
@@ -6999,7 +6990,6 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
 }
 
 /* ─── MODALITÀ FRASE PER FRASE · wizard sequenziale ──────────────────────── */
-.fpf-sentence-banner {
   background: linear-gradient(180deg, var(--cream) 0%, var(--ivory) 100%);
   border: 1px solid var(--rule-soft);
   border-left: 4px solid var(--primary);
@@ -7007,7 +6997,6 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   border-radius: var(--radius-md);
   margin-bottom: 14px;
 }
-.fpf-sentence-banner .label {
   font-family: var(--font-ui);
   font-size: 10px;
   font-weight: 700;
@@ -7017,20 +7006,17 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   display: block;
   margin-bottom: 4px;
 }
-.fpf-sentence-banner .text {
   font-family: var(--font-body);
   font-size: 16px;
   line-height: 1.5;
   color: var(--ink);
 }
-.fpf-step-bar {
   display: flex;
   align-items: center;
   gap: 4px;
   margin-bottom: 16px;
   flex-wrap: wrap;
 }
-.fpf-step {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -7045,19 +7031,14 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   cursor: pointer;
   transition: all var(--transition-base);
 }
-.fpf-step:hover { border-color: var(--primary); color: var(--primary); }
-.fpf-step.active {
   background: var(--primary);
   color: var(--paper);
   border-color: var(--primary);
 }
-.fpf-step.done {
   background: rgba(47, 133, 90, 0.10);
   border-color: rgba(47, 133, 90, 0.40);
   color: rgb(47, 133, 90);
 }
-.fpf-step.done::before { content: '✓'; font-weight: 700; }
-.fpf-step-num {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -7068,37 +7049,28 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   background: rgba(255, 252, 247, 0.25);
   border-radius: 50%;
 }
-.fpf-step.active .fpf-step-num { background: rgba(255, 252, 247, 0.30); }
-.fpf-step-sep {
   color: var(--sepia-soft);
   font-weight: 700;
   user-select: none;
 }
-.fpf-step-content {
   background: var(--paper);
   border-radius: var(--radius-md);
   padding: 14px;
   border: 1px solid var(--rule-soft);
   margin-bottom: 14px;
 }
-.fpf-actions {
   display: flex;
   justify-content: space-between;
   gap: 10px;
   margin-bottom: 18px;
   flex-wrap: wrap;
 }
-.fpf-translation-block {
   padding: 8px;
 }
 @media (max-width: 600px) {
-  .fpf-step { padding: 6px 10px; font-size: 11px; }
-  .fpf-step-label { display: none; }
-  .fpf-step-sep { font-size: 11px; }
 }
 
 /* ─── PANORAMICA FINALE «frase per frase» nella sezione E ──────────────── */
-.fpf-overview-status {
   padding: 10px 14px;
   margin-bottom: 14px;
   border-radius: var(--radius-sm);
@@ -7106,23 +7078,19 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   font-size: 12.5px;
   font-weight: 600;
 }
-.fpf-overview-status.done {
   background: rgba(47, 133, 90, 0.10);
   border: 1px solid rgba(47, 133, 90, 0.40);
   color: rgb(47, 133, 90);
 }
-.fpf-overview-status.partial {
   background: rgba(214, 158, 46, 0.10);
   border: 1px solid rgba(214, 158, 46, 0.45);
   color: rgb(146, 64, 14);
 }
-.fpf-overview-list {
   display: flex;
   flex-direction: column;
   gap: 10px;
   margin-bottom: 14px;
 }
-.fpf-overview-row {
   display: grid;
   grid-template-columns: 90px 1fr 1fr;
   gap: 14px;
@@ -7133,7 +7101,6 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   border-left: 3px solid var(--primary);
   border-radius: var(--radius-sm);
 }
-.fpf-overview-num {
   font-family: var(--font-ui);
   font-size: 11px;
   font-weight: 700;
@@ -7141,26 +7108,21 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   letter-spacing: 0.05em;
   color: var(--primary);
 }
-.fpf-overview-orig {
   font-family: var(--font-body);
   font-style: italic;
   font-size: 14px;
   color: var(--ink);
   line-height: 1.4;
 }
-.fpf-overview-orig.greek { font-family: var(--font-classical); font-style: normal; }
-.fpf-overview-trad {
   font-family: var(--font-body);
   font-size: 14px;
   color: var(--ink);
   line-height: 1.4;
 }
-.fpf-overview-trad.pending {
   color: var(--sepia-soft);
   font-style: italic;
 }
 @media (max-width: 800px) {
-  .fpf-overview-row {
     grid-template-columns: 1fr;
     gap: 6px;
   }
@@ -11805,10 +11767,6 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
              resta nascosto e non fa rumore. -->
         <button type="button" id="badge-backup" class="badge-backup" hidden
                 onclick="openExportModal()"></button>
-        <!-- Pulsante "Approccio" rimosso: l'approccio si cambia direttamente dal
-             segmented control nella quick-bar in topbar. Lo shortcut "a" è
-             ancora attivo (chiama openApproachModal) per accedere alla scheda
-             descrittiva pro/contro di ciascun approccio. -->
         <button class="sidebar-btn" onclick="openCommandPalette()" title="Command palette · cerca azioni (Ctrl+K)">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
           <span>Comandi</span>
@@ -12035,17 +11993,6 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 </div>
 
 <!-- MODALE APPROCCIO TRADUTTIVO — scelta del flusso di lavoro principale -->
-<div class="modal-backdrop" id="modal-approach">
-  <div class="modal" style="max-width: 1080px;">
-    <h3 class="modal-title">🎯 Scegli il modo di lavorare</h3>
-    <p class="modal-subtitle">Tre strategie diverse di fronte allo stesso brano: ognuna ha pro e contro. Puoi cambiare in qualsiasi momento (tasto <kbd>A</kbd>, o dalla palette dei comandi <kbd>Ctrl+K</kbd>).</p>
-    <div class="approach-grid" id="approach-grid"></div>
-    <div class="modal-actions">
-      <button class="btn btn-ghost" onclick="closeApproachModal()">Annulla / mantieni selezione corrente</button>
-    </div>
-  </div>
-</div>
-
 <div class="modal-backdrop" id="modal-percorsi">
   <div class="modal" style="max-width: 780px;">
     <h3 class="modal-title">Perché stai traducendo questo brano?</h3>
@@ -28324,11 +28271,9 @@ function arrangeChrome() {
    data-level guida la DENSITÀ dell'interfaccia (CSS progressive disclosure);
    il click su un livello applica anche un PRESET di workflow sui setter esistenti.
    I controlli fini restano disponibili sotto "Personalizza". */
-let quickBarCustomOpen = false;
 /* Densità d'interfaccia: sempre AVANZATO (servizio unico). L'asse «Livello» e i
    suoi preset di workflow sono stati rimossi con la distinzione di competenza. */
 function applyLevelToBody() { document.body.dataset.level = 'avanzato'; }
-function toggleQuickBarCustom() { quickBarCustomOpen = !quickBarCustomOpen; renderQuickBar(); }
 
 function renderQuickBar() {
   const bar = document.getElementById('quick-bar');
@@ -28393,12 +28338,6 @@ function quickSwitchMode(value) {
   if (state.mode === value) return;
   switchMode(value);
 }
-
-function quickSwitchApproach(value) {
-  if (getApproach() === value) return;
-  setApproach(value);
-}
-
 
 /* Icone della navigazione (Tabler Icons, outline, MIT) incorporate come SVG
    inline: nessuna dipendenza esterna, colore via currentColor (segue la lingua). */
@@ -29023,7 +28962,6 @@ function renderStep3Html() {
   // Dispatcher in base all'approccio scelto
   const approach = getApproach();
   if (approach === 'integrale') return renderStep3HtmlIntegrale();
-  if (approach === 'frase-per-frase') return renderStep3HtmlFrasePerFrase();
   if (approach === 'scheletro') return renderStep3HtmlScheletro();
   return renderStep3HtmlAttuale();
 }
@@ -29035,7 +28973,6 @@ function renderStep3HtmlAttuale() {
   if (!sentence) return `<div class="entry-empty">Frase non trovata.</div>`;
 
   return sectionHeader('C', `Analisi della frase ${idx + 1}`, 'tre stanze: grammaticale, logica, sintattico-periodale.')
-    + renderApproachBanner()
     + `<div class="flex-between">
         <button class="btn btn-ghost btn-sm" onclick="navigateSentence(-1)" ${idx === 0 ? 'disabled' : ''}>← Frase precedente</button>
         <span class="muted-text"><strong>${unitLabel(idx)}</strong> di ${state.sentences.length}</span>
@@ -29156,7 +29093,6 @@ function renderStep3HtmlScheletro() {
   // fissa (sticky) e — vivendo dentro l'editor — non scavalca il menù di sinistra.
   return `<div class="scheletro-bar">${stepperHtml}</div>`
     + sectionHeader('C', 'Analisi · lo scheletro del periodo', (tappa && tappa.hint) || '')
-    + renderApproachBanner()
     + bodyHtml
     + navButtons;
 }
@@ -31013,8 +30949,7 @@ function renderStep3HtmlIntegrale() {
   const sentences = state.sentences || [];
   if (sentences.length === 0) {
     return sectionHeader('C', 'Analisi integrale della versione', 'vista d\'insieme dell\'intero brano')
-      + renderApproachBanner()
-      + `<div class="entry-empty">Nessuna frase da analizzare. Torna alla scheda <strong>B</strong> per crearne almeno una.</div>`;
+        + `<div class="entry-empty">Nessuna frase da analizzare. Torna alla scheda <strong>B</strong> per crearne almeno una.</div>`;
   }
   const lang = state.meta.lingua;
   const isGreek = lang === 'greco';
@@ -31035,7 +30970,6 @@ function renderStep3HtmlIntegrale() {
   const totalEntries = sentences.reduce((acc, s) => acc + (s.grammar||[]).length + (s.logic||[]).length + (s.periodale||[]).length, 0);
 
   return sectionHeader('C', 'Analisi integrale della versione', `vista d'insieme · ${sentences.length} ${sentences.length === 1 ? 'frase' : 'frasi'} · ${totalWords} parol${totalWords === 1 ? 'a' : 'e'} · ${totalEntries} voci`)
-    + renderApproachBanner()
     + `<div class="integrale-hint">
         💡 Vista d'insieme: la versione è mostrata come un unico blocco di testo direttamente taggabile.
         La <strong>modalità batch</strong> in questa vista agisce sull'intero brano.
@@ -31208,76 +31142,6 @@ function renderIntegraleGroupedEntries(sentences, level, lang) {
 }
 
 /* ── APPROCCIO «frase per frase»: wizard sequenziale ────────────────────── */
-function renderStep3HtmlFrasePerFrase() {
-  const sentences = state.sentences || [];
-  const idx = state.currentSentenceIdx;
-  const sentence = sentences[idx];
-  if (!sentence) return `<div class="entry-empty">Frase non trovata.</div>`;
-
-  // Mappa step wizard → sub-tab della frase
-  const WIZARD_STEPS = [
-    { key: 1, label: 'Grammaticale', tab: 'grammaticale' },
-    { key: 2, label: 'Logica',        tab: 'logica' },
-    { key: 3, label: 'Sintassi',      tab: 'periodale' },
-    { key: 4, label: 'Traduzione',    tab: 'traduzione' },
-  ];
-  const stepNum = state.frasePerFraseStep || 1;
-  const stepDef = WIZARD_STEPS.find(s => s.key === stepNum) || WIZARD_STEPS[0];
-  if (stepDef.tab !== 'traduzione') state.currentAnalysisTab = stepDef.tab;
-
-  // Renderizza il body in base allo step
-  let body = '';
-  if (stepDef.tab === 'grammaticale') body = renderGrammarAnalysis(sentence);
-  else if (stepDef.tab === 'logica') body = renderLogicAnalysis(sentence);
-  else if (stepDef.tab === 'periodale') body = renderPeriodaleAnalysis(sentence);
-  else if (stepDef.tab === 'traduzione') {
-    // Mini-traduzione locale alla frase
-    body = `<div class="fpf-translation-block">
-      <h3 class="subsection-title">Resa italiana della frase ${idx + 1}</h3>
-      <textarea class="field-input" style="width:100%;min-height:120px;font-family:var(--font-body);font-size:15px;"
-        data-rivedere="${sentence.daRivedere ? '1' : ''}" oninput="updateSentenceTranslation('${sentence.id}', this.value)"
-        placeholder="Scrivi qui la traduzione ordinata di questa frase…">${escapeHtml(sentence.translation || '')}</textarea>
-      <p class="muted-text" style="margin-top:10px;font-size:12px;font-style:italic;">
-        Al termine di tutte le frasi, la sezione <strong>D · Traduzione</strong> (Ctrl+5) raccoglierà tutte le rese in una panoramica organica della versione.
-      </p>
-    </div>`;
-  }
-
-  // Indicatori step
-  const stepIndicators = WIZARD_STEPS.map(s => `
-    <button class="fpf-step ${s.key === stepNum ? 'active' : ''} ${s.key < stepNum ? 'done' : ''}"
-      onclick="setFrasePerFraseStep(${s.key})"
-      title="Vai allo step ${s.label}">
-      <span class="fpf-step-num">${s.key}</span>
-      <span class="fpf-step-label">${s.label}</span>
-    </button>`).join('<span class="fpf-step-sep">→</span>');
-
-  const isLastStep = stepNum >= WIZARD_STEPS.length;
-  const isLastSentence = idx >= sentences.length - 1;
-
-  return sectionHeader('C', `Wizard frase ${idx + 1} di ${sentences.length}`, 'completa ogni step in ordine, poi passa alla frase successiva.')
-    + renderApproachBanner()
-    + `<div class="fpf-sentence-banner">
-        <span class="label">${unitLabel(idx)} di ${sentences.length}</span>
-        <div class="text">${escapeHtml(sentence.original)}</div>
-      </div>
-      <div class="fpf-step-bar">${stepIndicators}</div>
-      <div id="analysis-content" class="fpf-step-content">${body}</div>
-      <div class="fpf-actions">
-        <button class="btn btn-ghost btn-sm" onclick="setFrasePerFraseStep(${Math.max(1, stepNum-1)})" ${stepNum === 1 ? 'disabled' : ''}>← Step precedente</button>
-        ${isLastStep
-          ? (isLastSentence
-            ? `<button class="btn btn-primary" onclick="goToStep(5)">✓ Tutte le frasi concluse · vai alla panoramica traduttiva</button>`
-            : `<button class="btn btn-primary" onclick="fpfAdvanceSentence()">Frase successiva →</button>`)
-          : `<button class="btn btn-primary" onclick="setFrasePerFraseStep(${stepNum+1})">Step successivo →</button>`}
-      </div>
-      <div class="flex-between" style="margin-top: 24px;">
-        <button class="btn btn-ghost btn-sm" onclick="goToStep(2)">← Torna alle frasi</button>
-        <button class="btn btn-ghost btn-sm" onclick="navigateSentence(-1)" ${idx === 0 ? 'disabled' : ''}>↶ Frase precedente</button>
-        <button class="btn btn-ghost btn-sm" onclick="navigateSentence(1)" ${idx === sentences.length - 1 ? 'disabled' : ''}>Frase successiva ↷</button>
-        <button class="btn btn-brand-soft btn-sm" onclick="openExportModal()">📤 Esporta lavoro</button>
-      </div>`;
-}
 
 function setFrasePerFraseStep(stepNum) {
   state.frasePerFraseStep = Math.max(1, Math.min(4, stepNum));
@@ -31299,7 +31163,6 @@ function fpfAdvanceSentence() {
    Resta come guscio vuoto per un solo commit: la funzione e le sue nove
    chiamate cadono nel commit di sole delezioni (docs/WHITELIST-DELEZIONI.md),
    dove si cancella e basta. */
-function renderApproachBanner() { return ''; }
 
 /* ════════════════════════════════════════════════════════════════════════════
    LA PILL «PERCORSO» · il controllo in corsa (punto 10)
@@ -32119,7 +31982,7 @@ function renderGuidedWizard() {
   // L'utente può cambiare l'approccio traduttivo (integrale / attuale /
   // frase-per-frase) in qualunque momento dal banner, anche restando nel
   // wizard. La scelta convive con il flusso a tappe.
-  const approachBannerInGuided = renderApproachBanner();
+  const approachBannerInGuided = '';
 
   const header = `
     <div class="wizard-pane">
@@ -33750,46 +33613,6 @@ function renderTranslationHtml() {
   const vista = (state.traduzioneVista === 'bella') ? 'bella' : 'bozza';
   // Per l'approccio "frase per frase" la bozza è una panoramica organica delle
   // rese già fatte nel wizard; la bella copia è la resa unica d'insieme.
-  if (getApproach() === 'frase-per-frase') {
-    const sentences = state.sentences || [];
-    const allTranslated = sentences.every(s => (s.translation || '').trim().length > 0);
-    if (vista === 'bella') {
-      return sectionHeader('E', 'Bella copia', 'resa organica e definitiva dell\'intera versione')
-        + renderApproachBanner()
-        + `<div class="translation-block">
-          <h3 class="subsection-title">Bella copia · resa organica della versione</h3>
-          <p class="muted-text" style="font-size:12px;font-style:italic;">Rilegge tutte le frasi in sequenza e produce una resa unica, armonica, con i giusti collegamenti.</p>
-          <textarea class="field-input" style="width:100%;min-height:240px;font-family:var(--font-body);font-size:15px;line-height:1.6;"
-            oninput="aggiornaBellaCopia(this.value)"
-            placeholder="Componi qui la traduzione d'insieme dell'intera versione…">${escapeHtml(state.meta.traduzioneBella || '')}</textarea>
-        </div>
-        ${renderChiusuraVersione()}
-        <div class="flex-between" style="margin-top: 18px;">
-          <button class="btn btn-ghost btn-sm" onclick="goToTraduzione('bozza')">← Torna alla bozza</button>
-          <button class="btn btn-brand-soft btn-sm" onclick="openExportModal()">📤 Esporta traduzione</button>
-        </div>`;
-    }
-    const sentencesHtml = sentences.map((s, i) => `
-      <div class="fpf-overview-row">
-        <div class="fpf-overview-num">Frase ${i + 1}</div>
-        <div class="fpf-overview-orig ${state.meta.lingua === 'greco' ? 'greek' : ''}">${escapeHtml(s.original)}</div>
-        <div class="fpf-overview-trad ${s.translation ? '' : 'pending'}">${s.translation ? escapeHtml(s.translation) : '(traduzione non ancora compilata)'}</div>
-      </div>`).join('');
-    return sectionHeader('E', 'Bozza · panoramica d\'insieme', 'le rese di lavoro dell\'intera versione, frase per frase')
-      + renderApproachBanner()
-      + `<div class="fpf-overview-status ${allTranslated ? 'done' : 'partial'}">
-          ${allTranslated
-            ? '✓ Tutte le frasi sono state tradotte. Passa alla bella copia per armonizzare la resa d\'insieme.'
-            : 'Alcune frasi non sono ancora state tradotte. Torna alla scheda C · Analisi (Ctrl+3) per completare il wizard.'}
-        </div>
-        <div class="fpf-overview-list">${sentencesHtml}</div>`
-      + renderBranoGlossarySection()
-      + `<div class="flex-between" style="margin-top: 18px;">
-          <button class="btn btn-ghost btn-sm" onclick="goToStep(3)">← Torna all'analisi</button>
-          <button class="btn btn-brand-soft btn-sm" onclick="goToTraduzione('bella')">Vai alla bella copia →</button>
-        </div>`;
-  }
-
   const pct = translationCompletionPct();
   const intro = `
     <div class="translation-intro">
@@ -39803,22 +39626,6 @@ const APPROACH_DESCRIPTORS = {
       'È facile lasciare frasi a metà passando alla successiva',
     ],
   },
-  'frase-per-frase': {
-    icon: '📍',
-    title: 'Frase per frase (wizard)',
-    tagline: 'Procedura sequenziale guidata: per ogni frase percorri in ordine grammar → logica → sintassi → traduzione, poi passi alla successiva. La sezione 5 (Traduzione) diventa panoramica finale d\'insieme.',
-    pros: [
-      'Massimo focus: una frase alla volta, ogni step concluso',
-      'Esperienza didattica ordinata, anti-dispersione',
-      'Ideale per studenti del biennio e per studio metodico',
-      'La traduzione finale d\'insieme è una vista riepilogativa pulita',
-    ],
-    cons: [
-      'Meno libertà di salto in caso di intuizioni a posteriori',
-      'Su brani lunghi può sembrare lento all\'utente esperto',
-      'Difficile correggere all\'indietro senza interrompere il flusso',
-    ],
-  },
   'scheletro': {
     icon: '🦴',
     title: 'Scheletro prima, dettaglio dopo',
@@ -39837,13 +39644,31 @@ const APPROACH_DESCRIPTORS = {
   },
 };
 
-function getApproach() { return state.approach || 'attuale'; }
+/* DERIVA dagli assi. Prima leggeva il campo persistito, e un brano salvato
+   con gli assi gia' scritti conservava un `approach` vecchio: era da li' che
+   il ramo `frase-per-frase` restava raggiungibile. */
+function getApproach() { return deriveApproachFromAxes(); }
 
 /* ── BRIDGE ASSI ↔ approach (riorganizzazione a 4 assi) ───────────────────────
    `approach` è DERIVATO dagli assi e serve solo al dispatcher di rendering:
    metodo='valenziale' → 'scheletro'; altrimenti vista='intero' → 'integrale';
    altrimenti 'attuale'. Il vecchio 'frase-per-frase' NON si genera più: la
    disciplina sequenziale è la Guida (modalità guidata). */
+/* PONTE verso gli assi. La whitelist delle delezioni lo dava per orfano: non lo
+   era — lo chiama ancora il pulsante «apri questa frase da sola» nella fase dei
+   verbi. Resta finche' quel chiamante esiste. */
+function setApproach(newApproach) {
+  if (newApproach === 'scheletro') { state.metodo = 'valenziale'; }
+  else if (newApproach === 'integrale') { state.metodo = 'strati'; state.vista = 'intero'; }
+  else if (newApproach === 'attuale') { state.metodo = 'strati'; state.vista = 'frase'; }
+  else return;
+  state.approachShown = true;
+  _syncApproach();
+  riconciliaPercorso();
+  persistCurrent();
+  renderAll();
+}
+
 function deriveApproachFromAxes() {
   if (state.metodo === 'valenziale') return 'scheletro';
   if (state.vista === 'intero') return 'integrale';
@@ -39875,56 +39700,9 @@ function setVista(value) {
 
 /* Compat: i chiamanti storici (modale, palette) passano un vecchio `approach`;
    lo traduciamo negli ASSI e poi deriviamo. */
-function setApproach(newApproach) {
-  if (newApproach === 'scheletro') { state.metodo = 'valenziale'; }
-  else if (newApproach === 'integrale') { state.metodo = 'strati'; state.vista = 'intero'; }
-  else if (newApproach === 'frase-per-frase') { state.metodo = 'strati'; state.vista = 'frase'; state.mode = 'guided'; }
-  else if (newApproach === 'attuale') { state.metodo = 'strati'; state.vista = 'frase'; }
-  else return;
-  state.approachShown = true;
-  _syncApproach();
-  riconciliaPercorso();
-  persistCurrent();
-  renderAll();
-}
 
-function renderApproachOptions() {
-  const grid = document.getElementById('approach-grid');
-  if (!grid) return;
-  const current = getApproach();
-  const keys = ['integrale', 'attuale', 'frase-per-frase'];
-  grid.innerHTML = keys.map(k => {
-    const d = APPROACH_DESCRIPTORS[k];
-    return `<button class="approach-option ${k === current ? 'current' : ''}" onclick="setApproach('${k}'); closeApproachModal();">
-      <div class="approach-head">
-        <span class="approach-icon">${d.icon}</span>
-        <span class="approach-title">${escapeHtml(d.title)}</span>
-      </div>
-      <p class="approach-tagline">${escapeHtml(d.tagline)}</p>
-      <div class="approach-pros">
-        <strong>✓ Pro</strong>
-        <ul>${d.pros.map(p => `<li>${escapeHtml(p)}</li>`).join('')}</ul>
-      </div>
-      <div class="approach-cons">
-        <strong>✕ Contro</strong>
-        <ul>${d.cons.map(p => `<li>${escapeHtml(p)}</li>`).join('')}</ul>
-      </div>
-    </button>`;
-  }).join('');
-}
 
-function openApproachModal() {
-  renderApproachOptions();
-  const m = document.getElementById('modal-approach');
-  if (m) m.classList.add('open');
-}
 
-function closeApproachModal() {
-  state.approachShown = true;
-  persistCurrent();
-  const m = document.getElementById('modal-approach');
-  if (m) m.classList.remove('open');
-}
 
 /* Apre il modale delle scorciatoie da tastiera */
 function openShortcutsModal() {
@@ -39937,7 +39715,6 @@ function openShortcutsModal() {
    visibile e selezionabile dal segmented control della quick-bar in topbar.
    Conservata come no-op così le chiamate esistenti (DOMContentLoaded) non
    rompono nulla. */
-function maybeShowApproachModalOnStart() { /* no-op · l'approccio è sempre in quick-bar */ }
 
 /* Permette di cambiare modalità a sessione in corso (dalla scheda Brano) */
 function switchMode(mode) {
@@ -39967,11 +39744,6 @@ function goToStep(num) {
   state.currentStep = num;
   persistCurrent();
   renderAll();
-  // Nota: l'auto-open del modale "approccio" alla prima entrata in C non
-  // serve più — l'utente vede sempre l'approccio attivo (e può cambiarlo)
-  // nel segmented control della quick-bar. Per la scheda descrittiva con
-  // pro/contro resta lo shortcut da tastiera "a" e la chiamata diretta
-  // openApproachModal() (non più cablata a nessun pulsante UI).
 }
 
 /* Naviga alla scheda E scegliendo la vista: 'bozza' (officina per frase) o
@@ -43246,7 +43018,6 @@ function buildCommandPaletteIndex() {
   add('Apri progetti…',                 'Strumenti', () => openProjectList(),       '', '📂');
   add('Nuovo progetto',                 'Strumenti', () => newProject(),            '', '📄');
   add('Salva il progetto',              'Strumenti', () => saveProject(),           '', '💾');
-  add('Scheda dei modi di lavorare',    'Strumenti', () => openApproachModal(),     'a', 'ℹ');
   add('Mostra scorciatoie tastiera',    'Strumenti', () => openShortcutsModal(),    '?', '⌨');
   if (ONBOARDING_ENABLED) add('Tour onboarding · rivedi i passi', 'Strumenti', () => startOnboarding(true), '', '🎓');
   add('Toggle dark mode (tema scuro)',  'Strumenti', () => toggleDarkMode(),        '', '🌗');
@@ -43842,7 +43613,7 @@ document.addEventListener('DOMContentLoaded', () => {
       // a → apri selettore approccio
       if (key === 'a') {
         e.preventDefault();
-        try { openApproachModal(); } catch (_) {}
+        /* la scheda dei modi di lavorare e' stata ritirata: la pill governa il percorso */
         return;
       }
     }
@@ -43879,7 +43650,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Se il progetto ha già un testo ma l'utente non ha mai scelto l'approccio,
   // proponiamo la finestra di selezione una sola volta.
-  try { maybeShowApproachModalOnStart(); } catch (_) {}
   // Applica lo stato persistito del dark mode al toggle in sidebar
   try { setDarkMode(getDarkMode()); } catch (_) {}
 

@@ -37,7 +37,6 @@ costruzione, e cancellarlo non cambia il comportamento di nessun brano.
 | markup `#modal-approach` | blocco HTML | idem |
 | voce di palette «Apri scheda Approccio (modal)» e scorciatoia `a` | 2 punti | non avrebbero più bersaglio |
 | `renderApproachBanner()` e le sue 9 chiamate | funzione + call-site | dopo la pill restituiva stringa vuota: un controllo che non disegna niente |
-| `setApproach()` | funzione | tradotto negli assi dai percorsi; nessun chiamante resta |
 | `quickBarCustomOpen` · `toggleQuickBarCustom()` | 2 simboli | il «Personalizza» che promettevano non esiste in `renderQuickBar` |
 | `maybeShowApproachModalOnStart()` | funzione | già ridotta a `no-op` |
 
@@ -50,6 +49,16 @@ costruzione, e cancellarlo non cambia il comportamento di nessun brano.
 | `APPROACH_DESCRIPTORS` per `integrale`/`attuale`/`scheletro` | li usa ancora la scheda descrittiva dell'aiuto e la palette dei metodi |
 | I tre segmentati Metodo · Vista · Guida | la pill è il controllo **primario**, non l'unico: un brano senza percorso deve restare governabile. La regola dell'audit («la pill sostituisce i 3 segmented») si compie quando ogni brano ha un percorso — cioè dopo la fusione del punto 11 |
 | `renderStep3HtmlScheletro` e il ramo `integrale` | vivi e raggiungibili |
+
+## 2.1 · Un errore della whitelist, corretto in corsa
+
+Questo documento dichiarava `setApproach()` orfano: **non lo era**. Lo chiama
+ancora il pulsante «apri questa frase da sola» nella fase dei verbi.
+Cancellarlo avrebbe rotto quel pulsante al primo click. La funzione **resta**;
+cade invece il wrapper `quickSwitchApproach()`, quello sì senza chiamanti.
+
+Vale come promemoria: una whitelist si verifica contando i chiamanti uno per
+uno, non a memoria.
 
 ## 3 · La terna di controllo
 
@@ -70,3 +79,19 @@ L'audit vieta nelle superfici **utente**: *approccio*, *attuale*, *integrale*,
 una scheda del corpus è italiano normale e non si tocca. Restano intatti anche
 i nomi interni — classi CSS `.integrale-*`, chiavi di stato, funzioni: non li
 legge nessuno studente.
+
+### Esito della terna (eseguita nel browser reale)
+
+1. **Brano legacy con `approach: 'frase-per-frase'` persistito e assi già
+   scritti** → `getApproach()` restituisce `attuale`, gli assi restano
+   `strati / frase / free`, la superficie giusta rende. Il ramo è
+   irraggiungibile per costruzione.
+2. **Brano senza assi** → la migrazione li deduce (`strati / frase / guided`) e
+   normalizza `approach`.
+3. **Le tre superfici vive** rendono (scheletro, integrale, per strati) e la
+   pill le governa.
+
+Due scoperte laterali, rimandate al commit successivo perché non sono
+delezioni: la pill si fidava di un flag memorizzato invece di guardare gli assi
+veri, e un brano senza `currentSentenceIdx` mostrava «Frase non trovata» nella
+vista per frase.
