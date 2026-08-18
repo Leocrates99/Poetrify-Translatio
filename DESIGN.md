@@ -52,11 +52,18 @@ letti dal CSS, ritmo osservato su `app.html` renderizzato. Fonte propria; token 
 ## Motion stance
 **Motion-cut** — nessuna libreria, zero `@keyframes`, nessun reveal; un solo token di transizione, `prefers-reduced-motion` azzerante. La quiete è una scelta: il prodotto si legge.
 
-## Notes — debiti rilevati, da non propagare
-Dalla diagnosi del 2026-08-18 — debiti del *prodotto*, non del sistema:
-1. `app.html` **non ha `<h1>`** — il wordmark è uno `<span class="brand-mark">`; zero `h1`/`h2`, due `h3` nel footer.
-2. `app.html` **non ha nav** — si esce solo dal footer.
-3. `--transition:150ms ease` usa **`ease`**, il default del browser: servono easing nominati. Governa tutte e sei le superfici.
-4. **Il ritmo si spegne in basso** — l'hub chiude a ~510px su 776.
+## Notes — stato dei debiti
+**Sanati il 2026-08-18.** `app.html` ha ora `h1` (wordmark) e tre `h2` (titoli delle schede), con i
+margini di default azzerati. Il piede è ancorato in fondo (`min-height:100dvh` + `margin-top:auto`
+e `padding-top:64px`, che regge anche il viewport corto). `tokens.css` ha easing **nominati**
+(`--ease-out`, `--ease-in-out`, `--dur-fast|base|slow`) e `--transition` non usa più `ease` nudo.
 
-Anti-pattern **già assenti**, da non reintrodurre: heading in corsivo · `transition: all` · `hover: scale()` · easing con rimbalzo · colori inline fuori token.
+**Aperto — il debito vero del moto.** Su **188** transizioni dichiarate nel prodotto solo **3**
+passano da `--transition`: 185 lo scavalcano con valori inline. E gli anti-pattern **non sono
+assenti**, contrariamente a quanto diceva la prima stesura di questo file:
+`transition: all` ×**112** (dictionary 23 · translator 77 · corpus 10 · profilo 2) e
+`hover: scale()` ×**2** (translator). Da bonificare, con `translator.html` (2,2 MB) come nodo duro.
+
+Confermato assente: heading in corsivo · easing con rimbalzo.
+**Non è un debito:** l'hub non ha nav perché *è* la nav (macrostruttura Index-First) e tutte e
+cinque le superfici di lavoro tornano ad `app.html`.
