@@ -99,6 +99,11 @@ esiste solo nel monolite; `_greekReduplicate` è vivo nel modulo e morto nel
 monolite. Unificarle è un lavoro a sé, con la sua whitelist: qui è solo
 registrato.
 
+> **Chiuso.** L'unificazione è stata fatta: vedi
+> [`UNIFICAZIONE-MORFOLOGIA.md`](UNIFICAZIONE-MORFOLOGIA.md). Le due copie
+> divergevano su **forme reali** — l'infinito futuro latino e gli apofonici
+> della III greca — e il monolite aveva torto su tutto.
+
 ## 6 · Verifica finale
 
 - **zero funzioni orfane** su 779 dichiarate (era 24);
