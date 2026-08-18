@@ -422,9 +422,16 @@ input, textarea, select { font-family: inherit; color: inherit; }
   height: 100dvh;
   min-height: 0;
   overflow: hidden;
+  /* La colonna DEVE poter scendere sotto il min-content dei figli: senza
+     `minmax(0, …)` una colonna implicita vale `auto` e si allarga fino al
+     contenuto più largo, portando l'intera impalcatura oltre il viewport
+     (e `overflow: hidden` taglia la differenza invece di mostrarla). */
+  grid-template-columns: minmax(0, 1fr);
   /* Evita che il pull-to-refresh chiuda l'app quando si è in cima */
   overscroll-behavior: contain;
 }
+/* Le due bande sono figlie della griglia: senza questo tornano a spingere. */
+.topbar, .bottombar, .main { min-width: 0; }
 
 /* TOP BAR */
 .topbar {
@@ -11549,6 +11556,69 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
     opacity: 0; pointer-events: none; transition: opacity .25s ease;
   }
   body.drawer-open .drawer-backdrop { opacity: 1; pointer-events: auto; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   COLLAUDO MOBILE (punto 8) · esiti misurati sul dito, non stimati
+   ──────────────────────────────────────────────────────────────────────────
+   Misurato su un brano reale di 12 frasi e 45 sintagmi, viewport 375×812:
+   ogni comando stava fra 27 e 36px d'altezza. Il minimo WCAG 2.5.8 (24px) era
+   rispettato ovunque, ma NESSUN comando arrivava ai 44px che il dito chiede
+   quando si preme alla cieca (Apple HIG · WCAG 2.5.5).
+   Si distingue invece di livellare: 44px ai comandi di NAVIGAZIONE — quelli
+   che si premono cento volte guardando altrove — e 32px a quelli densi, dove
+   portare tutto a 44 gonfierebbe la pagina fino a nascondere il lavoro.
+   Le soglie valgono sul PUNTATORE, non sulla larghezza: un tablet grande ha
+   lo stesso dito di un telefono.
+   ══════════════════════════════════════════════════════════════════════════ */
+@media (pointer: coarse) {
+  /* Navigazione: il nastro delle tappe, lo stepper dello scheletro e i due
+     tasti di avanzamento. Sono la spina dorsale del gesto. */
+  .nastro-nodo,
+  .scheletro-step,
+  .scheletro-nav .btn { min-height: 44px; }
+  .scheletro-step { padding-top: 6px; padding-bottom: 6px; }
+
+  /* Comandi densi: si premono guardando, e stanno dentro elenchi lunghi. */
+  .btn-sm,
+  .entry-toggle-btn,
+  .schel-order-btn,
+  .batch-toggle-btn,
+  .integrale-grouped-tab,
+  .ordo-chip-delete { min-height: 32px; }
+  .ordo-chip-delete { min-width: 32px; }
+  /* Il ✕ del blocco ordo passa da 18 a 32px: senza riservargli lo spazio
+     finisce SOPRA l'etichetta della fonte, e il tocco va all'etichetta invece
+     che al pulsante — verificato con elementFromPoint, non a occhio. */
+  .ordo-chip-header { padding-right: 36px; }
+
+  /* I campi dell'ordo nascono a una riga: sul telefono una riga non si becca
+     e non si scrive. 114 su 126 stavano sotto i 44px. */
+  .ordo-chip-phrase-input,
+  .ordo-chip-italian-input { min-height: 44px; }
+
+  /* Nessuna scritta sotto gli 11px: sotto quella soglia le targhette non si
+     leggono, si indovinano. (`ordo-chip-source` stava a 9px, `tree-card-ruolo`
+     pure.) Il prefisso `.app` non è ornamentale: nel foglio esistono 154
+     dichiarazioni sotto gli 11px, e alcune di queste classi sono già fissate da
+     selettori discendenti — `.schel-trad-brutta .field-block-label`,
+     `.unified-fields .field-block-label`. A parità di specificità (0,2,0)
+     vince chi viene dopo, e questo blocco chiude il foglio.
+     Si alza il pavimento SOLO dove la misura ha visto il problema: le altre
+     dichiarazioni fitte restano finché un collaudo non le incrimina. */
+  .app .nastro-cerchio,
+  .app .schel-vq-title, .app .schel-vq-open,
+  .app .prop-sigla-badge, .app .prop-sigla-dot, .app .prop-construct-tag,
+  .app .entry-summary-meta, .app .entry-toggle-btn, .app .entry-class-badge,
+  .app .entry-summary-ellipsis,
+  .app .tree-card-ruolo, .app .tree-card-tipo, .app .tree-card-modo,
+  .app .ordo-chip-num, .app .ordo-chip-source, .app .ordo-chip-arrow,
+  .app .ordo-chip-header, .app .ordo-num,
+  .app .scheletro-verb-tag, .app .scheletro-role-tag,
+  .app .batch-toggle-btn, .app .integrale-rect-count, .app .token-pos-marker,
+  .app .ts-num,
+  .app .archive-stat-label, .app .sigla, .app .status-badge, .app .current-tag,
+  .app .field-block-label { font-size: 11px; }
 }
 
 @media print {
