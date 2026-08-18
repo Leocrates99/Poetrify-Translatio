@@ -12915,7 +12915,10 @@ const PERCORSI = {
     disponibile: true, ingresso: 'avvio',
   },
   'versione-autore': {
-    nome: 'Versione d\u2019autore', icona: '✒',
+    /* Si chiamava «Versione d'autore», ma quelle parole in questa app vogliono
+       gia' dire «un brano di un autore antico» — nella scelta dell'origine e
+       nella Panoramica. Cede il nome piu' recente, cioe' il mio. */
+    nome: 'I bivi del testo', icona: '✒',
     scopo: 'Il metodo per intero, e in più i bivi che il testo apre: participi, agganci, posizioni.',
     tempo: '≈7 min a frase', minPerFrase: 7,
     playlist: ['frasi', 'verbi', 'proposizioni', 'participi', 'soggetto', 'oggetto',
@@ -13109,6 +13112,18 @@ function _registraCambio(p, esito) {
   const st = Array.isArray(p.meta.storicoPercorsi) ? p.meta.storicoPercorsi : [];
   st.push({ da: esito.vecchio, a: esito.nuovo, quando: new Date().toISOString() });
   p.meta.storicoPercorsi = st.slice(-12);      // basta la storia recente
+}
+
+/* Chi arriva col testo già pronto (dal Corpus) non ha attraversato l'avvio: la
+   scelta del percorso gli va chiesta al primo momento utile, una volta sola. */
+let _chiediPercorsoSeManca = false;
+
+function chiediPercorsoSeManca() {
+  if (!_chiediPercorsoSeManca) return;
+  _chiediPercorsoSeManca = false;
+  if (state.percorso && schedaPercorso(state.percorso)) return;
+  if (!(state.meta && state.meta.testoOriginale)) return;
+  try { apriPannelloPercorsi(); } catch (e) {}
 }
 
 /** Il gesto vero. `opz.confermato` salta la domanda; `opz.muto` salta il toast. */
@@ -27293,6 +27308,8 @@ function renderEditor() {
      questo, modificando un sintagma da dentro il pannello il dato cambiava e
      il pannello restava fermo sull'HTML di prima. */
   if (typeof aggiornaRientroLogico === 'function') aggiornaRientroLogico();
+  /* E qui si chiede il percorso a chi e' entrato col testo gia' fatto. */
+  if (typeof chiediPercorsoSeManca === 'function') chiediPercorsoSeManca();
 }
 
 function sectionHeader(letter, title, subtitle) {
@@ -29475,7 +29492,14 @@ function apriPannelloPercorsi() {
   const box = document.getElementById('pannello-percorsi-corpo');
   const modale = document.getElementById('modal-percorsi');
   if (!box || !modale) return;
-  const chiavi = percorsiDaAvvio().slice();
+  /* Tre card, non cinque: per chi arriva dal Corpus questo e' il PRIMO incontro
+     coi percorsi, e la regola contro il choice overload vale qui come all'avvio.
+     Il percorso in corso c'e' sempre, anche se non e' fra i primari. */
+  const tutti = percorsiDaAvvio().slice();
+  const primari = tutti.filter(function (k) { return PERCORSI[k].primario; });
+  const altri = tutti.filter(function (k) { return !PERCORSI[k].primario; });
+  const apri = _altriPercorsiInPannello || altri.indexOf(state.percorso) >= 0;
+  const chiavi = (apri ? tutti : primari).slice();
   if (state.percorso && chiavi.indexOf(state.percorso) < 0) chiavi.unshift(state.percorso);
   const n = (state.sentences || []).length;
   box.innerHTML = chiavi.map(function (k) {
@@ -29501,7 +29525,18 @@ function apriPannelloPercorsi() {
       + '</span>'
       + '</button>';
   }).join('');
+  if (!apri && altri.length) {
+    box.innerHTML += '<button class="btn btn-ghost btn-sm avvio-altri"'
+      + ' onclick="mostraAltriPercorsiInPannello()">Altri percorsi (' + altri.length + ') \u2014 '
+      + escapeHtml(altri.map(function (k) { return PERCORSI[k].nome; }).join(' \u00b7 ')) + '</button>';
+  }
   modale.classList.add('open');
+}
+
+let _altriPercorsiInPannello = false;
+function mostraAltriPercorsiInPannello() {
+  _altriPercorsiInPannello = true;
+  apriPannelloPercorsi();
 }
 
 function chiudiPannelloPercorsi() {
@@ -29877,7 +29912,7 @@ function renderPanoramicaHtml() {
   }).join('');
 
   const resumeBody = recent.length === 0
-    ? `<div class="home-empty">Ancora nessun brano ${branchName}.<br>Comincia da una <strong>versione d'autore</strong>: nel Corpus ce ne sono già di pronte.</div>`
+    ? `<div class="home-empty">Ancora nessun brano ${branchName}.<br>Prendine uno dal <strong>Corpus</strong>, già pulito e compilato, oppure incolla la versione del <strong>manuale</strong>: in entrambi i casi scegli tu <em>perché</em> la traduci.</div>`
     : `<div class="resume-list">${resumeCards}</div>`;
 
   return sectionHeader('Π', `Translator · ramo ${branchName}`, 'Comincia un brano nuovo, oppure riprendi quello che hai lasciato a metà.')
@@ -37710,6 +37745,11 @@ function importPassoDalCorpus(lang, testo, p) {
      progetto appena creato, prima del salvataggio. */
   if (_percorsoDaUrl) applicaPercorso(_percorsoDaUrl);
   state.currentStep = 2;           // dritti alla scomposizione: il testo c'è già
+  /* Se il docente non ha prescritto il percorso nel link, lo si chiede QUI:
+     prima questa era l'unica via che non incontrava mai la scelta, e chi
+     arrivava dal Corpus lavorava senza percorso — quindi senza tappe nel
+     nastro e col metro storico. */
+  _chiediPercorsoSeManca = !_percorsoDaUrl;
   persistCurrent();
   renderAll();
 
