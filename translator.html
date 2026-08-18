@@ -4169,6 +4169,49 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: var(--font-c
 .resume-card-percorso { font-size: .95em; opacity: .8; }
 /* Badge del percorso: dice con quale metodo — e quindi con quale metro — il
    brano è stato lavorato. Neutro: il colore in Poetrify è la lingua. */
+/* ── Lo stato terzo nelle superfici di lavoro ──────────────────────────── */
+.revisione-banner {
+  display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px;
+  margin: 0 0 14px; padding: 10px 14px;
+  background: var(--parchment);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-md, 8px);
+  font-family: var(--font-ui); font-size: 12.5px; line-height: 1.5;
+  color: var(--ink-soft);
+}
+.revisione-testo { flex: 1 1 320px; }
+.revisione-azioni { display: flex; gap: 6px; flex-wrap: wrap; }
+.revisione-pallino {
+  width: 9px; height: 9px; border-radius: 50%;
+  box-shadow: inset 0 0 0 2px var(--sepia); flex-shrink: 0;
+}
+/* Un campo che aspetta una rilettura si riconosce dal tratteggio: il testo c'è,
+   la conferma no. Nessuna barra colorata: il colore in Poetrify è la lingua. */
+textarea[data-rivedere="1"] { border-style: dashed; border-color: var(--sepia); }
+
+/* ── La domanda del cambio di percorso ─────────────────────────────────── */
+.cambio-da-a { font-family: var(--font-ui); font-size: 15px; margin: 0 0 4px; }
+.cambio-freccia { color: var(--sepia); margin: 0 6px; }
+.cambio-scopo { font-family: var(--font-ui); font-size: 13px; color: var(--sepia); margin: 0 0 14px; }
+.cambio-riga { font-family: var(--font-ui); font-size: 13px; margin: 0 0 6px; }
+.cambio-k {
+  display: inline-block; min-width: 108px; padding-right: 8px;
+  color: var(--sepia); font-size: 11px; letter-spacing: .04em; text-transform: uppercase;
+}
+.cambio-salvo {
+  font-family: var(--font-ui); font-size: 13px; line-height: 1.5;
+  margin: 14px 0 0; padding: 10px 12px;
+  background: var(--parchment); border-radius: var(--radius-sm);
+}
+.cambio-rivedere {
+  font-family: var(--font-ui); font-size: 13px; line-height: 1.5;
+  margin: 10px 0 0; padding: 10px 12px;
+  background: var(--parchment); border: 1px solid var(--rule); border-radius: var(--radius-sm);
+}
+.cambio-pallino {
+  display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+  box-shadow: inset 0 0 0 2px var(--sepia); margin-right: 8px; vertical-align: baseline;
+}
 .percorso-badge {
   display: inline-flex;
   align-items: center;
@@ -4236,6 +4279,13 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: var(--font-c
 .phase-chip[data-state="progress"] .phase-dot { background: var(--warning); }
 .phase-chip[data-state="done"]     { color: var(--success); }
 .phase-chip[data-state="progress"] { color: var(--warning); }
+/* Stato terzo: la tappa è piena ma precede il metodo attuale — va riletta.
+   Anello vuoto, non pieno: il lavoro c'è, la validazione no. */
+.phase-chip[data-state="review"] .phase-dot {
+  background: transparent;
+  box-shadow: inset 0 0 0 2px var(--sepia);
+}
+.phase-chip[data-state="review"] { color: var(--sepia); font-style: italic; }
 
 /* ── PANORAMICA (Π) · ripresa rapida ─────────────────────────────────────── */
 /* ── NASTRO DELLE TAPPE · orientamento permanente dentro il banco ───────────
@@ -11869,6 +11919,17 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   </div>
 </div>
 
+<div class="modal-backdrop" id="modal-cambio-percorso">
+  <div class="modal" style="max-width: 560px;">
+    <h3 class="modal-title">Cambi strada</h3>
+    <div id="cambio-percorso-corpo"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="chiudiCambioPercorso()">Resto dove sono</button>
+      <button class="btn btn-primary" onclick="confermaCambioPercorso()">Cambia percorso</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-backdrop" id="modal-shortcuts">
   <div class="modal" style="max-width: 760px;">
     <h3 class="modal-title">⌨ Scorciatoie da tastiera · solo PC</h3>
@@ -12590,6 +12651,237 @@ function applicaPercorso(chiave, opz) {
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
+   CAMBIO DI PERCORSO · «cambi strada: il lavoro fatto resta»
+   ────────────────────────────────────────────────────────────────────────────
+   Cambiare percorso non è cambiare schermata: cambia il METRO, cioè che cosa
+   si è promesso di consegnare. Tre conseguenze, tutte dette prima e nessuna
+   distruttiva:
+   · verso un percorso che chiede PIÙ analisi, le tappe a valle già fatte
+     passano allo stato terzo «da rivedere» — non si cancellano, si segnalano;
+   · verso un percorso che chiede MENO, nulla si perde e nulla si invalida: i
+     moduli che il nuovo metro non pesa restano scritti, semplicemente non
+     contano più (il freno all'abuso del percorso corto è la visibilità, non il
+     divieto: il cambio resta scritto nel brano e stampato negli export);
+   · una versione CONSEGNATA non si tocca: il suo metro è storia.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/** Che cosa comporterebbe il passaggio. Non muove niente: serve a dirlo prima. */
+function esitoCambioPercorso(p, nuovo) {
+  const scN = schedaPercorso(nuovo);
+  if (!scN) return null;
+  const vecchio = (p && p.percorso) || '';
+  const metroV = metroDi(p);
+  const metroN = (Array.isArray(scN.metro) && scN.metro.length) ? scN.metro : METRO_STORICO;
+  const aggiunti = metroN.filter(k => metroV.indexOf(k) < 0);
+  const tolti    = metroV.filter(k => metroN.indexOf(k) < 0);
+  /* Solo un arricchimento a MONTE mette in discussione ciò che sta a VALLE. */
+  const monteAggiunto = aggiunti.filter(k => {
+    const m = MODULI_METRO[k] || {};
+    if (m.fase !== 'analisi' && m.fase !== 'scomp') return false;
+    /* Se il modulo «nuovo» è già compiuto, a monte non cambierà nulla: nessun
+       motivo di rimandare a valle. Si segnala il lavoro, non la nomenclatura. */
+    return (m.quota(p) || 0) < 1;
+  });
+  const consegnata = !!(p && p.meta && p.meta.completatoAt);
+  const daRivedere = (monteAggiunto.length && !consegnata)
+    ? metroN.filter(k => (MODULI_METRO[k] || {}).fase === 'trad'
+                      && ((MODULI_METRO[k] || {}).quota(p) || 0) > 0)
+    : [];
+  return {
+    vecchio: vecchio, nuovo: nuovo, scV: schedaPercorso(vecchio), scN: scN,
+    aggiunti: aggiunti, tolti: tolti, monteAggiunto: monteAggiunto,
+    daRivedere: daRivedere, consegnata: consegnata,
+  };
+}
+
+/** I nomi leggibili di un elenco di moduli. */
+function etichetteModuli(chiavi) {
+  return (chiavi || []).map(k => (MODULI_METRO[k] || {}).label || k);
+}
+
+/** Marca le tappe a valle e le singole frasi già tradotte. Non tocca i testi. */
+function _marcaDaRivedere(p, esito) {
+  if (!esito || !esito.daRivedere.length) return;
+  p.meta.daRivedere = {
+    moduli: esito.daRivedere.slice(),
+    da: esito.vecchio, a: esito.nuovo,
+    perche: esito.monteAggiunto.slice(),
+    quando: new Date().toISOString(),
+  };
+  /* La brutta è per frase: si segnano solo le frasi che una brutta ce l'hanno,
+     così la rilettura è puntuale e si spegne una frase alla volta. */
+  if (esito.daRivedere.indexOf('brutta') >= 0) {
+    (p.sentences || []).forEach(f => {
+      if (f && MODULI_METRO.brutta.frase(f)) f.daRivedere = true;
+    });
+  }
+}
+
+/** Traccia dei cambi: l'export la stampa. La visibilità è il solo freno. */
+function _registraCambio(p, esito) {
+  if (!p.meta) return;
+  const st = Array.isArray(p.meta.storicoPercorsi) ? p.meta.storicoPercorsi : [];
+  st.push({ da: esito.vecchio, a: esito.nuovo, quando: new Date().toISOString() });
+  p.meta.storicoPercorsi = st.slice(-12);      // basta la storia recente
+}
+
+/** Il gesto vero. `opz.confermato` salta la domanda; `opz.muto` salta il toast. */
+function cambiaPercorso(nuovo, opz) {
+  opz = opz || {};
+  const sc = schedaPercorso(nuovo);
+  if (!sc) return false;
+  if (state.percorso === nuovo && !state.percorsoAdattato) return false;
+  const esito = esitoCambioPercorso(state, nuovo);
+  if (!esito) return false;
+  /* Si domanda soltanto quando c'è davvero qualcosa in gioco. */
+  if (esito.daRivedere.length && !opz.confermato) {
+    apriCambioPercorso(nuovo);
+    return false;
+  }
+  if (!applicaPercorso(nuovo, { forza: !!opz.forza })) return false;
+  state.percorsoAdattato = false;
+  _marcaDaRivedere(state, esito);
+  _registraCambio(state, esito);
+  persistCurrent();
+  if (typeof renderAll === 'function') renderAll();
+  if (!opz.muto && typeof showToast === 'function') {
+    showToast(esito.daRivedere.length
+      ? sc.icona + ' ' + sc.nome + ' · il lavoro resta, ' + etichetteModuli(esito.daRivedere).join(' e ') + ' da rileggere'
+      : sc.icona + ' ' + sc.nome + ' · il lavoro fatto resta');
+  }
+  return true;
+}
+
+/* ── Spegnere lo stato terzo ───────────────────────────────────────────────
+   Due vie, entrambe legittime: riscrivere il pezzo, o rileggerlo e confermarlo
+   com'è. La seconda non è una scorciatoia — una rilettura che conferma il testo
+   è a tutti gli effetti la rilettura chiesta. */
+function segnaRivisto(modulo, sIdx) {
+  const r = state.meta && state.meta.daRivedere;
+  if (!r || !Array.isArray(r.moduli) || r.moduli.indexOf(modulo) < 0) return false;
+  if (modulo === 'brutta' && typeof sIdx === 'number') {
+    const f = (state.sentences || [])[sIdx];
+    if (!f || !f.daRivedere) return false;
+    delete f.daRivedere;
+    /* Il modulo cade solo quando NESSUNA frase resta da rileggere. */
+    if ((state.sentences || []).some(x => x && x.daRivedere)) return false;
+  } else if (modulo === 'brutta') {
+    (state.sentences || []).forEach(f => { if (f) delete f.daRivedere; });
+  }
+  r.moduli = r.moduli.filter(k => k !== modulo);
+  if (!r.moduli.length) delete state.meta.daRivedere;
+  return true;
+}
+
+/** Riscrivere la brutta di una frase È rileggerla: il segno cade da sé. */
+function rivistaBruttaDi(sentence) {
+  if (!sentence || !sentence.daRivedere) return;
+  segnaRivisto('brutta', (state.sentences || []).indexOf(sentence));
+}
+
+/** Unico ingresso di scrittura della bella copia, così il segno cade sempre. */
+function aggiornaBellaCopia(testo) {
+  state.meta.traduzioneBella = testo;
+  segnaRivisto('bella');
+  persistCurrent();
+}
+
+/** Il pulsante «l'ho riletto» delle superfici di lavoro. */
+function confermaRevisione(modulo) {
+  const fatto = segnaRivisto(modulo);
+  persistCurrent();
+  if (typeof renderAll === 'function') renderAll();
+  if (fatto && typeof showToast === 'function') {
+    showToast('✓ ' + (etichetteModuli([modulo])[0]) + ': riletta col metodo nuovo');
+  }
+}
+
+/* ── Riconciliazione con i tre assi ────────────────────────────────────────
+   I segmenti Metodo/Vista/Guida restano cambiabili a mano (spariranno con la
+   pill del punto 10). Finché ci sono, la targhetta del percorso può mentire:
+   dichiarare «Versione per casa» mentre si lavora per strati. Qui si chiude la
+   bugia — o gli assi descrivono un altro percorso disponibile, e quello si
+   adotta col rito completo, o si dichiara l'adattamento. */
+function assiCombaciano(sc) {
+  if (!sc || !sc.preset) return false;
+  const pr = sc.preset;
+  const mode = state.mode || 'free';
+  if (pr.metodo && (state.metodo || 'strati') !== pr.metodo) return false;
+  if (pr.mode && mode !== pr.mode) return false;
+  /* In guidata la vista non si applica: il wizard è sequenziale per frase. */
+  if (pr.vista && mode !== 'guided' && (state.vista || 'frase') !== pr.vista) return false;
+  return true;
+}
+
+function riconciliaPercorso() {
+  const sc = schedaPercorso(state.percorso);
+  if (!sc) return;
+  if (assiCombaciano(sc)) { state.percorsoAdattato = false; return; }
+  const gemello = percorsiDisponibili().filter(k => k !== state.percorso)
+    .find(k => assiCombaciano(schedaPercorso(k)));
+  /* Se il gemello richiede la domanda, `cambiaPercorso` apre il modale e torna
+     false: fino alla risposta la verità è che gli assi non combaciano più. */
+  if (gemello && cambiaPercorso(gemello)) return;
+  state.percorsoAdattato = true;
+}
+
+/* ── La domanda del cambio ─────────────────────────────────────────────────
+   Compare SOLO quando il passaggio mette qualcosa in discussione. Dice tre
+   cose in quest'ordine: che cosa il nuovo percorso chiede in più, che il
+   lavoro fatto resta, quali tappe andranno rilette. Nessun allarme: è un
+   cambio legittimo, va soltanto capito. */
+let _cambioInSospeso = '';
+
+function apriCambioPercorso(nuovo) {
+  const esito = esitoCambioPercorso(state, nuovo);
+  const box = document.getElementById('cambio-percorso-corpo');
+  const modale = document.getElementById('modal-cambio-percorso');
+  if (!esito || !box || !modale) return;
+  _cambioInSospeso = nuovo;
+  const nomeV = esito.scV ? (esito.scV.icona + ' ' + esito.scV.nome) : 'nessun percorso dichiarato';
+  const nomeN = esito.scN.icona + ' ' + esito.scN.nome;
+  const riga = (etichetta, valori) => valori.length
+    ? '<p class="cambio-riga"><span class="cambio-k">' + etichetta + '</span> '
+      + escapeHtml(valori.join(' · ')) + '</p>'
+    : '';
+  box.innerHTML =
+    '<p class="cambio-da-a">' + escapeHtml(nomeV) + ' <span class="cambio-freccia">→</span> <strong>'
+      + escapeHtml(nomeN) + '</strong></p>'
+    + '<p class="cambio-scopo">' + escapeHtml(esito.scN.scopo) + '</p>'
+    + riga('Chiede in più', etichetteModuli(esito.aggiunti))
+    + riga('Non conta più', etichetteModuli(esito.tolti))
+    + '<p class="cambio-salvo"><strong>Il lavoro fatto resta.</strong> Niente viene cancellato: '
+      + 'analisi, brutta e bella copia restano dove sono.</p>'
+    + (esito.daRivedere.length
+      ? '<p class="cambio-rivedere"><span class="cambio-pallino"></span>'
+        + 'Queste tappe passano a <strong>«da rivedere»</strong>: '
+        + escapeHtml(etichetteModuli(esito.daRivedere).join(' · '))
+        + ' — sono precedenti a «' + escapeHtml(etichetteModuli(esito.monteAggiunto).join('» e «'))
+        + '», quindi vanno rilette. Contano a metà finché non le confermi.</p>'
+      : '');
+  modale.classList.add('open');
+}
+
+function chiudiCambioPercorso() {
+  _cambioInSospeso = '';
+  const m = document.getElementById('modal-cambio-percorso');
+  if (m) m.classList.remove('open');
+}
+
+function confermaCambioPercorso() {
+  const nuovo = _cambioInSospeso;
+  chiudiCambioPercorso();
+  if (nuovo) cambiaPercorso(nuovo, { confermato: true });
+}
+
+/** Come si chiama il percorso in corso, adattamento compreso. */
+function etichettaPercorso(p) {
+  const sc = schedaPercorso(p && p.percorso);
+  if (!sc) return '';
+  return sc.nome + ((p && p.percorsoAdattato) ? ' · adattato' : '');
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
    NAVIGAZIONE · DUE ASSI DISTINTI
    ────────────────────────────────────────────────────────────────────────────
    `currentStep` è VOLATILE: dice che cosa si sta guardando adesso, comprese le
@@ -13223,7 +13515,35 @@ function creaZip(voci) {
    (elementi <text>). Stesso modello, due uscite: nessuna delle due passa più
    da una fotografia.
    ════════════════════════════════════════════════════════════════════════════ */
-function datiDi(p) { return { meta: p.meta || {}, sentences: p.sentences || [] }; }
+function datiDi(p) {
+  /* `percorso` viaggia col dato: senza, projectCompletion/projectStatus
+     ricadrebbero sul metro storico e l'export mentirebbe sulla percentuale. */
+  return { meta: p.meta || {}, sentences: p.sentences || [],
+           percorso: p.percorso, percorsoAdattato: p.percorsoAdattato };
+}
+
+/* La riga che rende conto del percorso negli export. È il freno previsto
+   all'abuso del percorso corto: non un divieto, la visibilità. Dice il
+   percorso, la copertura reale dei moduli e i cambi di strada. */
+function rigaPercorso(d) {
+  const sc = schedaPercorso(d && d.percorso);
+  if (!sc) return '';
+  const cop = dettaglioMetro(d).map(x =>
+    x.label + (x.fatto ? '' : x.daRivedere ? ' (da rivedere)' : x.quota > 0 ? ' (parziale)' : ' (assente)')
+  ).join(' · ');
+  let out = sc.icona + ' ' + etichettaPercorso(d) + ' — copertura: ' + cop;
+  const st = (d.meta && d.meta.storicoPercorsi) || [];
+  if (st.length) {
+    out += ' · cambi di percorso: ' + st.map(c => {
+      const da = (schedaPercorso(c.da) || {}).nome || 'nessuno';
+      const a  = (schedaPercorso(c.a) || {}).nome || c.a;
+      let q = '';
+      try { q = new Date(c.quando).toLocaleDateString('it-IT'); } catch (e) {}
+      return da + ' \u2192 ' + a + (q ? ' (' + q + ')' : '');
+    }).join(', ');
+  }
+  return out;
+}
 
 /** Riduce un progetto a una sequenza di blocchi tipizzati. */
 function blocchiDi(p) {
@@ -13235,6 +13555,8 @@ function blocchiDi(p) {
   if (sotto) b.push({ t: 'sotto', x: sotto });
   b.push({ t: 'meta', x: `${statusLabel(projectStatus(d))} · ${projectCompletion(d)}% · `
     + `${d.sentences.length} frasi · ${projectWordCount(d)} parole` });
+  const rpB = rigaPercorso(d);
+  if (rpB) b.push({ t: 'meta', x: 'Percorso: ' + rpB });
   if (d.meta.completatoAt) {
     b.push({ t: 'meta', x: 'Consegnata il ' + new Date(d.meta.completatoAt).toLocaleDateString('it-IT') });
   }
@@ -28130,14 +28452,18 @@ function renderEditor() {
      viene mai salvata. Ha la precedenza su tutto il resto. */
   if (avvio) { c.innerHTML = renderAvvioHtml(); return; }
   const nastro = renderNastroTappe();
-  if (state.currentStep === 1) c.innerHTML = nastro + renderStep1Html();
+  /* Lo stato terzo si annuncia su OGNI superficie di lavoro, guidata compresa:
+     qui è l'unico punto che le vede tutte (il nastro tace in guidata, il banner
+     di approccio manca nella traduzione a scheletro). */
+  const avviso = isWorkStep(state.currentStep) ? renderRevisioneBanner() : '';
+  if (state.currentStep === 1) c.innerHTML = nastro + avviso + renderStep1Html();
   else if (state.currentStep === 2) {
-    if (state.mode === 'guided') c.innerHTML = renderGuidedWizard();
-    else c.innerHTML = nastro + renderStep2Html();
+    if (state.mode === 'guided') c.innerHTML = avviso + renderGuidedWizard();
+    else c.innerHTML = nastro + avviso + renderStep2Html();
   }
-  else if (state.currentStep === 3) c.innerHTML = nastro + renderStep3Html();
+  else if (state.currentStep === 3) c.innerHTML = nastro + avviso + renderStep3Html();
   else if (state.currentStep === 4) c.innerHTML = renderArchiveHtml();
-  else if (state.currentStep === 5) c.innerHTML = nastro + renderTranslationHtml();
+  else if (state.currentStep === 5) c.innerHTML = nastro + avviso + renderTranslationHtml();
   else if (state.currentStep === 6) c.innerHTML = renderDictionaryHtml();
   else if (state.currentStep === 7) c.innerHTML = renderPanoramicaHtml();
   if (state.currentStep === 1) {
@@ -28643,7 +28969,7 @@ function renderScheletroTraduzione(sentences, lang) {
       ${proposed}
       <div class="schel-trad-brutta">
         <label class="field-block-label">Brutta copia · resa letterale della frase</label>
-        <textarea class="translation-textarea brutta" placeholder="Resa di lavoro, vicina all'originale — concatena le rese dei sintagmi nell'ordine SVO…" oninput="updateSentenceTranslation('${sentence.id}', this.value)">${escapeHtml(sentence.translation || '')}</textarea>
+        <textarea class="translation-textarea brutta" placeholder="Resa di lavoro, vicina all'originale — concatena le rese dei sintagmi nell'ordine SVO…" data-rivedere="${sentence.daRivedere ? '1' : ''}" oninput="updateSentenceTranslation('${sentence.id}', this.value)">${escapeHtml(sentence.translation || '')}</textarea>
       </div>
     </div>`;
   }).join('');
@@ -30467,7 +30793,7 @@ function renderStep3HtmlFrasePerFrase() {
     body = `<div class="fpf-translation-block">
       <h3 class="subsection-title">Resa italiana della frase ${idx + 1}</h3>
       <textarea class="field-input" style="width:100%;min-height:120px;font-family:var(--font-body);font-size:15px;"
-        oninput="updateSentenceTranslation('${sentence.id}', this.value)"
+        data-rivedere="${sentence.daRivedere ? '1' : ''}" oninput="updateSentenceTranslation('${sentence.id}', this.value)"
         placeholder="Scrivi qui la traduzione ordinata di questa frase…">${escapeHtml(sentence.translation || '')}</textarea>
       <p class="muted-text" style="margin-top:10px;font-size:12px;font-style:italic;">
         Al termine di tutte le frasi, la sezione <strong>D · Traduzione</strong> (Ctrl+5) raccoglierà tutte le rese in una panoramica organica della versione.
@@ -30537,6 +30863,55 @@ function renderApproachBanner() {
   </div>`;
 }
 
+/* Lo stato terzo dove si lavora. Vive dentro il banner di contesto perché
+   quello è condiviso da tutte le superfici: una sola sede, nessuna scheda
+   dimenticata. Non compare mai a vuoto — solo se c'è qualcosa da dire. */
+function renderRevisioneBanner() {
+  let out = '';
+  const mods = moduliDaRivedere(state);
+  if (mods.length) {
+    const r = (state.meta && state.meta.daRivedere) || {};
+    const perche = etichetteModuli(r.perche || []).join('» e «');
+    const nFrasi = (state.sentences || []).filter(f => f && f.daRivedere).length;
+    const nomi = mods.map(k => {
+      const lbl = etichetteModuli([k])[0];
+      return (k === 'brutta' && nFrasi) ? `${lbl} (${nFrasi} fras${nFrasi === 1 ? 'e' : 'i'})` : lbl;
+    });
+    const bottoni = mods.map(k =>
+      `<button class="btn btn-ghost btn-sm" onclick="confermaRevisione('${k}')">${escapeHtml(etichetteModuli([k])[0])}: l'ho riletta</button>`
+    ).join('');
+    out += `<div class="revisione-banner">
+      <span class="revisione-pallino" aria-hidden="true"></span>
+      <span class="revisione-testo">Hai cambiato percorso${perche ? `: ora conta anche «<strong>${escapeHtml(perche)}</strong>»` : ''}.
+        ${escapeHtml(nomi.join(' e '))} ${mods.length === 1 ? 'è stata scritta prima' : 'sono state scritte prima'}:
+        ${mods.length === 1 ? 'resta dov\'è' : 'restano dove sono'}, ma ${mods.length === 1 ? 'va riletta' : 'vanno rilette'}
+        e ${mods.length === 1 ? 'conta' : 'contano'} a metà finché non ${mods.length === 1 ? 'la confermi' : 'le confermi'}.</span>
+      <span class="revisione-azioni">${bottoni}</span>
+    </div>`;
+  }
+  if (state.percorsoAdattato && schedaPercorso(state.percorso)) {
+    const sc = schedaPercorso(state.percorso);
+    out += `<div class="revisione-banner adattato">
+      <span class="revisione-testo">Stai lavorando con impostazioni diverse da quelle di
+        <strong>${sc.icona} ${escapeHtml(sc.nome)}</strong>. Il percorso resta quello dichiarato — e con esso il metro —
+        ma non è più il suo assetto.</span>
+      <span class="revisione-azioni"><button class="btn btn-ghost btn-sm" onclick="ripristinaAssiPercorso()">Rimettimi nel percorso</button></span>
+    </div>`;
+  }
+  return out;
+}
+
+/** Riporta i tre assi all'assetto del percorso dichiarato. */
+function ripristinaAssiPercorso() {
+  const sc = schedaPercorso(state.percorso);
+  if (!sc) return;
+  applicaPercorso(state.percorso, { forza: true });
+  state.percorsoAdattato = false;
+  persistCurrent();
+  renderAll();
+  if (typeof showToast === 'function') showToast(`${sc.icona} ${sc.nome} · assetto ripristinato`);
+}
+
 function renderAnalysisContent(sentence) {
   if (state.currentAnalysisTab === 'unificato') return renderUnifiedAnalysis(sentence);
   if (state.currentAnalysisTab === 'grammaticale') return renderGrammarAnalysis(sentence);
@@ -30599,13 +30974,40 @@ function metroDi(p) {
   return (sc && Array.isArray(sc.metro) && sc.metro.length) ? sc.metro : METRO_STORICO;
 }
 
+/* ── LO STATO TERZO · «da rivedere» ─────────────────────────────────────────
+   Passando a un percorso che chiede PIÙ analisi, il lavoro a valle non diventa
+   sbagliato: diventa non ancora riletto. Una brutta scritta senza i sintagmi va
+   riguardata quando i sintagmi ci sono. Non si cancella nulla — si dice.
+   Il peso: zero sarebbe falso (il lavoro c'è) e uno sarebbe la bugia opposta
+   (non è validato dal metodo nuovo). Metà, e la superficie lo dichiara. */
+const PESO_DA_RIVEDERE = 0.5;
+
+function moduliDaRivedere(p) {
+  /* Una versione consegnata non ha nulla in sospeso: il metro è storia. */
+  if (!p || !p.meta || p.meta.completatoAt) return [];
+  const r = p.meta.daRivedere;
+  if (!r || !Array.isArray(r.moduli)) return [];
+  /* Vale solo ciò che il metro CORRENTE misura: tornando a un percorso che non
+     chiede la bella copia, la bella copia non è più «da rivedere», è fuori. */
+  const metro = metroDi(p);
+  return r.moduli.filter(k => {
+    if (metro.indexOf(k) < 0) return false;
+    /* «Brutta» vive sulle frasi: senza frasi segnate non c'è più nulla da
+       rileggere (cancellate, o svuotate) e il modulo cade da sé. */
+    if (k === 'brutta') return (p.sentences || []).some(f => f && f.daRivedere);
+    return true;
+  });
+}
+
 /** Dettaglio per modulo: utile a spiegare PERCHÉ una versione non è completa. */
 function dettaglioMetro(p) {
+  const rivedere = moduliDaRivedere(p);
   return metroDi(p).map(k => {
     const m = MODULI_METRO[k];
     if (!m) return null;
     const q = Math.max(0, Math.min(1, m.quota(p) || 0));
-    return { chiave: k, label: m.label, quota: q, fatto: q >= 1 };
+    const daRiv = q > 0 && rivedere.indexOf(k) >= 0;
+    return { chiave: k, label: m.label, quota: q, daRivedere: daRiv, fatto: q >= 1 && !daRiv };
   }).filter(Boolean);
 }
 
@@ -30618,7 +31020,7 @@ function projectCompletion(p) {
   dettaglioMetro(p).forEach(d => {
     const peso = (MODULI_METRO[d.chiave] || {}).peso || 10;
     weight += peso;
-    score += peso * d.quota;
+    score += peso * d.quota * (d.daRivedere ? PESO_DA_RIVEDERE : 1);
   });
   if (!weight) return 0;
   return Math.min(100, Math.round((score / weight) * 100));
@@ -30657,10 +31059,20 @@ function projectPhases(p) {
   const tradCount = sents.filter(s => s.translation || s.translationFinal || (s.ordoVerborum||[]).length).length;
   const tradMeta = !!(p && p.meta && (p.meta.traduzioneBella || p.meta.traduzione));
   /* Un percorso che non prevede traduzione (il Ripasso) ha la fase già chiusa. */
-  const trad = !tradMod.length ? 'done'
+  const tradBase = !tradMod.length ? 'done'
              : ((total > 0 && tradCount === total) || (p && p.meta && p.meta.traduzioneBella)) ? 'done'
              : (tradCount > 0 || tradMeta) ? 'progress' : 'todo';
-  return { scomp, analisi, trad, analDone, total };
+  /* Lo stato terzo vive sulla TAPPA, non sul progetto: projectStatus resta a
+     tre valori (lo leggono filtri, ordinamenti e nomi di file), il semaforo no. */
+  const fasiRiv = {};
+  moduliDaRivedere(p).forEach(k => { const f = (MODULI_METRO[k] || {}).fase; if (f) fasiRiv[f] = true; });
+  const conRevisione = (st, fase) => (fasiRiv[fase] && st !== 'todo') ? 'review' : st;
+  return {
+    scomp: conRevisione(scomp, 'scomp'),
+    analisi: conRevisione(analisi, 'analisi'),
+    trad: conRevisione(tradBase, 'trad'),
+    analDone, total
+  };
 }
 
 function projectWordCount(p) {
@@ -30781,11 +31193,15 @@ function renderPanoramicaHtml() {
        ruberebbe la riga all'autore. Il nome sta nel tooltip, col metro. */
     const scP = schedaPercorso(p.percorso);
     const sub = [quando, `${nfr} fras${nfr === 1 ? 'e' : 'i'}`].filter(Boolean).join(' · ');
-    const mancaP = dettaglioMetro(p).filter(d => !d.fatto).map(d => d.label);
+    const dettP = dettaglioMetro(p);
+    const mancaP = dettP.filter(d => !d.fatto && !d.daRivedere).map(d => d.label);
+    const rivedereP = dettP.filter(d => d.daRivedere).map(d => d.label);
     const tipP = [
       isCurrent ? 'Torna al brano aperto' : 'Riprendi questo brano',
-      scP ? `Percorso: ${scP.nome}` : '',
-      p.meta.completatoAt ? 'Versione conclusa' : (mancaP.length ? `Manca: ${mancaP.join(' · ')}` : 'Tutto fatto'),
+      scP ? `Percorso: ${etichettaPercorso(p)}` : '',
+      p.meta.completatoAt ? 'Versione conclusa'
+        : ([mancaP.length ? `Manca: ${mancaP.join(' · ')}` : '',
+            rivedereP.length ? `Da rivedere: ${rivedereP.join(' · ')}` : ''].filter(Boolean).join(' — ') || 'Tutto fatto'),
     ].filter(Boolean).join(' — ');
     return `
       <button class="resume-card" data-status="${status}" onclick="openProject('${p.id}')" title="${escapeHtml(tipP)}">
@@ -30939,12 +31355,18 @@ function renderArchiveCard(p) {
      senza questo un 60% resta un numero senza appello. */
   const perc = schedaPercorso(p.percorso);
   const percBadge = perc
-    ? `<span class="percorso-badge" title="Percorso · ${escapeHtml(perc.scopo)}">${perc.icona} ${escapeHtml(perc.nome)}</span>`
+    ? `<span class="percorso-badge" title="Percorso · ${escapeHtml(perc.scopo)}">${perc.icona} ${escapeHtml(etichettaPercorso(p))}</span>`
     : '';
-  const mancanti = dettaglioMetro(p).filter(d => !d.fatto).map(d => d.label);
+  const dett = dettaglioMetro(p);
+  const mancanti = dett.filter(d => !d.fatto && !d.daRivedere).map(d => d.label);
+  const rivedere = dett.filter(d => d.daRivedere).map(d => d.label);
+  /* «Manca» e «da rivedere» non sono la stessa cosa e non vanno confuse: la
+     prima è assenza, la seconda è lavoro fatto che aspetta una rilettura. */
   const metroTitle = (perc ? `Metro «${perc.nome}» — ` : '')
     + (p.meta.completatoAt ? 'versione conclusa'
-      : mancanti.length ? `manca: ${mancanti.join(' · ')}` : 'tutto fatto');
+      : [mancanti.length ? `manca: ${mancanti.join(' · ')}` : '',
+         rivedere.length ? `da rivedere: ${rivedere.join(' · ')}` : '']
+        .filter(Boolean).join(' — ') || 'tutto fatto');
 
   const ph = projectPhases(p);
   const phaseChip = (st, label) => `<span class="phase-chip" data-state="${st}"><span class="phase-dot"></span>${label}</span>`;
@@ -31492,7 +31914,7 @@ function renderGuidedStepTraduzione() {
       <div class="field-block" style="margin-top:14px;">
         <label class="field-block-label">Traduzione · brutta copia della frase ${idx + 1}</label>
         <textarea class="field-input" style="width:100%;min-height:140px;font-family:var(--font-body);font-size:15px;line-height:1.55;"
-          oninput="updateSentenceTranslation('${sentence.id}', this.value)"
+          data-rivedere="${sentence.daRivedere ? '1' : ''}" oninput="updateSentenceTranslation('${sentence.id}', this.value)"
           placeholder="Scrivi qui la resa di lavoro di questa frase, vicina all'originale…">${escapeHtml(sentence.translation || '')}</textarea>
       </div>
       <div class="guided-traduzione-tips">
@@ -31533,7 +31955,7 @@ function renderGuidedStepBellaCopia() {
       <h3 class="guided-bella-title">② Bella copia · resa organica della versione</h3>
       <p class="guided-bella-hint">Obiettivo: testo uniforme, scorrevole, articolato dall'inizio alla fine. Smussa le imperfezioni, armonizza i collegamenti, riformula i passaggi che alla lettura suonano "grezzi". Talvolta tradurre significa anche "tradire" le parole di partenza affinché in italiano suonino bene.</p>
       <textarea class="field-input" style="width:100%;min-height:280px;font-family:var(--font-body);font-size:15.5px;line-height:1.6;"
-        oninput="state.meta.traduzioneBella = this.value; persistCurrent();"
+        oninput="aggiornaBellaCopia(this.value)"
         placeholder="Componi qui la traduzione finale d'insieme dell'intera versione…">${escapeHtml(state.meta.traduzioneBella || '')}</textarea>
     </section>
 
@@ -32816,7 +33238,7 @@ function renderTranslationHtml() {
           <h3 class="subsection-title">Bella copia · resa organica della versione</h3>
           <p class="muted-text" style="font-size:12px;font-style:italic;">Rilegge tutte le frasi in sequenza e produce una resa unica, armonica, con i giusti collegamenti.</p>
           <textarea class="field-input" style="width:100%;min-height:240px;font-family:var(--font-body);font-size:15px;line-height:1.6;"
-            oninput="state.meta.traduzioneBella = this.value; persistCurrent();"
+            oninput="aggiornaBellaCopia(this.value)"
             placeholder="Componi qui la traduzione d'insieme dell'intera versione…">${escapeHtml(state.meta.traduzioneBella || '')}</textarea>
         </div>
         ${renderChiusuraVersione()}
@@ -33865,7 +34287,7 @@ function renderTranslationSentenceCard(sentence, idx) {
             <button class="btn btn-ghost btn-sm" onclick="copyTextRaw(state.sentences.find(s=>s.id==='${sentence.id}').translation || '', event)" title="Copia">📋</button>
           </div>
         </div>
-        <textarea class="translation-textarea brutta" placeholder="Prima resa di lavoro, ancora vicina all'originale…" oninput="updateSentenceTranslation('${sentence.id}', this.value)">${escapeHtml(sentence.translation || '')}</textarea>
+        <textarea class="translation-textarea brutta" placeholder="Prima resa di lavoro, ancora vicina all'originale…" data-rivedere="${sentence.daRivedere ? '1' : ''}" oninput="updateSentenceTranslation('${sentence.id}', this.value)">${escapeHtml(sentence.translation || '')}</textarea>
       </div>
 
       <div class="ts-section">
@@ -34034,6 +34456,7 @@ function generateBruttaFromOrdo(sentenceId) {
     if (!confirm('Sovrascrivere la brutta copia con la concatenazione dei chip ordo?')) return;
   }
   sentence.translation = text;
+  rivistaBruttaDi(sentence);
   persistCurrent();
   renderEditor();
   renderSidebarTabs();
@@ -34059,6 +34482,7 @@ function assembleGlobalFinal() {
     if (!confirm('Sovrascrivere la bella complessiva con la concatenazione delle belle di frase?')) return;
   }
   state.meta.traduzioneBella = text;
+  segnaRivisto('bella');
   persistCurrent();
   renderEditor();
   showToast('Bella complessiva compilata dalle frasi');
@@ -34169,7 +34593,7 @@ function renderInlineTranslationPanel(sentence) {
       <div class="inline-translation-body">
         <textarea class="inline-translation-textarea"
                   placeholder="Traduci man mano che analizzi · in italiano corrente · niente formalismi…"
-                  oninput="updateSentenceTranslation('${sentence.id}', this.value)">${escapeHtml(sentence.translation || '')}</textarea>
+                  data-rivedere="${sentence.daRivedere ? '1' : ''}" oninput="updateSentenceTranslation('${sentence.id}', this.value)">${escapeHtml(sentence.translation || '')}</textarea>
         <div class="inline-translation-hint">
           📝 Blocco-appunti aperto: il sistema non valida. Usa i due punti <kbd>:</kbd> o un <em>accapo</em> come punti di sincronizzazione mentale fra original e resa.
         </div>
@@ -38911,6 +39335,7 @@ function setMetodo(value) {
   state.metodo = v;
   state.approachShown = true;
   _syncApproach();
+  riconciliaPercorso();            // la targhetta del percorso non deve mentire
   persistCurrent();
   renderAll();
   showToast(v === 'valenziale' ? '🦴 Metodo: Valenziale (Scheletro)' : '🧱 Metodo: Per strati');
@@ -38920,6 +39345,7 @@ function setVista(value) {
   if (state.vista === v) return;
   state.vista = v;
   _syncApproach();
+  riconciliaPercorso();
   persistCurrent();
   renderAll();
   showToast(v === 'intero' ? '🌐 Vista: Brano intero' : '🎯 Vista: Frase corrente');
@@ -38935,6 +39361,7 @@ function setApproach(newApproach) {
   else return;
   state.approachShown = true;
   _syncApproach();
+  riconciliaPercorso();
   persistCurrent();
   renderAll();
 }
@@ -38994,6 +39421,7 @@ function maybeShowApproachModalOnStart() { /* no-op · l'approccio è sempre in 
 function switchMode(mode) {
   state.mode = mode;
   if (mode === 'guided' && !state.guidedStep) state.guidedStep = 1;
+  riconciliaPercorso();
   persistCurrent();
   renderAll();
   showToast(mode === 'guided' ? 'Modalità guidata attivata' : 'Modalità libera attivata');
@@ -39607,7 +40035,7 @@ function switchAnalysisTab(tab) {
 
 function updateSentenceTranslation(sentenceId, value) {
   const s = state.sentences.find(x => x.id === sentenceId);
-  if (s) { s.translation = value; persistCurrent(); }
+  if (s) { s.translation = value; rivistaBruttaDi(s); persistCurrent(); }
 }
 
 function addGrammarEntry(sentenceId) {
@@ -40642,6 +41070,8 @@ function projectMd(d) {
   if (d.meta.autore) md += `**Autore.** ${d.meta.autore}\n\n`;
   if (d.meta.opera) md += `**Locus.** ${d.meta.opera}\n\n`;
   md += `> ${statusLabel(projectStatus(d))} · ${completion}% di completamento · ${d.sentences.length} frasi · ${projectWordCount(d)} parole\n`;
+  const rpMd = rigaPercorso(d);
+  if (rpMd) md += `> **Percorso.** ${escapeMd(rpMd)}\n`;
   md += `> _Aggiornato: ${new Date(d.meta.updatedAt).toLocaleString('it-IT')}_\n\n`;
   md += `---\n\n## Testo originale\n\n> ${escapeMd(d.meta.testoOriginale).replace(/\n/g, '\n> ')}\n\n`;
   if (d.meta.traduzione) md += `## Traduzione · brutta copia\n\n${escapeMd(d.meta.traduzione)}\n\n`;

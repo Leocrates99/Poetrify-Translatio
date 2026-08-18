@@ -1,0 +1,116 @@
+{
+"lat:kalendae": {
+"campi": [
+{
+"campo": "calendario romano",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the Calends",
+"the first day of the month",
+"day on which the order of days was proclaimed"
+],
+"it": [
+"le Calende",
+"il primo giorno del mese",
+"il giorno in cui i pontefici proclamavano le None"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"the Calends as the day interest fell due",
+"pay-day"
+],
+"it": [
+"le Calende come giorno di scadenza degli interessi",
+"il giorno della riscossione"
+]
+},
+"registro": "commerciale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"the Calends sacred to Juno",
+"the Calends of March, feast of married women (Matronalia)"
+],
+"it": [
+"le Calende sacre a Giunone",
+"le Calende di marzo, festa delle matrone (Matronali)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "misura del tempo",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a month"
+],
+"it": [
+"mese"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"the Calends",
+"first day of the month",
+"month"
+],
+"it": [
+"le Calende",
+"il primo del mese",
+"mese"
+]
+},
+"applicazione": [
+"Sostantivo solo plurale (pluralia tantum), di norma con l'aggettivo del mese: Kalendae Martiae, Kalendae Januariae, Kalendae Sextae.",
+"Nella datazione si usa l'accusativo con pridie o ante diem: litteras datas pridie Kalendas Maias, «lettera del giorno prima delle Calende di maggio», cioè del 30 aprile.",
+"Poiché alle Calende scadevano gli interessi, l'aggettivo che le accompagna è spesso negativo: tristes Kalendae, celeres Kalendae; renderle con «le odiose Calende», «le Calende che corrono via».",
+"Proverbio: ad Kalendas Graecas solvere, «pagare alle calende greche», cioè mai (i Greci non avevano le Calende).",
+"Il computo per Calende è esclusivamente romano: Kalendae Ausoniae vale «le Calende dei Latini».",
+"Grafia alternativa Calendae; abbreviata nelle iscrizioni in Kal. o Kl."
+],
+"divergenze": [
+"Whitaker riduce la voce all'uso calendariale e aggiunge le abbreviazioni epigrafiche Kal./Kl., che L&S non registra in questa forma; la nota whitakeriana «day of proclamation» corrisponde alla spiegazione etimologica di L&S (calare «proclamare»), non a un senso autonomo.",
+"Solo L&S attesta il traslato «mese» (Ov. F. 3, 99; Mart. 1, 100, 6), assente in Whitaker."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+}
+}

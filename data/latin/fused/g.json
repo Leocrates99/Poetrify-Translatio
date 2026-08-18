@@ -1,0 +1,10782 @@
+{
+"lat:gaesum": {
+"campi": [
+{
+"campo": "arma da getto",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a long, heavy javelin of the Gauls",
+"Gallic javelin"
+],
+"it": [
+"gèso",
+"giavellotto gallico",
+"lungo e pesante giavellotto"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"javelin, spear (in poets, also of Africans and Greeks)"
+],
+"it": [
+"giavellotto",
+"asta da lancio (nei poeti, anche di Africani e Greci)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Gallic javelin",
+"heavy throwing spear"
+],
+"it": [
+"gèso",
+"giavellotto gallico"
+]
+},
+"applicazione": [
+"Voce di origine celtica (gr. γαισός/γαῖσον), variante grafica meno corretta gesum: si lascia di norma non tradotta («gèso») quando il contesto è etnografico-militare (Caes. Gall. 3,4,1; Liv. 8,8,5), mentre si rende con «giavellotto» dove è generica.",
+"Sinonimi utili alla resa e alla distinzione: dolo, sarissa, sparus, lancea. La glossa antica gaesum grave iaculum (Paul. Fest.) autorizza l'aggiunta di «pesante» quando serve a distinguerlo dal pilum.",
+"Nei poeti epici (Verg. Aen. 8,662; Sil. 2,444; Stat. Theb. 4,64) perde il colore etnico e vale semplicemente «asta», «giavellotto»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:galbina": {
+"campi": [
+{
+"campo": "ornitologia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a small bird, perhaps the yellow thrush",
+"oriole (?)"
+],
+"it": [
+"piccolo uccello (forse il rigogolo)",
+"tordo giallo (?)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"a small yellow bird",
+"yellow thrush (?)"
+],
+"it": [
+"uccellino giallo",
+"rigogolo (?)"
+]
+},
+"applicazione": [
+"Hapax di fatto: un solo luogo (Mart. 13,68,1), in un lemma degli Xenia. L'identificazione zoologica è congetturale — L&S stesso premette perh. —, perciò in traduzione conviene mantenere il nome latino o rendere genericamente «uccellino», segnalando in nota l'ipotesi del rigogolo.",
+"Il nome è legato al colore galbinus («giallo-verde»): la resa dovrebbe conservare il tratto cromatico."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:galea": {
+"campi": [
+{
+"campo": "armamento difensivo del capo",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"helmet (usually of leather)",
+"head-piece",
+"morion"
+],
+"it": [
+"elmo (di cuoio)",
+"celata",
+"copricapo di difesa"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"bronze helmet, brazen helmet"
+],
+"it": [
+"elmo di bronzo",
+"elmo cesellato"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "zoologia (per traslato)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"the crest of the guinea fowl"
+],
+"it": [
+"cresta (della gallina faraona)",
+"elmetto carnoso"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"helmet",
+"head-piece"
+],
+"it": [
+"elmo",
+"celata"
+]
+},
+"applicazione": [
+"Distinzione tecnica da rispettare quando il testo la sfrutta: galea è propriamente l'elmo di cuoio, cassis quello di lamina metallica (galea de corio, cassis de lamina, Isid. orig. 18,14); ma già in Ennio, Cicerone, Virgilio e Orazio galea vale anche «elmo di bronzo» (loricae galeaeque aeneae, Cic. Verr. 2,4,97), sicché la distinzione non va imposta ai testi che non la osservano.",
+"Costruzioni frequenti: galeam induere «indossare l'elmo» (ad galeas induendas tempus defuit, Caes. Gall. 2,21,5); sub galea «sotto l'elmo», cioè «in armi».",
+"Il traslato ornitologico (Colum. 8,2,2) è tecnico-agronomico: si rende con «cresta» o «elmetto», mantenendo la metafora se il contesto la valorizza."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:galerus": {
+"campi": [
+{
+"campo": "copricapo di pelle",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a conical cap of leather",
+"fur cap",
+"cap or hat made of skin"
+],
+"it": [
+"berretto di pelle",
+"copricapo conico di cuoio",
+"berretto di pelliccia"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"ceremonial hat worn by pontifices and flamines"
+],
+"it": [
+"copricapo sacerdotale (dei pontefici e dei flàmini)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "acconciatura posticcia",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a wig"
+],
+"it": [
+"parrucca",
+"capigliatura posticcia"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"leather cap",
+"fur cap",
+"wig"
+],
+"it": [
+"berretto di pelle",
+"parrucca"
+]
+},
+"applicazione": [
+"Accompagnato di regola da un genitivo o da de + ablativo che indica la pelle: fulvos lupi de pelle galeros (Verg. Aen. 7,688) «berretti di fulva pelle di lupo»; l'aggettivo longus (Iuv.) segnala la forma conica.",
+"Nel senso di «parrucca» si accompagna a un aggettivo di colore (flavus galerus, Iuv. 6,120) e la resa italiana esige «parrucca bionda», non «berretto».",
+"Esiste anche la forma neutra galerum, -i, con gli stessi valori."
+],
+"divergenze": [
+"Il valore sacrale (copricapo rituale dei pontefici e dei flàmini, affine all'apex) è registrato da Whitaker ma non compare nella voce breve del Lewis elementare, che si limita a «berretto di pelle» e «parrucca»: le due fonti si integrano più che contraddirsi."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:galla": {
+"campi": [
+{
+"campo": "botanica",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"oak-apple",
+"gall-nut"
+],
+"it": [
+"galla",
+"noce di galla",
+"galla di quercia"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "vino",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a harsh, inferior kind of wine"
+],
+"it": [
+"vino aspro",
+"vinello scadente"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"gall-nut",
+"oak-apple"
+],
+"it": [
+"galla",
+"noce di galla"
+]
+},
+"applicazione": [
+"Termine dei trattati tecnici (Plin. nat. 16,26; 24,9; Colum. 9,13,7): la galla è l'escrescenza della quercia usata per concia, inchiostro e medicina; al plurale gallae indica i singoli frutti (Colum. 6,7,2).",
+"Il secondo valore, «vino aspro» (Lucil. ap. Non.), è raro e va dedotto dal contesto conviviale; l'accostamento è per il sapore astringente della galla.",
+"Attenzione al bisticcio con il nome proprio Galla («donna gallica»), sfruttato da Macrobio (sat. 2,2): in traduzione va conservato con una nota, non con un calco."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:galli": {
+"campi": [
+{
+"campo": "etnonimo",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the Gauls",
+"the Gallic nation"
+],
+"it": [
+"i Galli",
+"il popolo gallico"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a Gaul (sing. Gallus)",
+"a Gallic woman (fem. Galla)"
+],
+"it": [
+"un Gallo",
+"una donna gallica"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"the Gauls settled in Phrygia, the Gallograeci or Galatians"
+],
+"it": [
+"i Galati",
+"i Galli stanziati in Frigia (Gallogreci)"
+]
+},
+"registro": "storico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"the Gauls",
+"a Gaul"
+],
+"it": [
+"i Galli",
+"un Gallo"
+]
+},
+"applicazione": [
+"Etnonimo di norma al plurale; il singolare Gallus vale «un Gallo» (delegit Gallum ex his quos auxilii causa secum habebat, Caes. Gall. 3,18,1) e il femminile Galla «una donna gallica» (Liv. 22,57,6).",
+"L'estensione geografica va precisata secondo l'autore: Galli sono tanto i transalpini quanto i Galli dell'Italia settentrionale, e in età ellenistica i Galati d'Asia Minore (Liv. 38,12 sgg.).",
+"Dalla base derivano Gallia (il paese; al plurale Galliae per le due province, Cic. prov. 2,3), Gallicus, Gallius, Gallicanus, Gallulus e il sostantivato gallica «calzatura gallica».",
+"Da segnalare in nota il gioco di parole con galla «noce di galla» (Macr. sat. 2,2)."
+],
+"divergenze": [
+"Whitaker glossa il lemma solo per estensione geografica progressiva («Italia settentrionale, poi Francia sud-orientale, poi Francia e Belgio») e non registra i Galli d'Asia (Gallograeci/Galatae), che L&S invece include esplicitamente."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gallica": {
+"campi": [
+{
+"campo": "calzatura",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a Gallic shoe",
+"Gallic slipper"
+],
+"it": [
+"gallica",
+"calzatura alla gallica",
+"pantofola gallica"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Gallic shoe",
+"slipper"
+],
+"it": [
+"gallica",
+"calzatura gallica"
+]
+},
+"applicazione": [
+"La voce è un rinvio: gallica, ae, f. è il femminile sostantivato di Gallicus (L&S s.v. Galli, II B), «scarpa di foggia gallica».",
+"Ricorre quasi sempre al plurale e in coppia con altri capi d'abbigliamento, in contesti che oppongono l'abito civile a quello negligente: cum calceis et toga, nullis nec gallicis nec lacerna (Cic. Phil. 2,76); cfr. Gell. 13,21,6. Resa consigliata «pantofole», «scarpe alla gallica», per rendere il contrasto con calceus e toga."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gallina": {
+"campi": [
+{
+"campo": "pollame",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a hen"
+],
+"it": [
+"gallina"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"term of endearment: my hen, darling"
+],
+"it": [
+"gallinella (vezzeggiativo)",
+"tesoruccio mio"
+]
+},
+"registro": "colloquiale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "toponimo (per traslato)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"Ad Gallinas, name of a villa near Rome"
+],
+"it": [
+"Ad Gallinas (nome di una villa presso Roma)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"hen"
+],
+"it": [
+"gallina"
+]
+},
+"applicazione": [
+"Termine tecnico dei trattati agronomici (Varro rust. 3,9,1; Colum. 8,2,1) e insieme parola d'uso quotidiano in commedia e satira (Plaut. Pseud. 1,1,27 sgg.; Hor. sat. 2,2,24).",
+"Come vezzeggiativo compare in serie con altri nomi di animali: dic me tuom passerculum, gallinam, coturnicem (Plaut. Asin. 3,3,76); in italiano si rende con un diminutivo affettuoso, non con «gallina», che suonerebbe offensivo.",
+"Locuzioni: has litteras gallina scripsit (Plaut. Pseud. 1,1,28) «questa l'ha scritta una gallina», cioè «zampe di gallina», di scrittura illeggibile; gallinae filius albae (Iuv. 13,141) «figlio di gallina bianca», del fortunato, del privilegiato dalla sorte.",
+"Ad Gallinas (Suet. Galba 1; cfr. Plin. nat. 15,137) è il nome della villa imperiale di Livia: si lascia come toponimo, non si traduce."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gallinarius": {
+"campi": [
+{
+"campo": "allevamento del pollame",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"one who attends to poultry",
+"poultry-keeper",
+"poultry farmer"
+],
+"it": [
+"pollaiolo",
+"custode del pollaio",
+"allevatore di polli"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"poultry-keeper",
+"poultry farmer"
+],
+"it": [
+"pollaiolo",
+"allevatore di polli"
+]
+},
+"applicazione": [
+"È il maschile sostantivato dell'aggettivo gallinarius, a, um («del pollame»): si traduce con un nome d'agente («il pollaiolo», «chi ha cura del pollaio»), non con un aggettivo.",
+"Nei contesti agronomici (Varr. R. R. 3, 9, 7; Plin. 10, 155) indica lo schiavo o l'addetto preposto al pollaio della villa; in Cic. Ac. 2, 26, 86 vale come esempio di mestiere umile.",
+"Da non confondere con il neutro gallinarium, ii («pollaio», Col. 8, 3, 1) né con i nomi propri Gallinaria insula e Gallinaria silva, che appartengono all'uso aggettivale."
+],
+"divergenze": [
+"L&S lemmatizza la voce sotto l'aggettivo gallinarius, a, um e registra il maschile solo come sostantivazione; Whitaker dà direttamente il sostantivo («poultry farmer»). Il significato coincide."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:ganea": {
+"campi": [
+{
+"campo": "luogo di ristoro e di bagordi",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"eating-house",
+"cook-shop",
+"ordinary",
+"low tavern"
+],
+"it": [
+"bettola",
+"osteria",
+"taverna",
+"trattoria popolare"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"haunt of ill repute",
+"resort of prostitutes and undesirable characters"
+],
+"it": [
+"locale malfamato",
+"postribolo",
+"ritrovo di gente equivoca"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "crapula e dissolutezza",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"gluttonous eating",
+"gluttony",
+"debauchery"
+],
+"it": [
+"gozzoviglia",
+"crapula",
+"dissolutezza",
+"vita da taverna"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"eating-house",
+"low tavern",
+"gluttony"
+],
+"it": [
+"bettola",
+"taverna malfamata",
+"gozzoviglia"
+]
+},
+"applicazione": [
+"Spesso in dittologia o in serie con termini del vizio: ganea et lustra (Liv. 26, 2, 15), ventris et ganeae paratus (Tac. A. 3, 52), ganeae ceterique cultus (Sall. C. 13, 3): in questi nessi conviene rendere con l'astratto «crapula», «bagordi», non con il nome del locale.",
+"In ganea senectutem agere = «passare la vecchiaia nei bagordi»; in ganeum se immergere (Plaut. Men. 5, 1, 3) = «cacciarsi in qualche bettola».",
+"La forma neutra ganeum, i è variante arcaica equivalente (Plauto, Terenzio, Varrone, Prudenzio)."
+],
+"divergenze": [
+"Whitaker lemmatizza esplicitamente il senso astratto («gluttonous eating»), che L&S non enumera come senso a sé ma che emerge chiaramente dai loci citati (Sall. C. 13, 3; Tac. A. 3, 52; H. 2, 95)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:ganeo": {
+"campi": [
+{
+"campo": "ghiottoneria e dissolutezza",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"glutton",
+"debauchee",
+"profligate"
+],
+"it": [
+"ghiottone",
+"crapulone",
+"dissoluto",
+"scialacquatore"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"glutton",
+"debauchee"
+],
+"it": [
+"ghiottone",
+"crapulone",
+"dissoluto"
+]
+},
+"applicazione": [
+"Sinonimi di area: nepos, asotus, heluo; ricorre tipicamente in cataloghi d'ingiuria (Ter. Heaut. 5, 4, 11 gerro, iners, fraus, heluo, ganeo; Cic. Cat. 2, 4, 7 parricida... ganeo... nepos... adulter), dove è bene mantenere in italiano una serie di sostantivi ugualmente sferzanti.",
+"Si accompagna a qualificativi che ne segnalano la rovina economica (egentissimus ganeo, Cic. Sest. 52, 111): la ghiottoneria implica lo sperpero, e la resa può giocare su «crapulone squattrinato».",
+"Nome d'agente derivato da ganea: chi frequenta le bettole."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:ganeum": {
+"campi": [
+{
+"campo": "luogo di ristoro e di bagordi",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"eating-house",
+"cook-shop",
+"low tavern (of ill repute)"
+],
+"it": [
+"bettola",
+"osteria",
+"taverna malfamata"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "crapula e dissolutezza",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"gluttonous eating",
+"gluttony",
+"debauchery"
+],
+"it": [
+"gozzoviglia",
+"crapula",
+"dissolutezza"
+]
+},
+"registro": "astratto",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"eating-house",
+"low tavern"
+],
+"it": [
+"bettola",
+"taverna malfamata"
+]
+},
+"applicazione": [
+"L&S rinvia senz'altro a ganea (gāneum, i, v. ganea): il neutro è variante di forma, non di significato, ed è marcato come ante-classico (Plaut. Men. 5, 1, 3; As. 5, 2, 37; Ter. Ad. 3, 3, 5; Varr.; poi Prud. Psych. 343).",
+"Costruzione tipica del comico: se in ganeum immergere = «ficcarsi in qualche bettola»."
+],
+"divergenze": [
+"La voce L&S è un semplice rimando a ganea e non elenca sensi propri; le glosse qui date derivano dalla voce di rinvio e da Whitaker, che tratta le due forme come un unico lemma."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gangaba": {
+"campi": [
+{
+"campo": "servizio e trasporto di bagagli",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"porter",
+"carrier",
+"baggage-bearer (= bajulus)"
+],
+"it": [
+"portatore",
+"facchino",
+"portabagagli"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"porter",
+"baggage-carrier"
+],
+"it": [
+"portatore",
+"facchino"
+]
+},
+"applicazione": [
+"Vocabolo persiano assunto in latino e attestato in un solo luogo (Curt. 3, 13, 6), a proposito del seguito e delle salmerie dell'esercito persiano: in traduzione conviene «portatori» con eventuale glossa sull'origine orientale del termine.",
+"L&S lo equipara a bajulus, il facchino che porta i pesi a spalla."
+],
+"divergenze": [
+"Whitaker non registra il lemma: l'unica autorità disponibile è L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:garamantis": {
+"campi": [
+{
+"campo": "etnico e geografia africana",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"of the Garamantes",
+"Garamantian woman",
+"African"
+],
+"it": [
+"garamantide",
+"donna dei Garamanti",
+"africana"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Garamantian (woman)",
+"African"
+],
+"it": [
+"garamantide",
+"africana"
+]
+},
+"applicazione": [
+"Forma femminile dell'etnico Garamantes (popolo della Libia interna), usata come aggettivo e come sostantivo: nympha Garamantis in Virgilio vale semplicemente «ninfa africana», e in traduzione si può sciogliere così, salvo che il contesto non richieda il nome del popolo.",
+"Il genitivo è Garamantidis: si declina come i temi greci in -is, -idis."
+],
+"divergenze": [
+"La voce integrale di L&S manca: la fonte è il solo Lewis elementare, che registra l'uso aggettivale e la glossa «africano» senza distinguere ulteriori sensi. Whitaker non ha il lemma."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:garrulitas": {
+"campi": [
+{
+"campo": "loquacità umana",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"talkativeness",
+"garrulity",
+"prating",
+"babbling"
+],
+"it": [
+"loquacità",
+"ciarla",
+"chiacchiera insistente",
+"verbosità"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"fluent, unchecked flow of words (in speaking)"
+],
+"it": [
+"facondia vuota",
+"scioltezza verbosa",
+"fiume di parole"
+]
+},
+"registro": "retorico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"prattle (of children), engaging chatter"
+],
+"it": [
+"chiacchierio infantile",
+"cinguettio"
+]
+},
+"registro": "familiare",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "verso degli uccelli",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"chattering (of birds)",
+"cawing"
+],
+"it": [
+"garrire",
+"cinguettio",
+"gracchiare (della cornacchia)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"talkativeness",
+"garrulity",
+"chattering"
+],
+"it": [
+"loquacità",
+"ciarla",
+"garrire"
+]
+},
+"applicazione": [
+"Termine assente in Cicerone: appartiene alla prosa e alla poesia d'età imperiale (Ovidio, Seneca, Plinio, Quintiliano, Marziale, Svetonio).",
+"Regge il genitivo di qualità: cornix inauspicatae garrulitatis (Plin. 10, 30) = «cornacchia dal gracchiare di malaugurio».",
+"L'ablativo indica la causa: garrulitate sui (Mart. 5, 52, 8) = «per la propria loquacità», detto di chi rovina i doni fatti raccontandoli.",
+"Il valore può essere neutro o affettuoso (pueri facie et garrulitate amabiles, Suet. Aug. 83) oppure decisamente negativo (garrulitas quae neminem satiabit, Sen.): l'italiano distingua fra «chiacchierio» e «ciarla»."
+],
+"divergenze": [
+"Whitaker aggiunge la glossa «chattering» attribuendola a Collins, senza specificare il valore ornitologico che L&S isola invece come uso traslato (II)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:garum": {
+"campi": [
+{
+"campo": "cucina e condimenti",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"fish-sauce",
+"garum",
+"rich sauce made of small fish"
+],
+"it": [
+"garum",
+"salsa di pesce",
+"salamoia di pesce"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"fish-sauce",
+"garum"
+],
+"it": [
+"garum",
+"salsa di pesce"
+]
+},
+"applicazione": [
+"Nome di un prodotto specifico della cucina romana, ricavato dalla macerazione di pesciolini (soprattutto lo scomber): in traduzione conviene mantenere «garum» con eventuale glossa, perché «salsa di pesce» ne perde il carattere di prelibatezza costosa.",
+"Variante grafica garon, dal greco γάρον.",
+"Ricorre nei contesti di lusso gastronomico e di satira della tavola (Hor. S. 2, 8, 46; Mart. 13, 102; Sen. Ep. 95)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gaudium": {
+"campi": [
+{
+"campo": "gioia interiore",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"inward joy",
+"joy",
+"gladness",
+"delight"
+],
+"it": [
+"gioia",
+"letizia interiore",
+"contentezza",
+"gaudio"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"outward expressions of joy, rejoicings (plur.)"
+],
+"it": [
+"manifestazioni di gioia",
+"esultanze",
+"festeggiamenti"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "piacere dei sensi",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"sensual pleasure",
+"enjoyment",
+"delights (of the body, of the table)"
+],
+"it": [
+"piaceri",
+"godimento",
+"voluttà",
+"piaceri dei sensi"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "ciò che procura gioia",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"cause of joy",
+"occasion of joy",
+"object of delight"
+],
+"it": [
+"motivo di gioia",
+"occasione di gioia",
+"gioia (la persona o la cosa amata)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"glory, prized quality (of plants, of things)"
+],
+"it": [
+"vanto",
+"ornamento",
+"gloria (delle piante, delle gemme)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "beatitudine religiosa",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"everlasting blessedness",
+"gaud, bead of a rosary"
+],
+"it": [
+"beatitudine eterna",
+"gaudio (grano del rosario)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"joy",
+"gladness",
+"delight",
+"cause of joy"
+],
+"it": [
+"gioia",
+"letizia",
+"piacere",
+"motivo di gioia"
+]
+},
+"applicazione": [
+"Si oppone tecnicamente a laetitia: gaudium è la gioia raccolta e ragionata dell'animo, laetitia quella che prorompe all'esterno (Cic. Tusc. 4, 6, 13); nella resa italiana la coppia si può marcare con «gioia» / «allegrezza».",
+"L'ablativo di causa è la costruzione più frequente: exsultare, triumphare, lacrimare, exclamare, desipere gaudio = «per la gioia»; rafforzato in prae gaudio (Ter. Heaut. 2, 3, 67).",
+"Regge il genitivo oggettivo: gaudium periculosi saltus superati (Liv. 42, 55, 4) = «la gioia di aver superato la pericolosa gola».",
+"Costrutti con verbi di riempimento: gaudio compleri, gaudio affici, cumulari maximo gaudio, elatus incredibili gaudio.",
+"Il plurale gaudia vale di norma «le manifestazioni della gioia» oppure «i piaceri» (spec. sensuali: Lucr. 4, 1205; Iuv. 6, 365), e in questo secondo caso l'italiano richiede il plurale.",
+"Figura etimologica con gaudeo: gavisurum gaudia (Ter. And. 5, 5, 8), da rendere con «godere una gioia».",
+"Forma arcaica apocopata gau (Ennio). Proverbiale Gaudia principium nostri sunt doloris (Ov. M. 7, 796)."
+],
+"divergenze": [
+"Whitaker aggiunge due sensi tardi e medievali — «everlasting blessedness» e «gaud, bead of rosary» (marcato Latham) — che L&S, limitato al latino classico, non registra: vanno usati solo per testi cristiani o medievali.",
+"Il senso «piacere sensuale» è dato da entrambe le fonti, ma L&S lo segnala come raro e assente in Cicerone."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gaza": {
+"campi": [
+{
+"campo": "tesoro e ricchezze regie",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"royal treasure",
+"treasure",
+"riches"
+],
+"it": [
+"tesoro regio",
+"tesoro",
+"ricchezze"
+]
+},
+"registro": "generale",
+"fonti": [
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "toponimo",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"Gaza, city of Palestine",
+"a city of Media",
+"a city of Africa on the Arabian Gulf"
+],
+"it": [
+"Gaza (città della Palestina)",
+"Gaza (città della Media)",
+"Gaza (città dell'Africa, sul golfo Arabico)"
+]
+},
+"registro": "geografico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"royal treasure",
+"riches",
+"Gaza (city)"
+],
+"it": [
+"tesoro regio",
+"ricchezze",
+"Gaza"
+]
+},
+"applicazione": [
+"Come appellativo (voce di origine persiana) designa propriamente il tesoro del re, spec. dei sovrani orientali; il plurale gazae vale «ricchezze», «tesori accumulati», con coloritura di sfarzo esotico.",
+"Come nome proprio Gaza (gr. Γάζα) indica più città: la più celebre in Palestina, poi una in Media e una in Africa; da essa l'aggettivo Gazeticus, a, um (vina Gazetica, Sid. Carm. 17, 15)."
+],
+"divergenze": [
+"La voce integrale qui trascritta da L&S è il toponimo Gāza e non tratta l'appellativo: il senso «tesoro regio», che è quello richiesto dal sostantivo comune femminile, poggia sul solo Whitaker (L&S lo tratta in una voce omografa distinta, non presente in questo record)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:geminatio": {
+"campi": [
+{
+"campo": "raddoppiamento",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a doubling",
+"doubling",
+"reduplication"
+],
+"it": [
+"raddoppiamento",
+"raddoppio",
+"reduplicazione"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"doubling of words, repetition (as a figure of speech)"
+],
+"it": [
+"geminazione",
+"ripetizione (figura retorica)"
+]
+},
+"registro": "retorico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"doubling",
+"reduplication",
+"repetition"
+],
+"it": [
+"raddoppiamento",
+"geminazione",
+"ripetizione"
+]
+},
+"applicazione": [
+"Regge il genitivo della cosa raddoppiata: geminatio verborum, il raddoppiamento delle parole; vocalium geminatio, il raddoppiamento delle vocali; accusativi geminatio, il raddoppio dell'accusativo.",
+"Nel lessico retorico e grammaticale (Cicerone, Quintiliano) conviene rendere con «geminazione» o «ripetizione» quando indica la figura; con «raddoppiamento» quando indica il fatto fonetico o morfologico.",
+"In eadem vitii geminatione (Quint.): «nel ripetersi dello stesso errore», dove il termine vale il reiterarsi di un fatto."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gemitus": {
+"campi": [
+{
+"campo": "gemito e lamento",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a groan",
+"a sigh",
+"a sighing"
+],
+"it": [
+"gemito",
+"sospiro"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a lamentation",
+"complaint",
+"wailing"
+],
+"it": [
+"lamento",
+"pianto",
+"compianto"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "suono cupo di cose inanimate",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a deep or hoarse sound",
+"roaring",
+"rumbling"
+],
+"it": [
+"rimbombo",
+"fragore cupo",
+"muggito (del mare, della terra)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "dolore e sofferenza",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"pain",
+"sorrow",
+"grief"
+],
+"it": [
+"dolore",
+"pena",
+"affanno"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"groan",
+"sigh",
+"lamentation",
+"deep sound"
+],
+"it": [
+"gemito",
+"sospiro",
+"lamento",
+"rimbombo"
+]
+},
+"applicazione": [
+"Locuzioni verbali costanti: gemitum dare, edere, tollere, ciere = emettere, levare un gemito; ingentem gemitum dare pectore ab imo = trarre un gemito profondo dal fondo del petto.",
+"Il plurale (per lo più poetico) ha valore proprio: indica gemiti ripetuti o i gemiti di più persone (gemitus edere, Lucr.), e va reso con il plurale italiano.",
+"L'ablativo semplice vale modo o accompagnamento: cum gemitu / gemitu = tra i gemiti, gemendo; sine gemitu = senza un lamento.",
+"Riferito a cose (caverne, terra, mole, mare) si rende con «rimbombo», «fragore», «muggito»: dat tellus gemitum, la terra manda un cupo rimbombo."
+],
+"divergenze": [
+"Whitaker riduce la voce a due glosse (groan/sigh; roaring): coglie il senso proprio e quello traslato del suono, ma non registra il valore di «dolore, pena» che L&S documenta come traslato poetico (Verg. A. 2, 413; Lucr. 5, 1196)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gemma": {
+"campi": [
+{
+"campo": "pietra preziosa e gioiello",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a precious stone",
+"a jewel",
+"a gem (esp. one already cut)"
+],
+"it": [
+"gemma",
+"pietra preziosa",
+"gioiello"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a pearl"
+],
+"it": [
+"perla"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "oggetti di pietra preziosa (metonimia)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a drinking-vessel of precious stone",
+"goblet",
+"cup"
+],
+"it": [
+"coppa di pietra preziosa",
+"calice gemmato"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a seal ring",
+"signet"
+],
+"it": [
+"anello con sigillo",
+"sigillo",
+"castone inciso"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "botanica",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"a bud",
+"an eye on a plant",
+"gem"
+],
+"it": [
+"gemma",
+"germoglio",
+"occhio (della vite)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "ocelli della coda del pavone",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"the eyes of the peacock's tail"
+],
+"it": [
+"occhi della coda del pavone",
+"ocelli"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "ornamento, pregio",
+"rank": 5,
+"sensi": [
+{
+"tr": {
+"en": [
+"ornament",
+"beauty",
+"gem (figuratively)"
+],
+"it": [
+"ornamento",
+"gioiello (in senso figurato)",
+"perla",
+"vanto"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"gem, precious stone",
+"bud",
+"signet",
+"cup of precious stone"
+],
+"it": [
+"gemma, pietra preziosa",
+"germoglio",
+"sigillo",
+"coppa preziosa"
+]
+},
+"applicazione": [
+"Nel senso di pietra preziosa si oppone a lapillus (pietra opaca) e si affianca a margarita, unio (perla): nella resa conviene distinguere «gemma» (incisa, trasparente) da «pietruzza».",
+"Metonimie con ablativo strumentale, da sciogliere con perifrasi: gemma bibere = bere in una coppa di pietra preziosa; gemma ministrare = servire da bere in coppe preziose; in gemma ponere merum = versare il vino in una coppa preziosa.",
+"Nel senso di sigillo: impressa gemma signare = sigillare imprimendo l'anello; di qui il senso comico di «sotto chiave» in Plauto (sub gemma abstrusos habere).",
+"In botanica il verbo tecnico è turgere o trudere: turgent gemmae, le gemme si gonfiano; trudit gemmas, mette i germogli.",
+"In senso figurato (post-augusteo e rarissimo) si rende con «perla», «gioiello»: gemmas in carmine invenire, trovare le perle di un carme."
+],
+"divergenze": [
+"Whitaker registra due glosse assenti dalla voce di L&S: «amber» (ambra) e «game piece» (pedina da gioco); L&S documenta invece per la pietra dura solo gli usi metonimici di coppa, anello-sigillo e perla.",
+"Sulla gerarchia dei sensi: L&S segnala esplicitamente che «pietra preziosa» è il significato predominante, benché il senso botanico sia il primario per l'ordine espositivo; Whitaker elenca invece «bud» per primo."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:genae": {
+"campi": [
+{
+"campo": "guance",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the cheeks"
+],
+"it": [
+"guance",
+"gote"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "orbite e occhi",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"the eye-sockets",
+"the eyes"
+],
+"it": [
+"orbite",
+"occhi"
+]
+},
+"registro": "poetico",
+"fonti": [
+"Whitaker",
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"cheeks",
+"eye-sockets"
+],
+"it": [
+"guance",
+"gote",
+"orbite"
+]
+},
+"applicazione": [
+"Termine usato di norma al plurale; il singolare gena è raro e va reso comunque con «guancia».",
+"Con verbi di pianto le guance sono l'origine del movimento (ablativo o dativo): effusae genis lacrimae, lacrime sgorgate sulle guance; siccat genas, si asciuga le guance.",
+"Detto della prima barba: prima genas vestibat flore iuventa, la giovinezza rivestiva le guance della sua peluria; la resa naturale è «gli spuntava la prima barba».",
+"Nel nesso ovidiano expilat genis oculos («strappa gli occhi dalle cavità») genae vale «orbite»: da rendere con «orbite» o «cavità oculari», non con «guance»."
+],
+"divergenze": [
+"Whitaker aggiunge la glossa «eyes», che la voce breve di Lewis non enuncia come senso a sé ma solo lascia intravedere nel locus ovidiano expilat genis oculos: il valore è di «orbita, cavità dell'occhio» più che di «occhio» propriamente detto."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:genealogus": {
+"campi": [
+{
+"campo": "genealogia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a genealogist"
+],
+"it": [
+"genealogista",
+"compilatore di genealogie"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"genealogist"
+],
+"it": [
+"genealogista"
+]
+},
+"applicazione": [
+"Grecismo (γενεαλόγος): indica l'erudito che stila le discendenze, in Cicerone gli antichi genealogisti degli dèi (genealogi antiqui).",
+"In ambito cristiano è detto di Mosè come autore della Genesi (Prudenzio): la resa può essere «l'autore delle genealogie», «lo storico delle stirpi»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gener": {
+"campi": [
+{
+"campo": "genero",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a daughter's husband",
+"a son-in-law"
+],
+"it": [
+"genero"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a daughter's bridegroom",
+"betrothed of one's daughter"
+],
+"it": [
+"promesso sposo della figlia",
+"futuro genero"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "altri gradi di parentela acquisita",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"the husband of a granddaughter or great-granddaughter"
+],
+"it": [
+"marito della nipote (o pronipote)"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"a sister's husband",
+"brother-in-law"
+],
+"it": [
+"cognato (marito della sorella)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "uso scherzoso",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"a daughter's paramour (comically)"
+],
+"it": [
+"amante della figlia (per scherzo)"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"son-in-law",
+"daughter's bridegroom"
+],
+"it": [
+"genero",
+"promesso sposo della figlia"
+]
+},
+"applicazione": [
+"Si oppone regolarmente a socer (suocero) nelle coppie di parentela: cum soceris generi, i generi con i suoceri; spesso affiancato ad adfinis, affines (parenti acquisiti).",
+"Il linguaggio giuridico estende la denominazione: sotto gener rientrano anche i mariti della nipote e della pronipote (per il più preciso progener), e sotto generi et nurus appellatio anche i promessi sposi.",
+"Dativo plurale arcaico generibus (Accio); genitivo e declinazione regolari sul tema gener-, con caduta della -e- (generi)."
+],
+"divergenze": [
+"La lista di Whitaker per questo lemma è contaminata: le glosse «gene», «birth/descent/origin», «race/family/house/stock», «offspring», «noble birth», «kind/sort/variety», «class/rank», «mode/method/style» appartengono a genus (e all'inglese gene), non a gener. Dell'elenco è pertinente soltanto «son-in-law». Fa fede L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:generator": {
+"campi": [
+{
+"campo": "chi genera",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"an engenderer",
+"a begetter",
+"father",
+"sire"
+],
+"it": [
+"generatore",
+"procreatore",
+"padre",
+"progenitore"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a producer",
+"breeder"
+],
+"it": [
+"produttore",
+"allevatore (di animali)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"begetter",
+"father",
+"producer"
+],
+"it": [
+"generatore",
+"procreatore",
+"produttore"
+]
+},
+"applicazione": [
+"Vocabolo raro, nomen agentis di genero; regge il genitivo di ciò che è generato: generatores suos, i propri genitori (Cic.); magnanimum generator equorum, allevatore di cavalli generosi (Verg., detto di Agrigento).",
+"Detto di una città o di una terra si rende con «madre», «vivaio», «terra che alleva»; detto di persona con «padre», «progenitore»."
+],
+"divergenze": [
+"Whitaker registra il solo valore personale (begetter, father, sire) e non l'uso più ampio di «produttore, allevatore» che L&S documenta con il verso virgiliano su Agrigento."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:genesis": {
+"campi": [
+{
+"campo": "generazione e nascita",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"generation",
+"birth",
+"creation"
+],
+"it": [
+"generazione",
+"nascita",
+"creazione"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "astrologia",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"the star rising at one's birth",
+"natal star",
+"nativity",
+"horoscope"
+],
+"it": [
+"astro natale",
+"oroscopo",
+"tema di nascita",
+"destino segnato dagli astri"
+]
+},
+"registro": "astrologico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "libro biblico",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"Genesis, the first book of Moses"
+],
+"it": [
+"Genesi (il primo libro di Mosè)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"birth, generation",
+"horoscope",
+"Genesis"
+],
+"it": [
+"nascita, generazione",
+"oroscopo",
+"Genesi"
+]
+},
+"applicazione": [
+"Grecismo (γένεσις) di declinazione mista; nel senso proprio si rende con «nascita» o «creazione»: Pandoras genesin appellavit, intitolò l'opera «La nascita di Pandora».",
+"Nel senso astrologico entra in nessi tecnici da rendere con perifrasi: inspecta genesi, esaminato l'oroscopo; nota mathematicis genesis tua, il tuo tema natale è noto agli astrologi; genesim habere imperatoriam, avere un oroscopo che promette l'impero.",
+"Con l'iniziale maiuscola e senza determinazioni, in autori cristiani, designa il libro della Genesi."
+],
+"divergenze": [
+"Whitaker non fornisce alcuna glossa per questo lemma: la voce poggia interamente su L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:genesta": {
+"campi": [
+{
+"campo": "botanica",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the broom-plant",
+"broom",
+"Spanish broom",
+"greenweed"
+],
+"it": [
+"ginestra",
+"pianta della ginestra"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"broom",
+"broom-plant"
+],
+"it": [
+"ginestra"
+]
+},
+"applicazione": [
+"Variante grafica genista, altrettanto comune: le due forme vanno trattate come un unico lemma.",
+"Ricorre nei contesti agronomici e georgici (Virgilio, Plinio) fra gli arbusti spontanei e le piante da vimini: il singolare ha spesso valore collettivo, «la ginestra» = i cespugli di ginestra.",
+"Whitaker precisa l'estensione del nome ad arbusti affini (Spanish broom, greenweed): quando il contesto è tecnico-botanico conviene rendere con «ginestra» senza ulteriore specificazione."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:genetrix": {
+"campi": [
+{
+"campo": "madre",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"she that has borne any one",
+"a mother"
+],
+"it": [
+"madre",
+"genitrice"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"ancestress, mother of a lineage (as a divine epithet)"
+],
+"it": [
+"progenitrice",
+"capostipite",
+"Genitrice (epiteto di Venere e di Cibele)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "generatrice di cose",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"she that produces",
+"producer",
+"source"
+],
+"it": [
+"generatrice",
+"madre (di cose)",
+"fonte",
+"origine"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "suocera",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"a mother-in-law"
+],
+"it": [
+"suocera"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"mother",
+"ancestress",
+"producer"
+],
+"it": [
+"madre",
+"genitrice",
+"progenitrice"
+]
+},
+"applicazione": [
+"Variante genitrix, meno frequente ma corrente: stesso lemma, stessa resa. Sinonimo prosastico è mater; genetrix è di norma poetico o postclassico.",
+"Come epiteto cultuale non si traduce: Venus Genetrix, Venere Genitrice; magna deum genetrix, la gran madre degli dèi (Cibele).",
+"Nel senso traslato regge il genitivo di ciò che è prodotto: frugum genetrix, madre delle messi; vitiorum genetrix, madre dei vizi; genetrix virtutum frugalitas, la parsimonia generatrice di ogni virtù. Con nomi di città o regioni si rende con «madre», «fondatrice»: Miletus urbium genetrix, Mileto madre di città.",
+"Al plurale può valere «le madri» in senso generico, anche di animali: genetricum senectam educant (delle cicogne), accudiscono la vecchiaia delle madri."
+],
+"divergenze": [
+"Whitaker condensa la voce in «mother, ancestress»: coglie il senso proprio e quello di progenitrice, ma non registra né l'uso traslato di «generatrice» riferito a cose e astrazioni, né il valore poetico di «suocera» (Ov. M. 9, 326), entrambi documentati da L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:genitor": {
+"campi": [
+{
+"campo": "padre, generatore",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"begetter",
+"father",
+"parent",
+"sire"
+],
+"it": [
+"genitore",
+"padre",
+"chi genera"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"father of the gods",
+"divine father",
+"founder-father"
+],
+"it": [
+"padre (degli dèi)",
+"padre divino",
+"padre fondatore"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "autore, origine, fonte",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"creator",
+"author",
+"originator",
+"producer"
+],
+"it": [
+"creatore",
+"autore",
+"artefice",
+"generatore"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"source (of a river)"
+],
+"it": [
+"sorgente",
+"fonte (di un fiume)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"father",
+"begetter",
+"creator",
+"originator"
+],
+"it": [
+"padre",
+"genitore",
+"creatore",
+"autore"
+]
+},
+"applicazione": [
+"Regge il genitivo oggettivo di ciò che si genera: «bellorum genitor» = «generatore di guerre», «fraudum genitor» = «padre delle frodi», «vitiorum genitores» = «maestri di ogni vizio».",
+"Assoluto in poesia epica vale «il padre» per eccellenza (Giove, o l'antenato-capostipite): «genitor» da solo va reso col nome del dio o con «il padre».",
+"«deum genitor» = «padre degli dèi»; «genitor profundi» (di Nettuno) = «signore-padre del mare»: con un genitivo di dominio equivale a un titolo divino.",
+"Con nomi di cose inanimate l'ablativo indica la fonte da cui qualcosa nasce: «Rhodanus genitore Lemanno» = «il Rodano, che ha per padre il Lemano»."
+],
+"divergenze": [
+"Whitaker aggiunge «originator», che corrisponde al senso traslato (L&S II) di autore/origine di cose e situazioni; L&S mantiene invece netta la distinzione fra uso proprio (padre) e traslato (poetico e post-augusteo)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:genius": {
+"campi": [
+{
+"campo": "genio tutelare, nume",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"tutelary deity",
+"guardian spirit",
+"genius (of a person)"
+],
+"it": [
+"genio",
+"nume tutelare",
+"spirito protettore (della persona)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"genius of a place or community",
+"presiding spirit"
+],
+"it": [
+"genio del luogo",
+"nume tutelare (di città, colonia, curia)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "gusto della vita, inclinazione",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"spirit of enjoyment",
+"taste",
+"appetite",
+"inclination"
+],
+"it": [
+"gusto della vita",
+"voglia di godersela",
+"appetito",
+"inclinazione"
+]
+},
+"registro": "familiare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"entertainer",
+"patron (parasite's term)"
+],
+"it": [
+"anfitrione",
+"protettore (nel gergo dei parassiti)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "ingegno, talento",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"wit",
+"talent",
+"genius"
+],
+"it": [
+"ingegno",
+"talento",
+"estro"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"guardian spirit",
+"genius",
+"taste, appetite",
+"talent"
+],
+"it": [
+"genio tutelare",
+"nume",
+"gusto, inclinazione",
+"ingegno"
+]
+},
+"applicazione": [
+"Nelle suppliche e nei giuramenti si invoca il genio dell'interlocutore: «te per Genium obsecro» = «ti scongiuro per il tuo genio», cioè «per quanto hai di più caro»; giurare per il Genio del principe è formula anche giuridica.",
+"«indulgere genio» = «darsi alla bella vita, concedersi i piaceri»; per contro «genium suum defraudare / cum genio belligerare» = «privarsi di tutto, farsi la guerra da sé» (lessico della commedia).",
+"«Genium curare (mero, vino)» = «festeggiare, trattarsi bene», con riferimento all'offerta rituale al Genio nel giorno natalizio.",
+"«Genio loci» è formula epigrafica di dedica: al genitivo seguono luoghi ed enti (coloniae, municipii, curiae, theatri), da rendere «al Genio di…».",
+"Nel senso di ingegno è quasi sempre predicativo di un'opera: «victurus genium debet habere liber» = «il libro che vuol durare deve avere un'anima»."
+],
+"divergenze": [
+"Whitaker registra «prophetic skill», che nella voce di L&S non trova appoggio: il valore intellettuale documentato è solo quello di ingegno/talento (Giovenale, Marziale), peraltro dichiarato «very rare».",
+"L&S articola nettamente il senso comico-conviviale (gusto, appetito, patrono dei parassiti) che Whitaker comprime in «taste, inclination / appetite»."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gens": {
+"campi": [
+{
+"campo": "stirpe, casato (istituzione romana)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"clan",
+"gens",
+"house",
+"race united by name and rites"
+],
+"it": [
+"gente",
+"clan",
+"casato (insieme di famiglie con un nome e culti comuni)"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"lineage",
+"family descent",
+"birth"
+],
+"it": [
+"stirpe",
+"lignaggio",
+"nascita"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "popolo, nazione",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"nation",
+"people",
+"tribe"
+],
+"it": [
+"popolo",
+"nazione",
+"gente"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"foreign nations",
+"the peoples (pl.)"
+],
+"it": [
+"le genti",
+"i popoli stranieri"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"Gentiles",
+"the heathen"
+],
+"it": [
+"i Gentili",
+"i pagani"
+]
+},
+"registro": "religioso",
+"fonti": [
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "genere, razza (esseri viventi)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"the race",
+"mankind (gens humana)"
+],
+"it": [
+"il genere (umano)",
+"la razza"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"race of animals",
+"herd",
+"brood",
+"swarm"
+],
+"it": [
+"razza (di animali)",
+"branco",
+"sciame",
+"specie"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "discendente, progenie",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"descendant",
+"offspring",
+"scion"
+],
+"it": [
+"discendente",
+"rampollo",
+"progenie"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "genìa, banda",
+"rank": 5,
+"sensi": [
+{
+"tr": {
+"en": [
+"tribe",
+"brood",
+"crew (contemptuous)"
+],
+"it": [
+"genìa",
+"razza",
+"banda",
+"cricca"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"clan, gens",
+"nation, people",
+"race, breed",
+"descendant"
+],
+"it": [
+"gente, casato",
+"popolo, nazione",
+"razza, stirpe",
+"discendente"
+]
+},
+"applicazione": [
+"«patres (patricii) maiorum / minorum gentium» distingue le famiglie senatorie più antiche da quelle aggregate poi: da qui, per traslato, «di maiorum gentium» = «le divinità maggiori» e «maiorum gentium Stoicus» = «uno stoico di prima grandezza».",
+"Nel lessico giuridico «ius gentilitatis / iura gentium» in questo contesto non è il diritto internazionale ma il diritto della gens; «gentis enuptio» = «facoltà di sposarsi fuori del proprio casato».",
+"«sine gente» = «senza stirpe, di oscuri natali»; «gente ad se redire (hereditatem)» = «tornare al casato per diritto gentilizio».",
+"In coppia con «natio» e «populus» va graduato: gens indica il ceppo per discendenza, natio il gruppo etnico minore, populus la comunità politica; nelle enumerazioni ciceroniane conviene rendere «popoli e nazioni».",
+"Genitivo partitivo con avverbi e pronomi di luogo o quantità: «ubi gentium?» = «dove mai al mondo?»; il nesso rafforza la domanda o l'esclamazione.",
+"Riferito a un singolo eroe («deum gens Aenea») è apposizione: «stirpe divina», da sciogliere con «rampollo degli dèi»."
+],
+"divergenze": [
+"Whitaker aggiunge «Gentiles», uso del latino cristiano (plurale gentes = i non ebrei/non cristiani) che la voce di L&S qui non documenta esplicitamente, pur essendo coerente con il valore di «popoli stranieri».",
+"Whitaker riduce a «tribe, clan» il valore istituzionale romano che L&S descrive con precisione (unità di più familiae con nome e sacra comuni, patrizia e poi anche plebea).",
+"Il testo di L&S consultato è troncato all'interno della sezione sui popoli: possono restare fuori sfumature ulteriori della sezione finale."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gentilitas": {
+"campi": [
+{
+"campo": "parentela gentilizia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"relationship of members of the same gens",
+"kinship",
+"clan relationship"
+],
+"it": [
+"parentela gentilizia",
+"vincolo di stirpe",
+"appartenenza alla stessa gens"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "i parenti, il casato",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"relatives bearing the same name",
+"kindred",
+"clan"
+],
+"it": [
+"i parenti dello stesso nome",
+"il casato",
+"la parentela"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"plants bearing the same name",
+"group of homonymous plants"
+],
+"it": [
+"gruppo di piante omonime",
+"«famiglia» di piante dello stesso nome"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "paganesimo",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"heathenism",
+"paganism"
+],
+"it": [
+"paganesimo",
+"gentilesimo"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"the heathen",
+"the pagans"
+],
+"it": [
+"i pagani",
+"i gentili"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"kinship within a gens",
+"kindred of the same name",
+"paganism"
+],
+"it": [
+"parentela gentilizia",
+"casato, parenti",
+"paganesimo"
+]
+},
+"applicazione": [
+"Nel lessico giuridico ricorre in serie con i termini affini: «gentilitatum, agnationum iura» = «i diritti di gente e di agnazione»; «stirpis ac gentilitatis ius» = «il diritto di stirpe e di casato».",
+"Al plurale ha valore concreto e collettivo: «gentilitates colligere» = «rimettere insieme i casati (dispersi)».",
+"Come soggetto collettivo regge il verbo al singolare: «gentilitas eius cognomen eiuravit» = «i suoi parenti ripudiarono quel cognome».",
+"Nel latino cristiano si oppone a «Dei religio» e vale come astratto collettivo: renderlo «il paganesimo» o, secondo il contesto, «i pagani»."
+],
+"divergenze": [
+"L&S registra anche l'uso botanico (piante che portano lo stesso nome, Plinio), che Whitaker non ha.",
+"Whitaker distingue esplicitamente «paganism» e «heathens/pagans», coincidendo con la doppia articolazione astratto/concreto di L&S nella sezione ecclesiastica."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:genu": {
+"campi": [
+{
+"campo": "ginocchio",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"knee"
+],
+"it": [
+"ginocchio"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "nodo delle piante",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"knot",
+"joint (of a plant stem)"
+],
+"it": [
+"nodo",
+"internodo (del fusto)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"knee",
+"knot of a stem"
+],
+"it": [
+"ginocchio",
+"nodo (di pianta)"
+]
+},
+"applicazione": [
+"Lessico della supplica: «genua amplecti / complecti», «ad genua accidere, procidere», «genibus advolvi», «ad genua se submittere» = «abbracciare le ginocchia, gettarsi ai piedi di qualcuno»; «nixus genibus» = «in ginocchio».",
+"«genu ponere» e «genu flectere» (con dativo della persona) = «piegare il ginocchio davanti a, inginocchiarsi»; «genibus minor» (Orazio) = «piegando il ginocchio», cioè «da sottomesso».",
+"Misura di altezza con «tenus» o «fine» + genitivo: «genus tenus» = «fino al ginocchio».",
+"Le ginocchia come sede del vigore: «dum virent genua» = «finché le gambe reggono», cioè «finché si è giovani»; «genua succidunt / labant, corde et genibus tremit» = «le ginocchia cedono, si tremava nel cuore e nelle gambe».",
+"Declinazione: quarta neutra, con plurale «genua» (bisillabo in poesia) e dativo-ablativo plurale «genibus», più raramente «genubus»; si incontrano anche le forme arcaiche «genus» e «genum»."
+],
+"divergenze": [
+"Whitaker si ferma a «knee» e tace il valore botanico di nodo del fusto (L&S II), per il quale la lingua tecnica preferisce comunque «geniculum»."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:genualia": {
+"campi": [
+{
+"campo": "abbigliamento",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"garters",
+"knee-bands"
+],
+"it": [
+"legacci per le ginocchia",
+"giarrettiere",
+"fasce sotto il ginocchio"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"garters",
+"knee-bands"
+],
+"it": [
+"legacci per le ginocchia",
+"giarrettiere"
+]
+},
+"applicazione": [
+"Sostantivo neutro attestato solo al plurale (plurale con senso proprio: indica la coppia di legacci), da rendere sempre al plurale.",
+"Unico locus, Ovidio, Metamorfosi 10, 593: descrive l'abbigliamento della corsa di Atalanta; il contesto suggerisce la resa «fasce» o «legacci», non un accessorio moderno.",
+"Derivato di «genu» con il suffisso -alis: vale «ciò che appartiene al ginocchio»."
+],
+"divergenze": [
+"Whitaker non registra il lemma: l'unica fonte è L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:genus": {
+"campi": [
+{
+"campo": "nascita, stirpe, origine",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"birth",
+"descent",
+"origin",
+"stock"
+],
+"it": [
+"nascita",
+"discendenza",
+"origine",
+"stirpe"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"noble birth",
+"high descent"
+],
+"it": [
+"nobiltà di nascita",
+"nobili natali",
+"casato illustre"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "genere, specie, categoria",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"kind",
+"sort",
+"class",
+"species"
+],
+"it": [
+"genere",
+"specie",
+"sorta",
+"tipo",
+"categoria"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"the human race",
+"mankind"
+],
+"it": [
+"il genere umano",
+"l'umanità"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"race",
+"nation",
+"people"
+],
+"it": [
+"razza",
+"popolo",
+"schiatta"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "discendente, progenie",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"descendant",
+"offspring",
+"child",
+"posterity"
+],
+"it": [
+"discendente",
+"rampollo",
+"progenie",
+"posterità"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"birth, descent",
+"race, stock",
+"kind, sort, class",
+"offspring"
+],
+"it": [
+"nascita, stirpe",
+"genere, specie",
+"sorta, tipo",
+"progenie"
+]
+},
+"applicazione": [
+"Ablativo di origine con participi di nascita: «nobili / amplissimo / regio genere natus» = «nato da nobile (illustrissima, regale) stirpe»; «esse genere divino» = «essere di origine divina».",
+"Assoluto, in poesia e nella prosa alta, «genus» da solo vale «nobiltà di nascita» e si oppone alla virtù o al censo: «nec generis, ut ante, sed virtutis est praemium» = «non è più premio della nascita, ma del valore».",
+"«genus humanum», «genus hominum» = «il genere umano»; con genitivo di popolo indica la schiatta: «Graium genus» = «la stirpe dei Greci».",
+"Riferito a un singolo, in apposizione, è collettivo per concreto: «genus deorum», «genus Adrasti» = «rampollo degli dèi, discendente di Adrasto».",
+"Come termine di classificazione regge il genitivo di ciò che si suddivide e va reso con «tipo di, sorta di», adattando il traducente al referente (uomini, animali, piante, cose)."
+],
+"divergenze": [
+"Whitaker non fornisce glosse per questo lemma: la resa poggia interamente su L&S.",
+"Il testo di L&S disponibile è troncato all'interno della sezione II.B.1.a (il genere come classe di esseri viventi): restano perciò fuori dalla fusione gli impieghi specialistici successivi della voce."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:geographia": {
+"campi": [
+{
+"campo": "geografia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"geography"
+],
+"it": [
+"geografia",
+"descrizione della terra"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"geographical work",
+"treatise on geography"
+],
+"it": [
+"opera di geografia",
+"trattato geografico"
+]
+},
+"registro": "raro",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"geography",
+"geographical treatise"
+],
+"it": [
+"geografia",
+"trattato di geografia"
+]
+},
+"applicazione": [
+"Grecismo tecnico (γεωγραφία), da conservare come tale in traduzione: «de geographia» = «quanto alla geografia».",
+"Nel locus ciceroniano (Att. 2, 4, 3) il termine designa il lavoro geografico che Cicerone ha in cantiere: secondo il contesto conviene rendere «l'opera di geografia»."
+],
+"divergenze": [
+"Whitaker distingue il valore concreto di «opera/libro di geografia», che L&S non isola come senso a sé pur documentandolo di fatto con il passo delle Epistole ad Attico."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:geometres": {
+"campi": [
+{
+"campo": "geometria (chi la pratica)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"geometer",
+"geometrician"
+],
+"it": [
+"geometra",
+"studioso di geometria",
+"matematico"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"geometer",
+"geometrician"
+],
+"it": [
+"geometra",
+"studioso di geometria"
+]
+},
+"applicazione": [
+"Grecismo maschile della prima declinazione (γεωμέτρης), con flessione in parte greca: accusativo singolare «geometren», accusativo plurale «geometras», dativo «geometrae / geometris».",
+"Convivono le varianti «geometra» (tarda) e la forma trisillaba metricamente utile in Giovenale.",
+"Va reso «geometra» nel senso antico di matematico teorico, non nell'accezione moderna di tecnico agrimensore."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:geometria": {
+"campi": [
+{
+"campo": "geometria",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"geometry"
+],
+"it": [
+"geometria"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"geometry"
+],
+"it": [
+"geometria"
+]
+},
+"applicazione": [
+"Grecismo (γεωμετρία) del lessico delle discipline: in Cicerone e in Quintiliano designa la geometria come materia dell'educazione liberale.",
+"Ricorre con «in» + ablativo per indicare l'ambito: «in geometria lineamenta, formae» = «in geometria le linee, le figure»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:germana": {
+"campi": [
+{
+"campo": "parentela",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"full sister",
+"own sister",
+"sister"
+],
+"it": [
+"sorella germana",
+"sorella carnale",
+"sorella"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"full sister",
+"own sister"
+],
+"it": [
+"sorella germana",
+"sorella"
+]
+},
+"applicazione": [
+"Il termine specifica il legame di sangue pieno: la sorella nata dagli stessi genitori, non la «soror» genericamente intesa; in traduzione «sorella» basta, «sorella germana» quando il contesto oppone i gradi di parentela.",
+"Attestato in Ennio (ap. Cic.), Virgilio e Ovidio: è voce di tono elevato e affettivo, spesso in apostrofe."
+],
+"divergenze": [
+"La voce integrale di L&S non è disponibile: la fusione poggia sulla voce breve del Lewis elementare, concorde con Whitaker."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:germanitas": {
+"campi": [
+{
+"campo": "vincolo fraterno",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"brotherhood",
+"sisterhood",
+"the relation between brothers and sisters"
+],
+"it": [
+"fratellanza",
+"legame fraterno",
+"rapporto fra fratelli e sorelle"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"a sister"
+],
+"it": [
+"sorella"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "rapporto fra città consanguinee",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"the relationship of the inhabitants of cities which are colonies of one mother-city",
+"kinship between colonies"
+],
+"it": [
+"consanguineità fra città di comune origine",
+"fraternità coloniale"
+]
+},
+"registro": "politico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "affinità fra cose",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"union",
+"resemblance",
+"similarity",
+"affinity between things deriving from the same source"
+],
+"it": [
+"affinità",
+"somiglianza",
+"corrispondenza"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"brotherhood",
+"sisterhood",
+"affinity"
+],
+"it": [
+"fratellanza",
+"legame fraterno",
+"affinità"
+]
+},
+"applicazione": [
+"Nel senso proprio compare in serie con «pietas» e «caritas» come vincolo morale invocato davanti al giudice (Cic. Lig. 11, 33); si rende con «il vincolo fraterno», non con l'astratto «germanità».",
+"Con genitivo di cosa («germanitas malorum, vini, digitorum») indica la parentela naturale fra prodotti della stessa specie o della stessa terra: resa con «affinità di», «parentela fra».",
+"Nell'uso concreto («germanitatis stupra», Cic. Har. Resp. 20, 42) l'astratto sta per il concreto e vale «la sorella»."
+],
+"divergenze": [
+"Whitaker registra solo i due poli estremi (fratellanza / affinità fra cose) e tace sia del senso politico-coloniale sia dell'uso concreto «sorella», entrambi documentati da L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:germen": {
+"campi": [
+{
+"campo": "vegetazione",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"sprig",
+"offshoot",
+"sprout",
+"bud",
+"shoot"
+],
+"it": [
+"germoglio",
+"gemma",
+"virgulto",
+"pollone"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "generazione e stirpe",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"seed",
+"offspring",
+"scion",
+"progeny"
+],
+"it": [
+"seme",
+"rampollo",
+"progenie",
+"stirpe"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "origine (traslato)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"a germ",
+"origin",
+"source"
+],
+"it": [
+"germe",
+"origine",
+"principio"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"sprout",
+"bud",
+"germ"
+],
+"it": [
+"germoglio",
+"gemma",
+"germe"
+]
+},
+"applicazione": [
+"Voce poetica e della prosa post-augustea; il plurale «germina» è la forma corrente per i germogli che spuntano a primavera (Verg. G. 2, 332).",
+"Riferito a uomini o animali («impleratque uterum generoso germine», Ov. M. 9, 280; «servile germen», Iust.; dei cuccioli in Nemesiano) vale «seme», «prole»: si rende con «rampollo» o «stirpe» secondo il contesto.",
+"In senso traslato si accompagna a un'indicazione di provenienza («germine nobilis Eulalia», Prud.: nobile di nascita; «germen ab aethere trahere»: trarre origine dal cielo)."
+],
+"divergenze": [
+"Whitaker si ferma al senso botanico; i valori di «prole» e di «germe, origine», ampiamente attestati (Lucr., Ov., Claud., Prud.), risultano dal solo L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gerro": {
+"campi": [
+{
+"campo": "ingiuria sul carattere",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a trifler",
+"idle fellow",
+"good-for-nothing",
+"term of opprobrium"
+],
+"it": [
+"fannullone",
+"perdigiorno",
+"buono a nulla",
+"sciocco"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"trifler",
+"idle fellow"
+],
+"it": [
+"fannullone",
+"buono a nulla"
+]
+},
+"applicazione": [
+"Voce della commedia, attestata di fatto nel solo Terenzio (Heaut. 5, 4, 10) dentro una sequenza d'ingiurie: si rende con un'invettiva colloquiale al vocativo («fannullone!», «buono a nulla!»).",
+"Il valore di fondo discende da «gerrae» (frasche, sciocchezze): l'uomo da nulla, non il buffone di mestiere.",
+"Grafia arcaica «cerro», glossata «leves et inepti» in Paolo Diacono."
+],
+"divergenze": [
+"Whitaker glossa genericamente «termine di ingiuria» e propone «buffone» con punto interrogativo; L&S precisa il senso in «trifler, idle fellow», cioè sfaccendato, uomo da nulla."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gerulus": {
+"campi": [
+{
+"campo": "trasporto e mestiere",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a bearer",
+"carrier",
+"porter"
+],
+"it": [
+"portatore",
+"facchino",
+"chi porta"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "esecutore",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"one who does something",
+"a doer"
+],
+"it": [
+"esecutore",
+"chi compie qualcosa"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"bearer",
+"porter",
+"doer"
+],
+"it": [
+"portatore",
+"facchino",
+"esecutore"
+]
+},
+"applicazione": [
+"Nell'uso corrente designa lo schiavo o il servo che porta pesi o denaro (Plaut. Bacch. 4, 9, 79; Hor. Ep. 2, 2, 72; Suet. Calig. 40) e ricorre nelle iscrizioni come nome di mestiere: si rende con «portatore» o «facchino».",
+"Regge il genitivo della cosa portata («gerulus argenti»: portatore del denaro).",
+"Il senso di «esecutore» è di provenienza glossografica (reso con ὁ πράττων, ὁ πρακτήρ) e si appoggia al composto «gerulifigulus»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gestamen": {
+"campi": [
+{
+"campo": "ciò che si porta indosso",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"that which is borne or worn",
+"burden",
+"load"
+],
+"it": [
+"ciò che si porta",
+"carico",
+"peso"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"ornaments",
+"accoutrements",
+"arms",
+"insignia",
+"something worn or carried on the body"
+],
+"it": [
+"arma",
+"armatura",
+"insegna",
+"ornamento",
+"amuleto"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "mezzo di trasporto",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a litter",
+"sedan",
+"sedan chair"
+],
+"it": [
+"lettiga",
+"portantina"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"a carriage",
+"vehicle",
+"any means of conveyance"
+],
+"it": [
+"veicolo",
+"mezzo di trasporto",
+"cavalcatura"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"what is borne or worn",
+"equipment",
+"means of conveyance"
+],
+"it": [
+"ciò che si porta",
+"arma o insegna",
+"mezzo di trasporto"
+]
+},
+"applicazione": [
+"Voce poetica e post-augustea; in Virgilio e Ovidio designa per lo più l'armatura o lo scudo, spesso in apposizione all'oggetto nominato prima («clipeus, magni gestamen Abantis», Verg. A. 3, 286): si rende con «arma di», «ciò che portava».",
+"Il plurale «gestamina» conserva senso proprio di «armi, insegne che si portano addosso» (Ov. M. 15, 163; 1, 457).",
+"Nel senso di veicolo compare in giunture con genitivo del mezzo («lecticae gestamine», «gestamine sellae», Tac. A. 2, 2; 14, 4): in italiano si scioglie con «in lettiga», «in portantina»."
+],
+"divergenze": [
+"Whitaker registra il solo senso di oggetto portato sulla persona; l'intera famiglia «lettiga / veicolo / mezzo di trasporto» (Tac., Val. Fl., Sedul.) è documentata dal solo L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gestio": {
+"campi": [
+{
+"campo": "amministrazione",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a managing",
+"doing",
+"performing",
+"administration"
+],
+"it": [
+"gestione",
+"amministrazione",
+"compimento",
+"esecuzione"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "condotta",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a behaving",
+"acting in any manner",
+"conduct"
+],
+"it": [
+"comportamento",
+"condotta",
+"modo di agire"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"managing",
+"performing",
+"conduct"
+],
+"it": [
+"gestione",
+"amministrazione",
+"condotta"
+]
+},
+"applicazione": [
+"Termine tecnico raro, attestato quasi solo nella giuntura «in gestione negotii» (Cic. Inv. 1, 26, 38), sinonimo di «actio» e «administratio»: si rende con «nella conduzione di un affare».",
+"Il secondo valore appartiene alla lingua dei giuristi (Dig. 11, 7, 14, § 8) e vale «il tenere una certa condotta»."
+],
+"divergenze": [
+"Whitaker non registra il lemma: i sensi provengono interamente da L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gestus": {
+"campi": [
+{
+"campo": "movimento del corpo",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"movement of the limbs",
+"bodily action",
+"carriage",
+"gesture"
+],
+"it": [
+"gesto",
+"gestualità",
+"movimento del corpo",
+"portamento"
+]
+},
+"registro": "generale",
+"fonti": [
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "azione compiuta",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"what has been carried out",
+"a business",
+"performance (duty)"
+],
+"it": [
+"cosa compiuta",
+"affare",
+"adempimento"
+]
+},
+"registro": "raro",
+"fonti": [
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"deeds",
+"exploits"
+],
+"it": [
+"imprese",
+"gesta"
+]
+},
+"registro": "raro",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"gesture",
+"bodily action",
+"carriage"
+],
+"it": [
+"gesto",
+"gestualità",
+"portamento"
+]
+},
+"applicazione": [
+"Il sostantivo della quarta declinazione indica il movimento del corpo che accompagna la parola: nella lingua della retorica e del teatro si rende con «gestualità» o «azione», al plurale «i gesti».",
+"Le rese «cosa compiuta, impresa» appartengono in realtà al participio sostantivato di «gero» e al neutro plurale «gesta, -orum»: vanno tenute distinte dal maschile «gestus, -us»."
+],
+"divergenze": [
+"La voce «ls» qui trasmessa non è quella del sostantivo «gestus, -us» ma del participio «gestus, a, um» di «gero»: il senso di «gesto, movimento del corpo» poggia perciò sul solo Whitaker.",
+"Le glosse di Whitaker «what has been carried out» e «deeds, exploits» derivano dal participio e dal neutro «gesta», non dal sostantivo maschile: sono qui conservate ma segnalate come estranee al lemma in senso stretto."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gibbus": {
+"campi": [
+{
+"campo": "deformità del corpo",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a hunch",
+"hump",
+"lump on the body"
+],
+"it": [
+"gobba",
+"gibbo"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "protuberanza",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a hump-like swelling",
+"protuberance",
+"bulge"
+],
+"it": [
+"protuberanza",
+"rigonfiamento",
+"sporgenza"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"hump",
+"hunch",
+"protuberance"
+],
+"it": [
+"gobba",
+"protuberanza"
+]
+},
+"applicazione": [
+"Il sostantivo è tratto dall'aggettivo «gibbus, a, um» (curvo, convesso, gibboso): esiste anche il femminile «gibba, ae» con lo stesso valore (Suet. Dom. 23).",
+"In Giovenale (10, 294; 10, 309; 6, 109) è parola dell'invettiva sul difetto fisico; nella prosa tecnica (Cels. 8, 1; Amm. 23, 4) resta descrittiva e vale «rilievo, convessità»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gigas": {
+"campi": [
+{
+"campo": "mitologia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a giant",
+"the Giants (pl.)",
+"the fabled sons of Earth and Tartarus"
+],
+"it": [
+"Gigante",
+"i Giganti",
+"i figli della Terra"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "statura smisurata",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"giant",
+"a man of enormous stature"
+],
+"it": [
+"gigante",
+"uomo di statura smisurata"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"giant",
+"the Giants"
+],
+"it": [
+"Gigante",
+"i Giganti"
+]
+},
+"applicazione": [
+"Ricorre di norma al plurale «Gigantes, -um» per i figli della Terra e del Tartaro che assalirono il cielo e furono fulminati da Giove: in traduzione si conserva la maiuscola («i Giganti»).",
+"Il singolare è raro e poetico; accanto all'accusativo latino «gigantem» si trova quello grecizzante «giganta» (Stat. Th. 5, 569; Mart. 9, 51, 6).",
+"La locuzione «gigantum more bellare» (Cic. Sen. 2, 5) vale «combattere alla maniera dei Giganti», cioè muovere guerra agli dèi.",
+"Dal nome deriva l'aggettivo «Giganteus, a, um», riferito alle cose dei Giganti e, per traslato, semplicemente «gigantesco» (Sil. 5, 436)."
+],
+"divergenze": [
+"Whitaker distingue il comune «giant» dal proprio «Giant»; L&S accentua quasi esclusivamente il valore mitologico e ammette il senso comune soprattutto nell'uso tardo e biblico (Vulg. Sirach 47, 4)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gingiva": {
+"campi": [
+{
+"campo": "anatomia della bocca",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"gum",
+"gum (in which the teeth are set)"
+],
+"it": [
+"gengiva",
+"le gengive"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"gum"
+],
+"it": [
+"gengiva"
+]
+},
+"applicazione": [
+"Attestato sia al singolare (Plin., Iuv.) sia al plurale (Cels., Plin.): il plurale gingivae vale spesso come collettivo e si rende con l'italiano «le gengive».",
+"Ricorre in contesti medici in coppia con dens: inter dentem et gingivam «fra il dente e la gengiva» (Cels. 6,13)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:glacies": {
+"campi": [
+{
+"campo": "ghiaccio, elemento naturale",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"ice"
+],
+"it": [
+"ghiaccio",
+"gelo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"ice fields",
+"sheets of ice"
+],
+"it": [
+"distese di ghiaccio",
+"ghiacci"
+]
+},
+"registro": "poetico",
+"fonti": [
+"Whitaker",
+"L&S"
+]
+}
+]
+},
+{
+"campo": "durezza, consistenza rigida",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"hardness",
+"rigid consistency"
+],
+"it": [
+"durezza",
+"rigidità"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"ice",
+"ice fields"
+],
+"it": [
+"ghiaccio",
+"distese di ghiaccio"
+]
+},
+"applicazione": [
+"Con aggettivo qualificativo si rende quasi sempre con un sintagma italiano: lubrica glacies «il ghiaccio sdrucciolevole» (Liv. 21,36,7), aspera glacies «il ghiaccio tagliente» (Verg. ecl. 10,49).",
+"Il plurale (glacies nom./acc., gen. glacierum) è forma poetica e tarda e va reso con «i ghiacci», «le distese ghiacciate».",
+"Il senso traslato di «durezza» è isolato in Lucrezio (1,493, del bronzo che si liquefà): fuori di quel contesto non va introdotto nella traduzione."
+],
+"divergenze": [
+"Whitaker registra esplicitamente il plurale come «ice fields»; L&S documenta le forme plurali (Verg. georg. 4,517; Sid. epist. 4,6) senza staccarle in un senso autonomo.",
+"Il senso II «hardness» è solo di L&S e manca del tutto in Whitaker."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gladiator": {
+"campi": [
+{
+"campo": "combattente dei giochi",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"gladiator",
+"swordsman",
+"fighter in the public games"
+],
+"it": [
+"gladiatore",
+"combattente dei giochi pubblici",
+"spadaccino"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"cut-throat",
+"ruffian",
+"bravo"
+],
+"it": [
+"sicario",
+"tagliagole",
+"bravaccio"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "spettacolo gladiatorio",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"combat of gladiators",
+"gladiatorial exhibition",
+"gladiatorial games"
+],
+"it": [
+"spettacolo gladiatorio",
+"giochi gladiatorii",
+"combattimento di gladiatori"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "mestiere artigiano",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"swordcutler",
+"swordsmith"
+],
+"it": [
+"fabbricante di spade",
+"spadaio"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"gladiator",
+"gladiatorial show"
+],
+"it": [
+"gladiatore",
+"spettacolo gladiatorio"
+]
+},
+"applicazione": [
+"Il senso «spettacolo» compare solo al plurale: gladiatores dare / edere «offrire, allestire uno spettacolo di gladiatori» (Suet. Aug. 45), locum gladiatoribus dare «assegnare i posti per i giochi» (Cic. Att. 2,1,5).",
+"L'ablativo gladiatoribus vale come determinazione di tempo: «durante i giochi gladiatorii» (Cic. Phil. 2,19,3).",
+"Come ingiuria politica designa l'avversario come bandito armato: hic gladiator, di Antonio, si rende «questo sicario», non «questo gladiatore» (Cic. Phil. 5,12,32).",
+"Locuzione tecnica: rudem accipere «ricevere il congedo» (la spada di legno consegnata al gladiatore liberato dal servizio)."
+],
+"divergenze": [
+"Whitaker si ferma alla glossa unica «gladiator»: non registra né l'uso plurale metonimico per lo spettacolo, né l'impiego ingiurioso, né il senso tecnico di «fabbricante di spade» del Digesto."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gladiatura": {
+"campi": [
+{
+"campo": "attività gladiatoria",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"profession of gladiator",
+"gladiator's trade"
+],
+"it": [
+"mestiere di gladiatore",
+"professione gladiatoria"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"fighting of gladiators",
+"gladiatorial combat"
+],
+"it": [
+"combattimento gladiatorio",
+"lotta nell'arena"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"profession of gladiator",
+"gladiatorial combat"
+],
+"it": [
+"mestiere di gladiatore",
+"combattimento gladiatorio"
+]
+},
+"applicazione": [
+"Vocabolo post-augusteo e rarissimo: in Tacito regge un genitivo di destinazione, gladiaturae destinati «destinati al mestiere del gladiatore» (ann. 3,43).",
+"Nel senso di «combattimento» indica l'attività in sé, non il singolo spettacolo: requiem gladiaturae habere «avere una tregua dai combattimenti»."
+],
+"divergenze": [
+"Whitaker riconosce solo «profession of gladiator»; L&S affianca alla professione anche il combattimento stesso."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gladius": {
+"campi": [
+{
+"campo": "arma bianca",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"sword",
+"short sword",
+"blade"
+],
+"it": [
+"spada",
+"gladio",
+"lama"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "violenza armata e potere capitale",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"murder",
+"bloodshed",
+"death by the sword"
+],
+"it": [
+"assassinio",
+"strage",
+"spargimento di sangue"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"power of life and death",
+"capital jurisdiction"
+],
+"it": [
+"diritto di vita e di morte",
+"potere capitale"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "combattimento gladiatorio",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"gladiatorial combat",
+"the arena"
+],
+"it": [
+"combattimento gladiatorio",
+"l'arena"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "strumento agricolo",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"ploughshare"
+],
+"it": [
+"vomere",
+"lama dell'aratro"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "zoologia marina",
+"rank": 5,
+"sensi": [
+{
+"tr": {
+"en": [
+"sword-fish",
+"xiphias"
+],
+"it": [
+"pesce spada"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"sword",
+"murder",
+"sword-fish"
+],
+"it": [
+"spada",
+"assassinio",
+"pesce spada"
+]
+},
+"applicazione": [
+"Verbi tecnici dello sguainare: gladium stringere / destringere / educere (e vagina) «sguainare, trarre la spada»; l'operazione inversa è gladium condere / recondere in vaginam «rinfoderare».",
+"Proverbi: suo sibi gladio aliquem iugulare «battere qualcuno con le sue stesse armi» (Ter. Ad. 958); plumbeo gladio iugulari «essere sgozzato con una spada di piombo», cioè vinto senza alcuna fatica (Cic. Att. 1,16,2); ignem gladio scrutare «attizzare il fuoco con la spada», cioè aggravare una situazione già incandescente (Hor. sat. 2,3,276).",
+"gladium alicui dare qui se occidat «mettere in mano a qualcuno l'arma per rovinarsi» (Plaut. Trin. 129).",
+"Nel linguaggio dei giuristi ius gladii / potestas gladii è la giurisdizione capitale del governatore provinciale; ad gladium damnari / se locare significa essere condannato o ingaggiarsi come gladiatore.",
+"Sinonimi da distinguere nella resa: ensis è la variante poetica, pugio e sica il pugnale, spatha la spada lunga di cavalleria.",
+"Attestata anche la forma arcaica neutra gladium, -i (Lucil. ap. Non.; Quint. 1,5,16)."
+],
+"divergenze": [
+"Whitaker registra solo «sword» e «swordfish»; mancano in esso i sensi traslati di L&S (assassinio, ius gladii, combattimento gladiatorio, vomere)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:glaeba": {
+"campi": [
+{
+"campo": "zolla di terra",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"clod",
+"lump of earth",
+"turf"
+],
+"it": [
+"zolla",
+"gleba",
+"zolla di terra"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "terreno, proprietà fondiaria",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"land",
+"soil",
+"ground"
+],
+"it": [
+"terra",
+"suolo",
+"terreno"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"plot of land",
+"parcel of ground"
+],
+"it": [
+"appezzamento",
+"pezzo di terra",
+"particella di terreno"
+]
+},
+"registro": "giuridico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "massa compatta di una sostanza",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"piece",
+"lump",
+"mass"
+],
+"it": [
+"pezzo",
+"blocco",
+"grumo",
+"massa"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "fiscalità tardoantica",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"land tax on senatorial estates"
+],
+"it": [
+"imposta fondiaria (sui beni senatorî)",
+"tributo sulla terra"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"clod",
+"soil",
+"lump"
+],
+"it": [
+"zolla",
+"terreno",
+"blocco"
+]
+},
+"applicazione": [
+"Nel senso 3 regge il genitivo della materia e si rende con «blocco, pezzo, grumo di»: glaebae sevi ac picis «blocchi di sego e di pece» (Caes. Gall. 7,25), glaeba marmoris «un blocco di marmo», glaeba salis «un pane di sale», glaeba turis «un grumo d'incenso».",
+"Con verbi di possesso indica la minima unità di proprietà agraria: nemmeno una zolla, cioè «nemmeno un palmo di terra» (Cic. Verr. 2,3,28; Cic. agr. 3,1,3).",
+"ubere glaebae (Verg. Aen. 1,531) è genitivo di qualità: «per la fertilità del suolo».",
+"Nel rito funebre iniectio glaebae è la gettata simbolica di terra che rende sacro il sepolcro (Cic. leg. 2,57).",
+"La grafia gleba è considerata meno corretta da L&S ma è la più diffusa nei testi."
+],
+"divergenze": [
+"Whitaker aggiunge «hard soil», sfumatura che L&S non isola: va ricondotta al senso generico di «terra, suolo».",
+"L'uso fiscale tardo (Cod. Theod.) è solo in L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:glaebula": {
+"campi": [
+{
+"campo": "zolla di terra (diminutivo)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"small clod",
+"little lump of earth"
+],
+"it": [
+"zolletta",
+"piccola zolla"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "piccola proprietà fondiaria",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"little farm",
+"small piece of land"
+],
+"it": [
+"poderetto",
+"piccolo appezzamento",
+"campicello"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "piccola massa di una sostanza",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"small piece",
+"little lump"
+],
+"it": [
+"pezzetto",
+"grumo",
+"granello"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"small clod",
+"little farm",
+"small lump"
+],
+"it": [
+"zolletta",
+"poderetto",
+"pezzetto"
+]
+},
+"applicazione": [
+"Diminutivo di glaeba, post-augusteo: il valore diminutivo è spesso affettivo o modesto e conviene renderlo con un suffisso italiano («poderetto», «zolletta»).",
+"Nel senso 2 è termine della satira sociale: glaebula talis saturabat patrem «un simile campicello sfamava il padre» (Iuv. 14,166).",
+"Nel senso 3 regge il genitivo della materia: glaebula myrrhae «un grumo di mirra», glaebula nivis «una pallottola di neve».",
+"Variante grafica glebula."
+],
+"divergenze": [
+"Whitaker non registra il lemma: tutte le glosse dipendono da L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:glaesum": {
+"campi": [
+{
+"campo": "sostanza preziosa",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"amber"
+],
+"it": [
+"ambra"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"amber"
+],
+"it": [
+"ambra"
+]
+},
+"applicazione": [
+"Termine etnografico usato per l'ambra del Baltico raccolta dagli Aestii (Tac. Germ. 45; Plin. nat. 37,42): nella resa si può esplicitare «ambra (nome indigeno)».",
+"Varianti grafiche glesum, glessum; da esso l'aggettivo glaesarius «dell'ambra» (insula glaesaria «isola dell'ambra»)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:glans": {
+"campi": [
+{
+"campo": "frutto degli alberi",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"acorn",
+"mast",
+"beechnut",
+"chestnut",
+"acorn-shaped fruit"
+],
+"it": [
+"ghianda",
+"faggiola",
+"castagna",
+"frutto a forma di ghianda"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "proiettile da lancio",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"sling bullet",
+"missile of lead or clay"
+],
+"it": [
+"ghianda missile",
+"proiettile da fionda",
+"pallottola di piombo"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "anatomia",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"glans penis"
+],
+"it": [
+"glande"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"acorn",
+"sling bullet"
+],
+"it": [
+"ghianda",
+"proiettile da fionda"
+]
+},
+"applicazione": [
+"Nel linguaggio agrario e giuridico è collettivo e vale «le ghiande, il ghiandifero»: glandis appellatione omnis fructus continetur «sotto il nome di glans rientra ogni frutto degli alberi» (Dig. 50,16,236).",
+"Come nutrimento degli animali si rende con il collettivo: bubus glandem depromere «tirar fuori le ghiande per i buoi» (Plaut. Truc. 654); nei quadri di età primitiva (Lucr., Verg., Ov.) indica il cibo degli uomini prima del grano.",
+"Nel senso militare è la ghianda di piombo scagliata dai funditores: si accompagna a verbi come mittere, iacere (Caes. Gall. 5,43,1; Sall. Iug. 57,4); alcuni esemplari recano iscrizioni."
+],
+"divergenze": [
+"Whitaker non registra il senso anatomico, documentato in L&S (Cels. 7,25; Mart. 12,75,3)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:glarea": {
+"campi": [
+{
+"campo": "materiale inerte",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"gravel"
+],
+"it": [
+"ghiaia",
+"ghiaietto"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"gravel"
+],
+"it": [
+"ghiaia"
+]
+},
+"applicazione": [
+"Termine tecnico dell'edilizia stradale e dell'agrimensura: vias glarea substruere «massicciare le strade con la ghiaia» (Liv. 41,27,5); si oppone a pulvis «terra battuta» (Cic. ad Q. fr. 3,2,4).",
+"In contesto agronomico e poetico indica il terreno ghiaioso, magro e sassoso (Verg. georg. 2,212; Colum. 4,22,8): spesso conviene rendere «suolo ghiaioso»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:globus": {
+"campi": [
+{
+"campo": "corpo sferico",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a round body",
+"ball",
+"sphere",
+"globe"
+],
+"it": [
+"corpo rotondo",
+"palla",
+"sfera",
+"globo"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"globe of the earth",
+"sphere of a heavenly body",
+"orb of the sun or moon"
+],
+"it": [
+"globo terrestre",
+"sfera celeste",
+"disco del sole o della luna"
+]
+},
+"registro": "astronomico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "massa globulare di materia",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"globular mass",
+"ball or mass of things collected together",
+"globe of flame"
+],
+"it": [
+"massa globosa",
+"ammasso",
+"globo (di fiamme)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"clot of blood",
+"bank of clouds",
+"dense mass of weapons"
+],
+"it": [
+"grumo di sangue",
+"cumulo di nubi",
+"nugolo di dardi"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "aggregato di persone",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"close order of battle",
+"knot",
+"troop",
+"band",
+"company"
+],
+"it": [
+"formazione serrata",
+"drappello",
+"schiera compatta",
+"manipolo"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"throng",
+"crowd",
+"body of people"
+],
+"it": [
+"folla",
+"capannello",
+"gruppo compatto di persone"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"clique",
+"faction",
+"gang"
+],
+"it": [
+"cricca",
+"consorteria",
+"congrega"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "gastronomia",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"dumpling",
+"ball of flour fried in oil"
+],
+"it": [
+"frittella",
+"gnocco (pallottola di farina fritta nell'olio)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"ball",
+"sphere, globe",
+"dense mass",
+"band, throng"
+],
+"it": [
+"globo",
+"sfera",
+"massa compatta",
+"drappello, folla"
+]
+},
+"applicazione": [
+"Regge il genitivo della materia o del contenuto (globus flammarum, sanguinis, nubium, telorum): si rende con «globo / massa / nugolo di...».",
+"In lingua militare indica non un numero, ma un ordine serrato: cum globo iuvenum, militum globi si traducono «con un drappello di giovani», «reparti compatti di soldati».",
+"Col genitivo di un collettivo umano (globus nobilitatis, coniurationis, consensionis) assume tono spregiativo: «la cricca dei nobili», «il gruppetto dei congiurati».",
+"I sensi traslati (massa globulare, folla) mancano in Cicerone e Cesare: sono soprattutto poetici e postaugustei.",
+"Nel senso proprio è il termine con cui si rende il greco σφαῖρα (Cic. N. D. 2, 47)."
+],
+"divergenze": [
+"Whitaker isola «clique, band» come glossa autonoma; in L&S è una sfumatura spregiativa interna al senso di «folla, gruppo di persone».",
+"Whitaker non registra né l'accezione culinaria («gnocco»), né l'uso tecnico militare, entrambi documentati in L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:glomus": {
+"campi": [
+{
+"campo": "gomitolo",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"ball or clue of yarn",
+"skein",
+"ball made by winding"
+],
+"it": [
+"gomitolo",
+"matassa avvolta",
+"rocchetto di filo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"ball-shaped mass"
+],
+"it": [
+"massa a forma di palla",
+"batuffolo"
+]
+},
+"registro": "raro",
+"fonti": [
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "focaccia rituale",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"cake in the shape of a small boat, cooked in oil, used in sacrifices"
+],
+"it": [
+"focaccia sacrificale a forma di barchetta, cotta nell'olio"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"ball of yarn",
+"clue",
+"ball-shaped mass"
+],
+"it": [
+"gomitolo",
+"matassa",
+"massa sferica"
+]
+},
+"applicazione": [
+"Regge il genitivo della materia: glomus lanae, lini, staminis albi = «gomitolo di lana, di lino, di filo bianco».",
+"Vocabolo rarissimo; la quantità della prima sillaba oscilla (glŏmus di norma, glōmus in Lucrezio).",
+"Nel senso rituale la lingua di Catone e Varrone usa invece globus: i due lemmi si sovrappongono in quell'ambito."
+],
+"divergenze": [
+"Whitaker premette il senso generico «massa a forma di palla», che L&S non isola: la voce latina resta legata al gomitolo di filato e alla focaccia sacrificale."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gloria": {
+"campi": [
+{
+"campo": "gloria e fama",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"glory",
+"fame",
+"renown",
+"praise",
+"honour"
+],
+"it": [
+"gloria",
+"fama",
+"rinomanza",
+"onore",
+"lode"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"reputation",
+"standing in public opinion"
+],
+"it": [
+"reputazione",
+"buon nome",
+"credito presso l'opinione pubblica"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"glories, glorious deeds (in plural)"
+],
+"it": [
+"glorie",
+"titoli di gloria",
+"imprese gloriose (al plurale)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"pride, ornament (of a person or thing that confers glory)"
+],
+"it": [
+"vanto",
+"ornamento",
+"orgoglio (di ciò che dà lustro)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "brama di gloria",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"thirst for glory",
+"passion for glory",
+"ambition"
+],
+"it": [
+"brama di gloria",
+"sete di gloria",
+"ambizione"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "vanagloria",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"vainglory",
+"pride",
+"vaunting",
+"boasting"
+],
+"it": [
+"vanagloria",
+"iattanza",
+"millanteria",
+"ostentazione"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"boasts, vaunts (in plural)"
+],
+"it": [
+"vanterie",
+"spacconate (al plurale)"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"glory, fame",
+"renown",
+"ambition",
+"vainglory"
+],
+"it": [
+"gloria",
+"fama",
+"ambizione",
+"vanagloria"
+]
+},
+"applicazione": [
+"Col genitivo oggettivo indica il campo in cui si eccelle: gloria belli, rei militaris, dicendi, carminum = «gloria militare», «fama di oratore», «rinomanza poetica».",
+"Formule di stato con esse in: esse in gloria sempiterna, in maxima gloria = «godere di gloria imperitura, di grandissima fama».",
+"All'ablativo di causa efficiente con verbi passivi o mediali: gloria duci, gloria ferri = «essere spinto (trascinato) dall'ambizione».",
+"Il plurale ha valore concreto e cambia senso col campo: gloriae = «titoli di gloria» nel primo campo, «vanterie» nel terzo.",
+"Sinonimi affini da distinguere in traduzione: laus (la lode espressa), laudatio (l'elogio formale), gloriatio (l'atto del vantarsi)."
+],
+"divergenze": [
+"Whitaker allinea sullo stesso piano «glory, fame», «ambition» e «vainglory»; L&S le gerarchizza distinguendo il senso oggettivo (I) dal traslato soggettivo (II).",
+"Il valore poetico di «vanto, ornamento» (armenti gloria, taurus) e i due plurali con senso concreto sono documentati solo da L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gloriatio": {
+"campi": [
+{
+"campo": "atto del vantarsi",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a glorying",
+"boasting",
+"vaunting",
+"exulting"
+],
+"it": [
+"il vantarsi",
+"vanto",
+"millanteria",
+"esultanza per il proprio merito"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"glorying",
+"boasting",
+"vaunting"
+],
+"it": [
+"vanto",
+"il vantarsi",
+"millanteria"
+]
+},
+"applicazione": [
+"Neologismo coniato da Cicerone per rendere un astratto greco: nella prosa filosofica va tradotto con un infinito sostantivato («il vantarsi», «il gloriarsi») più che con un nome.",
+"Costruzione tipica dignus + ablativo: gloriatione dignam esse beatam vitam = «la vita felice merita di essere vantata».",
+"Nel latino cristiano (Vulg. Rom. 3, 27) vale «vanto» in senso negativo: ubi est ergo gloriatio tua? = «dov'è dunque il tuo vanto?»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gloriola": {
+"campi": [
+{
+"campo": "gloria di poco conto",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a small glory",
+"a little glory"
+],
+"it": [
+"gloriuzza",
+"piccola gloria",
+"modesta rinomanza"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"little glory",
+"small measure of fame"
+],
+"it": [
+"gloriuzza",
+"piccola gloria"
+]
+},
+"applicazione": [
+"Diminutivo di gloria coniato da Cicerone e attestato solo nelle lettere: il valore è affettivo e modesto, spesso autoironico (nosmet ipsi vivi gloriola nostra perfruamur = «godiamoci da vivi la nostra piccola gloria»).",
+"In italiano conviene conservare il diminutivo («gloriuzza», «un po' di gloria») per non perdere l'attenuazione."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gluten": {
+"campi": [
+{
+"campo": "sostanza adesiva",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"glue",
+"paste",
+"adhesive"
+],
+"it": [
+"colla",
+"sostanza collosa",
+"adesivo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"gum",
+"solder"
+],
+"it": [
+"gomma",
+"saldatura"
+]
+},
+"registro": "raro",
+"fonti": [
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "vincolo",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"connecting tie",
+"band",
+"bond"
+],
+"it": [
+"legame",
+"vincolo",
+"ciò che tiene unito"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"glue",
+"paste",
+"bond, tie"
+],
+"it": [
+"colla",
+"glutine",
+"vincolo"
+]
+},
+"applicazione": [
+"Convive con la forma parallela glutinum, i (n.), più frequente nella prosa tecnica (Celso, Plinio, Vitruvio); nella scelta della resa le due forme sono equivalenti.",
+"Nella lingua dell'apicoltura indica il propoli, la «colla» raccolta dalle api (Verg. georg. 4, 40 e 160).",
+"I sensi traslati sono postclassici e compaiono all'ablativo strumentale: glutino caritatis haerens = «tenuto stretto dal vincolo della carità».",
+"Marziano Capella attesta anche l'uso al maschile, contro il normale neutro."
+],
+"divergenze": [
+"Whitaker aggiunge «gum» e «solder» (quest'ultimo dalla versione Douay della Bibbia), accezioni che L&S non registra.",
+"Whitaker segnala esplicitamente «connecting tie/band/bond» come derivato da L&S: sul senso figurato le due fonti coincidono."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:glutinator": {
+"campi": [
+{
+"campo": "mestiere librario",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a gluer together of books",
+"bookbinder"
+],
+"it": [
+"rilegatore di libri",
+"chi incolla i fogli del volume"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"bookbinder",
+"gluer of books"
+],
+"it": [
+"rilegatore",
+"incollatore di libri"
+]
+},
+"applicazione": [
+"Termine tecnico dell'artigianato librario antico, attestato in Cicerone (Att. 4, 4b, 1) e nelle iscrizioni: designa lo schiavo o l'artigiano che incolla i fogli di papiro per formare il volumen.",
+"In traduzione si rende con «rilegatore», ricordando però che l'operazione antica è l'incollatura dei fogli, non la cucitura del codice."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gnaeus": {
+"campi": [
+{
+"campo": "onomastica romana",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"Gnaeus (Roman praenomen)"
+],
+"it": [
+"Gneo (prenome romano)"
+]
+},
+"registro": "nome proprio",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Gnaeus",
+"Roman praenomen (abbr. Cn.)"
+],
+"it": [
+"Gneo",
+"prenome romano (abbr. Cn.)"
+]
+},
+"applicazione": [
+"Si abbrevia regolarmente in Cn. per una convenzione grafica arcaica, in cui la lettera C valeva anche /g/ (come C. per Gaius).",
+"In italiano si traslittera «Gneo»; grafia alternativa latina Gneus, sotto cui il lessico registra la voce."
+],
+"divergenze": [
+"La voce di L&S è un semplice rinvio (Gnaeus, v. Gneus) e non fornisce alcuna definizione: il contenuto del lemma poggia interamente su Whitaker."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gnatho": {
+"campi": [
+{
+"campo": "nome proprio",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"Gnatho, a parasite in the Eunuchus of Terence"
+],
+"it": [
+"Gnatone, il parassita dell'Eunuchus di Terenzio"
+]
+},
+"registro": "nome proprio",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "parassita per antonomasia",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"a parasite in general",
+"sponger",
+"flatterer"
+],
+"it": [
+"parassita",
+"scroccone",
+"adulatore da tavola"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Gnatho",
+"parasite, sponger"
+],
+"it": [
+"Gnatone",
+"parassita, scroccone"
+]
+},
+"applicazione": [
+"Dal nome del personaggio terenziano (gr. Γνάθων, da γνάθος «mascella») si passa per antonomasia al nome comune: Cicerone lo usa già così (Lael. 25, 93; Phil. 2, 6, 15).",
+"In traduzione conviene conservare il nome proprio e glossarlo («un Gnatone», cioè uno scroccone), perché l'effetto dipende dal rinvio letterario.",
+"Da qui il derivato Gnathonici, «i seguaci di Gnatone», cioè la genìa dei parassiti (Ter. Eun. 2, 2, 33)."
+],
+"divergenze": [
+"Whitaker non registra il lemma: la voce dipende interamente da L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gobio": {
+"campi": [
+{
+"campo": "ittionimia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a gudgeon",
+"small fish of the gudgeon kind"
+],
+"it": [
+"ghiozzo",
+"gobione",
+"pesciolino di poco pregio"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"gudgeon",
+"small fish"
+],
+"it": [
+"ghiozzo",
+"gobione",
+"pesciolino"
+]
+},
+"applicazione": [
+"Grecismo (κωβιός) con forma parallela gobius, ī (m.): i due lemmi si alternano negli autori e vanno resi allo stesso modo.",
+"Designa un pesciolino di scarso pregio, comunemente adoperato come esca; in traduzione «ghiozzo» o, se serve la sfumatura spregiativa, «pesciolino da nulla»."
+],
+"divergenze": [
+"Il testo integrale di L&S manca: la resa poggia sulla voce breve del Lewis elementare, integrata da Whitaker, che aggiunge l'uso come esca e l'identificazione col genere Gobio."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gorgo": {
+"campi": [
+{
+"campo": "mitologia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"Gorgon",
+"Medusa",
+"the Gorgon Medusa, daughter of Phorcus"
+],
+"it": [
+"Gorgone",
+"Medusa",
+"la Gorgone Medusa, figlia di Forco"
+]
+},
+"registro": "mitologico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"the Gorgons (the three daughters of Phorcus: Stheno, Euryale, Medusa)"
+],
+"it": [
+"le Gorgoni (le tre figlie di Forco: Steno, Euriale, Medusa)"
+]
+},
+"registro": "mitologico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Gorgon",
+"Medusa"
+],
+"it": [
+"Gorgone",
+"Medusa"
+]
+},
+"applicazione": [
+"Nome proprio: al singolare vale per antonomasia Medusa, la Gorgone dalla chioma di serpi che pietrificava con lo sguardo, uccisa da Perseo; la sua testa fu poi fissata sullo scudo di Pallade.",
+"Il plurale Gorgones designa le tre sorelle (Verg. A. 6,289; Plin. 6,36,200).",
+"Flessione greca: gen. Gorgonis, ma anche Gorgus; è attestata la forma collaterale Gorgona, -ae.",
+"Spesso in apposizione al nome proprio: Medusae Gorgonis (Ov. Tr. 4,7,12)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:grabatus": {
+"campi": [
+{
+"campo": "mobilio: giaciglio",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"small or low couch",
+"pallet",
+"camp-bed",
+"cot"
+],
+"it": [
+"lettuccio",
+"giaciglio",
+"branda",
+"pagliericcio"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"mean or wretched bed",
+"poor man's couch"
+],
+"it": [
+"misero letto",
+"giaciglio da poveri"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"pallet",
+"camp-bed",
+"low couch"
+],
+"it": [
+"lettuccio",
+"giaciglio",
+"branda"
+]
+},
+"applicazione": [
+"Sinonimi di riferimento: lectus, cubile, stratum, torus; grabatus è il letto basso e povero, che si oppone al letto signorile.",
+"Prestito macedone-greco (κράβατος); esiste la forma collaterale neutra grabatum, -i (Cael. Aur.).",
+"Nella Vulgata indica il lettuccio o la barella del malato (Marc. 2,4; Act. 5,15), da rendere con «lettiga», «barella».",
+"Può essere qualificato da attributi che ne rovesciano l'umiltà: argento inaurato tectus (Scaev. Dig. 33,7,20)."
+],
+"divergenze": [
+"L&S descrive il termine come neutro «letto basso, branda», senza connotazione; la sfumatura spregiativa di «giaciglio misero» è esplicitata solo da Whitaker, ma trova appoggio negli usi satirici (Marziale, Catullo)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gracilitas": {
+"campi": [
+{
+"campo": "corporatura e forma fisica",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"slenderness",
+"thinness",
+"leanness",
+"meagreness",
+"slimness"
+],
+"it": [
+"esilità",
+"magrezza",
+"gracilità",
+"sottigliezza"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "stile retorico",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"simplicity of style",
+"plainness",
+"want of ornament",
+"tenuity"
+],
+"it": [
+"semplicità di stile",
+"sobrietà",
+"asciuttezza",
+"assenza di ornato"
+]
+},
+"registro": "retorico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"slenderness",
+"thinness",
+"plainness of style"
+],
+"it": [
+"esilità",
+"magrezza",
+"semplicità stilistica"
+]
+},
+"applicazione": [
+"Regge il genitivo della parte del corpo: gracilitas cervicis et crurum «l'esilità del collo e delle gambe» (Suet. Calig. 50).",
+"Il plurale gracilitates indica concretamente le forme snelle, i corpi asciutti, contrapposti agli habitus opimi (Cic. Brut. 16,64).",
+"In senso stilistico si oppone a ubertas (abbondanza) e sta accanto a mediocritas: designa lo stile tenue di Lisia (Quint. 12,10,24; Gell. 7,14,6); resa consigliata «stile tenue», «semplicità disadorna».",
+"Vale anche della sottigliezza di piante e fibre: digitalis gracilitas vitis (Plin. 14,4,40)."
+],
+"divergenze": [
+"Whitaker registra solo il valore fisico («slimness, leanness»); l'accezione retorica di «stile tenue», postclassica, è documentata unicamente da L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:graculus": {
+"campi": [
+{
+"campo": "ornitologia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"jackdaw (Corvus monedula)"
+],
+"it": [
+"taccola",
+"gracchio"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"jackdaw"
+],
+"it": [
+"taccola",
+"gracchio"
+]
+},
+"applicazione": [
+"Grafia alternativa gracculus; il nome è onomatopeico, tratto dal verso gra gra (Quint. 1,6,37; Isid. Orig. 12,7,45).",
+"Proverbiale: nihil cum fidibus graculo «nulla ha a che fare la taccola con la cetra», cioè gli ignoranti non hanno parte con la poesia (Gell. praef. 19).",
+"Graculus Aesopi indica chi si adorna di penne altrui e fa bella figura con la roba d'altri (Tert. adv. Val. 12; cfr. Phaedr. 1,3)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gradatio": {
+"campi": [
+{
+"campo": "retorica",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"gradation",
+"climax",
+"the figure κλῖμαξ"
+],
+"it": [
+"gradazione",
+"climax",
+"progressione ascendente"
+]
+},
+"registro": "retorico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "architettura",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"the making of a staircase or series of steps",
+"tier of steps"
+],
+"it": [
+"costruzione di gradinate",
+"serie di gradini",
+"gradinata"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"climax",
+"gradation",
+"series of steps"
+],
+"it": [
+"climax",
+"gradazione",
+"gradinata"
+]
+},
+"applicazione": [
+"Termine tecnico della retorica: figura in cui non si scende al membro seguente se non risalendo all'ultima parola del precedente (Auct. Her. 4,25,34; Cic. de Or. 3,54,207; Quint. 9,3,54); si rende con «climax» o «gradazione».",
+"Il senso edilizio, primario per etimologia, è attestato di fatto solo in Vitruvio (5,3), a proposito delle gradinate del teatro elevate sulla sostruzione."
+],
+"divergenze": [
+"Whitaker conserva solo il valore retorico («climax»); L&S mantiene anche il senso concreto e letterale di «costruzione di gradinate», che però resta isolato."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gradivus": {
+"campi": [
+{
+"campo": "religione: epiteto divino",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"Gradivus, surname of Mars",
+"the god who marches out, Mars"
+],
+"it": [
+"Gradivo, epiteto di Marte",
+"Marte (il dio che muove in campo)"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Gradivus (epithet of Mars)",
+"Mars"
+],
+"it": [
+"Gradivo",
+"Marte"
+]
+},
+"applicazione": [
+"Usato in apposizione al nome del dio (Marti Gradivo, Liv. 1,20,4) oppure in modo assoluto per Marte stesso (Ov. F. 3,677; M. 14,820).",
+"Frequente nel vocativo delle invocazioni: rex Gradive (Verg. A. 10,542); Gradivum patrem (Verg. A. 3,35).",
+"Quantità: di norma Grādīvus, con prima sillaba breve una sola volta in Ov. M. 6,427."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gradus": {
+"campi": [
+{
+"campo": "passo e andatura",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"step",
+"pace",
+"stride",
+"gait"
+],
+"it": [
+"passo",
+"andatura",
+"andamento"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"marching pace, step of the march"
+],
+"it": [
+"passo di marcia",
+"cadenza di marcia"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "gradino e scalinata",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"step, round of a ladder",
+"stair"
+],
+"it": [
+"gradino",
+"scalino",
+"piolo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"steps, flight of steps, staircase"
+],
+"it": [
+"scalinata",
+"gradinata",
+"scala"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "grado, tappa, rango",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"step, stage, degree"
+],
+"it": [
+"grado",
+"stadio",
+"tappa"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"step in a career, rank, office reached"
+],
+"it": [
+"grado della carriera",
+"rango",
+"scalino istituzionale"
+]
+},
+"registro": "politico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "posizione e fermezza",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"station, position, ground taken by a combatant"
+],
+"it": [
+"posizione",
+"postazione",
+"posto di combattimento"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"firm stand, steadfastness, self-possession"
+],
+"it": [
+"fermezza",
+"saldezza",
+"padronanza di sé"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"step",
+"pace",
+"stair",
+"degree"
+],
+"it": [
+"passo",
+"gradino",
+"grado",
+"posizione"
+]
+},
+"applicazione": [
+"Locuzioni verbali del camminare: gradum facere «muovere un passo», gradum ferre o proferre «avanzare», tollere gradum «alzare il passo», celerare o corripere gradum «affrettare il passo», sistere e sustinere gradum «fermarsi», referre o revocare gradum «tornare indietro».",
+"Ablativo di modo per la qualità dell'andatura: pleno gradu «a passo pieno, a marcia forzata», presso gradu «a passo contenuto», citato e concito gradu «a passo accelerato», modico gradu, suspenso gradu «in punta di piedi», quieto placido gradu «con passo calmo».",
+"Formule figurate della saldezza: stabili gradu «a piè fermo», de gradu deici o dejici «essere sbalzato dalla propria posizione, perdersi d'animo», gradu depellere e gradu movere «scacciare dalla posizione».",
+"Espressioni della gradualità: per gradus «per gradi», non gradu sed praecipiti cursu «non passo passo, ma di corsa precipitosa» (equivalente di gradatim).",
+"Al plurale gradus vale di norma «scalinata, gradinata»: gradus templi «la scalinata del tempio» (Cic. Att. 4,1,5).",
+"In senso astratto si costruisce con ad e l'accusativo o con il genitivo: gradum ad cetera facere «fare da primo passo verso il resto», gradus imperii «la tappa dell'espansione del dominio»; ex aedilitate gradum ad censuram facere «passare dall'edilità alla censura»."
+],
+"divergenze": [
+"Whitaker riduce la voce a due glosse («step», «position»): l'intera articolazione (gradino e scalinata, grado e tappa della carriera, fermezza morale) è documentata solo da L&S.",
+"La voce di L&S disponibile è troncata dopo il trapasso ai «things that rise by steps»: eventuali estensioni ulteriori del lemma non sono confluite in questa fusione."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:graecostasis": {
+"campi": [
+{
+"campo": "topografia romana",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"Graecostasis, a building in Rome near the Curia and Comitium where Greek and later other foreign ambassadors were lodged"
+],
+"it": [
+"Grecostasi, edificio del Foro romano presso la Curia e il Comizio dove alloggiavano gli ambasciatori greci e poi stranieri"
+]
+},
+"registro": "tecnico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"Graecostasis (building in the Roman Forum)"
+],
+"it": [
+"Grecostasi",
+"sede degli ambasciatori stranieri nel Foro"
+]
+},
+"applicazione": [
+"Nome proprio di luogo, sempre al singolare; calco del greco Γραικόστασις «stazione dei Greci».",
+"Ricorre come riferimento topografico del Foro, anche per la scansione delle ore del giorno (Plin. 7,60,212); si conserva di norma non tradotto, «la Grecostasi»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gramen": {
+"campi": [
+{
+"campo": "erba e manto erboso",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"grass",
+"turf",
+"sward"
+],
+"it": [
+"erba",
+"manto erboso",
+"tappeto d'erba"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"grassy places, meadows, pastures"
+],
+"it": [
+"prati",
+"distese erbose",
+"pascoli"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "pianta erbacea",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"plant",
+"herb"
+],
+"it": [
+"pianta",
+"erba",
+"erba officinale"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"dog's-grass, couch-grass"
+],
+"it": [
+"gramigna"
+]
+},
+"registro": "tecnico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"grass",
+"turf",
+"herb",
+"plant"
+],
+"it": [
+"erba",
+"prato",
+"pianta",
+"gramigna"
+]
+},
+"applicazione": [
+"Vicini semantici da distinguere: herba (erba in genere), faenum (fieno), caespes (zolla erbosa), glaeba (zolla).",
+"Il plurale gramina, frequentissimo in poesia, indica i prati o le distese erbose e si rende con un singolare collettivo (Lucr. 2,660; Hor. C. 4,7,1; Verg. G. 1,56).",
+"Perifrasi pleonastica graminis herba «il filo d'erba, l'erba del prato» (Verg. E. 5,26; Liv. 1,24,5).",
+"Nel senso di «pianta, erba» comprende le erbe medicinali e magiche: gramina data «erbe somministrate», cfr. cantatae herbae (Ov. M. 7,137 e 7,98); indica anche piante esotiche e aromatiche (Arabum gramina, Prop. 2,29,17).",
+"In Plinio, come termine botanico specifico e assoluto, vale «gramigna» (Plin. 24,118,178)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:grammatica": {
+"campi": [
+{
+"campo": "disciplina dello studio della lingua",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"grammar",
+"the art of grammar"
+],
+"it": [
+"grammatica",
+"arte grammaticale"
+]
+},
+"registro": "tecnico",
+"fonti": [
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"philology",
+"the study of language and literature"
+],
+"it": [
+"filologia",
+"studio della lingua e dei testi letterari"
+]
+},
+"registro": "tecnico",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"grammar",
+"philology"
+],
+"it": [
+"grammatica",
+"filologia"
+]
+},
+"applicazione": [
+"Femminile sostantivato dell'aggettivo grammaticus, con ars sottinteso: «l'arte grammaticale».",
+"Designa la disciplina insegnata dal grammaticus, che teneva insieme la norma della lingua e la spiegazione degli autori: secondo il contesto si rende «grammatica» o «filologia»."
+],
+"divergenze": [
+"L&S non dedica al lemma una voce autonoma e rinvia interamente a grammaticus (II.B): i significati qui registrati poggiano perciò su Whitaker.",
+"Whitaker distingue due glosse, «grammar» e «philology»; nell'uso antico la seconda non è un valore separato ma la parte esegetica della prima."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:granaria": {
+"campi": [
+{
+"campo": "agricoltura e conservazione delle derrate",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"granary",
+"store-house for corn",
+"corn-store"
+],
+"it": [
+"granaio",
+"magazzino del grano",
+"deposito di frumento"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"granary",
+"corn store-house"
+],
+"it": [
+"granaio",
+"deposito del grano"
+]
+},
+"applicazione": [
+"Attestato al plurale neutro (granaria, -orum) con valore normalmente singolare: si rende con «il granaio», salvo che il contesto imponga davvero più depositi.",
+"Derivato di granum: designa l'edificio o il locale dove si ammassa il frumento, non la derrata; per il grano stesso si usa frumentum."
+],
+"divergenze": [
+"Whitaker non registra il lemma: la resa poggia sulla sola voce breve di Lewis (Elementary Latin Dictionary), che rimanda a Cicerone e Orazio."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:grandiloquus": {
+"campi": [
+{
+"campo": "stile e oratoria",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"speaking grandly",
+"speaking loftily",
+"one who uses lofty language"
+],
+"it": [
+"che parla in stile elevato",
+"dal dire grandioso",
+"oratore dallo stile sublime"
+]
+},
+"registro": "retorico",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"grandiloquent",
+"bombastic",
+"big-talker"
+],
+"it": [
+"magniloquente",
+"ampolloso",
+"enfatico",
+"parolaio solenne"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"speaking loftily",
+"grandiloquent"
+],
+"it": [
+"che parla in stile elevato",
+"magniloquente",
+"ampolloso"
+]
+},
+"applicazione": [
+"Sostantivato di norma al plurale (grandiloqui) per designare una categoria di oratori: Cic. Or. 5,20 «et grandiloqui... fuerunt» vale «vi furono oratori dal dire grandioso».",
+"Il colore negativo si riconosce dal contesto polemico: in Cic. Tusc. 5,31,89 «isti grandiloqui» sono gli Stoici, e va reso «questi enfatici», «questi solenni parolai».",
+"Compare anche in funzione aggettivale (stilus grandiloquus, Servio): allora significa «di stile grandioso»."
+],
+"divergenze": [
+"Whitaker non registra il lemma: la doppia polarità, elogiativa in Cicerone oratore e spregiativa nelle Tusculanae, è documentata dal solo L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:granditas": {
+"campi": [
+{
+"campo": "grandiosità dello stile",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"grandeur",
+"sublimity",
+"elevation of style"
+],
+"it": [
+"grandiosità",
+"sublimità",
+"elevatezza (dello stile)"
+]
+},
+"registro": "retorico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "grandezza e avanzamento d'età",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"greatness",
+"advanced condition of age"
+],
+"it": [
+"grandezza",
+"età avanzata",
+"l'essere avanti negli anni"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"grandeur",
+"sublimity",
+"greatness"
+],
+"it": [
+"grandiosità",
+"sublimità",
+"grandezza"
+]
+},
+"applicazione": [
+"Nel senso retorico regge il genitivo di ciò in cui la grandiosità si manifesta: granditas verborum (Cic. Brut. 31,121) «la grandiosità delle parole».",
+"In serie con altri astratti (non vis, non granditas, non sublimitas, Plin. Ep. 6,21,5) conviene conservare la triade: «né forza, né grandiosità, né elevatezza».",
+"aetatis granditas (Sisenna) è perifrasi per la tarda età: si rende meglio con un aggettivo, «l'età avanzata», che con un astratto italiano."
+],
+"divergenze": [
+"Whitaker («grandeur», «elevation of style», «advanced condition/greatness of age») ricalca i due sensi di L&S, ma non segnala la rarità del valore traslato, che L&S dichiara esplicitamente («very rare»)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:grando": {
+"campi": [
+{
+"campo": "meteorologia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"hail",
+"hail-storm",
+"hailstones"
+],
+"it": [
+"grandine",
+"grandinata",
+"tempesta di grandine"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "quantità fitta che piove addosso",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"shower",
+"great quantity",
+"multitude"
+],
+"it": [
+"gragnuola",
+"nembo",
+"pioggia fitta (di proiettili)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "abbondanza di parole",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"torrent of speech",
+"flood of words"
+],
+"it": [
+"gragnuola di parole",
+"fiumana oratoria"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"hail",
+"hail-storm"
+],
+"it": [
+"grandine",
+"grandinata"
+]
+},
+"applicazione": [
+"Il plurale grandines non è enfatico ma iterativo: vale «le grandinate», i singoli episodi (Cic. N.D. 2,5,14; Plin. nat. 2,38,103).",
+"Nell'uso traslato regge il genitivo della materia: saxorum grandine (Sil. 2,38) «con una fitta gragnuola di sassi»; in italiano l'immagine si conserva bene con «gragnuola» o «nembo».",
+"Femminile nell'uso normale; L&S segnala un raro maschile in Varrone.",
+"saxea grando (Auct. B. Afr. 47,1) non è metafora ma descrizione: «chicchi di grandine duri come pietra»."
+],
+"divergenze": [
+"Whitaker si ferma al senso proprio («hail, hail-storm»); gli usi traslati, la gragnuola di sassi in Silio e il torrente di parole in Ausonio, sono documentati dal solo L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:granum": {
+"campi": [
+{
+"campo": "agricoltura e botanica",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"grain",
+"seed",
+"small kernel"
+],
+"it": [
+"chicco",
+"grano (singolo)",
+"seme",
+"acino",
+"nocciolo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "particella minuta, granulato",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"granule",
+"small grain (of salt, wax, marble)"
+],
+"it": [
+"granello",
+"granulo",
+"polvere granulosa"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"grain",
+"seed",
+"kernel"
+],
+"it": [
+"chicco",
+"seme",
+"granello"
+]
+},
+"applicazione": [
+"Regge il genitivo della materia e si rende con la formula italiana «un chicco di...»: granum tritici «un chicco di frumento», granum uvae «un acino d'uva», granum piperis «un grano di pepe».",
+"Con resine e aromi vale «grano, granello»: turis granum (Ov. F. 4,410) «un grano d'incenso».",
+"granum marmoreum (Pallad. 1,15; Vitr. 7,3) è tecnico: «marmo in polvere», «granulato di marmo».",
+"Il plurale grana indica i chicchi presi a uno a uno, non la messe nel suo insieme, per cui si usa frumentum o fruges."
+],
+"divergenze": [
+"Whitaker («grain», «seed») copre il solo senso principale; l'estensione tecnica al granulato di marmo e di cera è documentata dal solo L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:graphium": {
+"campi": [
+{
+"campo": "strumenti della scrittura",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"writing-style",
+"stylus",
+"pen used for writing on wax tablets"
+],
+"it": [
+"stilo",
+"stiletto per scrivere",
+"punteruolo da scrittura"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "strumento che registra o misura (uso tardo e moderno)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"-graph (as second element of compounds)",
+"recording or measuring instrument",
+"modern pen"
+],
+"it": [
+"-grafo (nei composti)",
+"strumento che registra o misura",
+"penna (latino moderno)"
+]
+},
+"registro": "raro",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"stylus",
+"writing-style"
+],
+"it": [
+"stilo",
+"stiletto per scrivere"
+]
+},
+"applicazione": [
+"Grecismo (γραφίον); Isidoro (6,9,2) dà come equivalente latino scriptorium. Nel tradurre conviene «stilo» e non «penna», perché lo strumento incide la cera e non deposita inchiostro.",
+"Nel racconto dell'uccisione di Cesare (Suet. Caes. 82) il graphium è arma d'occasione: va reso concretamente «lo stilo».",
+"Si accompagna alle tabellae ceratae: graphio scribere «scrivere con lo stilo»; la punta opposta, piatta, serviva a cancellare."
+],
+"divergenze": [
+"Whitaker aggiunge valori estranei alla latinità antica: il suffissoide «-graph» dei composti moderni e la «modern pen» del latino recente (Calepino). L&S conosce soltanto lo stilo antico: nei testi classici va usato esclusivamente quel senso."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:grassator": {
+"campi": [
+{
+"campo": "criminalità e violenza di strada",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"street-robber",
+"footpad",
+"waylayer",
+"highway robber"
+],
+"it": [
+"grassatore",
+"brigante di strada",
+"rapinatore notturno",
+"malvivente"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"rioter",
+"one who goes rioting about at night",
+"disorderly person"
+],
+"it": [
+"schiamazzatore notturno",
+"attaccabrighe",
+"chi va in giro a far baldoria di notte"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "ozio e vagabondaggio",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"vagabond",
+"idler"
+],
+"it": [
+"vagabondo",
+"sfaccendato",
+"perdigiorno"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"footpad, street-robber",
+"vagabond"
+],
+"it": [
+"grassatore, brigante di strada",
+"vagabondo"
+]
+},
+"applicazione": [
+"Il termine implica il girare per le strade di notte: nocturnus grassator (Gell. 20,1,8) «il malvivente notturno»; in contesto giuridico o retorico (Cic. Fat. 15,34) la resa tecnica è «grassatore».",
+"Nella coppia grassatores et sicarii (Suet. Caes. 72) i due termini vanno tenuti distinti: «rapinatori e sicari».",
+"Il senso arcaico di «perdigiorno» è documentato dal solo Catone (ap. Gell. 11,2,5), dove designa chi si dedica alla poesia e ai banchetti: va conservato solo lì, con nota."
+],
+"divergenze": [
+"Whitaker registra i due poli («vagabond», «footpad, highway robber») ma li appiattisce; L&S precisa che la seconda accezione copre tanto la scorribanda per divertimento quanto la rapina, cioè non è necessariamente criminale."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:grates": {
+"campi": [
+{
+"campo": "ringraziamento rituale, spec. agli dèi",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"thanks rendered (esp. to the gods)",
+"thanksgiving"
+],
+"it": [
+"ringraziamenti",
+"rendimento di grazie",
+"azione di grazie"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"thanks rendered to men",
+"public expression of gratitude"
+],
+"it": [
+"ringraziamenti (rivolti a uomini)",
+"riconoscenza espressa solennemente"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"thanks",
+"thanksgiving"
+],
+"it": [
+"ringraziamenti",
+"rendimento di grazie"
+]
+},
+"applicazione": [
+"Difettivo: si usa di regola al nominativo e all'accusativo plurale; l'unico caso obliquo attestato è l'ablativo gratibus (Tac. Ann. 12,37).",
+"Vive nei nessi grates agere / habere / persolvere / referre alicui: «rendere grazie», «serbare gratitudine», «sciogliere il debito di riconoscenza». La coppia laudes gratesque agere è formulare: «tributare lodi e ringraziamenti».",
+"Si oppone a gratias agere, formula d'uso verso gli uomini: grates appartiene alla lingua sacrale e alta (Plauto nelle preghiere, Livio, Virgilio, Tacito), e in Curzio e Tacito si estende al principe e ai benefattori.",
+"Uso sarcastico: Verg. Aen. 2,537 «persolvant grates dignas» vale «gli dèi ti rendano il compenso che meriti», dove il ringraziamento è rovesciato in castigo."
+],
+"divergenze": [
+"Whitaker coglie il carattere pluralia tantum, l'ambito divino e il nesso grates agere; L&S aggiunge l'estensione agli uomini (Curt. 9,6,17; Tac. Ann. 6,2) e la variante formulare plautina grates gratiasque."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gratia": {
+"campi": [
+{
+"campo": "favore di cui si gode presso altri, credito sociale",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"favor",
+"esteem",
+"regard",
+"liking",
+"popularity",
+"credit"
+],
+"it": [
+"favore",
+"stima",
+"considerazione",
+"credito",
+"simpatia"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"influence",
+"personal weight",
+"power derived from goodwill"
+],
+"it": [
+"influenza",
+"ascendente",
+"autorità personale",
+"peso politico"
+]
+},
+"registro": "politico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"friendship",
+"good relations",
+"reconciliation"
+],
+"it": [
+"amicizia",
+"buoni rapporti",
+"concordia ristabilita"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"partiality",
+"favoritism",
+"unpopularity (with mala)"
+],
+"it": [
+"parzialità",
+"favoritismo",
+"raccomandazione",
+"malanimo (con mala)"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "favore che si concede ad altri, benevolenza attiva",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"mark of favor",
+"kindness",
+"courtesy",
+"service",
+"obligation"
+],
+"it": [
+"favore",
+"cortesia",
+"benevolenza",
+"piacere fatto a qualcuno",
+"beneficio"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "riconoscenza e ringraziamento",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"gratitude",
+"thanks (usually plural)"
+],
+"it": [
+"gratitudine",
+"riconoscenza",
+"ringraziamenti"
+]
+},
+"registro": "generale",
+"fonti": [
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "grazia estetica, avvenenza",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"agreeableness",
+"pleasantness",
+"charm",
+"beauty",
+"loveliness",
+"grace"
+],
+"it": [
+"grazia",
+"avvenenza",
+"leggiadria",
+"fascino",
+"piacevolezza"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"charm of style",
+"attractiveness of expression"
+],
+"it": [
+"grazia dello stile",
+"garbo espressivo",
+"amabilità del dettato"
+]
+},
+"registro": "retorico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "mitologia: le Grazie",
+"rank": 5,
+"sensi": [
+{
+"tr": {
+"en": [
+"the Graces (Gratiae), Latin equivalent of the Greek Charites"
+],
+"it": [
+"le Grazie (Aglaia, Eufrosine, Talia)",
+"le Cariti"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"favor, esteem",
+"influence",
+"kindness",
+"charm"
+],
+"it": [
+"favore, stima",
+"influenza",
+"cortesia",
+"grazia"
+]
+},
+"applicazione": [
+"in gratiam redire cum aliquo «riconciliarsi con qualcuno»; aliquem in gratiam restituere «rimettere qualcuno in buoni rapporti»; in gratiam reducere «riappacificare».",
+"gratiam inire ab aliquo o apud aliquem «acquistarsi il favore di qualcuno»; in gratia esse apud aliquem «essere ben visto da qualcuno»; alicuius gratiam sequi (Caes.) «cercare il favore di qualcuno», con sfumatura di calcolo politico.",
+"gratia valere, gratia plurimum posse «essere molto influente»: l'ablativo è di limitazione e in Cesare designa il peso di un notabile nella sua comunità (Caes. B.G. 1,9,3; 2,6,4).",
+"cum bona gratia «di buon accordo, amichevolmente» (Ter. Phorm. 4,3,17; nel linguaggio giuridico anche del divorzio consensuale, Dig. 24,1,32); cum mala gratia «in cattivi rapporti»; cum gratia impetrare «ottenere di buon grado».",
+"Il plurale gratiae indica gli attestati concreti di favore, le simpatie acquisite: multas bonas gratias attulit (Cic. Mur. 20,42) «gli procurò molte benevolenze».",
+"Nel senso estetico regge il genitivo di ciò che è grazioso: gratia formae «la grazia dell'aspetto», gratia dicendi (Quint. 9,3,74) «il garbo dell'eloquio», gratia brevitatis «l'attrattiva della concisione».",
+"L'ablativo gratia posposto a un genitivo funziona da preposizione, «per amore di, allo scopo di» (exempli gratia, verbi gratia): la sezione di L&S che tratta questo uso cade oltre il punto in cui l'estratto disponibile si interrompe."
+],
+"divergenze": [
+"L'estratto di L&S qui disponibile si interrompe nella sezione II.A: i sensi di «riconoscenza, gratitudine» e i nessi gratiam referre e gratias agere, che Whitaker registra («gratitude», «thanks (pl.)»), non compaiono nel testo consultabile pur essendo capitali nell'uso classico.",
+"Whitaker distingue esplicitamente il polo positivo (bona gratia = popolarità) da quello negativo (mala gratia = impopolarità) e isola «partiality/favoritism»; in L&S la sfumatura resta implicita nei passi giudiziari (Iuv. 13,4: improba gratia che vince con l'urna ingannevole del pretore).",
+"«Doctor Gratiae» (Agostino d'Ippona), che Whitaker segnala, appartiene alla latinità cristiana e medievale ed è estraneo alla voce classica di L&S; parimenti il senso teologico di «grazia» non è documentato nella parte di L&S qui riportata."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gratificatio": {
+"campi": [
+{
+"campo": "cortesia e concessione di favori",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a showing kindness",
+"doing favors",
+"obligingness",
+"complaisance"
+],
+"it": [
+"il fare favori",
+"compiacenza",
+"cortesia",
+"condiscendenza",
+"l'accontentare qualcuno"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"obligingness",
+"showing kindness"
+],
+"it": [
+"compiacenza",
+"il fare favori"
+]
+},
+"applicazione": [
+"Astratto in -tio da gratificor: indica l'atto del compiacere, non il favore ricevuto; in italiano si rende spesso con una perifrasi verbale, «il far piaceri a qualcuno».",
+"Vocabolo raro ma di buona latinità classica (soprattutto ciceroniano). In contesto politico prende colore negativo dall'aggettivo che lo accompagna: impudens gratificatio cum acerba iniuria coniuncta (Cic. Agr. 3,2,6) «una sfrontata generosità congiunta a una dura ingiustizia», dove il favore fatto all'uno è danno per l'altro.",
+"Si sottintende il dativo della persona favorita, sul modello del verbo gratificari alicui."
+],
+"divergenze": [
+"Nessuna: Whitaker («showing kindness», «complaisance») coincide con la glossa di L&S, che aggiunge solo la marca d'uso («rare but class.»)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gratulatio": {
+"campi": [
+{
+"campo": "congratulazione, manifestazione di gioia",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"congratulation",
+"a wishing of joy",
+"felicitation"
+],
+"it": [
+"congratulazione",
+"felicitazione",
+"rallegramento"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"rejoicing",
+"joy",
+"jubilation"
+],
+"it": [
+"esultanza",
+"gioia manifestata",
+"tripudio"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "rendimento pubblico di grazie agli dèi",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"public thanksgiving",
+"religious festival of thanksgiving",
+"solemn rejoicing"
+],
+"it": [
+"pubblico ringraziamento",
+"rendimento di grazie",
+"festa solenne di ringraziamento agli dèi"
+]
+},
+"registro": "religioso",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"congratulation",
+"rejoicing",
+"public thanksgiving"
+],
+"it": [
+"congratulazione",
+"esultanza",
+"pubblico ringraziamento"
+]
+},
+"applicazione": [
+"Regge di norma il genitivo oggettivo o sta assoluto: laudis nostrae gratulatio tua «le tue congratulazioni per la mia lode».",
+"Al plurale indica le manifestazioni ripetute di felicitazione: inter gratulationes amicorum «tra le felicitazioni degli amici»; in sua gratulatione «durante le congratulazioni fattegli».",
+"Nel senso religioso è quasi sinonimo di supplicatio: gratulationem decernere alicui «decretare a qualcuno un pubblico ringraziamento»; gratulationem facere ad deorum templa «rendere grazie presso i templi degli dèi»."
+],
+"divergenze": [
+"Whitaker registra il solo campo profano (congratulation, rejoicing): il valore religioso di pubblico ringraziamento è documentato dal solo L&S (II)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gravedo": {
+"campi": [
+{
+"campo": "raffreddore, pesantezza del capo",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"cold in the head",
+"catarrh",
+"heaviness of the limbs"
+],
+"it": [
+"raffreddore",
+"catarro",
+"pesantezza di capo e di membra"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"heaviness in the head produced by intoxication",
+"after-effects of drunkenness"
+],
+"it": [
+"intontimento da sbornia",
+"pesantezza del capo dopo l'ubriachezza"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "gravidanza",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"pregnancy"
+],
+"it": [
+"gravidanza"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"cold in the head",
+"catarrh",
+"heaviness"
+],
+"it": [
+"raffreddore",
+"catarro",
+"pesantezza del capo"
+]
+},
+"applicazione": [
+"Al plurale (gravedines) indica gli accessi o gli stati ricorrenti di pesantezza: ad crapulae gravedines «contro i postumi della crapula».",
+"Termine della lingua medica (Celso, Plinio): si rende con «raffreddore» quando è localizzato al capo, con «pesantezza, torpore» quando investe tutto il corpo.",
+"Il valore di «gravidanza» è isolato e tardo (Nemesiano): da non presumere nei testi classici."
+],
+"divergenze": [
+"Whitaker dà il solo raffreddore; L&S aggiunge la pesantezza da postumi di ubriachezza e il senso, isolatissimo, di gravidanza."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:graviditas": {
+"campi": [
+{
+"campo": "gravidanza",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"pregnancy",
+"conception, gestation"
+],
+"it": [
+"gravidanza",
+"gestazione",
+"concepimento"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"pregnancy"
+],
+"it": [
+"gravidanza"
+]
+},
+"applicazione": [
+"Voce rarissima, forse attestata una sola volta (Cic. N. D. 2, 46, 119), dove il plurale graviditates vale «i concepimenti, le gestazioni» in senso generale, in serie con partus e maturitates."
+],
+"divergenze": [
+"Whitaker non registra il lemma: l'unica fonte è L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gravitas": {
+"campi": [
+{
+"campo": "peso, gravità fisica",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"weight",
+"heaviness",
+"gravity"
+],
+"it": [
+"peso",
+"pesantezza",
+"gravità"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"weight (of arms, ships)",
+"unwieldiness",
+"cumbrousness"
+],
+"it": [
+"peso (delle armi)",
+"ingombro",
+"lentezza dovuta al carico"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "dignità, serietà, autorevolezza",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"dignity",
+"seriousness",
+"gravity",
+"solemnity"
+],
+"it": [
+"dignità",
+"serietà",
+"gravità di contegno",
+"compostezza"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"weight, importance",
+"authority",
+"influence, power"
+],
+"it": [
+"peso",
+"importanza",
+"autorevolezza",
+"prestigio",
+"potenza"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "durezza, severità, oppressione",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"severity",
+"harshness",
+"oppressiveness",
+"cruelty"
+],
+"it": [
+"severità",
+"durezza",
+"asprezza",
+"oppressione"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"heaviness, slowness (of the tongue, of speech)"
+],
+"it": [
+"pesantezza (di pronuncia)",
+"lentezza dell'eloquio"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "malessere, gravità del male, insalubrità",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"sickness",
+"faintness",
+"heaviness of the body",
+"dulness"
+],
+"it": [
+"malessere",
+"pesantezza del corpo",
+"spossatezza",
+"torpore"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"severity, violence (of a disease)",
+"unwholesomeness (of a climate, of a place)"
+],
+"it": [
+"gravità (della malattia)",
+"violenza del male",
+"insalubrità (del clima, del luogo)"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "cattivo odore, fetore",
+"rank": 5,
+"sensi": [
+{
+"tr": {
+"en": [
+"rankness",
+"offensiveness of smell",
+"fetidness"
+],
+"it": [
+"cattivo odore",
+"fetore",
+"puzzo (dell'alito, della bocca)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "caro prezzo, carestia",
+"rank": 6,
+"sensi": [
+{
+"tr": {
+"en": [
+"dearness",
+"pressure of price",
+"high cost"
+],
+"it": [
+"caro prezzo",
+"rincaro",
+"carestia (dei viveri)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "peso della gravidanza",
+"rank": 7,
+"sensi": [
+{
+"tr": {
+"en": [
+"the burden of pregnancy",
+"pregnancy"
+],
+"it": [
+"peso del grembo",
+"gravidanza"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"weight",
+"dignity",
+"severity",
+"sickness"
+],
+"it": [
+"peso",
+"dignità",
+"severità",
+"gravosità"
+]
+},
+"applicazione": [
+"Il genitivo determina il campo: gravitas armorum «peso delle armi», caeli «insalubrità del clima», morbi «gravità del male», annonae «rincaro dei viveri», odoris/oris «fetore», capitis/aurium «pesantezza del capo, sordità».",
+"In senso morale designa il contegno grave del Romano: cum gravitate loqui «parlare con serietà e misura»; comitate condita gravitas «una severità temperata dall'affabilità»; gravitatis personam sustinere «sostenere la parte dell'uomo severo».",
+"Riferito a città o persone vale «autorevolezza, prestigio, potenza»: amplitudo gravitasque civitatis.",
+"Ricorre in coppia con pondus, dignitas, auctoritas, severitas: in traduzione conviene sciogliere l'endiadi anziché duplicare il termine."
+],
+"divergenze": [
+"Whitaker allinea glosse eterogenee senza gerarchia (weight, dignity, gravity, oppressiveness, pregnancy, sickness); L&S le distribuisce fra piano fisico (I) e traslato (II), distinguendo il valore negativo (durezza, severità) da quello positivo (dignità, autorevolezza).",
+"I sensi di «cattivo odore» e di «rincaro, caro prezzo» sono documentati dal solo L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gremium": {
+"campi": [
+{
+"campo": "grembo, seno",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"lap",
+"bosom"
+],
+"it": [
+"grembo",
+"seno",
+"braccia"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "seno, cuore, parte interna di un luogo",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"interior",
+"middle",
+"heart (of a land, a city, a river)",
+"bosom"
+],
+"it": [
+"seno",
+"interno",
+"cuore (di una regione, di una città)",
+"centro"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"protecting embrace",
+"care, keeping, protection"
+],
+"it": [
+"protezione",
+"tutela",
+"custodia amorevole"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "cavità, incavo",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"hollow",
+"cavity",
+"fold (of a garment)"
+],
+"it": [
+"incavo (della macina)",
+"cavità",
+"cavo, piega (della toga)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "utero, parti genitali femminili",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"womb",
+"female genital parts"
+],
+"it": [
+"utero",
+"grembo materno",
+"pudenda femminili"
+]
+},
+"registro": "raro",
+"fonti": [
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "legna da ardere",
+"rank": 5,
+"sensi": [
+{
+"tr": {
+"en": [
+"firewood (singular or collective)"
+],
+"it": [
+"legna da ardere",
+"fascina"
+]
+},
+"registro": "raro",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"lap",
+"bosom",
+"interior, heart"
+],
+"it": [
+"grembo",
+"seno",
+"cuore, interno"
+]
+},
+"applicazione": [
+"in gremio + genitivo di luogo rende «in seno a, nel cuore di»: in gremio Thebes, e gremio Capuae, Aetolia medio Graeciae gremio continetur.",
+"Con nome di persona vale «in braccio a, sotto la protezione di»: in fratris gremio; e sinu gremioque patriae abstrahi «essere strappato dal seno e dal grembo della patria».",
+"In vestris pono gremiis «rimetto nelle vostre mani»: il grembo è il luogo dell'affidamento e della consegna.",
+"Sinonimo affine sinus, con cui compare spesso in coppia: nella resa italiana conviene alternare «seno» e «grembo» per evitare la ripetizione."
+],
+"divergenze": [
+"Whitaker aggiunge due sensi assenti dalla voce di L&S: «legna da ardere» (di norma collettivo, voce di fatto omonima) e «utero, parti genitali femminili», che in L&S resta implicito soltanto nel valore osceno di qualche locus (Cat. 67, 30)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gressus": {
+"campi": [
+{
+"campo": "passo, andatura",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"going",
+"step",
+"gait",
+"walking"
+],
+"it": [
+"passo",
+"andatura",
+"incedere",
+"cammino"
+]
+},
+"registro": "poetico",
+"fonti": [
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"the feet (pl.)",
+"the steps"
+],
+"it": [
+"i passi",
+"i piedi (al plurale)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"step",
+"going",
+"gait"
+],
+"it": [
+"passo",
+"andatura",
+"cammino"
+]
+},
+"applicazione": [
+"Ricorre in nessi di movimento: gressum ferre, tendere, referre «dirigere, volgere, ritrarre il passo»; comitari gressum «accompagnare nel cammino».",
+"Il plurale gressus vale «i passi», quindi «il cammino» o, per metonimia, «i piedi».",
+"È variante nobile e poetica di gradus: nella prosa classica si preferisce gradus o incessus."
+],
+"divergenze": [
+"La voce riportata sotto «ls» registra soltanto il participio di gradior (gressus, a, um), non il sostantivo di quarta declinazione: dei sensi del nome dà conto la sola fonte Whitaker."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:grex": {
+"campi": [
+{
+"campo": "gregge, mandria, branco",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"flock",
+"herd",
+"drove",
+"swarm"
+],
+"it": [
+"gregge",
+"mandria",
+"branco",
+"stormo"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "schiera, compagnia di persone",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"company",
+"society",
+"troop",
+"band",
+"crowd"
+],
+"it": [
+"schiera",
+"compagnia",
+"frotta",
+"brigata",
+"stuolo"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"set",
+"faction",
+"class",
+"circle, coterie"
+],
+"it": [
+"cerchia",
+"gruppo",
+"setta",
+"schiera di seguaci"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"herd (contemptuously)",
+"rabble",
+"the common run"
+],
+"it": [
+"gregge (spregiativo)",
+"massa",
+"mucchio",
+"volgo"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "compagnia di attori, squadra di aurighi",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"company of players",
+"troupe",
+"band, team (of charioteers)"
+],
+"it": [
+"compagnia (di attori)",
+"troupe",
+"squadra (di aurighi)"
+]
+},
+"registro": "teatrale",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "fascio di cose",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"bundle (of rods)"
+],
+"it": [
+"fascio",
+"mazzo (di verghe)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"flock, herd",
+"company, troop",
+"crowd"
+],
+"it": [
+"gregge",
+"schiera, compagnia",
+"frotta"
+]
+},
+"applicazione": [
+"Opposto ad armenta, grex indica il bestiame minuto (pecore, capre), armentum il grosso (buoi, cavalli); ma con il genitivo si estende a ogni specie: grex equarum, elephantorum, avium, anserum.",
+"dux gregis, vir gregis «il capo del branco, il maschio dominante» (il caprone, l'ariete).",
+"grege facto «fatto gruppo, in massa, tutti insieme»: locuzione ablativa assoluta frequente nei racconti di tumulti e fughe.",
+"Riferito a uomini è spesso spregiativo: Epicuri de grege porcus «porco del gregge di Epicuro»; in grege annumerari «essere contato nel mucchio»."
+],
+"divergenze": [
+"Le fonti concordano; Whitaker esplicita il valore sociologico di «set, faction, class», che in L&S è compreso nel generico grex di persone (II, A, 1)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:grus": {
+"campi": [
+{
+"campo": "gru (uccello)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"crane",
+"the bird crane"
+],
+"it": [
+"gru",
+"la gru (uccello)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "macchina d'assedio",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"besieging machine",
+"battering-ram",
+"siege engine"
+],
+"it": [
+"macchina d'assedio",
+"ariete",
+"gru da assedio"
+]
+},
+"registro": "militare",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"crane",
+"siege engine"
+],
+"it": [
+"gru",
+"macchina d'assedio"
+]
+},
+"applicazione": [
+"L&S dà il lemma come femminile (grus, gruis f.), con impiego maschile in Orazio; accanto a grus è attestato il nominativo gruis (Fedro).",
+"Uccello considerato dai Romani una prelibatezza da mensa (Hor. Sat. 2, 8, 87): nei testi conviviali va reso «gru» senza attenuazioni.",
+"Il senso tecnico nasce per metafora dal becco ricurvo dell'uccello: la macchina è detta anche corvus (Vitr. 10, 19)."
+],
+"divergenze": [
+"Whitaker giustappone senza gerarchia «crane (machine)», «crane», «large bird» e «siege engine»: la prima e l'ultima glossa sono un unico senso, quello tecnico, che in L&S è il traslato (II)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gryps": {
+"campi": [
+{
+"campo": "grifone",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"griffin",
+"gryphon",
+"fabulous four-footed bird"
+],
+"it": [
+"grifone",
+"grifo",
+"favoloso uccello quadrupede"
+]
+},
+"registro": "mitologico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"griffin"
+],
+"it": [
+"grifone",
+"grifo"
+]
+},
+"applicazione": [
+"Grecismo (γρύψ), con genitivo gryphis; è attestata anche la forma di seconda declinazione gryphus, -i (Mela).",
+"Proverbiale l'adynaton virgiliano iungentur iam grypes equis «ormai i grifoni si accoppieranno con le cavalle» (Ecl. 8, 27): si rende come figura dell'impossibile, non alla lettera.",
+"Plinio lo colloca in Etiopia e ne descrive le orecchie e il rostro adunco: nei contesti paradossografici la resa «grifone» va mantenuta senza normalizzare in «aquila»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gubernaculum": {
+"campi": [
+{
+"campo": "timone",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"helm",
+"rudder",
+"steering oar of a ship"
+],
+"it": [
+"timone",
+"barra del timone",
+"remo timoniere"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "guida, direzione, governo dello Stato",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"guidance",
+"direction",
+"steering"
+],
+"it": [
+"guida",
+"direzione",
+"conduzione"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"government",
+"the helm of the ship of state",
+"administration"
+],
+"it": [
+"governo",
+"timone dello Stato",
+"reggimento della cosa pubblica"
+]
+},
+"registro": "politico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"helm, rudder",
+"government"
+],
+"it": [
+"timone",
+"governo"
+]
+},
+"applicazione": [
+"Forma poetica contratta gubernaclum (Lucrezio, Virgilio), imposta dal metro.",
+"Nel senso politico è di regola plurale: ad gubernacula rei publicae accedere/sedere «accostarsi al governo, sedere al timone dello Stato»; a gubernaculis recedere o repelli «ritirarsi, essere allontanato dal governo»; il singolare è raro e tardo.",
+"La metafora nautica resta viva e va conservata in traduzione: si accompagna a clavus «barra» (clavum tanti imperii tenere et gubernacula rei publicae tractare)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gubernatio": {
+"campi": [
+{
+"campo": "navigazione: il governare la nave",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a steering",
+"piloting of a ship",
+"pilotage"
+],
+"it": [
+"il governare la nave",
+"pilotaggio",
+"timoneria",
+"manovra del timone"
+]
+},
+"registro": "nautico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "direzione e governo (uso traslato)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"direction",
+"management",
+"government",
+"control"
+],
+"it": [
+"direzione",
+"governo",
+"amministrazione",
+"guida"
+]
+},
+"registro": "politico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"steering",
+"direction",
+"government"
+],
+"it": [
+"pilotaggio",
+"direzione",
+"governo"
+]
+},
+"applicazione": [
+"Nell'uso traslato regge il genitivo della cosa amministrata: gubernatio civitatis «il governo dello stato», summi imperii gubernatione districtus, gubernatio consilii «la direzione della deliberazione».",
+"La metafora nautica resta viva anche in contesto politico: si rende volentieri con «timone» (tenere il timone dello stato) quando il periodo italiano lo consente."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gubernator": {
+"campi": [
+{
+"campo": "navigazione: chi tiene il timone",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"steersman",
+"helmsman",
+"pilot"
+],
+"it": [
+"timoniere",
+"nocchiero",
+"pilota"
+]
+},
+"registro": "nautico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "direzione e governo (uso traslato)",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"director",
+"ruler",
+"governor",
+"one who directs or controls"
+],
+"it": [
+"reggitore",
+"guida",
+"chi governa",
+"governatore"
+]
+},
+"registro": "politico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"driver, charioteer (as a poetic metaphor for agitator)"
+],
+"it": [
+"auriga",
+"chi guida il carro"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"helmsman",
+"pilot",
+"director",
+"ruler"
+],
+"it": [
+"timoniere",
+"nocchiero",
+"reggitore",
+"guida"
+]
+},
+"applicazione": [
+"Nella prosa politica compare in dittologia con altri nomi di reggenza: custodes gubernatoresque rei publicae, rector et gubernator civitatis; si rende «nocchiero, reggitore dello stato».",
+"Proverbiale: tranquillo quilibet gubernator est «con mare calmo chiunque sa fare il timoniere».",
+"Nel senso figurato regge il genitivo di ciò che si guida (gubernator civitatis, poli «reggitore del cielo»)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gubernatrix": {
+"campi": [
+{
+"campo": "guida e direzione (al femminile)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"conductress",
+"directress",
+"she who directs or controls"
+],
+"it": [
+"guida",
+"conduttrice",
+"reggitrice",
+"maestra (che tiene il timone)"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"directress",
+"conductress",
+"guide (fem.)"
+],
+"it": [
+"guida",
+"conduttrice",
+"reggitrice"
+]
+},
+"applicazione": [
+"Si accompagna a nomi femminili astratti, in funzione predicativa o appositiva: fortuna quae gubernatrix fuit «la sorte che fu la nostra guida», praeclara gubernatrice civitatum eloquentia «l'eloquenza, celebre nocchiera degli stati».",
+"Femminile di mestiere costruito sul senso traslato di gubernator: in italiano rende meglio «che tiene il timone di», «che regge», più che «pilota»."
+],
+"divergenze": [
+"L&S documenta esclusivamente l'uso figurato (fortuna, eloquentia); Whitaker registra anche il senso nautico proprio «helmsman, pilot (female)», che è calco meccanico del maschile gubernator e non trova appoggio nei loci della voce."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gula": {
+"campi": [
+{
+"campo": "anatomia: gola ed esofago",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"gullet",
+"weasand",
+"throat",
+"neck",
+"maw"
+],
+"it": [
+"gola",
+"esofago",
+"canna della gola",
+"collo"
+]
+},
+"registro": "anatomico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "appetito e ingordigia",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"palate",
+"appetite",
+"taste for food"
+],
+"it": [
+"palato",
+"appetito",
+"gusto della tavola"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"gluttony",
+"gormandizing",
+"greed"
+],
+"it": [
+"ingordigia",
+"golosità",
+"voracità",
+"gola (come vizio)"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"throat",
+"gullet",
+"appetite",
+"gluttony"
+],
+"it": [
+"gola",
+"esofago",
+"appetito",
+"ingordigia"
+]
+},
+"applicazione": [
+"Nel senso proprio ricorre in giri idiomatici di violenza: obtorta gula «afferrato per la gola», laqueo gulam frangere «strozzare con un laccio», interstringere gulam «serrare la gola».",
+"temperare gulae regge il dativo: «tenere a freno la gola»; explere profundam gulam alicuius «saziare l'ingordigia senza fondo di qualcuno».",
+"irritamenta gulae vale «gli stimolanti dell'appetito, le ghiottonerie».",
+"Per metonimia designa il goloso stesso (quanta est gula, quae sibi totos ponit apros «che ghiottone, che si serve cinghiali interi»); il plurale proceres gulae indica «i sommi maestri della tavola»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gumia": {
+"campi": [
+{
+"campo": "ghiottoneria: chi mangia troppo",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"glutton",
+"gourmand",
+"gormandizer"
+],
+"it": [
+"ghiottone",
+"goloso",
+"mangione",
+"crapulone"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"glutton",
+"gourmand"
+],
+"it": [
+"ghiottone",
+"goloso"
+]
+},
+"applicazione": [
+"Lewis & Short lo registra di genere comune (com.): vale tanto «ghiottone» quanto «ghiottona».",
+"Parola rara, di tono comico-satirico (Lucilio, Apuleio) e tramandata in buona parte per via indiretta nei grammatici: in traduzione conviene un termine popolare e vivace."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gurges": {
+"campi": [
+{
+"campo": "acque vorticose: gorgo e voragine",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"raging abyss",
+"whirlpool",
+"gulf",
+"eddy"
+],
+"it": [
+"gorgo",
+"vortice",
+"voragine d'acqua",
+"abisso"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "acque, corrente, mare",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"waters",
+"stream",
+"flood",
+"sea"
+],
+"it": [
+"acque",
+"flutti",
+"corrente",
+"mare"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "abisso morale e dissipazione",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"abyss of vices",
+"bottomless pit of insatiable craving"
+],
+"it": [
+"voragine (di vizi)",
+"abisso",
+"gorgo delle passioni"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"spendthrift",
+"prodigal",
+"squanderer"
+],
+"it": [
+"scialacquatore",
+"dissipatore",
+"sperperatore"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"whirlpool",
+"abyss",
+"waters",
+"spendthrift"
+],
+"it": [
+"gorgo",
+"voragine",
+"flutti",
+"scialacquatore"
+]
+},
+"applicazione": [
+"Nel senso proprio si oppone a vada «i bassifondi»: per medios gurgites «in mezzo ai gorghi»; hauriri gurgitibus «essere inghiottiti dai vortici».",
+"Al plurale poetico, e con aggettivo geografico (Euboicus, Carpathius, Tusci), vale semplicemente «le acque, i flutti (del mare di...)».",
+"Nel senso morale regge il genitivo di ciò che viene divorato: gurges ac vorago patrimonii «voragine e abisso del patrimonio», gurges vitiorum turpitudinumque; detto di persona si rende «un pozzo senza fondo», «un ingoiatore di sostanze»."
+],
+"divergenze": [
+"Whitaker si ferma all'ambito acquatico («whirlpool, raging abyss, gulf, the sea, flood, stream»); solo L&S documenta l'uso morale (abisso di vizi) e quello personale (lo scialacquatore), largamente attestato in Cicerone."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gurgulio": {
+"campi": [
+{
+"campo": "anatomia: gola e trachea",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"gullet",
+"weasand",
+"windpipe",
+"throat"
+],
+"it": [
+"gola",
+"trachea",
+"esofago",
+"canna della gola"
+]
+},
+"registro": "anatomico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"windpipe",
+"gullet",
+"throat"
+],
+"it": [
+"trachea",
+"gola",
+"esofago"
+]
+},
+"applicazione": [
+"Sinonimo più tecnico e più basso di gula: nei testi di agricoltura e di medicina descrive il collo degli animali (hircus... gurgulione longiore), in Plauto entra in battute di tono comico.",
+"Nella resa italiana conviene scegliere fra «gola» e «trachea» in base al contesto anatomico, perché i loci non distinguono con rigore."
+],
+"divergenze": [
+"Whitaker dà solo «windpipe» (trachea); L&S oscilla fra esofago e trachea, e i passi citati non permettono sempre di decidere."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gurgustium": {
+"campi": [
+{
+"campo": "abitazione misera",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"hovel",
+"hut",
+"small mean dwelling",
+"shack"
+],
+"it": [
+"tugurio",
+"stamberga",
+"catapecchia",
+"bugigattolo"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"hovel",
+"hut"
+],
+"it": [
+"tugurio",
+"stamberga"
+]
+},
+"applicazione": [
+"Sempre con connotazione di disprezzo, tipica della polemica oratoria: nescio quo e gurgustio te prodire «venir fuori da non so quale catapecchia», in gurgustio habitare.",
+"La nozione implicita, secondo L&S, è quella di angustia del luogo: la resa italiana deve conservare l'idea del misero e dello stretto."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gustus": {
+"campi": [
+{
+"campo": "l'atto di assaggiare",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a tasting",
+"a partaking slightly of something",
+"sampling"
+],
+"it": [
+"assaggio",
+"degustazione",
+"il gustare",
+"il saggiare col palato"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "portata e bevanda",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"light dish at the beginning of a Roman meal",
+"antepast",
+"whet",
+"relish"
+],
+"it": [
+"antipasto",
+"prima portata",
+"stuzzichino"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"a draught of water"
+],
+"it": [
+"sorso",
+"sorsata d'acqua"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "sapore della cosa",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"taste",
+"flavor"
+],
+"it": [
+"sapore",
+"gusto (della cosa)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "saggio anticipato e impronta (uso figurato)",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"foretaste",
+"specimen",
+"sample"
+],
+"it": [
+"saggio",
+"assaggio",
+"anticipazione (di un'opera)"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+},
+{
+"tr": {
+"en": [
+"characteristic taste or flavour (of speech, of a city)"
+],
+"it": [
+"impronta",
+"tono caratteristico",
+"sapore (di città)"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"tasting",
+"flavor",
+"antepast",
+"foretaste"
+],
+"it": [
+"assaggio",
+"sapore",
+"antipasto",
+"saggio"
+]
+},
+"applicazione": [
+"Voce quasi tutta post-augustea, assente in Cicerone, che preferisce gustatus per la facoltà e sapor per il sapore.",
+"explorare aliquid gustu «saggiare qualcosa assaggiandola», detto dell'assaggiatore di corte; gustu libata potio «bevanda già assaggiata per prova»; ad primum gustum «al primo assaggio».",
+"Nel senso figurato regge il dativo della persona a cui si offre il saggio: gustum tibi dare volui «ho voluto dartene un assaggio»; ad hunc gustum «su questo modello, di questo tenore».",
+"Esiste anche una forma neutra gustum, -i (Apicio), per la portata d'apertura."
+],
+"divergenze": [
+"Whitaker riduce la voce a «tasting, appetite» e «draught of water»: non registra né l'antipasto, né il sapore, né il valore figurato di «saggio, anticipazione», tutti ben documentati in L&S.",
+"«appetite» di Whitaker non trova riscontro nei loci di L&S, dove gustus è l'atto o l'oggetto dell'assaggio e non il desiderio di cibo (per cui si dice piuttosto gula)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gutta": {
+"campi": [
+{
+"campo": "goccia di liquido",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"a drop (of a fluid)"
+],
+"it": [
+"goccia",
+"stilla"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "macchie e punteggiature naturali",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"spots",
+"specks (on animals, stones and the like)"
+],
+"it": [
+"macchie",
+"chiazze",
+"punteggiature",
+"screziature"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "architettura: ornamento dorico",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"gutta, small drop-shaped ornament under the triglyphs of a Doric column"
+],
+"it": [
+"goccia (ornamento sotto il triglifo dorico)"
+]
+},
+"registro": "architettonico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "quantità minima (uso figurato)",
+"rank": 4,
+"sensi": [
+{
+"tr": {
+"en": [
+"a drop, i. e. a little bit, a very little"
+],
+"it": [
+"un poco",
+"una briciola",
+"un'ombra",
+"un filo"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"drop",
+"spot",
+"speck"
+],
+"it": [
+"goccia",
+"macchia",
+"chiazza"
+]
+},
+"applicazione": [
+"Proverbiale: gutta cavat lapidem «la goccia scava la pietra».",
+"Nella lingua espressiva vale «neppure un po'»: guttam haud habeo sanguinis «non ho una goccia di sangue» (per la paura); si ego vini guttam indidi «se mi sono messo in bocca una sola goccia di vino».",
+"Nel senso di «macchie» è di norma plurale (guttae) e si accompagna all'ablativo di qualità: paribus lita corpora guttis «corpi cosparsi di macchie uguali».",
+"Il valore figurato di «minima quantità» è arcaico e rarissimo e regge il genitivo: gutta dulcedinis, gutta certi consili.",
+"Attestata una forma arcaica di genitivo singolare guttai (Lucrezio)."
+],
+"divergenze": [
+"Whitaker condensa la voce in «drop, spot, speck» e tace sia il termine tecnico d'architettura sia l'uso figurato di «minima quantità», entrambi registrati da L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:guttur": {
+"campi": [
+{
+"campo": "corpo (anatomia)",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"throat",
+"gullet",
+"neck",
+"windpipe"
+],
+"it": [
+"gola",
+"strozza",
+"collo",
+"canna della gola"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"swollen throat",
+"goitre"
+],
+"it": [
+"gozzo",
+"gola gonfia"
+]
+},
+"registro": "medico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"throat as the seat of the voice and of song"
+],
+"it": [
+"gola (sede della voce e del canto)",
+"ugola"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "vizio e appetito",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"gluttony",
+"voracious appetite",
+"greed"
+],
+"it": [
+"ingordigia",
+"gola (vizio)",
+"voracità"
+]
+},
+"registro": "spregiativo",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"throat",
+"gullet",
+"gluttony"
+],
+"it": [
+"gola",
+"strozza",
+"ingordigia"
+]
+},
+"applicazione": [
+"Il plurale guttura vale spesso il singolare, soprattutto in poesia (fodere guttura cultro, Ov. met. 7,314; laqueo ligare guttura, ib. 6,135): si rende con «la gola».",
+"Di norma neutro; arcaico e comico l'uso maschile con accusativo gutturem (Plaut. mil. 3,2,22; Aul. 2,4,25).",
+"Con verbi di suono e di canto (fundere cantus e gutture, cantare tenui gutture) indica la sede della voce: si rende «dalla gola», «con la voce», «con un filo di voce».",
+"Con verbi di gonfiore (guttur intumescit, tumidum guttur) descrive il gozzo: resa «avere il gozzo», non «avere la gola gonfia»."
+],
+"divergenze": [
+"Whitaker isola «swollen throat, goiter» come glossa autonoma; in L&S il gozzo non è un senso a sé, ma il contenuto dei loci di Plinio (guttur intumescit) e Giovenale (tumidum guttur in Alpibus).",
+"L'uso comico e osceno di inferior guttur per l'ano (Plaut. Aul. 2,4,25) è registrato solo da L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gutus": {
+"campi": [
+{
+"campo": "vasellame",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"narrow-necked vessel",
+"flask",
+"cruet",
+"jug for pouring drop by drop"
+],
+"it": [
+"ampolla",
+"boccetta dal collo stretto",
+"vasetto da versare a gocce"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"flask",
+"cruet",
+"narrow-necked vessel"
+],
+"it": [
+"ampolla",
+"boccetta",
+"vasetto"
+]
+},
+"applicazione": [
+"Grafia meno corretta guttus. Il nome, connesso a gutta, designa il vaso che lascia cadere il liquido a gocce (vino, olio, unguenti): resa preferibile «ampolla», non genericamente «vaso».",
+"Ricorre in coppia con patera nei contesti conviviali e sacrificali (cum patera gutus, Hor. sat. 1,6,118); ne è attestato l'esemplare di faggio (faginus, Plin. 16,73,185).",
+"Come oggetto povero e quotidiano compare nei cataloghi di suppellettili (Iuv. 3,263; 11,158; Mart. 14,52)."
+],
+"divergenze": [
+"Whitaker non registra il lemma: l'unica fonte disponibile è L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gymnasiarchus": {
+"campi": [
+{
+"campo": "istituzioni greche",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"master of a gymnasium",
+"gymnasiarch",
+"director of a gymnasium"
+],
+"it": [
+"ginnasiarco",
+"direttore del ginnasio",
+"sovrintendente della palestra"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"gymnasiarch",
+"master of a gymnasium"
+],
+"it": [
+"ginnasiarco",
+"direttore del ginnasio"
+]
+},
+"applicazione": [
+"Grecismo (γυμνασίαρχος) usato come tecnicismo: in italiano si conserva «ginnasiarco», evitando rese modernizzanti come «preside» o «allenatore».",
+"Accanto alla forma di 2ª declinazione esiste la variante di 1ª gymnasiarcha, ae (γυμνασιάρχης: Val. Max. 9,12,7 ext.; iscrizioni)."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gymnasium": {
+"campi": [
+{
+"campo": "edifici e istituzioni del mondo greco",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"gymnasium",
+"public place for gymnastic exercise",
+"sports ground",
+"palaestra"
+],
+"it": [
+"ginnasio",
+"palestra pubblica",
+"luogo di esercizio fisico"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "scuola e insegnamento",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"high school",
+"college",
+"place of philosophical teaching"
+],
+"it": [
+"scuola",
+"luogo di studio e di insegnamento",
+"scuola filosofica"
+]
+},
+"registro": "generale",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"building for study and walking on a private estate"
+],
+"it": [
+"ginnasio (edificio per lo studio e la passeggiata in una villa)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"gymnasium",
+"school"
+],
+"it": [
+"ginnasio",
+"palestra",
+"scuola"
+]
+},
+"applicazione": [
+"Grecismo che designa un'istituzione greca: quando è in gioco anche l'insegnamento conviene «ginnasio», non «palestra».",
+"Comico e ingiurioso il nesso gymnasium flagri «scuola di frusta» (Plaut. Asin. 2,2,31), detto di chi le prende di continuo; analogo habere aliquem gymnasium «servirsi di uno come sacco da botte» (Plaut. Aul. 3,1,5).",
+"In Cicerone i due edifici della villa tusculana portano nomi greci (Lyceum per il superius gymnasium, Academia): lì il termine indica l'ambiente destinato allo studio e alla conversazione filosofica.",
+"Al plurale, in coppia con scholae philosophorum (Cic. de orat. 1,13,56), vale l'insieme dei luoghi di formazione: resa «le scuole», «gli ambienti di studio»."
+],
+"divergenze": [
+"Whitaker semplifica in «secondary school» e «sports center»: la prima resa è modernizzante e va evitata nei testi classici, dove L&S distingue nettamente il luogo dell'esercizio fisico (I) dal luogo dell'insegnamento (II)."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gynaeceum": {
+"campi": [
+{
+"campo": "casa greca",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"women's apartments",
+"women's quarters",
+"inner part of the house where the women lived"
+],
+"it": [
+"gineceo",
+"appartamento delle donne",
+"parte interna della casa riservata alle donne"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "amministrazione imperiale",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"imperial gynaeceum",
+"the emperor's women's quarters",
+"state weaving workshop where women wove the imperial garments"
+],
+"it": [
+"gineceo imperiale",
+"opificio tessile imperiale",
+"gineceo (dove le donne filavano e tessevano le vesti del principe)"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"women's quarters",
+"gynaeceum"
+],
+"it": [
+"gineceo",
+"appartamento delle donne"
+]
+},
+"applicazione": [
+"Grafie alternative gynaecium e gunaec-.",
+"Nel senso greco è termine di ambientazione: nella commedia e in Cicerone indica lo spazio precluso agli estranei, sicché in gynaeceum irrumpere vale «violare l'appartamento delle donne».",
+"Nel latino tardo (Lattanzio, Vegezio, Codice Giustinianeo) è tecnicismo amministrativo: si rende «gineceo imperiale» o «opificio», non «appartamento delle donne»."
+],
+"divergenze": [
+"Whitaker registra la sola accezione greca; l'uso romano tardoantico dell'officina tessile imperiale è documentato solo da L&S."
+],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gynaeconitis": {
+"campi": [
+{
+"campo": "casa greca",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"the women's apartments in a Greek house",
+"women's quarters"
+],
+"it": [
+"gineceo",
+"appartamento delle donne",
+"quartiere femminile della casa greca"
+]
+},
+"registro": "raro",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"women's quarters",
+"gynaeconitis"
+],
+"it": [
+"gineceo",
+"appartamento delle donne"
+]
+},
+"applicazione": [
+"Sinonimo dotto di gynaeceum nel primo significato; grecismo di 3ª declinazione (γυναικωνῖτις, gen. -idis).",
+"Ricorre in contesti descrittivi dell'abitazione greca e del costume (Nep. praef. 7; Vitr. 6,10), spesso in opposizione alla parte della casa aperta agli ospiti."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gypsum": {
+"campi": [
+{
+"campo": "materiali da costruzione e da conservazione",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"gypsum",
+"white lime plaster",
+"plaster"
+],
+"it": [
+"gesso",
+"stucco",
+"calce bianca"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "arti figurative",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"plaster figures",
+"plaster images",
+"plaster busts"
+],
+"it": [
+"statuette di gesso",
+"busti di gesso",
+"calchi in gesso"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"gypsum",
+"plaster",
+"plaster figure"
+],
+"it": [
+"gesso",
+"stucco",
+"statuetta di gesso"
+]
+},
+"applicazione": [
+"Nell'uso agricolo e vinario indica il gesso adoperato per sigillare i vasi e correggere i vini (Cato, Colum., Plin.): si rende «gesso» o «ingessatura».",
+"Come materia della decorazione e dei calchi funge da collettivo: plena omnia gypso Chrysippi (Iuv. 2,4) va reso «pieno dappertutto di busti di Crisippo in gesso»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+},
+"lat:gyrus": {
+"campi": [
+{
+"campo": "movimento circolare",
+"rank": 1,
+"sensi": [
+{
+"tr": {
+"en": [
+"circle",
+"ring",
+"circular course",
+"wheeling movement"
+],
+"it": [
+"giro",
+"cerchio",
+"volta",
+"evoluzione circolare"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"circling movement of a trained horse",
+"volt",
+"manège figure"
+],
+"it": [
+"volteggio",
+"carosello",
+"giro del cavallo (nel maneggio)"
+]
+},
+"registro": "concreto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"coil of a snake",
+"circling flight of birds"
+],
+"it": [
+"spira (del serpente)",
+"cerchio (del volo)"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S"
+]
+}
+]
+},
+{
+"campo": "luogo dell'addestramento equestre",
+"rank": 2,
+"sensi": [
+{
+"tr": {
+"en": [
+"riding-ring",
+"the place where horses are trained",
+"course"
+],
+"it": [
+"maneggio",
+"pista",
+"arena per l'addestramento dei cavalli"
+]
+},
+"registro": "poetico",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+}
+]
+},
+{
+"campo": "tempo, corso, ambito (figurato)",
+"rank": 3,
+"sensi": [
+{
+"tr": {
+"en": [
+"circuit",
+"cycle",
+"course",
+"career"
+],
+"it": [
+"ciclo",
+"corso",
+"circuito",
+"giro (del tempo)"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S",
+"Whitaker"
+]
+},
+{
+"tr": {
+"en": [
+"narrow compass",
+"restricted sphere",
+"bounds"
+],
+"it": [
+"cerchia ristretta",
+"ambito angusto",
+"limiti"
+]
+},
+"registro": "astratto",
+"fonti": [
+"L&S"
+]
+}
+]
+}
+],
+"gloss": {
+"en": [
+"circle",
+"circuit",
+"course"
+],
+"it": [
+"giro",
+"cerchio",
+"corso"
+]
+},
+"applicazione": [
+"Grecismo (γῦρος) soprattutto poetico; concorre con circus, circulus, orbis, orbita, ma insiste sul movimento più che sulla figura.",
+"Formule dell'equitazione: carpere gyrum «percorrere il giro», gyros variare o ducere «tracciare evoluzioni», in gyrum ire «girare in tondo», gyrum pulsare equis «battere la pista con i cavalli».",
+"In gyrum o in gyro con verbi di costrizione (in gyrum rationis duci, in exiguum gyrum compellere) vale «entro i limiti di»: resa «ricondurre nei limiti», «restringere in uno spazio angusto».",
+"Riferito al tempo (angustissimum habet dies gyrum; interiore gyro diem trahit) indica l'ampiezza del ciclo: si rende con «orbita», «arco», «giro».",
+"L'ablativo di misura o modo (curvo brevius compellere gyro) equivale a «con un giro più stretto»."
+],
+"divergenze": [],
+"prov": {
+"autorita": "L&S integrale",
+"src": [
+"Lewis&Short1879·PD/Perseus·CC BY-SA 4.0",
+"open_words/Whitaker·MIT"
+],
+"lic": "CC BY-SA 4.0"
+}
+}
+}
