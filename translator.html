@@ -4176,6 +4176,43 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: var(--font-c
 .resume-card-percorso { font-size: .95em; opacity: .8; }
 /* Badge del percorso: dice con quale metodo — e quindi con quale metro — il
    brano è stato lavorato. Neutro: il colore in Poetrify è la lingua. */
+/* ── Tappa «Analisi automatica» (percorsi rapidi) ──────────────────────── */
+.auto-cappello {
+  padding: 14px 16px; margin: 0 0 16px;
+  background: var(--parchment); border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md);
+}
+.auto-cifra { font-family: var(--font-ui); font-size: 15px; color: var(--ink); }
+.auto-cifra strong { font-size: 22px; }
+.auto-quota { margin-left: 8px; color: var(--sepia); font-size: 12px; }
+.auto-nota { font-family: var(--font-ui); font-size: 12.5px; color: var(--sepia); margin: 6px 0 12px; line-height: 1.5; }
+.auto-elenco { display: flex; flex-direction: column; gap: 10px; }
+.auto-riga { padding: 10px 12px; border: 1px solid var(--rule-soft); border-radius: var(--radius-sm); background: var(--paper); }
+.auto-riga-capo { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.auto-riga-num { font-family: var(--font-ui); font-weight: 800; font-size: 12px; color: var(--sepia); }
+.auto-riga-conto { font-family: var(--font-ui); font-size: 11px; color: var(--sepia); }
+.auto-riga-testo { font-family: var(--font-body); font-size: 14px; color: var(--ink); font-style: italic; }
+.auto-riga-testo.greek { font-family: var(--font-classical); font-style: normal; }
+.auto-parole { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.auto-parola {
+  display: inline-flex; align-items: baseline; gap: 5px;
+  padding: 2px 8px; border-radius: 999px;
+  background: var(--ivory); border: 1px solid var(--rule-soft);
+  font-family: var(--font-ui); font-size: 12px;
+}
+.auto-pos { font-size: 11px; color: var(--sepia); }
+.auto-altre { font-family: var(--font-ui); font-size: 11px; color: var(--sepia); align-self: center; }
+
+/* ── Tappa «Stemma a barre» (chiusura del Ripasso) ─────────────────────── */
+.stemma-blocco { margin: 0 0 18px; }
+.stemma-blocco-capo { display: flex; align-items: baseline; gap: 8px; margin-bottom: 6px; }
+.stemma-blocco-num { font-family: var(--font-ui); font-weight: 800; font-size: 12px; color: var(--sepia); }
+.stemma-blocco-testo { font-family: var(--font-body); font-size: 14px; font-style: italic; color: var(--ink-soft); }
+.stemma-blocco-testo.greek { font-family: var(--font-classical); font-style: normal; }
+
+/* ── Rientro selettivo ─────────────────────────────────────────────────── */
+.schel-rientro { float: right; margin-top: -4px; }
+
 /* ── Lo stato terzo nelle superfici di lavoro ──────────────────────────── */
 .revisione-banner {
   display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px;
@@ -11618,6 +11655,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   .app .batch-toggle-btn, .app .integrale-rect-count, .app .token-pos-marker,
   .app .ts-num,
   .app .archive-stat-label, .app .sigla, .app .status-badge, .app .current-tag,
+  .app .barre-fn, .app .barre-fn em, .app .barre-count,
   .app .field-block-label { font-size: 11px; }
 }
 
@@ -11985,6 +12023,17 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
     <div class="approach-grid" id="approach-grid"></div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeApproachModal()">Annulla / mantieni selezione corrente</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="modal-rientro">
+  <div class="modal" style="max-width: 900px; max-height: 86vh; overflow-y: auto;">
+    <h3 class="modal-title" id="rientro-titolo">Sintagmi della frase</h3>
+    <p class="modal-subtitle">È lo stesso editor della scheda C: quello che cambi qui è cambiato davvero. Chiudendo torni esattamente dov'eri.</p>
+    <div id="rientro-corpo"></div>
+    <div class="modal-actions">
+      <button class="btn btn-primary" onclick="chiudiRientroLogico()">Torna alla traduzione</button>
     </div>
   </div>
 </div>
@@ -12683,9 +12732,28 @@ const TAPPE = {
     terminale: { etichetta: '✓ Esporta nella sezione Traduzione →', azione: 'scheletroExportToTranslation()' },
   },
 
-  /* ── Progettate, non ancora costruite (audit §3) ───────────────────────── */
-  autoanalisi: { label: 'Analisi automatica', sede: 'progetto' },
-  stemma:      { label: 'Stemma a barre',     sede: 'progetto', modulo: 'sintagmi' },
+  /* ── Le due tappe dei percorsi rapidi (punto 9) ────────────────────────── */
+  autoanalisi: {
+    label: 'Analisi automatica', icona: '⚡', sede: 'scheletro', modulo: 'grammatica',
+    hint: 'Le parole a classe chiusa — preposizioni, congiunzioni, particelle, articoli, forme di «essere», pronomi — sono già classificate. Controlla e correggi: quello che la macchina sa fare da sé non è il tuo lavoro.',
+    corpo: (ss, lang) => renderTappaAutoanalisi(ss, lang),
+    /* Entrando, la macchina fa la sua parte. Non è una scorciatoia: è togliere
+       di mezzo ciò che non insegna niente, per lasciare tempo alla struttura. */
+    entrando: function () {
+      if (typeof autoAnalyzeAllSentences === 'function') autoAnalyzeAllSentences({ silentSummary: true });
+    },
+  },
+  stemma: {
+    label: 'Stemma a barre', icona: '📊', sede: 'scheletro', modulo: 'sintagmi',
+    hint: 'L\'ossatura del periodo a colpo d\'occhio: ogni sintagma è una barra, lunga quanto la sua estensione in parole, nell\'ordine S · V · O · complementi. Serve a rivedere la struttura, non a tradurla.',
+    corpo: (ss, lang) => renderTappaStemma(ss, lang),
+    /* Il default della tappa è la vista a barre — ma il commutatore resta vivo:
+       si imposta solo se lo studente non ha già scelto in questa sessione. */
+    entrando: function () {
+      if (!state.syntaxTreeView) state.syntaxTreeView = 'barre';
+    },
+    terminale: { etichetta: '✓ Ripasso concluso', azione: 'concludiRipasso()' },
+  },
 };
 
 function schedaTappa(k) { return TAPPE[k] || null; }
@@ -12719,7 +12787,7 @@ const PERCORSI = {
        non la morfologia di ogni parola; la bella copia sì, è il compito. */
     metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'sintagmi', 'brutta', 'bella'],
     preset: { metodo: 'valenziale', vista: 'intero', mode: 'free' },
-    disponibile: true,
+    disponibile: true, ingresso: 'avvio',
   },
   'passo-passo': {
     nome: 'Passo dopo passo', icona: '🧭',
@@ -12729,7 +12797,7 @@ const PERCORSI = {
     /* Le nove tappe passano anche dalla grammatica: qui conta. */
     metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'sintagmi', 'grammatica', 'brutta', 'bella'],
     preset: { metodo: 'strati', vista: 'frase', mode: 'guided' },
-    disponibile: true,
+    disponibile: true, ingresso: 'avvio',
   },
   /* ── Progettati, non ancora costruiti (audit §3) ──────────────────────────
      Richiedono il refactor dello scheletro playlist-driven: finché quello non
@@ -12741,8 +12809,10 @@ const PERCORSI = {
     playlist: ['autoanalisi', 'verbi', 'proposizioni', 'ordo', 'bella'],
     /* Sotto verifica non si fa la morfologia: struttura e resa. */
     metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'brutta', 'bella'],
-    preset: { metodo: 'strati', vista: 'intero', mode: 'free' },
-    disponibile: false,
+    /* Il preset diceva «per strati» mentre la playlist è tutta di tappe dello
+       SCHELETRO: gli assi non portavano mai dove il percorso prometteva. */
+    preset: { metodo: 'valenziale', vista: 'intero', mode: 'free' },
+    disponibile: true, ingresso: 'avvio',
   },
   'ripasso': {
     nome: 'Ripasso lampo', icona: '⚡',
@@ -12752,7 +12822,10 @@ const PERCORSI = {
     /* Un ripasso e' compiuto SENZA una riga di traduzione: e' il suo scopo. */
     metro: ['testo', 'frasi', 'verbi', 'proposizioni'],
     preset: { metodo: 'valenziale', vista: 'intero', mode: 'free' },
-    disponibile: false,
+    /* Costruito, ma NON è un modo di cominciare una versione: si applica a un
+       brano che esiste già. Per questo l'ingresso è l'Archivio e la sua card
+       non compare fra quelle d'avvio (audit §4, tagli deliberati). */
+    disponibile: true, ingresso: 'archivio',
   },
 };
 
@@ -12796,9 +12869,20 @@ function schedaPercorso(chiave) {
   return (chiave && Object.prototype.hasOwnProperty.call(PERCORSI, chiave)) ? PERCORSI[chiave] : null;
 }
 
-/** I percorsi mostrabili all'utente (mai i progettati-non-costruiti). */
+/** Tutti i percorsi COSTRUITI: il motore li sa eseguire. */
 function percorsiDisponibili() {
   return Object.keys(PERCORSI).filter(k => PERCORSI[k].disponibile);
+}
+
+/* «Costruito» e «da dove si comincia» sono due cose diverse: il Ripasso lampo
+   esiste ed è eseguibile, ma non è un modo di INIZIARE una versione — si
+   applica a un brano che c'è già, e il suo ingresso è l'Archivio. */
+function percorsiDaAvvio() {
+  return percorsiDisponibili().filter(k => (PERCORSI[k].ingresso || 'avvio') === 'avvio');
+}
+
+function percorsiDaArchivio() {
+  return percorsiDisponibili().filter(k => PERCORSI[k].ingresso === 'archivio');
 }
 
 /**
@@ -13042,6 +13126,143 @@ function confermaCambioPercorso() {
   const nuovo = _cambioInSospeso;
   chiudiCambioPercorso();
   if (nuovo) cambiaPercorso(nuovo, { confermato: true });
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   PERCORSI RAPIDI (punto 9) · le due tappe che li reggono
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/** Quante parole ha già classificato la macchina, e quante restano. */
+function _contoAutoanalisi(sentences) {
+  let parole = 0, classificate = 0;
+  (sentences || []).forEach(s => {
+    const toks = tokenizeSentence(s.original || s.text || '');
+    parole += toks.filter(t => t.kind === 'word').length;
+    classificate += (s.grammar || []).filter(g => g && g.partOfSpeech).length;
+  });
+  return { parole: parole, classificate: Math.min(classificate, parole) };
+}
+
+/* TAPPA «Analisi automatica» · il lavoro che non insegna niente lo fa la
+   macchina. Non è una scorciatoia sul metodo: è tempo restituito alla
+   struttura. Resta tutto correggibile — si mostra che cosa ha deciso. */
+function renderTappaAutoanalisi(sentences, lang) {
+  const c = _contoAutoanalisi(sentences);
+  const resta = Math.max(0, c.parole - c.classificate);
+  const quota = c.parole ? Math.round(c.classificate / c.parole * 100) : 0;
+  const righe = (sentences || []).map((s, i) => {
+    const voci = (s.grammar || []).filter(g => g && g.partOfSpeech);
+    const toks = tokenizeSentence(s.original || '').filter(t => t.kind === 'word').length;
+    const campioni = voci.slice(0, 6).map(g =>
+      `<span class="auto-parola">${escapeHtml(g.word || '')}<span class="auto-pos">${escapeHtml(g.partOfSpeech || '')}</span></span>`
+    ).join('');
+    return `<div class="auto-riga">
+      <div class="auto-riga-capo">
+        <span class="auto-riga-num">${i + 1}</span>
+        <span class="auto-riga-conto">${voci.length} su ${toks}</span>
+      </div>
+      <div class="auto-riga-testo ${lang === 'greco' ? 'greek' : ''}">${escapeHtml(s.original || '')}</div>
+      ${campioni ? `<div class="auto-parole">${campioni}${voci.length > 6 ? `<span class="auto-altre">+${voci.length - 6}</span>` : ''}</div>` : ''}
+    </div>`;
+  }).join('');
+  return `<div class="subsection">
+    <div class="auto-cappello">
+      <div class="auto-cifra"><strong>${c.classificate}</strong> parole su ${c.parole}
+        <span class="auto-quota">${quota}%</span></div>
+      <p class="auto-nota">${resta
+        ? `Restano <strong>${resta}</strong> parole: sono i nomi, gli aggettivi e i verbi — cioè il lavoro vero. Nei percorsi rapidi non serve classificarle una per una: si passa alla struttura.`
+        : 'Tutto classificato.'}</p>
+      <button class="btn btn-brand-soft btn-sm" onclick="autoAnalyzeAllSentences()">⚡ Rifai l\'analisi automatica</button>
+    </div>
+    <div class="auto-elenco">${righe}</div>
+  </div>`;
+}
+
+/* TAPPA «Stemma a barre» · la chiusura del Ripasso: l'ossatura a colpo
+   d'occhio, frase per frase. Riusa il renderer dello stemma senza forzarne la
+   vista, così il commutatore che porta con sé continua a funzionare. */
+function renderTappaStemma(sentences, lang) {
+  const senza = (sentences || []).filter(s => !((s.logic || []).some(e => e && e.funzione))).length;
+  const blocchi = (sentences || []).map((s, i) => {
+    const vuota = !((s.logic || []).some(e => e && e.funzione));
+    return `<div class="stemma-blocco">
+      <div class="stemma-blocco-capo">
+        <span class="stemma-blocco-num">${i + 1}</span>
+        <span class="stemma-blocco-testo ${lang === 'greco' ? 'greek' : ''}">${escapeHtml(s.original || '')}</span>
+      </div>
+      ${vuota
+        ? '<div class="muted-text" style="font-size:12px;padding:6px 2px;">Nessun sintagma in questa frase: torna alla tappa dei sintagmi se vuoi vederne l\'ossatura.</div>'
+        : renderSyntaxTree(s)}
+    </div>`;
+  }).join('');
+  return `<div class="subsection">
+    ${senza ? `<p class="muted-text" style="font-size:12.5px;margin:0 0 12px;">${senza} fras${senza === 1 ? 'e' : 'i'} senza sintagmi: lo stemma le mostra vuote.</p>` : ''}
+    ${blocchi}
+  </div>`;
+}
+
+/** Chiusura del Ripasso: non c'è niente da esportare, si torna da dove si è entrati. */
+function concludiRipasso() {
+  persistCurrent();
+  goToStep(4);
+  if (typeof showToast === 'function') showToast('⚡ Ripasso concluso · la struttura è ripassata');
+}
+
+/* ── L'INGRESSO DALL'ARCHIVIO ──────────────────────────────────────────────
+   Il Ripasso non si comincia: si applica. Da qui si prende un brano che c'è
+   già e lo si guarda con l'occhio della struttura. */
+function avviaDaArchivio(id, chiave) {
+  const sc = schedaPercorso(chiave);
+  if (!sc) return;
+  openProject(id);
+  /* Passa dal rito completo: se il cambio mette in discussione del lavoro a
+     valle, la domanda compare — un percorso rapido non è un lasciapassare. */
+  if (!cambiaPercorso(chiave, { muto: true })) {
+    /* la domanda è aperta, oppure il percorso era già questo: in entrambi i
+       casi non si forza nulla. */
+    if (state.percorso !== chiave) return;
+  }
+  goToStep(3);
+  renderAll();
+  if (typeof showToast === 'function') showToast(`${sc.icona} ${sc.nome} · ${sc.tempo}`);
+}
+
+/* ── IL RIENTRO SELETTIVO ──────────────────────────────────────────────────
+   Il micro-gesto che mancava (audit §Routing): dalla resa di una frase si
+   torna sui suoi sintagmi senza perdere il posto. L'editor logico è lo stesso
+   di sempre — non una copia — servito in un pannello sopra il lavoro. */
+let _rientroFrase = '';
+
+function apriRientroLogico(sentenceId) {
+  const s = (state.sentences || []).find(x => x.id === sentenceId);
+  if (!s) return;
+  _rientroFrase = sentenceId;
+  const box = document.getElementById('rientro-corpo');
+  const tit = document.getElementById('rientro-titolo');
+  const modale = document.getElementById('modal-rientro');
+  if (!box || !modale) return;
+  const i = (state.sentences || []).indexOf(s);
+  if (tit) tit.textContent = 'Sintagmi della frase ' + (i + 1);
+  box.innerHTML = renderLogicAnalysis(s);
+  modale.classList.add('open');
+}
+
+function chiudiRientroLogico() {
+  _rientroFrase = '';
+  const m = document.getElementById('modal-rientro');
+  if (m) m.classList.remove('open');
+  persistCurrent();
+  renderAll();
+}
+
+/** Ridisegna il pannello dopo una modifica fatta dentro il pannello stesso. */
+function aggiornaRientroLogico() {
+  if (!_rientroFrase) return false;
+  const s = (state.sentences || []).find(x => x.id === _rientroFrase);
+  const box = document.getElementById('rientro-corpo');
+  if (!s || !box) return false;
+  box.innerHTML = renderLogicAnalysis(s);
+  return true;
 }
 
 /** Come si chiama il percorso in corso, adattamento compreso. */
@@ -28495,7 +28716,7 @@ function avvioPasso2() {
 function avvioPasso3() {
   const n = avvioFrasi();
   const primaVolta = !haGiaConclusoUnaVersione();
-  const chiavi = percorsiDisponibili();
+  const chiavi = percorsiDaAvvio();
   const card = (k) => {
     const sc = PERCORSI[k];
     const sel = avvio.percorso === k;
@@ -28642,6 +28863,10 @@ function renderEditor() {
     if (t) t.value = state.meta.testoOriginale || '';
     if (tr) tr.value = state.meta.traduzione || '';
   }
+  /* Il pannello del rientro selettivo e' parte del ciclo di rendering: senza
+     questo, modificando un sintagma da dentro il pannello il dato cambiava e
+     il pannello restava fermo sull'HTML di prima. */
+  if (typeof aggiornaRientroLogico === 'function') aggiornaRientroLogico();
 }
 
 function sectionHeader(letter, title, subtitle) {
@@ -29152,7 +29377,10 @@ function renderScheletroTraduzione(sentences, lang) {
       ${chips}
       ${proposed}
       <div class="schel-trad-brutta">
-        <label class="field-block-label">Brutta copia · resa letterale della frase</label>
+        <label class="field-block-label">Brutta copia · resa letterale della frase
+          <button class="btn btn-ghost btn-sm schel-rientro" onclick="apriRientroLogico('${sentence.id}')"
+                  title="Riapri i sintagmi di questa frase senza perdere il posto">⤴ Sintagmi di questa frase</button>
+        </label>
         <textarea class="translation-textarea brutta" placeholder="Resa di lavoro, vicina all'originale — concatena le rese dei sintagmi nell'ordine SVO…" data-rivedere="${sentence.daRivedere ? '1' : ''}" oninput="updateSentenceTranslation('${sentence.id}', this.value)">${escapeHtml(sentence.translation || '')}</textarea>
       </div>
     </div>`;
@@ -31552,6 +31780,18 @@ function renderArchiveCard(p) {
          rivedere.length ? `da rivedere: ${rivedere.join(' · ')}` : '']
         .filter(Boolean).join(' — ') || 'tutto fatto');
 
+  /* I percorsi che si applicano a un brano gia' in archivio (Ripasso lampo):
+     si costruiscono qui, fuori dal template, per non annidare backtick. */
+  const rapidiHtml = percorsiDaArchivio().map(function (k) {
+    const sc = PERCORSI[k];
+    const tit = escapeHtml(sc.nome + ' · ' + sc.scopo + ' (' + sc.tempo + ')');
+    const nome = escapeHtml(sc.nome.split(' ')[0]);
+    /* L'apice dentro l'attributo passa come entita' HTML: cosi' questa riga
+       non contiene un solo backslash da sbagliare. */
+    return '<button class="btn btn-ghost btn-sm" onclick="avviaDaArchivio(&#39;' + p.id + '&#39;, &#39;' + k + '&#39;)"'
+      + ' title="' + tit + '">' + sc.icona + ' ' + nome + '</button>';
+  }).join('');
+
   const ph = projectPhases(p);
   const phaseChip = (st, label) => `<span class="phase-chip" data-state="${st}"><span class="phase-dot"></span>${label}</span>`;
   const phasesHtml = `<div class="archive-card-phases" aria-label="Avanzamento per fase">`
@@ -31589,6 +31829,7 @@ function renderArchiveCard(p) {
         ${isCurrent
           ? `<button class="btn btn-ghost btn-sm" onclick="goToStep(1)">Vai al brano →</button>`
           : `<button class="btn btn-brand-soft btn-sm" onclick="openProject('${p.id}')">${status === 'done' ? 'Rivedi' : 'Riprendi'} →</button>`}
+        ${rapidiHtml}
         <button class="btn btn-ghost btn-sm" onclick="duplicateProject('${p.id}')" title="Duplica">⎘</button>
         <button class="btn btn-ghost btn-sm" onclick="transferProjectLanguage('${p.id}')" title="Sposta nell'altra lingua (latino ⇄ greco) — utile se la lingua era stata scelta per errore">⇄ ${p.meta.lingua === 'greco' ? 'Lat' : 'Gr'}</button>
         <button class="btn btn-ghost btn-sm" onclick="exportProjectFromArchive('${p.id}')" title="Esporta">⤓</button>

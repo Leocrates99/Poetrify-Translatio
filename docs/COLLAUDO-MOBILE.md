@@ -104,6 +104,20 @@ chip) invece di rimpicciolirlo.
 Criterio 7 verificato col dito su **723 comandi**: tutti rispondono al proprio
 tocco. Desktop e ramo greco ricontrollati dopo le cure: nessuna regressione.
 
+## 3.1 · Le superfici dei percorsi rapidi (punto 9)
+
+Ricollaudate con lo stesso metro appena costruite:
+
+| Superficie | Esito |
+|---|---|
+| Simulazione · Analisi automatica | a norma |
+| Simulazione · Ordo e brutta | a norma |
+| Ripasso · Stemma a barre | tre targhette a 10px (`barre-fn`, il suo `em`, `barre-count`) → pavimento alzato |
+| Pannello del rientro selettivo | 375px su 375, nessuno scorrimento orizzontale |
+
+Il metro non è una tantum: ogni superficie nuova ci passa prima di essere
+considerata finita.
+
 ## 4 · Che cosa decide per i percorsi rapidi
 
 - **Lo stepper regge playlist corte.** Con «Simulazione» (3 fasi) la barra si
