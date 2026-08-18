@@ -12662,6 +12662,8 @@ const TAPPE = {
   sintagmi:   { label: 'Sintagmi',    sede: 'guidata', modulo: 'sintagmi' },
   grammatica: { label: 'Grammatica',  sede: 'guidata', modulo: 'grammatica' },
   brutta:     { label: 'Brutta',      sede: 'guidata', modulo: 'brutta' },
+  /* `scheda` = quale scheda interna dell'analisi lasciare aperta uscendo dalla
+     tappa, per chi passa poi al banco libero. Era una mappa di numeri. */
 
   /* ── Le fasi dello SCHELETRO · quelle che il motore sa disegnare ───────── */
   verbi: {
@@ -13299,7 +13301,7 @@ const defaultState = () => ({
   currentAnalysisTab: 'grammaticale',
   previewOpen: false,
   mode: 'free',          // 'free' | 'guided'
-  guidedStep: 1,         // 1..6
+  guidedStep: 1,         // posizione nella playlist; la chiave sta in `guidataTappa`
   guidedSentenceIdx: 0,  // current sentence within a guided substep
   // PERCORSO · la scelta che l'utente compie davvero (per SCOPO e TEMPO):
   // vedi PERCORSI/schedaPercorso. Da esso si derivano gli assi qui sotto, che
@@ -28381,7 +28383,8 @@ function renderSidebarTabs() {
       { num: 2, letter: 'B', icon: 'tree', title: 'Analisi guidata', group: 'lavoro',
         enabled: !!state.meta.testoOriginale,
         hasContent: state.sentences.length > 0,
-        badge: state.sentences.length > 0 ? `${Math.min(state.guidedStep || 1, 9)}/9` : '·' },
+        badge: state.sentences.length > 0
+          ? `${numeroTappaGuidata()}/${tappeGuidateDi(state).length}` : '·' },
       { num: 5, sub: 'bozza', letter: 'E', icon: 'pencil', title: 'Bozza', group: 'traduzione',
         enabled: !!state.meta.testoOriginale, onclick: "goToTraduzione('bozza')",
         hasContent: hasTranslation, hideForMedie: true },
@@ -28569,6 +28572,7 @@ function avvioCrea() {
      una sola scelta, nessun controllo tecnico da toccare a mano. */
   applicaPercorso(avvio.percorso || PERCORSO_DEFAULT);
   state.guidedStep = 1;
+  delete state.guidataTappa;
   state.sentences = splitTextIntoSentences(a.testo).map(makeSentence);
   maybeAutoClosedClass();
   archiveFilters.lingua = a.lingua;
@@ -31877,6 +31881,7 @@ const GUIDATA = {
     globale: true,
   },
   verbi: {
+    scheda: 'grammaticale',
     fase: 'analisi', titolo: 'Isolamento delle forme verbali',
     istruzioni: 'Clicca le parole che riconosci come <strong>forme verbali</strong>: ogni verbo è il centro di un sintagma (proposizione). Numero di verbi = numero (massimo) di proposizioni. Distingui i <em>modi finiti</em> (indicativo, congiuntivo, imperativo) che reggono le proposizioni principali e subordinate, dai <em>modi non finiti</em> (infinito, participio, gerundio, gerundivo, supino) che possono comunque essere centro di sintagma con soggetti diversi dalla principale.',
     corpo: function () { return renderGuidedStep2(); },
@@ -31884,6 +31889,7 @@ const GUIDATA = {
     globale: false,
   },
   connettivi: {
+    scheda: 'grammaticale',
     fase: 'analisi', titolo: 'Congiunzioni e preposizioni · coordinanti e subordinanti',
     istruzioni: 'Segna <strong>tutti i collegamenti</strong> tra proposizioni e all\'interno dei sintagmi: <em>congiunzioni coordinanti</em> (et, sed, καί, ἀλλά…), <em>subordinanti</em> (ut, cum, quod, ἵνα, ὅτι…), <em>pronomi relativi</em> (qui, quae, quod / ὅς, ἥ, ὅ), <em>particelle</em> (μέν, δέ, γάρ…), <em>preposizioni</em> (in, ad, ex, ἐν, εἰς…) che reggono casi specifici, e gli <em>asindeti</em> della punteggiatura. Questo passaggio prepara la suddivisione delle proposizioni con una sola sbarra <code>/</code>.',
     corpo: function () { return renderGuidedStep3(); },
@@ -31895,6 +31901,7 @@ const GUIDATA = {
     globale: false,
   },
   sintassi: {
+    scheda: 'periodale',
     fase: 'analisi', titolo: 'Sintassi periodale · proposizioni principali, coordinate, subordinate',
     istruzioni: 'Identifica le <strong>proposizioni</strong> che compongono il periodo (principale, coordinate, subordinate) e classificale con sigle <em>A₁ A₂ B₁ B₂…</em>. Il sistema costruisce l\'<strong>albero gerarchico</strong> delle dipendenze. Per ognuna, indica il connettivo che la introduce e il modo del verbo principale.',
     corpo: function () { return renderGuidedStep4(); },
@@ -31902,6 +31909,7 @@ const GUIDATA = {
     globale: false,
   },
   sintagmi: {
+    scheda: 'logica',
     fase: 'analisi', titolo: 'Frase minima e complementi · soggetto → oggetto → casi obliqui',
     istruzioni: 'Per ogni proposizione, costruisci la <strong>frase minima</strong> isolando i sintagmi nell\'ordine: <em>1) soggetto e gruppo del nominativo</em> (attributi, apposizioni, predicativi del soggetto); <em>2) complemento oggetto e gruppo dell\'accusativo</em> se il verbo è transitivo; <em>3) complementi di movimento</em> (luogo, tempo); <em>4) altri complementi nei casi obliqui</em> (genitivo, dativo, ablativo) o introdotti da preposizioni.',
     corpo: function () { return renderGuidedStep5(); },
@@ -31909,6 +31917,7 @@ const GUIDATA = {
     globale: false,
   },
   grammatica: {
+    scheda: 'grammaticale',
     fase: 'analisi', titolo: 'Analisi grammaticale completa parola per parola',
     istruzioni: 'Completa la <strong>morfologia parola per parola</strong>: caso, numero, genere, tempo, modo, diatesi… Le parole già taggate (verbi e connettivi) restano colorate; concentrati su quelle che hanno il bordo tratteggiato. Quest\'analisi nutre tutti i suggerimenti incrociati con la logica e la sintassi.',
     corpo: function () { return renderGuidedStep6(); },
@@ -31949,6 +31958,40 @@ function tappeGuidateDi(pr) {
     });
 }
 
+/* Il cursore della via guidata e' una CHIAVE, come quello dello scheletro: con
+   playlist di lunghezza e ordine diversi un indice non identifica niente. Il
+   numero resta scritto accanto, per i lettori che lo conoscono. */
+function getTappaGuidata() {
+  const lista = tappeGuidateDi(state);
+  if (!lista.length) return '';
+  if (state.guidataTappa) {
+    const trovata = lista.find(function (t) { return t.chiave === state.guidataTappa; });
+    if (trovata) return trovata.chiave;
+  }
+  const n = Number(state.guidedStep);
+  if (n >= 1 && lista[n - 1]) return lista[n - 1].chiave;
+  return lista[0].chiave;
+}
+
+/** La posizione (1-based) della tappa guidata corrente. */
+function numeroTappaGuidata() {
+  const lista = tappeGuidateDi(state);
+  const k = getTappaGuidata();
+  const i = lista.findIndex(function (t) { return t.chiave === k; });
+  return i < 0 ? 1 : i + 1;
+}
+
+function setTappaGuidata(chiave) {
+  const lista = tappeGuidateDi(state);
+  if (!lista.length) return;
+  let i = lista.findIndex(function (t) { return t.chiave === chiave; });
+  if (i < 0) i = 0;
+  state.guidataTappa = lista[i].chiave;
+  state.guidedStep = i + 1;          // resta leggibile a chi conosce il numero
+  const t = GUIDATA[lista[i].chiave];
+  if (t && typeof t.entrando === 'function') t.entrando();
+}
+
 /** La scheda della tappa guidata in posizione `num` (1-based). */
 function tappaGuidataAl(num) {
   const lista = tappeGuidateDi(state);
@@ -31979,18 +32022,6 @@ function getVisibleGuidedSteps() {
   return tappeGuidateDi(state);
 }
 
-function clampVisibleGuidedStep(num) {
-  const visible = getVisibleGuidedSteps();
-  if (visible.find(s => s.num === num)) return num;
-  for (let i = num; i <= 9; i++) {
-    if (visible.find(s => s.num === i)) return i;
-  }
-  for (let i = num; i >= 1; i--) {
-    if (visible.find(s => s.num === i)) return i;
-  }
-  return visible[0].num;
-}
-
 function renderGuidedWizard() {
   if (state.sentences.length === 0) {
     // Prima volta: facciamo la scomposizione automatica + transition al wizard
@@ -31998,9 +32029,9 @@ function renderGuidedWizard() {
   }
   const visibleSteps = getVisibleGuidedSteps();
   const totalSteps = visibleSteps.length;
-  let rawStep = Math.max(1, Math.min(9, state.guidedStep || 1));
-  const currentStep = clampVisibleGuidedStep(rawStep);
-  if (currentStep !== rawStep) state.guidedStep = currentStep;
+  /* Nessun 9 cablato: il totale e' quello della playlist. */
+  const currentStep = numeroTappaGuidata();
+  if (state.guidedStep !== currentStep) state.guidedStep = currentStep;
   const meta = visibleSteps.find(s => s.num === currentStep) || visibleSteps[0];
   const currentPhase = GUIDED_PHASES[meta.phase] || GUIDED_PHASES.lettura;
   // Posizione 1-based fra le tappe visibili (per il "tappa X di N")
@@ -32128,23 +32159,22 @@ function startGuidedSegmentation() {
   state.sentences = chunks.map(makeSentence);
   maybeAutoClosedClass();
   state.guidedStep = 1;
+  delete state.guidataTappa;
   state.guidedSentenceIdx = 0;
   persistCurrent();
   renderAll();
 }
 
 function goToGuidedStep(num) {
-  const clamped = Math.max(1, Math.min(9, num));
-  // Rispetta i filtri di profilo: per le medie la sintassi periodale (5) è nascosta
-  const safe = clampVisibleGuidedStep(clamped);
-  state.guidedStep = safe;
+  const lista = tappeGuidateDi(state);
+  if (!lista.length) return;
+  const i = Math.max(1, Math.min(lista.length, Number(num) || 1)) - 1;
+  setTappaGuidata(lista[i].chiave);
   state.guidedSentenceIdx = 0;
-  // Allinea la tab interna dell'analisi (per eventuale passaggio a libera)
-  // Mapping: 3 (verbi), 4 (connettivi), 7 (grammar) → grammaticale
-  //          5 (sintassi) → periodale; 6 (sintagmi) → logica
-  if ([3, 4, 7].includes(safe)) state.currentAnalysisTab = 'grammaticale';
-  else if (safe === 5) state.currentAnalysisTab = 'periodale';
-  else if (safe === 6) state.currentAnalysisTab = 'logica';
+  /* La scheda interna d'analisi da lasciare aperta la dichiara la TAPPA: era
+     una mappa di posizioni, e con un'altra playlist indicava altre tappe. */
+  const scheda = (GUIDATA[lista[i].chiave] || {}).scheda;
+  if (scheda) state.currentAnalysisTab = scheda;
   persistCurrent();
   renderEditor();
   renderSidebarTabs();
