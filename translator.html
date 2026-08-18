@@ -13645,7 +13645,6 @@ let state = defaultState();
    step, dizionario intero). data-level='avanzato' spegne gli aiuti verbosi e le
    legende: è l'interfaccia esperta. */
 function getUserProfile() { return 'triennio'; }
-function applyProfileToBody() { document.body.dataset.level = 'avanzato'; }
 
 /* Pulizia one-shot delle chiavi orfane del vecchio sistema a livelli: senza,
    un utente di ritorno con 'poetrify-level'='base' vedrebbe ancora il dizionario
@@ -15138,17 +15137,6 @@ const SUBSCRIPT = { '0':'₀','1':'₁','2':'₂','3':'₃','4':'₄','5':'₅',
 function toSubscript(n) { return String(n).split('').map(d => SUBSCRIPT[d] || d).join(''); }
 
 /* Risale alla "ancora" della catena di coordinate: chi è il primo elemento non-coord */
-function periodaleAnchorOf(p, all) {
-  let cur = p;
-  const seen = new Set();
-  while (cur && cur.ruolo === 'coordinata' && cur.dipendeDa && !seen.has(cur.id)) {
-    seen.add(cur.id);
-    const next = all.find(x => x.id === cur.dipendeDa);
-    if (!next) break;
-    cur = next;
-  }
-  return cur || p;
-}
 
 /* Livello (profondità dell'albero) di una proposizione, con anti-ciclo */
 function periodaleLevel(p, all, memo, stack) {
@@ -16406,30 +16394,6 @@ const GR_VERB_MORPH = {
 
 /* Helper: cerca il match più lungo tra una lista di pattern (string o RegExp).
    Restituisce { match, length, label } o null. */
-function _matchLongestPattern(workNorm, patterns, position) {
-  let best = null;
-  for (const p of patterns) {
-    if (typeof p === 'string') {
-      if (position === 'start' && workNorm.startsWith(p)) {
-        if (!best || p.length > best.length) best = { match: p, length: p.length, label: p };
-      } else if (position === 'end' && workNorm.endsWith(p)) {
-        if (!best || p.length > best.length) best = { match: p, length: p.length, label: p };
-      }
-    } else if (p && p.re) {
-      const m = (position === 'start')
-        ? workNorm.match(p.re)
-        : (workNorm.match(new RegExp(p.re.source + '$')) || workNorm.match(p.re));
-      if (m && (!best || m[1].length > best.length)) best = { match: m[1], length: m[1].length, label: p.label || m[1] };
-    } else if (p && p.pattern) {
-      if (position === 'start' && workNorm.startsWith(p.pattern)) {
-        if (!best || p.pattern.length > best.length) best = { match: p.pattern, length: p.pattern.length, label: p.label || p.pattern };
-      } else if (position === 'end' && workNorm.endsWith(p.pattern)) {
-        if (!best || p.pattern.length > best.length) best = { match: p.pattern, length: p.pattern.length, label: p.label || p.pattern };
-      }
-    }
-  }
-  return best;
-}
 
 /* Analizza una forma verbale GRECA.
    `info` contiene: { time, mood, voice, parsed } dove parsed è il risultato di
@@ -17366,16 +17330,6 @@ function _stripGreekTone(s) {
 }
 
 /* Conta accenti tonali in una forma (per detect doppio accento) */
-function _countGreekTones(s) {
-  if (!s) return 0;
-  const nfd = s.normalize('NFD');
-  let n = 0;
-  for (let i = 0; i < nfd.length; i++) {
-    const c = nfd.charCodeAt(i);
-    if (c === 0x0300 || c === 0x0301 || c === 0x0342) n++;
-  }
-  return n;
-}
 
 /* Fix di una singola forma: se ha più di un accento tonale, rimuove il PRIMO
    (quello del tema). Esito: una forma con un solo accento, quello della desinenza. */
@@ -17515,24 +17469,6 @@ function _greekAugment(stem) {
       σ-cluster, ρ-: solo augmento sillabico ἐ-
    4) Vocale iniziale: come augmento temporale
    5) Muta + liquida (γρ, κλ, ecc.) ammette reduplicazione */
-function _greekReduplicate(stem) {
-  if (!stem) return stem;
-  const stripped = _grStrip(stem);
-  const c1 = stripped.charAt(0);
-  const c2 = stripped.charAt(1) || '';
-  if (/[αεηιουω]/.test(c1)) return _greekAugment(stem);
-  if (c1 === 'ζ' || c1 === 'ξ' || c1 === 'ψ') return 'ἐ' + stem;
-  if (c1 === 'ρ') return 'ἐρ' + stem;
-  if (c1 === 'σ' && /[βγδθκλμνπρτφχ]/.test(c2)) return 'ἐ' + stem;
-  if (/[βγδθκπτφχ]/.test(c1) && /[βγδθκπτφχσν]/.test(c2) && !/[λρμν]/.test(c2)) {
-    return 'ἐ' + stem;
-  }
-  const aspirateMap = { 'φ':'π', 'θ':'τ', 'χ':'κ' };
-  if (aspirateMap[c1]) {
-    return aspirateMap[c1] + 'ε' + stem;
-  }
-  return c1 + 'ε' + stem;
-}
 
 /* ACCENTO RECESSIVO DEI VERBI GRECI.
    Regola fondamentale: l'accento va il più lontano possibile dalla fine,
@@ -17544,30 +17480,7 @@ function _greekReduplicate(stem) {
    Eccezione delle finali in -αι/-οι: brevi in nominali e ottativo, lunghe altrove.
    Per uso pragmatico applichiamo l'algoritmo solo se il chiamante lo richiede;
    nei casi finali (perfetto plurale, ecc.) si invoca esplicitamente. */
-function _isShortFinal(ending) {
-  // Approssimazione: i finali bisillabici -μεν, -τε, -σαν, -σι, -σιν sono brevi
-  // perché la finale è sillaba aperta o seguita da -ν.
-  // Le finali in -ομεν, -ετε, -αμεν, -ατε, -ασι sono di per sé brevi.
-  const last = ending.slice(-3);
-  const last2 = ending.slice(-2);
-  if (/[ηω]$/.test(_grStrip(ending))) return false; // η, ω = lunghi
-  if (/(αι|οι|ει|ου|αυ|ευ|υι)$/.test(_grStrip(ending))) {
-    // αι/οι finali sono BREVI in verbi finiti (eccezione)
-    if (/(αι|οι)$/.test(_grStrip(ending))) return true;
-    return false;
-  }
-  if (/[αιυ]$/.test(_grStrip(ending))) return true; // ᾰ ῐ ῠ brevi (default scolastico)
-  if (/[εο]$/.test(_grStrip(ending))) return true;
-  return true;
-}
 
-function _countGreekSyllables(s) {
-  if (!s) return 0;
-  const norm = _grStrip(s);
-  // Conta gruppi vocalici (eventuali dittonghi conteggiano 1)
-  const matches = norm.match(/(αι|αυ|ει|ευ|οι|ου|υι|ηυ|ωυ|[αεηιουω])/g);
-  return matches ? matches.length : 0;
-}
 
 function _placeRecessiveAccent(form) {
   // Rimuove tutti gli accenti tonali, poi posiziona uno solo secondo la regola recessiva.
@@ -17631,34 +17544,12 @@ function _placeRecessiveAccent(form) {
    labiale (π β φ) + σ → ψ
    gutturale (κ γ χ) + σ → ξ
    dentale (τ δ θ) + σ → σ (dentale cade) */
-function _greekStemBeforeSigma(stem) {
-  if (!stem) return { stem: stem, dropSigma: false };
-  const stripped = _grStrip(stem);
-  const lastChar = stripped.slice(-1);
-  if (/[πβφ]/.test(lastChar)) return { stem: stem.slice(0, -1) + 'ψ', dropSigma: true };
-  if (/[κγχ]/.test(lastChar)) return { stem: stem.slice(0, -1) + 'ξ', dropSigma: true };
-  if (/[τδθ]/.test(lastChar)) return { stem: stem.slice(0, -1), dropSigma: false };
-  return { stem: stem, dropSigma: false };
-}
 
 /* Aggiunge augmento alla forma (per impf./aor./ppf.) — wrapper retrocompatibile */
 function _addAugment(stem) {
   return _greekAugment(stem);
 }
 // === vecchio _addAugment disabilitato ===
-function _addAugment_OLD(stem) {
-  if (!stem) return stem;
-  const ch = _grStrip(stem)[0];
-  // Vocale iniziale: ε→η, α→η, ο→ω, ι→ῑ, υ→ῡ
-  const augVowel = {'α':'ἠ','ε':'ἠ','η':'ἠ','ι':'ἰ','ο':'ὠ','ω':'ὠ','υ':'ὐ','αι':'ᾐ','αυ':'ηὐ','ει':'ᾐ','ευ':'ηὐ','οι':'ᾐ'};
-  // Per semplicità: se la parola comincia con vocale, sostituiamo la prima vocale con la forma augmentata
-  // (controllo manuale di base; per casi composti seguire la regola dell'augmento all'inizio del tema verbale)
-  const first = stem.charAt(0);
-  if (/[αεηιουω]/i.test(_grStrip(first))) {
-    return 'ἠ' + stem.slice(1); // augmento temporale generico
-  }
-  return 'ἐ' + stem;
-}
 
 /* ─── PARSER LEMMA GRECO ──────────────────────────────────────────────────────────
    Estrae da una stringa lemma greca (es. "λύω, λύσω, ἔλυσα, λέλυκα, λέλυμαι, ἐλύθην",
@@ -22663,10 +22554,6 @@ function lookupHighFreqDict(word, lang) {
 
 /* Suggerisce parte del discorso dalla parola se è nel dizionario di alta frequenza.
    Usato dalla UI grammaticale per pre-selezionare la categoria probabile. */
-function suggestPosFromDict(word, lang) {
-  const hit = lookupHighFreqDict(word, lang);
-  return hit ? hit.pos : null;
-}
 
 /* ──────────────────────────────────────────────────────────────────────────────
    PRESET CONGIUNZIONI/PARTICELLE — categoria già precompilata.
@@ -29209,24 +29096,6 @@ function renderNastro() {
     + '<span class="nastro-conto">' + fatte + '/' + chiavi.length + '</span></nav>';
 }
 
-function tappeLibere() {
-  const f = projectPhases(state);
-  const hasTesto = !!(state.meta && state.meta.testoOriginale);
-  const bellaFatta = !!(state.meta && state.meta.traduzioneBella && state.meta.traduzioneBella.trim());
-  const bozzaFatta = f.trad === 'done' || f.trad === 'progress';
-  return [
-    { id: 'brano',   label: 'Brano',        fatta: hasTesto,            vai: 'goToStep(1)',
-      corrente: state.currentStep === 1 },
-    { id: 'scomp',   label: 'Scomposizione', fatta: f.scomp === 'done',  vai: 'goToStep(2)',
-      corrente: state.currentStep === 2 },
-    { id: 'analisi', label: 'Analisi',      fatta: f.analisi === 'done', vai: 'goToStep(3)',
-      corrente: state.currentStep === 3 },
-    { id: 'bozza',   label: 'Bozza',        fatta: bozzaFatta,          vai: "goToTraduzione('bozza')",
-      corrente: state.currentStep === 5 && state.traduzioneVista !== 'bella' },
-    { id: 'bella',   label: 'Bella copia',  fatta: bellaFatta,          vai: "goToTraduzione('bella')",
-      corrente: state.currentStep === 5 && state.traduzioneVista === 'bella' },
-  ];
-}
 
 function renderNastroTappe() {
   /* Il nastro e' UNO: questa resta come porta d'ingresso del banco libero, ma
@@ -30251,7 +30120,10 @@ function renderScheletroProposizioni(sentences, lang) {
       ${connBar}
       ${defConjBar}
       ${renderPeriodaleActionBar(sentence)}
-      ${annotated.length ? `<div class="scheletro-autofill-row"><button class="btn btn-ghost btn-sm" onclick="scheletroAutofillProps('${sentence.id}')" title="Completa ruolo · tipo · modo · connettivo delle proposizioni in base al verbo e alla congiunzione">⚡ Completa proposizioni dai verbi</button></div>` : ''}
+      ${(annotated.length || congDaConfermare(sentence)) ? `<div class="scheletro-autofill-row">
+        ${annotated.length ? `<button class="btn btn-ghost btn-sm" onclick="scheletroAutofillProps('${sentence.id}')" title="Completa ruolo · tipo · modo · connettivo delle proposizioni in base al verbo e alla congiunzione">⚡ Completa proposizioni dai verbi</button>` : ''}
+        ${congDaConfermare(sentence) ? `<button class="btn btn-ghost btn-sm" onclick="scheletroConfirmAllConj('${sentence.id}')" title="Accetta in un colpo solo tutte le congiunzioni riconosciute in questa frase: potrai sempre correggerne una cliccandola">✓ Conferma le congiunzioni (${congDaConfermare(sentence)})</button>` : ''}
+      </div>` : ''}
       <div class="scheletro-prop-list">${entriesHtml}</div>
       ${annotated.length ? `<div class="scheletro-tree-wrap">${renderSyntaxTree(sentence, state.syntaxTreeView || vistaStemma())}</div>` : ''}
     </div>`;
@@ -30793,6 +30665,14 @@ function scheletroConfirmConj(sentenceId, tokenIdx, on) {
   persistCurrent(); renderEditor(); renderSidebarTabs();
 }
 
+/* Quante congiunzioni riconosciute attendono ancora la conferma. Serve al
+   pulsante in blocco: senza il conteggio, il gesto non dice quanto vale. */
+function congDaConfermare(sentence) {
+  return ((sentence && sentence.grammar) || [])
+    .filter(function (g) { return g && g.partOfSpeech === 'Congiunzione' && !g._connConfirmed; })
+    .length;
+}
+
 /* Handler · conferma tutte le congiunzioni candidate della frase. */
 function scheletroConfirmAllConj(sentenceId) {
   const sentence = state.sentences.find(s => s.id === sentenceId);
@@ -30846,217 +30726,20 @@ function scheletroAutofillProps(sentenceId) {
 
 /* FASE 1 · Verbo-caccia · tokenizer compatto multi-sentence con click per
    marcare verbi finiti. */
-function renderScheletroStep1(sentences, lang, totalVerbsFinite) {
-  const isGreek = lang === 'greco';
-  const sentencesHtml = sentences.map((sentence, sIdx) => {
-    const toks = tokenizeSentence(sentence.original);
-    const tokensHtml = toks.map(tok => {
-      if (tok.kind === 'space') return ' ';
-      if (tok.kind === 'punct') return `<span class="token token-punct">${escapeHtml(tok.text)}</span>`;
-      const ge = (sentence.grammar || []).find(g => g.tokenIndex === tok.idx);
-      const isVerbFinite = ge && ge.partOfSpeech === 'Verbo' && ge.verboForma === 'Forma finita';
-      const cls = ['token', 'scheletro-token'];
-      if (isVerbFinite) cls.push('scheletro-verb-marked', 'case-verbo');
-      else cls.push('token-untagged');
-      return `<span class="${cls.join(' ')}"
-              onclick="scheletroMarkVerb('${sentence.id}', ${tok.idx})"
-              title="Click per ${isVerbFinite ? 'togliere' : 'segnare come'} verbo finito">${escapeHtml(tok.text)}${isVerbFinite ? '<span class="scheletro-verb-tag">vb</span>' : ''}</span>`;
-    }).join('');
-    const verbCount = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo' && g.verboForma === 'Forma finita').length;
-    return `<div class="scheletro-sentence-block">
-      <div class="scheletro-sentence-header">
-        <h1 class="scheletro-sentence-num">${unitLabel(sIdx)}</h1>
-        <span class="scheletro-sentence-count">${verbCount} verbo/i finito/i</span>
-      </div>
-      <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
-    </div>`;
-  }).join('');
-
-  return `<div class="subsection">
-    <div class="method-note" style="background:rgba(197,48,48,0.06);border-left-color:rgba(197,48,48,0.55);">
-      <strong>🎯 Fase 1 · Verbo-caccia.</strong> Clicca tutti i verbi finiti del brano (saltando participi, infiniti, gerundi). Sono le àncore: ogni proposizione ne ha esattamente uno.
-      <em>Suggerimento:</em> guarda le terminazioni: -t/-nt (lat. 3ª pers.), -ι/-σι (gr. 3ª pers.), -bat/-bant (impf.), -vit (perf.), augmento (ε-, η-) in greco.
-    </div>
-    ${sentencesHtml}
-  </div>`;
-}
 
 /* FASE 2 · per ogni verbo marcato, mostra la sua frase + chiede di marcare
    soggetto e oggetto. */
-function renderScheletroStep2(sentences, lang, totalVerbsFinite) {
-  const isGreek = lang === 'greco';
-  if (totalVerbsFinite === 0) {
-    return `<div class="entry-empty">Nessun verbo finito marcato. Torna alla <strong>Fase 1</strong> per marcarne almeno uno.</div>`;
-  }
-  const verbCards = [];
-  sentences.forEach((sentence, sIdx) => {
-    const toks = tokenizeSentence(sentence.original);
-    const verbiFiniti = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo' && g.verboForma === 'Forma finita');
-    verbiFiniti.forEach(verb => {
-      const verbTokenIdx = verb.tokenIndex;
-      // C'è già un Soggetto/Oggetto nella frase per questo verbo?
-      const sogg = (sentence.logic || []).find(e => e.funzione === 'Soggetto');
-      const ogg = (sentence.logic || []).find(e => e.funzione === 'Complemento oggetto');
-      const tokensHtml = toks.map(tok => {
-        if (tok.kind === 'space') return ' ';
-        if (tok.kind === 'punct') return `<span class="token token-punct">${escapeHtml(tok.text)}</span>`;
-        const isVerb = tok.idx === verbTokenIdx;
-        const isSogg = sogg && (sogg.tokenIndices || []).includes(tok.idx);
-        const isOgg = ogg && (ogg.tokenIndices || []).includes(tok.idx);
-        const cls = ['token', 'scheletro-token'];
-        if (isVerb) cls.push('case-verbo', 'scheletro-verb-marked');
-        else if (isSogg) cls.push('case-nominativo', 'scheletro-sogg-marked');
-        else if (isOgg) cls.push('case-accusativo', 'scheletro-ogg-marked');
-        else cls.push('token-untagged');
-        const marker = isVerb ? '<span class="scheletro-verb-tag">vb</span>'
-                     : isSogg ? '<span class="scheletro-role-tag">S</span>'
-                     : isOgg  ? '<span class="scheletro-role-tag">O</span>'
-                     : '';
-        return `<span class="${cls.join(' ')}"
-                onclick="scheletroMarkSoggOgg('${sentence.id}', '${verb.id}', ${tok.idx}, event)"
-                title="Click: assegna Sogg/Ogg ciclicamente (S → O → ∅)">${escapeHtml(tok.text)}${marker}</span>`;
-      }).join('');
-      verbCards.push(`<div class="scheletro-verb-card">
-        <div class="scheletro-verb-card-header">
-          <span class="scheletro-verb-card-num">${unitLabel(sIdx)}</span>
-          <span class="scheletro-verb-card-verb ${isGreek ? 'greek' : ''}">📌 verbo: <strong>${escapeHtml(verb.word || '?')}</strong>${verb.persona ? ` · ${verb.persona} ${verb.numero || ''}` : ''}</span>
-          <span class="scheletro-verb-card-stats">${sogg ? '✓ Sogg.' : '○ Sogg.'} · ${ogg ? '✓ Ogg.' : '○ Ogg.'}</span>
-        </div>
-        <div class="token-grid ${isGreek ? 'greek' : ''}">${tokensHtml}</div>
-        <div class="scheletro-verb-card-help">
-          <strong>Click ciclico</strong>: 1° click marca <em>Soggetto</em>, 2° click <em>Oggetto</em>, 3° click rimuove.
-        </div>
-      </div>`);
-    });
-  });
-  return `<div class="subsection">
-    <div class="method-note" style="background:rgba(24,0,172,0.05);border-left-color:rgba(24,0,172,0.50);">
-      <strong>🧭 Fase 2 · Soggetti & oggetti.</strong> Per ogni verbo, individua chi compie l'azione (S = soggetto) e chi/cosa la subisce (O = oggetto). Concentrati sul nucleo: complementi e attributi verranno nella prossima fase.
-    </div>
-    ${verbCards.join('')}
-  </div>`;
-}
 
 /* FASE 3 · Periferia · auto-fill via dizionario + rifinitura residua.
    Mostra una vista riassuntiva delle frasi con un pulsante "completa
    automaticamente la periferia di questa frase" che fa partire l'auto-fill. */
-function renderScheletroStep3(sentences, lang) {
-  const isGreek = lang === 'greco';
-  const sentencesHtml = sentences.map((sentence, sIdx) => {
-    const grammarCount = (sentence.grammar || []).length;
-    const logicCount = (sentence.logic || []).length;
-    const periodaleCount = (sentence.periodale || []).length;
-    const toks = tokenizeSentence(sentence.original);
-    const totalWords = toks.filter(t => t.kind === 'word').length;
-    const grammarPct = totalWords > 0 ? Math.round((grammarCount / totalWords) * 100) : 0;
-    return `<div class="scheletro-finish-card">
-      <div class="scheletro-finish-header">
-        <span class="scheletro-finish-num">${unitLabel(sIdx)}</span>
-        <span class="scheletro-finish-stats">${grammarCount}/${totalWords} gram · ${logicCount} sint · ${periodaleCount} prop</span>
-      </div>
-      <div class="scheletro-finish-text ${isGreek ? 'greek' : ''}">${escapeHtml(sentence.original)}</div>
-      <div class="scheletro-finish-progress">
-        <div class="tokenizer-progress-bar"><div class="tokenizer-progress-fill" style="width:${grammarPct}%;"></div></div>
-      </div>
-      <div class="scheletro-finish-actions">
-        <button class="btn btn-primary btn-sm" onclick="scheletroAutoCompletePeriphery('${sentence.id}')" title="Marca preposizioni, articoli, congiunzioni, particelle e pronomi frequenti via dizionario di alta frequenza">⚡ Auto-completa periferia</button>
-        <button class="btn btn-ghost btn-sm" onclick="state.currentSentenceIdx=${sIdx}; setApproach('attuale')" title="Apri questa frase da sola, con tutte le schede d'analisi">↗ Lavora solo su questa frase</button>
-      </div>
-    </div>`;
-  }).join('');
-  return `<div class="subsection">
-    <div class="method-note" style="background:rgba(47,133,90,0.06);border-left-color:rgba(47,133,90,0.55);">
-      <strong>🌿 Fase 3 · Periferia.</strong> Il "nervo" del periodo è già fatto. Adesso compila il resto: complementi, attributi, particelle.
-      Premi <strong>⚡ Auto-completa periferia</strong> su ogni frase per far classificare automaticamente preposizioni, articoli, congiunzioni e pronomi frequenti via dizionario.
-    </div>
-    ${sentencesHtml}
-  </div>`;
-}
 
 /* Handler · marca un token come verbo finito (toggle) */
-function scheletroMarkVerb(sentenceId, tokenIdx) {
-  const sentence = state.sentences.find(s => s.id === sentenceId);
-  if (!sentence) return;
-  const tok = tokenizeSentence(sentence.original).find(t => t.idx === tokenIdx);
-  if (!tok || tok.kind !== 'word') return;
-  let entry = (sentence.grammar || []).find(e => e.tokenIndex === tokenIdx);
-  if (entry && entry.partOfSpeech === 'Verbo' && entry.verboForma === 'Forma finita') {
-    // Toggle OFF: rimuovi i campi che Scheletro ha impostato (lasciando il resto se l'utente aveva aggiunto altro)
-    delete entry.verboForma;
-    if (!entry.tempo && !entry.modo && !entry.persona && !entry.numero && !entry.diatesi) {
-      // Niente più contenuto verbale: ripristina partOfSpeech vuoto
-      delete entry.partOfSpeech;
-      // E se ora è completamente vuoto, elimina la entry
-      if (!entry.lemma && !entry.note) {
-        sentence.grammar = sentence.grammar.filter(e => e.id !== entry.id);
-      }
-    }
-  } else {
-    if (!entry) {
-      entry = makeEntry('grammar');
-      entry.word = tok.text;
-      entry.tokenIndex = tokenIdx;
-      insertEntrySorted(sentence.grammar, entry, 'grammar');
-    }
-    entry.partOfSpeech = 'Verbo';
-    entry.verboForma = 'Forma finita';
-    // Propagazione cross-layer: viene segnato "Predicato verbale" sulla logica se la entry logica esiste
-    propagateCrossAnalysis(sentence, 'grammar', entry);
-  }
-  persistCurrent();
-  renderEditor();
-  renderSidebarTabs();
-}
 
 /* Handler · click ciclico per Sogg → Ogg → ∅ in Fase 2.
    - Se token non è già in nessun ruolo: marca come Sogg
    - Se è già Sogg: rimuove e marca come Ogg
    - Se è già Ogg: rimuove */
-function scheletroMarkSoggOgg(sentenceId, verbEntryId, tokenIdx, event) {
-  if (event) event.stopPropagation();
-  const sentence = state.sentences.find(s => s.id === sentenceId);
-  if (!sentence) return;
-  const tok = tokenizeSentence(sentence.original).find(t => t.idx === tokenIdx);
-  if (!tok || tok.kind !== 'word') return;
-  const verb = (sentence.grammar || []).find(g => g.id === verbEntryId);
-  if (!verb || tokenIdx === verb.tokenIndex) return; // niente click sul verbo stesso
-
-  const existingSogg = (sentence.logic || []).find(e => e.funzione === 'Soggetto' && (e.tokenIndices || []).includes(tokenIdx));
-  const existingOgg  = (sentence.logic || []).find(e => e.funzione === 'Complemento oggetto' && (e.tokenIndices || []).includes(tokenIdx));
-
-  if (existingSogg) {
-    // Già Sogg → trasforma in Ogg (rimuovi dal Sogg, aggiungi a/crea Ogg)
-    existingSogg.tokenIndices = existingSogg.tokenIndices.filter(i => i !== tokenIdx);
-    if (existingSogg.tokenIndices.length === 0) sentence.logic = sentence.logic.filter(e => e.id !== existingSogg.id);
-    let oggEntry = (sentence.logic || []).find(e => e.funzione === 'Complemento oggetto');
-    if (!oggEntry) {
-      oggEntry = makeEntry('logic');
-      oggEntry.funzione = 'Complemento oggetto';
-      oggEntry.tokenIndices = [];
-      insertEntrySorted(sentence.logic, oggEntry, 'logic');
-    }
-    oggEntry.tokenIndices = [...new Set([...(oggEntry.tokenIndices || []), tokenIdx])].sort((a,b)=>a-b);
-    oggEntry.phrase = oggEntry.tokenIndices.map(i => (tokenizeSentence(sentence.original).find(t => t.idx === i) || {}).text).filter(Boolean).join(' ');
-  } else if (existingOgg) {
-    // Già Ogg → rimuovi
-    existingOgg.tokenIndices = existingOgg.tokenIndices.filter(i => i !== tokenIdx);
-    if (existingOgg.tokenIndices.length === 0) sentence.logic = sentence.logic.filter(e => e.id !== existingOgg.id);
-  } else {
-    // Non era niente → marca come Sogg
-    let soggEntry = (sentence.logic || []).find(e => e.funzione === 'Soggetto');
-    if (!soggEntry) {
-      soggEntry = makeEntry('logic');
-      soggEntry.funzione = 'Soggetto';
-      soggEntry.tokenIndices = [];
-      insertEntrySorted(sentence.logic, soggEntry, 'logic');
-    }
-    soggEntry.tokenIndices = [...new Set([...(soggEntry.tokenIndices || []), tokenIdx])].sort((a,b)=>a-b);
-    soggEntry.phrase = soggEntry.tokenIndices.map(i => (tokenizeSentence(sentence.original).find(t => t.idx === i) || {}).text).filter(Boolean).join(' ');
-  }
-  persistCurrent();
-  renderEditor();
-  renderSidebarTabs();
-}
 
 /* Handler · auto-completa la periferia di una frase via dizionario */
 /* ════════════════════════════════════════════════════════════════════════════
@@ -31440,9 +31123,6 @@ function maybeAutoClosedClass() {
 
 /* Alias retro-compatibile per la fase 3 di Scheletro (chiama la versione
  * generalizzata) — così non rompiamo onclick esistenti. */
-function scheletroAutoCompletePeriphery(sentenceId) {
-  autoAnalyzeHighConfidence(sentenceId);
-}
 
 function renderStep3HtmlIntegrale() {
   const sentences = state.sentences || [];
@@ -32127,7 +31807,6 @@ function openProject(id) {
   if (state && state.id === id) goToStep(workStepOf(state));
 }
 /* Alias storico: la ripresa rapida della Panoramica lo chiama per nome. */
-function resumeProject(id) { openProject(id); }
 
 function renderArchiveHtml() {
   // BRANCH LINGUISTICO: le due lingue sono archivi separati. Il ramo arriva da
@@ -33622,13 +33301,6 @@ function getBatchCandidatePoS(dimension) {
   return map[dimension]; // null = tutti, [] = nessuno, [...] = elenco
 }
 
-function isTokenBatchCandidate(tok) {
-  if (!batchMode.active || batchMode.mode !== 'grammar' || !batchMode.dimension) return false;
-  const candPos = getBatchCandidatePoS(batchMode.dimension);
-  if (candPos === null) return true; // tutte le parole candidate
-  if (!tok.grammarEntry || !tok.grammarEntry.partOfSpeech) return false;
-  return candPos.includes(tok.grammarEntry.partOfSpeech);
-}
 
 /* Restituisce lo stato del token nella modalità batch grammatica:
    'applied'   → ha già il valore batch corrente (✓)
@@ -36064,21 +35736,6 @@ function toggleLogicLegendFilter(caseCls) {
   renderEditor();
 }
 
-function legendColor(cls) {
-  const map = {
-    'lf-soggetto':       'rgba(197, 48, 48, 0.7)',
-    'lf-predicato':      'rgba(24, 0, 172, 0.7)',
-    'lf-oggetto':        'rgba(47, 133, 90, 0.7)',
-    'lf-termine':        'rgba(245, 124, 0, 0.7)',
-    'lf-specificazione': 'rgba(56, 178, 172, 0.7)',
-    'lf-luogo':          'rgba(99, 102, 241, 0.7)',
-    'lf-tempo':          'rgba(214, 158, 46, 0.7)',
-    'lf-modo':           'rgba(192, 38, 211, 0.7)',
-    'lf-attributo':      'rgba(63, 81, 181, 0.7)',
-    'lf-altro':          'rgba(120, 113, 108, 0.7)',
-  };
-  return map[cls] || 'currentColor';
-}
 
 function renderGrammarActionBar(sentence) {
   if (pending.mode !== 'grammar' || pending.sentenceId !== sentence.id || pending.tokenIdx == null) return '';
@@ -39892,25 +39549,6 @@ function onTipoTestoChange(v) {
   }
   renderPreview(); renderEditor(); renderSidebarTabs(); renderStats(); syncTopbar();
 }
-function setLingua(lang) {
-  // BRANCH SCORPORATI: non si può lavorare lo stesso testo in due lingue. Se clicco
-  // la lingua già attiva del progetto corrente, resto sul lavoro (eventualmente
-  // rientrando da una vista di branch: archivio D o panoramica Π). Se clicco
-  // l'ALTRA lingua, apro il suo branch per scegliere/creare la versione.
-  const inBranchView = (state.currentStep === 4 || state.currentStep === 7);
-  if (lang === state.meta.lingua && !inBranchView) {
-    return;   // già nella lingua corrente e già al lavoro: nessun cambiamento
-  }
-  if (lang === state.meta.lingua && inBranchView) {
-    // ero su una vista di branch guardando un altro branch: torna al mio
-    openLanguageBranch(lang);
-    return;
-  }
-  // cambio branch: salva il lavoro corrente (resta nell'archivio della sua lingua)
-  // e apri l'archivio della lingua di arrivo.
-  persistCurrent();
-  openLanguageBranch(lang);
-}
 
 /* Apre il branch della lingua indicata, dove l'utente sceglie una versione da
    riprendere o ne crea una nuova. Se sono già su una vista di branch (Π o D)
@@ -40216,17 +39854,6 @@ function getApproach() { return deriveApproachFromAxes(); }
 /* PONTE verso gli assi. La whitelist delle delezioni lo dava per orfano: non lo
    era — lo chiama ancora il pulsante «apri questa frase da sola» nella fase dei
    verbi. Resta finche' quel chiamante esiste. */
-function setApproach(newApproach) {
-  if (newApproach === 'scheletro') { state.metodo = 'valenziale'; }
-  else if (newApproach === 'integrale') { state.metodo = 'strati'; state.vista = 'intero'; }
-  else if (newApproach === 'attuale') { state.metodo = 'strati'; state.vista = 'frase'; }
-  else return;
-  state.approachShown = true;
-  _syncApproach();
-  riconciliaPercorso();
-  persistCurrent();
-  renderAll();
-}
 
 function deriveApproachFromAxes() {
   if (state.metodo === 'valenziale') return 'scheletro';
@@ -41067,18 +40694,6 @@ function deleteLogicEntry(sentenceId, entryId) {
   renderSidebarTabs();
 }
 
-function addPeriodaleEntry(sentenceId) {
-  const text = document.getElementById('new-prop-text').value.trim();
-  if (!text) { showToast('Inserisci il testo della proposizione'); return; }
-  const sentence = state.sentences.find(s => s.id === sentenceId);
-  if (!sentence) return;
-  const entry = makeEntry('periodale');
-  entry.text = text;
-  insertEntrySorted(sentence.periodale, entry, 'periodale');
-  persistCurrent();
-  renderEditor();
-  renderSidebarTabs();
-}
 
 function updatePeriodaleField(sentenceId, entryId, key, value) {
   const sentence = state.sentences.find(s => s.id === sentenceId);
