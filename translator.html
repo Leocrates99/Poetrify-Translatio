@@ -1267,11 +1267,14 @@ body[data-lang="greco"] .token-grid { font-family: var(--font-classical); }
   font-size: 17px;
 }
 .token.token-punct:hover { background: transparent; }
+/* L'alone era scritto a mano in indaco — rgba(24,0,172,0.15) — accanto a un
+   bordo var(--primary), che invece commuta: in latino era un bordo rosso
+   pompeiano con l'alone blu. Ora l'alone lo ricava dall'accento della lingua. */
 .token.token-pending {
   border-color: var(--primary) !important;
   border-style: solid !important;
   background: var(--primary-pale) !important;
-  box-shadow: 0 0 0 3px rgba(24, 0, 172, 0.15);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--lang-accent) 22%, transparent);
 }
 .token.token-selected {
   border-color: var(--primary) !important;
@@ -1309,9 +1312,11 @@ body[data-lang="greco"] .token-grid { font-family: var(--font-classical); }
   box-shadow: 0 0 0 1px var(--primary);
 }
 /* Animazione lampeggio al primo render del blocco dopo il drag */
+/* Stesso indaco a mano, stesso rimedio: il lampeggio del blocco appena creato
+   e' dell'accento della lingua, non del blu di Poetrify. */
 @keyframes block-flash {
-  0%   { box-shadow: 0 0 0 0 rgba(24, 0, 172, 0.45); }
-  50%  { box-shadow: 0 0 0 6px rgba(24, 0, 172, 0.18); }
+  0%   { box-shadow: 0 0 0 0 color-mix(in srgb, var(--lang-accent) 45%, transparent); }
+  50%  { box-shadow: 0 0 0 6px color-mix(in srgb, var(--lang-accent) 18%, transparent); }
   100% { box-shadow: 0 0 0 1px var(--primary); }
 }
 .token.token-selected.block-just-formed { animation: block-flash 0.6s ease-out 1; }
@@ -10543,6 +10548,25 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 .analysis-drawer-body { flex: 1; overflow-y: auto; padding: 12px 16px 24px; }
 .analysis-drawer-body .entry-fields { display: block; }
 .entry-card.is-in-drawer { outline: 2px solid var(--lang-accent); outline-offset: -1px; }
+/* La barra del token, qui dentro, non e' piu' una barra: e' il contenuto della
+   colonna. Perde il margine e l'accento spesso a sinistra — ce l'ha gia' il
+   drawer — e i comandi vanno in colonna, perche' 360px non sono una riga. Il
+   bordo resta di 1px per non perdere la tinta del caso, che e' informazione. */
+.analysis-drawer-body .token-action-bar {
+  margin: 0;
+  border-left-width: 1px;
+  flex-direction: column;
+  align-items: stretch;
+}
+.analysis-drawer-body .token-action-bar-row { flex-direction: column; align-items: stretch; }
+.analysis-drawer-body .token-action-bar select,
+.analysis-drawer-body .token-action-bar .field-select { width: 100%; min-width: 0; }
+/* La parola in lavorazione sta gia' nella testata del drawer, sempre in vista
+   mentre il corpo scorre: nella barra la si toglie per non dirla due volte. */
+.analysis-drawer-body .token-action-bar > .label,
+.analysis-drawer-body .token-action-bar > .target-word { display: none; }
+/* La parola ha la faccia della sua lingua anche nella testata. */
+body[data-lang="latino"] .analysis-drawer-word { font-family: var(--font-body); }
 .preview-header {
   padding: 12px 20px;
   border-bottom: 1px solid var(--rule-soft);
@@ -42063,18 +42087,62 @@ document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => { try { startOnboarding(false); } catch (_) {} }, 500);
 
   // close modals on backdrop click
-  /* DRAWER DI COMPILAZIONE · la voce in lavorazione si compila nella terza
-     colonna, non piu' in un pannello che spinge in basso la frase.
-     Non tocca il renderer: SPOSTA il nodo .entry-fields gia' costruito dentro
-     il drawer (i gestori inline e i gruppi di pulsanti si spostano con lui) e
-     lo riporta a casa quando si chiude. Dopo ogni re-render si risincronizza. */
+  /* DRAWER DI COMPILAZIONE · quel che si sta compilando vive nella terza
+     colonna, non in un pannello che spinge in basso la frase.
+     Non tocca i renderer: SPOSTA il nodo gia' costruito dentro il drawer (i
+     gestori inline e i gruppi di pulsanti si spostano con lui) e lo riporta a
+     casa quando si chiude. Dopo ogni re-render si risincronizza.
+
+     DUE INQUILINI, UNA PRECEDENZA DICHIARATA:
+       1. la BARRA DEL TOKEN, se c'e'. E' il gesto in corso: si e' appena
+          cliccata una parola e si sta dicendo che cos'e'. Misurata nella scheda
+          Periodale era alta 344px e finiva 255px sotto il bordo dello schermo:
+          per usarla si scorreva, e scorrendo il brano usciva di vista.
+          Entra da sola, senza un clic in piu'.
+       2. i CAMPI di una voce, aperti col clic sulla sua intestazione.
+     Uno solo alla volta.
+
+     Tutte e sette le barre dell'app nascono da funzioni «...ActionBar» /
+     «...PendingPanel» — nessuna e' cromo permanente — quindi la sola classe
+     .token-action-bar copre grammaticale, logica, periodale, unificato,
+     connettivi e i verbi dello scheletro. */
   window.__adrawer = null;
   var adrHome = null;
+
+  /* Sotto i 900px la terza colonna non esiste e il drawer diventa un foglio che
+     copre il brano: aprirlo DA SOLO a ogni tocco sarebbe peggio del pannello in
+     basso. Li' la barra resta dov'e'. La voce aperta a mano, che e' una scelta
+     esplicita, continua a usare il foglio a ogni larghezza. */
+  var adrLargo = window.matchMedia ? window.matchMedia('(min-width: 900px)') : { matches: true };
+
   function adrRestore(){
     if (adrHome && adrHome.node && adrHome.parent && adrHome.node.parentElement !== adrHome.parent) {
       adrHome.parent.insertBefore(adrHome.node, adrHome.next || null);
     }
     adrHome = null;
+  }
+
+  /* Via l'inquilino precedente, e la domanda giusta e' una sola: LA CASA C'E'
+     ANCORA? Se il posto da cui l'abbiamo preso e' ancora attaccato al documento,
+     ce lo rimettiamo — e' il caso di chi scende sotto i 900px, dove nessuno ha
+     ridisegnato niente e la barra deve tornare sotto il brano. Se invece la casa
+     e' stata staccata, l'editor e' stato ridisegnato e questo nodo e' scaduto:
+     rimetterlo vorrebbe dire appendere al nulla, quindi si butta. */
+  function adrSgombera(){
+    if (!adrHome) return;
+    if (adrHome.parent && adrHome.parent.isConnected) { adrRestore(); return; }
+    if (adrHome.node && adrHome.node.parentElement) adrHome.node.remove();
+    adrHome = null;
+  }
+
+  /* SENTINELLA DI RIDISEGNO. renderEditor riscrive sempre innerHTML, quindi a
+     ogni giro il primo figlio e' un nodo NUOVO. Serve a distinguere due
+     silenzi che si somigliano: «l'editor non ha la barra perche' l'abbiamo
+     spostata noi» e «l'editor e' stato ridisegnato e la barra non c'e' piu'».
+     Senza, la barra vecchia resterebbe nel drawer per sempre. */
+  function adrSentinella(){
+    var ed = document.getElementById('editor-content');
+    return ed ? ed.firstElementChild : null;
   }
   function adrCard(){
     if (!window.__adrawer) return null;
@@ -42085,7 +42153,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return null;
   }
   function adrShut(){
-    adrRestore();
+    adrSgombera();
     var host=document.getElementById('analysis-drawer'), main=document.querySelector('.main');
     if (host) host.hidden = true;
     if (main) {
@@ -42098,13 +42166,77 @@ document.addEventListener('DOMContentLoaded', () => {
       setTimeout(function(){ main.style.removeProperty('transition'); }, 0);   // setTimeout, non rAF: a tab non renderizzato rAF non scatta e la transizione resterebbe spenta per sempre
     }
   }
+  /* Porta in vista la parola in lavorazione. Il pannello si apre in cima alla
+     colonna di destra: se la parola sta in fondo allo schermo, lo sguardo
+     dovrebbe attraversare la pagina in diagonale. */
+  function adrPortaInVista(){
+    var ed = document.getElementById('editor-content');
+    var sc = document.querySelector('.editor');
+    if (!ed || !sc) return;
+    var t = ed.querySelector('.token.token-pending') || ed.querySelector('.token.token-selected');
+    if (!t) return;
+    var r = t.getBoundingClientRect(), s = sc.getBoundingClientRect();
+    if (r.top >= s.top && r.top <= s.top + s.height * 0.35) return;   // sta gia' bene
+    sc.scrollTop += (r.top - (s.top + 24));
+  }
+
+  /* Apre il drawer su un nodo, chiunque fosse l'inquilino di prima. */
+  function adrOspita(nodo, tipo, parola, pos){
+    var host=document.getElementById('analysis-drawer'),
+        body=document.getElementById('analysis-drawer-body'),
+        main=document.querySelector('.main');
+    /* Il ridisegno costruisce una barra NUOVA a ogni giro, quindi qui si passa
+       anche solo scegliendo una voce nel pannello: e' la parola a dire se e'
+       davvero cambiato qualcosa. Senza questo confronto la pagina sobbalzerebbe
+       a ogni scelta. */
+    var nuovaParola = (adrHome ? adrHome.parola : null) !== parola;
+    if (nodo.parentElement !== body) {
+      adrSgombera();
+      adrHome = { node: nodo, tipo: tipo, parola: parola, parent: nodo.parentElement,
+                  next: nodo.nextElementSibling, gen: adrSentinella() };
+      body.appendChild(nodo);
+      if (tipo === 'token' && nuovaParola) adrPortaInVista();
+    }
+    var w=document.getElementById('analysis-drawer-word'), ps=document.getElementById('analysis-drawer-pos');
+    if (w) w.textContent = parola || '';
+    if (ps) { ps.textContent = pos || ''; ps.style.display = pos ? '' : 'none'; }
+    /* Il drawer deve entrare nel layout PRIMA che cambino le tracce della
+       griglia: 'grid-template-columns' e' in transizione e 0fr -> minmax() non
+       e' interpolabile, quindi partire da una colonna senza elemento la lascia
+       bloccata. */
+    host.hidden = false;
+    void host.offsetHeight;
+    main.classList.add('analysis-open');
+  }
+
   window.syncAnalysisDrawer = function(){
     var host=document.getElementById('analysis-drawer'),
         body=document.getElementById('analysis-drawer-body'),
+        ed=document.getElementById('editor-content'),
         main=document.querySelector('.main');
     if (!host || !body || !main) return;
     Array.prototype.forEach.call(document.querySelectorAll('.entry-card.is-in-drawer'),
       function(c){ c.classList.remove('is-in-drawer'); });
+
+    /* ── 1 · la barra del token ha la precedenza ───────────────────────── */
+    var barraEd = (adrLargo.matches && ed) ? ed.querySelector('.token-action-bar') : null;
+    if (barraEd) {
+      adrOspita(barraEd, 'token',
+        ((barraEd.querySelector('.target-word') || {}).textContent || '').trim(), '');
+      return;
+    }
+    var barraDr = body.querySelector('.token-action-bar');
+    if (barraDr) {
+      /* Se la sentinella non e' cambiata, l'editor non e' stato ridisegnato:
+         la barra manca di la' solo perche' l'abbiamo spostata noi. */
+      if (adrHome && adrHome.tipo === 'token' && adrLargo.matches
+          && adrHome.gen === adrSentinella()) return;
+      adrSgombera();
+      Array.prototype.forEach.call(body.querySelectorAll('.token-action-bar'),
+        function(n){ n.remove(); });
+    }
+
+    /* ── 2 · i campi di una voce aperta a mano ─────────────────────────── */
     if (!window.__adrawer) { adrShut(); return; }
     var card = adrCard();
     if (!card) { window.__adrawer = null; adrShut(); return; }      // voce sparita
@@ -42114,27 +42246,41 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!inDrawer) { window.__adrawer = null; adrShut(); return; }
       fields = inDrawer;
     }
-    if (fields.parentElement !== body) {
-      adrRestore();
-      adrHome = { node: fields, parent: fields.parentElement, next: fields.nextElementSibling };
-      body.appendChild(fields);
-    }
-    var w=document.getElementById('analysis-drawer-word'), pos=document.getElementById('analysis-drawer-pos');
-    if (w) w.textContent = card.dataset.word || '';
-    if (pos) { pos.textContent = card.dataset.pos || ''; pos.style.display = card.dataset.pos ? '' : 'none'; }
     card.classList.add('is-in-drawer');
-    // Il drawer deve entrare nel layout PRIMA che cambino le tracce della griglia:
-    // 'grid-template-columns' e' in transizione e 0fr -> minmax() non e'
-    // interpolabile, quindi partire da una colonna senza elemento la lascia bloccata.
-    host.hidden = false;
-    void host.offsetHeight;
-    main.classList.add('analysis-open');
+    adrOspita(fields, 'voce', card.dataset.word || '', card.dataset.pos || '');
   };
+
+  /* Il drawer si riallinea quando si passa la soglia dei 900px: sopra, la barra
+     del token entra; sotto, torna sotto il brano.
+     Ci si appende a `resize` e non all'evento `change` di matchMedia: misurato,
+     portando la finestra da 820 a 1280px la media query CSS commuta ma `change`
+     non scatta — zero chiamate su un contatore messo li' apposta. `resize` e' un
+     segnale piu' grosso ma sempre presente; si smorza con un timer, e la
+     sincronia e' idempotente. */
+  var adrTimer = null;
+  window.addEventListener('resize', function(){
+    if (adrTimer) clearTimeout(adrTimer);
+    adrTimer = setTimeout(function(){ adrTimer = null; try { window.syncAnalysisDrawer(); } catch (_) {} }, 120);
+  });
   window.openAnalysisDrawer = function(sentenceId, entryId){
     window.__adrawer = { s: sentenceId, e: entryId };
     window.syncAnalysisDrawer();
   };
   window.closeAnalysisDrawer = function(){
+    /* Se dentro c'e' la BARRA DEL TOKEN, chiudere il drawer vuol dire annullare
+       la selezione: la barra esiste finche' la parola e' selezionata, e
+       limitarsi a nascondere il pannello la farebbe rientrare al primo
+       ridisegno. Si preme l'«Annulla» della barra stessa — l'uscita che l'app
+       ha gia' previsto, con tutto quel che si porta dietro. */
+    var body = document.getElementById('analysis-drawer-body');
+    var bar = body && body.querySelector('.token-action-bar');
+    if (bar) {
+      var ann = Array.prototype.filter.call(bar.querySelectorAll('button'), function (b) {
+        return /annulla/i.test(b.textContent || '');
+      })[0];
+      if (ann) { ann.click(); return; }
+      if (adrHome && adrHome.tipo === 'token') { adrSgombera(); adrShut(); return; }
+    }
     window.__adrawer = null;
     window.syncAnalysisDrawer();
   };
@@ -42151,7 +42297,9 @@ document.addEventListener('DOMContentLoaded', () => {
     window.syncAnalysisDrawer();
   });
   document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && window.__adrawer) window.closeAnalysisDrawer();
+    if (e.key !== 'Escape') return;
+    var host = document.getElementById('analysis-drawer');
+    if (window.__adrawer || (host && !host.hidden)) window.closeAnalysisDrawer();
   });
 
   /* PROMESSE SULLE TAPPE · l'app dichiarava «sei tappe» in tre punti mentre ne ha
