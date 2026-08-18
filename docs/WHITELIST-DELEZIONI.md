@@ -95,3 +95,29 @@ Due scoperte laterali, rimandate al commit successivo perché non sono
 delezioni: la pill si fidava di un flag memorizzato invece di guardare gli assi
 veri, e un brano senza `currentSentenceIdx` mostrava «Frase non trovata» nella
 vista per frase.
+
+---
+
+## Appendice · le carcasse dell'«approccio» (ago 2026)
+
+Il punto 10 aveva tolto il modale dell'approccio, sostituito dalla pill Percorso.
+Il suo **vestito** era rimasto: CSS che nessun markup produce più.
+
+**Verificato prima di cancellare**: cercando ogni classe `approach-*` in tutti i
+file vivi del repo (esclusi i worktree), le occorrenze stanno **tutte** dentro
+selettori CSS — zero nel markup, zero in JavaScript. E `.approach-banner*` non
+c'era già più.
+
+| Cosa | Quanto | Perché cade |
+|---|---|---|
+| CSS `.approach-grid` · `.approach-option` (+ `:hover`, `.current`, `::after`) · `.approach-head` · `.approach-icon` · `.approach-title` · `.approach-tagline` · `.approach-pros` · `.approach-cons` | **85 righe** | nessun markup le produce |
+| CSS `.approach-toggle-btn` (+ `:hover`, `.approach-current-tag`) | **29 righe** | il bottone apriva il modale che non c'è più |
+| `const approachBannerInGuided = ''` + la sua interpolazione nel wizard | 6 righe | è il buco lasciato dal banner rimosso: una costante vuota interpolata una volta |
+| `state.approachShown` (campo + assegnazione) | 2 righe | **scritto due volte, letto mai** |
+
+**Resta in piedi** `approach` come valore *derivato* dagli assi: è vivo, lo legge
+il dispatcher di rendering della scheda C (`renderStep3Html`).
+
+Collaudo: `regoleApproachNelCSSOM = 0`; le quattro sotto-schede dell'analisi, lo
+scheletro, la traduzione e la panoramica rendono; `brace_check = 10`;
+`node --check` OK.

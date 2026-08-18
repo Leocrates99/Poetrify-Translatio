@@ -6677,91 +6677,6 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
 }
 @media (max-width: 640px) { .mode-grid { grid-template-columns: 1fr; } }
 
-/* ─── APPROACH SELECTOR · tre opzioni di flusso traduttivo ───────────────── */
-.approach-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 14px;
-  margin-bottom: 18px;
-}
-@media (max-width: 1024px) { .approach-grid { grid-template-columns: 1fr; } }
-.approach-option {
-  text-align: left;
-  padding: 18px;
-  border: 2px solid var(--rule-soft);
-  background: var(--paper);
-  border-radius: var(--radius-md);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  transition: all var(--transition-base);
-  position: relative;
-  font-family: var(--font-body);
-}
-.approach-option:hover {
-  border-color: var(--primary);
-  background: var(--primary-pale);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(24, 0, 172, 0.10);
-}
-.approach-option.current {
-  border-color: var(--primary);
-  background: rgba(24, 0, 172, 0.06);
-}
-.approach-option.current::after {
-  content: '● ATTIVO';
-  position: absolute;
-  top: 8px;
-  right: 10px;
-  font-family: var(--font-ui);
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--primary);
-}
-.approach-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 4px;
-}
-.approach-icon { font-size: 28px; line-height: 1; }
-.approach-title {
-  font-family: var(--font-ui);
-  font-size: 14px;
-  font-weight: 700;
-  color: var(--primary);
-  letter-spacing: -0.01em;
-}
-.approach-tagline {
-  font-family: var(--font-body);
-  font-size: 13px;
-  line-height: 1.5;
-  color: var(--ink);
-  margin: 0 0 8px;
-}
-.approach-pros, .approach-cons {
-  font-family: var(--font-ui);
-  font-size: 11.5px;
-  line-height: 1.5;
-}
-.approach-pros { color: rgb(47, 133, 90); }
-.approach-cons { color: rgb(197, 48, 48); }
-.approach-pros strong, .approach-cons strong {
-  display: block;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  margin-bottom: 3px;
-}
-.approach-pros ul, .approach-cons ul {
-  margin: 0;
-  padding-left: 16px;
-}
-.approach-pros li, .approach-cons li { margin-bottom: 2px; }
-
 /* ─── SHORTCUTS MODAL · griglia tasto + descrizione ──────────────────────── */
 .shortcuts-grid {
   display: grid;
@@ -7161,35 +7076,6 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   }
 }
 
-/* ─── BOTTONE "Approccio" in header (toolbar) ───────────────────────────── */
-.approach-toggle-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  font-family: var(--font-ui);
-  font-size: 11px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: var(--radius-sm);
-  color: var(--primary);
-  cursor: pointer;
-  transition: all var(--transition-base);
-}
-.approach-toggle-btn:hover {
-  background: var(--primary);
-  color: var(--paper);
-}
-.approach-toggle-btn .approach-current-tag {
-  font-size: 10px;
-  font-style: italic;
-  opacity: 0.85;
-  font-weight: 400;
-  text-transform: none;
-}
 .mode-option {
   text-align: left;
   padding: 22px 22px 18px;
@@ -13683,7 +13569,6 @@ const defaultState = () => ({
   approach: 'attuale',
   metodo: 'strati',      // 'strati' (grammatica→logica→periodo) | 'valenziale' (Scheletro)
   vista: 'frase',        // 'frase' (frase corrente) | 'intero' (brano intero)
-  approachShown: false,  // true dopo che l'utente ha effettuato (almeno una volta) la scelta
   // Wizard "frase per frase": tieni traccia dello step corrente per la frase corrente
   frasePerFraseStep: 1,  // 1=grammar, 2=logic, 3=periodale, 4=traduzione frase
   // Filtri della sezione F · Dizionario — persistenti per ogni progetto
@@ -30443,12 +30328,6 @@ function renderGuidedWizard() {
 
 
 
-  // BANNER APPROCCIO · disponibile anche in modalità guidata.
-  // L'utente può cambiare l'approccio traduttivo (integrale / attuale /
-  // frase-per-frase) in qualunque momento dal banner, anche restando nel
-  // wizard. La scelta convive con il flusso a tappe.
-  const approachBannerInGuided = '';
-
   const header = `
     <div class="wizard-pane">
       <div class="wizard-header">
@@ -30458,7 +30337,6 @@ function renderGuidedWizard() {
         </div>
 
       </div>
-      ${approachBannerInGuided}
       ${renderNastro()}
       <div class="wizard-instructions">${meta.instructions}</div>
     </div>`;
@@ -38118,7 +37996,6 @@ function setMetodo(value) {
   const v = (value === 'valenziale') ? 'valenziale' : 'strati';
   if (state.metodo === v) return;
   state.metodo = v;
-  state.approachShown = true;
   _syncApproach();
   riconciliaPercorso();            // la targhetta del percorso non deve mentire
   persistCurrent();
