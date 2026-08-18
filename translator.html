@@ -31850,85 +31850,133 @@ const GUIDED_PHASES = {
   traduzione: { letter: 'C', label: 'Traduzione', color: '#D69E2E', tag: 'apri il dizionario' },
   versione:   { letter: 'D', label: 'Versione',   color: '#9C6B3C', tag: 'dall\'italiano all\'italiano' },
 };
-const GUIDED_STEPS_META = [
-  /* ── FASE A · LETTURA ──────────────────────────────────────────────────── */
-  { num: 1, phase: 'lettura', label: 'Pre-lettura',
-    title: 'Lettura preparatoria · titolo, autore, genere, vista d\'alto',
-    instructions: 'Prima di mettere mano al testo: <strong>leggi il titolo e il sottotitolo</strong> per inquadrare l\'argomento, <strong>identifica l\'autore e l\'opera</strong> se conosciuti, <strong>riconosci il genere</strong> della versione (racconto, militare, filosofica, lettera, discorso politico, storica) per anticipare stile e lessico, infine <strong>leggi tutta la versione almeno una volta</strong> per cogliere la struttura sintattica complessiva e le costruzioni grammaticali presenti.' },
+/* ════════════════════════════════════════════════════════════════════════════
+   LA VIA GUIDATA · la prosa delle tappe, indicizzata per CHIAVE (punto 11)
+   ────────────────────────────────────────────────────────────────────────────
+   Prima questa era una lista di nove voci numerate, e la playlist di «Passo
+   dopo passo» era la stessa lista scritta un'altra volta: stesso ordine,
+   stesse etichette, nessuna delle due sapeva dell'altra.
+   Ora la prosa sta qui, indicizzata per chiave del catalogo TAPPE, e l'ORDINE
+   e la SELEZIONE li da' la playlist del percorso — come per lo scheletro
+   (punto 7). Ogni voce dice anche quando e' compiuta, e se il suo
+   completamento riguarda il brano intero (`globale`) o la singola frase.
+   ════════════════════════════════════════════════════════════════════════════ */
+const GUIDATA = {
+  prelettura: {
+    fase: 'lettura', titolo: 'Lettura preparatoria · titolo, autore, genere, vista d\'alto',
+    istruzioni: 'Prima di mettere mano al testo: <strong>leggi il titolo e il sottotitolo</strong> per inquadrare l\'argomento, <strong>identifica l\'autore e l\'opera</strong> se conosciuti, <strong>riconosci il genere</strong> della versione (racconto, militare, filosofica, lettera, discorso politico, storica) per anticipare stile e lessico, infine <strong>leggi tutta la versione almeno una volta</strong> per cogliere la struttura sintattica complessiva e le costruzioni grammaticali presenti.',
+    corpo: function () { return renderGuidedStepLettura(); },
+    compiuta: function () { return !!(state.meta && state.meta.titolo && state.meta.genere && state.meta.letturaIntegrale); },
+    globale: true,
+  },
+  frasi: {
+    fase: 'analisi', titolo: 'Segmentazione · scomporre il periodo in frasi',
+    istruzioni: 'La punteggiatura forte (. ! ? ; :) separa enunciati con senso compiuto. <strong>Verifica e modifica</strong> la segmentazione automatica con due sbarre <code>//</code>: puoi accorpare, separare o aggiungere frasi a mano. Ogni frase è un\'unità autonoma di significato che potrai poi analizzare e tradurre singolarmente.',
+    corpo: function () { return renderGuidedStep1(); },
+    compiuta: function () { return (state.sentences || []).length > 0; },
+    globale: true,
+  },
+  verbi: {
+    fase: 'analisi', titolo: 'Isolamento delle forme verbali',
+    istruzioni: 'Clicca le parole che riconosci come <strong>forme verbali</strong>: ogni verbo è il centro di un sintagma (proposizione). Numero di verbi = numero (massimo) di proposizioni. Distingui i <em>modi finiti</em> (indicativo, congiuntivo, imperativo) che reggono le proposizioni principali e subordinate, dai <em>modi non finiti</em> (infinito, participio, gerundio, gerundivo, supino) che possono comunque essere centro di sintagma con soggetti diversi dalla principale.',
+    corpo: function () { return renderGuidedStep2(); },
+    compiuta: function (f) { return (f.grammar || []).some(function (e) { return e.partOfSpeech === 'Verbo'; }); },
+    globale: false,
+  },
+  connettivi: {
+    fase: 'analisi', titolo: 'Congiunzioni e preposizioni · coordinanti e subordinanti',
+    istruzioni: 'Segna <strong>tutti i collegamenti</strong> tra proposizioni e all\'interno dei sintagmi: <em>congiunzioni coordinanti</em> (et, sed, καί, ἀλλά…), <em>subordinanti</em> (ut, cum, quod, ἵνα, ὅτι…), <em>pronomi relativi</em> (qui, quae, quod / ὅς, ἥ, ὅ), <em>particelle</em> (μέν, δέ, γάρ…), <em>preposizioni</em> (in, ad, ex, ἐν, εἰς…) che reggono casi specifici, e gli <em>asindeti</em> della punteggiatura. Questo passaggio prepara la suddivisione delle proposizioni con una sola sbarra <code>/</code>.',
+    corpo: function () { return renderGuidedStep3(); },
+    compiuta: function (f) { return (f.grammar || []).some(function (e) {
+      return e.partOfSpeech === 'Congiunzione' || e.partOfSpeech === 'Particella'
+          || e.partOfSpeech === 'Preposizione'
+          || (e.partOfSpeech === 'Pronome' && e.pronomeTipo === 'Relativo');
+    }) || (f.asindeti || []).length > 0; },
+    globale: false,
+  },
+  sintassi: {
+    fase: 'analisi', titolo: 'Sintassi periodale · proposizioni principali, coordinate, subordinate',
+    istruzioni: 'Identifica le <strong>proposizioni</strong> che compongono il periodo (principale, coordinate, subordinate) e classificale con sigle <em>A₁ A₂ B₁ B₂…</em>. Il sistema costruisce l\'<strong>albero gerarchico</strong> delle dipendenze. Per ognuna, indica il connettivo che la introduce e il modo del verbo principale.',
+    corpo: function () { return renderGuidedStep4(); },
+    compiuta: function (f) { return (f.periodale || []).length > 0; },
+    globale: false,
+  },
+  sintagmi: {
+    fase: 'analisi', titolo: 'Frase minima e complementi · soggetto → oggetto → casi obliqui',
+    istruzioni: 'Per ogni proposizione, costruisci la <strong>frase minima</strong> isolando i sintagmi nell\'ordine: <em>1) soggetto e gruppo del nominativo</em> (attributi, apposizioni, predicativi del soggetto); <em>2) complemento oggetto e gruppo dell\'accusativo</em> se il verbo è transitivo; <em>3) complementi di movimento</em> (luogo, tempo); <em>4) altri complementi nei casi obliqui</em> (genitivo, dativo, ablativo) o introdotti da preposizioni.',
+    corpo: function () { return renderGuidedStep5(); },
+    compiuta: function (f) { return (f.logic || []).some(function (e) { return e.funzione; }); },
+    globale: false,
+  },
+  grammatica: {
+    fase: 'analisi', titolo: 'Analisi grammaticale completa parola per parola',
+    istruzioni: 'Completa la <strong>morfologia parola per parola</strong>: caso, numero, genere, tempo, modo, diatesi… Le parole già taggate (verbi e connettivi) restano colorate; concentrati su quelle che hanno il bordo tratteggiato. Quest\'analisi nutre tutti i suggerimenti incrociati con la logica e la sintassi.',
+    corpo: function () { return renderGuidedStep6(); },
+    compiuta: function (f) {
+      const toks = tokenizeSentence(f.original);
+      const parole = toks.filter(function (t) { return t.kind === 'word'; }).length;
+      const taggate = (f.grammar || []).filter(function (e) { return e.tokenIndex != null && e.partOfSpeech; }).length;
+      return parole > 0 && taggate / parole >= 0.7;
+    },
+    globale: false,
+  },
+  brutta: {
+    fase: 'traduzione', titolo: 'Traduzione · brutta copia con il dizionario',
+    istruzioni: 'Apri il dizionario (scheda <strong>F · Dizionario</strong> nella barra laterale, oppure il ponte <strong>↗ Dizionario</strong> accanto al lemma) e <strong>cerca le parole necessarie</strong>: sostantivi/aggettivi/pronomi al nominativo singolare maschile; verbi alla 1ª persona singolare presente indicativo; avverbi/preposizioni/congiunzioni invariabili. <strong>Scegli la traduzione contestualmente coerente</strong> col genere della versione e con i termini delle altre parole. Scrivi la resa di lavoro frase per frase.',
+    corpo: function () { return renderGuidedStepTraduzione(); },
+    compiuta: function (f) { return !!(f.translation && f.translation.trim().length > 0); },
+    globale: false,
+  },
+  bella: {
+    fase: 'versione', titolo: 'Versione finale · «dall\'italiano all\'italiano»',
+    istruzioni: 'Rileggi la brutta copia <strong>senza più guardare il testo originale</strong>. Lavora ora solo dentro la grammatica italiana: smussa le imperfezioni, armonizza i collegamenti, rendi il testo uniforme e scorrevole. Tradurre significa anche «tradire» le parole di partenza affinché in italiano suonino bene. Quando ti soddisfa, hai concluso la versione.',
+    corpo: function () { return renderGuidedStepBellaCopia(); },
+    compiuta: function () { return !!(state.meta && state.meta.traduzioneBella && state.meta.traduzioneBella.trim().length > 0); },
+    globale: true,
+  },
+};
 
-  /* ── FASE B · ANALISI ("Pasticcia il testo") ───────────────────────────── */
-  { num: 2, phase: 'analisi', label: 'Frasi',
-    title: 'Segmentazione · scomporre il periodo in frasi',
-    instructions: 'La punteggiatura forte (. ! ? ; :) separa enunciati con senso compiuto. <strong>Verifica e modifica</strong> la segmentazione automatica con due sbarre <code>//</code>: puoi accorpare, separare o aggiungere frasi a mano. Ogni frase è un\'unità autonoma di significato che potrai poi analizzare e tradurre singolarmente.' },
-  { num: 3, phase: 'analisi', label: 'Verbi',
-    title: 'Isolamento delle forme verbali',
-    instructions: 'Clicca le parole che riconosci come <strong>forme verbali</strong>: ogni verbo è il centro di un sintagma (proposizione). Numero di verbi = numero (massimo) di proposizioni. Distingui i <em>modi finiti</em> (indicativo, congiuntivo, imperativo) che reggono le proposizioni principali e subordinate, dai <em>modi non finiti</em> (infinito, participio, gerundio, gerundivo, supino) che possono comunque essere centro di sintagma con soggetti diversi dalla principale.' },
-  { num: 4, phase: 'analisi', label: 'Connettivi',
-    title: 'Congiunzioni e preposizioni · coordinanti e subordinanti',
-    instructions: 'Segna <strong>tutti i collegamenti</strong> tra proposizioni e all\'interno dei sintagmi: <em>congiunzioni coordinanti</em> (et, sed, καί, ἀλλά…), <em>subordinanti</em> (ut, cum, quod, ἵνα, ὅτι…), <em>pronomi relativi</em> (qui, quae, quod / ὅς, ἥ, ὅ), <em>particelle</em> (μέν, δέ, γάρ…), <em>preposizioni</em> (in, ad, ex, ἐν, εἰς…) che reggono casi specifici, e gli <em>asindeti</em> della punteggiatura. Questo passaggio prepara la suddivisione delle proposizioni con una sola sbarra <code>/</code>.' },
-  { num: 5, phase: 'analisi', label: 'Sintassi',
-    title: 'Sintassi periodale · proposizioni principali, coordinate, subordinate',
-    instructions: 'Identifica le <strong>proposizioni</strong> che compongono il periodo (principale, coordinate, subordinate) e classificale con sigle <em>A₁ A₂ B₁ B₂…</em>. Il sistema costruisce l\'<strong>albero gerarchico</strong> delle dipendenze. Per ognuna, indica il connettivo che la introduce e il modo del verbo principale.' },
-  { num: 6, phase: 'analisi', label: 'Sintagmi',
-    title: 'Frase minima e complementi · soggetto → oggetto → casi obliqui',
-    instructions: 'Per ogni proposizione, costruisci la <strong>frase minima</strong> isolando i sintagmi nell\'ordine: <em>1) soggetto e gruppo del nominativo</em> (attributi, apposizioni, predicativi del soggetto); <em>2) complemento oggetto e gruppo dell\'accusativo</em> se il verbo è transitivo; <em>3) complementi di movimento</em> (luogo, tempo); <em>4) altri complementi nei casi obliqui</em> (genitivo, dativo, ablativo) o introdotti da preposizioni.' },
-  { num: 7, phase: 'analisi', label: 'Grammatica',
-    title: 'Analisi grammaticale completa parola per parola',
-    instructions: 'Completa la <strong>morfologia parola per parola</strong>: caso, numero, genere, tempo, modo, diatesi… Le parole già taggate (verbi e connettivi) restano colorate; concentrati su quelle che hanno il bordo tratteggiato. Quest\'analisi nutre tutti i suggerimenti incrociati con la logica e la sintassi.' },
+/** Le tappe della via guidata per un progetto: la sua playlist, in ordine. */
+function tappeGuidateDi(pr) {
+  const sc = schedaPercorso(pr && pr.percorso);
+  const pl = (sc && Array.isArray(sc.playlist) && sc.playlist.length)
+    ? sc.playlist : PERCORSI['passo-passo'].playlist;
+  return pl.filter(function (k) { return !!GUIDATA[k]; })
+    .map(function (k, i) {
+      const t = GUIDATA[k];
+      return { num: i + 1, chiave: k, label: etichettaTappa(k),
+               phase: t.fase, title: t.titolo, instructions: t.istruzioni };
+    });
+}
 
-  /* ── FASE C · TRADUZIONE ───────────────────────────────────────────────── */
-  { num: 8, phase: 'traduzione', label: 'Brutta',
-    title: 'Traduzione · brutta copia con il dizionario',
-    instructions: 'Apri il dizionario (scheda <strong>F · Dizionario</strong> nella barra laterale, oppure il ponte <strong>↗ Dizionario</strong> accanto al lemma) e <strong>cerca le parole necessarie</strong>: sostantivi/aggettivi/pronomi al nominativo singolare maschile; verbi alla 1ª persona singolare presente indicativo; avverbi/preposizioni/congiunzioni invariabili. <strong>Scegli la traduzione contestualmente coerente</strong> col genere della versione e con i termini delle altre parole. Scrivi la resa di lavoro frase per frase.' },
-
-  /* ── FASE D · VERSIONE ─────────────────────────────────────────────────── */
-  { num: 9, phase: 'versione', label: 'Bella copia',
-    title: 'Versione finale · «dall\'italiano all\'italiano»',
-    instructions: 'Rileggi la brutta copia <strong>senza più guardare il testo originale</strong>. Lavora ora solo dentro la grammatica italiana: smussa le imperfezioni, armonizza i collegamenti, rendi il testo uniforme e scorrevole. Tradurre significa anche «tradire» le parole di partenza affinché in italiano suonino bene. Quando ti soddisfa, hai concluso la versione.' },
-];
+/** La scheda della tappa guidata in posizione `num` (1-based). */
+function tappaGuidataAl(num) {
+  const lista = tappeGuidateDi(state);
+  const v = lista[Math.max(1, Math.min(lista.length, Number(num) || 1)) - 1];
+  return v ? Object.assign({}, v, GUIDATA[v.chiave]) : null;
+}
 
 function isGuidedStepComplete(step, sentence) {
-  if (!sentence) sentence = state.sentences[state.guidedSentenceIdx || 0];
-  // FASE A · Lettura preparatoria — completa se titolo + genere + lettura confermata
-  if (step === 1) {
-    return !!(state.meta && state.meta.titolo && state.meta.genere && state.meta.letturaIntegrale);
-  }
-  // FASE B · Analisi
-  if (step === 2) return state.sentences.length > 0; // segmentazione
-  if (!sentence) return false;
-  if (step === 3) return (sentence.grammar || []).some(e => e.partOfSpeech === 'Verbo'); // verbi
-  if (step === 4) return (sentence.grammar || []).some(e =>
-    e.partOfSpeech === 'Congiunzione' ||
-    e.partOfSpeech === 'Particella' ||
-    e.partOfSpeech === 'Preposizione' ||
-    (e.partOfSpeech === 'Pronome' && e.pronomeTipo === 'Relativo')
-  ) || (sentence.asindeti || []).length > 0; // connettivi + preposizioni
-  if (step === 5) return (sentence.periodale || []).length > 0; // sintassi
-  if (step === 6) return (sentence.logic || []).some(e => e.funzione); // sintagmi
-  if (step === 7) {
-    const tokens = tokenizeSentence(sentence.original);
-    const totalWords = tokens.filter(t => t.kind === 'word').length;
-    const tagged = (sentence.grammar || []).filter(e => e.tokenIndex != null && e.partOfSpeech).length;
-    return totalWords > 0 && tagged / totalWords >= 0.7;
-  }
-  // FASE C · Traduzione — brutta
-  if (step === 8) return !!(sentence.translation && sentence.translation.trim().length > 0);
-  // FASE D · Versione — bella copia organica
-  if (step === 9) return !!(state.meta && state.meta.traduzioneBella && state.meta.traduzioneBella.trim().length > 0);
-  return false;
+  const t = tappaGuidataAl(step);
+  if (!t || typeof t.compiuta !== 'function') return false;
+  if (t.globale) { try { return !!t.compiuta(); } catch (e) { return false; } }
+  const f = sentence || (state.sentences || [])[state.guidedSentenceIdx || 0];
+  if (!f) return false;
+  try { return !!t.compiuta(f); } catch (e) { return false; }
 }
 
 function isGuidedStepCompleteAllSentences(step) {
-  if (step === 1) return isGuidedStepComplete(step); // step di lettura: globale
-  if (step === 2) return state.sentences.length > 0;
-  if (step === 9) return isGuidedStepComplete(step); // bella copia: globale
-  if (state.sentences.length === 0) return false;
-  return state.sentences.every(s => isGuidedStepComplete(step, s));
+  const t = tappaGuidataAl(step);
+  if (!t || typeof t.compiuta !== 'function') return false;
+  if (t.globale) { try { return !!t.compiuta(); } catch (e) { return false; } }
+  const ss = state.sentences || [];
+  if (!ss.length) return false;
+  return ss.every(function (f) { return isGuidedStepComplete(step, f); });
 }
 
 function getVisibleGuidedSteps() {
-  // Servizio completo: sempre tutte e 9 le tappe (inclusa la sintassi periodale).
-  return GUIDED_STEPS_META.slice();
+  /* Non piu' una costante: le tappe sono quelle della playlist del percorso. */
+  return tappeGuidateDi(state);
 }
 
 function clampVisibleGuidedStep(num) {
@@ -31953,7 +32001,7 @@ function renderGuidedWizard() {
   let rawStep = Math.max(1, Math.min(9, state.guidedStep || 1));
   const currentStep = clampVisibleGuidedStep(rawStep);
   if (currentStep !== rawStep) state.guidedStep = currentStep;
-  const meta = GUIDED_STEPS_META.find(s => s.num === currentStep) || GUIDED_STEPS_META[0];
+  const meta = visibleSteps.find(s => s.num === currentStep) || visibleSteps[0];
   const currentPhase = GUIDED_PHASES[meta.phase] || GUIDED_PHASES.lettura;
   // Posizione 1-based fra le tappe visibili (per il "tappa X di N")
   const currentVisibleIdx = visibleSteps.findIndex(s => s.num === currentStep);
@@ -32012,16 +32060,12 @@ function renderGuidedWizard() {
       <div class="wizard-instructions">${meta.instructions}</div>
     </div>`;
 
-  let body = '';
-  if (currentStep === 1) body = renderGuidedStepLettura();          // FASE A · Pre-lettura
-  else if (currentStep === 2) body = renderGuidedStep1();           // Segmentazione frasi (era 1)
-  else if (currentStep === 3) body = renderGuidedStep2();           // Verbi (era 2)
-  else if (currentStep === 4) body = renderGuidedStep3();           // Connettivi + preposizioni (era 3)
-  else if (currentStep === 5) body = renderGuidedStep4();           // Sintassi periodale (era 4)
-  else if (currentStep === 6) body = renderGuidedStep5();           // Sintagmi guidato (era 5)
-  else if (currentStep === 7) body = renderGuidedStep6();           // Grammaticale completa (era 6)
-  else if (currentStep === 8) body = renderGuidedStepTraduzione();  // FASE C · Traduzione brutta
-  else if (currentStep === 9) body = renderGuidedStepBellaCopia();  // FASE D · Bella copia
+  /* Il corpo lo disegna la TAPPA, non il suo numero: la catena di `else if`
+     legava ogni schermata alla propria posizione nell'elenco. */
+  const schedaCorrente = tappaGuidataAl(currentStep);
+  const body = (schedaCorrente && typeof schedaCorrente.corpo === 'function')
+    ? schedaCorrente.corpo()
+    : '<div class="entry-empty">Questa tappa non è ancora costruita.</div>';
 
   const navInfo = isGuidedStepCompleteAllSentences(currentStep)
     ? '✓ Tappa completata su tutte le frasi'
