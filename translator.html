@@ -4171,6 +4171,49 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: var(--font-c
 .resume-card-percorso { font-size: .95em; opacity: .8; }
 /* Badge del percorso: dice con quale metodo — e quindi con quale metro — il
    brano è stato lavorato. Neutro: il colore in Poetrify è la lingua. */
+.avvio-altri { display: block; margin: 12px auto 0; font-style: italic; }
+@media (pointer: coarse) { .avvio-altri { min-height: 44px; } }
+
+/* ── Il passo di frase in frase (ciclo stretto di «Leggere tanto») ──────── */
+.schel-frase-nav {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  margin: 0 0 16px; padding: 8px 12px;
+  background: var(--parchment); border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md);
+}
+.schel-frase-conto { font-family: var(--font-ui); font-size: 12px; color: var(--sepia); }
+
+/* ── Le tappe condizionali della «Versione d'autore» ────────────────────── */
+.autore-cartiglio {
+  padding: 14px 16px; margin: 0 0 16px;
+  background: var(--parchment); border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md);
+}
+.autore-cifra { font-family: var(--font-ui); font-size: 15px; color: var(--ink); }
+.autore-cifra strong { font-size: 22px; }
+.autore-nota { font-family: var(--font-ui); font-size: 12.5px; color: var(--sepia); margin: 6px 0 0; line-height: 1.55; }
+.autore-elenco { display: flex; flex-direction: column; gap: 10px; }
+.autore-riga {
+  padding: 10px 12px; background: var(--paper);
+  border: 1px solid var(--rule-soft); border-radius: var(--radius-sm);
+}
+/* Una riga «decisa» non cambia colore: cambia il PESO del bordo. Il colore in
+   Poetrify e' la lingua, e un verde qui direbbe un'altra cosa. */
+.autore-riga.decisa { border-color: var(--rule); }
+.autore-riga-capo { display: flex; align-items: baseline; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+.autore-num { font-family: var(--font-ui); font-weight: 800; font-size: 12px; color: var(--sepia); }
+.autore-parola { font-family: var(--font-body); font-size: 15px; color: var(--ink); }
+.autore-parola.greek { font-family: var(--font-classical); }
+.autore-valore, .autore-aperto {
+  font-family: var(--font-ui); font-size: 11px;
+  padding: 1px 8px; border-radius: 999px; border: 1px solid var(--rule);
+}
+.autore-valore { color: var(--ink-soft); background: var(--ivory); }
+.autore-aperto { color: var(--sepia); font-style: italic; border-style: dashed; }
+.autore-riga-testo { font-family: var(--font-body); font-size: 13.5px; font-style: italic; color: var(--ink-soft); }
+.autore-riga-testo.greek { font-family: var(--font-classical); font-style: normal; }
+.autore-regola { font-family: var(--font-ui); font-size: 12px; color: var(--sepia); margin: 6px 0 8px; line-height: 1.5; }
+
 /* ── Tappa «Analisi automatica» (percorsi rapidi) ──────────────────────── */
 .auto-cappello {
   padding: 14px 16px; margin: 0 0 16px;
@@ -12731,6 +12774,43 @@ const TAPPE = {
     terminale: { etichetta: '✓ Esporta nella sezione Traduzione →', azione: 'scheletroExportToTranslation()' },
   },
 
+  /* ── I BIVI della «Versione d'autore» (punto 12) ───────────────────────
+     Tappe CONDIZIONALI: `condizione` decide se esistono per QUESTO brano. Non
+     si nascondono, semplicemente non ci sono quando non c'è niente da vedere —
+     e per questo non compaiono nemmeno nel nastro né nel conto delle tappe. */
+  participi: {
+    label: 'Participi', icona: '◈', sede: 'scheletro', modulo: 'grammatica',
+    hint: 'Ogni participio è un bivio: attributivo e sostantivato stanno dentro il sintagma del nome; predicativo, congiunto e assoluto ne formano uno proprio. La scelta cambia la forma dell\u2019albero, non solo l\u2019etichetta.',
+    condizione: function () { return participiDelBrano().length > 0; },
+    corpo: function (ss, lang) { return renderTappaParticipi(ss, lang); },
+    compiuta: function (f) {
+      const pp = (f.grammar || []).filter(function (g) { return g && g.partOfSpeech === 'Verbo' && g.verboForma === 'Participio'; });
+      return pp.length === 0 || pp.every(function (g) { return !!g.valoreParticipio; });
+    },
+  },
+  ancore: {
+    label: 'Agganci', icona: '⚓', sede: 'scheletro', modulo: 'sintagmi',
+    hint: 'I participi a valore proprio reggono un sintagma e possono agganciarne altri: qui si dichiara che cosa dipende da che cosa.',
+    condizione: function () { return ancoreDelBrano().length > 0; },
+    corpo: function (ss, lang) { return renderTappaAncore(ss, lang); },
+    globale: true,
+    compiuta: function () {
+      const a = ancoreDelBrano();
+      if (!a.length) return true;
+      return a.some(function (x) {
+        return (x.frase.logic || []).some(function (y) { return y && y.padre === x.voce.id; });
+      });
+    },
+  },
+  attributivi: {
+    label: 'Posizioni', icona: '⌖', sede: 'scheletro', modulo: 'sintagmi',
+    hint: 'Certi complementi hanno le parole DENTRO lo span di un altro sintagma: è l\u2019indizio della posizione attributiva. Deciderlo qui fa cambiare posto alle barre dello stemma.',
+    condizione: function () { return incastonatiDelBrano().length > 0; },
+    corpo: function (ss, lang) { return renderTappaAttributivi(ss, lang); },
+    globale: true,
+    compiuta: function () { return incastonatiDelBrano().length === 0; },
+  },
+
   /* ── Le due tappe dei percorsi rapidi (punto 9) ────────────────────────── */
   autoanalisi: {
     label: 'Analisi automatica', icona: '⚡', sede: 'scheletro', modulo: 'grammatica',
@@ -12746,11 +12826,8 @@ const TAPPE = {
     label: 'Stemma a barre', icona: '📊', sede: 'scheletro', modulo: 'sintagmi',
     hint: 'L\'ossatura del periodo a colpo d\'occhio: ogni sintagma è una barra, lunga quanto la sua estensione in parole, nell\'ordine S · V · O · complementi. Serve a rivedere la struttura, non a tradurla.',
     corpo: (ss, lang) => renderTappaStemma(ss, lang),
-    /* Il default della tappa è la vista a barre — ma il commutatore resta vivo:
-       si imposta solo se lo studente non ha già scelto in questa sessione. */
-    entrando: function () {
-      if (!state.syntaxTreeView) state.syntaxTreeView = 'barre';
-    },
+    /* Il default a barre lo dichiara ormai la scheda del percorso
+       (`stemmaDefault`), che vale su TUTTE le superfici e non solo qui. */
     terminale: { etichetta: '✓ Ripasso concluso', azione: 'concludiRipasso()' },
   },
 };
@@ -12764,10 +12841,19 @@ function etichettaTappa(k) { return (TAPPE[k] || {}).label || String(k || ''); }
 const SCHELETRO_CANONICO = ['verbi', 'proposizioni', 'soggetto', 'oggetto', 'preposizionali', 'altri', 'ordo'];
 
 /** Le fasi dello scheletro per un progetto: la sua playlist, filtrata per sede. */
+/* Una tappa condizionale esiste solo se il brano la chiede: e' il branching
+   della «Versione d'autore». Chi non dichiara `condizione` c'e' sempre. */
+function tappaAttiva(k) {
+  const t = TAPPE[k];
+  if (!t) return false;
+  if (typeof t.condizione !== 'function') return true;
+  try { return !!t.condizione(); } catch (e) { return false; }
+}
+
 function tappeScheletroDi(p) {
   const sc = schedaPercorso(p && p.percorso);
   const dalla = ((sc && Array.isArray(sc.playlist)) ? sc.playlist : [])
-    .filter(k => (TAPPE[k] || {}).sede === 'scheletro');
+    .filter(k => (TAPPE[k] || {}).sede === 'scheletro' && tappaAttiva(k));
   return dalla.length ? dalla : SCHELETRO_CANONICO;
 }
 
@@ -12786,7 +12872,10 @@ const PERCORSI = {
        non la morfologia di ogni parola; la bella copia sì, è il compito. */
     metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'sintagmi', 'brutta', 'bella'],
     preset: { metodo: 'valenziale', vista: 'intero', mode: 'free' },
-    disponibile: true, ingresso: 'avvio',
+    /* Percorso di METODO: lo stemma si apre a barre, che è la figura che il
+       metodo insegna. Resta un default, non un vincolo: il commutatore vive. */
+    stemmaDefault: 'barre',
+    disponibile: true, ingresso: 'avvio', primario: true,
   },
   'passo-passo': {
     nome: 'Passo dopo passo', icona: '🧭',
@@ -12796,7 +12885,8 @@ const PERCORSI = {
     /* Le nove tappe passano anche dalla grammatica: qui conta. */
     metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'sintagmi', 'grammatica', 'brutta', 'bella'],
     preset: { metodo: 'strati', vista: 'frase', mode: 'guided' },
-    disponibile: true, ingresso: 'avvio',
+    stemmaDefault: 'barre',
+    disponibile: true, ingresso: 'avvio', primario: true,
   },
   /* ── Progettati, non ancora costruiti (audit §3) ──────────────────────────
      Richiedono il refactor dello scheletro playlist-driven: finché quello non
@@ -12811,6 +12901,27 @@ const PERCORSI = {
     /* Il preset diceva «per strati» mentre la playlist è tutta di tappe dello
        SCHELETRO: gli assi non portavano mai dove il percorso prometteva. */
     preset: { metodo: 'valenziale', vista: 'intero', mode: 'free' },
+    disponibile: true, ingresso: 'avvio', primario: true,
+  },
+  'leggere-tanto': {
+    nome: 'Leggere tanto', icona: '📚',
+    scopo: 'Mole: Cesare o Senofonte a capitoli. Una frase alla volta, ritmo e senso, senza fermarsi sui dettagli.',
+    tempo: '≈2-3 min a frase', minPerFrase: 2.5,
+    playlist: ['frasi', 'verbi', 'ordo'],
+    /* Non c'è bella copia: qui si legge molto, non si cesella. */
+    metro: ['testo', 'frasi', 'verbi', 'brutta'],
+    preset: { metodo: 'valenziale', vista: 'frase', mode: 'free' },
+    disponibile: true, ingresso: 'avvio',
+  },
+  'versione-autore': {
+    nome: 'Versione d\u2019autore', icona: '✒',
+    scopo: 'Il metodo per intero, e in più i bivi che il testo apre: participi, agganci, posizioni.',
+    tempo: '≈7 min a frase', minPerFrase: 7,
+    playlist: ['frasi', 'verbi', 'proposizioni', 'participi', 'soggetto', 'oggetto',
+               'preposizionali', 'altri', 'attributivi', 'ancore', 'ordo', 'bella'],
+    metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'sintagmi', 'grammatica', 'brutta', 'bella'],
+    preset: { metodo: 'valenziale', vista: 'intero', mode: 'free' },
+    stemmaDefault: 'barre',
     disponibile: true, ingresso: 'avvio',
   },
   'ripasso': {
@@ -12821,6 +12932,8 @@ const PERCORSI = {
     /* Un ripasso e' compiuto SENZA una riga di traduzione: e' il suo scopo. */
     metro: ['testo', 'frasi', 'verbi', 'proposizioni'],
     preset: { metodo: 'valenziale', vista: 'intero', mode: 'free' },
+    /* Il Ripasso finisce PROPRIO nello stemma: a maggior ragione a barre. */
+    stemmaDefault: 'barre',
     /* Costruito, ma NON è un modo di cominciare una versione: si applica a un
        brano che esiste già. Per questo l'ingresso è l'Archivio e la sua card
        non compare fra quelle d'avvio (audit §4, tagli deliberati). */
@@ -13126,6 +13239,135 @@ function confermaCambioPercorso() {
   const nuovo = _cambioInSospeso;
   chiudiCambioPercorso();
   if (nuovo) cambiaPercorso(nuovo, { confermato: true });
+}
+
+/* ════════════════════════════════════════════════════════════════════════════
+   VERSIONE D'AUTORE · i bivi li apre il TESTO (punto 12)
+   ────────────────────────────────────────────────────────────────────────────
+   È la «guida pro» rimandata dall'inizio. Non aggiunge un metodo nuovo: prende
+   quello di sempre e vi innesta tappe CONDIZIONALI, che compaiono solo se il
+   brano le chiede. Un testo senza participi non mostra la tappa dei participi,
+   e non perché sia stata nascosta: perché non c'è niente da vedere.
+   I predicati esistevano già tutti — `PARTICIPIO_VALORE_REGOLE`,
+   `sintagmaConParticipioProprio`, `suggerisciCapoAttributivo`: qui si aggiunge
+   solo il bivio.
+   ════════════════════════════════════════════════════════════════════════════ */
+
+/** Tutti i participi del brano, con la frase da cui vengono. */
+function participiDelBrano() {
+  const out = [];
+  (state.sentences || []).forEach(function (f, i) {
+    (f.grammar || []).forEach(function (g) {
+      if (g && g.partOfSpeech === 'Verbo' && g.verboForma === 'Participio') {
+        out.push({ frase: f, idx: i, voce: g });
+      }
+    });
+  });
+  return out;
+}
+
+/** I sintagmi che un participio a valore proprio può reggere (le àncore ⚓). */
+function ancoreDelBrano() {
+  const out = [];
+  (state.sentences || []).forEach(function (f, i) {
+    (f.logic || []).forEach(function (e) {
+      if (e && sintagmaConParticipioProprio(f, e)) out.push({ frase: f, idx: i, voce: e });
+    });
+  });
+  return out;
+}
+
+/** I complementi INCASTONATI in un altro sintagma: candidati alla posizione ⌖.
+    Solo l'incastonatura vera — le parole dentro lo span di un altro sintagma —
+    non la semplice adiacenza, che il suggeritore accetta ma non prova niente.
+    E il predicato restituisce `{capo, incastonato}`: il capo sta dentro. */
+function incastonatiDelBrano() {
+  const out = [];
+  (state.sentences || []).forEach(function (f, i) {
+    (f.logic || []).forEach(function (e) {
+      if (!e || e.attribuitoA) return;                 // già deciso dallo studente
+      let sugg = null;
+      try { sugg = suggerisciCapoAttributivo(f, e); } catch (err) { sugg = null; }
+      if (sugg && sugg.incastonato && sugg.capo) out.push({ frase: f, idx: i, voce: e, capo: sugg.capo });
+    });
+  });
+  return out;
+}
+
+/* ── I corpi delle tre tappe condizionali ───────────────────────────────── */
+
+/* `titolo` arriva come [zero, singolare, plurale]: un cartiglio che scrive
+   «1 sintagmi» non si può leggere, e qui l'italiano è la materia. */
+function _autoreCartiglio(titolo, spiega, n) {
+  const et = (n === 0) ? titolo[0] : (n === 1 ? titolo[1] : titolo[2]);
+  return '<div class="autore-cartiglio">'
+    + '<div class="autore-cifra">' + (n ? '<strong>' + n + '</strong> ' : '') + escapeHtml(et) + '</div>'
+    + '<p class="autore-nota">' + spiega + '</p></div>';
+}
+
+function renderTappaParticipi(sentences, lang) {
+  const tutti = participiDelBrano();
+  const righe = tutti.map(function (p) {
+    const valore = p.voce.valoreParticipio || '';
+    const regola = valore ? (PARTICIPIO_VALORE_REGOLE[valore] || '') : '';
+    return '<div class="autore-riga' + (valore ? ' decisa' : '') + '">'
+      + '<div class="autore-riga-capo">'
+        + '<span class="autore-num">' + (p.idx + 1) + '</span>'
+        + '<span class="autore-parola ' + (lang === 'greco' ? 'greek' : '') + '">' + escapeHtml(p.voce.word || '') + '</span>'
+        + (valore ? '<span class="autore-valore">' + escapeHtml(valore) + '</span>'
+                  : '<span class="autore-aperto">bivio aperto</span>')
+      + '</div>'
+      + '<div class="autore-riga-testo ' + (lang === 'greco' ? 'greek' : '') + '">' + escapeHtml(p.frase.original || '') + '</div>'
+      + (regola ? '<p class="autore-regola">' + regola + '</p>' : '')
+      + '<button class="btn btn-ghost btn-sm" onclick="apriRientroLogico(&#39;' + p.frase.id + '&#39;)">⤴ Sintagmi di questa frase</button>'
+      + '</div>';
+  }).join('');
+  const aperti = tutti.filter(function (p) { return !p.voce.valoreParticipio; }).length;
+  return '<div class="subsection">'
+    + _autoreCartiglio(['Nessun participio nel brano', 'participio nel brano', 'participi nel brano'], aperti
+        ? (aperti === 1 ? 'Ne resta <strong>uno</strong> senza valore dichiarato.' : 'Ne restano <strong>' + aperti + '</strong> senza valore dichiarato.')
+          + ' È il bivio che decide tutto il resto: attributivo e sostantivato stanno DENTRO il sintagma del nome; predicativo, congiunto e assoluto ne formano uno proprio, e possono agganciarne altri.'
+        : 'Tutti decisi. Il testo non ha altri bivi participiali da aprire.', tutti.length)
+    + '<div class="autore-elenco">' + righe + '</div></div>';
+}
+
+function renderTappaAncore(sentences, lang) {
+  const tutte = ancoreDelBrano();
+  const righe = tutte.map(function (a) {
+    const figli = (a.frase.logic || []).filter(function (x) { return x && x.padre === a.voce.id; });
+    return '<div class="autore-riga' + (figli.length ? ' decisa' : '') + '">'
+      + '<div class="autore-riga-capo">'
+        + '<span class="autore-num">' + (a.idx + 1) + '</span>'
+        + '<span class="autore-parola">⚓ ' + escapeHtml(a.voce.phrase || a.voce.funzione || '') + '</span>'
+        + '<span class="' + (figli.length ? 'autore-valore' : 'autore-aperto') + '">'
+          + (figli.length ? figli.length + ' agganciat' + (figli.length === 1 ? 'o' : 'i') : 'nessun aggancio')
+        + '</span>'
+      + '</div>'
+      + '<div class="autore-riga-testo ' + (lang === 'greco' ? 'greek' : '') + '">' + escapeHtml(a.frase.original || '') + '</div>'
+      + '<button class="btn btn-ghost btn-sm" onclick="apriRientroLogico(&#39;' + a.frase.id + '&#39;)">⤴ Aggancia i sintagmi</button>'
+      + '</div>';
+  }).join('');
+  return '<div class="subsection">'
+    + _autoreCartiglio(['Nessun sintagma participiale proprio', 'sintagma participiale proprio', 'sintagmi participiali propri'], 'Un participio predicativo, congiunto o assoluto regge un sintagma suo, e può <strong>agganciarne altri</strong>. Qui si dichiara che cosa dipende da che cosa: nello stemma i figli usciranno rientrati sotto la loro àncora.', tutte.length)
+    + '<div class="autore-elenco">' + righe + '</div></div>';
+}
+
+function renderTappaAttributivi(sentences, lang) {
+  const tutti = incastonatiDelBrano();
+  const righe = tutti.map(function (a) {
+    return '<div class="autore-riga">'
+      + '<div class="autore-riga-capo">'
+        + '<span class="autore-num">' + (a.idx + 1) + '</span>'
+        + '<span class="autore-parola">⌖ ' + escapeHtml(a.voce.phrase || a.voce.funzione || '') + '</span>'
+        + '<span class="autore-aperto">dentro «' + escapeHtml((a.capo.phrase || a.capo.funzione || '')) + '»</span>'
+      + '</div>'
+      + '<div class="autore-riga-testo ' + (lang === 'greco' ? 'greek' : '') + '">' + escapeHtml(a.frase.original || '') + '</div>'
+      + '<button class="btn btn-ghost btn-sm" onclick="apriRientroLogico(&#39;' + a.frase.id + '&#39;)">⤴ Decidi la posizione</button>'
+      + '</div>';
+  }).join('');
+  return '<div class="subsection">'
+    + _autoreCartiglio(['Nessun complemento incastonato', 'complemento incastonato', 'complementi incastonati'], 'Le loro parole stanno DENTRO lo span di un altro sintagma: è l\'indizio della <strong>posizione attributiva</strong>. Il suggerimento è solo un suggerimento — la classificazione resta tua, e nello stemma il legame esplicito ⌖ vince sull\'adiacenza.', tutti.length)
+    + '<div class="autore-elenco">' + righe + '</div></div>';
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
@@ -28709,10 +28951,21 @@ function avvioPasso2() {
    vede) e il tempo stimato SUL BRANO REALE.
    Si mostrano solo i percorsi COSTRUITI: niente card che promettono flussi
    inesistenti (audit docs/PERCORSI-TRADUTTIVI.md). */
+let _altriPercorsiAperti = false;
+function mostraAltriPercorsi() { _altriPercorsiAperti = true; renderAll(); }
+
 function avvioPasso3() {
   const n = avvioFrasi();
   const primaVolta = !haGiaConclusoUnaVersione();
-  const chiavi = percorsiDaAvvio();
+  /* Tre card, non sei: la scelta si legge in un colpo d'occhio. Gli altri
+     percorsi restano a una parola di distanza, non nascosti. */
+  const tutti = percorsiDaAvvio();
+  const primari = tutti.filter(function (k) { return PERCORSI[k].primario; });
+  const altri = tutti.filter(function (k) { return !PERCORSI[k].primario; });
+  /* Se si è già scelto un percorso «altro», il pannello lo mostra: non si
+     nasconde a qualcuno la strada su cui sta. */
+  const apri = _altriPercorsiAperti || altri.indexOf(avvio.percorso) >= 0;
+  const chiavi = apri ? tutti : primari;
   const card = (k) => {
     const sc = PERCORSI[k];
     const sel = avvio.percorso === k;
@@ -28740,6 +28993,9 @@ function avvioPasso3() {
       <h2 class="avvio-domanda">Perché traduci oggi?</h2>
       <p class="avvio-sotto">${escapeHtml(avvioTitolo())} — ${n} fras${n === 1 ? 'e' : 'i'}. Scegli la strada: <strong>puoi cambiarla anche dopo, il lavoro fatto resta</strong>.</p>
       <div class="avvio-modi">${chiavi.map(card).join('')}</div>
+      ${(!apri && altri.length) ? `<button class="btn btn-ghost btn-sm avvio-altri" onclick="mostraAltriPercorsi()">
+          Altri percorsi (${altri.length}) — ${escapeHtml(altri.map(k => PERCORSI[k].nome).join(' · '))}
+        </button>` : ''}
       <div class="avvio-azioni">
         <button class="btn btn-primary" onclick="avvioVai(4)">Continua →</button>
         <button class="btn btn-ghost" onclick="avvioVai(2)">← Indietro</button>
@@ -28816,6 +29072,16 @@ function approdaAlPercorso() {
   if (k) vaiAllaTappa(k);
 }
 
+/** Passa alla frase `i` restando nella tappa in corso (ciclo stretto). */
+function vaiAllaFrase(i) {
+  const n = (state.sentences || []).length;
+  if (!n) return;
+  state.currentSentenceIdx = Math.max(0, Math.min(n - 1, Number(i) || 0));
+  persistCurrent();
+  renderEditor();
+  renderSidebarTabs();
+}
+
 /** La tappa su cui si è adesso, dedotta dalla superficie e dai cursori. */
 function tappaCorrente() {
   /* In via guidata il cursore del wizard vale solo QUANDO si e' nel wizard:
@@ -28860,7 +29126,7 @@ function tappeDelNastro() {
   const pl = (sc && Array.isArray(sc.playlist) && sc.playlist.length)
     ? sc.playlist.slice()
     : ['frasi', 'verbi', 'proposizioni', 'soggetto', 'oggetto', 'preposizionali', 'altri', 'ordo', 'bella'];
-  return ['brano'].concat(pl.filter(function (k) { return TAPPE[k]; }));
+  return ['brano'].concat(pl.filter(function (k) { return TAPPE[k] && tappaAttiva(k); }));
 }
 
 /** Quante tappe del percorso sono concluse, su quante. Fonte unica: la usano
@@ -29231,7 +29497,13 @@ function setScheletroTappa(chiave) {
 }
 
 function renderStep3HtmlScheletro() {
-  const sentences = state.sentences || [];
+  const tutte = state.sentences || [];
+  /* L'asse «vista» finora lo scheletro lo ignorava: mostrava sempre tutte le
+     frasi, anche con `vista: 'frase'`. Rispettarlo apre il ciclo stretto di
+     «Leggere tanto» e alleggerisce le fasi più dense sul telefono. */
+  const unaSola = state.vista === 'frase' && tutte.length > 1;
+  const iFrase = Math.max(0, Math.min(tutte.length - 1, Number(state.currentSentenceIdx) || 0));
+  const sentences = unaSola ? [tutte[iFrase]] : tutte;
   const lang = state.meta.lingua;
   /* Le fasi non sono più scritte qui: sono la playlist del percorso, filtrata
      per le tappe che si svolgono nello scheletro. Un percorso più corto ha uno
@@ -29261,7 +29533,17 @@ function renderStep3HtmlScheletro() {
   /* La barra delle fasi non c'e' piu': le stesse tappe stanno nel NASTRO
      UNICO, in cima all'editor, insieme al resto del percorso. Due stepper per
      la stessa informazione erano due grafiche che dicevano la stessa cosa. */
+  /* Il passo di frase in frase: c'è solo quando si guarda una frase alla volta. */
+  const passoFrase = unaSola ? `<div class="schel-frase-nav">
+      <button class="btn btn-ghost btn-sm" ${iFrase === 0 ? 'disabled' : ''}
+              onclick="vaiAllaFrase(${iFrase - 1})">← Frase precedente</button>
+      <span class="schel-frase-conto">Frase ${iFrase + 1} di ${tutte.length}</span>
+      <button class="btn btn-ghost btn-sm" ${iFrase >= tutte.length - 1 ? 'disabled' : ''}
+              onclick="vaiAllaFrase(${iFrase + 1})">Frase successiva →</button>
+    </div>` : '';
+
   return sectionHeader('C', 'Analisi · lo scheletro del periodo', (tappa && tappa.hint) || '')
+    + passoFrase
     + bodyHtml
     + navButtons;
 }
@@ -29923,7 +30205,7 @@ function renderScheletroProposizioni(sentences, lang) {
       ${renderPeriodaleActionBar(sentence)}
       ${annotated.length ? `<div class="scheletro-autofill-row"><button class="btn btn-ghost btn-sm" onclick="scheletroAutofillProps('${sentence.id}')" title="Completa ruolo · tipo · modo · connettivo delle proposizioni in base al verbo e alla congiunzione">⚡ Completa proposizioni dai verbi</button></div>` : ''}
       <div class="scheletro-prop-list">${entriesHtml}</div>
-      ${annotated.length ? `<div class="scheletro-tree-wrap">${renderSyntaxTree(sentence, state.syntaxTreeView || 'classic')}</div>` : ''}
+      ${annotated.length ? `<div class="scheletro-tree-wrap">${renderSyntaxTree(sentence, state.syntaxTreeView || vistaStemma())}</div>` : ''}
     </div>`;
   }).join('');
   return `<div class="subsection">
@@ -36638,7 +36920,7 @@ function renderSyntaxTree(sentence, forceView) {
 
   // forceView: se passato, impone la vista (es. «classic» nello scheletro);
   // altrimenti segue il toggle globale (default v2).
-  const view = forceView || state.syntaxTreeView || 'v2';
+  const view = forceView || state.syntaxTreeView || vistaStemma();
 
   /* La vista A BARRE lavora sui SINTAGMI dell'analisi logica, non sulle
      proposizioni: va servita prima del controllo di vuoto sul periodale. */
@@ -36954,8 +37236,16 @@ function renderPeriodoIpoteticoPanel(sentence, annotated) {
 
 /* Ciclo fra le tre viste dello stemma: 2.0 (diagramma) → classica → barre.
    Ogni bottone dice la vista SUCCESSIVA, non quella corrente. */
+/* La vista d'ingresso dello stemma: la dichiara il percorso, e in mancanza
+   resta il diagramma 2.0. Non e' una forzatura — appena si tocca il
+   commutatore, `state.syntaxTreeView` prende il sopravvento e resta. */
+function vistaStemma() {
+  const sc = schedaPercorso(state.percorso);
+  return (sc && sc.stemmaDefault) ? sc.stemmaDefault : 'v2';
+}
+
 function toggleSyntaxTreeView() {
-  const v = state.syntaxTreeView || 'v2';
+  const v = state.syntaxTreeView || vistaStemma();
   state.syntaxTreeView = v === 'v2' ? 'classic' : v === 'classic' ? 'barre' : 'v2';
   persistCurrent();
   renderEditor();
