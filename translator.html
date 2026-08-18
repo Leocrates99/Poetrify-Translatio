@@ -12537,6 +12537,103 @@ const SCHEMA_VERSION = 4;
    esiste (per migrazione e deep-link) ma NON deve comparire in nessuna
    superficie — niente card vaporware.
    ════════════════════════════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════════════════════════
+   IL CATALOGO DELLE TAPPE · la playlist smette di essere una didascalia
+   ────────────────────────────────────────────────────────────────────────────
+   Prima ogni percorso portava la propria playlist come elenco di ETICHETTE, e
+   lo scheletro teneva le sue sette fasi cablate dentro il renderer: due elenchi
+   della stessa cosa, liberi di divergere senza che nulla se ne accorgesse.
+   Ora la playlist NOMINA le tappe di questo catalogo, e le fasi dello scheletro
+   sono le tappe della playlist che si svolgono lì.
+
+   Ogni tappa dichiara: come si chiama, dove si svolge, quale modulo del metro
+   alimenta e — se sta nello scheletro — che cosa disegna, che cosa accade
+   entrandoci e come si conclude.
+
+   `sede: 'progetto'` = tappa disegnata e non ancora costruita: dice il piano
+   nella miniatura del nastro e non entra in nessun motore. Il vaporware si
+   riconosce da qui, invece di nascondersi in una stringa.
+   ════════════════════════════════════════════════════════════════════════════ */
+const TAPPE = {
+  /* ── Fuori dallo scheletro: altre schede, altro motore ─────────────────── */
+  brano:      { label: 'Brano',       sede: 'brano',         modulo: 'testo' },
+  frasi:      { label: 'Frasi',       sede: 'scomposizione', modulo: 'frasi' },
+  bella:      { label: 'Bella copia', sede: 'traduzione',    modulo: 'bella' },
+  /* ── Il wizard guidato: nove tappe, motore proprio (fusione al punto 11) ─ */
+  prelettura: { label: 'Pre-lettura', sede: 'guidata' },
+  connettivi: { label: 'Connettivi',  sede: 'guidata', modulo: 'proposizioni' },
+  sintassi:   { label: 'Sintassi',    sede: 'guidata', modulo: 'proposizioni' },
+  sintagmi:   { label: 'Sintagmi',    sede: 'guidata', modulo: 'sintagmi' },
+  grammatica: { label: 'Grammatica',  sede: 'guidata', modulo: 'grammatica' },
+  brutta:     { label: 'Brutta',      sede: 'guidata', modulo: 'brutta' },
+
+  /* ── Le fasi dello SCHELETRO · quelle che il motore sa disegnare ───────── */
+  verbi: {
+    label: 'Verbi', icona: '🎯', sede: 'scheletro', modulo: 'verbi',
+    hint: 'Individua TUTTE le forme verbali del brano e distingui modo finito / non finito. I verbi finiti sono le àncore di ogni proposizione.',
+    corpo: (ss, lang) => renderScheletroVerbi(ss, lang),
+  },
+  proposizioni: {
+    label: 'Proposizioni', icona: '✂️', sede: 'scheletro', modulo: 'proposizioni',
+    hint: 'Spezza il periodo nelle proposizioni interne (per congiunzione o asindeto) e completa le corrispondenze sintattiche (ruolo · tipo · connettivo · dipendenza).',
+    corpo: (ss, lang) => renderScheletroProposizioni(ss, lang),
+  },
+  soggetto: {
+    label: 'Soggetto', icona: '🟦', sede: 'scheletro', modulo: 'sintagmi',
+    hint: 'Individua il soggetto e il suo gruppo (attributi, apposizioni, specificazioni). Il menù è isolato a questa fase.',
+    corpo: (ss, lang) => renderScheletroLogic(ss, lang, 'soggetto'),
+  },
+  oggetto: {
+    label: 'Oggetto', icona: '🟧', sede: 'scheletro', modulo: 'sintagmi',
+    hint: 'Individua il complemento oggetto e il suo gruppo. Il menù è isolato a questa fase.',
+    corpo: (ss, lang) => renderScheletroLogic(ss, lang, 'oggetto'),
+  },
+  preposizionali: {
+    label: 'Preposizionali', icona: '🔗', sede: 'scheletro', modulo: 'sintagmi',
+    hint: 'Individua i complementi RETTI DA PREPOSIZIONE (accusativo e ablativo). Il menù si organizza in base alla preposizione che regge il blocco selezionato.',
+    corpo: (ss, lang) => renderScheletroLogic(ss, lang, 'preposizionali'),
+  },
+  altri: {
+    label: 'Altri complementi', icona: '🟫', sede: 'scheletro', modulo: 'sintagmi',
+    hint: 'Individua gli altri complementi a caso semplice, SENZA preposizione (genitivo, dativo e ablativo: mezzo, modo, causa, tempo, limitazione…). Il menù elenca solo questi.',
+    corpo: (ss, lang) => renderScheletroLogic(ss, lang, 'altri'),
+  },
+  ordo: {
+    label: 'Ordo e brutta', icona: '✍️', sede: 'scheletro', modulo: 'brutta',
+    hint: 'Riprendi i sintagmi e i verbi individuati e riordinali nell\'ordo verborum SVO italiano (soggetto · verbo · oggetto · complementi); scrivi la resa letterale (brutta) di ciascuno e portala nella sezione Traduzione.',
+    corpo: (ss, lang) => renderScheletroTraduzione(ss, lang),
+    /* Ciò che accade ENTRANDO nella tappa: prima era appeso al numero 7. */
+    entrando: function () {
+      (state.sentences || []).forEach(s => {
+        if (!Array.isArray(s.ordoVerborum) || s.ordoVerborum.length === 0) scheletroSeedOrdo(s);
+      });
+    },
+    /* L'azione terminale è DICHIARATA dalla tappa, non dedotta dalla posizione:
+       un percorso che finisce altrove finirà altrove senza toccare il motore. */
+    terminale: { etichetta: '✓ Esporta nella sezione Traduzione →', azione: 'scheletroExportToTranslation()' },
+  },
+
+  /* ── Progettate, non ancora costruite (audit §3) ───────────────────────── */
+  autoanalisi: { label: 'Analisi automatica', sede: 'progetto' },
+  stemma:      { label: 'Stemma a barre',     sede: 'progetto', modulo: 'sintagmi' },
+};
+
+function schedaTappa(k) { return TAPPE[k] || null; }
+function etichettaTappa(k) { return (TAPPE[k] || {}).label || String(k || ''); }
+
+/* Le sette fasi storiche: restano la forma canonica dello scheletro e il
+   ripiego per chi non ha un percorso (o ne ha uno che passa di qui senza
+   dichiararlo). Non si inventa una playlist a chi non l'ha. */
+const SCHELETRO_CANONICO = ['verbi', 'proposizioni', 'soggetto', 'oggetto', 'preposizionali', 'altri', 'ordo'];
+
+/** Le fasi dello scheletro per un progetto: la sua playlist, filtrata per sede. */
+function tappeScheletroDi(p) {
+  const sc = schedaPercorso(p && p.percorso);
+  const dalla = ((sc && Array.isArray(sc.playlist)) ? sc.playlist : [])
+    .filter(k => (TAPPE[k] || {}).sede === 'scheletro');
+  return dalla.length ? dalla : SCHELETRO_CANONICO;
+}
+
 const PERCORSI = {
   'versione-casa': {
     nome: 'Versione per casa', icona: '📖',
@@ -12544,7 +12641,10 @@ const PERCORSI = {
     tempo: '≈5 min a frase', minPerFrase: 5,
     /* La playlist è per ora DESCRITTIVA (alimenta card e banner); diventerà
        guida del motore col refactor playlist-driven dello scheletro. */
-    playlist: ['Verbi', 'Proposizioni', 'Soggetto', 'Oggetto', 'Preposizionali', 'Altri complementi', 'Ordo e brutta', 'Bella copia'],
+    /* La playlist nomina le tappe del catalogo: da qui il motore dello
+       scheletro ricava le proprie fasi, e le card la propria miniatura.
+       Comincia dalle frasi perché è di lì che si parte davvero. */
+    playlist: ['frasi', 'verbi', 'proposizioni', 'soggetto', 'oggetto', 'preposizionali', 'altri', 'ordo', 'bella'],
     /* Il metro: la grammatica completa NON conta — lo scheletro chiede i verbi,
        non la morfologia di ogni parola; la bella copia sì, è il compito. */
     metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'sintagmi', 'brutta', 'bella'],
@@ -12555,7 +12655,7 @@ const PERCORSI = {
     nome: 'Passo dopo passo', icona: '🧭',
     scopo: 'La prima versione, con la voce del docente accanto a ogni tappa.',
     tempo: '≈8 min a frase le prime volte', minPerFrase: 8,
-    playlist: ['Pre-lettura', 'Frasi', 'Verbi', 'Connettivi', 'Sintassi', 'Sintagmi', 'Grammatica', 'Brutta', 'Bella copia'],
+    playlist: ['prelettura', 'frasi', 'verbi', 'connettivi', 'sintassi', 'sintagmi', 'grammatica', 'brutta', 'bella'],
     /* Le nove tappe passano anche dalla grammatica: qui conta. */
     metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'sintagmi', 'grammatica', 'brutta', 'bella'],
     preset: { metodo: 'strati', vista: 'frase', mode: 'guided' },
@@ -12568,7 +12668,7 @@ const PERCORSI = {
     nome: 'Simulazione di compito', icona: '⏱',
     scopo: 'Allenati al ritmo della verifica, a casa: struttura e resa, senza la morfologia completa.',
     tempo: '≈2-3 min a frase', minPerFrase: 2.5,
-    playlist: ['Analisi automatica', 'Verbi', 'Proposizioni', 'Ordo e brutta', 'Bella copia'],
+    playlist: ['autoanalisi', 'verbi', 'proposizioni', 'ordo', 'bella'],
     /* Sotto verifica non si fa la morfologia: struttura e resa. */
     metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'brutta', 'bella'],
     preset: { metodo: 'strati', vista: 'intero', mode: 'free' },
@@ -12578,7 +12678,7 @@ const PERCORSI = {
     nome: 'Ripasso lampo', icona: '⚡',
     scopo: 'Rivedere la struttura di una versione, senza tradurla.',
     tempo: '10-15 min in tutto', minPerFrase: 1,
-    playlist: ['Verbi', 'Proposizioni', 'Stemma a barre'],
+    playlist: ['verbi', 'proposizioni', 'stemma'],
     /* Un ripasso e' compiuto SENZA una riga di traduzione: e' il suo scopo. */
     metro: ['testo', 'frasi', 'verbi', 'proposizioni'],
     preset: { metodo: 'valenziale', vista: 'intero', mode: 'free' },
@@ -28332,8 +28432,8 @@ function avvioPasso3() {
     const consigliato = _percorsoDaUrl === k;
     const suggerito = !consigliato && primaVolta && k === 'passo-passo';
     const stima = stimaPercorso(k, n);
-    const nastro = sc.playlist.map(lab =>
-      `<span class="apc-nodo"><span class="apc-pallino" aria-hidden="true"></span>${escapeHtml(lab)}</span>`
+    const nastro = sc.playlist.map(t =>
+      `<span class="apc-nodo"><span class="apc-pallino" aria-hidden="true"></span>${escapeHtml(etichettaTappa(t))}</span>`
     ).join('<span class="apc-filo" aria-hidden="true"></span>');
     return `
       <button class="avvio-modo apc ${sel ? 'sel' : ''}" onclick="avvioCampo('percorso','${k}'); renderAll();"
@@ -28424,9 +28524,9 @@ function avvioPasso4() {
     : 'Il testo è pronto. Si parte dividendolo in frasi: da lì si costruisce l\'ossatura del periodo.';
   const n = avvioFrasi();
   const stima = stimaPercorso(avvio.percorso, n);
-  const nodi = tappe.map((lab, i) => {
+  const nodi = tappe.map((t, i) => {
     const cls = i === 0 ? 'ora' : '';
-    return `<span class="nastro-nodo statico ${cls}"><span class="nastro-cerchio">${i + 1}</span>${escapeHtml(lab)}</span>`;
+    return `<span class="nastro-nodo statico ${cls}"><span class="nastro-cerchio">${i + 1}</span>${escapeHtml(etichettaTappa(t))}</span>`;
   }).join('<span class="nastro-filo"></span>');
   return `<div class="avvio-corpo soglia">
       <div class="soglia-k">Tutto pronto</div>
@@ -28652,19 +28752,31 @@ function renderStep3HtmlAttuale() {
    Fase 3 · Periferia: auto-fill via dizionario + rifinitura manuale residua
    ════════════════════════════════════════════════════════════════════════════ */
 
-function getScheletroStep() {
-  return state.scheletroStep || 1;
+/* Il cursore dello scheletro è una CHIAVE, non un numero: con playlist di
+   lunghezza e ordine diversi un indice non vuol dire niente da un percorso
+   all'altro (e il cambio di percorso lo sposterebbe di soppiatto su un'altra
+   fase). Il numero resta scritto accanto, per i lettori che lo conoscono. */
+function getScheletroTappa() {
+  const lista = tappeScheletroDi(state);
+  if (state.scheletroTappa && lista.indexOf(state.scheletroTappa) >= 0) return state.scheletroTappa;
+  /* Compatibilità: prima era un numero sulle sette fasi canoniche. */
+  const n = Number(state.scheletroStep);
+  if (n >= 1) {
+    const vecchia = SCHELETRO_CANONICO[Math.min(n, SCHELETRO_CANONICO.length) - 1];
+    if (lista.indexOf(vecchia) >= 0) return vecchia;
+  }
+  return lista[0];
 }
 
-function setScheletroStep(step) {
-  state.scheletroStep = Math.max(1, Math.min(7, step));
-  // Entrando nella fase Traduzione, semina l'ordo verborum di ogni frase ancora
-  // vuota con i suoi sintagmi (logica) e verbi, già riordinati in SVO italiano.
-  if (state.scheletroStep === 7) {
-    (state.sentences || []).forEach(s => {
-      if (!Array.isArray(s.ordoVerborum) || s.ordoVerborum.length === 0) scheletroSeedOrdo(s);
-    });
-  }
+function setScheletroTappa(chiave) {
+  const lista = tappeScheletroDi(state);
+  if (lista.indexOf(chiave) < 0) chiave = lista[0];
+  state.scheletroTappa = chiave;
+  state.scheletroStep = lista.indexOf(chiave) + 1;   // resta leggibile a chi conosce il numero
+  /* Ciò che accade ENTRANDO nella tappa lo dichiara la tappa: il seed dell'ordo
+     era appeso al numero 7 e sarebbe rimasto appeso lì per ogni percorso. */
+  const t = schedaTappa(chiave);
+  if (t && typeof t.entrando === 'function') t.entrando();
   persistCurrent();
   renderEditor();
   // Su mobile lo stepper è una riga scrollabile: porta la fase attiva in vista.
@@ -28679,44 +28791,46 @@ function setScheletroStep(step) {
 function renderStep3HtmlScheletro() {
   const sentences = state.sentences || [];
   const lang = state.meta.lingua;
-  const step = getScheletroStep();
-  const STEPS = [
-    { num: 1, icon: '🎯', label: 'Verbi',        hint: 'Individua TUTTE le forme verbali del brano e distingui modo finito / non finito. I verbi finiti sono le àncore di ogni proposizione.' },
-    { num: 2, icon: '✂️', label: 'Proposizioni', hint: 'Spezza il periodo nelle proposizioni interne (per congiunzione o asindeto) e completa le corrispondenze sintattiche (ruolo · tipo · connettivo · dipendenza).' },
-    { num: 3, icon: '🟦', label: 'Soggetto',     hint: 'Individua il soggetto e il suo gruppo (attributi, apposizioni, specificazioni). Il menù è isolato a questa fase.' },
-    { num: 4, icon: '🟧', label: 'Oggetto',      hint: 'Individua il complemento oggetto e il suo gruppo. Il menù è isolato a questa fase.' },
-    { num: 5, icon: '🔗', label: 'Prepos.',      hint: 'Individua i complementi RETTI DA PREPOSIZIONE (accusativo e ablativo). Il menù si organizza in base alla preposizione che regge il blocco selezionato.' },
-    { num: 6, icon: '🟫', label: 'Altri compl.', hint: 'Individua gli altri complementi a caso semplice, SENZA preposizione (genitivo, dativo e ablativo: mezzo, modo, causa, tempo, limitazione…). Il menù elenca solo questi.' },
-    { num: 7, icon: '✍️', label: 'Traduzione',   hint: 'Riprendi i sintagmi e i verbi individuati e riordinali nell\'ordo verborum SVO italiano (soggetto · verbo · oggetto · complementi); scrivi la resa letterale (brutta) di ciascuno e portala nella sezione Traduzione.' },
-  ];
+  /* Le fasi non sono più scritte qui: sono la playlist del percorso, filtrata
+     per le tappe che si svolgono nello scheletro. Un percorso più corto ha uno
+     stepper più corto, e nessuna riga di questo renderer lo sa. */
+  const chiavi = tappeScheletroDi(state);
+  const corrente = getScheletroTappa();
+  const i = Math.max(0, chiavi.indexOf(corrente));
+  const tappa = schedaTappa(corrente) || schedaTappa(SCHELETRO_CANONICO[0]);
+  const ultima = i === chiavi.length - 1;
 
-  /* Mini-stepper */
-  const stepperHtml = `<div class="scheletro-stepper">${STEPS.map(s => {
-    const cls = s.num === step ? 'active' : (s.num < step ? 'done' : '');
-    return `<button class="scheletro-step ${cls}" onclick="setScheletroStep(${s.num})">
-      <span class="scheletro-step-num">${s.icon}</span>
-      <span class="scheletro-step-label">${escapeHtml(s.label)}</span>
+  const stepperHtml = `<div class="scheletro-stepper">${chiavi.map((k, j) => {
+    const t = schedaTappa(k) || {};
+    const cls = j === i ? 'active' : (j < i ? 'done' : '');
+    return `<button class="scheletro-step ${cls}" onclick="setScheletroTappa('${k}')"
+      ${j === i ? 'aria-current="step"' : ''}
+      aria-label="Fase ${j + 1} di ${chiavi.length}: ${escapeHtml(t.label || k)}">
+      <span class="scheletro-step-num">${t.icona || ''}</span>
+      <span class="scheletro-step-label">${escapeHtml(t.label || k)}</span>
     </button>`;
   }).join('<span class="scheletro-step-sep">→</span>')}</div>`;
 
-  let bodyHtml;
-  if (step === 1) bodyHtml = renderScheletroVerbi(sentences, lang);
-  else if (step === 2) bodyHtml = renderScheletroProposizioni(sentences, lang);
-  else if (step === 3) bodyHtml = renderScheletroLogic(sentences, lang, 'soggetto');
-  else if (step === 4) bodyHtml = renderScheletroLogic(sentences, lang, 'oggetto');
-  else if (step === 5) bodyHtml = renderScheletroLogic(sentences, lang, 'preposizionali');
-  else if (step === 6) bodyHtml = renderScheletroLogic(sentences, lang, 'altri');
-  else bodyHtml = renderScheletroTraduzione(sentences, lang);
+  const bodyHtml = (tappa && typeof tappa.corpo === 'function')
+    ? tappa.corpo(sentences, lang)
+    : '<div class="entry-empty">Questa tappa non è ancora costruita.</div>';
+
+  /* L'azione terminale la DICHIARA l'ultima tappa. Se non la dichiara, la
+     conclusione onesta è passare alla Traduzione: non si inventa un gesto. */
+  const term = (tappa && tappa.terminale)
+    || { etichetta: '✓ Vai alla scheda E · Traduzione →', azione: 'goToStep(5)' };
 
   const navButtons = `<div class="scheletro-nav">
-    ${step > 1 ? `<button class="btn btn-ghost btn-sm" onclick="setScheletroStep(${step - 1})">← Fase precedente</button>` : '<span></span>'}
-    ${step < 7 ? `<button class="btn btn-primary btn-sm" onclick="setScheletroStep(${step + 1})">Fase successiva (${escapeHtml(STEPS[step].label)}) →</button>` : '<button class="btn btn-primary btn-sm" onclick="scheletroExportToTranslation()">✓ Esporta nella sezione Traduzione →</button>'}
+    ${i > 0 ? `<button class="btn btn-ghost btn-sm" onclick="setScheletroTappa('${chiavi[i - 1]}')">← Fase precedente</button>` : '<span></span>'}
+    ${ultima
+      ? `<button class="btn btn-primary btn-sm" onclick="${term.azione}">${escapeHtml(term.etichetta)}</button>`
+      : `<button class="btn btn-primary btn-sm" onclick="setScheletroTappa('${chiavi[i + 1]}')">Fase successiva (${escapeHtml(etichettaTappa(chiavi[i + 1]))}) →</button>`}
   </div>`;
 
   // La barra delle fasi va in CIMA al contenuto (subito sotto l'header), resta
   // fissa (sticky) e — vivendo dentro l'editor — non scavalca il menù di sinistra.
   return `<div class="scheletro-bar">${stepperHtml}</div>`
-    + sectionHeader('C', 'Analisi · approccio Scheletro', STEPS[step - 1].hint)
+    + sectionHeader('C', 'Analisi · approccio Scheletro', (tappa && tappa.hint) || '')
     + renderApproachBanner()
     + bodyHtml
     + navButtons;
