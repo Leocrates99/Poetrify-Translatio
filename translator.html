@@ -4213,6 +4213,25 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: var(--font-c
 /* ── Rientro selettivo ─────────────────────────────────────────────────── */
 .schel-rientro { float: right; margin-top: -4px; }
 
+/* ── La pill «Percorso» · il controllo in corsa ─────────────────────────── */
+.pill-percorso {
+  display: inline-flex; align-items: baseline; gap: 8px;
+  margin: 0 0 14px; padding: 5px 14px 6px;
+  background: var(--paper); border: 1px solid var(--rule);
+  border-radius: 999px; cursor: pointer;
+  font-family: var(--font-ui); line-height: 1.3;
+  transition: border-color var(--transition-base), background var(--transition-base);
+}
+.pill-percorso:hover { border-color: var(--lang-accent); background: var(--ivory); }
+.pill-k {
+  font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--sepia);
+}
+.pill-v { font-size: 13px; color: var(--ink); }
+.pill-percorso.adattata .pill-v { font-style: italic; color: var(--sepia); }
+.pill-percorso.vuota .pill-v { font-style: italic; color: var(--sepia); }
+@media (pointer: coarse) { .pill-percorso { min-height: 44px; } .app .pill-k { font-size: 11px; } }
+
 /* ── Lo stato terzo nelle superfici di lavoro ──────────────────────────── */
 .revisione-banner {
   display: flex; align-items: center; flex-wrap: wrap; gap: 8px 12px;
@@ -12018,11 +12037,22 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 <!-- MODALE APPROCCIO TRADUTTIVO — scelta del flusso di lavoro principale -->
 <div class="modal-backdrop" id="modal-approach">
   <div class="modal" style="max-width: 1080px;">
-    <h3 class="modal-title">🎯 Scegli l'approccio traduttivo</h3>
+    <h3 class="modal-title">🎯 Scegli il modo di lavorare</h3>
     <p class="modal-subtitle">Tre strategie diverse di fronte allo stesso brano: ognuna ha pro e contro. Puoi cambiare in qualsiasi momento (tasto <kbd>A</kbd>, o dalla palette dei comandi <kbd>Ctrl+K</kbd>).</p>
     <div class="approach-grid" id="approach-grid"></div>
     <div class="modal-actions">
       <button class="btn btn-ghost" onclick="closeApproachModal()">Annulla / mantieni selezione corrente</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="modal-percorsi">
+  <div class="modal" style="max-width: 780px;">
+    <h3 class="modal-title">Perché stai traducendo questo brano?</h3>
+    <p class="modal-subtitle">Il percorso decide le tappe, il ritmo e che cosa vuol dire «finito». Cambiarlo non cancella niente: il lavoro fatto resta.</p>
+    <div class="avvio-modi" id="pannello-percorsi-corpo"></div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="chiudiPannelloPercorsi()">Resto dove sono</button>
     </div>
   </div>
 </div>
@@ -12069,7 +12099,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 
     <h4 class="shortcuts-section-title">Apertura modali e selettori</h4>
     <div class="shortcuts-grid">
-      <div><kbd>a</kbd><span>Selettore <strong>a</strong>pproccio traduttivo (integrale / attuale / frase-per-frase)</span></div>
+      <div><kbd>a</kbd><span>Scheda dei modi di lavorare (brano intero · frase per frase · scheletro)</span></div>
       <div><kbd>?</kbd> / <kbd>Shift</kbd>+<kbd>/</kbd><span>Questa finestra delle scorciatoie</span></div>
       <div><kbd>Alt</kbd>+<kbd>g</kbd><span>Tastiera greca antica (per inserimento testo)</span></div>
       <div><kbd>Esc</kbd><span>Annulla selezione corrente / chiudi modale aperto</span></div>
@@ -29125,7 +29155,7 @@ function renderStep3HtmlScheletro() {
   // La barra delle fasi va in CIMA al contenuto (subito sotto l'header), resta
   // fissa (sticky) e — vivendo dentro l'editor — non scavalca il menù di sinistra.
   return `<div class="scheletro-bar">${stepperHtml}</div>`
-    + sectionHeader('C', 'Analisi · approccio Scheletro', (tappa && tappa.hint) || '')
+    + sectionHeader('C', 'Analisi · lo scheletro del periodo', (tappa && tappa.hint) || '')
     + renderApproachBanner()
     + bodyHtml
     + navButtons;
@@ -31263,23 +31293,90 @@ function fpfAdvanceSentence() {
 }
 
 /* Banner di servizio con info sull'approccio attivo.
-   Il cambio approccio è dedicato al segmented control nella quick-bar (topbar)
-   per evitare ridondanza. Lo shortcut "a" e openApproachModal restano vivi
-   per chi vuole la scheda descrittiva pro/contro di ciascun approccio. */
-function renderApproachBanner() {
-  const a = getApproach();
-  const d = APPROACH_DESCRIPTORS[a] || APPROACH_DESCRIPTORS.attuale;
-  return `<div class="approach-banner">
-    <span class="approach-banner-label">${d.icon} <strong>Approccio:</strong> ${escapeHtml(d.title)}</span>
-    <span class="approach-banner-hint" style="font-size:11px;color:var(--sepia);font-style:italic;">cambi dai Controlli rapidi (menù laterale · Impostazioni) · tasto <kbd>a</kbd> per la scheda descrittiva</span>
-  </div>`;
+   ESTINTO (punto 10). Diceva «Approccio: Integrale» — una parola che non è
+   dello studente e un asse che non è più il perno del lavoro. Lo sostituisce
+   la PILL «Percorso», che sta nella sede unica e dice lo scopo, non l'asse.
+   Resta come guscio vuoto per un solo commit: la funzione e le sue nove
+   chiamate cadono nel commit di sole delezioni (docs/WHITELIST-DELEZIONI.md),
+   dove si cancella e basta. */
+function renderApproachBanner() { return ''; }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   LA PILL «PERCORSO» · il controllo in corsa (punto 10)
+   ────────────────────────────────────────────────────────────────────────────
+   Prima lo stato del lavoro si leggeva in un banner che diceva «Approccio:
+   Integrale» — una parola che non è dello studente e un asse che non è più il
+   perno. La pill dice il PERCORSO, cioè lo scopo, e cliccandola si cambia.
+   Vive nella stessa sede del banner di revisione: il punto di assemblaggio,
+   l'unico che vede tutte le superfici di lavoro.
+   ════════════════════════════════════════════════════════════════════════════ */
+function renderPillPercorso() {
+  const sc = schedaPercorso(state.percorso);
+  const testo = sc ? (sc.icona + ' ' + sc.nome) : '· scegli un percorso';
+  const adattato = sc && state.percorsoAdattato;
+  return '<button class="pill-percorso' + (adattato ? ' adattata' : '') + (sc ? '' : ' vuota') + '"'
+    + ' onclick="apriPannelloPercorsi()"'
+    + ' title="' + escapeHtml(sc ? (sc.scopo + ' · ' + sc.tempo) : 'Nessun percorso dichiarato per questo brano') + '">'
+    + '<span class="pill-k">Percorso</span>'
+    + '<span class="pill-v">' + escapeHtml(testo) + (adattato ? ' · adattato' : '') + '</span>'
+    + '</button>';
+}
+
+/* Il pannello: le stesse card dell'avvio, servite in corsa. Mostra i percorsi
+   che si possono COMINCIARE più, se il brano ne ha uno d'altro tipo (il
+   Ripasso, che si prende dall'Archivio), anche quello — perché un percorso in
+   corso deve sempre potersi rileggere e lasciare. */
+function apriPannelloPercorsi() {
+  const box = document.getElementById('pannello-percorsi-corpo');
+  const modale = document.getElementById('modal-percorsi');
+  if (!box || !modale) return;
+  const chiavi = percorsiDaAvvio().slice();
+  if (state.percorso && chiavi.indexOf(state.percorso) < 0) chiavi.unshift(state.percorso);
+  const n = (state.sentences || []).length;
+  box.innerHTML = chiavi.map(function (k) {
+    const sc = PERCORSI[k];
+    if (!sc) return '';
+    const attivo = k === state.percorso;
+    const stima = stimaPercorso(k, n);
+    const nastro = (sc.playlist || []).map(function (t) {
+      return '<span class="apc-nodo"><span class="apc-pallino" aria-hidden="true"></span>'
+        + escapeHtml(etichettaTappa(t)) + '</span>';
+    }).join('<span class="apc-filo" aria-hidden="true"></span>');
+    return '<button class="avvio-modo apc' + (attivo ? ' sel' : '') + '"'
+      + ' onclick="scegliPercorsoDaPannello(&#39;' + k + '&#39;)"'
+      + ' aria-pressed="' + (attivo ? 'true' : 'false') + '">'
+      + (attivo ? '<span class="apc-flag">è quello in corso</span>' : '')
+      + '<span class="am-t">' + sc.icona + ' ' + escapeHtml(sc.nome) + '</span>'
+      + '<span class="am-d">' + escapeHtml(sc.scopo) + '</span>'
+      + '<span class="apc-tempo">' + escapeHtml(sc.tempo)
+        + (stima ? ' · su questo brano: <strong>' + escapeHtml(stima) + '</strong>' : '') + '</span>'
+      + '<span class="am-piano">'
+        + '<span class="am-piano-k">Il percorso · ' + (sc.playlist || []).length + ' tappe</span>'
+        + '<span class="apc-nastro">' + nastro + '</span>'
+      + '</span>'
+      + '</button>';
+  }).join('');
+  modale.classList.add('open');
+}
+
+function chiudiPannelloPercorsi() {
+  const m = document.getElementById('modal-percorsi');
+  if (m) m.classList.remove('open');
+}
+
+/* Scegliere dal pannello passa dal rito completo del punto 6: se il cambio
+   mette in discussione del lavoro a valle, la domanda compare. */
+function scegliPercorsoDaPannello(chiave) {
+  if (chiave === state.percorso && !state.percorsoAdattato) { chiudiPannelloPercorsi(); return; }
+  chiudiPannelloPercorsi();
+  cambiaPercorso(chiave);
 }
 
 /* Lo stato terzo dove si lavora. Vive dentro il banner di contesto perché
    quello è condiviso da tutte le superfici: una sola sede, nessuna scheda
    dimenticata. Non compare mai a vuoto — solo se c'è qualcosa da dire. */
 function renderRevisioneBanner() {
-  let out = '';
+  let out = renderPillPercorso();
   const mods = moduliDaRivedere(state);
   if (mods.length) {
     const r = (state.meta && state.meta.daRivedere) || {};
@@ -43149,7 +43246,7 @@ function buildCommandPaletteIndex() {
   add('Apri progetti…',                 'Strumenti', () => openProjectList(),       '', '📂');
   add('Nuovo progetto',                 'Strumenti', () => newProject(),            '', '📄');
   add('Salva il progetto',              'Strumenti', () => saveProject(),           '', '💾');
-  add('Apri scheda Approccio (modal)',  'Strumenti', () => openApproachModal(),     'a', 'ℹ');
+  add('Scheda dei modi di lavorare',    'Strumenti', () => openApproachModal(),     'a', 'ℹ');
   add('Mostra scorciatoie tastiera',    'Strumenti', () => openShortcutsModal(),    '?', '⌨');
   if (ONBOARDING_ENABLED) add('Tour onboarding · rivedi i passi', 'Strumenti', () => startOnboarding(true), '', '🎓');
   add('Toggle dark mode (tema scuro)',  'Strumenti', () => toggleDarkMode(),        '', '🌗');
