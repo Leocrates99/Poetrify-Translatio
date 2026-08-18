@@ -11692,6 +11692,10 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   .app .periodale-bridge-label, .app .periodale-token-hint, .app .tree2-level-label,
   .app .wizard-eyebrow, .app .wizard-eyebrow strong, .app .wizard-phase-tag,
   .app .wizard-sentence-tab, .app .wizard-sentence-tab .done-mark,
+  /* Il CAMMINO d'ingresso: Panoramica e i tre passi dell'avvio. E' la prima
+     superficie che si incontra — qui una targhetta illeggibile costa di piu'. */
+  .app .avvio-campi label, .app .home-origins label,
+  .app .am-piano-k, .app .apc-nodo, .app .apc-flag,
   .app .tree2-node-ruolo, .app .schel-trad-brutta label,
   .app .field-block-label { font-size: 11px; }
 }
@@ -26782,11 +26786,13 @@ function renderSidebarTabs() {
    banco. Chi annulla non lascia brani fantasma in archivio. */
 let avvio = null;
 
-function startAvvio(lang) {
+function startAvvio(lang, origine) {
   const l = (lang === 'greco') ? 'greco' : 'latino';
   try { persistCurrent(); } catch (e) {}     // il lavoro in corso resta al sicuro
+  /* `origine` arriva da chi ha gia' scelto in Panoramica: la sua scelta non si
+     fa ridire. Senza, il passo 1 la chiede come sempre. */
   avvio = {
-    passo: 1, lingua: l, origine: null,
+    passo: 1, lingua: l, origine: (origine === 'autore' || origine === 'manuale') ? origine : null,
     autore: '', opera: '', loc: '',
     manualeId: '', versione: '', pagina: '',
     testo: '', percorso: percorsoProposto()
@@ -26917,7 +26923,15 @@ function avvioNastro() {
 function renderAvvioHtml() {
   if (!avvio) return '';
   const lin = avvio.lingua === 'greco' ? 'greco' : 'latino';
-  const testa = sectionHeader('◆', `Nuovo brano · ${lin}`, 'Tre passi e si comincia: da quale libro viene, il testo, come lavorarci.');
+  /* La testata dice DOVE SEI: prima ripeteva sempre la stessa frase su tutti e
+     quattro gli schermi, e il compito di orientare restava al solo nastro. */
+  const SCOPI = {
+    1: 'Passo 1 di 3 · da quale libro viene, per poterla ritrovare col suo nome',
+    2: 'Passo 2 di 3 · il testo: incollalo, oppure fotografa la pagina',
+    3: 'Passo 3 di 3 · perché la traduci: da qui dipendono le tappe e il ritmo',
+    4: 'Tutto pronto · uno sguardo al piano, poi si entra',
+  };
+  const testa = sectionHeader('◆', `Nuovo brano · ${lin}`, SCOPI[avvio.passo] || SCOPI[1]);
   if (avvio.passo === 2) return testa + avvioNastro() + avvioPasso2();
   if (avvio.passo === 3) return testa + avvioNastro() + avvioPasso3();
   if (avvio.passo === 4) return testa + avvioNastro() + avvioPasso4();
@@ -29919,15 +29933,15 @@ function renderPanoramicaHtml() {
     + `<div class="home-grid">
         <section class="home-panel home-start">
           <h3 class="home-panel-title">Comincia un brano</h3>
-          <p class="home-panel-sub">Che versione devi tradurre?</p>
+          <p class="home-panel-sub">Da dove prendi il testo?</p>
           <div class="home-origins">
             <button class="home-origin" onclick="openCorpusForBranch('${branchLang}')">
-              <span class="ho-t">Versione d'autore</span>
-              <span class="ho-d">La cerchi nel Corpus e arriva già pulita, con autore e opera compilati.</span>
+              <span class="ho-t">Prendila dal Corpus</span>
+              <span class="ho-d">Il canone antico per intero: scegli l'opera e il passo, e arriva già pulito, con autore e locus compilati.</span>
             </button>
-            <button class="home-origin" onclick="newProjectInLang('${branchLang}')">
-              <span class="ho-t">Dal manuale</span>
-              <span class="ho-d">La versione assegnata a scuola: la incolli o la fotografi.</span>
+            <button class="home-origin" onclick="newProjectInLang('${branchLang}', 'manuale')">
+              <span class="ho-t">Incollala o fotografala</span>
+              <span class="ho-d">La versione che hai sul libro o sul foglio: la incolli, oppure fotografi la pagina.</span>
             </button>
           </div>
         </section>
@@ -37907,8 +37921,8 @@ function importTavoloDalCorpus(lang) {
 }
 
 /* Avvia un nuovo brano nella lingua indicata (dal branch d'archivio). */
-function newProjectInLang(lang) {
-  startAvvio(lang);
+function newProjectInLang(lang, origine) {
+  startAvvio(lang, origine);
 }
 
 function confirmSetup() {
