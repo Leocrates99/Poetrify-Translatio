@@ -12794,12 +12794,13 @@ const TAPPE = {
     condizione: function () { return ancoreDelBrano().length > 0; },
     corpo: function (ss, lang) { return renderTappaAncore(ss, lang); },
     globale: true,
+    /* Agganciare non e' obbligatorio: un participiale puo' non reggere nulla.
+       Per questo la tappa non chiede che TUTTE le ancore abbiano figli — ma
+       nemmeno si accontenta che ne basti una (era `some`: una sola decideva
+       per tutte). Chiede che ogni ancora sia DECISA: o ha figli, o lo studente
+       ha dichiarato che non ne aggancia. */
     compiuta: function () {
-      const a = ancoreDelBrano();
-      if (!a.length) return true;
-      return a.some(function (x) {
-        return (x.frase.logic || []).some(function (y) { return y && y.padre === x.voce.id; });
-      });
+      return ancoreDelBrano().every(function (x) { return ancoraDecisa(x); });
     },
   },
   attributivi: {
@@ -13266,6 +13267,24 @@ function participiDelBrano() {
   return out;
 }
 
+/** Un'àncora è decisa quando regge qualcosa, o quando si è dichiarato che no. */
+function ancoraDecisa(a) {
+  if (!a || !a.voce) return false;
+  if (a.voce.senzaAgganci) return true;
+  return (a.frase.logic || []).some(function (y) { return y && y.padre === a.voce.id; });
+}
+
+/** Dichiara che un sintagma participiale non aggancia nulla (o ritratta). */
+function dichiaraSenzaAgganci(sentenceId, entryId) {
+  const f = (state.sentences || []).find(function (x) { return x.id === sentenceId; });
+  if (!f) return;
+  const e = (f.logic || []).find(function (x) { return x.id === entryId; });
+  if (!e) return;
+  if (e.senzaAgganci) delete e.senzaAgganci; else e.senzaAgganci = true;
+  persistCurrent();
+  renderAll();
+}
+
 /** I sintagmi che un participio a valore proprio può reggere (le àncore ⚓). */
 function ancoreDelBrano() {
   const out = [];
@@ -13277,10 +13296,21 @@ function ancoreDelBrano() {
   return out;
 }
 
-/** I complementi INCASTONATI in un altro sintagma: candidati alla posizione ⌖.
-    Solo l'incastonatura vera — le parole dentro lo span di un altro sintagma —
-    non la semplice adiacenza, che il suggeritore accetta ma non prova niente.
-    E il predicato restituisce `{capo, incastonato}`: il capo sta dentro. */
+/* I ruoli per cui l'ADIACENZA vale come indizio. E' la dottrina gia' fissata
+   dallo stemma a barre: l'incastonatura vale per qualunque funzione, la
+   vicinanza soltanto per i tre ruoli che stanno dentro un gruppo nominale.
+   Senza questo filtro la tappa proporrebbe anche il soggetto accanto al suo
+   verbo, che non e' in posizione attributiva. */
+const RUOLI_ADIACENZA = /attributo|apposizione|specificazione/i;
+
+/* I ruoli del NUCLEO non stanno mai in posizione attributiva: se un soggetto
+   finisce geometricamente dentro un iperbato (`Magnam Caesar victoriam`), la
+   geometria dice il vero e la sintassi no. Fuori dai candidati. */
+const RUOLI_NUCLEO = /^(soggetto|complemento oggetto|predicato|parte nominale|copula)/i;
+
+/** I candidati alla posizione ⌖, coi due indizi tenuti distinti:
+    l'INCASTONATURA (le parole dentro lo span di un altro sintagma) vale per
+    qualunque funzione; la VICINANZA solo per i ruoli del gruppo nominale. */
 function incastonatiDelBrano() {
   const out = [];
   (state.sentences || []).forEach(function (f, i) {
@@ -13288,7 +13318,10 @@ function incastonatiDelBrano() {
       if (!e || e.attribuitoA) return;                 // già deciso dallo studente
       let sugg = null;
       try { sugg = suggerisciCapoAttributivo(f, e); } catch (err) { sugg = null; }
-      if (sugg && sugg.incastonato && sugg.capo) out.push({ frase: f, idx: i, voce: e, capo: sugg.capo });
+      if (!sugg || !sugg.capo) return;
+      if (RUOLI_NUCLEO.test(e.funzione || '')) return;
+      if (!sugg.incastonato && !RUOLI_ADIACENZA.test(e.funzione || '')) return;
+      out.push({ frase: f, idx: i, voce: e, capo: sugg.capo, incastonato: !!sugg.incastonato });
     });
   });
   return out;
@@ -13335,20 +13368,27 @@ function renderTappaAncore(sentences, lang) {
   const tutte = ancoreDelBrano();
   const righe = tutte.map(function (a) {
     const figli = (a.frase.logic || []).filter(function (x) { return x && x.padre === a.voce.id; });
-    return '<div class="autore-riga' + (figli.length ? ' decisa' : '') + '">'
+    const decisa = ancoraDecisa(a);
+    const stato = figli.length
+      ? (figli.length + ' agganciat' + (figli.length === 1 ? 'o' : 'i'))
+      : (a.voce.senzaAgganci ? 'non aggancia nulla' : 'da decidere');
+    return '<div class="autore-riga' + (decisa ? ' decisa' : '') + '">'
       + '<div class="autore-riga-capo">'
         + '<span class="autore-num">' + (a.idx + 1) + '</span>'
         + '<span class="autore-parola">⚓ ' + escapeHtml(a.voce.phrase || a.voce.funzione || '') + '</span>'
-        + '<span class="' + (figli.length ? 'autore-valore' : 'autore-aperto') + '">'
-          + (figli.length ? figli.length + ' agganciat' + (figli.length === 1 ? 'o' : 'i') : 'nessun aggancio')
-        + '</span>'
+        + '<span class="' + (decisa ? 'autore-valore' : 'autore-aperto') + '">' + stato + '</span>'
       + '</div>'
       + '<div class="autore-riga-testo ' + (lang === 'greco' ? 'greek' : '') + '">' + escapeHtml(a.frase.original || '') + '</div>'
       + '<button class="btn btn-ghost btn-sm" onclick="apriRientroLogico(&#39;' + a.frase.id + '&#39;)">⤴ Aggancia i sintagmi</button>'
+      + (figli.length ? '' : '<button class="btn btn-ghost btn-sm" onclick="dichiaraSenzaAgganci(&#39;'
+          + a.frase.id + '&#39;, &#39;' + a.voce.id + '&#39;)">'
+          + (a.voce.senzaAgganci ? '↺ Ci ripenso' : '∅ Non aggancia nulla') + '</button>')
       + '</div>';
   }).join('');
   return '<div class="subsection">'
-    + _autoreCartiglio(['Nessun sintagma participiale proprio', 'sintagma participiale proprio', 'sintagmi participiali propri'], 'Un participio predicativo, congiunto o assoluto regge un sintagma suo, e può <strong>agganciarne altri</strong>. Qui si dichiara che cosa dipende da che cosa: nello stemma i figli usciranno rientrati sotto la loro àncora.', tutte.length)
+    + _autoreCartiglio(['Nessun sintagma participiale proprio', 'sintagma participiale proprio', 'sintagmi participiali propri'],
+        'Un participio predicativo, congiunto o assoluto regge un sintagma suo, e può <strong>agganciarne altri</strong>: nello stemma i figli escono rientrati sotto la loro àncora. '
+        + 'Agganciare non è obbligatorio — ma <strong>decidere sì</strong>: se un participiale non regge nulla, dillo, e la tappa si chiude.', tutte.length)
     + '<div class="autore-elenco">' + righe + '</div></div>';
 }
 
@@ -13359,14 +13399,18 @@ function renderTappaAttributivi(sentences, lang) {
       + '<div class="autore-riga-capo">'
         + '<span class="autore-num">' + (a.idx + 1) + '</span>'
         + '<span class="autore-parola">⌖ ' + escapeHtml(a.voce.phrase || a.voce.funzione || '') + '</span>'
-        + '<span class="autore-aperto">dentro «' + escapeHtml((a.capo.phrase || a.capo.funzione || '')) + '»</span>'
+        + '<span class="autore-aperto">' + (a.incastonato ? 'dentro' : 'accanto a') + ' «'
+          + escapeHtml((a.capo.phrase || a.capo.funzione || '')) + '»</span>'
       + '</div>'
       + '<div class="autore-riga-testo ' + (lang === 'greco' ? 'greek' : '') + '">' + escapeHtml(a.frase.original || '') + '</div>'
       + '<button class="btn btn-ghost btn-sm" onclick="apriRientroLogico(&#39;' + a.frase.id + '&#39;)">⤴ Decidi la posizione</button>'
       + '</div>';
   }).join('');
   return '<div class="subsection">'
-    + _autoreCartiglio(['Nessun complemento incastonato', 'complemento incastonato', 'complementi incastonati'], 'Le loro parole stanno DENTRO lo span di un altro sintagma: è l\'indizio della <strong>posizione attributiva</strong>. Il suggerimento è solo un suggerimento — la classificazione resta tua, e nello stemma il legame esplicito ⌖ vince sull\'adiacenza.', tutti.length)
+    + _autoreCartiglio(['Nessun candidato alla posizione attributiva', 'candidato alla posizione attributiva', 'candidati alla posizione attributiva'],
+        'Due indizi diversi. <strong>Dentro</strong>: le parole stanno nello span di un altro sintagma — vale per qualunque funzione. '
+        + '<strong>Accanto a</strong>: la parola confina con un altro sintagma — vale solo per attributo, apposizione e specificazione, i ruoli del gruppo nominale. '
+        + 'Restano suggerimenti: la classificazione è tua, e nello stemma il legame esplicito ⌖ vince sull\'euristica.', tutti.length)
     + '<div class="autore-elenco">' + righe + '</div></div>';
 }
 
@@ -38162,8 +38206,19 @@ function suggerisciCapoAttributivo(sentence, entry) {
     if (!e || e.id === entry.id || !(e.tokenIndices || []).length) return;
     const eMin = Math.min.apply(null, e.tokenIndices), eMax = Math.max.apply(null, e.tokenIndices);
     let p = 0;
-    if (mMin > eMin && mMax < eMax) p = 2;                              // incastonato nello span
-    else if (mMin - eMax === 2 || eMin - mMax === 2) p = 1;             // parola adiacente
+    /* CONTENIMENTO, non interiorita' stretta: `magnam` dentro
+       `magnam victoriam` comincia allo stesso token, e con `mMin > eMin` non
+       veniva riconosciuto — l'aggettivo finiva proposto al vicino dall'altra
+       parte. Si chiede che il capo mi contenga e sia piu' esteso di me. */
+    if (eMin <= mMin && mMax <= eMax && (eMax - eMin) > (mMax - mMin)) p = 2;   // contenuto nello span
+    /* Gli indici di PAROLA sono consecutivi (passo 1, verificato con
+       `tokenizeSentence`): la condizione cercava `=== 2`, cioè «una parola in
+       mezzo», e chiamava «adiacente» proprio il caso che non lo è. Cosi' il ★
+       mancava il caso piu' comune del latino — `magnam victoriam`,
+       `virtus militum`. Ora vale l'adiacenza vera (1) e resta lo scarto di una
+       parola (2), che in latino e' l'iperbato breve, con punteggio minore. */
+    else if (mMin - eMax === 1 || eMin - mMax === 1) p = 1;             // parola adiacente
+    else if (mMin - eMax === 2 || eMin - mMax === 2) p = 0.5;           // una parola in mezzo
     if (!p) return;
     const d = Math.min(Math.abs(mMin - eMax), Math.abs(eMin - mMax));
     if (p > punteggio || (p === punteggio && d < distanza)) { migliore = e; punteggio = p; distanza = d; }

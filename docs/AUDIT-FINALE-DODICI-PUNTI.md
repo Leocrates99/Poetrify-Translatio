@@ -6,7 +6,8 @@
 > unico, playlist-driven, con un metro onesto, e nessuna promessa dell'audit è
 > rimasta scoperta».
 > **Verdetto: la tesi regge, con due eccezioni gravi — entrambe regressioni
-> introdotte dal lavoro stesso, entrambe riparate qui.**
+> introdotte dal lavoro stesso — e due difetti preesistenti emersi chiudendo le
+> osservazioni minori. Tutto riparato qui.**
 
 ## 1 · Il metodo dell'audit
 
@@ -93,26 +94,53 @@ regola nuova dà «Agganci», che è la tappa giusta.
 Rimosse. *(Restano 19 funzioni orfane, ma erano già tali prima dei dodici punti:
 non le tocco qui — sarebbero un lavoro d'igiene con la sua whitelist.)*
 
-### 🟡 R4 — La tappa ⌖ promette più di quanto il predicato dia
+### ✅ R4 — chiusa · e sotto c'era un difetto preesistente, non una promessa mal calibrata
 
-`suggerisciCapoAttributivo` riconosce l'incastonatura **stretta**
-(`mMin > eMin && mMax < eMax`). Il caso più comune in latino —
-`magnam victoriam`, l'attributo che comincia allo stesso token del suo capo —
-**non scatta**: mMin e eMin coincidono. La tappa vale solo per i casi «a
-cornice» (`in [magna] urbe`).
+L'osservazione iniziale era che la tappa ⌖ rendeva poco. Misurandola — e la
+misura è stata rifatta due volte, perché la prima usava indici di token
+inventati con una convenzione diversa da quella vera — è emerso altro.
 
-Il testo della tappa dice «le loro parole stanno DENTRO lo span di un altro
-sintagma», che è vero ma lascia sperare in un rendimento maggiore.
-**Non è un difetto del codice** (il predicato è preesistente e altrove è usato
-bene, con l'adiacenza come ripiego): è una **promessa da calibrare**. Lasciato
-come osservazione, non toccato.
+**Difetto 1 · l'adiacenza era sfasata di uno.** `suggerisciCapoAttributivo`
+cercava `mMin - eMax === 2` e commentava «parola adiacente». Ma gli indici di
+*parola* sono consecutivi (passo 1, verificato con `tokenizeSentence`): quella
+condizione descrive «una parola in mezzo», non l'adiacenza. Due parole
+adiacenti non davano alcun suggerimento; ne dava una separata da una parola.
+Preesistente, dal commit `2987735`.
 
-### 🟡 R5 — `ancore.compiuta` è indulgente
+**Difetto 2 · l'incastonatura era «strettamente interna».** Il test chiedeva
+`mMin > eMin`, quindi non riconosceva come capo il sintagma che *contiene* il
+complemento partendo dal suo stesso token. Conseguenza in una lingua a
+concordanza: **`magnam` veniva proposto come attributivo di `Caesar`** invece
+che di `victoriam` — il vicino dall'altra parte. Suggerire l'aggettivo al nome
+sbagliato non è un dettaglio in un'app che insegna la concordanza.
 
-Usa `some`: basta **un solo** aggancio dichiarato perché la tappa risulti
-compiuta, anche se altre àncore restano vuote. Difendibile (agganciare non è
-obbligatorio) ma incoerente con le altre tappe, che chiedono *tutte* le frasi.
-Lasciato come osservazione.
+**Chiuse entrambe.** L'adiacenza vale ora per distanza 1 (e resta lo scarto di
+2, l'iperbato breve, con punteggio minore); l'incastonatura diventa
+**contenimento** (il capo mi contiene e ha span maggiore).
+
+Sui quattro casi latini di prova, prima e dopo:
+
+| caso | prima | dopo |
+|---|---|---|
+| `magnam victoriam` (aggettivo adiacente) | proposto a **`Caesar`** ✗ | dentro `magnam victoriam` ✓ |
+| `virtus militum` (genitivo adiacente) | nessun suggerimento ✗ | accanto a `Virtus` ✓ |
+| `in [magna] urbe` (cornice) | dentro ✓ | dentro ✓ |
+| `Magnam Caesar victoriam` (iperbato) | il **soggetto** proposto come attributivo ✗ | escluso ✓ |
+
+La tappa distingue ora i due indizi nel testo («dentro» / «accanto a») e
+esclude i **ruoli-nucleo** (soggetto, oggetto, predicato), che in posizione
+attributiva non stanno mai: senza quel filtro, un soggetto incastrato in un
+iperbato risultava candidato — la geometria diceva il vero, la sintassi no.
+
+### ✅ R5 — chiusa · agganciare è facoltativo, decidere no
+
+`ancore.compiuta` usava `some`: un solo aggancio decideva per tutte. La via
+d'uscita non era essere più severi (`every` avrebbe preteso agganci che il
+testo può non avere), ma rendere la cosa **decidibile**: si aggiunge
+«∅ Non aggancia nulla» (con «↺ Ci ripenso» per ritrattare), e la tappa è
+compiuta quando **ogni àncora è stata decisa**, in un senso o nell'altro.
+Lo stato passa da «da decidere» a «non aggancia nulla», e il conto del nastro
+lo segue.
 
 ## 3 · Che cosa ha retto
 
