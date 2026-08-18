@@ -241,34 +241,28 @@ body[data-lang="greco"] {
 }
 
 /* ─── Applicazione dell'accento linguistico nei punti chiave ───────────── */
-/* 1. Tab dell'analisi (sub-tab grammar/logica/periodale) */
-body[data-lang="latino"] .analysis-tab.active {
-  background: var(--lang-accent);
-  color: var(--paper);
-  border-color: var(--lang-accent);
-}
-body[data-lang="latino"] .analysis-tab:hover { color: var(--lang-accent); }
+/* UNA FORMA SOLA, DUE COLORI.
+   Qui vivevano otto regole scritte per il SOLO latino, benche' il loro corpo
+   usasse gia' var(--lang-accent), che commuta da se'. Tre erano doppioni delle
+   regole base (.tab-letter/.tab-icon, .tab-progress.has-content,
+   .compact-tools .btn.active). Le altre davano al latino una forma che il greco
+   non aveva: il tab dell'analisi PIENO d'accento contro un tab bianco in
+   rilievo; la voce attiva del menu' marcata 3px di bordo PIU' 4px d'ombra
+   interna contro 3px soli; il bottone morbido con un hover pieno contro un
+   hover appena tinto. Due lingue, due disegni.
+   Ora la forma sta una volta sola nelle regole base — cerca
+   «.analysis-tab.active», «.tab-item.active», «.btn-brand-soft» — e il colore
+   lo mette --lang-accent: fra greco e latino resta l'unica differenza giusta.
+   Restano per lingua le due che una differenza VERA ce l'hanno: la pillola
+   della lingua (qui sotto) e la tastiera greca, che in latino non serve.
 
-/* 3. Menù di sinistra (latino): lettere, spunte di verifica e accento del tab
-   attivo in rosso pompeiano invece del blu. */
-body[data-lang="latino"] .tab-letter,
-body[data-lang="latino"] .tab-icon { color: var(--lang-accent); }
-body[data-lang="latino"] .tab-progress.has-content { background: var(--lang-accent); }
-body[data-lang="latino"] .tab-item.active {
-  box-shadow: inset 4px 0 0 var(--lang-accent);
-  border-left-color: var(--lang-accent);
-}
-
-/* 4. Banner della frase corrente */
-body[data-lang="latino"] .current-sentence-banner,
-  border-left-color: var(--lang-accent);
-}
-
-/* 5. Section headers (lettera grande A·B·C·…): rosso pompeiano, SENZA sfondo */
-body[data-lang="latino"] .section-letter {
-  color: var(--lang-accent);
-  background: none;
-}
+   In mezzo c'erano anche DUE BLOCCHI MAL FORMATI — un selettore chiuso con la
+   virgola invece che con la graffa, e una dichiarazione senza selettore. Il
+   parser, cercando la graffa d'apertura, si mangiava la regola successiva:
+   morivano cosi', in silenzio, l'accento di .section-letter e quello di
+   .lemma-final (verificato nel CSSOM: quei due selettori non c'erano). Nessun
+   danno visibile — le basi usano gia' --primary e --brass, che sono gli stessi
+   valori — ma era una trappola per chiunque scrivesse una regola li' sotto. */
 
 /* 6. Wizard guidato — header
    Qui vivevano due regole rimosse il 21 lug 2026.
@@ -285,15 +279,9 @@ body[data-lang="latino"] .section-letter {
        Lo stato attivo è ora definito una volta sola, per entrambi i rami,
        accanto agli altri stati della tappa (cerca «.wizard-step.active»). */
 
-/* 7. Approach banner della scheda C */
-  border-left-color: var(--lang-accent);
-}
-
-/* 8. Lemma section nella grammar entry */
-body[data-lang="latino"] .lemma-final {
-  color: var(--lang-accent);
-  border-color: var(--lang-accent-border);
-}
+/* (Il secondo blocco mal formato stava qui. Il lemma confermato resta in
+   ottone — var(--brass) — in tutte e due le lingue: l'ottone dice «confermato»
+   in tutta l'app, e non e' un colore di lingua.) */
 
 /* 9. Topbar identifier: piccola pillola «LATINO» rosso pompeiano accanto al titolo */
 .poetrify-lang-pill {
@@ -319,28 +307,10 @@ body[data-lang="greco"]  .poetrify-lang-pill::before { content: '𝛼 '; font-fa
 /* 10. (rimossa) La barretta-accento in cima all'editor è stata eliminata:
    risultava superflua e ingombrante a inizio pagina. */
 
-/* 11. Token-action-bar (selettori di sintagma/grammatica/proposizione) */
-body[data-lang="latino"] .token-action-bar { border-left: 3px solid var(--lang-accent); padding-left: 12px; }
-
-/* 12. Compact tools (toolbar Manuale/Sottinteso) */
-body[data-lang="latino"] .compact-tools .btn.active {
-  background: var(--lang-accent-pale);
-  border-color: var(--lang-accent);
-  color: var(--lang-accent);
-}
-
-/* 13. Btn primari sulle pagine di analisi latino — accento contestuale
-       (mantengo il brand indaco sui modali generali e progetti) */
-body[data-lang="latino"] .btn.btn-brand-soft {
-  background: var(--lang-accent-pale);
-  color: var(--lang-accent-dark);
-  border-color: var(--lang-accent-border);
-}
-body[data-lang="latino"] .btn.btn-brand-soft:hover {
-  background: var(--lang-accent);
-  color: var(--paper);
-  border-color: var(--lang-accent);
-}
+/* (Qui stavano le ultime tre regole per il solo latino: la barra d'azione del
+   token con un bordo di 3px invece dei 4 della base, i comandi compatti — un
+   doppione — e il bottone morbido con un hover pieno che il greco non aveva.
+   Sono confluite nelle regole base, valide per entrambe le lingue.) */
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -623,8 +593,11 @@ input, textarea, select { font-family: inherit; color: inherit; }
   border-bottom: 1px solid var(--rule-soft);
   margin-bottom: 8px;
 }
-/* Nome della lingua di lavoro accanto all'etichetta, nel colore della lingua. */
-.sidebar-section-label::after {
+/* Il nome della lingua timbra UNA sola intestazione: quella dell'officina.
+   Prima il ::after stava su .sidebar-section-label e basta, cioe' su tutte e
+   quattro, e nel menu' si leggeva «Impostazioni · Latino», «Strumenti ·
+   Latino», «Dati del brano · Latino». La lingua e' del lavoro, non delle voci. */
+.sidebar-section-label.lang-stamp::after {
   content: " · " var(--lang-name);
   color: var(--lang-accent);
   font-weight: 800;
@@ -688,11 +661,16 @@ input, textarea, select { font-family: inherit; color: inherit; }
   text-overflow: ellipsis;
 }
 .tab-item.active .tab-title { color: var(--ink); font-weight: 600; }
+/* Pastiglia, non cerchio fisso: da quando dice «fatte/totale» il contenuto puo'
+   essere lungo cinque caratteri, e «10/10» misura 22,1px col font della nav —
+   cioe' l'ultima tappa di un percorso a dieci traboccava dal proprio cerchio.
+   Con min-width uguale all'altezza, una spunta o una cifra sola restano tonde. */
 .tab-progress {
   margin-left: auto;
-  width: 20px; height: 20px;
+  min-width: 20px; height: 20px;
+  padding: 0 6px;
   flex-shrink: 0;
-  border-radius: 50%;
+  border-radius: 999px;
   background: var(--cream);
   font-size: 10px;
   font-weight: 700;
@@ -1129,9 +1107,14 @@ body[data-lang="greco"] .current-sentence-banner .text { font-family: var(--font
   text-align: center;
   white-space: nowrap;
 }
+.analysis-tab:hover:not(.active) { color: var(--lang-accent); }
+/* Selezionato = pieno d'accento, come ogni altra scelta dell'app (le pastiglie
+   della morfologia, il pallino di completamento, gli assi del lavoro). Prima
+   valeva per il solo latino, e il greco vedeva un tab bianco in rilievo: due
+   segnali diversi per la stessa cosa. */
 .analysis-tab.active {
-  background: var(--paper);
-  color: var(--primary);
+  background: var(--lang-accent);
+  color: var(--on-primary);
   box-shadow: 0 1px 3px var(--tr-shadow);
 }
 
@@ -4741,100 +4724,99 @@ body[data-level="avanzato"] .syntax-tree-legend {
 
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   QUICK-BAR · seconda riga della topbar. Tre segmented control sempre disponibili
-   (modalità · approccio · profilo). È l'unico entry-point in pagina per queste
-   tre impostazioni: i pulsanti ridondanti altrove sono stati rimossi.
+   GLI ASSI DEL LAVORO · metodo · vista · guida
+   ───────────────────────────────────────────────────────────────────────────
+   Vivono SEMPRE nel menù di sinistra: arrangeChrome() ce li porta su ogni
+   schermo, e lì la colonna è stretta. Prima fingevano d'essere un segmented
+   control orizzontale — pista con ombra interna, pulsanti dentro — che nello
+   stretto andava a capo: due righe dentro una pista sola, cioè una pista che
+   non è più una pista. Le icone erano emoji, a colori e di un altro peso
+   ottico, accanto a un menù di icone in tratto. E l'opzione non applicabile
+   era BARRATA, che vuol dire «sbagliata», non «adesso non serve».
+   Ora sono la stessa scelta a pastiglie dei pannelli di morfologia: due celle
+   uguali per costruzione, quella scelta piena d'accento. Una forma sola in
+   tutta l'app, e il colore lo mette la lingua.
    ═══════════════════════════════════════════════════════════════════════════ */
 .quick-bar {
   display: flex;
-  align-items: center;
-  gap: 18px;
-  padding: 8px 0 10px;
-  margin-top: 2px;
-  border-top: 1px solid var(--rule-soft);
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 13px;
+  padding: 2px 0 4px;
   font-family: var(--font-ui);
+  min-width: 0;
 }
-.quick-bar-group {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+/* DA DOVE VENGONO. I tre assi non sono interruttori capitati lì: li imposta il
+   percorso. Finché non lo si dice, sembrano tre comandi tecnici orfani. */
+.assi-testa { margin: 0; font-size: 11.5px; line-height: 1.5; color: var(--sepia); }
+.assi-link {
+  appearance: none; border: none; background: none; padding: 0;
+  font-family: inherit; font-size: inherit; font-weight: 700;
+  color: var(--lang-accent); cursor: pointer;
+  text-decoration: underline; text-underline-offset: 2px;
 }
+.assi-link:hover { color: var(--lang-accent-dark); }
+.assi-rimetti {
+  display: inline-block; margin-top: 6px;
+  font-family: inherit; font-size: 11px; line-height: 1.2;
+  padding: 6px 10px; cursor: pointer;
+  color: var(--lang-accent-dark); background: var(--lang-accent-pale);
+  border: 1px solid var(--lang-accent-border); border-radius: var(--radius-md);
+  transition: background var(--transition-base), color var(--transition-base), border-color var(--transition-base);
+}
+.assi-rimetti:hover { background: var(--lang-accent); color: var(--on-primary); border-color: var(--lang-accent); }
+.assi-link:focus-visible, .assi-rimetti:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: 2px; }
+.quick-bar-group { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
 .quick-bar-label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--sepia);
 }
-.quick-seg {
-  display: inline-flex;
-  background: var(--paper);
-  border: 1px solid var(--rule);
-  border-radius: 6px;
-  padding: 2px;
-  gap: 1px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.03) inset;
-}
+/* Due celle uguali, sempre: `flex: 1 1 0` non lascia resti e non va mai a capo.
+   Se un'etichetta è lunga va a capo DENTRO la sua cella, che è il posto giusto. */
+.quick-seg { display: flex; gap: 5px; min-width: 0; }
 .quick-seg-btn {
-  appearance: none;
-  border: none;
-  background: transparent;
+  flex: 1 1 0; min-width: 0;
   font-family: var(--font-ui);
   font-size: 11.5px;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  line-height: 1.25;
+  padding: 7px 8px;
+  text-align: center;
   color: var(--ink-soft);
-  padding: 5px 10px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-.quick-seg-btn:hover:not(.active):not([disabled]) {
   background: var(--ivory);
-  color: var(--primary);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--transition-base), border-color var(--transition-base), color var(--transition-base);
 }
+.quick-seg-btn:hover:not(.active) { border-color: var(--lang-accent-border); color: var(--lang-accent); }
 .quick-seg-btn.active {
-  background: var(--lang-accent);   /* rosso in latino · blu in greco (variabile definita) */
+  background: var(--lang-accent);
+  border-color: var(--lang-accent);
   color: var(--on-primary);
-  box-shadow: 0 1px 3px var(--tr-shadow-strong);
+  font-weight: 600;
 }
-.quick-seg-btn[disabled] {
-  opacity: 0.4;
-  cursor: not-allowed;
-  text-decoration: line-through;
-  text-decoration-color: rgba(0,0,0,0.25);
+.quick-seg-btn:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: 1px; }
+/* NON APPLICABILE non è SBAGLIATO. Prima l'opzione spenta era barrata e al 40%
+   d'opacità: in Guidata il gruppo Vista sembrava cancellato — quella scelta
+   compresa, che restava l'unica in vigore e si leggeva rosa slavato — e nulla
+   diceva perché. Ora il gruppo si fa quieto, resta leggibile, e una riga lo
+   spiega. */
+.quick-bar-group.inerte .quick-seg-btn { cursor: default; }
+.quick-bar-group.inerte .quick-seg-btn.active {
+  background: var(--lang-accent-pale);
+  border-color: var(--lang-accent-border);
+  color: var(--lang-accent-dark);
 }
-.quick-seg-icon {
-  font-size: 13px;
-  line-height: 1;
-}
-/* (Le vecchie regole monolingue usavano variabili inesistenti
-   --accent-lat/--accent-gr → sfondo non valido → testo bianco
-   invisibile. Ora il colore lo dà --lang-accent nella regola base.) */
+.quick-bar-group.inerte .quick-seg-btn:not(.active) { background: transparent; color: var(--sepia); }
+.quick-bar-group.inerte .quick-seg-btn:hover { border-color: var(--rule-soft); }
+.quick-bar-group.inerte .quick-seg-btn:not(.active):hover { color: var(--sepia); }
+.quick-seg-nota { margin: 1px 0 0; font-size: 11px; line-height: 1.45; color: var(--sepia); }
 
-/* In dark mode, la barra si scurisce con la palette generale */
-:root[data-theme="dark"] body .quick-bar {
-  background: linear-gradient(180deg, var(--paper) 0%, var(--ivory) 100%);
-  border-bottom-color: rgba(255,255,255,0.06);
-}
-
-/* Responsive: su tablet/mobile la barra va a wrap, le label diventano più piccole */
-@media (max-width: 900px) {
-  .quick-bar { padding: 8px 12px; gap: 10px; }
-  .quick-bar-label { font-size: 9px; }
-  .quick-seg-btn { padding: 4px 7px; font-size: 10.5px; }
-}
-@media (max-width: 600px) {
-  .quick-bar { padding: 6px 8px; gap: 6px; row-gap: 8px; }
-  .quick-bar-group { flex-basis: 100%; justify-content: space-between; }
-  .quick-bar-label { min-width: 64px; }
-  .quick-seg { flex: 1; }
-  .quick-seg-btn { flex: 1; justify-content: center; }
+@media (pointer: coarse) {
+  .quick-seg-btn, .assi-rimetti { min-height: 36px; }
 }
 
 /* SCELTA DELLA LINGUA · banda IN FLUSSO (era un modale d'ingresso).
@@ -10513,8 +10495,10 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 .btn-ghost { background: transparent; color: var(--ink); border-color: var(--rule); }
 .btn-ghost:hover { background: var(--cream); }
 .btn-ghost:disabled { opacity: 0.4; cursor: not-allowed; }
-.btn-brand-soft { background: var(--primary-pale); color: var(--primary); border-color: var(--primary-border); }
-.btn-brand-soft:hover { background: var(--primary-border); }
+/* Accento di lingua, e un hover che si vede: pieno, come il latino aveva gia'
+   e il greco no. */
+.btn-brand-soft { background: var(--lang-accent-pale); color: var(--lang-accent-dark); border-color: var(--lang-accent-border); }
+.btn-brand-soft:hover { background: var(--lang-accent); color: var(--on-primary); border-color: var(--lang-accent); }
 .btn-danger-soft { background: transparent; color: var(--danger); border-color: rgba(197, 48, 48, 0.25); }
 .btn-danger-soft:hover { background: rgba(197, 48, 48, 0.08); }
 .btn-sm { padding: 4px 10px; font-size: 12px; }
@@ -11050,12 +11034,15 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   .tab-letter { font-size: 18px; }
   .tab-icon svg { width: 18px; height: 18px; }
   .tab-title { display: none; }
+  /* Anche nel rail la pastiglia si allarga sul contenuto: qui il titolo della
+     voce non c'e', e un badge tagliato sarebbe l'unica cosa che parla. Il corpo
+     resta quello della base: 9px non li leggeva nessuno. */
   .tab-progress {
     position: static !important;
     transform: none !important;
     margin-left: 0;
-    width: 18px; height: 18px;
-    font-size: 9px;
+    min-width: 18px; width: auto; height: 18px;
+    padding: 0 5px;
     flex-shrink: 0;
   }
   .sidebar-actions {
@@ -11521,12 +11508,10 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 }
 .poetrify-lang-pill { display: none; }   /* ridondante con il toggle LAT/ΕΛ */
 
-/* Quick-bar (impostazioni) impaginata in COLONNA dentro il menù stretto: ogni
-   gruppo a tutta larghezza, segmenti distribuiti. Vale per sidebar e drawer. */
-#drawer-settings-slot .quick-bar { flex-direction: column; align-items: stretch; gap: 10px; border-top: none; padding: 4px 0; margin: 0; }
-#drawer-settings-slot .quick-bar-group { width: 100%; }
-#drawer-settings-slot .quick-seg { display: flex; width: 100%; flex-wrap: wrap; }
-#drawer-settings-slot .quick-seg-btn { flex: 1 1 auto; justify-content: center; padding: 6px 8px; font-size: 11px; }
+/* (Qui stavano quattro scavalchi che rimettevano gli assi in colonna dentro il
+   menù stretto — compreso il `flex-wrap: wrap` che spezzava la pista in due
+   righe. La forma in colonna è ora quella BASE, perché è l'unica che esista:
+   arrangeChrome() porta il blocco qui su ogni schermo. Niente da scavalcare.) */
 #drawer-brano-slot .brano-info { width: 100%; }
 #drawer-brano-slot .brano-info > summary { width: 100%; max-width: none; }
 #drawer-brano-slot .brano-meta-pop { position: static; box-shadow: none; border: none; padding: 8px 0 0; min-width: 0; }
@@ -11607,8 +11592,6 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   .sidebar-btn span { display: inline !important; }
   .sidebar-zoom-control { display: flex !important; }
 
-  /* la quick-bar spostata nel drawer occupa tutta la larghezza e va a capo */
-  #drawer-settings-slot .quick-bar { width: 100%; flex-wrap: wrap; }
   #drawer-brano-slot .brano-info { width: 100%; }
   #drawer-brano-slot .brano-info > summary { width: 100%; max-width: none; }
   #drawer-brano-slot .brano-meta-pop { position: static; box-shadow: none; border: none; padding: 8px 0 0; min-width: 0; }
@@ -11666,6 +11649,13 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   .ordo-chip-phrase-input,
   .ordo-chip-italian-input { min-height: 44px; }
 
+  /* Il link al percorso, nel capo degli assi, e' testo dentro un paragrafo:
+     alto 17px, sotto il minimo assoluto. Il padding allarga il bersaglio, il
+     margine negativo tiene stretta la riga. E il badge del backup stava a 31px,
+     un pixel sotto la soglia dei comandi densi. */
+  .assi-link { display: inline-block; padding: 4px 3px; margin: -4px -3px; }
+  .badge-backup { min-height: 32px; }
+
   /* Nessuna scritta sotto gli 11px: sotto quella soglia le targhette non si
      leggono, si indovinano. (`ordo-chip-source` stava a 9px, `tree-card-ruolo`
      pure.) Il prefisso `.app` non è ornamentale: nel foglio esistono 154
@@ -11696,6 +11686,11 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
      superficie che si incontra — qui una targhetta illeggibile costa di piu'. */
   .app .avvio-campi label, .app .home-origins label,
   .app .am-piano-k, .app .apc-nodo, .app .apc-flag,
+  /* IL MENU' DI SINISTRA: si guarda con la coda dell'occhio mentre si lavora,
+     ed e' l'unico posto che dice a che punto sta il percorso. Le intestazioni
+     stavano a 10px, il badge del completamento a 9, le targhette dei «Dati del
+     brano» a 10. */
+  .app .sidebar-section-label, .app .tab-progress, .app .meta-field label,
   .app .tree2-node-ruolo, .app .schel-trad-brutta label,
   .app .field-block-label { font-size: 11px; }
 }
@@ -11784,7 +11779,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
          nel menù laterale (sezione «Impostazioni»), su ogni schermo. Contiene i
          tre segmented control Metodo · Vista · Guida: è l'unico punto in pagina
          per cambiare questi tre assi. -->
-    <div class="quick-bar" id="quick-bar" role="toolbar" aria-label="Controlli rapidi: metodo, vista, guida">
+    <div class="quick-bar" id="quick-bar" role="group" aria-label="Assi del lavoro: metodo, vista, guida">
       <!-- popolato da JS in renderQuickBar() -->
     </div>
   </header>
@@ -11793,7 +11788,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   <main class="main" id="main">
 
     <aside class="sidebar" id="sidebar">
-      <div class="sidebar-section-label">Officina di traduzione</div>
+      <div class="sidebar-section-label lang-stamp">Officina di traduzione</div>
       <ul class="tab-list" id="tab-list"></ul>
 
       <!-- Slot riempiti da arrangeChrome() su OGNI schermo (la quick-bar delle
@@ -26612,59 +26607,124 @@ function arrangeChrome() {
    suoi preset di workflow sono stati rimossi con la distinzione di competenza. */
 function applyLevelToBody() { document.body.dataset.level = 'avanzato'; }
 
+/* Il capo del blocco: chi ha messo questi tre assi. Sono derivati dal percorso
+   (applicaPercorso ne applica il preset), e senza dirlo sembrano tre comandi
+   tecnici capitati nel menù. Se sono stati cambiati a mano, il capo lo dice e
+   offre di rimetterli come li vuole il percorso — la stessa verità che la pill
+   racconta col suo «· adattato». */
+function assiTestaHtml() {
+  const sc = (typeof schedaPercorso === 'function') ? schedaPercorso(state.percorso) : null;
+  if (!sc) {
+    return '<p class="assi-testa">Nessun percorso dichiarato: i tre assi sono liberi. '
+      + '<button type="button" class="assi-link" onclick="apriPannelloPercorsi()">Scegline uno</button></p>';
+  }
+  const adattato = (typeof assiCombaciano === 'function') && !assiCombaciano(sc);
+  return '<p class="assi-testa">Li ha impostati il percorso '
+    + '<button type="button" class="assi-link" onclick="apriPannelloPercorsi()">' + escapeHtml(sc.nome) + '</button>.'
+    + (adattato
+        ? ' Li hai cambiati a mano.<br>'
+          + '<button type="button" class="assi-rimetti" onclick="rimettiAssiDalPercorso()">Rimettili come il percorso</button>'
+        : '')
+    + '</p>';
+}
+
+function rimettiAssiDalPercorso() {
+  const sc = schedaPercorso(state.percorso);
+  if (!sc || !sc.preset) return;
+  applicaPercorso(state.percorso, { forza: true });
+  if (state.mode === 'guided' && !state.guidedStep) state.guidedStep = 1;
+  state.percorsoAdattato = false;
+  persistCurrent();
+  renderAll();
+  showToast('Assi rimessi come li vuole «' + sc.nome + '»');
+}
+
+/* Le frecce spostano il fuoco e scelgono, come in ogni altro radiogroup
+   dell'app. Il re-render sostituisce i pulsanti, quindi il fuoco va ridato a
+   mano: senza, alla prima freccia il fuoco cadeva sul <body> e la seconda
+   freccia non faceva più nulla. */
+let _assiFuoco = null;
+
 function renderQuickBar() {
   const bar = document.getElementById('quick-bar');
   if (!bar) return;
 
   const mode = state.mode || 'free';
-  const approach = getApproach();
-
   const metodo = state.metodo || 'strati';
   const vista = state.vista || 'frase';
 
+  /* Parole, non emoji. Le emoji sono glifi a colori, di un altro peso ottico e
+     di un altro disegno per ogni sistema operativo: accanto a un menù di icone
+     in tratto erano la cosa che faceva sembrare vecchio il controllo. Le
+     etichette bastano, e il `title` porta la spiegazione lunga. */
   const metodoBtns = [
-    { value: 'strati',     icon: '🧱', label: 'Per strati',            title: 'Analisi a livelli: grammatica → analisi logica → analisi del periodo' },
-    { value: 'valenziale', icon: '🦴', label: 'Valenziale (Scheletro)', title: 'Dal nucleo del verbo: verbo → soggetto/oggetto → complementi → ordine SVO (come i classicisti esperti)' },
+    { value: 'strati',     label: 'Per strati', title: 'Analisi a livelli: grammatica → analisi logica → analisi del periodo' },
+    { value: 'valenziale', label: 'Valenziale', title: 'Lo scheletro, dal nucleo del verbo: verbo → soggetto/oggetto → complementi → ordine SVO (come i classicisti esperti)' },
   ];
   const vistaBtns = [
-    { value: 'frase',  icon: '🎯', label: 'Frase corrente', title: 'Una frase (o un verso) alla volta, con libertà di salto' },
-    { value: 'intero', icon: '🌐', label: 'Brano intero',   title: 'Tutto il testo mostrato insieme · utile per brani coesi e lavoro in blocco' },
+    { value: 'frase',  label: 'Frase corrente', title: 'Una frase (o un verso) alla volta, con libertà di salto' },
+    { value: 'intero', label: 'Brano intero',   title: 'Tutto il testo mostrato insieme · utile per brani coesi e lavoro in blocco' },
   ];
   const guidaBtns = [
-    { value: 'free',   icon: '🪶', label: 'Libera',  title: 'Tutti gli strumenti sbloccati, nell’ordine che preferisci' },
-    { value: 'guided', icon: '🧭', label: 'Guidata', title: 'Percorso sequenziale a tappe: Lettura → Analisi → Traduzione → Versione' },
+    { value: 'free',   label: 'Libera',  title: 'Tutti gli strumenti sbloccati, nell’ordine che preferisci' },
+    { value: 'guided', label: 'Guidata', title: 'Percorso sequenziale a tappe: Lettura → Analisi → Traduzione → Versione' },
   ];
 
-  const seg = (label, btns, currentValue, onclickFn, extraAttr) => {
+  /* Un gruppo INERTE non è un gruppo barrato: resta leggibile, continua a dire
+     qual è la scelta in vigore, e la nota dice perché adesso non si tocca. */
+  const seg = (label, btns, valore, setter, nota) => {
+    const gid = 'assi-' + label.toLowerCase().replace(/[^a-z]+/g, '');
+    const inerte = !!nota;
     const buttons = btns.map(b => {
-      const active = b.value === currentValue ? 'active' : '';
-      const disabled = (extraAttr && extraAttr.disabledFor && extraAttr.disabledFor(b)) ? 'disabled' : '';
-      return `<button class="quick-seg-btn ${active}" ${disabled}
-                data-mode="${b.value}"
-                role="radio" aria-checked="${b.value === currentValue ? 'true' : 'false'}"
-                onclick="${onclickFn}('${b.value}')"
-                title="${escapeHtml(b.title)}">
-                <span class="quick-seg-icon" aria-hidden="true">${b.icon}</span>${escapeHtml(b.label)}
-              </button>`;
+      const on = b.value === valore;
+      return '<button type="button" class="quick-seg-btn' + (on ? ' active' : '') + '"'
+        + ' role="radio" aria-checked="' + (on ? 'true' : 'false') + '"'
+        + ' tabindex="' + (on ? '0' : '-1') + '"'
+        + ' data-v="' + b.value + '"'
+        + (inerte ? ' aria-disabled="true"' : (' onclick="' + setter + '(&#39;' + b.value + '&#39;)"'))
+        + ' title="' + escapeHtml(b.title) + '">' + escapeHtml(b.label) + '</button>';
     }).join('');
-    /* Il gruppo dichiara il proprio NOME e ogni pulsante la propria scelta: senza,
-       con lo screen reader si sentono quattro file di pulsanti indistinguibili e
-       non si sa quale sia attivo (i .seg-btn accanto lo dicevano gia'). */
-    const gid = 'quickbar-' + label.toLowerCase().replace(/[^a-z]+/g, '');
-    return `<div class="quick-bar-group">
-              <span class="quick-bar-label" id="${gid}">${label}</span>
-              <div class="quick-seg" role="radiogroup" aria-labelledby="${gid}">${buttons}</div>
-            </div>`;
+    return '<div class="quick-bar-group' + (inerte ? ' inerte' : '') + '">'
+      + '<span class="quick-bar-label" id="' + gid + '">' + escapeHtml(label) + '</span>'
+      + '<div class="quick-seg" role="radiogroup" aria-labelledby="' + gid + '"'
+        + (inerte ? ' aria-disabled="true"' : '') + '>' + buttons + '</div>'
+      + (nota ? '<p class="quick-seg-nota">' + escapeHtml(nota) + '</p>' : '')
+      + '</div>';
   };
 
-  // TRE ASSI ORTOGONALI, sempre visibili: Metodo · Vista · Guida.
-  // In modalità Guidata la Vista non si applica (il wizard è sequenziale per
-  // frase): il gruppo Vista resta disabilitato, per chiarezza.
-  const vistaDisabled = (mode === 'guided');
-  bar.innerHTML =
-    seg('Metodo',  metodoBtns,  metodo,  'setMetodo', null) +
-    seg('Vista',   vistaBtns,   vista,   'setVista', { disabledFor: () => vistaDisabled }) +
-    seg('Guida',   guidaBtns,   mode,    'quickSwitchMode', null);
+  /* In Guidata il wizard è sequenziale per frase: la Vista non si applica. */
+  const notaVista = (mode === 'guided')
+    ? 'In Guidata si va una frase alla volta: la vista non si applica.'
+    : '';
+
+  bar.innerHTML = assiTestaHtml()
+    + seg('Metodo', metodoBtns, metodo, 'setMetodo',       '')
+    + seg('Vista',  vistaBtns,  vista,  'setVista',        notaVista)
+    + seg('Guida',  guidaBtns,  mode,   'quickSwitchMode', '');
+
+  if (!bar.dataset.frecce) {
+    bar.dataset.frecce = '1';
+    bar.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const gruppo = e.target && e.target.closest && e.target.closest('.quick-seg');
+      if (!gruppo) return;
+      e.preventDefault();
+      const btns = Array.prototype.slice.call(gruppo.querySelectorAll('.quick-seg-btn'));
+      let i = btns.indexOf(document.activeElement); if (i < 0) i = 0;
+      const n = (e.key === 'ArrowRight') ? (i + 1) % btns.length : (i - 1 + btns.length) % btns.length;
+      btns[n].focus();
+      if (gruppo.getAttribute('aria-disabled') === 'true') return;
+      _assiFuoco = { g: gruppo.getAttribute('aria-labelledby'), v: btns[n].dataset.v };
+      btns[n].click();
+    });
+  }
+
+  if (_assiFuoco) {
+    const g = bar.querySelector('.quick-seg[aria-labelledby="' + _assiFuoco.g + '"]');
+    const b = g && g.querySelector('.quick-seg-btn[data-v="' + _assiFuoco.v + '"]');
+    _assiFuoco = null;
+    if (b) b.focus();
+  }
 }
 
 /* Wrapper sottili dei setter esistenti, con verifica e toast informativo.
@@ -38039,7 +38099,7 @@ function setMetodo(value) {
   riconciliaPercorso();            // la targhetta del percorso non deve mentire
   persistCurrent();
   renderAll();
-  showToast(v === 'valenziale' ? '🦴 Metodo: Valenziale (Scheletro)' : '🧱 Metodo: Per strati');
+  showToast(v === 'valenziale' ? 'Metodo · Valenziale' : 'Metodo · Per strati');
 }
 function setVista(value) {
   const v = (value === 'intero') ? 'intero' : 'frase';
@@ -38049,7 +38109,7 @@ function setVista(value) {
   riconciliaPercorso();
   persistCurrent();
   renderAll();
-  showToast(v === 'intero' ? '🌐 Vista: Brano intero' : '🎯 Vista: Frase corrente');
+  showToast(v === 'intero' ? 'Vista · Brano intero' : 'Vista · Frase corrente');
 }
 
 /* Compat: i chiamanti storici (modale, palette) passano un vecchio `approach`;
@@ -38077,7 +38137,7 @@ function switchMode(mode) {
   riconciliaPercorso();
   persistCurrent();
   renderAll();
-  showToast(mode === 'guided' ? 'Modalità guidata attivata' : 'Modalità libera attivata');
+  showToast(mode === 'guided' ? 'Guida · Guidata' : 'Guida · Libera');
 }
 
 function saveProject() {
@@ -41341,17 +41401,18 @@ function buildCommandPaletteIndex() {
     add('Sub-tab · Sintattico-periodale','Sub-tab', () => switchAnalysisTab('periodale'),'p', '🌳');
   }
 
-  // === Modalità ===
-  add('Modalità · Libera',      'Modalità',  () => switchMode('free'),   '', '🪶');
-  add('Modalità · Guidata',     'Modalità',  () => switchMode('guided'), '', '🧭');
-
-  // === Approccio ===
-  add('Metodo · 🧱 Per strati',              'Metodo', () => setMetodo('strati'),       '', '🧱');
-  add('Metodo · 🦴 Valenziale (Scheletro)',  'Metodo', () => setMetodo('valenziale'),   '', '🦴');
-  add('Vista · 🎯 Frase corrente',           'Vista',  () => setVista('frase'),         '', '🎯');
-  add('Vista · 🌐 Brano intero',             'Vista',  () => setVista('intero'),        '', '🌐');
-  add('Guida · 🪶 Libera',                   'Guida',  () => quickSwitchMode('free'),   '', '🪶');
-  add('Guida · 🧭 Guidata (wizard)',         'Guida',  () => quickSwitchMode('guided'), '', '🧭');
+  /* === I tre assi del lavoro ===
+     Prima erano SEI voci per quattro scelte: «Modalità · Libera» e «Guida ·
+     Libera» erano lo stesso gesto sotto due nomi di gruppo, e l'emoji stava sia
+     nell'etichetta sia nella colonna delle icone, cioè due volte per riga.
+     Un asse, un gruppo, una voce per scelta — le stesse parole del controllo
+     nel menù, così cercarle è cercare quel che si è visto. */
+  add('Metodo · Per strati',    'Metodo', () => setMetodo('strati'),       '', '🧱');
+  add('Metodo · Valenziale',    'Metodo', () => setMetodo('valenziale'),   '', '🦴');
+  add('Vista · Frase corrente', 'Vista',  () => setVista('frase'),         '', '🎯');
+  add('Vista · Brano intero',   'Vista',  () => setVista('intero'),        '', '🌐');
+  add('Guida · Libera',         'Guida',  () => quickSwitchMode('free'),   '', '🪶');
+  add('Guida · Guidata',        'Guida',  () => quickSwitchMode('guided'), '', '🧭');
   add('Backup · 💾 Esporta tutti i progetti (JSON)', 'Backup', () => exportAllProjects(),        '', '💾');
   add('Backup · 💾 Esporta solo il brano corrente',  'Backup', () => exportCurrentProjectJson(), '', '💾');
   add('Backup · 📥 Importa progetti da file (JSON)',  'Backup', () => importProjectsFromFile(),   '', '📥');
