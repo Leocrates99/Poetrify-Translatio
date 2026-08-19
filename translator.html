@@ -10455,7 +10455,11 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
    targhetta): occhiello 10,5 · parola fino a 40 · targhetta 11. Quando i corpi
    sono vicini l'occhio non legge una gerarchia, legge rumore ordinato. */
 .analysis-drawer-head { position: relative; flex: none;
-  padding: 16px 44px 13px 18px; border-bottom: 1.5px solid var(--ink); }
+  padding: 16px 44px 13px 18px;
+  /* 2px, non 1,5: al rapporto di pixel del portatile (1,25) le larghezze si
+     agganciano ai pixel del dispositivo — 1px e 1,5px rendono entrambi 0,8, e
+     il filetto «forte» spariva fra i capelli intorno. 2px rende 1,6. */
+  border-bottom: 2px solid var(--ink); }
 .adr-occhiello { display: block; font-family: var(--font-ui); font-size: 10.5px;
   font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase;
   color: var(--adr-ink); margin-bottom: 3px; }
