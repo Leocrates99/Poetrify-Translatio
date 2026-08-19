@@ -147,3 +147,68 @@ suo **fondo reale** (strati traslucidi composti):
   stesso genere di deriva della palette PoS, un gradino più in basso.
 - **`token-faded`** porta i token già assegnati a `opacity: .42`: è una scelta
   deliberata di quella tappa, ma a quell'opacità il testo scende sotto la soglia.
+
+---
+
+## 6 · La tendina dei token (ago 2026)
+
+Dentro la scheda restavano **tre menù che disegnava il sistema operativo**, perché
+l'upgrade a pastiglie si ferma a sette opzioni:
+
+| menù | voci | note |
+|---|---|---|
+| `pending-pos-select` | 10 | **senza classe**: `segUpgradeAll` cerca `select.field-select` e non l'ha mai nemmeno considerato — nativo per omissione, non per scelta |
+| `pending-logic-select` | **52-53 in otto gruppi** | nomi fino a 44 caratteri; è il caso che rende il lavoro necessario |
+| `pending-periodale-ruolo` | 3 | |
+
+Una tendina di sistema con cinquantatré voci raggruppate, in una colonna di
+451px, è una lista da scorrere a memoria.
+
+**Il patto è quello già in casa.** `segUpgrade` non tocca i renderer: prende il
+`<select>` già costruito, gli mette accanto un widget, riscrive il valore
+sull'originale e dispatcha `change`. La tendina fa lo stesso, per i select che le
+pastiglie non prendono e che stanno dentro una `.token-action-bar`. Il select
+resta il padrone del valore; la tendina è la sua faccia.
+
+**Tre cose che fa e quella di sistema no.** *Filtra* (sopra le dodici voci);
+*mostra i gruppi* come intestazioni di sezione in accento di lingua invece che
+come separatori grigi; *sta nel disegno* — carta, filetti, raggi e corpi della
+scheda.
+
+### Due difetti trovati misurando
+
+**🔴 Il filtro cercava anche nel nome del gruppo.** Misurato: «luogo» dava **16
+voci invece di 4**, perché il gruppo dell'ablativo si chiama «Caso ablativo ·
+mezzo, modo, *luogo*, tempo, agente» e si trascinava dietro tutti i suoi quindici
+complementi; «specificazione» dava 13 invece di 1 per la stessa ragione col
+genitivo. Le quattro parole che un docente digita davvero — luogo,
+specificazione, agente, termine — erano tutte e quattro rovinate. Ora si cerca
+solo nel testo della voce; le intestazioni restano per chi *sfoglia*, che è un
+gesto diverso dal filtrare.
+
+**🟠 Il pannello scavalcava il proprio tetto.** L'altezza calcolata sullo spazio
+disponibile ignorava il massimo di 340px del disegno: misurati 433. Una tendina
+alta mezzo schermo non si legge, si subisce.
+
+### Una trappola, chiusa in partenza
+
+Il cassetto ha `overflow: hidden`: un pannello in `position: absolute` ci sarebbe
+stato **tagliato dentro**. La tendina è `position: fixed` e prende le coordinate
+dal grilletto, riposizionandosi allo scorrimento e scegliendo se aprirsi in giù o
+in su secondo lo spazio. Verificato: `tagliatoDalCassetto: false`.
+
+### Collaudo
+
+| | esito |
+|---|---|
+| filtro «luogo» | **4** · i quattro complementi di luogo |
+| filtro «specificazione» · «agente» · «termine» | 1 ciascuno |
+| filtro «tempo» | 2 · continuato e determinato |
+| filtro senza risultati | «Nessuna voce con questo filtro.» |
+| tastiera | ↓↓ + Invio → il `<select>` passa da «Aggettivo» a «Verbo» |
+| pannello | `fixed`, allineato al grilletto, dentro la finestra, tetto 340 |
+| greco | 53 voci, gruppi in blu Poetrify, «genitiv» → 2 |
+| contrasti | minimo **5,68** in chiaro · **6,59** in scuro · niente sotto i 10px |
+| fino in fondo | scelta dalla tendina → «Crea sintagma» → sintagma creato, nessun pannello orfano |
+
+`brace_check = 10` · `node --check` OK · console pulita.

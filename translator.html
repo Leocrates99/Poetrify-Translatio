@@ -10494,6 +10494,79 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 .analysis-drawer-body { flex: 1; overflow-y: auto; padding: 16px 18px 24px; }
 .analysis-drawer-body .entry-fields { display: block; }
 .entry-card.is-in-drawer { outline: 2px solid var(--lang-accent); outline-offset: -1px; }
+/* ═══════════════════════════════════════════════════════════════════════════
+   LA TENDINA DEI TOKEN · il menu' della casa al posto di quello del sistema
+   ───────────────────────────────────────────────────────────────────────────
+   Le scelte lunghe (le 55 funzioni sintattiche in otto gruppi, le 10 parti del
+   discorso) non diventano pastiglie: sopra le sette voci la fila non regge. Ma
+   il <select> nativo dentro la scheda e' un corpo estraneo — lo disegna il
+   sistema operativo, non l'app — e con 55 voci raggruppate e' una lista da
+   scorrere a memoria.
+   Questa tendina ha la carta, i filetti e i corpi della scheda del dizionario,
+   mostra i gruppi come intestazioni di sezione e, sopra le dodici voci, filtra.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.drop-host { display: none !important; }        /* il select resta, ma non si vede */
+.drop {
+  position: relative; width: 100%; min-width: 0;
+  font-family: var(--font-ui);
+}
+.drop-trigger {
+  width: 100%; min-height: 40px;
+  display: flex; align-items: center; gap: 8px;
+  padding: 8px 12px; text-align: left;
+  background: var(--paper); color: var(--ink);
+  border: 1px solid var(--rule); border-radius: var(--radius-md);
+  font-family: var(--font-ui); font-size: 13px; line-height: 1.3; cursor: pointer;
+  transition: border-color var(--transition-base), background var(--transition-base);
+}
+.drop-trigger:hover { border-color: var(--lang-accent-border); }
+.drop-trigger:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: 1px; }
+.drop.is-open .drop-trigger { border-color: var(--lang-accent); }
+.drop-valore { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.drop-valore.vuoto { color: var(--sepia); }     /* il segnaposto non finge d'essere una scelta */
+.drop-trigger.scelto .drop-valore { font-weight: 600; }
+.drop-caret { flex: none; width: 14px; height: 14px; color: var(--sepia); transition: transform var(--transition-base); }
+.drop.is-open .drop-caret { transform: rotate(180deg); color: var(--lang-accent); }
+
+/* Il pannello e' FISSO, non assoluto: il cassetto ha overflow:hidden e lo
+   taglierebbe dentro. Le coordinate gliele da' il grilletto. */
+.drop-pannello {
+  position: fixed; z-index: 400;
+  background: var(--paper); border: 1px solid var(--rule);
+  border-radius: var(--radius-md); box-shadow: var(--shadow-strong);
+  display: flex; flex-direction: column; overflow: hidden;
+  max-height: 340px;
+}
+.drop-cerca { flex: none; padding: 8px; border-bottom: 1px solid var(--rule-soft); }
+.drop-cerca input {
+  width: 100%; padding: 7px 10px; font-family: var(--font-ui); font-size: 12.5px;
+  color: var(--ink); background: var(--ivory);
+  border: 1px solid var(--rule-soft); border-radius: var(--radius-sm);
+}
+.drop-cerca input:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: -1px; }
+.drop-lista { flex: 1; overflow-y: auto; padding: 4px 0 6px; }
+.drop-gruppo {
+  display: block; padding: 11px 12px 4px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--lang-accent);
+}
+.drop-gruppo + .drop-voce { margin-top: 0; }
+.drop-lista > .drop-gruppo:not(:first-child) {
+  margin-top: 5px; border-top: 1px solid var(--rule-soft); padding-top: 11px;
+}
+.drop-voce {
+  display: flex; align-items: baseline; gap: 8px; width: 100%;
+  padding: 8px 12px; text-align: left; cursor: pointer;
+  background: none; border: 0; color: var(--ink-soft);
+  font-family: var(--font-ui); font-size: 13px; line-height: 1.35;
+}
+.drop-voce:hover, .drop-voce.attiva { background: var(--cream); color: var(--ink); }
+.drop-voce.scelta { color: var(--lang-accent); font-weight: 700; }
+.drop-voce.scelta::before { content: '✓'; flex: none; font-size: 11px; }
+.drop-voce:not(.scelta)::before { content: ''; flex: none; width: 11px; }
+.drop-vuoto { padding: 14px 12px; font-size: 12.5px; color: var(--sepia); font-style: italic; }
+@media (pointer: coarse) { .drop-voce { min-height: 40px; align-items: center; } }
+
 /* ── IL CORPO · la barra del token, vestita da scheda ─────────────────────
    La barra qui dentro non e' piu' una barra: e' il contenuto della colonna.
    Perde riquadro, fondo e margine — il cassetto e' gia' una superficie — e
@@ -42655,10 +42728,223 @@ document.addEventListener('DOMContentLoaded', () => {
   window.segUpgradeAll = function(root){
     (root || document).querySelectorAll('select.field-select:not([data-seg])').forEach(segUpgrade);
   };
+
+  /* ══════════════════════════════════════════════════════════════════════
+     LA TENDINA · per le scelte che le pastiglie non prendono
+     ──────────────────────────────────────────────────────────────────────
+     Stesso patto di segUpgrade: non tocca i renderer, prende il <select> gia'
+     costruito, gli mette accanto un widget e riscrive il valore sull'originale
+     dispatchando `change`. Il select resta il padrone del valore; la tendina e'
+     solo la sua faccia.
+     Vale per i menu' DEL TOKEN — quelli dentro una `.token-action-bar`, dovunque
+     essa viva (cassetto o flusso) — perche' e' li' che il widget di sistema si
+     vedeva in mezzo alla scheda.
+     ══════════════════════════════════════════════════════════════════════ */
+  var DROP_CERCA_DA = 12;      // sopra questa soglia compare il campo di filtro
+  var dropAperta = null;
+
+  function dropVoci(sel){
+    var voci = [], gruppoCorrente = '';
+    Array.prototype.forEach.call(sel.children, function (n) {
+      if (n.tagName === 'OPTGROUP') {
+        gruppoCorrente = n.label || '';
+        Array.prototype.forEach.call(n.children, function (o) {
+          if (o.value !== '') voci.push({ v: o.value, t: o.textContent.trim(), g: gruppoCorrente });
+        });
+      } else if (n.tagName === 'OPTION' && n.value !== '') {
+        voci.push({ v: n.value, t: n.textContent.trim(), g: '' });
+      }
+    });
+    return voci;
+  }
+
+  function dropSegnaposto(sel){
+    var vuota = Array.prototype.filter.call(sel.options, function (o) { return o.value === ''; })[0];
+    return vuota ? vuota.textContent.trim() : 'Scegli…';
+  }
+
+  function dropChiudi(){
+    if (!dropAperta) return;
+    var d = dropAperta;
+    dropAperta = null;
+    d.pannello.remove();
+    d.radice.classList.remove('is-open');
+    d.trigger.setAttribute('aria-expanded', 'false');
+    window.removeEventListener('scroll', d.riposiziona, true);
+    window.removeEventListener('resize', dropChiudi);
+    document.removeEventListener('mousedown', d.fuori, true);
+  }
+
+  function dropUpgrade(sel){
+    if (sel.dataset.drop) return;
+    if (sel.dataset.seg === 'on') return;                 // le pastiglie l'hanno gia' preso
+    if (!sel.closest('.token-action-bar')) return;        // solo i menu' del token
+    var voci = dropVoci(sel);
+    if (voci.length < 2) return;
+    sel.dataset.drop = 'on';
+
+    var radice = document.createElement('div');
+    radice.className = 'drop';
+    var trigger = document.createElement('button');
+    trigger.type = 'button'; trigger.className = 'drop-trigger';
+    trigger.setAttribute('role', 'combobox');
+    trigger.setAttribute('aria-expanded', 'false');
+    trigger.setAttribute('aria-haspopup', 'listbox');
+    var etichetta = sel.closest('.token-action-bar');
+    etichetta = etichetta && etichetta.querySelector('.label');
+    if (etichetta) trigger.setAttribute('aria-label', etichetta.textContent.trim());
+    var valore = document.createElement('span');
+    valore.className = 'drop-valore';
+    trigger.appendChild(valore);
+    trigger.insertAdjacentHTML('beforeend',
+      '<svg class="drop-caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"'
+      + ' stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>');
+    radice.appendChild(trigger);
+    sel.classList.add('drop-host');
+    sel.insertAdjacentElement('beforebegin', radice);
+
+    function sincronizza(){
+      var scelta = voci.filter(function (o) { return o.v === sel.value; })[0];
+      valore.textContent = scelta ? scelta.t : dropSegnaposto(sel);
+      valore.classList.toggle('vuoto', !scelta);
+      trigger.classList.toggle('scelto', !!scelta);
+    }
+    sel.addEventListener('change', sincronizza);
+    sincronizza();
+
+    function apri(){
+      if (dropAperta && dropAperta.radice === radice) { dropChiudi(); return; }
+      dropChiudi();
+
+      var pannello = document.createElement('div');
+      pannello.className = 'drop-pannello';
+      pannello.setAttribute('role', 'listbox');
+      var cerca = null;
+      if (voci.length > DROP_CERCA_DA) {
+        var box = document.createElement('div');
+        box.className = 'drop-cerca';
+        cerca = document.createElement('input');
+        cerca.type = 'text'; cerca.placeholder = 'Filtra…';
+        cerca.setAttribute('aria-label', 'Filtra le voci');
+        box.appendChild(cerca); pannello.appendChild(box);
+      }
+      var lista = document.createElement('div');
+      lista.className = 'drop-lista';
+      pannello.appendChild(lista);
+      document.body.appendChild(pannello);
+
+      var attiva = -1, visibili = [];
+
+      function disegna(filtro){
+        lista.innerHTML = '';
+        visibili = [];
+        var f = (filtro || '').trim().toLowerCase();
+        var gruppoScritto = '';
+        voci.forEach(function (o) {
+          /* Solo il TESTO della voce, non il nome del gruppo: cercare «luogo»
+             dava 16 risultati invece di 4, perche' il gruppo dell'ablativo si
+             chiama «...mezzo, modo, luogo, tempo, agente» e si trascinava dietro
+             tutti i suoi complementi. Le intestazioni restano per chi sfoglia. */
+          if (f && o.t.toLowerCase().indexOf(f) < 0) return;
+          if (o.g && o.g !== gruppoScritto) {
+            gruppoScritto = o.g;
+            var g = document.createElement('span');
+            g.className = 'drop-gruppo'; g.textContent = o.g;
+            lista.appendChild(g);
+          }
+          var b = document.createElement('button');
+          b.type = 'button'; b.className = 'drop-voce';
+          b.setAttribute('role', 'option');
+          b.dataset.v = o.v;
+          b.textContent = o.t;
+          if (o.v === sel.value) { b.classList.add('scelta'); b.setAttribute('aria-selected', 'true'); }
+          else b.setAttribute('aria-selected', 'false');
+          b.addEventListener('click', function () { scegli(o.v); });
+          lista.appendChild(b);
+          visibili.push(b);
+        });
+        if (!visibili.length) {
+          var v = document.createElement('p');
+          v.className = 'drop-vuoto'; v.textContent = 'Nessuna voce con questo filtro.';
+          lista.appendChild(v);
+        }
+        attiva = visibili.findIndex(function (b) { return b.classList.contains('scelta'); });
+        evidenzia();
+      }
+
+      function evidenzia(){
+        visibili.forEach(function (b, i) { b.classList.toggle('attiva', i === attiva); });
+        if (attiva >= 0 && visibili[attiva]) visibili[attiva].scrollIntoView({ block: 'nearest' });
+      }
+
+      function scegli(v){
+        sel.value = v;
+        sincronizza();
+        sel.dispatchEvent(new Event('change', { bubbles: true }));
+        dropChiudi();
+        trigger.focus();
+      }
+
+      function riposiziona(){
+        var r = trigger.getBoundingClientRect();
+        var sotto = window.innerHeight - r.bottom - 10;
+        var sopra = r.top - 10;
+        var giu = sotto >= 200 || sotto >= sopra;
+        pannello.style.left = Math.round(r.left) + 'px';
+        pannello.style.width = Math.round(r.width) + 'px';
+        /* Il tetto del disegno e' 340: lo spazio disponibile puo' essere di piu',
+           ma una tendina alta mezzo schermo non si legge, si subisce. */
+        pannello.style.maxHeight = Math.round(Math.min(340, Math.max(160, giu ? sotto : sopra))) + 'px';
+        if (giu) { pannello.style.top = Math.round(r.bottom + 4) + 'px'; pannello.style.bottom = 'auto'; }
+        else { pannello.style.top = 'auto'; pannello.style.bottom = Math.round(window.innerHeight - r.top + 4) + 'px'; }
+      }
+
+      function fuori(e){
+        if (!pannello.contains(e.target) && !radice.contains(e.target)) dropChiudi();
+      }
+
+      pannello.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          if (!visibili.length) return;
+          attiva = (e.key === 'ArrowDown')
+            ? (attiva + 1) % visibili.length
+            : (attiva - 1 + visibili.length) % visibili.length;
+          evidenzia();
+        } else if (e.key === 'Enter') {
+          e.preventDefault();
+          if (attiva >= 0 && visibili[attiva]) scegli(visibili[attiva].dataset.v);
+        } else if (e.key === 'Escape') {
+          e.preventDefault(); dropChiudi(); trigger.focus();
+        }
+      });
+
+      dropAperta = { radice: radice, trigger: trigger, pannello: pannello,
+                     riposiziona: riposiziona, fuori: fuori };
+      radice.classList.add('is-open');
+      trigger.setAttribute('aria-expanded', 'true');
+      disegna('');
+      riposiziona();
+      window.addEventListener('scroll', riposiziona, true);
+      window.addEventListener('resize', dropChiudi);
+      document.addEventListener('mousedown', fuori, true);
+      if (cerca) { cerca.addEventListener('input', function () { disegna(cerca.value); }); cerca.focus(); }
+      else if (visibili.length) evidenzia();
+    }
+
+    trigger.addEventListener('click', apri);
+    trigger.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown' || e.key === 'Enter' || e.key === ' ') { e.preventDefault(); apri(); }
+    });
+  }
+
+  window.dropUpgradeAll = function(root){
+    (root || document).querySelectorAll('select:not([data-drop])').forEach(dropUpgrade);
+  };
   window.__segRuns = 0;
   var segQueued = false;
   function segFlush(){
-    try { window.__segRuns++; window.segUpgradeAll(); if (window.tokenA11yAll) window.tokenA11yAll(); if (window.iconBtnA11yAll) window.iconBtnA11yAll(); if (window.syncGuidedStepPromises) window.syncGuidedStepPromises(); if (window.modalA11yAll) window.modalA11yAll(); if (window.syncAnalysisDrawer) window.syncAnalysisDrawer(); }
+    try { window.__segRuns++; window.segUpgradeAll(); if (window.dropUpgradeAll) window.dropUpgradeAll(); if (window.tokenA11yAll) window.tokenA11yAll(); if (window.iconBtnA11yAll) window.iconBtnA11yAll(); if (window.syncGuidedStepPromises) window.syncGuidedStepPromises(); if (window.modalA11yAll) window.modalA11yAll(); if (window.syncAnalysisDrawer) window.syncAnalysisDrawer(); }
     catch (err) { console.warn('[seg] upgrade fallito:', err); }
     finally { segQueued = false; }   // la spia si azzera SEMPRE: un errore non deve bloccare per sempre
   }
