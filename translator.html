@@ -11762,8 +11762,100 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
   .app .field-block-label { font-size: 11px; }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   IL LEGGIO · quando lo schermo e' basso, il cromo si ritira in una fascia
+   ───────────────────────────────────────────────────────────────────────────
+   Misurato sul portatile (1536×864 = 1920×1080 al 125%): il brano cominciava a
+   y=667 su 864, con 523px di cose che parlavano prima del testo — e due
+   ridondanze vere, «21 parole · 1 frase» detto due volte a 200px di distanza e
+   il nome del percorso pure.
+   L'innesco e' l'ALTEZZA, non la larghezza: e' l'asse scarso qui, e la stessa
+   regola serve il portatile, la finestra affiancata e il telefono, che hanno in
+   comune l'altezza e non la larghezza. Sopra i 900 non cambia niente.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.fascia { display: none; }              /* si mostra solo quando serve */
+
+@media (max-height: 900px) {
+  .fascia {
+    display: flex; align-items: center; gap: 8px; flex-wrap: nowrap;
+    position: sticky; top: 0; z-index: 30;
+    margin: 0 0 14px; padding: 5px 6px 5px 4px;
+    background: var(--paper); border: 1px solid var(--rule-soft);
+    border-left: 3px solid var(--lang-accent);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    font-family: var(--font-ui); min-height: 44px; overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .fascia::-webkit-scrollbar { height: 0; }
+  .fascia-voce {
+    display: inline-flex; align-items: baseline; gap: 6px; flex: none;
+    padding: 6px 10px; border: 0; border-radius: var(--radius-sm);
+    background: none; cursor: pointer; white-space: nowrap; min-height: 32px;
+  }
+  .fascia-voce:hover { background: var(--cream); }
+  /* Un filetto fra le voci: senza, «Versione per casa» e «Tappa» si leggevano
+     come una frase sola. */
+  .fascia-voce + .fascia-voce { border-left: 1px solid var(--rule-soft); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+  .fascia-voce:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: -1px; }
+  .fascia-k {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--sepia);
+  }
+  .fascia-v { font-size: 12.5px; font-weight: 700; color: var(--ink); }
+  .fascia-percorso .fascia-v { color: var(--lang-accent); }
+  .fascia-percorso.vuota .fascia-v { color: var(--sepia); font-weight: 400; font-style: italic; }
+  /* Il conto e' la stessa pastiglia del menu' di sinistra: stesso numero,
+     stessa forma — se ne conta uno solo, si legge come uno solo. */
+  .fascia-conto {
+    margin-left: 2px; min-width: 20px; height: 20px; padding: 0 6px;
+    display: inline-flex; align-items: center; justify-content: center;
+    border-radius: var(--radius-pill); background: var(--lang-accent);
+    color: var(--on-primary); font-size: 10px; font-weight: 700;
+    font-variant-numeric: tabular-nums;
+  }
+  .fascia-spia {
+    display: inline-flex; align-items: center; gap: 6px; flex: none; margin-left: auto;
+    padding: 5px 11px; min-height: 32px; cursor: pointer; white-space: nowrap;
+    font-family: var(--font-ui); font-size: 11.5px; font-weight: 700;
+    /* 8% e non 12: col fondo piu' carico il testo ambra scuro misurava 4,48:1,
+       sotto la soglia per un pelo. Il problema era il fondo, non il corpo. */
+    color: var(--warning-ink); background: color-mix(in srgb, var(--warning) 8%, transparent);
+    border: 1px solid color-mix(in srgb, var(--warning) 40%, transparent);
+    border-radius: var(--radius-pill);
+  }
+  .fascia-spia:hover { background: color-mix(in srgb, var(--warning) 16%, transparent); }
+  .fascia-spia:focus-visible { outline: 2px solid var(--warning-ink); outline-offset: 1px; }
+  .fascia-pallino { width: 7px; height: 7px; border-radius: 50%; background: var(--warning); flex: none; }
+
+  /* Il cromo disteso si ritira: la fascia lo riassume, e ogni sua voce e' la
+     porta per riaprirlo. Niente si perde, si smette solo di dirlo sempre. */
+  #editor-content > .nastro,
+  #editor-content > .pill-percorso,
+  #editor-content > .revisione-banner { display: none; }
+  body.fascia-nastro-aperto #editor-content > .nastro { display: block; }
+  body.fascia-avvisi-aperti #editor-content > .pill-percorso,
+  body.fascia-avvisi-aperti #editor-content > .revisione-banner { display: flex; }
+
+  /* La testata di sezione dice «C · Analisi integrale · 21 parole · 1 frase»:
+     la scheda la dice gia' il menu' di sinistra, e il conto delle parole e'
+     ripetuto sotto, nella testata del brano. Qui si tace. */
+  #editor-content > .section-header { display: none; }
+
+  /* La testata del brano su una riga sola. L'incipit — «📜 Versione · Gallia est
+     omnis divisa in partes…» — annuncia parole che stanno gia' due centimetri
+     piu' sotto: e' la duplicazione piu' netta della schermata. Tace, e resta il
+     conto, che e' l'unica parte davvero sua. Senza l'incipit la riga non va piu'
+     a capo e la testata passa da due righe a una. */
+  .tokenizer-header { padding-top: 6px; padding-bottom: 6px; flex-wrap: nowrap; }
+  .tokenizer-header .tokenizer-title { display: none; }
+  .tokenizer-header h3, .tokenizer-header .subsection-title { font-size: 14px; }
+  /* Il comando di analisi automatica: una riga piu' bassa, stesso bersaglio. */
+  .integrale-quick-actions { padding-top: 4px; padding-bottom: 4px; }
+}
+
 @media print {
-  .topbar, .sidebar, .bottombar, .preview, .greek-kbd-toggle, .greek-kbd-panel { display: none; }
+  .topbar, .sidebar, .bottombar, .preview, .greek-kbd-toggle, .greek-kbd-panel, .fascia { display: none; }
   .main { grid-template-columns: 1fr; }
   body { background: white; }
 }
@@ -27369,6 +27461,82 @@ function renderNastro() {
 }
 
 
+/* ════════════════════════════════════════════════════════════════════════════
+   LA FASCIA · le tre cose che servono mentre si traduce
+   ────────────────────────────────────────────────────────────────────────────
+   Quale percorso · quale tappa · quanto manca. Piu' la spia della revisione
+   quando c'e' qualcosa da rileggere. Ognuna e' una PORTA verso il pezzo di cromo
+   che riassume, cosi' niente si perde: si smette solo di dirlo sempre.
+   Si disegna SEMPRE; e' il CSS a mostrarla quando lo schermo e' basso e a
+   nascondere il cromo disteso. Farla dipendere dalla finestra in JavaScript
+   significherebbe che al primo ridimensionamento senza ridisegno le due verita'
+   divergono.
+   ════════════════════════════════════════════════════════════════════════════ */
+function fasciaHaAvvisi() {
+  try {
+    if (moduliDaRivedere(state).length) return true;
+    if (state.percorsoAdattato && schedaPercorso(state.percorso)) return true;
+  } catch (e) {}
+  return false;
+}
+
+function renderFascia() {
+  if (avvio) return '';
+  if (!isWorkStep(state.currentStep)) return '';
+  if (!(state.meta && state.meta.testoOriginale)) return '';
+
+  const sc = schedaPercorso(state.percorso);
+  const conto = contoTappe();
+  const k = tappaCorrente();
+  const nomeTappa = k ? etichettaTappa(k) : '';
+  const avvisi = fasciaHaAvvisi();
+
+  const percorso = sc
+    ? '<button type="button" class="fascia-voce fascia-percorso" onclick="apriPannelloPercorsi()"'
+      + ' title="' + escapeHtml(sc.scopo + ' · ' + sc.tempo) + '">'
+      + '<span class="fascia-k">Percorso</span>'
+      + '<span class="fascia-v">' + escapeHtml(sc.nome) + '</span></button>'
+    : '<button type="button" class="fascia-voce fascia-percorso vuota" onclick="apriPannelloPercorsi()">'
+      + '<span class="fascia-k">Percorso</span><span class="fascia-v">scegline uno</span></button>';
+
+  /* Il nome della tappa c'e' solo dove esiste un cursore di tappa (scheletro,
+     via guidata); nella vista a strati non c'e', e va bene cosi'. Il CONTO
+     invece e' sempre vero — e' il completamento del percorso, lo stesso numero
+     del pallino nel menu' — quindi non puo' sparire col nome. */
+  const tappa = conto.totale
+    ? '<button type="button" class="fascia-voce fascia-tappa" onclick="fasciaApriNastro()"'
+      + ' aria-expanded="false" title="Vedi tutte le tappe">'
+      + '<span class="fascia-k">' + (nomeTappa ? 'Tappa' : 'Avanzamento') + '</span>'
+      + (nomeTappa ? '<span class="fascia-v">' + escapeHtml(nomeTappa) + '</span>' : '')
+      + '<span class="fascia-conto">' + conto.fatte + '/' + conto.totale + '</span></button>'
+    : '';
+
+  const spia = avvisi
+    ? '<button type="button" class="fascia-spia" onclick="fasciaApriAvvisi()"'
+      + ' aria-expanded="false" title="Vedi che cosa c\u2019\u00e8 da rileggere">'
+      + '<span class="fascia-pallino" aria-hidden="true"></span>da rileggere</button>'
+    : '';
+
+  return '<div class="fascia" role="group" aria-label="Dove sei nel lavoro">'
+    + percorso + tappa + spia + '</div>';
+}
+
+/* Le due porte. Lo stato sta sul <body> perche' renderEditor riscrive solo il
+   contenuto: una classe qui sopravvive al ridisegno, e la scelta di tenere
+   aperto il nastro resta finche' non lo si richiude. */
+function fasciaApriNastro() {
+  const apri = !document.body.classList.contains('fascia-nastro-aperto');
+  document.body.classList.toggle('fascia-nastro-aperto', apri);
+  const b = document.querySelector('.fascia-tappa');
+  if (b) b.setAttribute('aria-expanded', apri ? 'true' : 'false');
+}
+function fasciaApriAvvisi() {
+  const apri = !document.body.classList.contains('fascia-avvisi-aperti');
+  document.body.classList.toggle('fascia-avvisi-aperti', apri);
+  const b = document.querySelector('.fascia-spia');
+  if (b) b.setAttribute('aria-expanded', apri ? 'true' : 'false');
+}
+
 function renderNastroTappe() {
   /* Il nastro e' UNO: questa resta come porta d'ingresso del banco libero, ma
      il disegno lo fa `renderNastro()`, lo stesso che serve la via guidata. */
@@ -27426,19 +27594,20 @@ function renderEditor() {
   /* L'avvio di un brano è una vista a sé, VOLATILE: precede il progetto e non
      viene mai salvata. Ha la precedenza su tutto il resto. */
   if (avvio) { c.innerHTML = renderAvvioHtml(); return; }
+  const fascia = renderFascia();
   const nastro = renderNastroTappe();
   /* Lo stato terzo si annuncia su OGNI superficie di lavoro, guidata compresa:
      qui è l'unico punto che le vede tutte (il nastro tace in guidata, il banner
      di approccio manca nella traduzione a scheletro). */
   const avviso = isWorkStep(state.currentStep) ? renderRevisioneBanner() : '';
-  if (state.currentStep === 1) c.innerHTML = nastro + avviso + renderStep1Html();
+  if (state.currentStep === 1) c.innerHTML = fascia + nastro + avviso + renderStep1Html();
   else if (state.currentStep === 2) {
-    if (state.mode === 'guided') c.innerHTML = avviso + renderGuidedWizard();
-    else c.innerHTML = nastro + avviso + renderStep2Html();
+    if (state.mode === 'guided') c.innerHTML = fascia + avviso + renderGuidedWizard();
+    else c.innerHTML = fascia + nastro + avviso + renderStep2Html();
   }
-  else if (state.currentStep === 3) c.innerHTML = nastro + avviso + renderStep3Html();
+  else if (state.currentStep === 3) c.innerHTML = fascia + nastro + avviso + renderStep3Html();
   else if (state.currentStep === 4) c.innerHTML = renderArchiveHtml();
-  else if (state.currentStep === 5) c.innerHTML = nastro + avviso + renderTranslationHtml();
+  else if (state.currentStep === 5) c.innerHTML = fascia + nastro + avviso + renderTranslationHtml();
   else if (state.currentStep === 6) c.innerHTML = renderDictionaryHtml();
   else if (state.currentStep === 7) c.innerHTML = renderPanoramicaHtml();
   if (state.currentStep === 1) {
