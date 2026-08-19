@@ -3439,18 +3439,19 @@ h1.scheletro-sentence-num,
 :root[data-theme="dark"] body .alt-reading                      { background: rgba(255,255,255,0.04); color: #8d90ee; border-color: rgba(99, 102, 241, 0.45); }
 :root[data-theme="dark"] body .alt-reading.active               { background: rgba(99, 102, 241, 0.35); color: #fff; }
 
-/* Palette per parte del discorso (alta trasparenza, ~0.20) */
-.token.pos-sostantivo   { background: rgba(24, 0, 172, 0.15); border-color: rgba(24, 0, 172, 0.40); color: #0f0070; }
-.token.pos-aggettivo    { background: rgba(47, 133, 90, 0.18); border-color: rgba(47, 133, 90, 0.45); color: #1f5c3d; }
-.token.pos-verbo        { background: rgba(197, 48, 48, 0.16); border-color: rgba(197, 48, 48, 0.45); color: #8b1f1f; }
-.token.pos-pronome      { background: rgba(214, 158, 46, 0.20); border-color: rgba(214, 158, 46, 0.50); color: #7a4f0a; }
-.token.pos-avverbio     { background: rgba(99, 102, 241, 0.18); border-color: rgba(99, 102, 241, 0.45); color: #3a3eb0; }
-.token.pos-preposizione { background: rgba(107, 102, 96, 0.15); border-color: rgba(107, 102, 96, 0.45); color: #44403c; }
-.token.pos-congiunzione { background: rgba(245, 124, 0, 0.18); border-color: rgba(245, 124, 0, 0.45); color: #8a4500; }
-.token.pos-articolo     { background: rgba(56, 178, 172, 0.20); border-color: rgba(56, 178, 172, 0.50); color: #1c6f6a; }
-.token.pos-interiezione { background: rgba(192, 38, 211, 0.16); border-color: rgba(192, 38, 211, 0.45); color: #7a1d8a; }
-.token.pos-numerale     { background: rgba(63, 81, 181, 0.18); border-color: rgba(63, 81, 181, 0.45); color: #2a3781; }
-.token.pos-particella   { background: rgba(120, 113, 108, 0.18); border-color: rgba(120, 113, 108, 0.45); color: #4a4540; }
+/* Parte del discorso · UNA formula, la palette la da' `--pos-c` dei token
+   condivisi. Prima qui c'erano undici colori scritti a mano, diversi da quelli
+   del dizionario: zero coincidenze su undici, e verde e arancio significavano
+   categorie scambiate fra le due meta' dell'app.
+   Il testo si scurisce verso --ink, che si inverte col tema: una formula sola
+   regge chiaro e scuro senza una seconda tabella. */
+.token.pos-sostantivo, .token.pos-verbo, .token.pos-aggettivo, .token.pos-pronome,
+.token.pos-avverbio, .token.pos-preposizione, .token.pos-congiunzione,
+.token.pos-numerale, .token.pos-interiezione, .token.pos-articolo, .token.pos-particella {
+  background: color-mix(in srgb, var(--pos-c, var(--sepia)) 14%, transparent);
+  border-color: color-mix(in srgb, var(--pos-c, var(--sepia)) 42%, transparent);
+  color: color-mix(in srgb, var(--pos-c, var(--sepia)) 62%, var(--ink));
+}
 
 /* Bordi per funzione logica (sintagmi multi-token) */
 .token.lf-soggetto        { box-shadow: inset 0 -3px 0 rgba(197, 48, 48, 0.7); }
@@ -8294,7 +8295,7 @@ body[data-lang="greco"] .ordo-chip-phrase-input { font-family: var(--font-classi
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--brass);
+  color: var(--brass-ink);
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -8344,12 +8345,12 @@ body[data-lang="greco"] .ordo-chip-phrase-input { font-family: var(--font-classi
   border: 1px solid var(--rule-soft);
   transition: all var(--transition-base);
 }
-.lemma-exception-toggle:hover { border-color: var(--brass); color: var(--brass); }
+.lemma-exception-toggle:hover { border-color: var(--brass); color: var(--brass-ink); }
 .lemma-exception-toggle input { accent-color: var(--brass); }
 .lemma-exception-toggle:has(input:checked) {
   background: rgba(156, 107, 60, 0.10);
   border-color: var(--brass);
-  color: var(--brass);
+  color: var(--brass-ink);
   font-weight: 700;
 }
 .lemma-grid {
@@ -8397,7 +8398,7 @@ body[data-lang="greco"] .lemma-input { font-family: var(--font-classical); }
   display: inline-block;
   padding: 1px 7px;
   border-radius: var(--radius-sm);
-  font-size: 9px;
+  font-size: 10px;   /* era 9: sotto il pavimento leggibile, e dice quanto ci si puo' fidare del lemma */
   font-weight: 700;
   margin-left: 6px;
   font-family: var(--font-ui);
@@ -8405,10 +8406,10 @@ body[data-lang="greco"] .lemma-input { font-family: var(--font-classical); }
   letter-spacing: 0.06em;
   vertical-align: middle;
 }
-.lemma-confidence.high   { background: rgba(47,133,90,0.18); color: var(--success); }
-.lemma-confidence.medium { background: rgba(214,158,46,0.20); color: var(--warning); }
-.lemma-confidence.low    { background: rgba(197,48,48,0.12); color: var(--danger); }
-.lemma-confidence.manual { background: rgba(156, 107, 60, 0.18); color: var(--brass); }
+.lemma-confidence.high   { background: rgba(47,133,90,0.18); color: var(--success-ink); }
+.lemma-confidence.medium { background: rgba(214,158,46,0.20); color: var(--warning-ink); }
+.lemma-confidence.low    { background: rgba(197,48,48,0.12); color: var(--danger-ink); }
+.lemma-confidence.manual { background: rgba(156, 107, 60, 0.18); color: var(--brass-ink); }
 .lemma-confidence.none   { background: var(--cream); color: var(--sepia); }
 
 /* Badge "dal dizionario" — segnala match diretto da dizionario di frequenza */
@@ -8418,7 +8419,7 @@ body[data-lang="greco"] .lemma-input { font-family: var(--font-classical); }
   gap: 4px;
   padding: 2px 8px;
   border-radius: var(--radius-sm);
-  font-size: 9.5px;
+  font-size: 10px   /* era 9,5: sotto il pavimento leggibile del pannello */;
   font-weight: 700;
   margin-left: 6px;
   font-family: var(--font-ui);
@@ -8649,6 +8650,22 @@ button.dict-suggest-pill:hover { background: rgba(24, 0, 172, 0.16); }
 .case-vocativo   { --case-strong: rgba(56, 178, 172, 0.85); --case-bg: rgba(56, 178, 172, 0.16); --case-border: rgba(56, 178, 172, 0.50); --case-text: #1c6f6a; }
 .case-locativo   { --case-strong: rgba(107, 114, 128, 0.70);--case-bg: rgba(107, 114, 128, 0.10);--case-border: rgba(107, 114, 128, 0.40);--case-text: #374151; }
 .case-neutro     { --case-strong: rgba(120, 113, 108, 0.55);--case-bg: rgba(120, 113, 108, 0.08);--case-border: rgba(120, 113, 108, 0.32);--case-text: var(--sepia); }
+
+/* IL VERSO DEL BUIO. `--case-text` porta le tinte scure disegnate per la carta
+   chiara: sul fondo notturno l'occhiello del cassetto misurava 2,07:1 e la
+   targhetta 1,95 — illeggibili. Nel buio l'accento schiarisce, e con lui il
+   testo: fondo tenue e bordo restano (sono alfa, e reggono su carta scura).
+   Contrasti verificati su --paper scuro (#1c1f24): da 6,99 a 9,22.
+   `case-neutro` non compare perche' il suo testo e' gia' var(--sepia), che si
+   inverte da se'. */
+:root[data-theme="dark"] .case-nominativo { --case-text: #8AB0F5; }
+:root[data-theme="dark"] .case-verbo      { --case-text: #F58BA0; }
+:root[data-theme="dark"] .case-accusativo { --case-text: #F2A65C; }
+:root[data-theme="dark"] .case-dativo     { --case-text: #B49BF0; }
+:root[data-theme="dark"] .case-ablativo   { --case-text: #6FD693; }
+:root[data-theme="dark"] .case-genitivo   { --case-text: #EE8FD0; }
+:root[data-theme="dark"] .case-vocativo   { --case-text: #5FD1CB; }
+:root[data-theme="dark"] .case-locativo   { --case-text: #AEB6C2; }
 
 /* Legenda swatches con palette case-X */
 .pos-legend-swatch.case-nominativo, .pos-legend-swatch.case-verbo,
@@ -10420,39 +10437,102 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
    minmax() non sono tipi di traccia interpolabili. Per il drawer la disattivo
    (apertura istantanea, layout deterministico); la preview conserva la sua. */
 .main.analysis-open { transition: none; }
-.analysis-drawer { grid-column: 3; background: var(--paper); border-left: 1px solid var(--rule-soft);
+.analysis-drawer { grid-column: 3; background: var(--paper);
+  /* Il filetto di sinistra porta il colore della CATEGORIA, com'e' nella scheda
+     del dizionario: e' il pattern deliberato di Poetrify, non lo slop. Qui la
+     categoria e' il gruppo di CASO — la stessa tinta che la parola ha nel brano
+     — con la parte del discorso come ripiego e la lingua come ultima risorsa. */
+  border-left: 4px solid var(--case-strong, var(--pos-c, var(--lang-accent)));
+  /* L'inchiostro del cassetto: il testo del caso quando c'e' (e' gia' la
+     variante leggibile), altrimenti la tinta di categoria scurita verso
+     l'inchiostro — che si inverte col tema, quindi una formula vale per due. */
+  --adr-ink: var(--case-text, color-mix(in srgb, var(--pos-c, var(--lang-accent)) 78%, var(--ink)));
   overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
 .analysis-drawer[hidden] { display: none; }
-.analysis-drawer-head { display: flex; align-items: baseline; gap: 8px; padding: 12px 16px;
-  border-bottom: 1px solid var(--rule-soft); flex: none; }
-.analysis-drawer-word { font-family: var(--font-classical); font-size: 18px; color: var(--ink); }
-.analysis-drawer-pos { font-size: 10.5px; padding: 2px 8px; border-radius: var(--radius-lg);
-  border: 1px solid currentColor; }
-.analysis-drawer-x { margin-left: auto; background: none; border: 0; cursor: pointer;
-  font-size: 20px; line-height: 1; color: var(--ink-soft); padding: 0 2px; }
-.analysis-drawer-x:hover { color: var(--lang-accent); }
-.analysis-drawer-body { flex: 1; overflow-y: auto; padding: 12px 16px 24px; }
+
+/* ── LA TESTATA · l'attacco della scheda ──────────────────────────────────
+   Tre livelli con salti larghi, gli stessi del dizionario (lemma › traduzione ›
+   targhetta): occhiello 10,5 · parola fino a 40 · targhetta 11. Quando i corpi
+   sono vicini l'occhio non legge una gerarchia, legge rumore ordinato. */
+.analysis-drawer-head { position: relative; flex: none;
+  padding: 16px 44px 13px 18px; border-bottom: 1.5px solid var(--ink); }
+.adr-occhiello { display: block; font-family: var(--font-ui); font-size: 10.5px;
+  font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--adr-ink); margin-bottom: 3px; }
+.adr-occhiello:empty { display: none; }
+.analysis-drawer-word { display: block; font-family: var(--font-display);
+  font-size: clamp(26px, 3.1vw, 38px); font-weight: 700; letter-spacing: -0.03em;
+  line-height: 0.98; color: var(--ink); overflow-wrap: anywhere; }
+/* L'iniziale in accento: e' il dettaglio della voce del dizionario, e qui dice
+   a colpo d'occhio in che lingua si sta lavorando. */
+.analysis-drawer-word:empty { display: none; }
+.analysis-drawer-word .adr-init { color: var(--lang-accent); }
+.adr-meta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.adr-meta:empty { display: none; }
+.analysis-drawer-pos { font-family: var(--font-ui); font-size: 11px; font-weight: 700;
+  /* Stessa famiglia della pastiglia nel brano — fondo tenue, bordo, testo scuro
+     — cosi' la parola e la sua targhetta si riconoscono come la stessa cosa. Il
+     fondo pieno `--case-strong` e' un'alfa sopra la carta: col bianco sopra
+     scenderebbe sotto il 4,5:1. */
+  color: var(--adr-ink);
+  background: var(--case-bg, var(--cream));
+  border: 1px solid var(--case-border, var(--rule));
+  border-radius: 6px; padding: 2px 9px; white-space: nowrap; }
+.analysis-drawer-pos:empty { display: none; }
+/* La ✕ aveva 20px di glifo e nessuna area: sotto ogni minimo di tocco. */
+.analysis-drawer-x { position: absolute; top: 10px; right: 10px;
+  width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+  background: none; border: 0; border-radius: var(--radius-sm); cursor: pointer;
+  font-size: 22px; line-height: 1; color: var(--sepia); }
+.analysis-drawer-x:hover { color: var(--lang-accent); background: var(--cream); }
+.analysis-drawer-x:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: 1px; }
+
+.analysis-drawer-body { flex: 1; overflow-y: auto; padding: 16px 18px 24px; }
 .analysis-drawer-body .entry-fields { display: block; }
 .entry-card.is-in-drawer { outline: 2px solid var(--lang-accent); outline-offset: -1px; }
-/* La barra del token, qui dentro, non e' piu' una barra: e' il contenuto della
-   colonna. Perde il margine e l'accento spesso a sinistra — ce l'ha gia' il
-   drawer — e i comandi vanno in colonna, perche' 360px non sono una riga. Il
-   bordo resta di 1px per non perdere la tinta del caso, che e' informazione. */
+/* ── IL CORPO · la barra del token, vestita da scheda ─────────────────────
+   La barra qui dentro non e' piu' una barra: e' il contenuto della colonna.
+   Perde riquadro, fondo e margine — il cassetto e' gia' una superficie — e
+   diventa una sequenza di blocchi etichettati, come le sezioni di una voce. */
 .analysis-drawer-body .token-action-bar {
-  margin: 0;
-  border-left-width: 1px;
-  flex-direction: column;
-  align-items: stretch;
+  margin: 0; padding: 0; background: none; border: 0; border-radius: 0;
+  flex-direction: column; align-items: stretch; gap: 15px;
 }
-.analysis-drawer-body .token-action-bar-row { flex-direction: column; align-items: stretch; }
+.analysis-drawer-body .token-action-bar-row {
+  flex-direction: column; align-items: stretch; gap: 10px;
+}
 .analysis-drawer-body .token-action-bar select,
 .analysis-drawer-body .token-action-bar .field-select { width: 100%; min-width: 0; }
-/* La parola in lavorazione sta gia' nella testata del drawer, sempre in vista
-   mentre il corpo scorre: nella barra la si toglie per non dirla due volte. */
+/* Le etichette diventano intestazioni di blocco, come le targhette di sezione
+   della voce: sopra il controllo, non accanto. */
+.analysis-drawer-body .token-action-bar .label {
+  display: block; font-family: var(--font-ui); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.07em; text-transform: uppercase; color: var(--lang-accent);
+}
+/* La parola sta gia' nella testata, sempre in vista mentre il corpo scorre:
+   nella barra si toglie, per non dirla due volte. Con lei l'etichetta che la
+   annunciava, che e' salita a fare da occhiello. */
 .analysis-drawer-body .token-action-bar > .label,
 .analysis-drawer-body .token-action-bar > .target-word { display: none; }
-/* La parola ha la faccia della sua lingua anche nella testata. */
+/* I gruppi di pastiglie si separano con un filetto d'ottone: e' l'accento
+   d'edizione del canone — filetti, mai campiture. */
+.analysis-drawer-body .seg-group { padding-top: 12px; border-top: 1px solid var(--rule-soft); }
+.analysis-drawer-body .seg-group:first-of-type { padding-top: 0; border-top: 0; }
+/* L'atto da compiere ha peso: a tutta larghezza, alto abbastanza da premerlo
+   guardando il brano. */
+.analysis-drawer-body .btn { width: 100%; min-height: 40px; border-radius: var(--radius-md);
+  font-size: 13.5px; justify-content: center; }
+.analysis-drawer-body .btn-primary { font-weight: 700; letter-spacing: 0.01em; }
+/* Il cartiglio del blocco multi-parola: perde il fondo pieno e resta un
+   cartiglio di pergamena col filetto d'ottone. */
+.analysis-drawer-body .action-block-banner {
+  background: var(--parchment); border: 1px solid var(--parchment-edge);
+  border-left: 3px solid var(--brass); border-radius: var(--radius-md); padding: 10px 12px;
+}
+/* La parola ha la faccia della sua lingua anche nella testata: in latino il
+   serif di lettura, in greco quello politonico. */
 body[data-lang="latino"] .analysis-drawer-word { font-family: var(--font-body); }
+body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classical); }
 .preview-header {
   padding: 12px 20px;
   border-bottom: 1px solid var(--rule-soft);
@@ -11782,9 +11862,12 @@ body[data-lang="latino"] .analysis-drawer-word { font-family: var(--font-body); 
 
     <aside class="analysis-drawer" id="analysis-drawer" aria-labelledby="analysis-drawer-word" hidden>
       <div class="analysis-drawer-head">
+        <button type="button" class="analysis-drawer-x" onclick="closeAnalysisDrawer()" aria-label="Chiudi la compilazione" title="Chiudi (Esc)">&times;</button>
+        <span class="adr-occhiello" id="analysis-drawer-atto"></span>
         <span class="analysis-drawer-word" id="analysis-drawer-word"></span>
-        <span class="analysis-drawer-pos" id="analysis-drawer-pos"></span>
-        <button type="button" class="analysis-drawer-x" onclick="closeAnalysisDrawer()" aria-label="Chiudi la compilazione">&times;</button>
+        <span class="adr-meta">
+          <span class="analysis-drawer-pos" id="analysis-drawer-pos"></span>
+        </span>
       </div>
       <div class="analysis-drawer-body" id="analysis-drawer-body"></div>
     </aside>
@@ -41985,6 +42068,11 @@ document.addEventListener('DOMContentLoaded', () => {
      connettivi e i verbi dello scheletro. */
   window.__adrawer = null;
   var adrHome = null;
+  /* Quale dei due gesti e' stato l'ultimo: il clic sull'intestazione di una voce
+     o il clic su una parola del brano. Non e' una gerarchia fra inquilini — con
+     una gerarchia fissa la via della voce restava irraggiungibile ogni volta che
+     una parola era selezionata, e dopo un «Assegna» lo resta. */
+  var adrVoceRichiesta = false;
 
   /* Sotto i 900px la terza colonna non esiste e il drawer diventa un foglio che
      copre il brano: aprirlo DA SOLO a ogni tocco sarebbe peggio del pannello in
@@ -42057,6 +42145,69 @@ document.addEventListener('DOMContentLoaded', () => {
     sc.scrollTop += (r.top - (s.top + 24));
   }
 
+  /* Le classi che portano un colore di categoria. Nella scheda dell'analisi il
+     sistema semantico e' il gruppo di CASO (nove tinte, `--case-*`); `pos-*`
+     serve altrove. Il cassetto adotta quella che trova, e il colore lo eredita. */
+  var ADR_CASO = { 'case-nominativo':'Nominativo', 'case-genitivo':'Genitivo',
+    'case-dativo':'Dativo', 'case-accusativo':'Accusativo', 'case-ablativo':'Ablativo',
+    'case-vocativo':'Vocativo', 'case-locativo':'Locativo', 'case-verbo':'Verbo',
+    'case-neutro':'' };   /* «neutro» vuol dire «nessun caso»: la targhetta tace */
+  var ADR_POS = { 'pos-sostantivo':'Sostantivo', 'pos-verbo':'Verbo', 'pos-aggettivo':'Aggettivo',
+    'pos-pronome':'Pronome', 'pos-avverbio':'Avverbio', 'pos-preposizione':'Preposizione',
+    'pos-congiunzione':'Congiunzione', 'pos-numerale':'Numerale', 'pos-interiezione':'Interiezione',
+    'pos-articolo':'Articolo', 'pos-particella':'Particella' };
+
+  /* La categoria si legge dalla pastiglia nel brano, che ce l'ha gia' addosso:
+     nessuna nuova fonte di verita', nessun rischio di dire due cose diverse. */
+  function adrCategoria(){
+    var ed = document.getElementById('editor-content');
+    var t = ed && (ed.querySelector('.token.token-pending') || ed.querySelector('.token.token-selected'));
+    if (!t) return null;
+    var i, c;
+    for (i = 0; i < t.classList.length; i++) {
+      c = t.classList[i];
+      if (ADR_CASO.hasOwnProperty(c)) return { classe: c, nome: ADR_CASO[c] };
+    }
+    for (i = 0; i < t.classList.length; i++) {
+      c = t.classList[i];
+      if (ADR_POS[c]) return { classe: c, nome: ADR_POS[c] };
+    }
+    return null;
+  }
+
+  function adrClasseDaNome(nome){
+    var k;
+    for (k in ADR_POS) { if (ADR_POS[k] === nome) return k; }
+    for (k in ADR_CASO) { if (ADR_CASO[k] && ADR_CASO[k] === nome) return k; }
+    return null;
+  }
+
+  /* L'atto in corso, dichiarato dalla barra stessa. Nelle barre impilate
+     l'etichetta sta dentro una riga, non e' figlia diretta: si cerca prima il
+     figlio diretto — quello che il CSS nasconde perche' sale qui — e poi la
+     prima etichetta ovunque nella barra. */
+  function adrAtto(nodo){
+    if (!nodo) return '';
+    var l = nodo.querySelector(':scope > .label') || nodo.querySelector('.label');
+    if (l) return l.textContent.trim();
+    var ban = nodo.querySelector('.block-banner-text strong');
+    return ban ? ban.textContent.trim() : '';
+  }
+
+  /* La parola con l'iniziale in accento. Array.from per non spezzare le lettere
+     greche fuori dal piano base. */
+  function adrScriviParola(el, parola){
+    el.textContent = '';
+    var p = String(parola || '');
+    if (!p) return;
+    var lettere = Array.from(p);
+    var init = document.createElement('span');
+    init.className = 'adr-init';
+    init.textContent = lettere[0];
+    el.appendChild(init);
+    el.appendChild(document.createTextNode(lettere.slice(1).join('')));
+  }
+
   /* Apre il drawer su un nodo, chiunque fosse l'inquilino di prima. */
   function adrOspita(nodo, tipo, parola, pos){
     var host=document.getElementById('analysis-drawer'),
@@ -42074,9 +42225,23 @@ document.addEventListener('DOMContentLoaded', () => {
       body.appendChild(nodo);
       if (tipo === 'token' && nuovaParola) adrPortaInVista();
     }
-    var w=document.getElementById('analysis-drawer-word'), ps=document.getElementById('analysis-drawer-pos');
-    if (w) w.textContent = parola || '';
-    if (ps) { ps.textContent = pos || ''; ps.style.display = pos ? '' : 'none'; }
+    var host=document.getElementById('analysis-drawer');
+    var w=document.getElementById('analysis-drawer-word'),
+        ps=document.getElementById('analysis-drawer-pos'),
+        at=document.getElementById('analysis-drawer-atto');
+    if (w) adrScriviParola(w, parola);
+    /* La categoria: dal brano quando si sta definendo un token, dalla scheda
+       quando si compila una voce gia' creata. */
+    var cat = (tipo === 'token') ? adrCategoria()
+            : (pos ? { classe: adrClasseDaNome(pos), nome: pos } : null);
+    if (ps) ps.textContent = (cat && cat.nome) || pos || '';
+    if (at) at.textContent = (tipo === 'token') ? adrAtto(nodo) : 'Voce in compilazione';
+    if (host) {
+      var k;
+      for (k in ADR_POS) host.classList.remove(k);
+      for (k in ADR_CASO) host.classList.remove(k);
+      if (cat && cat.classe) host.classList.add(cat.classe);
+    }
     /* Il drawer deve entrare nel layout PRIMA che cambino le tracce della
        griglia: 'grid-template-columns' e' in transizione e 0fr -> minmax() non
        e' interpolabile, quindi partire da una colonna senza elemento la lascia
@@ -42095,8 +42260,9 @@ document.addEventListener('DOMContentLoaded', () => {
     Array.prototype.forEach.call(document.querySelectorAll('.entry-card.is-in-drawer'),
       function(c){ c.classList.remove('is-in-drawer'); });
 
-    /* ── 1 · la barra del token ha la precedenza ───────────────────────── */
-    var barraEd = (adrLargo.matches && ed) ? ed.querySelector('.token-action-bar') : null;
+    /* ── 1 · la barra del token, se il gesto piu' recente e' stato suo ──── */
+    var barraEd = (adrLargo.matches && ed && !(adrVoceRichiesta && window.__adrawer && adrCard()))
+      ? ed.querySelector('.token-action-bar') : null;
     if (barraEd) {
       adrOspita(barraEd, 'token',
         ((barraEd.querySelector('.target-word') || {}).textContent || '').trim(), '');
@@ -42162,8 +42328,13 @@ document.addEventListener('DOMContentLoaded', () => {
     window.syncAnalysisDrawer();
   };
   document.addEventListener('click', function(e){
+    if (e.target.closest && e.target.closest('#editor-content .token')) adrVoceRichiesta = false;
+  }, true);
+
+  document.addEventListener('click', function(e){
     var h = e.target.closest && e.target.closest('.entry-card-header');
     if (!h) return;
+    adrVoceRichiesta = true;
     if (e.target.closest('button, select, input, textarea, a, .entry-actions')) return;
     var card = h.closest('.entry-card');
     if (!card || !card.dataset.entry) return;

@@ -52,6 +52,9 @@
   /* Accento caldo comune — ottone (dettagli/filetti, mai campiture) */
   --brass: #9c6b3c;
   --brass-light: #c79a5e;
+  /* L'ottone che porta TESTO vuole un gradino piu' scuro: #9c6b3c su avorio
+     misura 4,43:1, sotto il 4,5 richiesto. Il filetto resta --brass. */
+  --brass-ink: #7a5228;
 
   /* Superfici — registro CALDO (avorio/pergamena) */
   --paper: #ffffff;
@@ -123,6 +126,41 @@ body[data-lang="grc"], body[data-lang="greco"] {
   --dacc: #1800AC; --dacc-deep: #0f0070; --dacc-pale: rgba(24,0,172,0.10); --dacc-border: rgba(24,0,172,0.30);
 }
 
+/* ── PARTE DEL DISCORSO · una palette sola per tutta l'app ─────────────────
+   Il colore della categoria grammaticale e' informazione, non decorazione: la
+   stessa entita' deve avere lo stesso colore in ogni vista. Viveva solo in
+   `dictionary.html`, mentre il translator dipingeva le sue pastiglie con una
+   palette diversa costruita per riuso di variabili semantiche — zero tinte in
+   comune su undici, con verde e arancio che significavano categorie SCAMBIATE
+   fra le due meta' dell'app. Qui e' una volta sola, e la leggono entrambe.
+   Ogni classe imposta `--pos-c`, che i figli ereditano. */
+.pos-sostantivo   { --pos-c: #1F63D6; }  /* sostantivo · blu         */
+.pos-verbo        { --pos-c: #DC2B2B; }  /* verbo · rosso            */
+.pos-aggettivo    { --pos-c: #0FA3A3; }  /* aggettivo · verde acqua  */
+.pos-pronome      { --pos-c: #D19A16; }  /* pronome · oro ocra       */
+.pos-avverbio     { --pos-c: #1FA24F; }  /* avverbio · verde         */
+.pos-preposizione { --pos-c: #9C2D8E; }  /* preposizione · murice    */
+.pos-congiunzione { --pos-c: #4A45C0; }  /* congiunzione · indaco    */
+.pos-numerale     { --pos-c: #E9720C; }  /* numerale · arancio       */
+.pos-interiezione { --pos-c: #E5389A; }  /* interiezione · rosa      */
+.pos-articolo     { --pos-c: #17B4CE; }  /* articolo · ciano         */
+.pos-particella   { --pos-c: #6B7280; }  /* particella · ardesia     */
+
+/* Nel buio le stesse tinte schiariscono: sature su fondo scuro reggono come
+   filetto ma non come parola (il canone: l'accento si inverte, e cosi' il testo
+   che ci sta sopra). Stessa identita', un gradino piu' chiaro. */
+:root[data-theme="dark"] .pos-sostantivo   { --pos-c: #6D9BEA; }
+:root[data-theme="dark"] .pos-verbo        { --pos-c: #F08585; }
+:root[data-theme="dark"] .pos-aggettivo    { --pos-c: #4FD1D1; }
+:root[data-theme="dark"] .pos-pronome      { --pos-c: #E8C264; }
+:root[data-theme="dark"] .pos-avverbio     { --pos-c: #5FD08A; }
+:root[data-theme="dark"] .pos-preposizione { --pos-c: #D97CC8; }
+:root[data-theme="dark"] .pos-congiunzione { --pos-c: #928DEA; }
+:root[data-theme="dark"] .pos-numerale     { --pos-c: #F5A45C; }
+:root[data-theme="dark"] .pos-interiezione { --pos-c: #F284BE; }
+:root[data-theme="dark"] .pos-articolo     { --pos-c: #62D4E6; }
+:root[data-theme="dark"] .pos-particella   { --pos-c: #A6ABB5; }
+
 /* ════════════════════════════════════════════════════════════════════════════
    D2 · TEMA SCURO unificato su [data-theme="dark"] su <html>
    (impostato dallo script anti-flash in <head>; toggle in poetrify-theme.js).
@@ -131,7 +169,7 @@ body[data-lang="grc"], body[data-lang="greco"] {
 :root[data-theme="dark"] {
   --primary: #8b7dff; --primary-dark: #a99cff; --primary-pale: rgba(139,125,255,0.16);
   --on-primary: #14121c;                  /* D3: scuro su accento chiaro */
-  --accent-lat: #e58a90; --accent-gr: #8b7dff; --brass: #d6a071;
+  --accent-lat: #e58a90; --accent-gr: #8b7dff; --brass: #d6a071; --brass-ink: #e0b892;
   --paper: #1c1f24; --ivory: #232730; --cream: #2a2e38; --parchment: #14121c; --parchment-edge: #2f3340;
   --ink: #e8e6e1; --ink-soft: #c8c5be; --sepia: #a8a39b; --sepia-soft: #7d7873;
   --rule: #5a6584; --rule-soft: #3a3f4d;
