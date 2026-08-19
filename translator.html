@@ -11882,7 +11882,10 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
   .analysis-drawer-body .btn,
   .analysis-drawer-body .seg-btn,
   .analysis-drawer-body .drop-trigger,
-  .analysis-drawer-body .dict-suggest-pill { min-height: 44px; }
+  .analysis-drawer-body .dict-suggest-pill,
+  /* Il commutatore scelta/scrittura libera: misurato a 40px, l'unico bersaglio
+     del cassetto sotto la soglia, perche' la sua classe non era in elenco. */
+  .analysis-drawer-body .toggle-mode-btn { min-height: 44px; }
   .drop-voce { min-height: 44px; }
   /* La chiusura del foglio: 32px bastano al mouse, non al pollice — e sbagliarla
      qui vuol dire toccare la parola che sta sotto. */
@@ -26246,6 +26249,26 @@ function toggleEntryExpanded(sentenceId, entryId, type, evt) {
   entry._expanded = willExpand;
   persistCurrent();
   renderEditor();
+  /* IL CASSETTO SEGUE LA VOCE. Aprire una voce E' la richiesta di compilarla, e
+     la compilazione vive nel pannello di destra: senza questa riga il `▶` apriva
+     i campi in fondo alla pagina e il pannello restava vuoto proprio nel momento
+     in cui serviva.
+     Sta qui e non nel listener delegato sull'intestazione perche' quel listener
+     questo clic non lo vede: `toggleEntryExpanded` apre con `stopPropagation()`.
+     Si ospita solo la voce INDIRIZZABILE — quella la cui carta porta
+     `data-sent`/`data-entry` — cosi' il giorno in cui anche le altre sezioni li
+     emetteranno, entreranno nel cassetto senza altre modifiche. */
+  try {
+    if (willExpand) {
+      var _c = document.querySelector('.entry-card[data-sent="' + sentenceId + '"][data-entry="' + entryId + '"]');
+      if (_c && typeof window.openAnalysisDrawer === 'function') window.openAnalysisDrawer(sentenceId, entryId);
+    } else if (window.__adrawer && window.__adrawer.e === entryId
+               && typeof window.closeAnalysisDrawer === 'function') {
+      /* Richiudere la voce chiude il pannello che la ospitava: altrimenti i campi
+         restano a destra staccati dalla carta che li ha aperti. */
+      window.closeAnalysisDrawer();
+    }
+  } catch (_e) {}
 }
 function setAllEntriesExpanded(sentenceId, type, expanded) {
   const sentence = state.sentences.find(s => s.id === sentenceId);
@@ -26255,6 +26278,14 @@ function setAllEntriesExpanded(sentenceId, type, expanded) {
   arr.forEach(e => { e._expanded = expanded ? true : false; });
   persistCurrent();
   renderEditor();
+  /* «Comprimi tutto» vale anche per la voce che sta nel cassetto, o resterebbe
+     l'unica aperta — a destra — mentre la lista dice che sono tutte chiuse.
+     «Espandi tutto» invece non tocca il pannello: aperte tutte, non c'e' una voce
+     da ospitare piu' delle altre, e sceglierne una a caso sarebbe peggio. */
+  try {
+    if (!expanded && window.__adrawer && window.__adrawer.s === sentenceId
+        && typeof window.closeAnalysisDrawer === 'function') window.closeAnalysisDrawer();
+  } catch (_e) {}
 }
 function renderEntryToggleBtn(sentenceId, entryId, type, isCollapsed) {
   return `<button class="entry-toggle-btn" onclick="toggleEntryExpanded('${sentenceId}','${entryId}','${type}', event)" title="${isCollapsed ? 'Espandi voce' : 'Comprimi voce'}">

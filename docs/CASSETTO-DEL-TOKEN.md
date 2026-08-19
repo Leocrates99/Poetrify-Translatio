@@ -212,3 +212,65 @@ in su secondo lo spazio. Verificato: `tagliatoDalCassetto: false`.
 | fino in fondo | scelta dalla tendina → «Crea sintagma» → sintagma creato, nessun pannello orfano |
 
 `brace_check = 10` · `node --check` OK · console pulita.
+
+## 7 · Le due vie del cassetto
+
+Il cassetto ospita **due inquilini diversi**, e conviene dirlo per esteso perché
+per un pezzo se ne è visto uno solo.
+
+| via | che cosa entra | da quale gesto |
+|---|---|---|
+| **1 · la parola** | `.token-action-bar` — scelta della parte del discorso, «Assegna», «Annulla» | clic su una parola del brano |
+| **2 · la voce** | `.entry-fields` — il modulo intero: declinazione, genere, numero, caso, lemma | apertura di una voce nella lista |
+
+La via 2 esisteva, era scritta bene e **non la innescava nessuno**:
+`window.openAnalysisDrawer` era definita e mai chiamata in tutto il file. Chi
+apriva una voce col `▶` vedeva i campi comparire in fondo alla pagina — misurato
+a `y=975` su uno schermo alto 1440 — con il pannello di destra vuoto. Sembrava un
+pannello rotto; era un pannello a cui nessuno bussava.
+
+Un cablaggio c'era, ma su un gesto che quasi nessuno fa: un listener delegato
+sull'intestazione della carta, che risponde al clic sul **testo**. Due barriere lo
+tenevano fuori dal gesto principale:
+
+1. `toggleEntryExpanded` apre con `evt.stopPropagation()`, e quel listener sta su
+   `document` in fase di risalita: il clic sul `▶` non gli arriva mai;
+2. la sua guardia esclude i pulsanti — e il `▶` **è** un pulsante. La guardia
+   serve (il cestino non deve aprire il pannello), ma buttava via insieme al
+   cestino l'unico comando che dice «apri questa voce».
+
+Per questo il collegamento sta dove la voce **cambia stato**, non nel listener. Si
+apre il cassetto solo per la voce *indirizzabile*, quella la cui carta porta
+`data-sent`/`data-entry`: oggi le emette la sola `renderGrammarEntry()`, e il
+controllo è sulla presenza degli attributi e non su un elenco di tipi, così il
+giorno in cui anche la sezione logica li emetterà entrerà nel cassetto da sola.
+Richiudere la voce chiude il pannello; «Comprimi tutto» chiude anche l'inquilino,
+mentre «Espandi tutto» non tocca nulla — aperte tutte, non ce n'è una da ospitare
+più delle altre.
+
+### Collaudo
+
+| prova | esito |
+|---|---|
+| `▶` su una voce | campi da `y=975` a `y=246`, **dentro** il cassetto, carta marcata `is-in-drawer` |
+| controlli ospitati | 33 (sostantivo latino) · 45 (verbo) · 31 (sostantivo greco) |
+| i pulsanti premuti davvero | declinazione «I» e genere «Femm.» passano a `seg-btn on` |
+| dopo il ridisegno | i campi **restano** nel cassetto: una sola copia, la carta non li ricontiene |
+| `▶` di nuovo | cassetto svuotato, `__adrawer` a `null`, l'invito del tavolo torna |
+| leggìo 1536×864 | cassetto a `x=971`, largo 565, dentro lo schermo |
+| tavolo 2560×1440 | colonne `264 · 1180 · 480`, campi a `y=246` |
+| tablet 768×1024, greco | campi nel cassetto, «μῆνιν» in testata con gli accenti |
+| telefono 375×812 | foglio dal basso, chiude a `812`; nessun bersaglio sotto i 44px, nessun campo di scrittura sotto i 16 |
+
+Un bersaglio era fuori norma e non lo era per caso: `.toggle-mode-btn`, il `✎` che
+commuta fra scelta e scrittura libera, misurava **40px** perché la sua classe non
+era nell'elenco della regola per il tocco. Aggiunta.
+
+Due letture, durante il collaudo, hanno mentito e vanno ricordate come tali: i
+campi sembravano **duplicati** (una copia nella carta e una nel cassetto) e il
+foglio del telefono sembrava **non salire**. La prima era una misura presa nello
+stesso tick del clic, mentre la risincronizzazione è asincrona; la seconda è la
+transizione CSS che in un riquadro che non compone fotogrammi non avanza mai.
+Rimisurate a cose ferme — e con la transizione spenta — entrambe erano a posto.
+
+`brace_check = 10` · `node --check` OK · console pulita.
