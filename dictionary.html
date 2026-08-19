@@ -2244,7 +2244,10 @@ header.topbar { transition: background 0.25s ease; }
 .lx-meta{ display:inline-flex; align-items:center; gap:9px; flex-wrap:wrap; }
 .lx-postag{ font-family:var(--font-ui); font-size:10.5px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:var(--pc); }
 .lx-catbox{ font-family:var(--font-ui); font-size:11px; font-weight:700; color:#fff; background:var(--cat-c,var(--pc)); border-radius:6px; padding:2px 9px; white-space:nowrap; text-shadow:0 1px 1px rgba(0,0,0,.18); }
-.lx-principal{ border-top:1.5px solid var(--lxink); border-bottom:1px solid var(--lxrule); padding:12px 0; margin:16px 0 6px; font-size:14px; color:var(--lxink-soft); display:flex; gap:12px; flex-wrap:wrap; align-items:baseline; }
+/* 2px, non 1,5: a dpr 1,25 le larghezze di bordo si agganciano ai pixel del
+   dispositivo e 1,5px rendono 0,8 — identici al capello di sotto, con la
+   cornice della banda che si perde. A 2px il tratto forte rende 1,6, il doppio. */
+.lx-principal{ border-top:2px solid var(--lxink); border-bottom:1px solid var(--lxrule); padding:12px 0; margin:16px 0 6px; font-size:14px; color:var(--lxink-soft); display:flex; gap:12px; flex-wrap:wrap; align-items:baseline; }
 .lx-parts{ font-family:inherit; font-size:clamp(21px,2.6vw,26px); font-weight:700; letter-spacing:-.01em; color:var(--lxink); }
 .lx-parts .greek, .lx-entry.greek .lx-parts{ font-family:'Times New Roman','Palatino Linotype',serif; }
 .lx-etim{ font-style:italic; color:var(--lxink-faint); }
