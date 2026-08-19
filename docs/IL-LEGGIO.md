@@ -90,3 +90,75 @@ verità divergerebbero.
 Sopra il brano restano la fascia (44, ed è il punto), i comandi rapidi (47) e la
 testata del brano (58). Comprimere oltre vorrebbe dire togliere **comandi**, non
 ripetizioni: è una decisione diversa da questa, e va proposta prima di farla.
+
+---
+
+## 6 · Il menù che si ritira, e il tavolo
+
+### Il menù a tendina
+
+264 px sono giusti quando il menù si **legge** e un lusso quando si **traduce**.
+Una maniglia lo stringe a **60 px**: restano le icone, i nomi vanno nei tooltip,
+il pallino di completamento si appoggia all'icona invece di stare in fila. La
+scelta si ricorda, perché è una postura di lavoro e non un gesto da rifare a
+ogni apertura.
+
+**Guadagno misurato: 204 px** — l'editor passa da 1272 a 1476.
+
+Stringendo tacciono «Impostazioni», «Dati del brano» e «Strumenti»: in 60 px non
+ci stanno, e non è una perdita — sono impostazioni, non comandi da secondo, e il
+percorso (l'unica che si guarda spesso) sta ora nella fascia.
+
+**La riga di lettura non si allarga** (824 px prima e dopo): il tetto va alla
+pagina, non alla riga. Lo spazio guadagnato serve alla terza colonna.
+
+### Il tavolo · ≥ 1800 px
+
+| | |
+|---|---|
+| colonne | **60 / 1180 / 480** — identiche a cassetto vuoto e pieno |
+| riga di lettura | 824 px, invariata |
+| il cassetto | **c'è**, anche senza parola: con un invito, non con un buco |
+| il brano | **ancorato in cima**: resta a 669 anche scorrendo di 300 px |
+
+Col menù stretto la somma delle tracce fa **1720 px** — esattamente il tetto
+della proposta.
+
+### Tre difetti trovati misurando
+
+**🔴 Il rail perdeva contro gli `!important` del blocco desktop.** Col menù
+stretto la colonna restava 264 e i titoli visibili: il blocco «DESKTOP (>900px):
+menù FISSO e pieno» usa `!important` proprio per annullare il rail dei telefoni,
+e annullava anche il mio. Le regole del rail sono andate **dentro lo stesso
+contesto e dopo di lui** — che è anche giusto per significato: sotto i 900 il
+menù è già un cassetto e non ha niente da stringere.
+
+**🔴 La classe sul `<body>` non bastava.** Caricando la pagina con la classe già
+posata la griglia andava a `60px 1476px 0px`; aggiungendola **a pagina viva**,
+`#main` continuava a calcolare 264. Il browser dell'app non rifà il match dei
+selettori discendenti su quell'elemento — la stessa cosa vista col `data-lang` —
+mentre i discendenti più vicini (titoli, voci) si aggiornavano. Non ci si affida
+al ricalcolo altrui: la classe si posa **anche su `#main`**, cioè sull'elemento
+la cui griglia deve cambiare. Costa una riga.
+
+**🟠 Sul tavolo il pannello raddoppiava sotto gli occhi.** A cassetto vuoto le
+colonne erano `60 / 1180 / 480`; cliccando una parola diventavano
+`60 / 1389 / 1111`, perché `.main.analysis-open` porta le proprie tracce dal
+blocco desktop e le mie non lo nominavano. Ora le varianti aperte prendono le
+stesse tracce: la terza colonna è sua sempre, piena o vuota.
+
+E le tracce sono **fisse, non frazioni**: con `1fr` il pannello arrivava a 957 px
+e la colonna di mezzo ne sprecava 700 — i 1370 vuoti tornavano, solo spostati
+dentro.
+
+### Collaudo
+
+- **2560×1440**: colonne 60/1180/480 identiche vuoto e pieno, invito che appare
+  e tace, brano ancorato (669 → 669 dopo 300 px di scorrimento), riga 824,
+  nessuno scroll orizzontale.
+- **1536×864**: fascia attiva, brano a 379, menù stretto ricordato, cassetto
+  nascosto da vuoto; cliccando una parola il brano resta a 330.
+- **La maniglia**: 77×32, contrasto 5,68, `aria-expanded` che segue lo stato,
+  memoria in `localStorage`.
+
+`brace_check = 10` · `node --check` OK · console pulita.

@@ -11597,6 +11597,47 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
   .sidebar-zoom-control { display: flex !important; }
 }
 
+/* ── IL MENU' STRETTO · le regole ─────────────────────────────────────────
+   Stesso contesto del blocco qui sopra, e dopo di lui: quello usa `!important`
+   per annullare il rail dei telefoni, quindi il rail volontario deve parlare la
+   stessa lingua. Sotto i 900 non serve: li' il menu' e' gia' un cassetto. */
+@media (min-width: 901px) {
+  /* Il selettore nomina la classe SULL'ELEMENTO STESSO oltre che sul body: e'
+     l'unico modo perche' la griglia si ricalcoli anche dove il browser non rifa'
+     il match dei discendenti a pagina viva. */
+  body.menu-stretto .main, .main.menu-stretto { grid-template-columns: 60px 1fr 0fr !important; }
+  body.menu-stretto .main.preview-open, .main.menu-stretto.preview-open,
+  body.menu-stretto .main.analysis-open,
+  .main.menu-stretto.analysis-open { grid-template-columns: 60px 1fr minmax(320px, 0.8fr) !important; }
+  body.menu-stretto .sidebar { padding: 18px 0 !important; align-items: center; }
+  body.menu-stretto .sidebar-maniglia { margin: 0 0 6px; padding: 6px; }
+  body.menu-stretto .sidebar-maniglia svg { transform: rotate(180deg); }
+  body.menu-stretto .sidebar-maniglia-t { display: none; }
+  /* Quel che nel rail non ci sta, e non serve mentre si traduce: le
+     impostazioni restano una scelta, non un comando da secondo. */
+  body.menu-stretto .sidebar-section-label,
+  body.menu-stretto .tab-group-label,
+  body.menu-stretto .tab-title,
+  body.menu-stretto .drawer-slot,
+  body.menu-stretto .sidebar-actions,
+  body.menu-stretto .sidebar-zoom-control { display: none !important; }
+  body.menu-stretto .tab-list { padding: 2px 0; align-items: center; }
+  body.menu-stretto .tab-item {
+    justify-content: center; padding: 9px 0; border-left-width: 0;
+    border-radius: var(--radius-sm); width: 44px; position: relative;
+  }
+  /* Il segno «sei qui» non puo' essere il bordo di sinistra, che nel rail non
+     c'e' piu': diventa la campitura d'accento, che a 44px si vede meglio. */
+  body.menu-stretto .tab-item.active { background: var(--lang-accent-pale); box-shadow: none; }
+  body.menu-stretto .tab-item.active .tab-icon { color: var(--lang-accent); }
+  /* Il pallino del completamento si appoggia all'icona invece di stare in fila. */
+  body.menu-stretto .tab-progress {
+    position: absolute; top: 2px; right: 1px; margin: 0;
+    min-width: 15px; height: 15px; padding: 0 3px; font-size: 9px;
+  }
+  body.menu-stretto .tab-progress:not(.has-content) { display: none; }
+}
+
 @media (max-width: 900px) {
   /* ── HEADER MINIMALE · una sola riga ───────────────────────────────────── */
   .topbar { padding: 6px 12px !important; gap: 8px !important; }
@@ -11761,6 +11802,80 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
   .app .tree2-node-ruolo, .app .schel-trad-brutta label,
   .app .field-block-label { font-size: 11px; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   IL TAVOLO · sopra i 1800px la terza colonna e' sempre riservata
+   ───────────────────────────────────────────────────────────────────────────
+   Sul 2K il banco lasciava 1370px vuoti. Non si allarga la riga di lettura —
+   sotto i 70 caratteri per legge tipografica — ma si mette accanto una seconda
+   cosa da guardare: il cassetto del token, che qui non si apre e non si chiude,
+   c'e'. E il brano si ancora in cima, cosi' resta in vista mentre l'officina
+   scorre sotto: e' la colonna dedicata, ottenuta senza spezzare l'editor.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.adr-invito { display: none; }
+
+@media (min-width: 1800px) {
+  /* Tracce FISSE e griglia centrata, non frazioni: con `1fr` il pannello
+     arrivava a 957px e la colonna di mezzo ne sprecava 700 — i 1370 vuoti
+     tornavano, solo spostati dentro. 1180 al lavoro (la riga di lettura resta
+     920, col respiro intorno) e 480 al pannello; col menu' stretto la somma fa
+     1720, che e' il tetto della proposta. */
+  /* Le varianti «aperto» prendono le STESSE tracce: senza, cliccando una parola
+     il pannello passava da 480 a 1111px sotto gli occhi. Qui la terza colonna e'
+     sua sempre, piena o vuota. */
+  .main, .main.preview-open, .main.analysis-open {
+    grid-template-columns: 264px minmax(0, 1180px) minmax(380px, 480px) !important;
+    justify-content: center;
+  }
+  body.menu-stretto .main, .main.menu-stretto,
+  body.menu-stretto .main.preview-open, .main.menu-stretto.preview-open,
+  body.menu-stretto .main.analysis-open, .main.menu-stretto.analysis-open {
+    grid-template-columns: 60px minmax(0, 1180px) minmax(380px, 480px) !important;
+  }
+  /* Il cassetto c'e' anche quando non ospita nulla: la colonna e' sua. */
+  .analysis-drawer[hidden] { display: flex !important; }
+  .adr-invito {
+    display: block; margin: auto 18px; padding: 18px 0;
+    font-family: var(--font-ui); font-size: 13.5px; line-height: 1.55;
+    color: var(--sepia); text-align: center; font-style: italic;
+  }
+  /* Quando qualcosa lo abita, l'invito tace. */
+  .analysis-drawer:has(#analysis-drawer-body > *) .adr-invito { display: none; }
+  /* A cassetto vuoto la testata non ha niente da dire e non deve occupare. */
+  .analysis-drawer:not(:has(#analysis-drawer-body > *)) .analysis-drawer-head { display: none; }
+
+  /* IL BRANO RESTA IN VISTA. Si ancora in cima alla colonna che scorre: sotto
+     di lui l'officina scorre, lui no. E' la promessa della colonna dedicata
+     senza spezzare l'editor in due contenitori. */
+  .integrale-tokenizer-wrap, .subsection:has(> .tokenizer) {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--paper);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   IL MENU' CHE SI RITIRA · 204px che tornano al lavoro
+   ───────────────────────────────────────────────────────────────────────────
+   264px sono giusti quando il menu' si legge e un lusso quando si traduce. La
+   maniglia lo stringe a 60: restano le icone, i nomi vanno nei tooltip, e le
+   sezioni delle impostazioni tacciono — sono impostazioni, non comandi da
+   secondo, e il percorso ora sta nella fascia.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.sidebar-maniglia {
+  display: flex; align-items: center; gap: 7px; align-self: flex-start;
+  margin: 0 0 2px 14px; padding: 6px 10px 6px 7px;
+  background: none; border: 1px solid transparent; border-radius: var(--radius-pill);
+  font-family: var(--font-ui); font-size: 11px; font-weight: 700;
+  letter-spacing: 0.04em; color: var(--sepia); cursor: pointer; min-height: 32px;
+  transition: background var(--transition-base), color var(--transition-base);
+}
+.sidebar-maniglia:hover { background: var(--cream); color: var(--lang-accent); }
+.sidebar-maniglia:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: 1px; }
+.sidebar-maniglia svg { width: 15px; height: 15px; flex: none; transition: transform var(--transition-base); }
+
+/* Le regole del rail vivono nel blocco desktop, piu' sotto: il contesto
+   «>900px» usa `!important` per annullare il rail dei telefoni, e annullerebbe
+   anche questo. Cerca «IL MENU' STRETTO · le regole». */
 
 /* ═══════════════════════════════════════════════════════════════════════════
    IL LEGGIO · quando lo schermo e' basso, il cromo si ritira in una fascia
@@ -11947,6 +12062,14 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
   <main class="main" id="main">
 
     <aside class="sidebar" id="sidebar">
+      <button type="button" class="sidebar-maniglia" id="sidebar-maniglia"
+              onclick="stringiMenu()" aria-expanded="true" aria-controls="sidebar"
+              title="Stringi il menù (guadagni larghezza per il brano)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6"/></svg>
+        <span class="sidebar-maniglia-t">Stringi</span>
+      </button>
       <div class="sidebar-section-label lang-stamp">Officina di traduzione</div>
       <ul class="tab-list" id="tab-list"></ul>
 
@@ -12039,6 +12162,10 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
         </span>
       </div>
       <div class="analysis-drawer-body" id="analysis-drawer-body"></div>
+      <!-- L'invito: si vede solo sul tavolo, quando il cassetto e' riservato ma
+           ancora vuoto. Un pannello permanente senza niente dentro sarebbe un
+           buco; con una riga diventa una promessa. -->
+      <p class="adr-invito">Clicca una parola del brano per dire che cos'è.</p>
     </aside>
     <section class="preview" id="preview" style="display:none;">
       <div class="preview-header">
@@ -26740,6 +26867,29 @@ function toggleDrawer(force) {
   document.body.classList.toggle('drawer-open', open);
 }
 function closeDrawer() { document.body.classList.remove('drawer-open'); }
+
+/* IL MENU' CHE SI RITIRA · la scelta si ricorda, perche' e' una postura di
+   lavoro e non un gesto da rifare a ogni apertura. */
+function stringiMenu(forza) {
+  const stretto = (typeof forza === 'boolean') ? forza : !document.body.classList.contains('menu-stretto');
+  document.body.classList.toggle('menu-stretto', stretto);
+  /* Anche sull'elemento la cui griglia deve cambiare: senza, a pagina viva
+     `#main` non si ricalcolava e il menu' si stringeva solo al ricaricamento. */
+  const m0 = document.getElementById('main');
+  if (m0) m0.classList.toggle('menu-stretto', stretto);
+  try { localStorage.setItem('poetrify-menu-stretto', stretto ? '1' : '0'); } catch (e) {}
+  const m = document.getElementById('sidebar-maniglia');
+  if (m) {
+    m.setAttribute('aria-expanded', stretto ? 'false' : 'true');
+    m.title = stretto ? 'Allarga il menù' : 'Stringi il menù (guadagni larghezza per il brano)';
+  }
+}
+
+function ripristinaMenuStretto() {
+  let v = null;
+  try { v = localStorage.getItem('poetrify-menu-stretto'); } catch (e) {}
+  if (v === '1') stringiMenu(true);
+}
 
 /* Colloca la quick-bar (impostazioni) e il popover "Dati del brano" SEMPRE nel
    menù di sinistra (sidebar) — sia su desktop (colonna fissa) sia su mobile
@@ -42289,6 +42439,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Baseline dell'annullamento: lo stato appena caricato e' il primo «prima».
   try { if (!_shadowSnap) _shadowSnap = _snapshotState(); } catch (_) {}
 
+  try { ripristinaMenuStretto(); } catch (e) {}
+
   // Tour al primo avvio — SOSPESO: startOnboarding() esce subito se ONBOARDING_ENABLED e' false.
   setTimeout(() => { try { startOnboarding(false); } catch (_) {} }, 500);
 
@@ -42363,10 +42515,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     return null;
   }
+  /* Sul tavolo la terza colonna e' del cassetto anche da vuoto: li' non si
+     mette `hidden`. Un elemento dichiarato nascosto e mostrato a forza dal CSS
+     resta ambiguo per chi legge con lo screen reader. */
+  var adrTavolo = window.matchMedia ? window.matchMedia('(min-width: 1800px)') : { matches: false };
+
   function adrShut(){
     adrSgombera();
     var host=document.getElementById('analysis-drawer'), main=document.querySelector('.main');
-    if (host) host.hidden = true;
+    if (host) host.hidden = !adrTavolo.matches;
     if (main) {
       // Anche in CHIUSURA la transizione su grid-template-columns si blocca e
       // lascerebbe l'editor stretto con una colonna vuota accanto: la spengo per
