@@ -2342,19 +2342,10 @@ body.focus-mode::after {
   transform: translateY(0);
   box-shadow: 0 1px 2px rgba(217, 119, 6, 0.30);
 }
-.auto-analyze-btn-large {
-  padding: 9px 18px;
-  font-size: 13px;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(217, 119, 6, 0.35);
-}
-.integrale-quick-actions {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin: 12px 0 16px;
-  flex-wrap: wrap;
-}
+/* (Qui stavano `.auto-analyze-btn-large` e `.integrale-quick-actions`: la
+   variante grande del pulsante e la riga che la conteneva. Il pulsante e' salito
+   nella testata del brano, accanto all'altro comando d'insieme, e nessun markup
+   produce piu' quelle due classi.) */
 
 /* Dark mode: il giallo "saetta" resta caldo ma più tenue su fondo scuro */
 :root[data-theme="dark"] body .auto-analyze-btn {
@@ -11966,7 +11957,6 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
   .tokenizer-header .tokenizer-title { display: none; }
   .tokenizer-header h3, .tokenizer-header .subsection-title { font-size: 14px; }
   /* Il comando di analisi automatica: una riga piu' bassa, stesso bersaglio. */
-  .integrale-quick-actions { padding-top: 4px; padding-bottom: 4px; }
 }
 
 @media print {
@@ -29747,9 +29737,6 @@ function renderStep3HtmlIntegrale() {
         La <strong>modalità batch</strong> in questa vista agisce sull'intero brano.
         Sotto trovi tutte le voci di analisi raggruppate per livello e per frase.
       </div>
-      <div class="integrale-quick-actions">
-        <button class="auto-analyze-btn auto-analyze-btn-large" onclick="autoAnalyzeAllSentences()" title="Auto-classifica preposizioni · congiunzioni · particelle · forme di sum/εἰμί · pronomi personali su TUTTE le frasi del brano">⚡ Auto-analizza l'intero brano</button>
-      </div>
       ${tokenizerHtml}
       <div class="integrale-grouped-wrap">
         <div class="integrale-grouped-header">
@@ -29868,6 +29855,10 @@ function renderIntegraleTokenizer(macro, tab, isGreek) {
           <button class="analysis-tab ${tab === 'logica' ? 'active' : ''}" onclick="switchAnalysisTab('logica')">Logica</button>
           <button class="analysis-tab profile-biennio-plus ${tab === 'periodale' ? 'active' : ''}" onclick="switchAnalysisTab('periodale')">Periodale</button>
         </div>
+        <!-- I due comandi che agiscono sull'INTERO brano stanno insieme, nella
+             riga che quel brano intesta. L'auto-analisi aveva una riga tutta sua
+             sopra il testo: 47px per un pulsante, e lontano da suo fratello. -->
+        <button class="auto-analyze-btn" onclick="autoAnalyzeAllSentences()" title="Auto-classifica preposizioni · congiunzioni · particelle · forme di sum/εἰμί · pronomi personali su TUTTE le frasi del brano">⚡ Auto-analizza il brano</button>
         ${batchToggleBtn}
       </div>
       ${batchActive ? batchBar : ''}

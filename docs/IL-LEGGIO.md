@@ -162,3 +162,41 @@ dentro.
   memoria in `localStorage`.
 
 `brace_check = 10` · `node --check` OK · console pulita.
+
+---
+
+## 7 · L'auto-analisi entra nella riga delle schede
+
+Stava in una riga tutta sua sopra il brano — **47 px per un pulsante** — mentre
+nella testata del brano c'era già l'altro comando d'insieme, «⚡ Batch · intera
+versione».
+
+**I due non sono doppioni**, e vale la pena dirlo: `autoAnalyzeAllSentences()`
+classifica in un colpo le classi chiuse su tutte le frasi (un'azione), mentre
+`toggleBatchMode()` entra in modalità di tag ripetuto (un modo). Ma sono la
+stessa **famiglia** — comandi che agiscono sull'intero brano — e stavano in due
+posti diversi. Ora stanno insieme, nella riga che intesta il brano su cui
+agiscono.
+
+Cambia solo la sede: stesso `onclick`, stesso titolo, testo accorciato da
+«Auto-analizza l'intero brano» a «Auto-analizza il brano» perché la riga è
+condivisa.
+
+| | prima | dopo |
+|---|---|---|
+| il brano comincia a | y = 379 | **y = 324** |
+| guadagno | — | **55 px** |
+| la riga dedicata | 47 px | **sparita** |
+| testata del brano | 58 px | 66 px (un controllo in più, **una riga sola**) |
+
+**Verificato che funziona dalla nuova sede**: svuotata l'analisi delle frasi, il
+clic riporta 5 voci — verbo, preposizione e tre pronomi. Contrasto del pulsante
+9,57; bersaglio 31 px.
+
+Nel movimento sono rimaste orfane due regole, `.integrale-quick-actions` e
+`.auto-analyze-btn-large`: verificato in tutti i file vivi che nessun markup le
+produce, e tolte nello stesso commit — è litter creato qui, non un debito
+ereditato da separare in una passata di sole delezioni.
+
+**Bilancio del leggìo**: il brano è passato da **y = 667 a y = 324**, cioè
+**343 px guadagnati** su uno schermo alto 864.
