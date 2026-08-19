@@ -11204,20 +11204,10 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
     display: flex !important;
   }
   .main.preview-open .preview, .main.analysis-open .analysis-drawer { transform: translateX(0); }
-  /* Sotto i 720px la griglia e' a UNA colonna: il drawer, che vive in colonna 3,
-     diventerebbe una scheggia (80px). Come la preview, qui e' un FOGLIO fisso a
-     destra — altrimenti su tablet e telefono i campi di compilazione spariscono
-     dalla scheda (sono stati spostati nel drawer) e non si vedono da nessuna parte. */
-  .analysis-drawer {
-    position: fixed !important;
-    top: 0; right: 0; bottom: 0;
-    width: 92vw; max-width: 420px;
-    z-index: 150;
-    border-left: 1px solid var(--rule);
-    box-shadow: -8px 0 32px rgba(44, 53, 57, 0.25);
-    transform: translateX(100%);
-    transition: transform 250ms ease;
-  }
+  /* (Il foglio LATERALE del cassetto viveva qui: largo il 92% dello schermo,
+     copriva il brano. E' diventato un foglio DAL BASSO — cerca «IL FOGLIO DAL
+     BASSO» — cosi' il testo resta sopra, visibile. La preview conserva la sua
+     forma laterale: quella e' una lettura a se', non un ausilio al brano.) */
   .preview-content { padding: 18px 20px; }
 
   /* MODALI: full-width, scroll interno */
@@ -11795,6 +11785,108 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
+   IL FOGLIO DAL BASSO · tablet e telefono
+   ───────────────────────────────────────────────────────────────────────────
+   Sotto i 900px la terza colonna non esiste, e un foglio laterale largo il 92%
+   copre proprio il testo che si sta leggendo. Il pannello sale dal basso: e' la
+   regola del canone applicata all'asse opposto — a destra quando avanza la
+   larghezza, dal basso quando avanza l'altezza.
+   Sul tablet prende il 45% dell'altezza (sopra restano la fascia e cinque righe
+   di brano), sul telefono il 60% (li' i controlli sono piu' alti).
+   Le unita' sono `svh` e non `vh`: con la barra di Safari che compare e sparisce
+   `vh` misura la finestra piu' grande, e il foglio finirebbe sotto il bordo.
+   ═══════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 899px) {
+  .analysis-drawer {
+    position: fixed !important;
+    left: 0; right: 0; bottom: 0; top: auto;
+    width: 100%; max-width: none;
+    height: 45svh; max-height: 45svh;
+    z-index: 150;
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--case-strong, var(--pos-c, var(--lang-accent)));
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    box-shadow: 0 -10px 34px rgba(44, 53, 57, 0.22);
+    transform: translateY(100%);
+    transition: transform 250ms var(--ease-out);
+    /* La barra gestuale dell'iPhone mangia gli ultimi 34px: senza questo, li'
+       sotto finisce il pulsante di conferma. */
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  /* La classe sta SUL foglio: `.main.analysis-open .analysis-drawer` non bastava,
+     perche' il browser non rifa' il match dei discendenti quando cambia la
+     classe dell'antenato — misurato, il foglio restava a translateY(100%). */
+  .analysis-drawer.is-aperto { transform: translateY(0); }
+  /* La maniglia dice che quella cosa e' un foglio, e da dove arriva. */
+  .analysis-drawer::before {
+    content: ''; position: absolute; top: 7px; left: 50%; transform: translateX(-50%);
+    width: 38px; height: 4px; border-radius: 2px; background: var(--rule);
+  }
+  .analysis-drawer-head { padding-top: 20px; }
+  .analysis-drawer-body { -webkit-overflow-scrolling: touch; overscroll-behavior: contain; }
+  /* Sotto il foglio il brano resta leggibile: gli si lascia il posto. */
+  body.foglio-aperto .editor { padding-bottom: 47svh; }
+}
+
+/* IL BRANO ANCORATO · su tablet e telefono il testo resta in cima e diventa un
+   riquadro che scorre dentro di se'. Senza, con un brano vero da cento parole
+   si scorre per lavorare e il testo se ne va: e' esattamente cio' che tutto
+   questo lavoro doveva impedire.
+   Nessun comando nuovo — il gesto per vedere il resto e' scorrere, come
+   dappertutto. `overscroll-behavior: contain` perche' arrivando in fondo al
+   riquadro il trascinamento non prosegua sulla pagina sotto. */
+@media (max-width: 899px) {
+  .integrale-tokenizer-wrap, .subsection:has(> .tokenizer) {
+    position: sticky; top: 0; z-index: 20;
+    background: var(--paper);
+    max-height: 30svh; overflow-y: auto;
+    -webkit-overflow-scrolling: touch; overscroll-behavior: contain;
+    box-shadow: 0 6px 10px -8px rgba(44, 53, 57, 0.35);
+  }
+  /* Col foglio aperto il tetto si misura sullo spazio che resta DAVVERO: il
+     foglio prende il 45%, sopra ne restano 55, meno i ~140px di fascia e stacchi
+     che stanno sopra il riquadro. Senza, il fondo del brano finiva dietro al
+     pannello: scorribile, ma invisibile. */
+  body.foglio-aperto .integrale-tokenizer-wrap,
+  body.foglio-aperto .subsection:has(> .tokenizer) { max-height: calc(55svh - 140px); }
+}
+
+/* LA MANO · sotto i 768 il foglio prende piu' spazio, perche' i controlli sono
+   piu' alti e le dita meno precise; e il brano un po' di piu', perche' a quella
+   larghezza le righe sono corte e una frase ne occupa parecchie. */
+@media (max-width: 767px) {
+  .analysis-drawer { height: 60svh; max-height: 60svh; }
+  body.foglio-aperto .editor { padding-bottom: 62svh; }
+  .integrale-tokenizer-wrap, .subsection:has(> .tokenizer) { max-height: 34svh; }
+  /* Sul telefono il foglio prende il 60: sopra ne restano 40. */
+  body.foglio-aperto .integrale-tokenizer-wrap,
+  body.foglio-aperto .subsection:has(> .tokenizer) { max-height: calc(40svh - 140px); }
+}
+
+/* IPHONE E TELEFONI DI FASCIA ALTA · i campi a 16px.
+   Sotto quella soglia Safari INGRANDISCE la pagina al primo tocco su un campo,
+   e da quello zoom non si torna indietro da soli: il brano resta tagliato per
+   il resto della sessione. Vale per i campi VERI, non per le etichette. */
+@media (pointer: coarse) and (max-width: 899px) {
+  .analysis-drawer-body input[type="text"],
+  .analysis-drawer-body input[type="search"],
+  .analysis-drawer-body textarea,
+  .analysis-drawer-body select,
+  .analysis-drawer-body .field-input,
+  .analysis-drawer-body .field-select,
+  .drop-cerca input { font-size: 16px !important; }
+  /* E i bersagli dentro il foglio non scendono sotto i 44. */
+  .analysis-drawer-body .btn,
+  .analysis-drawer-body .seg-btn,
+  .analysis-drawer-body .drop-trigger,
+  .analysis-drawer-body .dict-suggest-pill { min-height: 44px; }
+  .drop-voce { min-height: 44px; }
+  /* La chiusura del foglio: 32px bastano al mouse, non al pollice — e sbagliarla
+     qui vuol dire toccare la parola che sta sotto. */
+  .analysis-drawer-x { width: 44px; height: 44px; top: 6px; right: 6px; }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
    IL TAVOLO · sopra i 1800px la terza colonna e' sempre riservata
    ───────────────────────────────────────────────────────────────────────────
    Sul 2K il banco lasciava 1370px vuoti. Non si allarga la riga di lettura —
@@ -11881,7 +11973,7 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
    ═══════════════════════════════════════════════════════════════════════════ */
 .fascia { display: none; }              /* si mostra solo quando serve */
 
-@media (max-height: 900px) {
+@media (max-height: 900px), (max-width: 899px) {
   .fascia {
     display: flex; align-items: center; gap: 8px; flex-wrap: nowrap;
     position: sticky; top: 0; z-index: 30;
@@ -42463,11 +42555,12 @@ document.addEventListener('DOMContentLoaded', () => {
      una parola era selezionata, e dopo un «Assegna» lo resta. */
   var adrVoceRichiesta = false;
 
-  /* Sotto i 900px la terza colonna non esiste e il drawer diventa un foglio che
-     copre il brano: aprirlo DA SOLO a ogni tocco sarebbe peggio del pannello in
-     basso. Li' la barra resta dov'e'. La voce aperta a mano, che e' una scelta
-     esplicita, continua a usare il foglio a ogni larghezza. */
-  var adrLargo = window.matchMedia ? window.matchMedia('(min-width: 900px)') : { matches: true };
+  /* La barra del token entra nel cassetto a OGNI larghezza. Prima no: sotto i
+     900px il cassetto era un foglio laterale largo il 92% dello schermo, che
+     copriva il brano — e aprirlo da solo a ogni tocco sarebbe stato peggio del
+     pannello in basso. Ora sotto i 900 il cassetto sale DAL BASSO e il brano
+     resta sopra, visibile: il motivo per tenerlo fuori e' caduto. */
+  var adrLargo = { matches: true };
 
   function adrRestore(){
     if (adrHome && adrHome.node && adrHome.parent && adrHome.node.parentElement !== adrHome.parent) {
@@ -42514,7 +42607,12 @@ document.addEventListener('DOMContentLoaded', () => {
   function adrShut(){
     adrSgombera();
     var host=document.getElementById('analysis-drawer'), main=document.querySelector('.main');
-    if (host) host.hidden = !adrTavolo.matches;
+    if (host) {
+      host.hidden = !adrTavolo.matches;
+      host.classList.remove('is-aperto');
+      host.style.removeProperty('transform');   // torna alla regola del foglio
+    }
+    document.body.classList.remove('foglio-aperto');
     if (main) {
       // Anche in CHIUSURA la transizione su grid-template-columns si blocca e
       // lascerebbe l'editor stretto con una colonna vuota accanto: la spengo per
@@ -42642,7 +42740,16 @@ document.addEventListener('DOMContentLoaded', () => {
        bloccata. */
     host.hidden = false;
     void host.offsetHeight;
+    host.classList.add('is-aperto');
+    /* In linea, non solo per classe: misurato che questo browser non ricalcola
+       la trasformazione nemmeno quando la classe cambia sull'elemento stesso, e
+       il foglio restava fuori schermo. Uno stile in linea non chiede a nessuno
+       di rivalutare un selettore. Sopra i 900 e' l'identita', quindi innocuo. */
+    host.style.transform = 'translateY(0)';
     main.classList.add('analysis-open');
+    /* Sotto i 900 il foglio copre la parte bassa: si lascia al brano il posto
+       per scorrere sopra di lui invece di finirgli sotto. */
+    document.body.classList.add('foglio-aperto');
   }
 
   window.syncAnalysisDrawer = function(){
