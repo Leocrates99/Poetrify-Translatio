@@ -12,7 +12,7 @@
 <!-- Font self-hosted (vendor/fonts/) — nessuna dipendenza da Google Fonts -->
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
 <!-- Token condivisi (fonte unica del design system · shared/) -->
-<link rel="stylesheet" href="shared/poetrify-tokens.css">
+<link rel="stylesheet" href="shared/poetrify-tokens.css?v=2026-08-19">
 <!-- API tema condivisa (il toggle #dark-mode-toggle la usa) -->
 <script src="shared/poetrify-quarantena.js"></script>
 <script src="shared/poetrify-manuali.js"></script>
@@ -11004,7 +11004,10 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
 
 /* MOBILE / TABLET PORTRAIT — 720px
    Trasforma la sidebar in barra orizzontale superiore + topbar a 2 righe + preview overlay */
-@media (max-width: 720px) {
+/* IL CONFINE DELLA MANO · 767, cioe' esattamente sotto la soglia --bp-mano
+   dichiarata nei token condivisi. Stava a 720, e fra 721 e 767 il translator
+   si comportava da tablet mentre il canone lo chiamava mano. */
+@media (max-width: 767px) {
   body { font-size: 14px; }
 
   /* APP: altezza dinamica e overflow hidden per impedire doppio scroll (viewport + interno). */
@@ -42602,7 +42605,18 @@ document.addEventListener('DOMContentLoaded', () => {
   /* Sul tavolo la terza colonna e' del cassetto anche da vuoto: li' non si
      mette `hidden`. Un elemento dichiarato nascosto e mostrato a forza dal CSS
      resta ambiguo per chi legge con lo screen reader. */
-  var adrTavolo = window.matchMedia ? window.matchMedia('(min-width: 1800px)') : { matches: false };
+  /* La soglia la dichiara `shared/poetrify-tokens.css` (--bp-leggio): qui si
+     legge, non si ripete. Le custom property non entrano nella condizione di una
+     media query, ma in JavaScript si leggono benissimo — ed e' l'unico posto
+     dove questo numero serve al codice. */
+  var adrSoglia = (function () {
+    try {
+      var v = getComputedStyle(document.documentElement).getPropertyValue('--bp-leggio').trim();
+      if (v) return v;
+    } catch (e) {}
+    return '1800px';                       // ripiego: il valore che il token dichiara
+  })();
+  var adrTavolo = window.matchMedia ? window.matchMedia('(min-width: ' + adrSoglia + ')') : { matches: false };
 
   function adrShut(){
     adrSgombera();

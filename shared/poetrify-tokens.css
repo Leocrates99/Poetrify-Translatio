@@ -75,6 +75,29 @@
   --danger:  #c53030; --danger-ink:  #9b2c2c;
   --mark: #fbe38a;
 
+  /* ── LE QUATTRO SOGLIE DI SCHERMO ────────────────────────────────────────
+     Misurate sull'hardware reale (portatile 1536×864 = 1920×1080 al 125% ·
+     esterno 2K 2560×1440), non su taglie di catalogo. Separano CAPACITA', non
+     dimensioni: «ho una seconda colonna?», «posso tenere il pannello sempre
+     aperto?».
+       < 768        LA MANO      una colonna · pannello dal basso al 60%
+       768 – 1279   IL TABLET    una colonna · pannello dal basso al 45%
+       1280 – 1799  IL LEGGIO    due colonne + cassetto a richiesta
+       ≥ 1800       IL TAVOLO    tre colonne, il cassetto non si apre: c'e'
+     E una soglia d'ALTEZZA, perche' l'asse scarso non e' sempre la larghezza:
+       altezza ≤ 900  il cromo si ritira nella fascia (vale anche sotto i 900
+                      di larghezza, dove a mancare e' lo spazio in orizzontale)
+
+     ATTENZIONE: una custom property NON si puo' usare dentro la condizione di
+     una media query — `@media (max-width: var(--bp-tablet))` non scatta, in
+     nessun browser. Questi token sono la fonte DICHIARATIVA: li legge il
+     JavaScript (che li usa davvero) e li cita il CSS, dove il numero va scritto
+     alla lettera con accanto il nome della classe. */
+  --bp-mano: 768px;
+  --bp-tablet: 1280px;
+  --bp-leggio: 1800px;
+  --bp-altezza-scarsa: 900px;
+
   /* Forma — raggi (D8: 8/12) */
   --radius-sm: 4px;
   --radius-md: 8px;
