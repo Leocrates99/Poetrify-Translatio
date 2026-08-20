@@ -30,11 +30,8 @@ body {
 }
 
 /* ── Brand header ─────────────────────────────────────────────── */
-.site-header {
-  text-align: center;
-  margin-top: clamp(56px, 12vh, 130px);
-  margin-bottom: 8px;
-}
+/* (Il frontespizio centrato viveva qui: marchio da 64px sotto 130px di aria.
+   La veste ora la da' `.topbar-casa`, in fondo al foglio.) */
 .brand-mark {
   display: block;
   margin: 0;
@@ -186,14 +183,59 @@ footer {
   .hub { grid-template-columns: 1fr; }
   .site-header { margin-top: 56px; }
 }
+
+/* ─── LA TESTATA, NELLA GRAMMATICA DELLA CASA ─────────────────────────────
+   [casa] · [dove sei] · [firma a destra, una riga sola]. La stessa del
+   translator, del dizionario e del corpus: una pagina d'ingresso resta un
+   ingresso, ma la sua intestazione non puo' parlare una lingua sua. */
+.topbar-casa {
+  display: flex; align-items: baseline; gap: 0;
+  /* Il body di queste pagine e' una colonna flex CENTRATA: un <header> di blocco
+     vi si stringe al contenuto invece di stendersi. Si stende a mano, e i margini
+     negativi annullano il respiro laterale del body, cosi' il filetto arriva
+     davvero ai bordi come sulle altre superfici. */
+  align-self: stretch;
+  padding: 10px clamp(24px, 4vw, 34px);
+  border-bottom: 1px solid var(--rule-soft, rgba(0,0,0,.08));
+  /* I -20px annullano il respiro laterale del body: senza, il filetto si ferma
+     a venti pixel dal bordo e la barra sembra un riquadro, non una testata.
+     Stanno nella SCORCIATOIA, non in due righe a parte: una `margin` successiva
+     nello stesso blocco le avrebbe azzerate — ed e' esattamente quel che era
+     successo alla prima misura. */
+  margin: 0 -20px clamp(28px, 6vh, 64px);
+  text-align: left;
+}
+.topbar-casa .brand-mark {
+  display: inline; margin: 0;
+  font-size: 25px; line-height: 1.1;
+}
+/* Il luogo, staccato dalla casa: lo spazio dice che sono due cose diverse. */
+.topbar-casa .topbar-dove {
+  margin-left: 34px; flex: 0 1 auto;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 21px; font-weight: 600; letter-spacing: -0.01em;
+  color: var(--ink, #2c3539);
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+/* La firma chiude la riga, su una riga sola. */
+.topbar-casa .brand-sub {
+  display: inline; margin: 0 0 0 auto; flex: 0 0 auto;
+  white-space: nowrap; font-size: 11.5px; letter-spacing: 0.16em;
+}
+@media (max-width: 640px) {
+  .topbar-casa .brand-sub { display: none; }   /* stretto: vince il luogo */
+  .topbar-casa .topbar-dove { margin-left: 18px; font-size: 17px; }
+  .topbar-casa .brand-mark { font-size: 21px; }
+}
 </style>
 <!-- Icone classiche: game-icons.net (CC BY 3.0) - Lorc, Delapouite, DarkZaitzev; ricolorate col design system Poetrify -->
 </head>
 <body>
 
-<header class="site-header">
+<header class="site-header topbar-casa">
   <h1 class="brand-mark">Poetrify</h1>
-  <p class="brand-sub">Officina del greco e del latino</p>
+  <span class="topbar-dove">Strumenti</span>
+  <span class="brand-sub">Officina del greco e del latino</span>
 </header>
 
 <p class="intro">Analizza e traduci il latino e il greco antico con un metodo chiaro, completo e diretto.</p>
