@@ -176,9 +176,73 @@ nulla quando lo si preme.
 
 ## 4 · Rimasto fuori, e detto
 
-- **`.token.token-pending`** ha un alone azzurro scritto a mano
+- ~~**`.token.token-pending`** ha un alone azzurro scritto a mano
   (`rgba(24,0,172,0.15)`) accanto a un bordo `var(--primary)`: in latino è un
-  bordo rosso con l'alone blu. È nell'editor, non nel menù — fuori da questi due
-  lavori, ma è lo stesso difetto di famiglia.
-- **`.approach-grid` / `.approach-option`**: CSS orfano dal punto 10 (il modale
-  dell'approccio non esiste più). Da cancellare in un commit di sole delezioni.
+  bordo rosso con l'alone blu.~~ **Chiuso.** Era la punta di un difetto di
+  famiglia, e la famiglia intera è stata sanata: `--primary-pale` e i derivati del
+  primario seguono ora la lingua, e i traslucidi scritti a mano sono passati a
+  `rgba(var(--primary-rgb), a)`. Quella regola oggi dice
+  `background: var(--primary-pale)` e `box-shadow: … var(--lang-accent) 22%`.
+- ~~**`.approach-grid` / `.approach-option`**: CSS orfano dal punto 10.~~
+  **Chiuso**, in un commit di sole delezioni: zero occorrenze nel file.
+
+---
+
+## 5 · Il menù come postura, e l'asse che eredita
+
+### Il menù parte chiuso
+
+264px sono giusti quando il menù si **legge** — nomi per esteso, gruppi, pallini
+di completamento — e sono un lusso appena si comincia a tradurre. Il rail da 60px
+è la postura di lavoro, e da oggi è quella di partenza.
+
+Cambia **solo il default di chi non ha ancora scelto**: chi allarga il menù se lo
+ritrova largo, perché la scelta si ricorda come prima. Per chi arriva nuovo, il
+brano nasce con 204px in più.
+
+### Ogni comando vive nel rail
+
+Indietro e home hanno lasciato la testata ed entrano nella testa del menù,
+nell'ordine **home · apri/chiudi · indietro**: in fila quando il menù è largo,
+impilati nel rail, sempre raggiungibili senza aprire niente. Con loro se ne sono
+andate le tre regole di `.topbar-iconbtn`, rimaste senza inquilino, e
+`.sidebar-maniglia-t`, il testo della maniglia che non esiste più — il comando è
+un'icona, e il suo nome sta nel `title`.
+
+La testata, alleggerita, è passata da **112px a 48**: ne parla
+`docs/IL-LEGGIO.md`, che possiede la storia del rail; qui si registra la
+conseguenza sul menù.
+
+### L'asse METODO è ora l'unica porta della modalità guidata
+
+È la novità che riguarda gli assi, e viene da un riordino dei percorsi
+(`docs/PERCORSI-TRADUTTIVI.md` §6). La carta d'avvio «**Passo dopo passo**» non
+era uno scopo ma un **modo** — la spiegazione che cammina accanto al lavoro — e
+quel modo l'app lo possedeva già qui, alla voce **Guidata**. La carta lo
+duplicava, ed è uscita.
+
+L'asse smette così di essere un'alternativa fra le altre e diventa **la sede** di
+quella scelta. Ne segue una cosa da sapere, e sta scritta perché è una scelta e
+non un effetto: chi traduce per la prima volta parte dal compito a casa e la
+guida se l'accende da qui. Il distintivo «è la tua prima volta», che additava la
+carta scomparsa, è caduto con lei.
+
+Resta valido tutto quello che la §1 dice del gruppo Vista in Guidata: non si
+barra, si fa quieto, e una riga spiega perché non si applica.
+
+### Collaudo
+
+| prova | esito |
+|---|---|
+| stato nuovo, senza preferenza | `menu-stretto` attivo: il menù nasce chiuso |
+| rail | 60px, i tre comandi impilati a `y = 75 · 110 · 145` |
+| preferenza «aperto», su caricamento vero | 264px, otto etichette, testa in fila a `x = 22 · 58 · 94` |
+| ordine nella testa | Home · Allarga/Stringi · Indietro |
+| carcasse | `.topbar-iconbtn` e `.sidebar-maniglia-t` a zero |
+| assi | «Guidata» presente e applicabile; il gruppo Vista quieto, non barrato |
+
+> Una nota di metodo, perché è costata due misure sbagliate: commutando il menù a
+> pagina viva la colonna continuava a leggersi 60px e le etichette restavano
+> nascoste, come se il comando non funzionasse. Non era vero — in questo riquadro
+> **cambiare una classe non rifa' il matching dei selettori**. La prova onesta è
+> un caricamento vero con la preferenza salvata.
