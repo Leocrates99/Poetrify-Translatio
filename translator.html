@@ -4523,6 +4523,11 @@ textarea[data-rivedere="1"] { border-style: dashed; border-color: var(--sepia); 
    scorrendo. Rettangoli col lato corto in verticale — la descrizione detta
    l'altezza, e `align-items: stretch` la pareggia fra le tre. */
 .avvio-corpo-largo { max-width: 920px; }
+/* Le stesse tre carte vivono anche nel modale dei percorsi, e chi arriva dal
+   Corpus le incontra prima che nell'avvio. Il `.modal` condiviso si ferma a
+   780px: le carte scendevano a 229px e il paragrafo a 34 caratteri per riga,
+   una colonna da giornale. Stessa misura dell'avvio, stesso respiro. */
+#modal-percorsi .modal { max-width: 980px; }
 .avvio-modi { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: stretch; }
 @media (max-width: 1080px) { .avvio-modi { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 700px) { .avvio-modi { grid-template-columns: 1fr; } }
@@ -11977,7 +11982,13 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
   .analysis-drawer-body .dict-suggest-pill,
   /* Il commutatore scelta/scrittura libera: misurato a 40px, l'unico bersaglio
      del cassetto sotto la soglia, perche' la sua classe non era in elenco. */
-  .analysis-drawer-body .toggle-mode-btn { min-height: 44px; }
+  .analysis-drawer-body .toggle-mode-btn,
+  /* I comandi del pannello dello scheletro, da quando entra anche lui nel foglio:
+     nati per stare in una riga del brano, misurano 25px e 21 sul telefono. Ogni
+     componente che arriva in una superficie nuova porta le proprie misure, e la
+     regola del tocco non conosce le sue classi finche' non gliele si dice. */
+  .analysis-drawer-body .schel-vq-forma-btn,
+  .analysis-drawer-body .schel-conn-btn { min-height: 44px; }
   .drop-voce { min-height: 44px; }
   /* La chiusura del foglio: 32px bastano al mouse, non al pollice — e sbagliarla
      qui vuol dire toccare la parola che sta sotto. */
@@ -12526,7 +12537,9 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
 
 <!-- MODALE APPROCCIO TRADUTTIVO — scelta del flusso di lavoro principale -->
 <div class="modal-backdrop" id="modal-percorsi">
-  <div class="modal" style="max-width: 780px;">
+  <!-- La misura sta nel foglio, non qui: uno stile in linea batte ogni
+       selettore, e questo teneva le carte a 229px. -->
+  <div class="modal">
     <h3 class="modal-title">Perché stai traducendo questo brano?</h3>
     <p class="modal-subtitle">Il percorso decide le tappe, il ritmo e che cosa vuol dire «finito». Cambiarlo non cancella niente: il lavoro fatto resta.</p>
     <div class="avvio-modi" id="pannello-percorsi-corpo"></div>
@@ -30251,23 +30264,19 @@ function apriPannelloPercorsi() {
     const sc = PERCORSI[k];
     if (!sc) return '';
     const attivo = k === state.percorso;
+    /* STESSA FORMA DELLE CARTE D'AVVIO. Erano due superfici delle stesse tre
+       carte e ne era stata aggiornata una sola: qui restavano l'anteprima delle
+       tappe e il tempo lungo. Chi arriva dal Corpus incontra PRIMA questa. */
     const stima = stimaPercorso(k, n);
-    const nastro = (sc.playlist || []).map(function (t) {
-      return '<span class="apc-nodo"><span class="apc-pallino" aria-hidden="true"></span>'
-        + escapeHtml(etichettaTappa(t)) + '</span>';
-    }).join('<span class="apc-filo" aria-hidden="true"></span>');
     return '<button class="avvio-modo apc' + (attivo ? ' sel' : '') + '"'
       + ' onclick="scegliPercorsoDaPannello(&#39;' + k + '&#39;)"'
       + ' aria-pressed="' + (attivo ? 'true' : 'false') + '">'
       + (attivo ? '<span class="apc-flag">è quello in corso</span>' : '')
       + '<span class="am-t">' + sc.icona + ' ' + escapeHtml(sc.nome) + '</span>'
       + '<span class="am-d">' + escapeHtml(sc.scopo) + '</span>'
-      + '<span class="apc-tempo">' + escapeHtml(sc.tempo)
-        + (stima ? ' · su questo brano: <strong>' + escapeHtml(stima) + '</strong>' : '') + '</span>'
-      + '<span class="am-piano">'
-        + '<span class="am-piano-k">Il percorso · ' + (sc.playlist || []).length + ' tappe</span>'
-        + '<span class="apc-nastro">' + nastro + '</span>'
-      + '</span>'
+      + (stima ? '<span class="apc-stima" title="Una stima larga. Il tempo vero dipende'
+          + ' anche da quanto sono lunghe le parole e da quante volte apri il dizionario.">'
+          + escapeHtml(stima) + '</span>' : '')
       + '</button>';
   }).join('');
   if (!apri && altri.length) {
