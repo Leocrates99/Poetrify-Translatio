@@ -104,8 +104,8 @@ il suo corpo sale da 9 a 10px.
 parola restava selezionata — e dopo un «Assegna» resta selezionata. Provato: si
 clicca l'intestazione di «est» e il cassetto continua a mostrare «Gallia».
 
-La regola giusta non è una gerarchia fra i due inquilini ma il **gesto più
-recente**. Un solo ascoltatore delegato sui token segna quale dei due è stato
+La regola giusta non è una gerarchia fra gli inquilini ma il **gesto più
+recente**. Un solo ascoltatore delegato sui token segna quale sia stato
 l'ultimo; nessun renderer toccato.
 
 ---
@@ -213,15 +213,21 @@ in su secondo lo spazio. Verificato: `tagliatoDalCassetto: false`.
 
 `brace_check = 10` · `node --check` OK · console pulita.
 
-## 7 · Le due vie del cassetto
+## 7 · Le porte del cassetto
 
-Il cassetto ospita **due inquilini diversi**, e conviene dirlo per esteso perché
+Il cassetto ospita **tre inquilini diversi**, e conviene dirlo per esteso perché
 per un pezzo se ne è visto uno solo.
 
-| via | che cosa entra | da quale gesto |
+| porta | che cosa entra | da quale gesto |
 |---|---|---|
 | **1 · la parola** | `.token-action-bar` — scelta della parte del discorso, «Assegna», «Annulla» | clic su una parola del brano |
+| **1bis · la tappa** | i pannelli dello scheletro — il verbo attivo, la congiunzione attiva | si aprono lavorando, nelle tappe del percorso |
 | **2 · la voce** | `.entry-fields` — il modulo intero: declinazione, genere, numero, caso, lemma | apertura di una voce nella lista |
+
+L'ordine dei numeri non è casuale: la porta 1bis sta **fra** le altre due perché
+ne condivide la natura con la prima — è un gesto automatico, si apre lavorando —
+e come quella cede il passo alla voce aperta a mano, che è una richiesta esplicita.
+La sezione 8 la racconta per intero.
 
 La via 2 esisteva, era scritta bene e **non la innescava nessuno**:
 `window.openAnalysisDrawer` era definita e mai chiamata in tutto il file. Chi
@@ -274,3 +280,82 @@ transizione CSS che in un riquadro che non compone fotogrammi non avanza mai.
 Rimisurate a cose ferme — e con la transizione spenta — entrambe erano a posto.
 
 `brace_check = 10` · `node --check` OK · console pulita.
+
+## 8 · La terza porta · le tappe dello scheletro
+
+Chi lavorava una tappa del percorso — Verbi, Proposizioni — vedeva il pannello
+dell'analisi aprirsi **in linea sotto il brano**, con la colonna di destra a
+`0px`, e non capiva perché il cassetto ci fosse altrove e lì no.
+
+La ragione stava in una frontiera. L'app disegna l'analisi con **tre famiglie di
+markup**, non due: le carte-voce, la barra del token, e i renderer dello
+scheletro (`renderScheletro*`) che hanno un linguaggio proprio — `.schel-vq-row`,
+`.schel-conn-bar`, `.schel-defconj-bar`. Contati sulla regione intera dello
+scheletro, righe 28548-29300: **zero** agganci che il cassetto sapesse afferrare.
+
+### La porta stretta, e perché non l'unificazione
+
+Si poteva far emettere allo scheletro le stesse carte indirizzabili dell'Analisi,
+riducendo le famiglie da tre a due. Sarebbe stato più pulito e molto più
+invasivo: quei renderer non hanno solo un markup, hanno una logica d'interazione
+propria — i bottoni che commutano finito e non finito, la barra dei connettivi,
+il flusso di conferma — e riscriverne il markup vuol dire ricablare i gestori.
+Si è scelta la porta stretta: **non si riscrive lo scheletro, gli si apre un
+ingresso**.
+
+### Un elenco, non tre rami
+
+La porta non ramifica. Dichiara le sedi, e la prossima tappa che nascerà con un
+pannello proprio si aggiunge con una riga:
+
+| pannello | il nome della parola | categoria |
+|---|---|---|
+| `.schel-vq-row.is-active` | `.schel-vq-word` | Verbo |
+| `.schel-conn-bar` | `.schel-conn-bar-word` | Congiunzione |
+
+**Restano fuori le viste d'insieme, e non per dimenticanza.** Il Nucleo è una
+griglia di celle sull'intera frase, i gruppi SVO raccolgono la frase, la
+Traduzione è il campo di scrittura della frase: non hanno «quello aperto» da
+portare via, e in una colonna da 540px starebbero peggio di dove stanno. Nello
+scheletro esistono due soli stati «aperto», `scheletroActiveVerb` e
+`scheletroActiveConn`, e sono esattamente i due della tavola.
+
+### Il congedo è metà della porta
+
+Nascondere la testa della riga dentro il cassetto — il nome lo dice già la
+testata — sembrava una rifinitura, ed era la rimozione dell'**unica uscita** di
+quel pannello: la × non chiudeva, perché la voce resta attiva nello stato e la
+sincronia se la riprendeva al primo giro. Vale come regola: **ogni porta ha
+bisogno del suo congedo**, e si preme quello che il pannello già possiede — la
+testa per il verbo, il pulsante «chiudi» per la congiunzione — invece di
+limitarsi a nascondere il cassetto.
+
+### Una voce uscita dall'elenco prima di entrarci
+
+`.schel-defconj-bar` — la barretta «è una congiunzione o un pronome relativo non
+rilevato?» — sembrava un terzo candidato. Provandola: quando compare, compare
+**insieme** al pannello della proposizione, che il cassetto prende già dalla prima
+porta e che è il lavoro vero. Non si è riusciti a produrre uno stato in cui
+vincesse, e una riga di configurazione che non scatta mai promette una copertura
+che non c'è. È uscita, col perché scritto accanto.
+
+Quella prova ha portato una buona notizia non cercata: il pannello della
+**proposizione** era già ospitato dalla prima porta, perché contiene una
+`.token-action-bar`. La copertura era più larga di quanto la mappa dicesse.
+
+### Collaudo
+
+| prova | esito |
+|---|---|
+| tappa Verbi, verbo marcato | pannello in `#analysis-drawer-body`, colonne `60 · 678 · 542` |
+| testata | «VOCE IN COMPILAZIONE · deplorare · Verbo» |
+| comando premuto nel cassetto | «modo non finito» → stato `_scheletroForma: non-finita`, `verboForma: Infinito` |
+| dopo il ridisegno | pannello ancora ospitato, **una sola copia** |
+| × sul verbo | riga a casa **collassata**, colonna a `0px` |
+| tappa Proposizioni, congiunzione | «VOCE IN COMPILAZIONE · enim · Congiunzione», una copia |
+| select nel cassetto | «Coordinante copulativa» → stato `congiunzioneTipo` |
+| × sulla congiunzione | `scheletroActiveConn` azzerato, colonna a `0px` |
+| non-regressione porta 1 | «PAROLA SELEZIONATA · vitam», 5 controlli, nessuna intrusa |
+| non-regressione porta 2 | «VOCE IN COMPILAZIONE · Non · Avverbio», 13 controlli, una copia |
+
+`brace_check = 10` · `node --check` OK · script verificato arrivare in fondo.
