@@ -522,23 +522,9 @@ input, textarea, select { font-family: inherit; color: inherit; }
   border-color: var(--primary);
   background: white;
 }
-.topbar-iconbtn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px; height: 30px;
-  flex-shrink: 0;
-  border-radius: var(--radius-sm);
-  color: var(--sepia);
-  border: 1px solid transparent;
-  transition: all var(--transition-base);
-}
-.topbar-iconbtn svg { width: 17px; height: 17px; display: block; }
-.topbar-iconbtn:hover {
-  color: var(--lang-accent);
-  background: var(--ivory);
-  border-color: var(--rule-soft);
-}
+/* (Qui stavano le tre regole di `.topbar-iconbtn`. I due bottoni-icona della
+   testata — indietro e home — sono passati nel menù di sinistra, dove ora vive
+   ogni comando, e queste sono rimaste senza inquilino.) */
 .save-status {
   display: flex;
   align-items: center;
@@ -11603,6 +11589,17 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
    hamburger) restano centrati verticalmente. */
 .topbar-row-main { display: flex !important; align-items: center; gap: 12px; grid-template-columns: none !important; }
 .brand { flex-shrink: 0; }
+/* IL SOTTOTITOLO STA IN FONDO A DESTRA, SU UNA RIGA SOLA. Era dentro il marchio
+   e lo faceva crescere in altezza; qui e' la firma della casa, che si guarda
+   una volta, non un'informazione da rileggere a ogni sguardo. */
+.brand-sub {
+  margin-left: auto;
+  flex: 0 0 auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 40vw;
+}
 .brano-meta, .save-status, .drawer-toggle { flex-shrink: 0; }
 /* Titolo della versione = H1 (gerarchia primaria): titolo vero e proprio, non più
    sottotitolo in corsivo. */
@@ -11618,18 +11615,22 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
    quello della sidebar); il titolo della versione si allinea alla colonna di
    lavoro; logo leggermente più grande; tutto centrato verticalmente. */
 @media (min-width: 901px) {
-  /* topbar a filo sinistro (padding-left 0) così la colonna brand (264px) finisce
-     ESATTAMENTE sul divisore della sidebar: il "filo" è continuo header↔corpo. */
-  .topbar { padding: 8px 28px 8px 0 !important; }
-  .topbar-row-main { display: grid !important; grid-template-columns: 264px 1fr auto !important; align-items: center; gap: 12px; }
+  /* UNA RIGA SOLA. Prima era una griglia a tre colonne con sei figli: i due in
+     eccesso finivano su una seconda riga implicita, e il titolo della versione
+     si ritrovava incolonnato SOTTO il marchio, largo 264px. Misurata, la
+     testata occupava 112px per dire tre cose. In fila ne bastano una sessantina. */
+  .topbar { padding: 7px 28px 7px 22px !important; }
+  .topbar-row-main { display: flex !important; align-items: center; gap: 0; }
   .brand {
-    flex-direction: column; align-items: flex-start; justify-content: center; gap: 1px;
-    align-self: stretch; padding: 0 14px 0 22px;
-    border-right: 1px solid var(--rule-soft);
+    flex-direction: row; align-items: baseline; gap: 10px;
+    padding: 0; border-right: 0; flex: 0 0 auto;
   }
-  .brand-mark { font-size: 27px; line-height: 1.05; }
-  .brand-sub { font-size: 11.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
-  .topbar-title { font-size: 23px; }
+  .brand-mark { font-size: 25px; line-height: 1.1; }
+  .brand-sub { font-size: 11.5px; }
+  /* Il titolo della versione ha spazio suo: il distacco dal marchio dice che
+     sono due cose diverse — la casa e il lavoro di oggi — senza bisogno di un
+     filetto che le separi. */
+  .topbar-title { font-size: 21px; margin-left: 34px; flex: 0 1 auto; }
 }
 .poetrify-lang-pill { display: none; }   /* ridondante con il toggle LAT/ΕΛ */
 
@@ -11668,9 +11669,10 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
   body.menu-stretto .main.analysis-open,
   .main.menu-stretto.analysis-open { grid-template-columns: 60px 1fr minmax(320px, 0.8fr) !important; }
   body.menu-stretto .sidebar { padding: 18px 0 !important; align-items: center; }
-  body.menu-stretto .sidebar-maniglia { margin: 0 0 6px; padding: 6px; }
+  /* Nel rail i tre comandi si impilano: in 60px non stanno in fila, e impilati
+     restano tutti raggiungibili senza aprire nulla. */
+  body.menu-stretto .sidebar-testa { flex-direction: column; padding: 4px 0 6px; gap: 1px; }
   body.menu-stretto .sidebar-maniglia svg { transform: rotate(180deg); }
-  body.menu-stretto .sidebar-maniglia-t { display: none; }
   /* Quel che nel rail non ci sta, e non serve mentre si traduce: le
      impostazioni restano una scelta, non un comando da secondo. */
   body.menu-stretto .sidebar-section-label,
@@ -12024,17 +12026,20 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
    sezioni delle impostazioni tacciono — sono impostazioni, non comandi da
    secondo, e il percorso ora sta nella fascia.
    ═══════════════════════════════════════════════════════════════════════════ */
-.sidebar-maniglia {
-  display: flex; align-items: center; gap: 7px; align-self: flex-start;
-  margin: 0 0 2px 14px; padding: 6px 10px 6px 7px;
-  background: none; border: 1px solid transparent; border-radius: var(--radius-pill);
-  font-family: var(--font-ui); font-size: 11px; font-weight: 700;
-  letter-spacing: 0.04em; color: var(--sepia); cursor: pointer; min-height: 32px;
+.sidebar-testa {
+  display: flex; align-items: center; gap: 2px;
+  padding: 4px 10px 2px;
+}
+.sidebar-nav-btn {
+  display: flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; flex: none;
+  background: none; border: 1px solid transparent; border-radius: var(--radius-sm);
+  color: var(--sepia); cursor: pointer; text-decoration: none;
   transition: background var(--transition-base), color var(--transition-base);
 }
-.sidebar-maniglia:hover { background: var(--cream); color: var(--lang-accent); }
-.sidebar-maniglia:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: 1px; }
-.sidebar-maniglia svg { width: 15px; height: 15px; flex: none; transition: transform var(--transition-base); }
+.sidebar-nav-btn:hover { background: var(--cream); color: var(--lang-accent); }
+.sidebar-nav-btn:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: 1px; }
+.sidebar-nav-btn svg { width: 17px; height: 17px; display: block; transition: transform var(--transition-base); }
 
 /* Le regole del rail vivono nel blocco desktop, piu' sotto: il contesto
    «>900px» usa `!important` per annullare il rail dei telefoni, e annullerebbe
@@ -12153,20 +12158,14 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
            salvando il lavoro corrente prima di lasciare la pagina. -->
       <a class="brand" href="app.html" title="Torna all'inizio (dashboard Poetrify)" onclick="try{persistCurrent()}catch(e){}">
         <span class="brand-mark">Poetrify</span>
-        <span class="brand-sub">Officina del greco e del latino</span>
       </a>
-      <!-- Indietro: torna alla pagina da cui si è arrivati (di norma la scelta
-           della lingua), non sempre all'hub. Salva il lavoro prima di lasciare. -->
-      <a class="topbar-iconbtn" href="lingua.html?to=translator"
-         onclick="event.preventDefault(); indietroTranslator();" title="Torna indietro" aria-label="Indietro">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></svg>
-      </a>
-      <!-- Home discreta a icona (dal mockup): torna alla dashboard salvando. -->
-      <a class="topbar-iconbtn" href="app.html" onclick="try{persistCurrent()}catch(e){}" title="Torna alla home (dashboard Poetrify)" aria-label="Home">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
-      </a>
-      <!-- Titolo della versione in lavorazione (nascosto in archivio/dizionario). -->
+      <!-- Il titolo della versione di lavoro: c'è SEMPRE, accanto al marchio.
+           (Indietro e home sono usciti di qui: ogni comando vive nel menù di
+           sinistra, in cima, nell'ordine home · apri-chiudi · indietro.) -->
       <h1 class="topbar-title" id="topbar-title"></h1>
+      <!-- Il sottotitolo lascia il marchio e va in fondo a destra, su una riga
+           sola: è la firma della casa, non un'informazione da leggere ogni volta. -->
+      <span class="brand-sub" id="brand-sub">Officina del greco e del latino</span>
 
       <div class="brano-meta" id="topbar-brano-slot">
         <!-- Dati del brano (titolo/autore/opera) raccolti in un UNICO popover
@@ -12224,14 +12223,25 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
   <main class="main" id="main">
 
     <aside class="sidebar" id="sidebar">
-      <button type="button" class="sidebar-maniglia" id="sidebar-maniglia"
-              onclick="stringiMenu()" aria-expanded="true" aria-controls="sidebar"
-              title="Stringi il menù (guadagni larghezza per il brano)">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="M15 6l-6 6 6 6"/></svg>
-        <span class="sidebar-maniglia-t">Stringi</span>
-      </button>
+      <!-- LA TESTA DEL MENU'. Ogni comando sta qui, anche quelli che prima
+           vivevano nella testata: nell'ordine home, apri/chiudi, indietro. -->
+      <div class="sidebar-testa">
+        <a class="sidebar-nav-btn" href="app.html" onclick="try{persistCurrent()}catch(e){}"
+           title="Torna alla home (dashboard Poetrify)" aria-label="Home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l-2 0l9 -9l9 9l-2 0"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"/><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"/></svg>
+        </a>
+        <button type="button" class="sidebar-nav-btn sidebar-maniglia" id="sidebar-maniglia"
+                onclick="stringiMenu()" aria-expanded="false" aria-controls="sidebar"
+                title="Allarga il menù">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M15 6l-6 6 6 6"/></svg>
+        </button>
+        <a class="sidebar-nav-btn" href="lingua.html?to=translator"
+           onclick="event.preventDefault(); indietroTranslator();" title="Torna indietro" aria-label="Indietro">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></svg>
+        </a>
+      </div>
       <div class="sidebar-section-label lang-stamp">Officina di traduzione</div>
       <ul class="tab-list" id="tab-list"></ul>
 
@@ -27038,9 +27048,15 @@ function syncTopbar() {
     /* Anche durante l'AVVIO di un brano il titolo non ha senso: quello in
        memoria è del brano precedente, e mostrarlo mentre se ne crea un altro
        fa credere di starci ancora lavorando. */
+    /* Il posto del titolo non si toglie mai: la testata deve dire sempre su che
+       cosa si sta lavorando. Quel che cambia e' il TESTO, e per una ragione
+       precisa: durante l'avvio di un brano nuovo il titolo in memoria e' quello
+       del brano PRECEDENTE, e stamparlo direbbe una cosa falsa. Li' — e nelle
+       schede che non lavorano un brano — resta l'etichetta neutra. */
     const noBrano = (state.currentStep === 4 || state.currentStep === 6 || state.currentStep === 7 || !!avvio);
-    tbTitle.style.display = noBrano ? 'none' : '';
-    tbTitle.textContent = (state.meta.titolo && state.meta.titolo.trim()) ? state.meta.titolo.trim() : 'Versione senza titolo';
+    tbTitle.style.display = '';
+    tbTitle.textContent = (!noBrano && state.meta.titolo && state.meta.titolo.trim())
+      ? state.meta.titolo.trim() : 'Versione senza titolo';
   }
   // Aggiorna la pillola identitaria linguistica
   const langPill = document.getElementById('poetrify-lang-pill');
@@ -27071,14 +27087,19 @@ function stringiMenu(forza) {
   const m = document.getElementById('sidebar-maniglia');
   if (m) {
     m.setAttribute('aria-expanded', stretto ? 'false' : 'true');
+    m.setAttribute('aria-label', stretto ? 'Allarga il menù' : 'Stringi il menù');
     m.title = stretto ? 'Allarga il menù' : 'Stringi il menù (guadagni larghezza per il brano)';
   }
 }
 
+/* IL RAIL E' LA POSTURA DI PARTENZA. Il menu' largo tiene 264px: giusti quando
+   lo si legge, un lusso appena si comincia a tradurre. Chi lo vuole aperto lo
+   apre e la scelta si ricorda: cambia solo il default di chi non ha ancora
+   scelto, e per lui il brano nasce con 204px in piu'. */
 function ripristinaMenuStretto() {
   let v = null;
   try { v = localStorage.getItem('poetrify-menu-stretto'); } catch (e) {}
-  if (v === '1') stringiMenu(true);
+  stringiMenu(v !== '0');
 }
 
 /* Colloca la quick-bar (impostazioni) e il popover "Dati del brano" SEMPRE nel
