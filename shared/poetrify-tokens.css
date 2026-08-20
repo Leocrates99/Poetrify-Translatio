@@ -226,3 +226,50 @@ body[data-lang="grc"], body[data-lang="greco"] {
     scroll-behavior: auto !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   IL MINI-CTA · convenzione della casa
+   ───────────────────────────────────────────────────────────────────────────
+   Un richiamo che porta l'utente ALTROVE non e' un link sottolineato: e' un
+   pulsante piccolo, pieno nel colore della lingua. Vale su ogni superficie.
+
+   `--lang-accent` esiste solo nel translator; altrove il colore della lingua lo
+   porta `--primary`. La catena di ripieghi tiene entrambi i casi.
+
+   ATTENZIONE ALLA CASCATA, ogni volta che se ne piazza uno: una regola di
+   contenitore come `.tal-blocco a { color: … }` ha specificita' (0,2,0) e batte
+   questa (0,1,0), ridipingendo il TESTO del pulsante col colore del fondo — cioe'
+   rendendolo invisibile. Se quella regola serviva solo al link che stai
+   sostituendo, toglila; non combatterla con `!important`.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.cta-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: var(--lang-accent, var(--primary));
+  border: 1px solid var(--lang-accent, var(--primary));
+  border-radius: var(--radius-pill, 999px);
+  color: var(--on-primary);
+  font-family: var(--font-ui);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.cta-mini:hover {
+  background: var(--primary-dark, var(--lang-accent, var(--primary)));
+  border-color: var(--primary-dark, var(--lang-accent, var(--primary)));
+  text-decoration: none;
+}
+.cta-mini:focus-visible {
+  outline: 2px solid var(--lang-accent, var(--primary));
+  outline-offset: 2px;
+}
+/* Al tocco il bersaglio sale a 44px, come ogni comando della casa. */
+@media (pointer: coarse) {
+  .cta-mini { min-height: 44px; padding: 10px 16px; font-size: 13px; }
+}
