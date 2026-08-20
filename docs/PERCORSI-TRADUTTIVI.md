@@ -73,6 +73,11 @@ vi si fonde come **overlay-guida** (i suoi testi didattici tornano visibili e di
 
 ## 3 · La famiglia dei percorsi
 
+> **Superata dalla §6.** Quanto segue è il piano di allora, e resta a registro
+> perché spiega da dove viene ciò che c'è oggi. La famiglia dei sei è stata poi
+> ridotta a **tre scopi** — casa, classe, simulazione — e due voci hanno cambiato
+> natura invece di sparire. Per lo stato corrente si legga la §6.
+
 *Nomi rivisti dalla critica didattica: per scopo, in parole da studente. «La versione» →
 **Versione per casa**; «Compito in classe» → **Simulazione di compito** (durante una
 verifica reale l'app è vietata: la promessa onesta è l'allenamento); «Pro con
@@ -165,7 +170,101 @@ spediti». La risposta strutturale è **una sola catena di moduli** con playlist
 - *strutturata*: la scheda-percorso è l'unica fonte di verità (card, pill, nastro, export);
 - *funzionante*: si compone da pezzi già vivi (scheletro, auto-analizza, seed ordo, stemma);
 - *efficiente*: nessun renderer duplicato; il wizard si fonde invece di raddoppiare;
-- *intuitiva*: si sceglie per scopo con parole da studente, e la playlist si vede;
+- *intuitiva*: si sceglie per scopo con parole da studente — e la scelta è fra tre,
+  non fra sei (§6); la playlist non si mostra più nella card, perché chi sceglie uno
+  scopo non sta scegliendo una sequenza;
 - *spedita*: Simulazione ~10 clic di struttura; Ripasso 10-15′; e il percorso pieno
   resta il default culturale, difeso dalla visibilità (export col percorso stampato),
   non da divieti.
+
+---
+
+## 6 · La riduzione a tre scopi
+
+La famiglia dei sei nasceva da una domanda giusta — *a che cosa serve questa
+versione?* — ma mescolava risposte di tipo diverso. Cinque carte all'avvio non
+erano cinque scopi: erano due scopi, un **modo** e un **approfondimento**, messi
+in fila come se fossero la stessa cosa.
+
+### I tre scopi
+
+| carta | quando |
+|---|---|
+| **Compito a casa** *(default)* | la versione assegnata, col tempo per il metodo intero |
+| **Uso in classe** | si lavora insieme e a voce alta, una frase per volta |
+| **Simulazione di compito** | il ritmo della verifica, per allenarsi |
+
+Le descrizioni sono scritte in **voce Leonardo, in prosa paragrafica**: nessuna
+titolatura, nessuna frase nominale, nessun doppio punto. Verificato sul
+rendering, non sul sorgente.
+
+> **Compito a casa** — Quando la versione è assegnata e il tempo non manca, si
+> percorre il metodo per intero, dalla segmentazione fino alla bella copia. I
+> participi non fanno storia a sé, perché tirano a sé blocchi di complementi e si
+> sciolgono dove capitano.
+
+### «I bivi del testo» non era un percorso
+
+È la correzione che riordina l'impianto, ed è concettuale prima che tecnica. I
+participi possono portare con sé blocchi di complementi o sintagmi nell'analisi
+logica e sintattica: non aprono una **strada alternativa**, approfondiscono quella
+che c'è. Le sue tappe — `participi`, `attributivi`, `ancore` — sono passate nella
+playlist del compito a casa, dove appartengono. Un potenziamento del metodo
+generale, non un metodo accanto.
+
+### Due carte sono uscite, e una non è sparita
+
+**«Passo dopo passo»** era un MODO, non uno scopo: la spiegazione che cammina
+accanto al lavoro. Quel modo l'app lo possedeva già altrove — l'asse METODO, alla
+voce «Guidata» — e la carta lo duplicava. È uscita dalle carte d'avvio; la
+modalità resta dove già viveva, e la nuova carta «Uso in classe» nasce col preset
+guidato invece di ereditarlo.
+
+**«Leggere tanto»** è uscita senza sostituto: la lettura estensiva è una pratica
+vera ma non uno dei tre scopi, e tenerla avrebbe rimesso in fila una quarta
+risposta di tipo diverso.
+
+Con «passo dopo passo» è caduto il distintivo **«è la tua prima volta»**, che
+additava proprio quella carta: senza di lei additerebbe il vuoto. Con il
+distintivo è caduta anche `haGiaConclusoUnaVersione()`, rimasta senza chiamanti.
+Chi traduce per la prima volta parte dal compito a casa e la guida se l'accende
+dall'asse METODO — sta scritto qui perché è una scelta, non un effetto.
+
+### Le carte, alleggerite
+
+- **Via l'anteprima delle tappe.** Faceva vedere nove pallini con le etichette e
+  occupava più spazio della descrizione che doveva sostenere. Chi sceglie uno
+  scopo non sta scegliendo una sequenza, e le tappe le vedrà lavorando. (Le classi
+  restano: la miniatura del nastro vive ancora in un altro renderer.)
+- **Il tempo si stringe in un riquadrino con la sola stima.** Diceva
+  «≈5 min a frase · su questo brano: circa 30 minuti», cioè prometteva una
+  precisione che non ha: il tempo vero dipende anche da **quanto sono lunghe le
+  parole** e da **quante volte si apre il dizionario**. Il conteggio delle frasi
+  esce dal riquadro; la ragione della larghezza sta nel tooltip.
+- **Tre rettangoli col lato corto in verticale, su una riga sola.** La tappa degli
+  scopi dichiara `avvio-corpo-largo` e prende i 920px che il suo ospite concede: a
+  720 le tre carte erano colonnine 231×250, ora sono **297×207**.
+
+### Collaudo
+
+| prova | esito |
+|---|---|
+| carte all'avvio | 3, su una riga, `repeat(3, 1fr)` |
+| forma | 297×207 ciascuna, lato corto in verticale, stessa altezza |
+| anteprima tappe residua | 0 |
+| riquadro del tempo | «circa 30 / 40 / 15 minuti», senza conteggio delle frasi |
+| pulsante «altri percorsi» | assente: non ci sono altri da mostrare |
+| percorso proposto | `versione-casa` |
+| bivi assorbiti | `participi`, `attributivi`, `ancore` nella playlist di casa |
+| doppi punti nelle descrizioni | 0 |
+| titolature o frasi nominali | nessuna |
+
+`brace_check = 10` · `node --check` OK · script verificato arrivare in fondo.
+
+### Che cosa resta vero della §3
+
+Le regole trasversali di quella sezione non sono state toccate e valgono ancora:
+parole da studente, la scelta che si legge invece di scoprirsi, il nastro unico,
+il percorso che non ha **mai un colore proprio** perché il colore resta della
+lingua, l'onestà dei controlli, il cambio di strada che non distrugge il lavoro
+fatto. Cambia la famiglia, non il canone.
