@@ -10547,6 +10547,14 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 
 .analysis-drawer-body { flex: 1; overflow-y: auto; padding: 16px 18px 24px; }
 .analysis-drawer-body .entry-fields { display: block; }
+/* Il pannello della tappa, ospitato: nel corpo dello scheletro sta in una riga
+   fra le altre e porta i propri margini e la propria cornice; qui e' l'unico
+   inquilino e li perde, perche' la cornice la da' gia' il cassetto. */
+.analysis-drawer-body .schel-vq-row.is-active {
+  margin: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+}
+/* Il nome della parola lo dice gia' la testata del cassetto. */
+.analysis-drawer-body .schel-vq-head { display: none; }
 .entry-card.is-in-drawer { outline: 2px solid var(--lang-accent); outline-offset: -1px; }
 /* ═══════════════════════════════════════════════════════════════════════════
    LA TENDINA DEI TOKEN · il menu' della casa al posto di quello del sistema
@@ -43014,6 +43022,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ── 2 · i campi di una voce aperta a mano ─────────────────────────── */
+    /* 1bis · IL PANNELLO DELLA TAPPA DELLO SCHELETRO.
+       Le tappe del percorso (Verbi, Proposizioni, …) hanno un markup proprio, che
+       non e' ne' la barra del token ne' una carta-voce: il cassetto non le vedeva
+       e il pannello restava in linea sotto il brano. Il nodo e'
+       `.schel-vq-row.is-active`, uno solo per volta perche' e' «il verbo attivo».
+       Stessa precedenza della barra del token: e' un gesto automatico, quindi
+       cede a una voce aperta a mano, che e' una richiesta esplicita. */
+    var rigaEd = (adrLargo.matches && ed && !(adrVoceRichiesta && window.__adrawer && adrCard()))
+      ? ed.querySelector('.schel-vq-row.is-active') : null;
+    if (rigaEd) {
+      adrOspita(rigaEd, 'schel',
+        ((rigaEd.querySelector('.schel-vq-word') || {}).textContent || '').trim(), 'Verbo');
+      return;
+    }
+    var rigaDr = body.querySelector('.schel-vq-row.is-active');
+    if (rigaDr) {
+      /* Sentinella immutata: l'editor non e' stato ridisegnato, la riga manca di
+         la' solo perche' l'abbiamo spostata noi. */
+      if (adrHome && adrHome.tipo === 'schel' && adrLargo.matches
+          && adrHome.gen === adrSentinella()) return;
+      adrSgombera();
+      Array.prototype.forEach.call(body.querySelectorAll('.schel-vq-row'),
+        function(n){ n.remove(); });
+    }
+
     if (!window.__adrawer) { adrShut(); return; }
     var card = adrCard();
     if (!card) { window.__adrawer = null; adrShut(); return; }      // voce sparita
@@ -43057,6 +43090,15 @@ document.addEventListener('DOMContentLoaded', () => {
       })[0];
       if (ann) { ann.click(); return; }
       if (adrHome && adrHome.tipo === 'token') { adrSgombera(); adrShut(); return; }
+    }
+    /* Stessa logica per il pannello della tappa dello scheletro: la riga esiste
+       finche' il verbo e' ATTIVO, e limitarsi a nascondere il cassetto la farebbe
+       rientrare al primo ridisegno. Si preme la testa della riga — l'uscita che
+       l'app ha gia' previsto — che qui e' nascosta alla vista ma non al codice. */
+    var riga = body && body.querySelector('.schel-vq-row.is-active');
+    if (riga) {
+      var testa = riga.querySelector('.schel-vq-head');
+      if (testa) { testa.click(); return; }
     }
     window.__adrawer = null;
     window.syncAnalysisDrawer();
