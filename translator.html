@@ -34,6 +34,11 @@
   --primary-tint: #ede9fc;
   --primary-dark: #0f0070;
   --primary-border: #d8d0f7;
+  /* IL TRIPLO DELLA LINGUA. Ogni campitura traslucida del primario passa di
+     qui: `rgba(var(--primary-rgb), a)` conserva l'opacita' e cambia colore con
+     la lingua. Prima quei valori erano scritti a mano — nati quando l'indaco
+     era il neutro — e restavano blu anche in latino, sotto un filetto rosso. */
+  --primary-rgb: 24, 0, 172;
   --brass: #9c6b3c;
 
   /* Variabili di accento linguistico per evitare confusione fra latino e greco.
@@ -199,10 +204,15 @@
    Quando l'utente sta lavorando su un brano in latino (body[data-lang="latino"]),
    l'identità cromatica delle sezioni linguistiche prende il rosso pompeiano,
    per distinguersi chiaramente dal greco e ridurre il rischio di confusione.
-   Il brand primario indaco (#1800AC) resta come asse della UI di servizio
-   (sidebar, modali, badge tier). L'override agisce solo sulle variabili
-   --lang-accent-* che sono usate nei punti dove il contesto
-   linguistico è rilevante. */
+   IL COLORE E' LA LINGUA, SENZA ECCEZIONI: non solo le --lang-accent-*, ma
+   il primario e OGNI suo derivato. Questa carta diceva l'opposto — «l'indaco
+   resta come asse della UI di servizio» — mentre shared/poetrify-tokens.css,
+   linkato dopo e quindi vincente per cascata, gia' faceva commutare --primary
+   per lingua. Da quella contraddizione nascevano i filetti rossi su fondo blu:
+   il primario cambiava, i suoi derivati scritti a mano no.
+   Resta legittimamente FUORI dalla regola il colore di CATEGORIA — parte del
+   discorso, caso, classe, fase del percorso: quello dice che cos'e' una parola,
+   non in che lingua e', e deve restare uguale nelle due. */
 body[data-lang="latino"] {
   --lang-accent: #A22E37;        /* rosso pompeiano */
   --lang-accent-soft: #c44a52;
@@ -210,6 +220,12 @@ body[data-lang="latino"] {
   --lang-accent-dark: #6e1f25;
   --lang-accent-border: #e8b8bc;
   --lang-name: 'Latino';
+  /* I derivati del primario seguono la lingua come il primario. Senza queste
+     tre righe restavano lilla-indaco: era la campitura sotto i filetti rossi. */
+  --primary-rgb: 162, 46, 55;
+  --primary-tint: #fbecee;
+  --primary-border: #e8b8bc;
+  --primary-pale: rgba(162, 46, 55, 0.09);
 }
 body[data-lang="greco"] {
   --lang-accent: #1800AC;
@@ -218,6 +234,10 @@ body[data-lang="greco"] {
   --lang-accent-dark: #0f0070;
   --lang-accent-border: #d8d0f7;
   --lang-name: 'Greco';
+  --primary-rgb: 24, 0, 172;
+  --primary-tint: #ede9fc;
+  --primary-border: #d8d0f7;
+  --primary-pale: rgba(24, 0, 172, 0.08);
 }
 /* Adattamento dark mode per il latino pompeiano */
 :root[data-theme="dark"] body[data-lang="latino"] {
@@ -226,6 +246,13 @@ body[data-lang="greco"] {
   --lang-accent-pale: rgba(229, 138, 144, 0.16);
   --lang-accent-dark: #ffb0b5;
   --lang-accent-border: rgba(229, 138, 144, 0.35);
+  /* Di notte i derivati del primario devono seguire la lingua come di giorno.
+     Senza queste righe --primary-pale restava violetto anche in latino: misurati
+     41 punti, fra cui il fondo del token al passaggio del mouse. */
+  --primary-rgb: 229, 138, 144;
+  --primary-tint: rgba(229, 138, 144, 0.10);
+  --primary-border: rgba(229, 138, 144, 0.30);
+  --primary-pale: rgba(229, 138, 144, 0.16);
 }
 
 /* Il greco mancava: senza, di notte l'accento restava #1800AC (blu SCURO) mentre
@@ -238,6 +265,10 @@ body[data-lang="greco"] {
   --lang-accent-pale: rgba(139, 125, 255, 0.16);
   --lang-accent-dark: #a99cff;
   --lang-accent-border: rgba(139, 125, 255, 0.35);
+  --primary-rgb: 139, 125, 255;
+  --primary-tint: rgba(139, 125, 255, 0.10);
+  --primary-border: rgba(139, 125, 255, 0.30);
+  --primary-pale: rgba(139, 125, 255, 0.16);
 }
 
 /* ─── Applicazione dell'accento linguistico nei punti chiave ───────────── */
@@ -421,6 +452,11 @@ input, textarea, select { font-family: inherit; color: inherit; }
   gap: 10px;
   text-decoration: none;
   cursor: pointer;
+  /* Il <a> senza colore proprio prende il blu di default del browser (#0000EE):
+     invisibile finche' dentro c'e' solo il marchio, che ha il suo, ma qualunque
+     testo aggiunto qui nascerebbe blu in latino. Una lingua non puo' dipendere
+     da cosa il browser considera «un collegamento». */
+  color: var(--primary);
   transition: opacity var(--transition-base);
 }
 .brand:hover { opacity: 0.8; }
@@ -5347,7 +5383,7 @@ body[data-level="avanzato"] .syntax-tree-legend {
   font-family: var(--font-ui);
   font-size: 10px;
   padding: 1px 8px;
-  background: rgba(24, 0, 172, 0.10);
+  background: rgba(var(--primary-rgb), 0.10);
   color: var(--primary);
   border-radius: 999px;
   font-weight: 600;
@@ -5392,7 +5428,7 @@ body[data-level="avanzato"] .syntax-tree-legend {
 .dict-card-translation {
   margin-top: 4px;
   padding: 8px 10px;
-  background: rgba(24, 0, 172, 0.04);
+  background: rgba(var(--primary-rgb), 0.04);
   border-left: 3px solid var(--primary);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   display: flex;
@@ -5549,7 +5585,7 @@ body[data-level="avanzato"] .syntax-tree-legend {
   align-items: center;
   gap: 8px;
   padding: 6px 10px;
-  background: rgba(24, 0, 172, 0.08);
+  background: rgba(var(--primary-rgb), 0.08);
   border: 1px solid rgba(24, 0, 172, 0.20);
   border-left: 3px solid var(--primary);
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -5630,7 +5666,7 @@ body[data-level="avanzato"] .syntax-tree-legend {
 .dict-paradigm-btn:hover {
   background: var(--primary-dark, #0f0070);
   transform: translateY(-1px);
-  box-shadow: 0 3px 10px rgba(24, 0, 172, 0.25);
+  box-shadow: 0 3px 10px rgba(var(--primary-rgb), 0.25);
 }
 .dict-paradigm-icon { font-size: 13px; }
 
@@ -5692,7 +5728,7 @@ body[data-level="avanzato"] .syntax-tree-legend {
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--primary);
-  background: rgba(24, 0, 172, 0.06);
+  background: rgba(var(--primary-rgb), 0.06);
   border-left: 3px solid var(--primary);
   padding: 8px 14px;
   border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -6096,7 +6132,7 @@ body.paradigm-morph-on .paradigm-morph-legend { display: flex; }
   color: var(--primary);
 }
 .paradigm-morph-toggle.active {
-  background: rgba(24, 0, 172, 0.10);
+  background: rgba(var(--primary-rgb), 0.10);
   border-color: var(--primary);
   color: var(--primary);
 }
@@ -6189,7 +6225,7 @@ body.paradigm-morph-on .paradigm-morph-legend { display: flex; }
    PONTE COMUNICATIVO ANALISI PERIODALE
    ============================================ */
 .periodale-bridge {
-  background: linear-gradient(135deg, rgba(24, 0, 172, 0.04), rgba(214, 158, 46, 0.04));
+  background: linear-gradient(135deg, rgba(var(--primary-rgb), 0.04), rgba(214, 158, 46, 0.04));
   border: 1px solid rgba(24, 0, 172, 0.18);
   border-radius: var(--radius-md);
   padding: 12px 14px;
@@ -6202,7 +6238,7 @@ body.paradigm-morph-on .paradigm-morph-legend { display: flex; }
   gap: 8px;
   margin-bottom: 10px;
   padding-bottom: 8px;
-  border-bottom: 1px dashed rgba(24, 0, 172, 0.2);
+  border-bottom: 1px dashed rgba(var(--primary-rgb), 0.2);
   flex-wrap: wrap;
 }
 .periodale-bridge-icon { font-size: 18px; }
@@ -6252,7 +6288,7 @@ body.paradigm-morph-on .paradigm-morph-legend { display: flex; }
 }
 body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classical); font-size: 14px; }
 .periodale-bridge-chip.verb-chip {
-  background: rgba(24, 0, 172, 0.10);
+  background: rgba(var(--primary-rgb), 0.10);
   color: var(--primary);
   border-color: rgba(24, 0, 172, 0.25);
 }
@@ -6413,7 +6449,7 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
     /* scroll hint: gradiente che indica scroll possibile */
     background: linear-gradient(to right, var(--paper), var(--paper)),
                 linear-gradient(to right, var(--paper), var(--paper)),
-                linear-gradient(to right, rgba(24,0,172,0.10), rgba(24,0,172,0)),
+                linear-gradient(to right, rgba(var(--primary-rgb),0.10), rgba(var(--primary-rgb),0)),
                 linear-gradient(to left, rgba(24,0,172,0.10), rgba(24,0,172,0));
     background-position: left center, right center, left center, right center;
     background-repeat: no-repeat;
@@ -7329,7 +7365,7 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
 }
 .genere-card.selected {
   border-color: var(--primary);
-  background: rgba(24, 0, 172, 0.08);
+  background: rgba(var(--primary-rgb), 0.08);
 }
 .genere-card input { display: none; }
 .genere-card-label {
@@ -8287,7 +8323,7 @@ body[data-lang="greco"] .ordo-chip-phrase-input { font-family: var(--font-classi
   text-decoration: none;
   padding: 3px 9px;
   border-radius: var(--radius-sm);
-  background: rgba(24, 0, 172, 0.06);
+  background: rgba(var(--primary-rgb), 0.06);
   border: 1px solid rgba(24, 0, 172, 0.25);
   transition: all var(--transition-base);
   letter-spacing: 0.02em;
@@ -8394,7 +8430,7 @@ body[data-lang="greco"] .lemma-input { font-family: var(--font-classical); }
   text-transform: uppercase;
   letter-spacing: 0.05em;
   vertical-align: middle;
-  background: rgba(24, 0, 172, 0.10);
+  background: rgba(var(--primary-rgb), 0.10);
   color: var(--primary);
   border: 1px solid rgba(24, 0, 172, 0.25);
 }
@@ -14684,7 +14720,19 @@ function blocchiDi(p) {
 }
 
 /* ── PDF VETTORIALE · testo vero, selezionabile e ricercabile ─────────────── */
+/* IL COLORE DELLA LINGUA FUORI DAL DOM. Le esportazioni non hanno un
+   `body[data-lang]` da cui ereditare: prima dipingevano l'indaco a mano e una
+   versione latina usciva blu su carta mentre a schermo era rossa. La lingua la
+   dice il PROGETTO che si esporta, non quello aperto: l'esportazione in blocco
+   lavora su progetti diversi da quello corrente. */
+function coloreDiLingua(lingua) {
+  return (lingua === 'greco')
+    ? { accento: '#1800AC', scuro: '#0f0070', tenue: '#ede9fc' }
+    : { accento: '#A22E37', scuro: '#7d232b', tenue: '#fbecee' };
+}
+
 async function pdfDi(p) {
+  const _CL = coloreDiLingua(p && p.meta && p.meta.lingua);
   await ensureLib('jspdf');
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4', compress: true });
@@ -14709,20 +14757,20 @@ async function pdfDi(p) {
   blocchiDi(p).forEach(bl => {
     switch (bl.t) {
       case 'titolo':
-        spazio(30); scrivi(bl.x, { dim: 19, stile: 'bold', colore: '#1800AC', dopo: 2 });
-        doc.setDrawColor('#1800AC'); doc.setLineWidth(1.2);
+        spazio(30); scrivi(bl.x, { dim: 19, stile: 'bold', colore: _CL.accento, dopo: 2 });
+        doc.setDrawColor(_CL.accento); doc.setLineWidth(1.2);
         spazio(8); doc.line(L, y, L + larghezza, y); y += 12;
         break;
       case 'sotto': scrivi(bl.x, { dim: 12, stile: 'italic', colore: '#4a4540', dopo: 2 }); break;
       case 'meta':  scrivi(bl.x, { dim: 9, colore: '#6b6660', dopo: 8 }); break;
       case 'h2':
-        y += 8; spazio(22); scrivi(bl.x, { dim: 14, stile: 'bold', colore: '#1800AC', dopo: 3 });
+        y += 8; spazio(22); scrivi(bl.x, { dim: 14, stile: 'bold', colore: _CL.accento, dopo: 3 });
         break;
       case 'h3': y += 4; scrivi(bl.x, { dim: 11, stile: 'bold', colore: '#0f0070', dopo: 2 }); break;
       case 'cit': {
         const inizio = y;
         scrivi(bl.x, { dim: 11.5, stile: 'italic', x: L + 14, larghezza: larghezza - 14, dopo: 6 });
-        doc.setDrawColor('#1800AC'); doc.setLineWidth(2.4);
+        doc.setDrawColor(_CL.accento); doc.setLineWidth(2.4);
         doc.line(L + 3, inizio - 9, L + 3, y - 8);
         break;
       }
@@ -14760,6 +14808,7 @@ async function pdfDi(p) {
 /* ── SVG VETTORIALE · il formato scalabile vero (al posto del «PNG vettoriale»,
       che non può esistere: il PNG è una griglia di pixel) ───────────────────── */
 function svgDi(p) {
+  const _CL = coloreDiLingua(p && p.meta && p.meta.lingua);
   const W = 820, ML = 56, MR = 56, larghezza = W - ML - MR;
   const esc = s => String(s == null ? '' : s)
     .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -14794,17 +14843,17 @@ function svgDi(p) {
   blocchiDi(p).forEach(bl => {
     switch (bl.t) {
       case 'titolo':
-        testo(bl.x, { dim: 22, peso: 700, colore: '#1800AC', dopo: 2 });
-        corpo += `<line x1="${ML}" y1="${y}" x2="${W - MR}" y2="${y}" stroke="#1800AC" stroke-width="1.5"/>\n`;
+        testo(bl.x, { dim: 22, peso: 700, colore: _CL.accento, dopo: 2 });
+        corpo += `<line x1="${ML}" y1="${y}" x2="${W - MR}" y2="${y}" stroke="${_CL.accento}" stroke-width="1.5"/>\n`;
         y += 16; break;
       case 'sotto': testo(bl.x, { dim: 13, corsivo: true, colore: '#4a4540', dopo: 2 }); break;
       case 'meta':  testo(bl.x, { dim: 10, colore: '#6b6660', font: 'Helvetica, Arial, sans-serif', dopo: 10 }); break;
-      case 'h2':    y += 10; testo(bl.x, { dim: 16, peso: 700, colore: '#1800AC', dopo: 4 }); break;
+      case 'h2':    y += 10; testo(bl.x, { dim: 16, peso: 700, colore: _CL.accento, dopo: 4 }); break;
       case 'h3':    y += 4;  testo(bl.x, { dim: 12, peso: 700, colore: '#0f0070', dopo: 2 }); break;
       case 'cit': {
         const y0 = y;
         testo(bl.x, { dim: 12.5, corsivo: true, x: ML + 16, larghezza: larghezza - 16, dopo: 8 });
-        corpo += `<line x1="${ML + 4}" y1="${y0 - 12}" x2="${ML + 4}" y2="${y - 10}" stroke="#1800AC" stroke-width="3"/>\n`;
+        corpo += `<line x1="${ML + 4}" y1="${y0 - 12}" x2="${ML + 4}" y2="${y - 10}" stroke="${_CL.accento}" stroke-width="3"/>\n`;
         break;
       }
       case 'p': testo(bl.x, { dim: 12, dopo: 6 }); break;
@@ -30743,7 +30792,7 @@ function transferProjectLanguage(id) {
    (segmentazione · verbi · connettivi & preposizioni · sintagmi per caso ·
    traduzione) sono mappati direttamente sulle tappe della fase B. */
 const GUIDED_PHASES = {
-  lettura:    { letter: 'A', label: 'Lettura',    color: '#1800AC', tag: 'leggere prima di tradurre' },
+  lettura:    { letter: 'A', label: 'Lettura',    color: _CL.accento, tag: 'leggere prima di tradurre' },
   analisi:    { letter: 'B', label: 'Analisi',    color: '#2F855A', tag: '«pasticcia» il testo' },
   traduzione: { letter: 'C', label: 'Traduzione', color: '#D69E2E', tag: 'apri il dizionario' },
   versione:   { letter: 'D', label: 'Versione',   color: '#9C6B3C', tag: 'dall\'italiano all\'italiano' },
@@ -40408,23 +40457,24 @@ function exportWord() {
 /* Documento Word (HTML in veste .doc) di UN progetto qualsiasi: serve sia al
    pulsante del brano corrente sia all'esportazione dell'intero archivio. */
 function docWordDi(dati) {
+  const _CL = coloreDiLingua(dati && dati.meta && dati.meta.lingua);
   const html = buildPrintHtml(true, dati);
   const fullHtml = `<!DOCTYPE html><html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
 <head><meta charset="utf-8"><title>${escapeHtml((dati.meta && dati.meta.titolo) || 'Poetrify')}</title>
 <style>
 @page{size:A4;margin:2cm;}
 body{font-family:'Source Serif 4',Georgia,'Times New Roman',serif;line-height:1.6;color:#1a1f24;font-size:11.5pt;}
-h1{font-family:'Playfair Display',Georgia,serif;color:#1800AC;font-size:24pt;border-bottom:2.5pt solid #1800AC;padding-bottom:8pt;font-weight:700;letter-spacing:-0.01em;margin:0 0 12pt 0;}
-h2{font-family:'Playfair Display',Georgia,serif;color:#1800AC;font-size:17pt;margin-top:22pt;margin-bottom:8pt;font-weight:700;page-break-after:avoid;border-bottom:1pt solid #d5d2cb;padding-bottom:4pt;}
-h3{font-family:'Playfair Display',Georgia,serif;color:#0f0070;font-size:14pt;margin-top:18pt;margin-bottom:6pt;font-weight:700;page-break-after:avoid;}
-h4{font-family:'Source Sans 3','Helvetica',sans-serif;color:#1800AC;font-size:10pt;margin-top:14pt;margin-bottom:4pt;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;page-break-after:avoid;border-bottom:0.5pt solid #ede9fc;padding-bottom:2pt;}
+h1{font-family:'Playfair Display',Georgia,serif;color:${_CL.accento};font-size:24pt;border-bottom:2.5pt solid ${_CL.accento};padding-bottom:8pt;font-weight:700;letter-spacing:-0.01em;margin:0 0 12pt 0;}
+h2{font-family:'Playfair Display',Georgia,serif;color:${_CL.accento};font-size:17pt;margin-top:22pt;margin-bottom:8pt;font-weight:700;page-break-after:avoid;border-bottom:1pt solid #d5d2cb;padding-bottom:4pt;}
+h3{font-family:'Playfair Display',Georgia,serif;color:${_CL.scuro};font-size:14pt;margin-top:18pt;margin-bottom:6pt;font-weight:700;page-break-after:avoid;}
+h4{font-family:'Source Sans 3','Helvetica',sans-serif;color:${_CL.accento};font-size:10pt;margin-top:14pt;margin-bottom:4pt;text-transform:uppercase;letter-spacing:0.1em;font-weight:700;page-break-after:avoid;border-bottom:0.5pt solid ${_CL.tenue};padding-bottom:2pt;}
 p{margin:0 0 8pt;}
 table{border-collapse:collapse;width:100%;font-size:10pt;margin:8pt 0 12pt;font-family:'Source Sans 3','Helvetica',sans-serif;page-break-inside:avoid;}
 th,td{border:1pt solid #c5c2b8;padding:6pt 9pt;vertical-align:top;text-align:left;line-height:1.45;}
-th{background:#ede9fc;color:#0f0070;font-weight:700;text-transform:uppercase;font-size:9pt;letter-spacing:0.08em;border-bottom:1.5pt solid #1800AC;}
+th{background:${_CL.tenue};color:${_CL.scuro};font-weight:700;text-transform:uppercase;font-size:9pt;letter-spacing:0.08em;border-bottom:1.5pt solid ${_CL.accento};}
 tbody tr:nth-child(even) td{background:#fafaf7;}
 tbody tr:hover td{background:#f5f4f0;}
-blockquote{margin:8pt 0;padding:10pt 14pt;border-left:4pt solid #1800AC;background:#fcfbf8;font-style:italic;color:#1a1f24;font-size:11.5pt;line-height:1.65;}
+blockquote{margin:8pt 0;padding:10pt 14pt;border-left:4pt solid ${_CL.accento};background:#fcfbf8;font-style:italic;color:#1a1f24;font-size:11.5pt;line-height:1.65;}
 em{color:#3f1885;font-weight:500;}
 strong{color:#08003f;}
 .muted{color:#4a4540;font-size:10pt;}
@@ -40439,10 +40489,11 @@ li{margin-bottom:3pt;}
    QUALSIASI progetto dell'archivio, non solo quello aperto. */
 function buildPrintHtml(includeTokenGrid, dati) {
   const d = dati || buildExportData();
+  const _CL = coloreDiLingua(d.meta.lingua);
   const sigla = d.meta.lingua === 'greco' ? 'GR' : 'LA';
   const completion = projectCompletion(d);
   const status = statusLabel(projectStatus(d));
-  let html = `<h1>${escapeHtml(d.meta.titolo || 'Traduzione')} <span style="font-size:0.5em;color:#1800AC;font-weight:600;">[${sigla}]</span></h1>`;
+  let html = `<h1>${escapeHtml(d.meta.titolo || 'Traduzione')} <span style="font-size:0.5em;color:${_CL.accento};font-weight:600;">[${sigla}]</span></h1>`;
   if (d.meta.autore || d.meta.opera) {
     html += `<p class="muted" style="margin-top:-2pt;">`;
     if (d.meta.autore) html += `<em>${escapeHtml(d.meta.autore)}</em>`;
@@ -40450,7 +40501,7 @@ function buildPrintHtml(includeTokenGrid, dati) {
     if (d.meta.opera) html += `${escapeHtml(d.meta.opera)}`;
     html += `</p>`;
   }
-  html += `<p class="muted" style="margin-bottom:14pt;"><strong style="color:#1800AC;">${status}</strong> · ${completion}% completamento · ${d.sentences.length} frasi · ${projectWordCount(d)} parole · aggiornato ${new Date(d.meta.updatedAt).toLocaleString('it-IT')}</p>`;
+  html += `<p class="muted" style="margin-bottom:14pt;"><strong style="color:${_CL.accento};">${status}</strong> · ${completion}% completamento · ${d.sentences.length} frasi · ${projectWordCount(d)} parole · aggiornato ${new Date(d.meta.updatedAt).toLocaleString('it-IT')}</p>`;
 
   html += `<h2>Testo originale</h2>`;
   html += `<blockquote>${escapeHtml(d.meta.testoOriginale).replace(/\n/g, '<br>')}</blockquote>`;
@@ -40476,7 +40527,7 @@ function buildPrintHtml(includeTokenGrid, dati) {
         const caseGroup = o.funzione ? funzioneToCaseGroup(o.funzione) : 'neutro';
         const fnChipStyle = o.funzione ? caseExportStyle(caseGroup, 'padding:2pt 7pt;border-radius:3px;display:inline-block;font-size:9.5pt;white-space:nowrap;') : '';
         html += `<tr>
-          <td style="text-align:center;font-weight:700;color:#1800AC;font-size:11pt;">${i + 1}</td>
+          <td style="text-align:center;font-weight:700;color:${_CL.accento};font-size:11pt;">${i + 1}</td>
           <td><em style="font-size:11pt;color:#08003f;font-style:italic;">${escapeHtml(o.phrase || '')}</em></td>
           <td>${o.funzione ? `<span style="${fnChipStyle}">${escapeHtml(o.funzione)}</span>` : ''}</td>
           <td style="color:#1a1f24;font-weight:500;">${escapeHtml(o.italian || '<span style=\"color:#a8a39b;font-style:italic;\">(da tradurre)</span>')}</td>
@@ -40532,7 +40583,7 @@ function buildPrintHtml(includeTokenGrid, dati) {
         const dipendeStr = dipendeDa ? `${dipendeDa._sigla} · ${dipendeDa.text.substring(0, 24)}` : '';
         const c = periodaleColorFor(e);
         const sigStyle = `background:${c.bg};border:1.5px solid ${c.border};color:${c.color};padding:2pt 8pt;border-radius:3px;display:inline-block;font-weight:700;font-size:10pt;letter-spacing:-0.02em;`;
-        html += `<tr><td><span style="${sigStyle}">${e._sigla}</span></td><td style="font-style:italic;color:#1a1f24;font-weight:500;">${escapeHtml(e.text)}</td><td style="color:#08003f;font-weight:600;">${escapeHtml(e.ruolo || '')}</td><td style="color:#1a1f24;">${escapeHtml(e.tipo || '')}</td><td style="color:#1a1f24;">${escapeHtml(e.modo || '')}</td><td style="color:#1800AC;font-weight:600;font-family:'Source Sans 3',sans-serif;">${escapeHtml(e.connettivo || '')}</td><td style="color:#4a4540;font-size:9pt;">${escapeHtml(dipendeStr)}</td><td style="color:#4a4540;">${escapeHtml(e.note || '')}</td></tr>`;
+        html += `<tr><td><span style="${sigStyle}">${e._sigla}</span></td><td style="font-style:italic;color:#1a1f24;font-weight:500;">${escapeHtml(e.text)}</td><td style="color:#08003f;font-weight:600;">${escapeHtml(e.ruolo || '')}</td><td style="color:#1a1f24;">${escapeHtml(e.tipo || '')}</td><td style="color:#1a1f24;">${escapeHtml(e.modo || '')}</td><td style="color:${_CL.accento};font-weight:600;font-family:'Source Sans 3',sans-serif;">${escapeHtml(e.connettivo || '')}</td><td style="color:#4a4540;font-size:9pt;">${escapeHtml(dipendeStr)}</td><td style="color:#4a4540;">${escapeHtml(e.note || '')}</td></tr>`;
       });
       html += `</tbody></table>`;
     }
