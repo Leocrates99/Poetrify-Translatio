@@ -4571,10 +4571,15 @@ textarea[data-rivedere="1"] { border-style: dashed; border-color: var(--sepia); 
 .home-panel.home-start { border-color: var(--lang-accent); box-shadow: 0 0 0 1px var(--lang-accent), var(--shadow-sm); }
 .home-panel-title { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--ink); margin: 0; }
 .home-panel-sub { font-family: var(--font-ui); font-size: 12.5px; color: var(--sepia); margin: 2px 0 0; }
-.home-origins { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; }
+.home-panel.home-start { display: flex; flex-direction: column; }
+/* I due pulsanti si dividono l'altezza del riquadro invece di stare in cima e
+   lasciare sotto il vuoto: il pannello accanto arriva in fondo, e un riquadro
+   mezzo pieno accanto a uno pieno legge come una cosa incompiuta. */
+.home-origins { display: flex; flex-direction: column; gap: 10px; margin-top: 15px; flex: 1; }
 .home-origin {
-  display: flex; flex-direction: column; gap: 3px;
-  text-align: left; padding: 14px 15px;
+  display: flex; flex-direction: column; justify-content: center; gap: 4px;
+  flex: 1;
+  text-align: left; padding: 16px 17px;
   background: var(--ivory);
   border: 1px solid var(--rule-soft);
   border-radius: var(--radius-md);
@@ -4582,6 +4587,23 @@ textarea[data-rivedere="1"] { border-style: dashed; border-color: var(--sepia); 
   transition: border-color var(--transition-base), background var(--transition-base), transform var(--transition-base);
 }
 .home-origin:hover { border-color: var(--lang-accent); background: var(--paper); transform: translateY(-1px); }
+/* LA VIA FREQUENTE HA IL COLORE PIENO. Non e' un ornamento: dei due ingressi uno
+   si prende quasi sempre, e il peso visivo dice quale senza costringere a
+   leggerli tutti e due per scegliere. */
+.home-origin-pieno {
+  background: var(--lang-accent);
+  border-color: var(--lang-accent);
+}
+/* Doppia classe, non `!important`: `.home-origin .ho-t` e' dichiarata piu' sotto
+   e a parita' di specificita' (0,2,0) vinceva per ordine di sorgente. Misurato:
+   titolo rosso su fondo rosso. Con `.home-origin.home-origin-pieno` si sale a
+   (0,3,0) e l'ordine non conta piu'. */
+.home-origin.home-origin-pieno .ho-t { color: var(--on-primary); }
+.home-origin.home-origin-pieno .ho-d { color: var(--on-primary); opacity: 0.9; }
+.home-origin-pieno:hover {
+  background: var(--lang-accent-dark, var(--lang-accent));
+  border-color: var(--lang-accent-dark, var(--lang-accent));
+}
 .home-origin .ho-t { font-family: var(--font-ui); font-size: 14px; font-weight: 700; color: var(--lang-accent); }
 .home-origin .ho-d { font-family: var(--font-ui); font-size: 11.5px; line-height: 1.45; color: var(--sepia); }
 .home-empty {
@@ -30559,13 +30581,13 @@ function renderPanoramicaHtml() {
           <h3 class="home-panel-title">Comincia un brano</h3>
           <p class="home-panel-sub">Da dove prendi il testo?</p>
           <div class="home-origins">
+            <button class="home-origin home-origin-pieno" onclick="newProjectInLang('${branchLang}', 'manuale')">
+              <span class="ho-t">Incollala o fotografala</span>
+              <span class="ho-d">La versione che hai davanti: il manuale, la fotocopia, il foglio con la data a penna. Incolli il testo — oppure fotografi la pagina, e a decifrarla ci pensa il lettore ottico.</span>
+            </button>
             <button class="home-origin" onclick="openCorpusForBranch('${branchLang}')">
               <span class="ho-t">Prendila dal Corpus</span>
-              <span class="ho-d">Il canone antico per intero: scegli l'opera e il passo, e arriva già pulito, con autore e locus compilati.</span>
-            </button>
-            <button class="home-origin" onclick="newProjectInLang('${branchLang}', 'manuale')">
-              <span class="ho-t">Incollala o fotografala</span>
-              <span class="ho-d">La versione che hai sul libro o sul foglio: la incolli, oppure fotografi la pagina.</span>
+              <span class="ho-d">Il canone antico, per intero. Scegli l'autore e il passo: il testo arriva pulito, con opera e locus già al loro posto.</span>
             </button>
           </div>
         </section>
