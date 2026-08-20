@@ -98,7 +98,8 @@ ripetizioni: è una decisione diversa da questa, e va proposta prima di farla.
 ### Il menù a tendina
 
 264 px sono giusti quando il menù si **legge** e un lusso quando si **traduce**.
-Una maniglia lo stringe a **60 px**: restano le icone, i nomi vanno nei tooltip,
+Una maniglia lo stringe a **60 px** — e dalla §8 quei 60 px sono lo **stato di
+partenza**, non più il risultato di un gesto: restano le icone, i nomi nei tooltip,
 il pallino di completamento si appoggia all'icona invece di stare in fila. La
 scelta si ricorda, perché è una postura di lavoro e non un gesto da rifare a
 ogni apertura.
@@ -200,3 +201,59 @@ ereditato da separare in una passata di sole delezioni.
 
 **Bilancio del leggìo**: il brano è passato da **y = 667 a y = 324**, cioè
 **343 px guadagnati** su uno schermo alto 864.
+
+---
+
+## 8 · La testata si assottiglia, e il rail diventa la partenza
+
+Il leggiò aveva recuperato 343 px togliendo ripetizioni **dentro** l'editor.
+Restava sopra a tutto la testata dell'applicazione, e nessuno l'aveva misurata.
+
+### 112 px per dire tre cose
+
+Misurata: **112 px**, e non per scelta. La riga principale era una griglia a
+**tre colonne con sei figli**, così i due in eccesso finivano su una seconda riga
+implicita: il titolo della versione si ritrovava incolonnato *sotto* il marchio,
+largo 264 px, e due bottoni-icona stavano sparsi — uno a `x=276`, l'altro a
+`x=1478`.
+
+Non era cromo da comprimere: era una griglia che non teneva ciò che le si dava.
+Ora una riga sola — marchio, titolo della versione con 34 px di stacco,
+sottotitolo in fondo a destra su una riga — e **48 px**. Sessantaquattro
+restituiti al lavoro senza togliere nulla di ciò che si legge.
+
+I due bottoni-icona non sono spariti: hanno cambiato casa, e stanno nella testa
+del menù insieme agli altri comandi (`docs/MENU-E-ASSI.md` §5).
+
+### Il rail non si chiede, c'è
+
+I 204 px del menù stretto erano un guadagno **a richiesta**: bisognava sapere che
+la maniglia esisteva e premerla. Da oggi il rail è lo stato di partenza, e chi
+allarga il menù se lo ritrova largo la volta dopo — la preferenza si ricorda come
+prima. Cambia solo il default di chi non ha ancora scelto, ed è la maggioranza di
+chi arriva.
+
+### La misura, sul leggiò vero
+
+Stato nuovo, nessuna preferenza salvata, 1536×864, tappa Verbi del compito a casa:
+
+| | |
+|---|---|
+| testata | **48 px** *(erano 112)* |
+| menù al primo fotogramma | **chiuso**, `menu-stretto` attivo |
+| colonne | **60 / 1476 / 0** — il rail c'è già, non si aspetta un gesto |
+| brano | **y = 234** |
+| colonna di lettura | 920 px, invariata |
+
+Il numero della §7 — «da 667 a 324» — non si somma a questo: era misurato su
+un'altra schermata, e sommare misure di viste diverse dà un totale che non
+corrisponde a niente. Qui si registra ciò che si vede oggi, con la vista dichiarata.
+
+### Che cosa resta sopra il brano
+
+La §5 diceva: fascia (44), comandi rapidi (47), testata del brano (58) — e che
+comprimere oltre avrebbe voluto dire togliere **comandi**, non ripetizioni. Quella
+frase vale ancora, e la testata dell'applicazione non ne faceva parte: era sopra a
+tutto e fuori dal conto. È la ragione per cui è rimasta a 112 px mentre tutto il
+resto si ritirava — **nessuno l'aveva misurata**, e quel che non si misura non si
+ritira.
