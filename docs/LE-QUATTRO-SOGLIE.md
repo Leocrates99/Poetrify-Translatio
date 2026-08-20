@@ -95,3 +95,51 @@ la fascia c'è in entrambi, nessuno scroll orizzontale, console pulita.
 Consolidare non vuol dire far flettere tutte le superfici allo stesso pixel: vuol
 dire che i numeri che esprimono una **classe** vengono da un elenco solo, scritto
 in un posto solo, e che chi ne usa un altro sa di star parlando di un componente.
+
+---
+
+## 6 · Le soglie nate dopo, e a quale categoria appartengono
+
+La §5 ha stabilito il criterio: **i numeri che esprimono una classe vengono
+dall'elenco; chi ne usa un altro sa di star parlando di un componente**. Un
+criterio serve se lo si applica quando si aggiunge, non solo quando si riordina.
+Le passate successive hanno introdotto quattro soglie di larghezza: eccole, con la
+loro categoria dichiarata.
+
+| soglia | dove | categoria |
+|---|---|---|
+| **1080 px** | `.avvio-modi` — le tre carte dello scopo passano a due colonne | componente |
+| **700 px** | `.avvio-modi` — a colonna singola | componente |
+| **640 px** | `.topbar-casa` — la firma tace, il marchio scende a 21 px | componente |
+| **900 px** | `header.topbar .tb-firma` nel dizionario — la firma tace | componente |
+
+### Le due che meritano una riga in più
+
+**1080** cade nella fascia dei numeri di classe (sopra i 700) e non appartiene
+all'elenco: va giustificata come si giustificò il 1024 del dizionario. La ragione
+è la stessa specie: **è il punto in cui quel contenuto sta stretto**, non il punto
+in cui cambia la macchina. Tre carte affiancate con dentro un paragrafo hanno
+bisogno di circa 290 px l'una; sotto i 1080 la terza si assottiglia oltre il
+leggibile e conviene passare a due. Rinumerarla a 1280 vorrebbe dire mandare a due
+colonne un leggiò che le tre le regge benissimo — far quadrare una tabella
+rompendo una schermata.
+
+**900 come LARGHEZZA** è il numero più insidioso dell'elenco, perché nel canone
+900 esiste già — ma come **altezza** (`--bp-altezza-scarsa`, l'innesco della
+fascia). Sono due grandezze diverse che portano la stessa cifra, e a distanza di
+mesi qualcuno le leggerà come la stessa cosa. Resta com'è perché è il punto in cui
+la barra del dizionario va a capo per i suoi strumenti, ma è registrato qui
+proprio perché la coincidenza è una trappola, non un allineamento.
+
+### La versione del foglio condiviso, di nuovo
+
+La §3 racconta un difetto: `shared/poetrify-tokens.css` linkato **senza versione**,
+e le soglie che si leggevano vuote perché il file restava in cache. La convenzione
+allora introdotta è stata riapplicata: il foglio condiviso ha ricevuto una classe
+di componente (`.cta-mini`, il mini pulsante di richiamo) e con essa la versione è
+salita a **`?v=2026-08-20`** su **tutte e sei** le superfici — verificato contando,
+non presumendo.
+
+È la parte della convenzione che si dimentica per prima: si tocca il foglio
+condiviso e si prova la propria pagina, che intanto ha ricaricato. Le altre cinque
+no.
