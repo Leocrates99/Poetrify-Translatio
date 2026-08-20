@@ -7972,45 +7972,6 @@ select optgroup option {
 /* ============================================
    TRADUZIONE — workflow brutta · ordo · bella
    ============================================ */
-.translation-intro {
-  background: var(--primary-tint);
-  border: 1px solid var(--primary-border);
-  border-radius: var(--radius-md);
-  padding: 14px 18px;
-  margin-bottom: 22px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 14px;
-}
-.translation-step {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-.translation-step-letter {
-  font-family: var(--font-display);
-  font-size: 22px;
-  font-weight: 700;
-  color: var(--primary);
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-.translation-step-title {
-  font-family: var(--font-ui);
-  font-size: 11px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--ink);
-}
-.translation-step-desc {
-  font-family: var(--font-body);
-  font-size: 12px;
-  color: var(--sepia);
-  font-style: italic;
-  line-height: 1.4;
-}
-
 .translation-sentence-card {
   background: var(--paper);
   border: 1px solid var(--rule-soft);
@@ -8274,50 +8235,6 @@ body[data-lang="greco"] .ordo-chip-phrase-input { font-family: var(--font-classi
 }
 .translation-textarea.brutta {
   border-left: 3px solid var(--warning);
-}
-
-.translation-global {
-  background: var(--paper);
-  border: 1px solid var(--rule-soft);
-  border-radius: var(--radius-md);
-  padding: 22px 26px;
-  margin-top: 26px;
-  margin-bottom: 18px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-}
-.translation-global-header {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: 14px;
-  padding-bottom: 12px;
-  border-bottom: 1px dashed var(--rule-soft);
-  flex-wrap: wrap;
-  gap: 10px;
-}
-.translation-global-title {
-  font-family: var(--font-display);
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-}
-.translation-global-row {
-  margin-bottom: 16px;
-}
-.translation-global-row:last-child { margin-bottom: 0; }
-.translation-progress-bar {
-  height: 5px;
-  background: var(--cream);
-  border-radius: 999px;
-  overflow: hidden;
-  margin-top: 10px;
-}
-.translation-progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--warning), var(--success));
-  transition: width 250ms ease;
-  border-radius: 999px;
 }
 
 /* ============================================
@@ -11043,7 +10960,6 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
   .section-letter { font-size: 52px; }
   .section-title h1 { font-size: 26px; }
   .archive-stats { grid-template-columns: repeat(2, 1fr); }
-  .translation-intro { grid-template-columns: 1fr 1fr; }
   .modal { max-width: 92vw; }
   /* SCHELETRO · già su tablet le 7 fasi stanno su una riga scrollabile (con
      etichette) invece di andare a capo in modo disordinato. */
@@ -11335,7 +11251,6 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
   .archive-card-actions { justify-content: flex-start; }
 
   /* TRANSLATION compact */
-  .translation-intro { grid-template-columns: 1fr; }
   .translation-sentence-card { padding: 14px 14px; }
   .ordo-chip { min-width: 130px; max-width: 100%; flex: 1 1 130px; }
   .ts-section-title { flex-wrap: wrap; }
@@ -32636,47 +32551,10 @@ function renderTranslationHtml() {
   // Per l'approccio "frase per frase" la bozza è una panoramica organica delle
   // rese già fatte nel wizard; la bella copia è la resa unica d'insieme.
   const pct = translationCompletionPct();
-  const intro = `
-    <div class="translation-intro">
-      <div class="translation-step">
-        <span class="translation-step-letter">①</span>
-        <span class="translation-step-title">Brutta copia</span>
-        <span class="translation-step-desc">prima resa di lavoro per ogni frase, ancora vicina all'originale</span>
-      </div>
-      <div class="translation-step">
-        <span class="translation-step-letter">②</span>
-        <span class="translation-step-title">Ordo verborum</span>
-        <span class="translation-step-desc">i sintagmi disposti in italiano: trascinali per riordinare e traduci ogni elemento</span>
-      </div>
-      <div class="translation-step">
-        <span class="translation-step-letter">③</span>
-        <span class="translation-step-title">Bella copia</span>
-        <span class="translation-step-desc">resa finale in italiano corretto, da rifinire dalle bozze precedenti</span>
-      </div>
-    </div>`;
-
   const sentencesHtml = state.sentences.map((s, i) => renderTranslationSentenceCard(s, i)).join('');
 
   const globalBrutta = state.meta.traduzione || '';
   const globalBella = state.meta.traduzioneBella || '';
-
-  const globalHeader = `
-      <div class="translation-global-header">
-        <span class="translation-global-title">Traduzione complessiva del brano</span>
-        <span class="muted-text">${pct}% completata · ${state.sentences.length} frasi</span>
-      </div>
-      <div class="translation-progress-bar"><div class="translation-progress-fill" style="width:${pct}%;"></div></div>`;
-  const bruttaGlobalRow = `
-      <div class="translation-global-row" style="margin-top:18px;">
-        <div class="ts-section-title">
-          <span class="ts-section-num">B</span>Brutta copia complessiva
-          <div class="ts-tools">
-            <button class="btn btn-ghost btn-sm" onclick="assembleGlobalDraft()" title="Compila concatenando le brutte di ogni frase">↧ Compila da frasi</button>
-            <button class="btn btn-ghost btn-sm" onclick="copyTextRaw(state.meta.traduzione || '', event)">📋 copia</button>
-          </div>
-        </div>
-        <textarea class="translation-textarea brutta" placeholder="Brutta copia complessiva — premi «Compila da frasi» per assemblare le bozze, oppure scrivi a mano." oninput="onMetaChange('traduzione', this.value)">${escapeHtml(globalBrutta)}</textarea>
-      </div>`;
 
   /* Vista «Bella copia» · la resa finale complessiva.
      LA VESTE E' QUELLA DELLA VIA GUIDATA: stessa struttura, stesse classi, stessi
@@ -32740,16 +32618,55 @@ function renderTranslationHtml() {
   }
 
   // Vista «Bozza»: l'officina per frase + la brutta complessiva.
+  /* Vista «Bozza di lavoro» · la stessa grammatica della bella copia: banda di
+     stato, sezioni numerate, strumenti sulla riga del titolo, chiusa in fondo.
+     Le schede delle frasi e il glossario restano NUDI dentro la colonna: sono
+     gia' carte, e incartarle di nuovo sarebbe un riquadro dentro un riquadro. */
+  const nFrasi = state.sentences.length;
+  const brutteFatte = state.sentences.filter(function (f) { return (f.translation || '').trim().length > 0; }).length;
+  const tutteBrutte = nFrasi > 0 && brutteFatte === nFrasi;
   return sectionHeader('E', 'Bozza di lavoro', 'percorso brutta → ordo verborum → bella, frase per frase')
-    + intro
-    + `<div class="method-note"><strong>Metodo.</strong> Per ogni frase: ① scrivi una <em>brutta copia</em> ancora vicina all'originale, ② disponi i <em>sintagmi</em> nell'ordo italiano (puoi importarli dalla logica e trascinarli per riordinare), ③ rifinisci la <em>bella copia</em>. La resa complessiva finale vive nella scheda <strong>Bella copia</strong>.</div>`
-    + sentencesHtml
-    + renderBranoGlossarySection()
-    + `<div class="translation-global">` + globalHeader + bruttaGlobalRow + `</div>`
-    + `<div class="flex-between" style="margin-top: 18px;">
+    + `<div class="guided-bella">
+      <div class="guided-bella-info ${tutteBrutte ? 'done' : 'partial'}">
+        <span>${tutteBrutte
+          ? '✓ Ogni frase ha la sua resa di lavoro. Puoi passare alla bella copia.'
+          : 'Resa di lavoro fatta su <strong>' + brutteFatte + '</strong> frasi su <strong>' + nFrasi + '</strong>.'}</span>
+        <span class="guided-bella-conto">${pct}% · ${nFrasi} ${nFrasi === 1 ? 'frase' : 'frasi'}</span>
+        <span class="guided-bella-barra"><span style="width:${pct}%;"></span></span>
+      </div>
+
+      <section class="guided-bella-section">
+        <h3 class="guided-bella-title">① Le tre mosse, su ogni frase</h3>
+        <p class="guided-bella-hint"><strong>Brutta copia</strong>: la prima resa di lavoro, ancora vicina all'originale. <strong>Ordo verborum</strong>: i sintagmi disposti nell'ordine italiano — puoi importarli dall'analisi logica e trascinarli per riordinare. <strong>Bella copia</strong>: la resa finale in italiano corretto, rifinita dalle precedenti. La resa d'insieme dell'intero brano vive nella scheda «Bella copia».</p>
+      </section>
+
+      ${sentencesHtml}
+      ${renderBranoGlossarySection()}
+
+      <section class="guided-bella-section">
+        <h3 class="guided-bella-title">② Brutta copia complessiva
+          <span class="guided-bella-tools">
+            <button class="btn btn-ghost btn-sm" onclick="assembleGlobalDraft()" title="Compila concatenando le brutte di ogni frase">↧ Compila da frasi</button>
+            <button class="btn btn-ghost btn-sm" onclick="copyTextRaw(state.meta.traduzione || '', event)">📋 copia</button>
+          </span>
+        </h3>
+        <p class="guided-bella-hint">L'unione delle rese di lavoro, da leggere di seguito. Premi «Compila da frasi» per assemblarla dalle bozze, oppure scrivila a mano.</p>
+        <textarea class="field-input" style="width:100%;min-height:180px;font-family:var(--font-body);font-size:15.5px;line-height:1.6;"
+          oninput="onMetaChange('traduzione', this.value)"
+          placeholder="Brutta copia complessiva del brano…">${escapeHtml(globalBrutta)}</textarea>
+      </section>
+
+      <div class="guided-bella-cta">
+        ${tutteBrutte
+          ? 'Ogni frase ha la sua resa: la versione può passare alla bella copia.'
+          : 'Quando ogni frase ha la sua resa di lavoro, si passa alla bella copia.'}
+      </div>
+
+      <div class="flex-between">
         <span></span>
         <button class="btn btn-brand-soft btn-sm" onclick="goToTraduzione('bella')">Vai alla bella copia →</button>
-      </div>`;
+      </div>
+    </div>`;
 }
 
 /* ════════════════════════════════════════════════════════════════════════════
