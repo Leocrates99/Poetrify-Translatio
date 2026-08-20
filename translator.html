@@ -4486,7 +4486,45 @@ textarea[data-rivedere="1"] { border-style: dashed; border-color: var(--sepia); 
 }
 .avvio-campi input:focus, .avvio-campi select:focus { outline: none; border-color: var(--lang-accent); }
 .avvio-nomanuali { font-family: var(--font-ui); font-size: 12.5px; line-height: 1.6; color: var(--sepia); }
-.avvio-nomanuali a { color: var(--lang-accent); font-weight: 700; }
+/* (Qui stava `.avvio-nomanuali a`, che coloravano il link d'accento. Il link e'
+   diventato un `.cta-mini` a fondo pieno, e quella regola — piu' specifica — gli
+   avrebbe dipinto il testo dello stesso colore del fondo.) */
+.avvio-nomanuali .cta-mini { margin-top: 6px; }
+
+/* Il campo del titolo eredita la veste degli altri campi dell'avvio invece di
+   vestirsi da solo: una riga sola, e l'etichetta dice che si puo' saltare. */
+.avvio-campi-titolo { grid-template-columns: 1fr; }
+.avvio-facolt {
+  font-weight: 600; letter-spacing: 0.04em; text-transform: none;
+  color: var(--sepia); opacity: 0.75; font-size: 9.5px;
+}
+
+/* ─── IL MINI-CTA · convenzione della casa ────────────────────────────────
+   Un richiamo che porta altrove non e' un link sottolineato: e' un pulsante
+   piccolo, pieno nel colore della LINGUA. Vale qui e in ogni luogo futuro.
+   Prima di usarlo, verifica che il contenitore non colori i propri `<a>`: una
+   regola come `.tal-contenitore a` e' (0,2,0) e vince su questa (0,1,0),
+   ridipingendo il testo del colore del fondo. */
+.cta-mini {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 6px 12px;
+  background: var(--lang-accent);
+  border: 1px solid var(--lang-accent);
+  border-radius: var(--radius-pill);
+  color: var(--on-primary);
+  font-family: var(--font-ui); font-size: 12px; font-weight: 700;
+  letter-spacing: 0.01em; text-decoration: none; white-space: nowrap;
+  cursor: pointer;
+  transition: background var(--transition-base), border-color var(--transition-base);
+}
+.cta-mini:hover {
+  background: var(--lang-accent-dark, var(--lang-accent));
+  border-color: var(--lang-accent-dark, var(--lang-accent));
+  text-decoration: none;
+}
+.cta-mini:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: 2px; }
+/* Al tocco il bersaglio sale a 44px, come ogni comando della casa. */
+@media (pointer: coarse) { .cta-mini { min-height: 44px; padding: 10px 16px; font-size: 13px; } }
 
 .avvio-testo {
   width: 100%; font-family: var(--font-classical); font-size: 16px; line-height: 1.7;
@@ -27361,7 +27399,7 @@ function startAvvio(lang, origine) {
      fa ridire. Senza, il passo 1 la chiede come sempre. */
   avvio = {
     passo: 1, lingua: l, origine: (origine === 'autore' || origine === 'manuale') ? origine : null,
-    autore: '', opera: '', loc: '',
+    autore: '', opera: '', loc: '', titolo: '',
     manualeId: '', versione: '', pagina: '',
     testo: '', percorso: percorsoProposto()
   };
@@ -27371,13 +27409,27 @@ function startAvvio(lang, origine) {
 function avvioAnnulla() { avvio = null; state.currentStep = 7; renderAll(); }
 function avvioVai(passo) { if (!avvio) return; avvio.passo = passo; renderAll(); }
 function avvioSetOrigine(o) { if (!avvio) return; avvio.origine = o; renderAll(); }
-function avvioCampo(k, v) { if (avvio) avvio[k] = v; }   // niente re-render: non si perde il fuoco
+function avvioCampo(k, v) {
+  if (!avvio) return;
+  avvio[k] = v;                        // niente re-render: non si perde il fuoco
+  /* Ma il segnaposto del titolo MOSTRA il nome che il brano si darebbe da se', e
+     quel nome dipende proprio da questi campi: senza ridisegno resta indietro e
+     promette un nome vecchio. Misurato: scritto «148», diceva ancora «Brano del
+     20/08/2026». Si aggiorna il solo nodo che deve cambiare, non la schermata. */
+  if (k !== 'titolo') {
+    const seg = document.querySelector('.avvio-box-titolo input');
+    if (seg) seg.placeholder = avvioTitoloAutomatico() || 'come vuoi ritrovarla';
+  }
+}
 
 /* Il titolo si compone da sé, ed è il modo in cui il brano sarà ritrovato:
    «Latino · vers. 148, p. 212» oppure «Cicerone · De officiis I, 15».
    Non deve MAI restare «Senza titolo» — è il difetto che rende l'archivio
    inconsultabile. */
-function avvioTitolo() {
+/* Il nome che il brano si darebbe da se'. Sta separato perche' due committenti
+   diversi lo chiedono: `avvioTitolo()`, quando il campo e' vuoto, e il SEGNAPOSTO
+   del campo stesso, che deve mostrarlo mentre il campo e' vuoto. */
+function avvioTitoloAutomatico() {
   if (!avvio) return '';
   if (avvio.origine === 'manuale') {
     const lin = avvio.lingua === 'greco' ? 'Greco' : 'Latino';
@@ -27398,6 +27450,14 @@ function avvioTitolo() {
     return parole + (t.split(/\s+/).length > 6 ? '…' : '');
   }
   return 'Brano del ' + new Date().toLocaleDateString('it-IT');
+}
+
+/* Il nome scritto a mano viene prima di ogni composizione: chi lo detta sa come
+   vuole ritrovare il brano. Vuoto il campo, torna l'automatismo. */
+function avvioTitolo() {
+  if (!avvio) return '';
+  const scritto = String(avvio.titolo || '').trim();
+  return scritto || avvioTitoloAutomatico();
 }
 
 function avvioFrasi() {
@@ -27538,7 +27598,7 @@ function avvioPasso1() {
     const tendina = manuali.length
       ? `<label>Manuale<select onchange="avvioCampo('manualeId', this.value)">${opzioni}</select></label>`
       : `<div class="avvio-nomanuali">Non hai ancora dichiarato i tuoi manuali.
-           <a href="profilo.html">Aggiungili una volta sola →</a></div>`;
+           <a class="cta-mini" href="profilo.html">Aggiungili una volta sola →</a></div>`;
     dettaglio = `
       <div class="avvio-box">
         <div class="avvio-campi manuale">
@@ -27554,10 +27614,20 @@ function avvioPasso1() {
       <h2 class="avvio-domanda">Da quale libro viene?</h2>
       <p class="avvio-sotto">Serve a ritrovarla dopo — e a chiamarla col suo nome.</p>
       <div class="avvio-origini">
-        ${card('autore', "Versione d'autore", 'Cicerone, Cesare, Virgilio, Platone… un testo antico con autore e opera.')}
         ${card('manuale', 'Dal manuale scolastico', 'La versione assegnata a scuola: manuale, numero e pagina.')}
+        ${card('autore', "Versione d'autore", 'Cicerone, Cesare, Virgilio, Platone… un testo antico con autore e opera.')}
       </div>
       ${dettaglio}
+      ${sel ? `<div class="avvio-box avvio-box-titolo">
+        <div class="avvio-campi avvio-campi-titolo">
+        <label>Titolo della versione <span class="avvio-facolt">facoltativo</span>
+          <input type="text" value="${escapeHtml(avvio.titolo || '')}"
+                 oninput="avvioCampo('titolo', this.value)"
+                 placeholder="${escapeHtml(avvioTitoloAutomatico() || 'come vuoi ritrovarla')}">
+        </label>
+        </div>
+        <p class="avvio-box-nota">Lascialo vuoto e il nome se lo compone da sé, come mostra il segnaposto.</p>
+      </div>` : ''}
       <div class="avvio-azioni">
         <button class="btn btn-primary" ${sel ? '' : 'disabled'} onclick="avvioVai(2)">Continua →</button>
         <button class="btn btn-ghost" onclick="avvioAnnulla()">Annulla</button>
