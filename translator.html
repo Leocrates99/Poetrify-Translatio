@@ -10550,9 +10550,16 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 /* Il pannello della tappa, ospitato: nel corpo dello scheletro sta in una riga
    fra le altre e porta i propri margini e la propria cornice; qui e' l'unico
    inquilino e li perde, perche' la cornice la da' gia' il cassetto. */
-.analysis-drawer-body .schel-vq-row.is-active {
+.analysis-drawer-body .schel-vq-row.is-active,
+.analysis-drawer-body .schel-conn-bar {
   margin: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
 }
+/* Le due barre della congiunzione nascono in orizzontale, per stare in una riga
+   del brano. Nel cassetto la riga non c'e': si impilano, e i campi respirano. */
+.analysis-drawer-body .schel-conn-bar {
+  display: flex; flex-direction: column; align-items: stretch; gap: 8px;
+}
+.analysis-drawer-body .schel-conn-bar .schel-conn-sel { width: 100%; }
 /* Il nome della parola lo dice gia' la testata del cassetto. */
 .analysis-drawer-body .schel-vq-head { display: none; }
 .entry-card.is-in-drawer { outline: 2px solid var(--lang-accent); outline-offset: -1px; }
@@ -42941,6 +42948,24 @@ document.addEventListener('DOMContentLoaded', () => {
     el.appendChild(document.createTextNode(lettere.slice(1).join('')));
   }
 
+    /* I PANNELLI DELLE TAPPE DELLO SCHELETRO, dichiarati invece che ramificati.
+     Ciascuno e' «uno aperto alla volta» per costruzione, e porta il nome della
+     parola in un proprio nodo. La prossima tappa che nascera' con un pannello
+     si aggiunge QUI, con una riga: la porta non si tocca.
+     Restano fuori, e non per dimenticanza, le viste d'insieme — il Nucleo a
+     celle, i gruppi SVO, il campo della traduzione: non hanno «quello aperto»
+     da portare via, e in una colonna stretta starebbero peggio. */
+  var ADR_SCHEL = [
+    { sel: '.schel-vq-row.is-active', parola: '.schel-vq-word',      pos: 'Verbo' },
+    { sel: '.schel-conn-bar',         parola: '.schel-conn-bar-word', pos: 'Congiunzione' },
+    /* (`.schel-defconj-bar` stava qui e ne e' uscita. Provata: quando compare,
+       compare insieme al pannello della PROPOSIZIONE, che il cassetto prende
+       gia' dalla prima porta e che e' il lavoro vero; non sono riuscito a
+       produrre uno stato in cui quella barretta vincesse. Una riga che non
+       scatta mai promette una copertura che non c'e'.) */
+  ];
+  var ADR_SCHEL_TUTTI = ADR_SCHEL.map(function (x) { return x.sel; }).join(', ');
+
   /* Apre il drawer su un nodo, chiunque fosse l'inquilino di prima. */
   function adrOspita(nodo, tipo, parola, pos){
     var host=document.getElementById('analysis-drawer'),
@@ -43029,21 +43054,25 @@ document.addEventListener('DOMContentLoaded', () => {
        `.schel-vq-row.is-active`, uno solo per volta perche' e' «il verbo attivo».
        Stessa precedenza della barra del token: e' un gesto automatico, quindi
        cede a una voce aperta a mano, che e' una richiesta esplicita. */
-    var rigaEd = (adrLargo.matches && ed && !(adrVoceRichiesta && window.__adrawer && adrCard()))
-      ? ed.querySelector('.schel-vq-row.is-active') : null;
+    var libero = adrLargo.matches && ed && !(adrVoceRichiesta && window.__adrawer && adrCard());
+    var rigaEd = null, schedaEd = null;
+    for (var iSch = 0; iSch < ADR_SCHEL.length && libero; iSch++) {
+      var trovato = ed.querySelector(ADR_SCHEL[iSch].sel);
+      if (trovato) { rigaEd = trovato; schedaEd = ADR_SCHEL[iSch]; break; }
+    }
     if (rigaEd) {
       adrOspita(rigaEd, 'schel',
-        ((rigaEd.querySelector('.schel-vq-word') || {}).textContent || '').trim(), 'Verbo');
+        ((rigaEd.querySelector(schedaEd.parola) || {}).textContent || '').trim(), schedaEd.pos);
       return;
     }
-    var rigaDr = body.querySelector('.schel-vq-row.is-active');
+    var rigaDr = body.querySelector(ADR_SCHEL_TUTTI);
     if (rigaDr) {
-      /* Sentinella immutata: l'editor non e' stato ridisegnato, la riga manca di
-         la' solo perche' l'abbiamo spostata noi. */
+      /* Sentinella immutata: l'editor non e' stato ridisegnato, il pannello manca
+         di la' solo perche' l'abbiamo spostato noi. */
       if (adrHome && adrHome.tipo === 'schel' && adrLargo.matches
           && adrHome.gen === adrSentinella()) return;
       adrSgombera();
-      Array.prototype.forEach.call(body.querySelectorAll('.schel-vq-row'),
+      Array.prototype.forEach.call(body.querySelectorAll(ADR_SCHEL_TUTTI),
         function(n){ n.remove(); });
     }
 
@@ -43095,10 +43124,18 @@ document.addEventListener('DOMContentLoaded', () => {
        finche' il verbo e' ATTIVO, e limitarsi a nascondere il cassetto la farebbe
        rientrare al primo ridisegno. Si preme la testa della riga — l'uscita che
        l'app ha gia' previsto — che qui e' nascosta alla vista ma non al codice. */
-    var riga = body && body.querySelector('.schel-vq-row.is-active');
+    var riga = body && body.querySelector(ADR_SCHEL_TUTTI);
     if (riga) {
-      var testa = riga.querySelector('.schel-vq-head');
-      if (testa) { testa.click(); return; }
+      /* Ogni pannello ha il proprio congedo: la testa per il verbo, il pulsante
+         «chiudi» per la congiunzione. Si preme quello, non si nasconde il
+         cassetto: il pannello esiste finche' la sua voce e' attiva, e tornerebbe
+         al primo ridisegno. Chi non ha un congedo proprio si sgombera. */
+      var congedo = riga.querySelector('.schel-vq-head') ||
+        Array.prototype.filter.call(riga.querySelectorAll('button'), function (b) {
+          return /^\s*chiudi\s*$/i.test(b.textContent || '');
+        })[0];
+      if (congedo) { congedo.click(); return; }
+      adrSgombera(); adrShut(); return;
     }
     window.__adrawer = null;
     window.syncAnalysisDrawer();
