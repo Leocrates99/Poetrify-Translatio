@@ -7608,7 +7608,79 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   font-weight: 700;
   color: var(--primary);
   margin: 0 0 6px;
+  /* Il titolo ospita gli strumenti della sezione: nella vista libera ci sono, in
+     quella guidata no, e la riga regge entrambi i casi senza cambiare aspetto. */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
+/* Gli strumenti stanno in fondo alla riga del titolo, non sopra il contenuto:
+   il comando appartiene alla sezione che governa, e si legge dopo il suo nome. */
+.guided-bella-tools {
+  margin-left: auto;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.guided-bella-tools .btn {
+  font-size: 11.5px;
+  padding: 4px 9px;
+  min-height: 26px;
+}
+/* Al tocco gli strumenti tornano a 44px. La riduzione a 26 serve a stare sulla
+   riga del titolo quando si punta col mouse; col pollice quello stesso bersaglio
+   diventa inafferrabile, e sul telefono la riga va a capo comunque, quindi lo
+   spazio non manca. */
+@media (pointer: coarse) {
+  .guided-bella-tools .btn { min-height: 44px; padding: 6px 12px; font-size: 12.5px; }
+  /* E vale per TUTTI i comandi della vista, non solo per gli strumenti: la
+     chiusura della versione e i due pulsanti in fondo stavano a 32px, che e' la
+     taglia `btn-sm` di tutta l'app. Qui si alza dove serve invece di ritoccare
+     una classe che regge mezzo programma. */
+  .guided-bella .btn { min-height: 44px; }
+}
+/* L'avanzamento vive DENTRO la banda di stato, che gia' dice a che punto e' il
+   lavoro: due indicatori dello stesso fatto, in due riquadri diversi, erano una
+   ripetizione. La banda diventa una griglia a due righe. */
+.guided-bella-info {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 4px 12px;
+}
+.guided-bella-conto {
+  font-variant-numeric: tabular-nums;
+  font-size: 11.5px;
+  opacity: 0.85;
+  white-space: nowrap;
+}
+.guided-bella-barra {
+  grid-column: 1 / -1;
+  height: 4px;
+  border-radius: var(--radius-pill);
+  background: currentColor;
+  /* La barra prende il colore della banda che la ospita: verde a lavoro finito,
+     ambra a lavoro parziale. Un secondo colore direbbe una seconda cosa. */
+  opacity: 0.18;
+  overflow: hidden;
+}
+.guided-bella-barra > span {
+  display: block;
+  height: 100%;
+  background: currentColor;
+  opacity: 1;
+}
+/* Il pannello di chiusura entra nel guscio delle sezioni invece di portarsi il
+   proprio: i suoi pulsanti sono gia' quelli della casa, era la scatola a stonare. */
+.guided-bella .chiusura {
+  background: var(--paper);
+  border: 1px solid var(--rule-soft);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin: 0;
+}
+.guided-bella .flex-between { margin-top: 0; }
 .guided-bella-hint {
   font-family: var(--font-body);
   font-size: 13px;
@@ -7637,7 +7709,9 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   font-family: var(--font-body);
   font-size: 13.5px;
   text-align: center;
-  color: var(--brass);
+  /* `--brass` come TESTO misura 4,43:1: regge come filetto, non come parola.
+     Per questo esiste `--brass-ink`. Qui era rimasto l'ottone da filetto. */
+  color: var(--brass-ink, var(--brass));
 }
 
 /* ─── LEGENDA CONNETTIVI · stile preposizione ───────────────────────────── */
@@ -32582,33 +32656,66 @@ function renderTranslationHtml() {
         </div>
         <textarea class="translation-textarea brutta" placeholder="Brutta copia complessiva — premi «Compila da frasi» per assemblare le bozze, oppure scrivi a mano." oninput="onMetaChange('traduzione', this.value)">${escapeHtml(globalBrutta)}</textarea>
       </div>`;
-  const bellaGlobalRow = `
-      <div class="translation-global-row" style="margin-top:18px;">
-        <div class="ts-section-title">
-          <span class="ts-section-num">B</span>Bella copia complessiva
-          <div class="ts-tools">
-            <button class="btn btn-ghost btn-sm" onclick="assembleGlobalFinal()" title="Compila concatenando le belle di ogni frase">↧ Compila da frasi</button>
-            <button class="btn btn-ghost btn-sm" onclick="copyTextRaw(state.meta.traduzioneBella || '', event)">📋 copia</button>
-          </div>
-        </div>
-        <textarea class="translation-textarea bella" placeholder="Bella copia complessiva — la resa finale destinata al lettore, rifinita dalle bozze precedenti." oninput="onMetaChange('traduzioneBella', this.value)">${escapeHtml(globalBella)}</textarea>
-      </div>`;
 
-  // Vista «Bella copia»: solo la resa finale complessiva, pulita, con export.
+  /* Vista «Bella copia» · la resa finale complessiva.
+     LA VESTE E' QUELLA DELLA VIA GUIDATA: stessa struttura, stesse classi, stessi
+     testi delle due sezioni. La stessa tappa non puo' avere due grafiche a
+     seconda della strada per cui ci si arriva.
+     Quel che la vista libera ha in piu' — avanzamento, «Compila da frasi»,
+     «copia», la chiusura della versione, l'export — resta, ma prende posto DENTRO
+     questa struttura invece di portarsi la propria: gli strumenti sulla riga del
+     titolo, l'avanzamento nella banda di stato, la chiusura nel guscio delle
+     sezioni. Adeguare la grafica non vuol dire buttare il lavoro. */
   if (vista === 'bella') {
+    const tutteTradotte = state.sentences.length > 0
+      && state.sentences.every(function (f) { return (f.translation || '').trim().length > 0; });
+    const bruttaRiepilogo = state.sentences
+      .map(function (f, i) { return '[' + (i + 1) + '] ' + (f.translation || '(da tradurre)'); })
+      .join('\n\n');
+    const bellaScritta = (state.meta.traduzioneBella || '').trim().length > 0;
+    const nFrasi = state.sentences.length;
     return sectionHeader('E', 'Bella copia', 'la resa finale del brano, rifinita dalle bozze')
-      + `<div class="method-note"><strong>Metodo.</strong> La bella copia complessiva è la resa destinata al lettore: puoi comporla assemblando le belle copie delle singole frasi («Compila da frasi») e poi armonizzarla — collegamenti, scorrevolezza, registro.</div>`
-      + `<div class="translation-global">` + globalHeader + bellaGlobalRow + `</div>`
-      /* La chiusura della versione sta QUI, dove la versione finisce. Prima
-         viveva solo dentro il ramo «frase per frase», che era raggiungibile
-         quasi da nessuno ed e' stato cancellato al punto 10: il pannello se
-         n'era andato con lui, e con esso l'unico modo di segnare una versione
-         come consegnata. */
-      + renderChiusuraVersione()
-      + `<div class="flex-between" style="margin-top: 18px;">
+      + `<div class="guided-bella">
+        <div class="guided-bella-info ${tutteTradotte ? 'done' : 'partial'}">
+          <span>${tutteTradotte
+            ? '✓ Tutte le frasi sono state tradotte in brutta copia. Ora rileggi e armonizza.'
+            : 'Attenzione: alcune frasi non hanno ancora una resa di lavoro. Torna alla <strong>bozza</strong> per completarle, oppure procedi e ritorna in seguito.'}</span>
+          <span class="guided-bella-conto">${pct}% · ${nFrasi} ${nFrasi === 1 ? 'frase' : 'frasi'}</span>
+          <span class="guided-bella-barra"><span style="width:${pct}%;"></span></span>
+        </div>
+
+        <section class="guided-bella-section">
+          <h3 class="guided-bella-title">① Brutta copia riepilogativa · solo italiano</h3>
+          <p class="guided-bella-hint">L'unione delle brutte copie frase per frase. Leggila come fosse un testo italiano qualunque. Da ora <strong>non guardare più il testo originale</strong>: lavori solo dentro la grammatica della lingua di arrivo.</p>
+          <pre class="guided-bella-brutta">${escapeHtml(bruttaRiepilogo || '(nessuna traduzione ancora disponibile)')}</pre>
+        </section>
+
+        <section class="guided-bella-section">
+          <h3 class="guided-bella-title">② Bella copia · resa organica della versione
+            <span class="guided-bella-tools">
+              <button class="btn btn-ghost btn-sm" onclick="assembleGlobalFinal()" title="Compila concatenando le belle di ogni frase">↧ Compila da frasi</button>
+              <button class="btn btn-ghost btn-sm" onclick="copyTextRaw(state.meta.traduzioneBella || '', event)">📋 copia</button>
+            </span>
+          </h3>
+          <p class="guided-bella-hint">Obiettivo: testo uniforme, scorrevole, articolato dall'inizio alla fine. Smussa le imperfezioni, armonizza i collegamenti, riformula i passaggi che alla lettura suonano «grezzi». Talvolta tradurre significa anche «tradire» le parole di partenza affinché in italiano suonino bene.</p>
+          <textarea class="field-input" style="width:100%;min-height:280px;font-family:var(--font-body);font-size:15.5px;line-height:1.6;"
+            oninput="onMetaChange('traduzioneBella', this.value)"
+            placeholder="Componi qui la traduzione finale d'insieme dell'intera versione…">${escapeHtml(globalBella)}</textarea>
+        </section>
+
+        ${renderChiusuraVersione()}
+
+        <div class="guided-bella-cta">
+          ${bellaScritta
+            ? '🎉 <strong>Congratulazioni · hai concluso la versione!</strong> Puoi esportare il lavoro o tornare alle tappe precedenti per rifiniture.'
+            : 'Quando la bella copia è pronta, il lavoro sulla versione si considera concluso.'}
+        </div>
+
+        <div class="flex-between">
           <button class="btn btn-ghost btn-sm" onclick="goToTraduzione('bozza')">← Torna alla bozza</button>
           <button class="btn btn-brand-soft btn-sm" onclick="openExportModal()">📤 Esporta traduzione</button>
-        </div>`;
+        </div>
+      </div>`;
   }
 
   // Vista «Bozza»: l'officina per frase + la brutta complessiva.
