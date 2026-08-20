@@ -54,20 +54,37 @@ body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
   position: sticky; top: 0; z-index: 20;
 }
 .home {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-family: var(--font-ui); font-size: 13px; font-weight: 600;
-  color: var(--sepia); text-decoration: none; white-space: nowrap;
-  padding: 6px 10px; border-radius: 8px; transition: background .15s, color .15s;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; flex: none;
+  color: var(--sepia); text-decoration: none;
+  border-radius: var(--radius-sm, 4px); transition: background .15s, color .15s;
+}
+.home svg { width: 18px; height: 18px; }
+/* L'ETICHETTA RESTA, MA PER CHI LEGGE CON LA VOCE. Da quando la testata nomina
+   la casa, «← Poetrify» accanto a «Poetrify» era la stessa parola due volte a
+   cento pixel di distanza. La destinazione continua a dirla il tooltip, e il
+   comando prende la forma dei pulsanti-icona del canone. */
+.home [data-indietro-etichetta] {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
 }
 .home:hover { background: var(--cream); color: var(--primary); }
-.brand { display: flex; flex-direction: column; line-height: 1.05; }
-.brand .mark {
-  font-family: var(--font-display); font-size: 24px; font-weight: 700;
-  color: var(--primary); letter-spacing: -.01em;
+.brand { display: flex; align-items: baseline; gap: 14px; line-height: 1.1; }
+/* La casa: Playfair nel colore primario, come sul translator. */
+.brand .marchio {
+  font-family: var(--font-display); font-size: 22px; font-weight: 700;
+  color: var(--primary); letter-spacing: -.02em;
 }
-.brand .sub {
+/* Il luogo: staccato dalla casa, nella stessa famiglia ma in inchiostro. */
+.brand .mark {
+  font-family: var(--font-display); font-size: 19px; font-weight: 600;
+  color: var(--ink); letter-spacing: -.01em;
+}
+/* La firma chiude la riga a destra, su una riga sola. */
+.sub.firma {
+  margin-left: auto; flex: 0 0 auto; white-space: nowrap;
   font-family: var(--font-ui); font-size: 10.5px; font-weight: 600;
-  text-transform: uppercase; letter-spacing: .18em; color: var(--sepia); margin-top: 3px;
+  text-transform: uppercase; letter-spacing: .18em; color: var(--sepia);
 }
 
 /* ── Barra di ricerca ─────────────────────────────────────────── */
@@ -819,7 +836,7 @@ body.con-tavolo .stage { padding-bottom: 190px; }
   .browser.open { display: block; }
   .mobtoggle { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-size: 12px; font-weight: 700; color: var(--primary); background: var(--cream); border: 1px solid var(--rule-soft); border-radius: var(--radius-md); padding: 8px 14px; margin: 12px auto 0; }
 }
-@media (max-width: 560px) { .brand .sub { display: none; } .facet-lbl { min-width: 0; } }
+@media (max-width: 560px) { .sub.firma { display: none; } .facet-lbl { min-width: 0; } }
 
 /* Dark (D2): token in shared/ [data-theme]. Qui solo le regole del Corpus. */
 :root[data-theme="dark"] { --parchment: #24242c; --parchment-edge: #34343f; --mark: #6b5a1e; }
@@ -836,7 +853,11 @@ body.con-tavolo .stage { padding-bottom: 190px; }
     <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     <span data-indietro-etichetta>Poetrify</span>
   </a>
-  <div class="brand"><span class="mark">Corpus</span><span class="sub">biblioteca dei testi antichi</span></div>
+  <!-- La grammatica della testata: la casa, poi il luogo, poi la firma in
+       fondo a destra. Prima il marchio stava sopra la firma, in colonna, e la
+       casa non era nominata: il mark diceva «Corpus». -->
+  <div class="brand"><span class="marchio">Poetrify</span><span class="mark">Corpus</span></div>
+  <span class="sub firma">biblioteca dei testi antichi</span>
 </header>
 
 <div class="searchwrap">

@@ -64,11 +64,19 @@ header.topbar {
   gap: 8px;
   flex-wrap: wrap;
 }
-header.topbar > div:first-child { display: inline-flex; align-items: baseline; gap: 9px; }
-header.topbar h1 {
-  font-family: var(--font-body);
-  font-size: 19px;
+header.topbar > div:first-child { display: inline-flex; align-items: baseline; gap: 14px; }
+/* La casa, nella tipografia del canone. */
+header.topbar .tb-marchio {
+  font-family: var(--font-display);
+  font-size: 21px;
   font-weight: 700;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+}
+header.topbar h1 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
   letter-spacing: -0.015em;
   color: var(--ink);
   display: inline-flex;
@@ -87,6 +95,11 @@ header.topbar small {
   letter-spacing: 0.08em;
   color: var(--sepia);
 }
+/* La firma chiude la riga, su una riga sola. Sotto i 900 sparisce: li' la barra
+   va gia' a capo per gli strumenti, e una didascalia in piu' la farebbe crescere
+   proprio dove lo spazio manca. */
+header.topbar .tb-firma { margin-left: auto; flex: 0 0 auto; white-space: nowrap; }
+@media (max-width: 900px) { header.topbar .tb-firma { display: none; } }
 .topbar-spacer { flex: 1; }
 .topbar-link, .topbar-btn {
   color: var(--ink-soft);
@@ -2361,9 +2374,11 @@ body.dict-has-entry .main-left > section:first-child{ margin-bottom:4px; }
 <body>
 
 <header class="topbar">
+  <!-- Casa e luogo sono due cose distinte, non una stringa sola; la firma
+       chiude la riga a destra invece di stare appiccicata al titolo. -->
   <div>
-    <h1>Poetrify · Dizionario</h1>
-    <small>Latino e Greco antico · nucleo scolastico</small>
+    <span class="tb-marchio">Poetrify</span>
+    <h1>Dizionario</h1>
   </div>
   <div class="topbar-spacer"></div>
 
@@ -2381,6 +2396,7 @@ body.dict-has-entry .main-left > section:first-child{ margin-bottom:4px; }
   <button class="topbar-btn" id="dict-dark-toggle" title="Alterna tema scuro/chiaro">🌙 Scuro</button>
   <a class="topbar-link" href="app.html" data-indietro="app.html" title="Torna agli strumenti">← Strumenti</a>
   <a class="topbar-link" href="translator.html" title="Officina di traduzione">📜 Translator</a>
+  <small class="tb-firma">Latino e Greco antico · nucleo scolastico</small>
 </header>
 
 <main>
