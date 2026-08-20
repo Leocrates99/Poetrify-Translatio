@@ -34,10 +34,14 @@ niente di nuovo e senza toccare un solo renderer.
    parola e si sta dicendo che cos'è. Entra da sola, senza un clic in più.
 2. i **campi di una voce**, aperti col clic sulla sua intestazione.
 
+> **Sono tre, non due.** Fra le due si è poi inserita la porta dei **pannelli
+> dello scheletro**, che condivide la natura della prima. La storia sta in
+> `docs/CASSETTO-DEL-TOKEN.md` §8; il perché servisse, nella §6 qui sotto.
+
 Tutte e sette le barre dell'app nascono da funzioni `…ActionBar` /
 `…PendingPanel` — nessuna è cromo permanente — quindi la sola classe
-`.token-action-bar` copre **grammaticale, logica, periodale, unificato,
-connettivi e i verbi dello scheletro**.
+`.token-action-bar` copre **grammaticale, logica, periodale, unificato e
+connettivi**. ~~e i verbi dello scheletro~~ — **questa parte era falsa**: vedi §6.
 
 ## 3 · Le tre insidie, e come sono chiuse
 
@@ -73,10 +77,13 @@ nell'editor, nessun token in attesa, e la griglia torna a due colonne.
 
 ## 4 · Le due scelte deliberate
 
-**Sotto i 900px la barra resta dov'è.** Lì la terza colonna non esiste e il
+~~**Sotto i 900px la barra resta dov'è.** Lì la terza colonna non esiste e il
 drawer diventa un foglio che copre il brano: aprirlo *da solo* a ogni tocco
-sarebbe peggio del pannello in basso. La voce aperta a mano, che è una scelta
-esplicita, continua a usare il foglio a ogni larghezza.
+sarebbe peggio del pannello in basso.~~ **Superata.** Era vera finché
+l'alternativa era un foglio LATERALE largo il 92% dello schermo. Da quando sotto
+i 900 il pannello **sale dal basso** e lascia il brano sopra, visibile
+(`docs/TABLET-E-MANO.md`), il motivo per tenerlo fuori è caduto: `adrLargo` vale
+`true` a ogni larghezza. La voce aperta a mano usava già il foglio dappertutto.
 
 **La parola si porta in vista, una volta sola.** Il pannello si apre in cima
 alla colonna di destra; se la parola cliccata sta in fondo allo schermo — e nella
@@ -124,3 +131,44 @@ ogni mutazione del DOM, cioè dopo ogni interazione vera. Provato a 820px con la
 barra rimasta nel cassetto — una qualunque mutazione la rimette sotto il brano,
 chiude il cassetto e riporta la griglia a una colonna. Anche se il segnale di
 ridimensionamento mancasse del tutto, la posizione si corregge al primo gesto.
+
+---
+
+## 6 · Una copertura dichiarata e mai avuta
+
+La §2 chiudeva con una frase che sembrava un pregio del disegno: la sola classe
+`.token-action-bar` copre sei superfici, **compresi i verbi dello scheletro**.
+Era falsa, e non per un dettaglio.
+
+Contato oggi sulla regione intera dello scheletro, righe 28548-29300:
+
+```
+.token-action-bar in quella regione:  0
+```
+
+I renderer del percorso — `renderScheletroVerbi`, `renderScheletroProposizioni` e
+sorelle — hanno una **famiglia di markup propria**: `.schel-vq-row`,
+`.schel-conn-bar`, `.schel-defconj-bar`. Nessuna e' una barra del token.
+
+### Che cosa è costata
+
+Esattamente ciò che l'utente ha visto e segnalato: lavorando la tappa **Verbi**
+del compito a casa, il pannello dell'analisi si apriva **in linea sotto il brano**
+con la colonna di destra a `0px`, e non si capiva perché il cassetto ci fosse
+altrove e lì no. La carta diceva che quel caso era coperto, quindi nessuno era
+andato a guardare.
+
+La lacuna è chiusa — la porta dei pannelli dello scheletro, `CASSETTO-DEL-TOKEN`
+§8 — ma il difetto della **carta** merita di restare scritto, perché è di una
+specie che si ripete: *una copertura dedotta dal nome di una classe invece che
+contata*. Sette barre nascono da funzioni `…ActionBar`, dunque — sembrava — tutto
+ciò che assomiglia a una barra è una `.token-action-bar`. Lo scheletro non
+assomigliava a niente di tutto questo, ed era proprio il posto dove l'utente
+lavora di più.
+
+### La regola che ne esce
+
+Una copertura si scrive in una carta **solo dopo averla contata**, e il conteggio
+va messo accanto all'affermazione. «La sola classe X copre A, B, C» senza un
+numero è un'ipotesi con l'aria di un fatto; «grep su X nella regione R: n
+occorrenze» è una verifica che il lettore successivo può rifare.
