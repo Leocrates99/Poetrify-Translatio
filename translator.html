@@ -4519,7 +4519,12 @@ textarea[data-rivedere="1"] { border-style: dashed; border-color: var(--sepia); 
 }
 .avvio-titolo-anteprima strong { color: var(--ink); }
 
-.avvio-modi { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+/* Tre su UNA riga: gli scopi sono tre e si confrontano a colpo d'occhio, non
+   scorrendo. Rettangoli col lato corto in verticale — la descrizione detta
+   l'altezza, e `align-items: stretch` la pareggia fra le tre. */
+.avvio-corpo-largo { max-width: 920px; }
+.avvio-modi { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: stretch; }
+@media (max-width: 1080px) { .avvio-modi { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 700px) { .avvio-modi { grid-template-columns: 1fr; } }
 .avvio-modo {
   display: flex; flex-direction: column; gap: 5px; text-align: left; padding: 18px;
@@ -4543,9 +4548,18 @@ textarea[data-rivedere="1"] { border-style: dashed; border-color: var(--sepia); 
   font-family: var(--font-ui); font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em;
   text-transform: uppercase; color: var(--paper); background: var(--lang-accent);
 }
-.apc-flag-prima { background: var(--sepia); }
 .apc-tempo {
   font-family: var(--font-ui); font-size: 11px; color: var(--sepia); margin-top: 3px;
+}
+/* La stima sta in un angolo, e in fondo: si legge dopo aver scelto lo scopo, non
+   prima. `margin-top: auto` la spinge in basso, cosi' le tre carte la portano
+   sulla stessa linea anche quando le descrizioni sono di lunghezza diversa. */
+.apc-stima {
+  align-self: flex-start; margin-top: auto;
+  padding: 4px 9px; border-radius: var(--radius-pill, 999px);
+  background: var(--ivory); border: 1px solid var(--rule-soft);
+  font-family: var(--font-ui); font-size: 11px; font-weight: 700;
+  color: var(--ink-soft); white-space: nowrap; cursor: help;
 }
 .apc-tempo strong { color: var(--ink); font-weight: 700; }
 .apc-nastro { display: flex; flex-wrap: wrap; align-items: center; gap: 3px; margin-top: 8px; }
@@ -13307,15 +13321,18 @@ function tappeScheletroDi(p) {
 
 const PERCORSI = {
   'versione-casa': {
-    nome: 'Versione per casa', icona: '📖',
-    scopo: 'Il compito assegnato: il metodo per intero, con calma.',
+    nome: 'Compito a casa', icona: '📖',
+    scopo: 'Quando la versione è assegnata e il tempo non manca, si percorre il metodo per intero, dalla segmentazione fino alla bella copia. I participi non fanno storia a sé, perché tirano a sé blocchi di complementi e si sciolgono dove capitano.',
     tempo: '≈5 min a frase', minPerFrase: 5,
     /* La playlist è per ora DESCRITTIVA (alimenta card e banner); diventerà
        guida del motore col refactor playlist-driven dello scheletro. */
     /* La playlist nomina le tappe del catalogo: da qui il motore dello
        scheletro ricava le proprie fasi, e le card la propria miniatura.
        Comincia dalle frasi perché è di lì che si parte davvero. */
-    playlist: ['frasi', 'verbi', 'proposizioni', 'soggetto', 'oggetto', 'preposizionali', 'altri', 'ordo', 'bella'],
+    /* I bivi del testo NON erano un percorso: participi, attributivi e ancore
+       sono il potenziamento di questo metodo, ed e' qui che stanno. */
+    playlist: ['frasi', 'verbi', 'proposizioni', 'participi', 'soggetto', 'oggetto',
+               'preposizionali', 'altri', 'attributivi', 'ancore', 'ordo', 'bella'],
     /* Il metro: la grammatica completa NON conta — lo scheletro chiede i verbi,
        non la morfologia di ogni parola; la bella copia sì, è il compito. */
     metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'sintagmi', 'brutta', 'bella'],
@@ -13325,6 +13342,21 @@ const PERCORSI = {
     stemmaDefault: 'barre',
     disponibile: true, ingresso: 'avvio', primario: true,
   },
+  /* Nasce da zero, non eredita da «passo dopo passo»: in aula non si fa tutta la
+     versione, ci si ferma dove il testo resiste. Playlist corta, una frase per
+     volta, modo guidato perche' la spiegazione cammina accanto al lavoro. */
+  'in-classe': {
+    nome: 'Uso in classe', icona: '🗣',
+    scopo: 'In aula si lavora insieme e a voce alta, una frase per volta, e conviene fermarsi dove il testo resiste invece di correre fino in fondo. Il percorso allora si apre una tappa alla volta, così che quello che spieghi e quello che compare sullo schermo camminino insieme.',
+    tempo: 'a passo d\'aula', minPerFrase: 6,
+    playlist: ['frasi', 'verbi', 'proposizioni', 'sintagmi', 'brutta'],
+    metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'sintagmi', 'brutta'],
+    preset: { metodo: 'strati', vista: 'frase', mode: 'guided' },
+    stemmaDefault: 'barre',
+    disponibile: true, ingresso: 'avvio', primario: true,
+  },
+  /* Fuori dalle carte d'avvio per scelta: la spiegazione passo per passo non
+     sparisce, cambia porta — vive sull'asse METODO come «Guidata». */
   'passo-passo': {
     nome: 'Passo dopo passo', icona: '🧭',
     scopo: 'La prima versione, con la voce del docente accanto a ogni tappa.',
@@ -13334,14 +13366,14 @@ const PERCORSI = {
     metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'sintagmi', 'grammatica', 'brutta', 'bella'],
     preset: { metodo: 'strati', vista: 'frase', mode: 'guided' },
     stemmaDefault: 'barre',
-    disponibile: true, ingresso: 'avvio', primario: true,
+    disponibile: true, ingresso: 'nessuno',
   },
   /* ── Progettati, non ancora costruiti (audit §3) ──────────────────────────
      Richiedono il refactor dello scheletro playlist-driven: finché quello non
      c'è, sarebbero card che promettono un flusso inesistente. */
   'simulazione': {
     nome: 'Simulazione di compito', icona: '⏱',
-    scopo: 'Allenati al ritmo della verifica, a casa: struttura e resa, senza la morfologia completa.',
+    scopo: 'Sotto verifica il tempo comanda, e allora si rinuncia alla morfologia minuta per tenere la struttura e la resa. Ci si allena a casa con lo stesso passo che si avrà in classe, e il cronometro serve a scoprire dove ci si impunta, non a fare paura.',
     tempo: '≈2-3 min a frase', minPerFrase: 2.5,
     playlist: ['autoanalisi', 'verbi', 'proposizioni', 'ordo', 'bella'],
     /* Sotto verifica non si fa la morfologia: struttura e resa. */
@@ -13359,8 +13391,10 @@ const PERCORSI = {
     /* Non c'è bella copia: qui si legge molto, non si cesella. */
     metro: ['testo', 'frasi', 'verbi', 'brutta'],
     preset: { metodo: 'valenziale', vista: 'frase', mode: 'free' },
-    disponibile: true, ingresso: 'avvio',
+    disponibile: true, ingresso: 'nessuno',
   },
+  /* NON era un percorso, era un potenziamento: le sue tappe sono passate al
+     metodo generale, dove i participi si sciolgono insieme al resto. */
   'versione-autore': {
     /* Si chiamava «Versione d'autore», ma quelle parole in questa app vogliono
        gia' dire «un brano di un autore antico» — nella scelta dell'origine e
@@ -13373,7 +13407,7 @@ const PERCORSI = {
     metro: ['testo', 'frasi', 'verbi', 'proposizioni', 'sintagmi', 'grammatica', 'brutta', 'bella'],
     preset: { metodo: 'valenziale', vista: 'intero', mode: 'free' },
     stemmaDefault: 'barre',
-    disponibile: true, ingresso: 'avvio',
+    disponibile: true, ingresso: 'nessuno',
   },
   'ripasso': {
     nome: 'Ripasso lampo', icona: '⚡',
@@ -13411,20 +13445,17 @@ function stimaPercorso(chiave, nFrasi) {
   return 'circa ' + ore + (resto ? '½' : '') + (ore === 1 && !resto ? ' ora' : ' ore');
 }
 
-/* Ha già portato a termine almeno una versione? Da questo dipende quale card
-   sia il default evidenziato: al primo ingresso il percorso giusto è quello
-   che il metodo lo SPIEGA, non quello più efficiente. */
-function haGiaConclusoUnaVersione() {
-  try {
-    return loadAllProjects().some(p => p && p.meta &&
-      (p.meta.completatoAt || String(p.meta.traduzioneBella || '').trim()));
-  } catch (e) { return false; }
-}
+/* (`haGiaConclusoUnaVersione()` viveva qui. Serviva a decidere quale card
+   evidenziare al primo ingresso, e quella decisione non esiste piu': la
+   spiegazione passo per passo sta sull'asse METODO, non in una card.) */
 
 /** Il percorso proposto per default in un nuovo avvio. */
 function percorsoProposto() {
   if (_percorsoDaUrl && schedaPercorso(_percorsoDaUrl)) return _percorsoDaUrl;
-  return haGiaConclusoUnaVersione() ? PERCORSO_DEFAULT : 'passo-passo';
+  /* Additava «passo dopo passo», che non e' piu' una carta d'avvio: la prima
+     volta si comincia dal compito a casa, e a spiegare passo per passo ci pensa
+     l'asse METODO in modalita' Guidata. */
+  return PERCORSO_DEFAULT;
 }
 
 /** La scheda del percorso, o null se la chiave non esiste. */
@@ -14312,7 +14343,7 @@ const MIGRAZIONI = {
   3: function (p) {
     if (p.percorso && schedaPercorso(p.percorso)) return p;
     if (p.percorso && !schedaPercorso(p.percorso)) delete p.percorso;   // chiave ignota: via
-    if (p.mode === 'guided') p.percorso = 'passo-passo';
+    if (p.mode === 'guided') p.percorso = 'in-classe';
     else if (p.metodo === 'valenziale') p.percorso = 'versione-casa';
     return p;
   },
@@ -27644,7 +27675,6 @@ function mostraAltriPercorsi() { _altriPercorsiAperti = true; renderAll(); }
 
 function avvioPasso3() {
   const n = avvioFrasi();
-  const primaVolta = !haGiaConclusoUnaVersione();
   /* Tre card, non sei: la scelta si legge in un colpo d'occhio. Gli altri
      percorsi restano a una parola di distanza, non nascosti. */
   const tutti = percorsiDaAvvio();
@@ -27658,28 +27688,22 @@ function avvioPasso3() {
     const sc = PERCORSI[k];
     const sel = avvio.percorso === k;
     const consigliato = _percorsoDaUrl === k;
-    const suggerito = !consigliato && primaVolta && k === 'passo-passo';
     const stima = stimaPercorso(k, n);
-    const nastro = sc.playlist.map(t =>
-      `<span class="apc-nodo"><span class="apc-pallino" aria-hidden="true"></span>${escapeHtml(etichettaTappa(t))}</span>`
-    ).join('<span class="apc-filo" aria-hidden="true"></span>');
     return `
       <button class="avvio-modo apc ${sel ? 'sel' : ''}" onclick="avvioCampo('percorso','${k}'); renderAll();"
               aria-pressed="${sel ? 'true' : 'false'}">
-        ${consigliato ? '<span class="apc-flag">consigliato per questo compito</span>'
-          : suggerito ? '<span class="apc-flag apc-flag-prima">è la tua prima volta: qui il metodo te lo spiego io</span>' : ''}
+        ${consigliato ? '<span class="apc-flag">consigliato per questo compito</span>' : ''}
         <span class="am-t">${sc.icona} ${escapeHtml(sc.nome)}</span>
         <span class="am-d">${escapeHtml(sc.scopo)}</span>
-        <span class="apc-tempo">${escapeHtml(sc.tempo)}${stima ? ` · su questo brano: <strong>${escapeHtml(stima)}</strong>` : ''}</span>
-        <span class="am-piano">
-          <span class="am-piano-k">Il percorso · ${sc.playlist.length} tappe</span>
-          <span class="apc-nastro">${nastro}</span>
-        </span>
+        ${stima ? `<span class="apc-stima" title="Una stima larga. Il tempo vero dipende anche da quanto sono lunghe le parole e da quante volte apri il dizionario.">${escapeHtml(stima)}</span>` : ''}
       </button>`;
   };
-  return `<div class="avvio-corpo">
+  /* Larga: tre carte affiancate in 720px diventerebbero colonnine piu' alte che
+     larghe. Qui il contenitore prende tutto lo spazio che il suo ospite concede
+     (920px), e i rettangoli tornano col lato corto in verticale. */
+  return `<div class="avvio-corpo avvio-corpo-largo">
       <h2 class="avvio-domanda">Perché traduci oggi?</h2>
-      <p class="avvio-sotto">${escapeHtml(avvioTitolo())} — ${n} fras${n === 1 ? 'e' : 'i'}. Scegli la strada: <strong>puoi cambiarla anche dopo, il lavoro fatto resta</strong>.</p>
+      <p class="avvio-sotto">${escapeHtml(avvioTitolo())} — ${n} fras${n === 1 ? 'e' : 'i'}. Scegli la strada sapendo che <strong>puoi cambiarla anche dopo, perché il lavoro fatto resta</strong>.</p>
       <div class="avvio-modi">${chiavi.map(card).join('')}</div>
       ${(!apri && altri.length) ? `<button class="btn btn-ghost btn-sm avvio-altri" onclick="mostraAltriPercorsi()">
           Altri percorsi (${altri.length}) — ${escapeHtml(altri.map(k => PERCORSI[k].nome).join(' · '))}
