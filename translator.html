@@ -7232,6 +7232,15 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   letter-spacing: 0.1em;
   color: var(--primary);
 }
+/* IL FILETTO PORTA LA LINGUA, non la fase. Stava scritto in linea — dove
+   nessun selettore lo raggiunge — e prendeva `GUIDED_PHASES[fase].color`, che
+   per la fase di LETTURA vale #1800AC: l'indaco del greco, dipinto sulla prima
+   schermata di ogni versione latina. Un asse diverso dalla lingua non possiede
+   un colore, e meno che mai uno dei due colori delle lingue.
+   La fase la si legge dove e' scritta a parole, nel sopracciglio: «FASE A ·
+   LETTURA». Il resto dell'apparato era gia' caduto da se': `--phase-color` non
+   viene MAI scritta (sei occorrenze, cinque letture col ripiego var(--primary)
+   e un commento) e `.wizard-phase-group` non esce dal markup. */
 .wizard-title {
   font-family: var(--font-display);
   font-size: 22px;
@@ -7239,6 +7248,8 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   color: var(--ink);
   letter-spacing: -0.01em;
   margin: 4px 0 0;
+  border-left: 4px solid var(--lang-accent, var(--primary));
+  padding-left: 12px;
 }
 .wizard-progress-pct {
   font-family: var(--font-body);
@@ -27736,8 +27747,23 @@ function avvioPasso3() {
    ════════════════════════════════════════════════════════════════════════════ */
 
 /** Dove si svolge, ADESSO, la tappa `k`: dipende dalla via, non solo dal catalogo. */
+/* DUE CATALOGHI, UN VOCABOLARIO SOLO. La stessa playlist viene letta due volte:
+   dal nastro attraverso TAPPE, dal wizard attraverso GUIDATA. Una tappa porta
+   due nomi — le proposizioni si chiamano `sintassi` nella via guidata, e il
+   titolo di quella tappa lo dice: «Sintassi periodale · proposizioni
+   principali, coordinate, subordinate». Senza questa coppia il nodo
+   «Proposizioni» del nastro non portava in nessun posto: `sedeEffettiva` non lo
+   trovava fra le tappe guidate, il salto finiva sulla scheda C e la guardia
+   della superficie lo rimandava indietro. Si premeva, e non succedeva niente. */
+const SINONIMI_GUIDATA = { proposizioni: 'sintassi' };
+function chiaveGuidata(k) {
+  if (GUIDATA[k]) return k;
+  const alt = SINONIMI_GUIDATA[k];
+  return (alt && GUIDATA[alt]) ? alt : k;
+}
+
 function sedeEffettiva(k) {
-  if (state.mode === 'guided' && GUIDATA[k]) return 'guidata';
+  if (state.mode === 'guided' && GUIDATA[chiaveGuidata(k)]) return 'guidata';
   const t = TAPPE[k];
   if (!t) return '';
   if (t.sede === 'scheletro' && getApproach() !== 'scheletro') {
@@ -27754,7 +27780,8 @@ function vaiAllaTappa(k) {
     /* Il wizard vive nella scheda B: senza questo, saltando a una tappa guidata
        mentre si è sulla C non lo si raggiungeva mai — restava la superficie
        vecchia, senza nastro e senza wizard. */
-    goToGuidedStep((tappeGuidateDi(state).findIndex(function (t) { return t.chiave === k; })) + 1);
+    const kg = chiaveGuidata(k);
+    goToGuidedStep((tappeGuidateDi(state).findIndex(function (t) { return t.chiave === kg; })) + 1);
     if (state.currentStep !== 2) goToStep(2);
     return;
   }
@@ -27863,7 +27890,9 @@ function renderNastro() {
   const nodi = chiavi.map(function (k, i) {
     const compiuta = (k === 'brano') ? !!(state.meta && state.meta.testoOriginale) : tappaCompiuta(k);
     if (compiuta) fatte++;
-    const corrente = (k === ora);
+    /* «Sei qui» vale anche sotto l'altro nome: in via guidata il cursore dice
+       `sintassi` mentre il nastro scrive `proposizioni`. */
+    const corrente = (k === ora) || (chiaveGuidata(k) === ora);
     const cls = corrente ? 'ora' : (compiuta ? 'fatta' : '');
     const segno = (compiuta && !corrente) ? '✓' : String(i + 1);
     const et = escapeHtml(etichettaTappa(k));
@@ -30877,14 +30906,17 @@ function transferProjectLanguage(id) {
 /* ════════════════════════════════════════════════════════════════════════════
    MODALITÀ GUIDATA · 4 macro-fasi (Lettura · Analisi · Traduzione · Versione)
    secondo la guida didattica distribuita agli studenti. Ogni tappa appartiene
-   a una fase con colore identitario. I "cardinal points" della guida
+   a una fase. Il colore identitario che ciascuna aveva e' caduto: era un asse
+   che si prendeva una tinta, e quella della lettura era per giunta l'indaco del
+   greco, che compariva sulla prima schermata di ogni versione latina.
+   I "cardinal points" della guida
    (segmentazione · verbi · connettivi & preposizioni · sintagmi per caso ·
    traduzione) sono mappati direttamente sulle tappe della fase B. */
 const GUIDED_PHASES = {
-  lettura:    { letter: 'A', label: 'Lettura',    color: '#1800AC', tag: 'leggere prima di tradurre' },
-  analisi:    { letter: 'B', label: 'Analisi',    color: '#2F855A', tag: '«pasticcia» il testo' },
-  traduzione: { letter: 'C', label: 'Traduzione', color: '#D69E2E', tag: 'apri il dizionario' },
-  versione:   { letter: 'D', label: 'Versione',   color: '#9C6B3C', tag: 'dall\'italiano all\'italiano' },
+  lettura:    { letter: 'A', label: 'Lettura',    tag: 'leggere prima di tradurre' },
+  analisi:    { letter: 'B', label: 'Analisi',    tag: '«pasticcia» il testo' },
+  traduzione: { letter: 'C', label: 'Traduzione', tag: 'apri il dizionario' },
+  versione:   { letter: 'D', label: 'Versione',   tag: 'dall\'italiano all\'italiano' },
 };
 /* ════════════════════════════════════════════════════════════════════════════
    LA VIA GUIDATA · la prosa delle tappe, indicizzata per CHIAVE (punto 11)
@@ -30982,7 +31014,11 @@ function tappeGuidateDi(pr) {
   const sc = schedaPercorso(pr && pr.percorso);
   const pl = (sc && Array.isArray(sc.playlist) && sc.playlist.length)
     ? sc.playlist : PERCORSI['passo-passo'].playlist;
-  return pl.filter(function (k) { return !!GUIDATA[k]; })
+  /* La playlist si legge col vocabolario dei sinonimi, altrimenti una tappa che
+     esiste sotto un altro nome sparisce senza dirlo: «Uso in classe» dichiarava
+     cinque tappe e ne consegnava quattro, e il nastro mostrava un nodo che il
+     wizard non sapeva ospitare. */
+  return pl.map(chiaveGuidata).filter(function (k) { return !!GUIDATA[k]; })
     .map(function (k, i) {
       const t = GUIDATA[k];
       return { num: i + 1, chiave: k, label: etichettaTappa(k),
@@ -31077,7 +31113,7 @@ function renderGuidedWizard() {
       <div class="wizard-header">
         <div>
           <div class="wizard-eyebrow">Modalità guidata · Fase <strong>${currentPhase.letter}</strong> · ${escapeHtml(currentPhase.label)} <span class="wizard-phase-tag">${escapeHtml(currentPhase.tag)}</span></div>
-          <h2 class="wizard-title" style="border-left: 4px solid ${currentPhase.color}; padding-left: 12px;">${escapeHtml(meta.title)}</h2>
+          <h2 class="wizard-title">${escapeHtml(meta.title)}</h2>
         </div>
 
       </div>
