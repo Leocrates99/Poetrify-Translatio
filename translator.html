@@ -7547,27 +7547,21 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
 }
 
 /* ─── FASE C · TRADUZIONE BRUTTA ────────────────────────────────────────── */
-.guided-traduzione {
-  background: var(--paper);
-  border: 1px solid var(--rule-soft);
-  border-radius: var(--radius-md);
-  padding: 16px;
-}
+/* La Fase C e' passata al canone `.guided-bella` (FASE D, qui sotto), e con lei
+   se ne sono andate quattro famiglie. `.guided-traduzione` faceva il guscio che
+   adesso fa la sezione; `.guided-traduzione-actions` teneva in riga un pulsante
+   che oggi sta sul titolo della sezione che governa; `.guided-traduzione-tips`
+   era un riquadro d'avviso ambra per un testo che avviso non e';
+   `.guided-ordo-*` dava al pannello dell'ordo un colore proprio, il teal, che
+   nella stessa schermata significava insieme contenitore, complemento di
+   specificazione e vocativo.
+   Del vecchio impianto resta solo il riquadro del testo antico, che una ragione
+   per restare se' ce l'ha: ci vive il greco, con la sua faccia politonica. */
 .guided-traduzione-orig {
-  background: var(--cream);
-  padding: 10px 14px;
+  background: var(--ivory);
+  padding: 12px 14px;
+  border: 1px solid var(--rule-soft);
   border-radius: var(--radius-sm);
-  margin-bottom: 12px;
-}
-.guided-traduzione-orig .label {
-  font-family: var(--font-ui);
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
-  color: var(--sepia);
-  display: block;
-  margin-bottom: 4px;
 }
 .guided-traduzione-orig .text {
   font-family: var(--font-body);
@@ -7577,69 +7571,11 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   font-style: italic;
 }
 .guided-traduzione-orig.greek .text { font-family: var(--font-classical); font-style: normal; }
-.guided-traduzione-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
-}
-.guided-traduzione-tips {
-  margin-top: 12px;
-  padding: 10px 14px;
-  background: rgba(214, 158, 46, 0.08);
-  border: 1px solid rgba(214, 158, 46, 0.30);
-  border-radius: var(--radius-sm);
-  font-family: var(--font-body);
-  font-size: 12.5px;
-  line-height: 1.5;
-}
-.guided-traduzione-tips strong { color: rgb(146, 64, 14); }
-.guided-traduzione-tips ul { margin: 6px 0 0; padding-left: 20px; }
 
-/* ─── ORDO VERBORUM PANE nel wizard guidato · traduzione brutta ──────── */
-.guided-ordo-pane {
-  margin-top: 14px;
-  background: linear-gradient(180deg, rgba(56, 178, 172, 0.07) 0%, var(--paper) 100%);
-  border: 1px solid rgba(56, 178, 172, 0.30);
-  border-left: 4px solid rgba(56, 178, 172, 0.65);
-  border-radius: var(--radius-md);
-  padding: 12px 14px;
-}
-.guided-ordo-pane.empty {
-  background: var(--cream);
-  border-left-color: var(--rule);
-}
-.guided-ordo-head {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 6px;
-}
-.guided-ordo-icon { font-size: 18px; line-height: 1; }
-.guided-ordo-title {
-  font-family: var(--font-ui);
-  font-size: 12px;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: rgb(28, 111, 106);
-}
-.guided-ordo-hint {
-  font-family: var(--font-body);
-  font-size: 12.5px;
-  line-height: 1.45;
-  color: var(--ink);
-  margin: 0 0 10px;
-}
-.guided-ordo-hint strong { color: rgb(28, 111, 106); }
-.guided-ordo-body { display: flex; flex-direction: column; gap: 8px; }
-.ordo-block {
-  padding: 8px 10px;
-  background: var(--paper);
-  border: 1px solid var(--rule-soft);
-  border-radius: var(--radius-sm);
-}
+/* Il blocco di una proposizione non si incarta due volte: sta gia' dentro la
+   sezione del canone, e una cornice dentro la cornice era una ripetizione. */
+.ordo-block { padding: 0; }
+.ordo-block + .ordo-block { margin-top: 10px; }
 .ordo-block-label {
   font-family: var(--font-ui);
   font-size: 10px;
@@ -7778,6 +7714,32 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   overflow-y: auto;
   color: var(--ink);
 }
+/* IL CAMPO SU CUI SI SCRIVE DAVVERO. La famiglia portava a token ogni raggio e
+   ogni carattere, e poi il pezzo piu' importante della superficie era vestito
+   nel markup: la stessa riga di stile in linea copiata tre volte, col 15.5px
+   che non compariva in nessuna regola. Ora sta qui, e la Fase C la usa con le
+   altre tre. La misura minima distingue i ruoli: la resa d'insieme vuole
+   respiro, la brutta di una frase sola no. */
+.guided-bella-campo {
+  width: 100%;
+  min-height: 280px;
+  font-family: var(--font-body);
+  font-size: 15.5px;
+  line-height: 1.6;
+}
+.guided-bella-campo.brutta { min-height: 180px; }
+
+/* Il vuoto dell'ordo: prosa, non un riquadro d'errore. Porta con se' il mini
+   pulsante che manda dove il vuoto si riempie. */
+.guided-bella-vuoto {
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--sepia);
+  margin: 0;
+}
+.guided-bella-vuoto .cta-mini { margin-left: 4px; vertical-align: baseline; }
+
 .guided-bella-cta {
   padding: 12px 16px;
   background: rgba(156, 107, 60, 0.10);
@@ -10296,13 +10258,22 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   font-family: var(--font-body);
   font-size: 13px;
 }
+/* LA PASTIGLIA PRENDE IL COLORE DAL CASO, non da una palette propria.
+   Le cinque varianti .ordo-step-* dipingevano il predicato di rgba(24,0,172),
+   che e' #1800AC: l'indaco del GRECO, sulla schermata di una versione latina.
+   E dicevano il contrario dello stemma a barre, dove il nominativo e' blu e il
+   verbo rosso: passando dall'una all'altro le due tinte principali si
+   scambiavano sotto gli stessi due nomi. Ora la classe .case-* porta le sue
+   quattro variabili, copre tutte e quattordici le funzioni e ha il verso del
+   buio; qui restano solo la forma e la misura. */
 .ordo-step {
   display: inline-flex;
   align-items: center;
   gap: 5px;
   padding: 4px 10px;
-  background: var(--paper);
-  border: 1px solid var(--rule);
+  background: var(--case-bg, var(--paper));
+  border: 1px solid var(--case-border, var(--rule));
+  color: var(--case-text, var(--ink));
   border-radius: var(--radius-sm);
 }
 .ordo-num {
@@ -10318,11 +10289,6 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   color: var(--paper);
   border-radius: 50%;
 }
-.ordo-step-soggetto   { border-color: rgba(197, 48, 48, 0.45); background: rgba(197, 48, 48, 0.06); }
-.ordo-step-predicato  { border-color: rgba(24, 0, 172, 0.45);  background: rgba(24, 0, 172, 0.06); }
-.ordo-step-oggetto    { border-color: rgba(47, 133, 90, 0.45); background: rgba(47, 133, 90, 0.06); }
-.ordo-step-termine    { border-color: rgba(245, 124, 0, 0.45); background: rgba(245, 124, 0, 0.06); }
-.ordo-step-specificazione { border-color: rgba(56, 178, 172, 0.45); background: rgba(56, 178, 172, 0.06); }
 .ordo-arrow {
   font-family: var(--font-ui);
   color: var(--sepia-soft);
@@ -11512,6 +11478,13 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
     min-height: 36px;
   }
   .token { min-height: 32px; }
+  /* Le linguette di frase sono la NAVIGAZIONE della via guidata: si toccano a
+     ogni cambio di frase, e stavano a 36px come un pulsante qualunque mentre la
+     superficie che governano — il canone `.guided-bella` — sta a 44. Qui si
+     alza dove serve, come si e' fatto per il cassetto. Resta aperta la domanda
+     piu' larga, ed e' scritta perche' non si perda: il programma ha DUE soglie
+     del tocco, 36 in questo blocco e 44 nel cassetto e nel canone. */
+  .wizard-sentence-tab { min-height: 44px; }
   /* I segmentati che hanno sostituito i menù a tendina (famiglia field-select)
      nascono compatti — 4px 9px, ~24px d'altezza — perché sul desktop convivono
      con un cursore preciso. Su puntatore grossolano vanno portati alla stessa
@@ -31340,6 +31313,34 @@ function renderGuidedStepTraduzione() {
 
   const tabsHtml = renderGuidedSentenceTabs();
 
+  /* Il vuoto dice la verita' e offre la porta, se la porta esiste. La sigla
+     «B6» non e' mai esistita: nessuna parte del programma numera le tappe con
+     lettera e numero, e il sei era anche sbagliato — la posizione dei sintagmi
+     cambia con la playlist del percorso, e in qualche percorso la tappa non
+     c'e' affatto. Si mandava il docente a cercare un cartello mai affisso. */
+  function vuotoOrdo() {
+    const raggiungibile = tappeGuidateDi(state)
+      .some(function (t) { return t.chiave === 'sintagmi'; });
+    return '<p class="guided-bella-vuoto">Di questa frase non hai ancora segnato i sintagmi, '
+      + "e senza quelli non resta nulla da rimettere in fila."
+      + (raggiungibile
+          ? ' <button type="button" class="cta-mini" onclick="vaiAllaTappa(&#39;sintagmi&#39;)">Vai ai sintagmi</button>'
+          : '')
+      + '</p>';
+  }
+
+  /* La banda di stato del canone guarda l'intero brano, non la frase aperta:
+     la tappa e' fatta quando ogni frase ha la sua resa di lavoro. */
+  const fatte = sentences.filter(function (f) {
+    return (f.translation || '').trim().length > 0;
+  }).length;
+  const tutte = sentences.length > 0 && fatte === sentences.length;
+  const pct = sentences.length ? Math.round((fatte / sentences.length) * 100) : 0;
+  const nomeGenere = state.meta.genere
+    ? ((GUIDED_GENERI.find(function (g) { return g.key === state.meta.genere; }) || {}).label
+       || state.meta.genere)
+    : '';
+
   /* ═════════════════════════════════════════════════════════════════════
      ORDO VERBORUM SVO · ricostruzione automatica della disposizione
      italiana (Soggetto → Verbo → Oggetto → Compl. vari) basata
@@ -31352,11 +31353,13 @@ function renderGuidedStepTraduzione() {
     const buildOrdoBlock = (label, parts, propIdx) => {
       if (!parts || parts.length === 0) return '';
       const stepsHtml = parts.map((p, i) =>
-        `<span class="ordo-step ordo-step-${escapeHtml(p.key)}" title="${escapeHtml(p.funzione || '')}">
+        `<span class="ordo-step case-${funzioneToCaseGroup(p.funzione || '')}" title="${escapeHtml(p.funzione || '')}">
           <span class="ordo-num">${i+1}</span>${escapeHtml(p.phrase)}
         </span>`).join('<span class="ordo-arrow">→</span>');
+      /* Senza proposizioni annotate la sequenza e' una sola e la targhetta
+         ripeteva il titolo della sezione: si scrive solo quando distingue. */
       return `<div class="ordo-block">
-        <h5 class="ordo-block-label">${escapeHtml(label)}</h5>
+        ${label ? `<h5 class="ordo-block-label">${escapeHtml(label)}</h5>` : ''}
         <div class="prop-ordo-sequence">${stepsHtml}</div>
       </div>`;
     };
@@ -31367,8 +31370,10 @@ function renderGuidedStepTraduzione() {
       const annotated = annotatePeriodaleSiglas(periodale);
       annotated.forEach((pe, i) => {
         const parts = buildOrdoVerborum(sentence, pe);
+        /* Il separatore si scrive solo se c'e' qualcosa da separare: con
+           `ruolo` e `tipo` vuoti l'etichetta finiva in un punto medio sospeso. */
         const lbl = pe._sigla
-          ? `Prop. ${pe._sigla} · ${pe.ruolo || ''}${pe.tipo ? ' · ' + pe.tipo : ''}`
+          ? ['Prop. ' + pe._sigla, pe.ruolo || '', pe.tipo || ''].filter(Boolean).join(' · ')
           : `Proposizione ${i + 1}`;
         ordoContent += buildOrdoBlock(lbl, parts, i);
       });
@@ -31376,49 +31381,63 @@ function renderGuidedStepTraduzione() {
       // Fallback: una sequenza unica sull'intera frase usando i sintagmi logici
       const virtualProp = { tokenIndices: logica.flatMap(l => l.tokenIndices || []) };
       const parts = buildOrdoVerborum(sentence, virtualProp);
-      ordoContent += buildOrdoBlock('Ordo verborum (intera frase)', parts, 0);
+      ordoContent += buildOrdoBlock('', parts, 0);
     }
 
-    ordoHtml = `<div class="guided-ordo-pane">
-      <div class="guided-ordo-head">
-        <span class="guided-ordo-icon">🪶</span>
-        <span class="guided-ordo-title">Ordo verborum SVO · ricostruzione automatica</span>
-      </div>
-      <p class="guided-ordo-hint">Sequenza italiana automatica <strong>Soggetto → Verbo → Compl. oggetto → Altri complementi</strong>, dedotta dall'analisi logica già compilata. Usala come traccia per scrivere la traduzione in brutta.</p>
-      <div class="guided-ordo-body">${ordoContent || '<div class="muted-text" style="font-size:12px;font-style:italic;">Nessun sintagma logico disponibile per questa frase. Completa prima le tappe B6 (Sintagmi) per ottenere la ricostruzione automatica.</div>'}</div>
-    </div>`;
+    ordoHtml = ordoContent || vuotoOrdo();
   } else {
-    ordoHtml = `<div class="guided-ordo-pane empty">
-      <div class="guided-ordo-head"><span class="guided-ordo-icon">🪶</span><span class="guided-ordo-title">Ordo verborum SVO · ricostruzione automatica</span></div>
-      <p class="guided-ordo-hint muted-text" style="font-style:italic;">Completa l'analisi logica (tappa B6 · Sintagmi) per ottenere la ricostruzione automatica della disposizione SVO italiana di questa frase.</p>
-    </div>`;
+    ordoHtml = vuotoOrdo();
   }
 
+  /* LA FASE C AL CANONE. Era l'ultima superficie di lavoro fuori da
+     `.guided-bella`: un seguito di riquadri ciascuno con la propria cornice —
+     il pannello dell'ordo aveva persino un colore suo, il teal, che nella
+     stessa schermata significava contemporaneamente contenitore, complemento
+     di specificazione e vocativo. Ora e' la forma di casa: banda di stato,
+     sezioni bianche con titolo numerato e prosa sotto, congedo in fondo. */
   return `${tabsHtml}
-    <div class="guided-traduzione">
-      <div class="guided-traduzione-orig ${isGreek ? 'greek' : ''}">
-        <span class="label">Originale · frase ${idx + 1} di ${sentences.length}</span>
-        <div class="text">${escapeHtml(sentence.original || '')}</div>
+    <div class="guided-bella">
+      <div class="guided-bella-info ${tutte ? 'done' : 'partial'}">
+        <span>${tutte
+          ? "✓ Ogni frase del brano ha la sua resa di lavoro. Da qui si passa alla versione d'insieme."
+          : fatte === 0
+            ? "Nessuna frase ha ancora la sua resa di lavoro. Si comincia da questa, e le altre stanno nelle linguette qui sopra."
+            : `Resa di lavoro fatta su <strong>${fatte}</strong> ${fatte === 1 ? 'frase' : 'frasi'} su <strong>${sentences.length}</strong>. Le altre stanno nelle linguette qui sopra.`}</span>
+        <span class="guided-bella-conto">${pct}% · ${sentences.length} ${sentences.length === 1 ? 'frase' : 'frasi'}</span>
+        <span class="guided-bella-barra"><span style="width:${pct}%;"></span></span>
       </div>
-      <div class="guided-traduzione-actions">
-        <a class="btn btn-primary" href="${escapeHtml(dictHref)}" target="_blank" rel="noopener">📖 Apri il dizionario in una nuova scheda</a>
-        <span class="muted-text" style="font-size:11.5px;">consulta i lemmi: sost./agg./pron. al nom. sing. masch.; verbi alla 1ª sing. pres. ind.</span>
-      </div>
-      ${ordoHtml}
-      <div class="field-block" style="margin-top:14px;">
-        <label class="field-block-label">Traduzione · brutta copia della frase ${idx + 1}</label>
-        <textarea class="field-input" style="width:100%;min-height:140px;font-family:var(--font-body);font-size:15px;line-height:1.55;"
+
+      <section class="guided-bella-section">
+        <h3 class="guided-bella-title">① Il testo davanti · frase ${idx + 1} di ${sentences.length}
+          <span class="guided-bella-tools">
+            <a class="btn btn-ghost btn-sm" href="${escapeHtml(dictHref)}" target="_blank" rel="noopener"
+               title="Apre il dizionario del ramo in una scheda accanto, senza perdere il lavoro">📖 dizionario</a>
+          </span>
+        </h3>
+        <p class="guided-bella-hint">Sul dizionario le parole si cercano nella forma con cui stanno in elenco, il nominativo singolare maschile per i nomi, gli aggettivi e i pronomi, la prima persona del presente indicativo per i verbi. La forma che hai sotto gli occhi è quasi sempre un'altra, e risalire dall'una all'altra è già metà dell'analisi.</p>
+        <div class="guided-traduzione-orig ${isGreek ? 'greek' : ''}">
+          <div class="text">${escapeHtml(sentence.original || '')}</div>
+        </div>
+      </section>
+
+      <section class="guided-bella-section">
+        <h3 class="guided-bella-title">② L'ordine italiano · quello che l'analisi ha già riconosciuto</h3>
+        <p class="guided-bella-hint">I sintagmi che hai marcato tornano qui nella disposizione che l'italiano preferisce, il soggetto davanti e i complementi in coda. Non è una traduzione ed è bene che non lo sembri: è la scaletta su cui appoggiare la propria.</p>
+        ${ordoHtml}
+      </section>
+
+      <section class="guided-bella-section">
+        <h3 class="guided-bella-title">③ La brutta copia · vicina all'originale</h3>
+        <p class="guided-bella-hint">Qui si scrive per capire, non per consegnare. Di un nome o di un aggettivo prendi il significato più largo e lascia che sia il contesto a stringerlo; davanti a un verbo che resiste, giragli attorno — traduci prima il soggetto e i complementi, e spesso il senso si lascia raggiungere per esclusione.${nomeGenere ? ` Il brano è ${escapeHtml(nomeGenere.toLowerCase())}, e tenerne il registro vale quanto azzeccare una parola.` : ''}</p>
+        <textarea class="field-input guided-bella-campo brutta"
           data-rivedere="${sentence.daRivedere ? '1' : ''}" oninput="updateSentenceTranslation('${sentence.id}', this.value)"
           placeholder="Scrivi qui la resa di lavoro di questa frase, vicina all'originale…">${escapeHtml(sentence.translation || '')}</textarea>
-      </div>
-      <div class="guided-traduzione-tips">
-        <strong>Suggerimenti contestuali:</strong>
-        <ul>
-          <li>Sostantivi e aggettivi: parti da un significato generico, poi raffinalo col contesto.</li>
-          <li>Verbi: se non ne ricavi il senso, prova prima a tradurre i complementi e il soggetto.</li>
-          ${state.meta.genere ? `<li>Il genere «${escapeHtml(GUIDED_GENERI.find(g=>g.key===state.meta.genere)?.label || state.meta.genere)}» suggerisce un lessico coerente. Mantienine il registro.</li>` : ''}
-          <li>Usa la sequenza ordo verborum SVO qui sopra come scaletta dell'italiano.</li>
-        </ul>
+      </section>
+
+      <div class="guided-bella-cta">
+        ${tutte
+          ? "🎉 <strong>La brutta copia è finita.</strong> Nella tappa che viene il testo antico si chiude, e si lavora soltanto dentro l'italiano."
+          : 'Quando ogni frase ha la sua resa di lavoro, la tappa si considera fatta.'}
       </div>
     </div>`;
 }
@@ -31448,7 +31467,7 @@ function renderGuidedStepBellaCopia() {
     <section class="guided-bella-section">
       <h3 class="guided-bella-title">② Bella copia · resa organica della versione</h3>
       <p class="guided-bella-hint">Obiettivo: testo uniforme, scorrevole, articolato dall'inizio alla fine. Smussa le imperfezioni, armonizza i collegamenti, riformula i passaggi che alla lettura suonano "grezzi". Talvolta tradurre significa anche "tradire" le parole di partenza affinché in italiano suonino bene.</p>
-      <textarea class="field-input" style="width:100%;min-height:280px;font-family:var(--font-body);font-size:15.5px;line-height:1.6;"
+      <textarea class="field-input guided-bella-campo"
         oninput="aggiornaBellaCopia(this.value)"
         placeholder="Componi qui la traduzione finale d'insieme dell'intera versione…">${escapeHtml(state.meta.traduzioneBella || '')}</textarea>
     </section>
@@ -32762,7 +32781,7 @@ function renderTranslationHtml() {
             </span>
           </h3>
           <p class="guided-bella-hint">Obiettivo: testo uniforme, scorrevole, articolato dall'inizio alla fine. Smussa le imperfezioni, armonizza i collegamenti, riformula i passaggi che alla lettura suonano «grezzi». Talvolta tradurre significa anche «tradire» le parole di partenza affinché in italiano suonino bene.</p>
-          <textarea class="field-input" style="width:100%;min-height:280px;font-family:var(--font-body);font-size:15.5px;line-height:1.6;"
+          <textarea class="field-input guided-bella-campo"
             oninput="onMetaChange('traduzioneBella', this.value)"
             placeholder="Componi qui la traduzione finale d'insieme dell'intera versione…">${escapeHtml(globalBella)}</textarea>
         </section>
@@ -32816,7 +32835,7 @@ function renderTranslationHtml() {
           </span>
         </h3>
         <p class="guided-bella-hint">L'unione delle rese di lavoro, da leggere di seguito. Premi «Compila da frasi» per assemblarla dalle bozze, oppure scrivila a mano.</p>
-        <textarea class="field-input" style="width:100%;min-height:180px;font-family:var(--font-body);font-size:15.5px;line-height:1.6;"
+        <textarea class="field-input guided-bella-campo brutta"
           oninput="onMetaChange('traduzione', this.value)"
           placeholder="Brutta copia complessiva del brano…">${escapeHtml(globalBrutta)}</textarea>
       </section>
@@ -37702,7 +37721,7 @@ function renderPropositionInsight(sentenceId, periodaleEntry, lang) {
   // Ordo verborum italiano (S → V → O → altri)
   let ordoHtml = '';
   if (analysis.ordo && analysis.ordo.length > 0) {
-    const seq = analysis.ordo.map((p, i) => `<span class="ordo-step ordo-step-${escapeHtml(p.key)}" title="${escapeHtml(p.funzione)}"><span class="ordo-num">${i+1}</span>${escapeHtml(p.phrase)}</span>`).join('<span class="ordo-arrow">→</span>');
+    const seq = analysis.ordo.map((p, i) => `<span class="ordo-step case-${funzioneToCaseGroup(p.funzione)}" title="${escapeHtml(p.funzione)}"><span class="ordo-num">${i+1}</span>${escapeHtml(p.phrase)}</span>`).join('<span class="ordo-arrow">→</span>');
     ordoHtml = `<div class="prop-insight-section">
       <h5 class="prop-insight-title">🪶 Ordo verborum italiano (ricostruzione)</h5>
       <div class="prop-ordo-sequence">${seq}</div>
