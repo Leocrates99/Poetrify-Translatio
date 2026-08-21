@@ -4291,6 +4291,12 @@ body[data-lang="greco"] .tree-card-connettivo strong { font-family: var(--font-c
 /* Un campo che aspetta una rilettura si riconosce dal tratteggio: il testo c'è,
    la conferma no. Nessuna barra colorata: il colore in Poetrify è la lingua. */
 textarea[data-rivedere="1"] { border-style: dashed; border-color: var(--sepia); }
+/* Nel buio la regola generale del campo — `:root[data-theme="dark"] body
+   .field-input`, che pesa (0,3,1) contro il (0,2,0) di qui — riportava il bordo
+   a var(--rule): restava il tratteggio nel colore di un campo qualunque, cioe'
+   il segno smetteva di segnare. Misurato: rgb(59,63,74) invece di #a8a39b.
+   Questa pareggia il peso a (0,3,2) senza ricorrere a !important. */
+:root[data-theme="dark"] body textarea[data-rivedere="1"] { border-color: var(--sepia); }
 
 /* ── La domanda del cambio di percorso ─────────────────────────────────── */
 .cambio-da-a { font-family: var(--font-ui); font-size: 15px; margin: 0 0 4px; }
@@ -7581,7 +7587,10 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
   color: var(--ink);
   font-style: italic;
 }
-.guided-traduzione-orig.greek .text { font-family: var(--font-classical); font-style: normal; }
+/* La commutazione del carattere greco NON vive qui: la fa la grande lista
+   tipografica in testa al foglio (cerca «.guided-traduzione-orig.greek .text»),
+   con !important su entrambe le dichiarazioni. Una seconda regola senza peso
+   faceva solo credere il contrario a chi legge la famiglia. */
 
 /* Il blocco di una proposizione non si incarta due volte: sta gia' dentro la
    sezione del canone, e una cornice dentro la cornice era una ripetizione. */
@@ -7731,14 +7740,18 @@ body[data-lang="greco"] .periodale-bridge-chip { font-family: var(--font-classic
    che non compariva in nessuna regola. Ora sta qui, e la Fase C la usa con le
    altre tre. La misura minima distingue i ruoli: la resa d'insieme vuole
    respiro, la brutta di una frase sola no. */
-.guided-bella-campo {
+/* Doppia classe di proposito: `.field-input` e' dichiarata PIU' AVANTI nel
+   foglio e, a parita' di peso, l'ultima vince — il campo sarebbe sceso da 15,5
+   a 13px, cioe' la misura del corpo d'interfaccia invece di quella di lettura.
+   Era la ragione per cui lo stile stava scritto in linea. */
+.field-input.guided-bella-campo {
   width: 100%;
   min-height: 280px;
   font-family: var(--font-body);
   font-size: 15.5px;
   line-height: 1.6;
 }
-.guided-bella-campo.brutta { min-height: 180px; }
+.field-input.guided-bella-campo.brutta { min-height: 180px; }
 
 /* Il vuoto dell'ordo: prosa, non un riquadro d'errore. Porta con se' il mini
    pulsante che manda dove il vuoto si riempie. */
@@ -10261,6 +10274,9 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
 }
 
 /* Ordo verborum italiano: sequenza con frecce */
+/* Nelle pastiglie ci sta il testo ANTICO, non la sua traduzione: il greco
+   politonico usciva qui in carattere di corpo mentre a pochi centimetri, nella
+   stessa schermata, il riquadro dell'originale lo vestiva come si deve. */
 .prop-ordo-sequence {
   display: flex;
   flex-wrap: wrap;
@@ -10269,6 +10285,7 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   font-family: var(--font-body);
   font-size: 13px;
 }
+.prop-ordo-sequence.greek .ordo-step { font-family: var(--font-classical); }
 /* LA PASTIGLIA PRENDE IL COLORE DAL CASO, non da una palette propria.
    Le cinque varianti .ordo-step-* dipingevano il predicato di rgba(24,0,172),
    che e' #1800AC: l'indaco del GRECO, sulla schermata di una versione latina.
@@ -31386,7 +31403,7 @@ function renderGuidedStepTraduzione() {
   const periodale = sentence.periodale || [];
   const logica = sentence.logic || [];
   if (periodale.length > 0 || logica.length > 0) {
-    const buildOrdoBlock = (label, parts, propIdx) => {
+    const buildOrdoBlock = (label, parts) => {
       if (!parts || parts.length === 0) return '';
       const stepsHtml = parts.map((p, i) =>
         `<span class="ordo-step case-${funzioneToCaseGroup(p.funzione || '')}" title="${escapeHtml(p.funzione || '')}">
@@ -31396,7 +31413,7 @@ function renderGuidedStepTraduzione() {
          ripeteva il titolo della sezione: si scrive solo quando distingue. */
       return `<div class="ordo-block">
         ${label ? `<h5 class="ordo-block-label">${escapeHtml(label)}</h5>` : ''}
-        <div class="prop-ordo-sequence">${stepsHtml}</div>
+        <div class="prop-ordo-sequence${isGreek ? ' greek' : ''}">${stepsHtml}</div>
       </div>`;
     };
 
@@ -31411,13 +31428,13 @@ function renderGuidedStepTraduzione() {
         const lbl = pe._sigla
           ? ['Prop. ' + pe._sigla, pe.ruolo || '', pe.tipo || ''].filter(Boolean).join(' · ')
           : `Proposizione ${i + 1}`;
-        ordoContent += buildOrdoBlock(lbl, parts, i);
+        ordoContent += buildOrdoBlock(lbl, parts);
       });
     } else {
       // Fallback: una sequenza unica sull'intera frase usando i sintagmi logici
       const virtualProp = { tokenIndices: logica.flatMap(l => l.tokenIndices || []) };
       const parts = buildOrdoVerborum(sentence, virtualProp);
-      ordoContent += buildOrdoBlock('', parts, 0);
+      ordoContent += buildOrdoBlock('', parts);
     }
 
     ordoHtml = ordoContent || vuotoOrdo();
@@ -31466,6 +31483,7 @@ function renderGuidedStepTraduzione() {
         <h3 class="guided-bella-title">③ La brutta copia · vicina all'originale</h3>
         <p class="guided-bella-hint">Qui si scrive per capire, non per consegnare. Di un nome o di un aggettivo prendi il significato più largo e lascia che sia il contesto a stringerlo; davanti a un verbo che resiste, giragli attorno — traduci prima il soggetto e i complementi, e spesso il senso si lascia raggiungere per esclusione.${nomeGenere ? ` Il brano è ${escapeHtml(nomeGenere.toLowerCase())}, e tenerne il registro vale quanto azzeccare una parola.` : ''}</p>
         <textarea class="field-input guided-bella-campo brutta"
+          aria-label="Brutta copia di questa frase"
           data-rivedere="${sentence.daRivedere ? '1' : ''}" oninput="updateSentenceTranslation('${sentence.id}', this.value)"
           placeholder="Scrivi qui la resa di lavoro di questa frase, vicina all'originale…">${escapeHtml(sentence.translation || '')}</textarea>
       </section>
@@ -34899,7 +34917,10 @@ function funzioneToPropField(funzione) {
    proposizione periodale. Una entry logica appartiene alla proposizione se
    almeno UN tokenIndex è contenuto nella proposizione. */
 function groupLogicByPropField(sentence, periodaleEntry) {
-  if (!sentence || !periodaleEntry) return { fields: {}, ordered: [], stragglers: [] };
+  /* `total` serve: la guardia di buildOrdoVerborum interroga `grouped.total === 0`,
+     e undefined non e' zero — su questo ramo la funzione proseguiva e restituiva
+     [] invece di null. `stragglers` non lo legge nessuno. */
+  if (!sentence || !periodaleEntry) return { fields: {}, ordered: [], total: 0 };
   const propTokens = new Set((periodaleEntry.tokenIndices || []).filter(i => i >= 0));
   const allLogic = sentence.logic || [];
   const matched = allLogic.filter(le => {
@@ -39505,7 +39526,23 @@ function switchAnalysisTab(tab) {
 
 function updateSentenceTranslation(sentenceId, value) {
   const s = state.sentences.find(x => x.id === sentenceId);
-  if (s) { s.translation = value; rivistaBruttaDi(s); persistCurrent(); }
+  if (!s) return;
+  /* Riscrivere la brutta E' rileggerla, e il dato cadeva davvero — ma il bordo
+     tratteggiato restava, perche' l'attributo che lo accende viene scritto al
+     disegno e nessuno ridisegnava. Il docente riscriveva la frase e il campo
+     continuava a dirgli che c'era da rileggerla. Si spegne in loco: ridisegnare
+     dentro l'oninput costerebbe il fuoco e la posizione del cursore a ogni
+     tasto battuto. La guardia guarda QUESTA frase, non il modulo: segnaRivisto
+     torna vero solo quando cade l'ultima, e qui serve sapere se e' caduta la
+     nostra. */
+  const eraDaRivedere = !!s.daRivedere;
+  s.translation = value;
+  rivistaBruttaDi(s);
+  if (eraDaRivedere && !s.daRivedere) {
+    const el = document.activeElement;
+    if (el && el.dataset && el.dataset.rivedere) el.dataset.rivedere = '';
+  }
+  persistCurrent();
 }
 
 function addGrammarEntry(sentenceId) {
