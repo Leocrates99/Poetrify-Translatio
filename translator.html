@@ -3056,12 +3056,13 @@ h1.scheletro-sentence-num,
 .schel-conn-btn.schel-conn-del { color: var(--danger); }
 .schel-conn-btn:hover { border-color: var(--primary); }
 /* menù a tendina compatti per l'analisi dei verbi (fase 1) */
-.schel-vq-wrap { margin-top: 8px; padding: 8px 10px; background: transparent; border: 1px solid rgba(196,18,52,0.30); border-left: 3px solid rgba(196,18,52,0.7); border-radius: 8px; }
-.schel-vq-title { font-family: var(--font-ui); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: #8b1f1f; margin-bottom: 6px; }
+.schel-vq-wrap { margin-top: 8px; padding: 8px 10px; background: transparent; border: 1px solid var(--case-border, var(--rule)); border-radius: 8px; }
+.schel-vq-title { font-family: var(--font-ui); font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.03em; color: var(--case-text, var(--ink)); margin-bottom: 6px; }
 .schel-vq-row { display: flex; align-items: flex-start; gap: 10px; padding: 4px 0; border-top: 1px solid var(--rule-soft); }
 .schel-vq-row:first-of-type { border-top: none; }
-.schel-vq-word { flex: 0 0 auto; min-width: 70px; font-weight: 800; color: #8b1f1f; font-size: 14px; padding-top: 4px; }
-:root[data-theme="dark"] body .schel-vq-word { color: #f1a3a3; }
+/* Il rosso del verbo e' quello del RUOLO: `.case-verbo` sta sul wrap, cosi' i
+   token arrivano anche alle righe chiuse, e il buio li rovescia da se'. */
+.schel-vq-word { flex: 0 0 auto; min-width: 70px; font-weight: 800; color: var(--case-text, var(--ink)); font-size: 14px; padding-top: 4px; }
 .schel-vq-word.greek { font-family: var(--font-classical); }
 .schel-vq-fields { display: flex; flex-wrap: wrap; gap: 6px 10px; flex: 1; }
 .schel-vq-field { display: inline-flex; flex-direction: column; gap: 1px; }
@@ -3094,9 +3095,18 @@ h1.scheletro-sentence-num,
 .schel-vq-forma-btn:hover { border-color: var(--case-strong, var(--ink)); }
 .schel-vq-forma-btn.active { background: var(--case-strong, var(--ink)); border-color: var(--case-strong, var(--ink)); color: #fff; }
 
+/* IL NON FINITO ha un colore suo, e non e' un ruolo: e' il rame con cui il token
+   non finito si distingue dal ciliegia del finito in anteprima
+   (`.scheletro-verb-nonfin`). Dichiarato qui una volta sola, con il verso del
+   buio, invece che scritto a mano in tre varianti. */
+.schel-vq-row { --nonfin-text: #8a4318; --nonfin-border: rgba(160,78,28,0.72); --nonfin-strong: rgba(160,78,28,0.92); }
+:root[data-theme="dark"] body .schel-vq-row { --nonfin-text: #E8A27A; }
+
 /* LA PORTA · due riquadri, e i campi dopo. La descrizione detta l'altezza e
-   `stretch` la pareggia fra i due, come le carte dello scopo nell'avvio. */
-.schel-vq-porta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 4px 0 6px; }
+   `stretch` la pareggia fra i due, come le carte dello scopo nell'avvio. Le
+   colonne si contano sullo spazio che c'e', non sul viewport: nel cassetto da
+   420px due colonne da 190 erano una strettoia, mentre lo schermo diceva 1280. */
+.schel-vq-porta { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; margin: 4px 0 6px; }
 .schel-vq-porta-btn {
   appearance: none; cursor: pointer; text-align: left;
   display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; min-height: 96px;
@@ -3106,12 +3116,11 @@ h1.scheletro-sentence-num,
 .schel-vq-porta-btn:hover { border-color: var(--case-strong, var(--ink)); }
 .schel-vq-porta-btn:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: 2px; }
 .schel-vq-porta-btn .svp-t { font-family: var(--font-ui); font-size: 15px; font-weight: 700; color: var(--case-text, var(--ink)); }
-.schel-vq-porta-btn.nf .svp-t { color: #b1481f; }
-.schel-vq-porta-btn.nf:hover { border-color: #b1481f; }
+.schel-vq-porta-btn.nf .svp-t { color: var(--nonfin-text); }
+.schel-vq-porta-btn.nf:hover { border-color: var(--nonfin-text); }
 .schel-vq-porta-btn .svp-d { font-family: var(--font-body); font-size: 12.5px; line-height: 1.45; color: var(--sepia); }
 .schel-vq-porta-auto { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .schel-vq-porta-auto .svp-oppure { font-family: var(--font-body); font-size: 12.5px; font-style: italic; color: var(--sepia); }
-@media (max-width: 520px) { .schel-vq-porta { grid-template-columns: 1fr; } }
 
 /* I PULSANTI DEL MODULO APERTO, piu' grandi: nati per stare in una riga del
    brano, erano 11,5px con 4px di padding — troppo piccoli e schiacciati per un
@@ -3129,7 +3138,11 @@ h1.scheletro-sentence-num,
 .schel-vq-row.is-active .schel-vq-fields { gap: 12px 16px; }
 .schel-vq-row.is-active .schel-vq-field { gap: 5px; }
 .schel-vq-row.is-active .schel-vq-field > span { font-size: 11.5px; }
-.schel-vq-fields .field-select, .schel-vq-fields .field-input { font-size: 14px; padding: 8px 10px; min-height: 38px; }
+.schel-vq-fields .field-select:not(.seg-host), .schel-vq-fields .field-input { font-size: 14px; padding: 8px 10px; min-height: 38px; }
+/* Il suggerimento sotto un campo (la regola del participio) e' uno <span> figlio
+   del label come l'etichetta, e ne prendeva la veste: maiuscoletto spaziato. E'
+   prosa, e si veste da prosa. */
+.schel-vq-field > span.field-hint { font-family: var(--font-body); font-size: 12px; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--sepia); max-width: 36ch; }
 .schel-vq-forma .schel-conn-btn, .schel-vq-porta-auto .schel-conn-btn { font-size: 12.5px; padding: 7px 12px; min-height: 38px; }
 
 /* LA TASTIERA CHE COMPILA · solo dove c'e' una tastiera. I numerini compaiono
@@ -3143,32 +3156,34 @@ h1.scheletro-sentence-num,
     position: absolute; top: -7px; right: -6px;
     min-width: 16px; height: 16px; padding: 0 4px; box-sizing: border-box;
     display: inline-flex; align-items: center; justify-content: center;
-    font-family: var(--font-ui); font-size: 10px; font-weight: 700; line-height: 1;
+    font-family: var(--font-ui); font-size: 11px; font-weight: 700; line-height: 1;
     background: var(--ink); color: var(--paper); border-radius: 999px;
     border: 1.5px solid var(--paper); pointer-events: none;
   }
   .schel-vq-porta-btn[data-scorcia]::after { top: 10px; right: 12px; min-width: 20px; height: 20px; font-size: 11.5px; }
   .scorcia-legenda {
     display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 5px;
+    flex-basis: 100%;                 /* in una barra a flex prende una riga sua */
     font-family: var(--font-body); font-size: 12px; color: var(--sepia);
   }
+  .scorcia-legenda .scorcia-oltre { font-style: italic; }
   .scorcia-legenda kbd {
-    font-family: var(--font-ui); font-size: 10px; font-weight: 700;
+    font-family: var(--font-ui); font-size: 11px; font-weight: 700;
     min-width: 16px; height: 16px; padding: 0 4px; box-sizing: border-box;
     display: inline-flex; align-items: center; justify-content: center;
     background: var(--ink); color: var(--paper); border-radius: 999px; margin-right: 4px;
   }
 }
-.schel-vq-forma-btn.active.nf { background: rgba(214,90,60,0.92); border-color: rgba(214,90,60,0.92); }
-.schel-vq-forma-btn.nf { border-color: rgba(214,90,60,0.5); color: #b1481f; }
+.schel-vq-forma-btn.nf { border-color: var(--nonfin-border); color: var(--nonfin-text); }
+/* L'attivo non finito va DOPO la regola .nf e pesa di piu': prima, a parita' di
+   peso, `.nf` veniva dopo e gli lasciava il testo arancio su fondo arancio
+   (misurato 1,57:1). */
+.schel-vq-forma-btn.active.nf { background: var(--nonfin-strong); border-color: var(--nonfin-strong); color: #fff; }
 :root[data-theme="dark"] body .schel-vq-forma-btn { background: rgba(255,255,255,0.06); }
 /* Quella regola, (0,2,2), batteva anche il pulsante ATTIVO, (0,2,0): nel buio il
    fondo pieno spariva sotto un velo al 6% e restava testo bianco su niente. */
 :root[data-theme="dark"] body .schel-vq-forma-btn.active { background: var(--case-strong, var(--ink)); }
-:root[data-theme="dark"] body .schel-vq-forma-btn.active.nf { background: rgba(214,90,60,0.92); }
-/* #b1481f su carta scura misura 3,0:1; questo e' l'arancio notturno dell'accusativo, 8,1:1. */
-:root[data-theme="dark"] body .schel-vq-forma-btn.nf:not(.active),
-:root[data-theme="dark"] body .schel-vq-porta-btn.nf .svp-t { color: #F2A65C; }
+:root[data-theme="dark"] body .schel-vq-forma-btn.active.nf { background: var(--nonfin-strong); color: #fff; }
 :root[data-theme="dark"] body .schel-vq-wrap { background: transparent; }
 :root[data-theme="dark"] body .schel-vq-row.is-active { background: transparent; }
 /* FASE 7 · Traduzione (ordo SVO + brutta) */
@@ -11341,7 +11356,7 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
   /* barra di conferma logica + dropdown verbi: select a tutta larghezza e alti
      abbastanza da essere toccabili */
   .schel-confirm-sel { flex: 1 1 100%; max-width: 100%; }
-  .schel-confirm-sel, .schel-vq-field .field-select { min-height: 34px; }
+  .schel-confirm-sel, .schel-vq-field .field-select { min-height: 38px; }
   .schel-trad-tools .btn { flex: 1 1 auto; justify-content: center; }
 
   /* PREVIEW pane come overlay laterale */
@@ -11595,6 +11610,11 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
      migliora la lettura e peggiora il tocco. */
   .seg-btn { min-height: 36px; padding: 7px 11px; }
   .seg-group { gap: 6px; }
+  /* Il modulo del verbo e i pulsanti grandi: 44 su qualunque puntatore grosso.
+     La regola del cassetto li copriva solo sotto i 900px; un tablet largo in
+     orizzontale li lasciava a 38. */
+  .schel-vq-fields .seg-btn, .schel-vq-forma-btn, .schel-vq-porta-auto .schel-conn-btn,
+  .schel-vq-fields .field-select:not(.seg-host), .schel-vq-fields .field-input { min-height: 44px; }
   /* stessa ragione per la coppia transitivo/intransitivo dei nuclei valenziali */
   .nucleus-trans-btn { min-height: 32px; padding: 5px 10px; }
   .entry-drag-handle { padding: 4px 6px; }
@@ -12671,7 +12691,7 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
 
     <h4 class="shortcuts-section-title">Compilare l'analisi</h4>
     <div class="shortcuts-grid">
-      <div><kbd>1</kbd>…<kbd>9</kbd><span>Nel modulo aperto — verbo, nome, aggettivo, barra del token — la cifra preme il pulsante del <strong>primo gruppo ancora vuoto</strong>; i numerini sui pulsanti dicono quale. Scelto un valore, i numerini passano al gruppo seguente. Una tendina rimasta tale mostra la legenda delle cifre sotto di sé.</span></div>
+      <div><kbd>1</kbd>…<kbd>9</kbd><span>Nel modulo aperto — verbo, nome, aggettivo, barra del token — la cifra preme il pulsante del <strong>primo gruppo ancora vuoto</strong>; i numerini sui pulsanti dicono quale. Scelto un valore, i numerini passano al gruppo seguente; <kbd>0</kbd> salta il gruppo che non si vuole compilare. Una tendina rimasta tale mostra la legenda delle cifre sotto di sé.</span></div>
     </div>
 
     <h4 class="shortcuts-section-title">Apertura modali e selettori</h4>
@@ -28743,7 +28763,7 @@ function renderScheletroVerbi(sentences, lang) {
     const verbs = (sentence.grammar || []).filter(g => g.partOfSpeech === 'Verbo').sort((a, b) => (a.tokenIndex || 0) - (b.tokenIndex || 0));
     const av = state.scheletroActiveVerb || {};
     const quickHtml = verbs.length
-      ? `<div class="schel-vq-wrap"><div class="schel-vq-title">🔬 Completa l'analisi dei verbi · si apre la voce su cui lavori</div>${verbs.map(v => renderScheletroVerbQuick(sentence.id, v, lang, av.sentenceId === sentence.id && av.tokenIdx === v.tokenIndex)).join('')}</div>`
+      ? `<div class="schel-vq-wrap case-verbo"><div class="schel-vq-title">🔬 Completa l'analisi dei verbi · si apre la voce su cui lavori</div>${verbs.map(v => renderScheletroVerbQuick(sentence.id, v, lang, av.sentenceId === sentence.id && av.tokenIdx === v.tokenIndex)).join('')}</div>`
       : '';
     return `<div class="scheletro-sentence-block">
       <div class="scheletro-sentence-header">
@@ -28802,13 +28822,15 @@ function renderScheletroVerbQuick(sentenceId, verb, lang, isActive) {
      e non dal docente, e un modulo che partiva pieno di cose da non guardare.
      Ora, finche' nessuno ha detto quale modo e' e nessun campo e' compilato,
      si vedono DUE riquadri soli — finito, non finito — e i campi arrivano dopo
-     la scelta. La porta e' per apertura: il cursore della voce attiva si
-     ricorda che e' stata passata, e se si riapre un verbo ancora vuoto la si
-     ripassa. Chi ha gia' campi compilati (o la forma non finita) non la vede. */
-  const cursore = state.scheletroActiveVerb || {};
+     la scelta. La scelta si scrive SULLA VOCE (`_formaScelta`), non sul cursore
+     di apertura: scritta sul cursore, sopravviveva al ricarico e sigillava la
+     porta su una voce svuotata o ricreata da un'altra superficie, e insieme non
+     distingueva il «finito» scelto dal docente dal «finito» di default — la porta
+     tornava a ogni riapertura anche dopo una scelta esplicita. Chi ha gia' campi
+     compilati (o la forma non finita) non la vede comunque. */
   const compilato = !!(verb.tempo || verb.modo || verb.diatesi || verb.persona || verb.numero
                        || verb.coniugazione || verb.lemma);
-  const porta = !cursore.formaScelta && !isNonFin && !compilato;
+  const porta = !verb._formaScelta && !isNonFin && !compilato;
   const formaSeg = porta
     ? `<div class="schel-vq-porta">
     <button class="schel-vq-porta-btn" onclick="event.stopPropagation(); scheletroSetVerbForma('${sentenceId}','${verb.id}','finito')">
@@ -28876,12 +28898,14 @@ function scheletroSuggestVerb(sentenceId, verbId) {
   const v = (sentence.grammar || []).find(e => e.id === verbId);
   if (!v) return;
   const sug = suggestVerbMorph(v.word, state.meta.lingua);
-  if (state.scheletroActiveVerb) state.scheletroActiveVerb.formaScelta = true;   // anche l'auto passa la porta
   // AUTO-RICONOSCIMENTO: applica (sovrascrive) i campi morfologici dedotti; il
   // lemma resta intatto. È un suggerimento da rivedere ma esplicitamente richiesto.
   let n = 0;
   Object.entries(sug).forEach(([k, val]) => { if (val) { v[k] = val; n++; } });
   v.partOfSpeech = 'Verbo';
+  /* L'auto passa la porta solo se ha riconosciuto qualcosa: altrimenti mostrava
+     «modo finito» come scelto dal docente, che non aveva scelto niente. */
+  if (n > 0) v._formaScelta = true;
   // imposta il flag non-finito (per il colore in anteprima) in base alla forma dedotta
   const NONFIN = ['Infinito', 'Participio', 'Gerundio', 'Gerundivo', 'Supino'];
   if (NONFIN.includes(v.verboForma)) v._scheletroForma = 'non-finita';
@@ -29445,7 +29469,7 @@ function scheletroCycleVerb(sentenceId, tokenIdx) {
     state.scheletroActiveVerb = { sentenceId, tokenIdx };   // apre la voce appena inserita
   } else {
     // era un verbo → smarca (toggle off)
-    delete entry._scheletroForma; delete entry.verboForma;
+    delete entry._scheletroForma; delete entry.verboForma; delete entry._formaScelta;
     if (entry.partOfSpeech === 'Verbo') delete entry.partOfSpeech;
     if (!entry.lemma && !entry.note && !entry.caso && !entry.tempo && !entry.modo && !entry.persona && !entry.diatesi) {
       sentence.grammar = sentence.grammar.filter(e => e.id !== entry.id);
@@ -29464,7 +29488,7 @@ function scheletroSetVerbForma(sentenceId, verbId, kind) {
   const v = (sentence.grammar || []).find(e => e.id === verbId);
   if (!v) return;
   v.partOfSpeech = 'Verbo';
-  if (state.scheletroActiveVerb) state.scheletroActiveVerb.formaScelta = true;   // la porta e' passata
+  v._formaScelta = true;                     // la porta e' passata, e resta passata per questa voce
   if (kind === 'finito') {
     v.verboForma = 'Forma finita';
     delete v._scheletroForma;
@@ -43603,6 +43627,8 @@ document.addEventListener('DOMContentLoaded', () => {
     'Deponente':'Depon.','Semideponente':'Semidep.','Difettivo':'Difett.',
     'Positivo':'Pos.','Comparativo':'Compar.','Superlativo':'Superl.',
     'Forma finita':'Finita','Infinito':'Infin.','Participio':'Partic.','Gerundio':'Gerund.',
+    'Prima classe (-us/-a/-um)':'I classe','Seconda classe (terza decl.)':'II classe',
+    'Prima classe (3 uscite, I-II decl.)':'I classe','Seconda classe (3a decl.)':'II classe',
     'Accusativo o ablativo':'Acc. o abl.','Accusativo (con preposizione)':'Acc. + prep.'
   };
   function segLabel(v){
@@ -43918,12 +43944,22 @@ document.addEventListener('DOMContentLoaded', () => {
          nell'elenco il cassetto non contava come radice e la cifra cadeva nel vuoto. */
       if (corpo && corpo.querySelector('.seg-group, .schel-vq-porta, .schel-vq-forma, select.field-select, select[data-drop="on"]')) return corpo;
     }
+    /* Nel flusso possono stare aperte piu' carte insieme: la radice e' quella che
+       ha il fuoco, altrimenti l'ultima su cui si e' cliccato, altrimenti la prima. */
     var ed = document.getElementById('editor-content') || document;
-    var cand = ed.querySelector('.schel-vq-row.is-active')
-            || ed.querySelector('.token-action-bar')
-            || ed.querySelector('.entry-card:not(.is-collapsed) .entry-fields');
-    return scorciaVisibile(cand) ? cand : null;
+    var tutti = Array.prototype.slice.call(ed.querySelectorAll(
+      '.schel-vq-row.is-active, .token-action-bar, .entry-card:not(.is-collapsed) .entry-fields')).filter(scorciaVisibile);
+    if (!tutti.length) return null;
+    var att = document.activeElement;
+    for (var i = 0; i < tutti.length; i++) if (att && tutti[i].contains(att)) return tutti[i];
+    if (scorciaToccata && scorciaToccata.isConnected && tutti.indexOf(scorciaToccata) >= 0) return scorciaToccata;
+    return tutti[0];
   }
+  var scorciaToccata = null;
+  document.addEventListener('click', function(e){
+    var t = e.target && e.target.closest && e.target.closest('.schel-vq-row.is-active, .token-action-bar, .entry-card:not(.is-collapsed) .entry-fields');
+    if (t) scorciaToccata = t;
+  }, true);
   function scorciaOpzioni(sel){
     return Array.prototype.filter.call(sel.options, function(o){ return o.value !== ''; });
   }
@@ -43951,9 +43987,29 @@ document.addEventListener('DOMContentLoaded', () => {
     if (g.tipo === 'tendina') return g.el.value !== '';
     return g.btns.some(function(b){ return b.classList.contains('on') || b.classList.contains('active'); });
   }
+  /* Un gruppo lasciato vuoto di proposito (la diatesi che non si sa ancora)
+     inchioderebbe le cifre su di se': lo 0 lo salta. Il salto e' legato al
+     modulo — la parola in lavorazione piu' l'elenco dei suoi gruppi — e cade da
+     se' quando il modulo cambia. */
+  var scorciaSalti = { firma: '', etichette: [] };
+  function scorciaEtichetta(g){
+    if (g.tipo === 'tendina') { var c = g.el.closest('label, .field-block'); return (c ? c.textContent : g.el.name || '').trim().slice(0, 40); }
+    return (g.el.getAttribute('aria-label') || g.el.className || '').trim().slice(0, 40);
+  }
+  function scorciaFirma(root, gs){
+    var parola = root.querySelector('.schel-vq-word, .target-word, [data-word]');
+    parola = parola ? (parola.getAttribute('data-word') || parola.textContent).trim() : '';
+    return parola + '|' + gs.map(scorciaEtichetta).join('|');
+  }
   function scorciaAttivo(root){
     var gs = scorciaGruppi(root);
-    for (var i = 0; i < gs.length; i++) if (!scorciaPieno(gs[i])) return gs[i];
+    var firma = scorciaFirma(root, gs);
+    if (firma !== scorciaSalti.firma) scorciaSalti = { firma: firma, etichette: [] };
+    for (var i = 0; i < gs.length; i++) {
+      if (scorciaPieno(gs[i])) continue;
+      if (scorciaSalti.etichette.indexOf(scorciaEtichetta(gs[i])) >= 0) continue;
+      return gs[i];
+    }
     return null;
   }
   function scorciaCasa(sel){ return sel.closest('label, .field-block') || sel.parentNode; }
@@ -43978,7 +44034,7 @@ document.addEventListener('DOMContentLoaded', () => {
     var sel = (g && g.tipo === 'tendina') ? g.el : null;
     var tenuta = null;
     document.querySelectorAll('.scorcia-legenda').forEach(function(l){
-      if (sel && l.__scorciaSel === sel && l.parentNode === scorciaCasa(sel)) tenuta = l;
+      if (sel && l.__scorciaSel === sel && l.previousElementSibling === sel) tenuta = l;
       else l.remove();
     });
     if (sel && !tenuta) {
@@ -43986,24 +44042,42 @@ document.addEventListener('DOMContentLoaded', () => {
       leg.className = 'scorcia-legenda';
       leg.setAttribute('aria-hidden', 'true');
       leg.__scorciaSel = sel;
-      scorciaOpzioni(sel).slice(0, 9).forEach(function(o, i){
+      var opz = scorciaOpzioni(sel);
+      opz.slice(0, 9).forEach(function(o, i){
         var v = document.createElement('span');
         var k = document.createElement('kbd'); k.textContent = String(i + 1);
         v.appendChild(k); v.appendChild(document.createTextNode(o.textContent.trim()));
         leg.appendChild(v);
       });
-      scorciaCasa(sel).appendChild(leg);
+      if (opz.length > 9) {
+        /* Le cifre sono nove: il resto si dice, non si tace. */
+        var oltre = document.createElement('span');
+        oltre.className = 'scorcia-oltre';
+        oltre.textContent = '\u2026 e altre ' + (opz.length - 9) + ' con il mouse';
+        leg.appendChild(oltre);
+      }
+      /* Subito dopo la tendina, che sta subito dopo la sua faccia: in una barra a
+         flex «in coda al contenitore» voleva dire dopo il pulsante Assegna. */
+      sel.insertAdjacentElement('afterend', leg);
     }
   };
   document.addEventListener('keydown', function(e){
     if (e.defaultPrevented || !scorciaSuPC()) return;
     if (e.ctrlKey || e.metaKey || e.altKey) return;
-    if (!/^[1-9]$/.test(e.key)) return;
+    if (e.repeat) return;                                            // un tasto tenuto non compila a cascata
+    if (!/^[0-9]$/.test(e.key)) return;
     var t = e.target;
     if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return;
     if (document.querySelector('.modal-backdrop.open')) return;      // il modale sopra ha la tastiera
+    if (dropAperta) return;                                          // il listino aperto ha la sua
     var root = scorciaRadice(); if (!root) return;
     var g = scorciaAttivo(root); if (!g) return;
+    if (e.key === '0') {
+      e.preventDefault();
+      scorciaSalti.etichette.push(scorciaEtichetta(g));
+      setTimeout(window.scorciaAggiorna, 0);
+      return;
+    }
     var n = parseInt(e.key, 10) - 1;
     if (g.tipo === 'bottoni') {
       if (!g.btns[n]) return;
