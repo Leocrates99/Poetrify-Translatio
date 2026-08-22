@@ -3084,16 +3084,91 @@ h1.scheletro-sentence-num,
 .schel-vq-suggest { background: rgba(214,158,46,0.16); border-color: rgba(214,158,46,0.5); color: #7a4f0a; }
 /* selettore FORMA del verbo (finito / non finito) + auto */
 .schel-vq-forma { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 2px 0 4px; }
+/* Il colore viene dal RUOLO (la riga porta `.case-verbo`), non da un rosso
+   scritto a mano: cosi' e' lo stesso del cassetto, dello stemma e dell'ordo. */
 .schel-vq-forma-btn {
-  appearance: none; cursor: pointer; font-family: var(--font-ui); font-size: 11px; font-weight: 700;
-  padding: 4px 12px; border-radius: 999px; border: 1.5px solid rgba(197,48,48,0.45);
-  background: var(--paper); color: #8b1f1f; transition: all 0.15s ease;
+  appearance: none; cursor: pointer; font-family: var(--font-ui); font-size: 13px; font-weight: 700;
+  padding: 8px 16px; min-height: 38px; border-radius: 999px; border: 1.5px solid var(--case-border, var(--rule));
+  background: var(--paper); color: var(--case-text, var(--ink)); transition: all 0.15s ease;
 }
-.schel-vq-forma-btn:hover { border-color: #8b1f1f; }
-.schel-vq-forma-btn.active { background: rgba(197,48,48,0.9); border-color: rgba(197,48,48,0.9); color: #fff; }
+.schel-vq-forma-btn:hover { border-color: var(--case-strong, var(--ink)); }
+.schel-vq-forma-btn.active { background: var(--case-strong, var(--ink)); border-color: var(--case-strong, var(--ink)); color: #fff; }
+
+/* LA PORTA · due riquadri, e i campi dopo. La descrizione detta l'altezza e
+   `stretch` la pareggia fra i due, come le carte dello scopo nell'avvio. */
+.schel-vq-porta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 4px 0 6px; }
+.schel-vq-porta-btn {
+  appearance: none; cursor: pointer; text-align: left;
+  display: flex; flex-direction: column; gap: 6px; padding: 14px 16px; min-height: 96px;
+  background: var(--paper); border: 1.5px solid var(--rule-soft); border-radius: var(--radius-md);
+  color: var(--ink); transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.schel-vq-porta-btn:hover { border-color: var(--case-strong, var(--ink)); }
+.schel-vq-porta-btn:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: 2px; }
+.schel-vq-porta-btn .svp-t { font-family: var(--font-ui); font-size: 15px; font-weight: 700; color: var(--case-text, var(--ink)); }
+.schel-vq-porta-btn.nf .svp-t { color: #b1481f; }
+.schel-vq-porta-btn.nf:hover { border-color: #b1481f; }
+.schel-vq-porta-btn .svp-d { font-family: var(--font-body); font-size: 12.5px; line-height: 1.45; color: var(--sepia); }
+.schel-vq-porta-auto { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.schel-vq-porta-auto .svp-oppure { font-family: var(--font-body); font-size: 12.5px; font-style: italic; color: var(--sepia); }
+@media (max-width: 520px) { .schel-vq-porta { grid-template-columns: 1fr; } }
+
+/* I PULSANTI DEL MODULO APERTO, piu' grandi: nati per stare in una riga del
+   brano, erano 11,5px con 4px di padding — troppo piccoli e schiacciati per un
+   modulo che si compila con attenzione. Qui, e nel cassetto che li ospita. */
+/* PESO (0,2,0) DI PROPOSITO, ne' piu' ne' meno. Piu' pesante — `.schel-vq-row
+   .is-active .seg-btn`, (0,3,0) — batteva la regola del TOCCO del cassetto, che
+   pesa (0,2,0): misurati 25 bersagli su 28 a 38px sul telefono. Piu' leggero —
+   con `:where()`, (0,1,0) — perdeva contro la regola base `.seg-btn`, che viene
+   dopo nel foglio: tornava tutto a 11,5px. A (0,2,0) vince sulla base, che viene
+   prima, e a parita' perde contro il tocco, che viene dopo. */
+.schel-vq-fields .seg-group, .analysis-drawer-body .seg-group { gap: 6px; }
+.schel-vq-fields .seg-btn, .analysis-drawer-body .seg-btn {
+  font-size: 13px; padding: 8px 14px; min-height: 38px;
+}
+.schel-vq-row.is-active .schel-vq-fields { gap: 12px 16px; }
+.schel-vq-row.is-active .schel-vq-field { gap: 5px; }
+.schel-vq-row.is-active .schel-vq-field > span { font-size: 11.5px; }
+.schel-vq-fields .field-select, .schel-vq-fields .field-input { font-size: 14px; padding: 8px 10px; min-height: 38px; }
+.schel-vq-forma .schel-conn-btn, .schel-vq-porta-auto .schel-conn-btn { font-size: 12.5px; padding: 7px 12px; min-height: 38px; }
+
+/* LA TASTIERA CHE COMPILA · solo dove c'e' una tastiera. I numerini compaiono
+   sul primo gruppo ancora vuoto del modulo aperto; la cifra preme quel pulsante
+   e il gruppo seguente si accende da se'. Sul tocco non esistono: un dito non
+   ha cifre. */
+@media (hover: hover) and (pointer: fine) {
+  [data-scorcia] { position: relative; }
+  [data-scorcia]::after {
+    content: attr(data-scorcia);
+    position: absolute; top: -7px; right: -6px;
+    min-width: 16px; height: 16px; padding: 0 4px; box-sizing: border-box;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: var(--font-ui); font-size: 10px; font-weight: 700; line-height: 1;
+    background: var(--ink); color: var(--paper); border-radius: 999px;
+    border: 1.5px solid var(--paper); pointer-events: none;
+  }
+  .schel-vq-porta-btn[data-scorcia]::after { top: 10px; right: 12px; min-width: 20px; height: 20px; font-size: 11.5px; }
+  .scorcia-legenda {
+    display: flex; flex-wrap: wrap; gap: 4px 10px; margin-top: 5px;
+    font-family: var(--font-body); font-size: 12px; color: var(--sepia);
+  }
+  .scorcia-legenda kbd {
+    font-family: var(--font-ui); font-size: 10px; font-weight: 700;
+    min-width: 16px; height: 16px; padding: 0 4px; box-sizing: border-box;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: var(--ink); color: var(--paper); border-radius: 999px; margin-right: 4px;
+  }
+}
 .schel-vq-forma-btn.active.nf { background: rgba(214,90,60,0.92); border-color: rgba(214,90,60,0.92); }
 .schel-vq-forma-btn.nf { border-color: rgba(214,90,60,0.5); color: #b1481f; }
 :root[data-theme="dark"] body .schel-vq-forma-btn { background: rgba(255,255,255,0.06); }
+/* Quella regola, (0,2,2), batteva anche il pulsante ATTIVO, (0,2,0): nel buio il
+   fondo pieno spariva sotto un velo al 6% e restava testo bianco su niente. */
+:root[data-theme="dark"] body .schel-vq-forma-btn.active { background: var(--case-strong, var(--ink)); }
+:root[data-theme="dark"] body .schel-vq-forma-btn.active.nf { background: rgba(214,90,60,0.92); }
+/* #b1481f su carta scura misura 3,0:1; questo e' l'arancio notturno dell'accusativo, 8,1:1. */
+:root[data-theme="dark"] body .schel-vq-forma-btn.nf:not(.active),
+:root[data-theme="dark"] body .schel-vq-porta-btn.nf .svp-t { color: #F2A65C; }
 :root[data-theme="dark"] body .schel-vq-wrap { background: transparent; }
 :root[data-theme="dark"] body .schel-vq-row.is-active { background: transparent; }
 /* FASE 7 · Traduzione (ordo SVO + brutta) */
@@ -11990,6 +12065,10 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
      regola del tocco non conosce le sue classi finche' non gliele si dice. */
   .analysis-drawer-body .schel-vq-forma-btn,
   .analysis-drawer-body .schel-conn-btn { min-height: 44px; }
+  /* Tendine rimaste native e campi di testo: misurati 34 e 38px sotto il dito.
+     Il select che ha gia' le pastiglie (.seg-host) non conta, non lo si tocca. */
+  .analysis-drawer-body .field-select:not(.seg-host),
+  .analysis-drawer-body .field-input { min-height: 44px; }
   .drop-voce { min-height: 44px; }
   /* La chiusura del foglio: 32px bastano al mouse, non al pollice — e sbagliarla
      qui vuol dire toccare la parola che sta sotto. */
@@ -12588,6 +12667,11 @@ body[data-lang="greco"] .analysis-drawer-word { font-family: var(--font-classica
       <div><kbd>g</kbd> / <kbd>l</kbd> / <kbd>p</kbd><span>Sub-tab: <strong>g</strong>rammaticale · <strong>l</strong>ogica · <strong>p</strong>eriodale</span></div>
       <div><kbd>e</kbd> / <kbd>c</kbd><span><strong>E</strong>spandi tutto / <strong>C</strong>omprimi tutto le voci della sub-tab attiva</span></div>
       <div><kbd>b</kbd><span>Toggle modalità <strong>b</strong>atch (grammaticale o logica)</span></div>
+    </div>
+
+    <h4 class="shortcuts-section-title">Compilare l'analisi</h4>
+    <div class="shortcuts-grid">
+      <div><kbd>1</kbd>…<kbd>9</kbd><span>Nel modulo aperto — verbo, nome, aggettivo, barra del token — la cifra preme il pulsante del <strong>primo gruppo ancora vuoto</strong>; i numerini sui pulsanti dicono quale. Scelto un valore, i numerini passano al gruppo seguente. Una tendina rimasta tale mostra la legenda delle cifre sotto di sé.</span></div>
     </div>
 
     <h4 class="shortcuts-section-title">Apertura modali e selettori</h4>
@@ -28712,11 +28796,39 @@ function renderScheletroVerbQuick(sentenceId, verb, lang, isActive) {
       <span class="schel-vq-open">completa ▾</span>
     </div>`;
   }
-  // Selettore FORMA: finito / non finito (+ auto). Niente più doppio-click sul token.
-  const formaSeg = `<div class="schel-vq-forma">
+  const autoBtn = `<button class="schel-conn-btn schel-vq-suggest" onclick="event.stopPropagation(); scheletroSuggestVerb('${sentenceId}','${verb.id}')" title="Riconoscimento automatico di forma, tempo, modo, diatesi, persona, numero dalle desinenze e dai suffissi">✨ auto</button>`;
+  /* LA PORTA. Alla creazione il verbo nasce «finito» per default e la voce si
+     apriva gia' coi sei campi del finito sotto: una scelta fatta dal programma
+     e non dal docente, e un modulo che partiva pieno di cose da non guardare.
+     Ora, finche' nessuno ha detto quale modo e' e nessun campo e' compilato,
+     si vedono DUE riquadri soli — finito, non finito — e i campi arrivano dopo
+     la scelta. La porta e' per apertura: il cursore della voce attiva si
+     ricorda che e' stata passata, e se si riapre un verbo ancora vuoto la si
+     ripassa. Chi ha gia' campi compilati (o la forma non finita) non la vede. */
+  const cursore = state.scheletroActiveVerb || {};
+  const compilato = !!(verb.tempo || verb.modo || verb.diatesi || verb.persona || verb.numero
+                       || verb.coniugazione || verb.lemma);
+  const porta = !cursore.formaScelta && !isNonFin && !compilato;
+  const formaSeg = porta
+    ? `<div class="schel-vq-porta">
+    <button class="schel-vq-porta-btn" onclick="event.stopPropagation(); scheletroSetVerbForma('${sentenceId}','${verb.id}','finito')">
+      <span class="svp-t">modo finito</span>
+      <span class="svp-d">${isGreek
+        ? 'Indicativo, congiuntivo, ottativo, imperativo. Porta persona e numero, e regge la proposizione.'
+        : 'Indicativo, congiuntivo, imperativo. Porta persona e numero, e regge la proposizione.'}</span>
+    </button>
+    <button class="schel-vq-porta-btn nf" onclick="event.stopPropagation(); scheletroSetVerbForma('${sentenceId}','${verb.id}','nonfinito')">
+      <span class="svp-t">modo non finito</span>
+      <span class="svp-d">${isGreek
+        ? 'Infinito e participio. Senza persona, e quasi sempre al servizio di un altro verbo o di un nome.'
+        : 'Infinito, participio, gerundio, gerundivo, supino. Senza persona, e quasi sempre al servizio di un altro verbo o di un nome.'}</span>
+    </button>
+    <span class="schel-vq-porta-auto"><span class="svp-oppure">oppure lascia parlare la desinenza</span>${autoBtn}</span>
+  </div>`
+    : `<div class="schel-vq-forma">
     <button class="schel-vq-forma-btn ${isFin ? 'active' : ''}" onclick="event.stopPropagation(); scheletroSetVerbForma('${sentenceId}','${verb.id}','finito')">modo finito</button>
     <button class="schel-vq-forma-btn ${isNonFin ? 'active nf' : ''}" onclick="event.stopPropagation(); scheletroSetVerbForma('${sentenceId}','${verb.id}','nonfinito')">modo non finito</button>
-    <button class="schel-conn-btn schel-vq-suggest" onclick="event.stopPropagation(); scheletroSuggestVerb('${sentenceId}','${verb.id}')" title="Riconoscimento automatico di forma, tempo, modo, diatesi, persona, numero dalle desinenze e dai suffissi">✨ auto</button>
+    ${autoBtn}
   </div>`;
   // Per il non-finito: select della forma specifica (Infinito / Participio / …)
   const formeNonFin = (TAXONOMIES[lang] && TAXONOMIES[lang].verboForma || []).filter(f => NONFIN.includes(f));
@@ -28745,7 +28857,7 @@ function renderScheletroVerbQuick(sentenceId, verb, lang, isActive) {
       <span class="schel-vq-open">▴ chiudi</span>
     </div>
     ${formaSeg}
-    <div class="schel-vq-fields">${tipoSel}${selects}${lemmaInput}</div>
+    ${porta ? '' : `<div class="schel-vq-fields">${tipoSel}${selects}${lemmaInput}</div>`}
   </div>`;
 }
 
@@ -28764,6 +28876,7 @@ function scheletroSuggestVerb(sentenceId, verbId) {
   const v = (sentence.grammar || []).find(e => e.id === verbId);
   if (!v) return;
   const sug = suggestVerbMorph(v.word, state.meta.lingua);
+  if (state.scheletroActiveVerb) state.scheletroActiveVerb.formaScelta = true;   // anche l'auto passa la porta
   // AUTO-RICONOSCIMENTO: applica (sovrascrive) i campi morfologici dedotti; il
   // lemma resta intatto. È un suggerimento da rivedere ma esplicitamente richiesto.
   let n = 0;
@@ -29351,6 +29464,7 @@ function scheletroSetVerbForma(sentenceId, verbId, kind) {
   const v = (sentence.grammar || []).find(e => e.id === verbId);
   if (!v) return;
   v.partOfSpeech = 'Verbo';
+  if (state.scheletroActiveVerb) state.scheletroActiveVerb.formaScelta = true;   // la porta e' passata
   if (kind === 'finito') {
     v.verboForma = 'Forma finita';
     delete v._scheletroForma;
@@ -43778,10 +43892,138 @@ document.addEventListener('DOMContentLoaded', () => {
   window.dropUpgradeAll = function(root){
     (root || document).querySelectorAll('select:not([data-drop])').forEach(dropUpgrade);
   };
+  /* ══════════════════════════════════════════════════════════════════════
+     LA TASTIERA CHE COMPILA · solo PC
+     ──────────────────────────────────────────────────────────────────────
+     Nel modulo aperto — il verbo dello scheletro, la voce di un nome o di un
+     aggettivo, la barra del token, dovunque vivano, cassetto o flusso — i
+     gruppi di scelta si leggono nell'ordine in cui stanno. Il PRIMO gruppo
+     ancora vuoto e' quello che la tastiera serve: le cifre 1-9 premono i suoi
+     pulsanti, e i numerini glieli scrivono sopra. Fatta la scelta, il modulo si
+     ridisegna e il gruppo seguente prende i numerini. Una tendina rimasta
+     nativa (troppe voci per le pastiglie) si serve lo stesso, con una legenda
+     sotto che dice quale cifra e' quale voce.
+     Vale solo con un puntatore fine e un hover veri — cioe' una tastiera: sul
+     tocco i numerini non compaiono e le cifre non fanno niente.
+     ══════════════════════════════════════════════════════════════════════ */
+  var scorciaPC = window.matchMedia ? window.matchMedia('(hover: hover) and (pointer: fine)') : null;
+  function scorciaSuPC(){ return !!(scorciaPC && scorciaPC.matches); }
+  function scorciaVisibile(el){ return !!(el && el.offsetParent !== null); }
+  function scorciaRadice(){
+    var host = document.getElementById('analysis-drawer');
+    if (host && !host.hidden) {
+      var corpo = host.querySelector('.analysis-drawer-body');
+      /* La barra grammaticale appena aperta contiene SOLO la tendina della parte del
+         discorso (select.drop-host, che non e' un .field-select): senza questa voce
+         nell'elenco il cassetto non contava come radice e la cifra cadeva nel vuoto. */
+      if (corpo && corpo.querySelector('.seg-group, .schel-vq-porta, .schel-vq-forma, select.field-select, select[data-drop="on"]')) return corpo;
+    }
+    var ed = document.getElementById('editor-content') || document;
+    var cand = ed.querySelector('.schel-vq-row.is-active')
+            || ed.querySelector('.token-action-bar')
+            || ed.querySelector('.entry-card:not(.is-collapsed) .entry-fields');
+    return scorciaVisibile(cand) ? cand : null;
+  }
+  function scorciaOpzioni(sel){
+    return Array.prototype.filter.call(sel.options, function(o){ return o.value !== ''; });
+  }
+  function scorciaGruppi(root){
+    var out = [];
+    /* Due specie di tendina: il <select> rimasto nativo perche' troppo lungo per le
+       pastiglie (data-seg="skip") e quello vestito dal widget della tendina
+       (data-drop="on", p.es. la parte del discorso nella barra del token), che
+       non porta .field-select. La cifra scrive sul select padrone e dispatcha
+       `change`, come fanno entrambi i widget: e' il loro stesso patto. */
+    root.querySelectorAll('.schel-vq-porta, .schel-vq-forma, .seg-group, select.field-select[data-seg="skip"], select[data-drop="on"]').forEach(function(g){
+      if (g.tagName === 'SELECT') {
+        if (g.dataset.seg === 'on') return;                         // ha gia' le pastiglie: le conta il .seg-group
+        var faccia = g.dataset.drop === 'on' ? g.previousElementSibling : g;
+        if (!scorciaVisibile(faccia) && !scorciaVisibile(g)) return;
+        out.push({ el: g, tipo: 'tendina' }); return;
+      }
+      if (!scorciaVisibile(g)) return;
+      var btns = Array.prototype.slice.call(g.querySelectorAll('button')).filter(scorciaVisibile);
+      if (btns.length) out.push({ el: g, tipo: 'bottoni', btns: btns });
+    });
+    return out;
+  }
+  function scorciaPieno(g){
+    if (g.tipo === 'tendina') return g.el.value !== '';
+    return g.btns.some(function(b){ return b.classList.contains('on') || b.classList.contains('active'); });
+  }
+  function scorciaAttivo(root){
+    var gs = scorciaGruppi(root);
+    for (var i = 0; i < gs.length; i++) if (!scorciaPieno(gs[i])) return gs[i];
+    return null;
+  }
+  function scorciaCasa(sel){ return sel.closest('label, .field-block') || sel.parentNode; }
+  /* IDEMPOTENTE DI PROPOSITO. Questa funzione gira dentro segFlush, cioe' a ogni
+     mutazione del DOM. Se togliesse e rimettesse la legenda a ogni passata, ogni
+     rimessa sarebbe una mutazione nuova che rimette in coda la passata: un ciclo
+     senza fine a setTimeout(0). Percio' tocca il DOM solo quando lo stato voluto
+     differisce da quello che c'e': i numerini sono attributi (l'osservatore guarda
+     solo childList) e la legenda di una tendina, una volta fatta, si tiene finche'
+     quella tendina resta la prima vuota. */
+  window.scorciaAggiorna = function(){
+    var root = scorciaSuPC() ? scorciaRadice() : null;
+    var g = root ? scorciaAttivo(root) : null;
+    var voluti = (g && g.tipo === 'bottoni') ? g.btns.slice(0, 9) : [];
+    document.querySelectorAll('[data-scorcia]').forEach(function(b){
+      if (voluti.indexOf(b) < 0) b.removeAttribute('data-scorcia');
+    });
+    voluti.forEach(function(b, i){
+      var v = String(i + 1);
+      if (b.getAttribute('data-scorcia') !== v) b.setAttribute('data-scorcia', v);
+    });
+    var sel = (g && g.tipo === 'tendina') ? g.el : null;
+    var tenuta = null;
+    document.querySelectorAll('.scorcia-legenda').forEach(function(l){
+      if (sel && l.__scorciaSel === sel && l.parentNode === scorciaCasa(sel)) tenuta = l;
+      else l.remove();
+    });
+    if (sel && !tenuta) {
+      var leg = document.createElement('div');
+      leg.className = 'scorcia-legenda';
+      leg.setAttribute('aria-hidden', 'true');
+      leg.__scorciaSel = sel;
+      scorciaOpzioni(sel).slice(0, 9).forEach(function(o, i){
+        var v = document.createElement('span');
+        var k = document.createElement('kbd'); k.textContent = String(i + 1);
+        v.appendChild(k); v.appendChild(document.createTextNode(o.textContent.trim()));
+        leg.appendChild(v);
+      });
+      scorciaCasa(sel).appendChild(leg);
+    }
+  };
+  document.addEventListener('keydown', function(e){
+    if (e.defaultPrevented || !scorciaSuPC()) return;
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (!/^[1-9]$/.test(e.key)) return;
+    var t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.tagName === 'SELECT' || t.isContentEditable)) return;
+    if (document.querySelector('.modal-backdrop.open')) return;      // il modale sopra ha la tastiera
+    var root = scorciaRadice(); if (!root) return;
+    var g = scorciaAttivo(root); if (!g) return;
+    var n = parseInt(e.key, 10) - 1;
+    if (g.tipo === 'bottoni') {
+      if (!g.btns[n]) return;
+      e.preventDefault();
+      g.btns[n].click();
+    } else {
+      var o = scorciaOpzioni(g.el);
+      if (!o[n]) return;
+      e.preventDefault();
+      g.el.value = o[n].value;
+      g.el.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    setTimeout(window.scorciaAggiorna, 0);
+  });
+  if (scorciaPC && scorciaPC.addEventListener) scorciaPC.addEventListener('change', function(){ window.scorciaAggiorna(); });
+
   window.__segRuns = 0;
   var segQueued = false;
   function segFlush(){
-    try { window.__segRuns++; window.segUpgradeAll(); if (window.dropUpgradeAll) window.dropUpgradeAll(); if (window.tokenA11yAll) window.tokenA11yAll(); if (window.iconBtnA11yAll) window.iconBtnA11yAll(); if (window.syncGuidedStepPromises) window.syncGuidedStepPromises(); if (window.modalA11yAll) window.modalA11yAll(); if (window.syncAnalysisDrawer) window.syncAnalysisDrawer(); }
+    try { window.__segRuns++; window.segUpgradeAll(); if (window.dropUpgradeAll) window.dropUpgradeAll(); window.scorciaAggiorna(); if (window.tokenA11yAll) window.tokenA11yAll(); if (window.iconBtnA11yAll) window.iconBtnA11yAll(); if (window.syncGuidedStepPromises) window.syncGuidedStepPromises(); if (window.modalA11yAll) window.modalA11yAll(); if (window.syncAnalysisDrawer) window.syncAnalysisDrawer(); }
     catch (err) { console.warn('[seg] upgrade fallito:', err); }
     finally { segQueued = false; }   // la spia si azzera SEMPRE: un errore non deve bloccare per sempre
   }
