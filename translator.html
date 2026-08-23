@@ -12,7 +12,7 @@
 <!-- Font self-hosted (vendor/fonts/) — nessuna dipendenza da Google Fonts -->
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
 <!-- Token condivisi (fonte unica del design system · shared/) -->
-<link rel="stylesheet" href="shared/poetrify-tokens.css?v=2026-08-20">
+<link rel="stylesheet" href="shared/poetrify-tokens.css?v=2026-08-23">
 <!-- API tema condivisa (il toggle #dark-mode-toggle la usa) -->
 <script src="shared/poetrify-quarantena.js"></script>
 <script src="shared/poetrify-manuali.js"></script>
@@ -3085,22 +3085,14 @@ h1.scheletro-sentence-num,
 .schel-vq-suggest { background: rgba(214,158,46,0.16); border-color: rgba(214,158,46,0.5); color: #7a4f0a; }
 /* selettore FORMA del verbo (finito / non finito) + auto */
 .schel-vq-forma { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 2px 0 4px; }
-/* Il colore viene dal RUOLO (la riga porta `.case-verbo`), non da un rosso
-   scritto a mano: cosi' e' lo stesso del cassetto, dello stemma e dell'ordo. */
+/* Il colore del selettore della forma e' la FINITEZZA del codice di categoria
+   (regole piu' sotto, generate dal motore degli Iperappunti). */
 .schel-vq-forma-btn {
   appearance: none; cursor: pointer; font-family: var(--font-ui); font-size: 13px; font-weight: 700;
-  padding: 8px 16px; min-height: 38px; border-radius: 999px; border: 1.5px solid var(--case-border, var(--rule));
-  background: var(--paper); color: var(--case-text, var(--ink)); transition: all 0.15s ease;
+  padding: 8px 16px; min-height: 38px; border-radius: 999px; border: 1.5px solid var(--rule);
+  background: var(--paper); color: var(--ink); transition: all 0.15s ease;
 }
-.schel-vq-forma-btn:hover { border-color: var(--case-strong, var(--ink)); }
-.schel-vq-forma-btn.active { background: var(--case-strong, var(--ink)); border-color: var(--case-strong, var(--ink)); color: #fff; }
 
-/* IL NON FINITO ha un colore suo, e non e' un ruolo: e' il rame con cui il token
-   non finito si distingue dal ciliegia del finito in anteprima
-   (`.scheletro-verb-nonfin`). Dichiarato qui una volta sola, con il verso del
-   buio, invece che scritto a mano in tre varianti. */
-.schel-vq-row { --nonfin-text: #8a4318; --nonfin-border: rgba(160,78,28,0.72); --nonfin-strong: rgba(160,78,28,0.92); }
-:root[data-theme="dark"] body .schel-vq-row { --nonfin-text: #E8A27A; }
 
 /* LA PORTA · due riquadri, e i campi dopo. La descrizione detta l'altezza e
    `stretch` la pareggia fra i due, come le carte dello scopo nell'avvio. Le
@@ -3113,11 +3105,8 @@ h1.scheletro-sentence-num,
   background: var(--paper); border: 1.5px solid var(--rule-soft); border-radius: var(--radius-md);
   color: var(--ink); transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.schel-vq-porta-btn:hover { border-color: var(--case-strong, var(--ink)); }
 .schel-vq-porta-btn:focus-visible { outline: 2px solid var(--lang-accent); outline-offset: 2px; }
-.schel-vq-porta-btn .svp-t { font-family: var(--font-ui); font-size: 15px; font-weight: 700; color: var(--case-text, var(--ink)); }
-.schel-vq-porta-btn.nf .svp-t { color: var(--nonfin-text); }
-.schel-vq-porta-btn.nf:hover { border-color: var(--nonfin-text); }
+.schel-vq-porta-btn .svp-t { font-family: var(--font-ui); font-size: 15px; font-weight: 700; color: var(--ink); }
 .schel-vq-porta-btn .svp-d { font-family: var(--font-body); font-size: 12.5px; line-height: 1.45; color: var(--sepia); }
 .schel-vq-porta-auto { grid-column: 1 / -1; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .schel-vq-porta-auto .svp-oppure { font-family: var(--font-body); font-size: 12.5px; font-style: italic; color: var(--sepia); }
@@ -3144,6 +3133,203 @@ h1.scheletro-sentence-num,
    prosa, e si veste da prosa. */
 .schel-vq-field > span.field-hint { font-family: var(--font-body); font-size: 12px; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--sepia); max-width: 36ch; }
 .schel-vq-forma .schel-conn-btn, .schel-vq-porta-auto .schel-conn-btn { font-size: 12.5px; padding: 7px 12px; min-height: 38px; }
+
+
+/* ═══════════════════════════════════════════════════════════════════════
+   I PULSANTI DELL'ANALISI PORTANO IL CODICE DI CATEGORIA della collana.
+   Tre stati: a riposo, la campitura tenue del pigmento e il testo d'inchiostro
+   (nessun pigmento regge da solo come testo: il giallo di Napoli su carta
+   misura 1,4); scelto, il pigmento pieno e sopra il testo che il contrasto
+   misurato decide, bianco o nero; al passaggio, il bordo pieno. Le regole
+   sono generate dal motore degli Iperappunti (scratchpad/codice-categoria.py)
+   e accoppiate per ETICHETTA del valore (data-v), cosi' valgono ovunque una
+   pastiglia nasca da una tendina: voce del token, barra, pannello del verbo,
+   cassetto. I tempi del paradigma si riconducono ai tre del codice — presente,
+   passato, futuro — e semideponente sta con deponente.
+   ═══════════════════════════════════════════════════════════════════════ */
+.seg-btn[data-v="Nominativo"],
+.seg-btn[data-v="Genitivo"],
+.seg-btn[data-v="Dativo"],
+.seg-btn[data-v="Accusativo"],
+.seg-btn[data-v="Vocativo"],
+.seg-btn[data-v="Ablativo"],
+.seg-btn[data-v="Maschile"],
+.seg-btn[data-v="Femminile"],
+.seg-btn[data-v="Neutro"],
+.seg-btn[data-v="Singolare"],
+.seg-btn[data-v="Plurale"],
+.seg-btn[data-v="Duale"],
+.seg-btn[data-v="Positivo"],
+.seg-btn[data-v="Comparativo"],
+.seg-btn[data-v="Superlativo"],
+.seg-btn[data-v="Presente"],
+.seg-btn[data-v="Imperfetto"],
+.seg-btn[data-v="Perfetto"],
+.seg-btn[data-v="Piuccheperfetto"],
+.seg-btn[data-v="Aoristo"],
+.seg-btn[data-v="Futuro"],
+.seg-btn[data-v="Futuro semplice"],
+.seg-btn[data-v="Futuro anteriore"],
+.seg-btn[data-v="Attiva"],
+.seg-btn[data-v="Passiva"],
+.seg-btn[data-v="Media"],
+.seg-btn[data-v="Medio-passiva"],
+.seg-btn[data-v="Deponente"],
+.seg-btn[data-v="Semideponente"],
+.seg-btn[data-v="Indicativo"],
+.seg-btn[data-v="Congiuntivo"],
+.seg-btn[data-v="Ottativo"],
+.seg-btn[data-v="Imperativo"],
+.seg-btn[data-v="Infinito"],
+.seg-btn[data-v="Participio"],
+.seg-btn[data-v="Gerundio"],
+.seg-btn[data-v="Gerundivo"],
+.seg-btn[data-v="Supino"],
+.seg-btn[data-v="Forma finita"] {
+  background: color-mix(in srgb, var(--cat) 14%, var(--paper));
+  border-color: color-mix(in srgb, var(--cat) 55%, transparent);
+  color: var(--ink);
+}
+.seg-btn[data-v="Nominativo"]:hover,
+.seg-btn[data-v="Genitivo"]:hover,
+.seg-btn[data-v="Dativo"]:hover,
+.seg-btn[data-v="Accusativo"]:hover,
+.seg-btn[data-v="Vocativo"]:hover,
+.seg-btn[data-v="Ablativo"]:hover,
+.seg-btn[data-v="Maschile"]:hover,
+.seg-btn[data-v="Femminile"]:hover,
+.seg-btn[data-v="Neutro"]:hover,
+.seg-btn[data-v="Singolare"]:hover,
+.seg-btn[data-v="Plurale"]:hover,
+.seg-btn[data-v="Duale"]:hover,
+.seg-btn[data-v="Positivo"]:hover,
+.seg-btn[data-v="Comparativo"]:hover,
+.seg-btn[data-v="Superlativo"]:hover,
+.seg-btn[data-v="Presente"]:hover,
+.seg-btn[data-v="Imperfetto"]:hover,
+.seg-btn[data-v="Perfetto"]:hover,
+.seg-btn[data-v="Piuccheperfetto"]:hover,
+.seg-btn[data-v="Aoristo"]:hover,
+.seg-btn[data-v="Futuro"]:hover,
+.seg-btn[data-v="Futuro semplice"]:hover,
+.seg-btn[data-v="Futuro anteriore"]:hover,
+.seg-btn[data-v="Attiva"]:hover,
+.seg-btn[data-v="Passiva"]:hover,
+.seg-btn[data-v="Media"]:hover,
+.seg-btn[data-v="Medio-passiva"]:hover,
+.seg-btn[data-v="Deponente"]:hover,
+.seg-btn[data-v="Semideponente"]:hover,
+.seg-btn[data-v="Indicativo"]:hover,
+.seg-btn[data-v="Congiuntivo"]:hover,
+.seg-btn[data-v="Ottativo"]:hover,
+.seg-btn[data-v="Imperativo"]:hover,
+.seg-btn[data-v="Infinito"]:hover,
+.seg-btn[data-v="Participio"]:hover,
+.seg-btn[data-v="Gerundio"]:hover,
+.seg-btn[data-v="Gerundivo"]:hover,
+.seg-btn[data-v="Supino"]:hover,
+.seg-btn[data-v="Forma finita"]:hover { border-color: var(--cat); color: var(--ink); }
+.seg-btn[data-v="Nominativo"].on,
+.seg-btn[data-v="Genitivo"].on,
+.seg-btn[data-v="Dativo"].on,
+.seg-btn[data-v="Accusativo"].on,
+.seg-btn[data-v="Vocativo"].on,
+.seg-btn[data-v="Ablativo"].on,
+.seg-btn[data-v="Maschile"].on,
+.seg-btn[data-v="Femminile"].on,
+.seg-btn[data-v="Neutro"].on,
+.seg-btn[data-v="Singolare"].on,
+.seg-btn[data-v="Plurale"].on,
+.seg-btn[data-v="Duale"].on,
+.seg-btn[data-v="Positivo"].on,
+.seg-btn[data-v="Comparativo"].on,
+.seg-btn[data-v="Superlativo"].on,
+.seg-btn[data-v="Presente"].on,
+.seg-btn[data-v="Imperfetto"].on,
+.seg-btn[data-v="Perfetto"].on,
+.seg-btn[data-v="Piuccheperfetto"].on,
+.seg-btn[data-v="Aoristo"].on,
+.seg-btn[data-v="Futuro"].on,
+.seg-btn[data-v="Futuro semplice"].on,
+.seg-btn[data-v="Futuro anteriore"].on,
+.seg-btn[data-v="Attiva"].on,
+.seg-btn[data-v="Passiva"].on,
+.seg-btn[data-v="Media"].on,
+.seg-btn[data-v="Medio-passiva"].on,
+.seg-btn[data-v="Deponente"].on,
+.seg-btn[data-v="Semideponente"].on,
+.seg-btn[data-v="Indicativo"].on,
+.seg-btn[data-v="Congiuntivo"].on,
+.seg-btn[data-v="Ottativo"].on,
+.seg-btn[data-v="Imperativo"].on,
+.seg-btn[data-v="Infinito"].on,
+.seg-btn[data-v="Participio"].on,
+.seg-btn[data-v="Gerundio"].on,
+.seg-btn[data-v="Gerundivo"].on,
+.seg-btn[data-v="Supino"].on,
+.seg-btn[data-v="Forma finita"].on { background: var(--cat); border-color: var(--cat); color: var(--cat-ink); }
+:root[data-theme="dark"] body :is(.seg-btn[data-v="Nominativo"], .seg-btn[data-v="Genitivo"], .seg-btn[data-v="Dativo"], .seg-btn[data-v="Accusativo"], .seg-btn[data-v="Vocativo"], .seg-btn[data-v="Ablativo"], .seg-btn[data-v="Maschile"], .seg-btn[data-v="Femminile"], .seg-btn[data-v="Neutro"], .seg-btn[data-v="Singolare"], .seg-btn[data-v="Plurale"], .seg-btn[data-v="Duale"], .seg-btn[data-v="Positivo"], .seg-btn[data-v="Comparativo"], .seg-btn[data-v="Superlativo"], .seg-btn[data-v="Presente"], .seg-btn[data-v="Imperfetto"], .seg-btn[data-v="Perfetto"], .seg-btn[data-v="Piuccheperfetto"], .seg-btn[data-v="Aoristo"], .seg-btn[data-v="Futuro"], .seg-btn[data-v="Futuro semplice"], .seg-btn[data-v="Futuro anteriore"], .seg-btn[data-v="Attiva"], .seg-btn[data-v="Passiva"], .seg-btn[data-v="Media"], .seg-btn[data-v="Medio-passiva"], .seg-btn[data-v="Deponente"], .seg-btn[data-v="Semideponente"], .seg-btn[data-v="Indicativo"], .seg-btn[data-v="Congiuntivo"], .seg-btn[data-v="Ottativo"], .seg-btn[data-v="Imperativo"], .seg-btn[data-v="Infinito"], .seg-btn[data-v="Participio"], .seg-btn[data-v="Gerundio"], .seg-btn[data-v="Gerundivo"], .seg-btn[data-v="Supino"], .seg-btn[data-v="Forma finita"]) { border-color: color-mix(in srgb, var(--cat) 70%, #fff); }
+.seg-btn[data-v="Nominativo"] { --cat: var(--cat-nominativo); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Genitivo"] { --cat: var(--cat-genitivo); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Dativo"] { --cat: var(--cat-dativo); --cat-ink: #1A1A1A; }
+.seg-btn[data-v="Accusativo"] { --cat: var(--cat-accusativo); --cat-ink: #1A1A1A; }
+.seg-btn[data-v="Vocativo"] { --cat: var(--cat-vocativo); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Ablativo"] { --cat: var(--cat-ablativo); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Maschile"] { --cat: var(--cat-maschile); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Femminile"] { --cat: var(--cat-femminile); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Neutro"] { --cat: var(--cat-neutro); --cat-ink: #1A1A1A; }
+.seg-btn[data-v="Singolare"] { --cat: var(--cat-singolare); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Plurale"] { --cat: var(--cat-plurale); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Duale"] { --cat: var(--cat-duale); --cat-ink: #1A1A1A; }
+.seg-btn[data-v="Positivo"] { --cat: var(--cat-positivo); --cat-ink: #1A1A1A; }
+.seg-btn[data-v="Comparativo"] { --cat: var(--cat-comparativo); --cat-ink: #1A1A1A; }
+.seg-btn[data-v="Superlativo"] { --cat: var(--cat-superlativo); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Presente"] { --cat: var(--cat-presente); --cat-ink: #1A1A1A; }
+.seg-btn[data-v="Imperfetto"] { --cat: var(--cat-passato); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Perfetto"] { --cat: var(--cat-passato); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Piuccheperfetto"] { --cat: var(--cat-passato); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Aoristo"] { --cat: var(--cat-passato); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Futuro"] { --cat: var(--cat-futuro); --cat-ink: #1A1A1A; }
+.seg-btn[data-v="Futuro semplice"] { --cat: var(--cat-futuro); --cat-ink: #1A1A1A; }
+.seg-btn[data-v="Futuro anteriore"] { --cat: var(--cat-futuro); --cat-ink: #1A1A1A; }
+.seg-btn[data-v="Attiva"] { --cat: var(--cat-attiva); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Passiva"] { --cat: var(--cat-passiva); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Media"] { --cat: var(--cat-media); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Medio-passiva"] { --cat: var(--cat-medio-passiva); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Deponente"] { --cat: var(--cat-deponente); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Semideponente"] { --cat: var(--cat-deponente); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Indicativo"] { --cat: var(--cat-indicativo); --cat-ink: #1A1A1A; }
+.seg-btn[data-v="Congiuntivo"] { --cat: var(--cat-congiuntivo); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Ottativo"] { --cat: var(--cat-ottativo); --cat-ink: #1A1A1A; }
+.seg-btn[data-v="Imperativo"] { --cat: var(--cat-imperativo); --cat-ink: #1A1A1A; }
+.seg-btn[data-v="Infinito"] { --cat: var(--cat-infinito); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Participio"] { --cat: var(--cat-participio); --cat-ink: #1A1A1A; }
+.seg-btn[data-v="Gerundio"] { --cat: var(--cat-gerundio); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Gerundivo"] { --cat: var(--cat-gerundivo); --cat-ink: #FFFFFF; }
+.seg-btn[data-v="Supino"] { --cat: var(--cat-supino); --cat-ink: #1A1A1A; }
+.seg-btn[data-v="Forma finita"] { --cat: var(--cat-finita); --cat-ink: #1A1A1A; }
+
+/* LA PORTA E IL SELETTORE DELLA FORMA vestono la finitezza del codice: verde il
+   finito, rosso il non finito, come nelle tavole della collana. */
+.schel-vq-forma-btn, .schel-vq-porta-btn {
+  background: color-mix(in srgb, var(--cat-finita) 14%, var(--paper));
+  border-color: color-mix(in srgb, var(--cat-finita) 55%, transparent);
+  color: var(--ink);
+}
+.schel-vq-forma-btn.nf, .schel-vq-porta-btn.nf {
+  background: color-mix(in srgb, var(--cat-non-finita) 14%, var(--paper));
+  border-color: color-mix(in srgb, var(--cat-non-finita) 55%, transparent);
+}
+.schel-vq-forma-btn:hover, .schel-vq-porta-btn:hover { border-color: var(--cat-finita); }
+.schel-vq-forma-btn.nf:hover, .schel-vq-porta-btn.nf:hover { border-color: var(--cat-non-finita); }
+/* Sul verde del finito il contrasto misurato sceglie il nero (6,3 contro 3,3 del bianco). */
+.schel-vq-forma-btn.active { background: var(--cat-finita); border-color: var(--cat-finita); color: #1A1A1A; }
+.schel-vq-forma-btn.active.nf { background: var(--cat-non-finita); border-color: var(--cat-non-finita); color: #fff; }
+.schel-vq-porta-btn .svp-t, .schel-vq-porta-btn.nf .svp-t { color: var(--ink); }
+:root[data-theme="dark"] body .schel-vq-forma-btn { background: color-mix(in srgb, var(--cat-finita) 14%, var(--paper)); }
+:root[data-theme="dark"] body .schel-vq-forma-btn.nf { background: color-mix(in srgb, var(--cat-non-finita) 14%, var(--paper)); }
+:root[data-theme="dark"] body .schel-vq-forma-btn.active { background: var(--cat-finita); color: #1A1A1A; }
+:root[data-theme="dark"] body .schel-vq-forma-btn.active.nf { background: var(--cat-non-finita); color: #fff; }
 
 /* LA TASTIERA CHE COMPILA · solo dove c'e' una tastiera. I numerini compaiono
    sul primo gruppo ancora vuoto del modulo aperto; la cifra preme quel pulsante
@@ -3174,16 +3360,8 @@ h1.scheletro-sentence-num,
     background: var(--ink); color: var(--paper); border-radius: 999px; margin-right: 4px;
   }
 }
-.schel-vq-forma-btn.nf { border-color: var(--nonfin-border); color: var(--nonfin-text); }
-/* L'attivo non finito va DOPO la regola .nf e pesa di piu': prima, a parita' di
-   peso, `.nf` veniva dopo e gli lasciava il testo arancio su fondo arancio
-   (misurato 1,57:1). */
-.schel-vq-forma-btn.active.nf { background: var(--nonfin-strong); border-color: var(--nonfin-strong); color: #fff; }
-:root[data-theme="dark"] body .schel-vq-forma-btn { background: rgba(255,255,255,0.06); }
-/* Quella regola, (0,2,2), batteva anche il pulsante ATTIVO, (0,2,0): nel buio il
-   fondo pieno spariva sotto un velo al 6% e restava testo bianco su niente. */
-:root[data-theme="dark"] body .schel-vq-forma-btn.active { background: var(--case-strong, var(--ink)); }
-:root[data-theme="dark"] body .schel-vq-forma-btn.active.nf { background: var(--nonfin-strong); color: #fff; }
+
+
 :root[data-theme="dark"] body .schel-vq-wrap { background: transparent; }
 :root[data-theme="dark"] body .schel-vq-row.is-active { background: transparent; }
 /* FASE 7 · Traduzione (ordo SVO + brutta) */
@@ -28849,7 +29027,7 @@ function renderScheletroVerbQuick(sentenceId, verb, lang, isActive) {
   </div>`
     : `<div class="schel-vq-forma">
     <button class="schel-vq-forma-btn ${isFin ? 'active' : ''}" onclick="event.stopPropagation(); scheletroSetVerbForma('${sentenceId}','${verb.id}','finito')">modo finito</button>
-    <button class="schel-vq-forma-btn ${isNonFin ? 'active nf' : ''}" onclick="event.stopPropagation(); scheletroSetVerbForma('${sentenceId}','${verb.id}','nonfinito')">modo non finito</button>
+    <button class="schel-vq-forma-btn nf ${isNonFin ? 'active' : ''}" onclick="event.stopPropagation(); scheletroSetVerbForma('${sentenceId}','${verb.id}','nonfinito')">modo non finito</button>
     ${autoBtn}
   </div>`;
   // Per il non-finito: select della forma specifica (Infinito / Participio / …)

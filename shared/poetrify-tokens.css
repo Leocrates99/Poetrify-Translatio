@@ -273,3 +273,55 @@ body[data-lang="grc"], body[data-lang="greco"] {
 @media (pointer: coarse) {
   .cta-mini { min-height: 44px; padding: 10px 16px; font-size: 13px; }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   IL CODICE DI CATEGORIA · dalla collana degli Iperappunti
+   ───────────────────────────────────────────────────────────────────────
+   Le tinte sono i pigmenti storici nominati dal docente e dichiarati nel
+   motore della skill (assets/genera-iperappunto.js, FLESSIVA): blu di Prussia
+   il nominativo, porpora il genitivo, giallo di Napoli il dativo, giallo
+   indiano l'accusativo, verde di Scheele il vocativo, bruno di mummia
+   l'ablativo; oltremare il singolare, cinabro il plurale, malachite il duale;
+   orpimento il neutro. Il codice attraversa l'ecosistema: le parti del
+   discorso vanno dal dizionario alla dispensa (.pos-*), le categorie flessive
+   tornano dalla dispensa al translator. Generato dal motore, non ricopiato:
+   se il motore cambia, si rigenera (scratchpad/codice-categoria.py).
+   Persona, coniugazione, declinazione e classe NON hanno colore: la spina
+   nera basta, e un colore che non serve toglie forza a quelli che servono.
+   ═══════════════════════════════════════════════════════════════════════ */
+:root {
+  --cat-nominativo: #003153;
+  --cat-genitivo: #66023C;
+  --cat-dativo: #FADA5E;
+  --cat-accusativo: #E3A857;
+  --cat-vocativo: #477D3B;
+  --cat-ablativo: #8E5A3C;
+  --cat-maschile: #2A6FC4;
+  --cat-femminile: #B4153A;
+  --cat-neutro: #E6B422;
+  --cat-singolare: #120A8F;
+  --cat-plurale: #D9381E;
+  --cat-duale: #0BDA51;
+  --cat-positivo: #35C46A;
+  --cat-comparativo: #E09400;
+  --cat-superlativo: #3A44C8;
+  --cat-presente: #3ECC5F;
+  --cat-passato: #8F1010;
+  --cat-futuro: #2E86E8;
+  --cat-attiva: #00614A;
+  --cat-medio-passiva: #B35C00;
+  --cat-media: #B35C00;
+  --cat-passiva: #8A1259;
+  --cat-deponente: #8A1259;
+  --cat-indicativo: #12A150;
+  --cat-congiuntivo: #1B3FB0;
+  --cat-ottativo: #D9A400;
+  --cat-imperativo: #F07000;
+  --cat-infinito: #D62828;
+  --cat-participio: #45A8E0;
+  --cat-gerundio: #7B2FC4;
+  --cat-gerundivo: #D6208C;
+  --cat-supino: #0FA3A3;
+  --cat-finita: #12A150;
+  --cat-non-finita: #D62828;
+}
