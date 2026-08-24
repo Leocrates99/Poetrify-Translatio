@@ -1471,8 +1471,13 @@ body[data-lang="greco"] .token-grid { font-family: var(--font-classical); }
   line-height: 1.4;
   font-weight: 700;
 }
-.token-morph-mark.morph-augment { background: rgba(56,178,172,0.20); color: #1c6f6a; border: 1px solid rgba(56,178,172,0.55); }
-.token-morph-mark.morph-redupl  { background: rgba(192,38,211,0.18); color: #7a1d8a; border: 1px solid rgba(192,38,211,0.55); }
+/* Aumento e raddoppiamento portano le tinte del codice morfotattico della collana
+   (MORFEMA nel motore degli Iperappunti): azzurrite l'aumento, turchese il
+   raddoppiamento — nel piuccheperfetto greco convivono e si devono distinguere. */
+.token-morph-mark.morph-augment { background: rgba(43, 107, 181, 0.18); color: #2B6BB5; border: 1px solid rgba(43, 107, 181, 0.55); }
+.token-morph-mark.morph-redupl  { background: rgba(0, 194, 212, 0.18); color: #007C88; border: 1px solid rgba(0, 194, 212, 0.55); }
+:root[data-theme="dark"] body .token-morph-mark.morph-augment { color: #80A6D3; }
+:root[data-theme="dark"] body .token-morph-mark.morph-redupl  { color: #00C2D4; }
 
 /* ─── Bordino "composto" (lemma con prefisso) ──────────────────────────── */
 .token.token-has-prefix {
@@ -3382,14 +3387,14 @@ h1.scheletro-sentence-num,
 .schel-confirm-count {
   display: inline-flex; align-items: center; justify-content: center;
   min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px;
-  background: var(--case-strong, var(--primary)); color: var(--on-primary);
+  background: var(--case-strong, var(--primary)); color: var(--case-strong-ink, var(--on-primary));
   font-family: var(--font-ui); font-size: 11px; font-weight: 700; flex: 0 0 auto;
 }
 .schel-confirm-phrase { flex: 1 1 80px; min-width: 60px; font-weight: 600; color: var(--case-text, var(--ink)); font-size: 14px; }
 .schel-confirm-prep {
   flex: 0 0 auto; display: inline-flex; align-items: center; gap: 2px;
   padding: 1px 8px; border-radius: 999px; font-size: 11px; font-weight: 700;
-  background: var(--case-strong, var(--primary)); color: var(--on-primary); opacity: 0.92;
+  background: var(--case-strong, var(--primary)); color: var(--case-strong-ink, var(--on-primary)); opacity: 0.92;
   font-family: var(--font-ui);
 }
 .schel-confirm-sel { flex: 0 1 240px; max-width: 260px; font-size: 12px; }
@@ -3397,7 +3402,7 @@ h1.scheletro-sentence-num,
   appearance: none; cursor: pointer; border-radius: 7px; font-size: 14px; font-weight: 800;
   min-width: 32px; height: 28px; line-height: 1; border: 1px solid transparent; flex: 0 0 auto;
 }
-.schel-confirm-ok { background: var(--case-strong, var(--primary)); color: #fff; }
+.schel-confirm-ok { background: var(--case-strong, var(--primary)); color: var(--case-strong-ink, #fff); }
 .schel-confirm-ok:hover { filter: brightness(1.08); }
 .schel-confirm-x { background: transparent; color: var(--sepia); border-color: var(--rule); }
 .schel-confirm-x:hover { color: var(--danger); border-color: var(--danger); }
@@ -5652,10 +5657,14 @@ body[data-level="avanzato"] .syntax-tree-legend {
   letter-spacing: 0.03em;
 }
 
-/* Chip GENERE — colori distintivi M/F/N */
-.dict-meta-bit.gen-m { background: rgba(99, 102, 241, 0.14);  color: #3a3eb0; border-color: rgba(99, 102, 241, 0.40); }
-.dict-meta-bit.gen-f { background: rgba(217, 70, 161, 0.13);  color: #9d2375; border-color: rgba(217, 70, 161, 0.40); }
-.dict-meta-bit.gen-n { background: rgba(120, 113, 108, 0.16); color: #57534e; border-color: rgba(120, 113, 108, 0.40); }
+/* Chip GENERE — le tinte del codice di categoria della collana: maschile azzurro,
+   femminile rosso, neutro orpimento (FLESSIVA nel motore degli Iperappunti). */
+.dict-meta-bit.gen-m { background: rgba(42, 111, 196, 0.14); color: #2A6FC4; border-color: rgba(42, 111, 196, 0.40); }
+.dict-meta-bit.gen-f { background: rgba(180, 21, 58, 0.13); color: #B4153A; border-color: rgba(180, 21, 58, 0.40); }
+.dict-meta-bit.gen-n { background: rgba(230, 180, 34, 0.22); color: #8A6C14; border-color: rgba(230, 180, 34, 0.50); }
+:root[data-theme="dark"] body .dict-meta-bit.gen-m { color: #7BA6DA; }
+:root[data-theme="dark"] body .dict-meta-bit.gen-f { color: #DB8FA0; }
+:root[data-theme="dark"] body .dict-meta-bit.gen-n { color: #E6B422; }
 
 /* Chip DECLINAZIONE — gradiente cromatico I→V (latino) / I/II/III (greco) */
 .dict-meta-bit.dec-i   { background: rgba(197, 48, 48, 0.12);  color: #8b1f1f; border-color: rgba(197, 48, 48, 0.40); }
@@ -5665,7 +5674,9 @@ body[data-level="avanzato"] .syntax-tree-legend {
 .dict-meta-bit.dec-v   { background: rgba(192, 38, 211, 0.13); color: #7a1d8a; border-color: rgba(192, 38, 211, 0.40); }
 
 /* Chip CLASSE AGGETTIVALE */
-.dict-meta-bit.cls-i   { background: rgba(24, 0, 172, 0.10);   color: #1800ac; border-color: rgba(24, 0, 172, 0.40); }
+/* La classe non ha codice nella collana (la spina nera basta), e l'indaco e' del
+   GRECO: qui un neutro freddo, parente del cls-ii, senza rubare la lingua. */
+.dict-meta-bit.cls-i   { background: rgba(63, 81, 181, 0.10);  color: #2a3781; border-color: rgba(63, 81, 181, 0.35); }
 .dict-meta-bit.cls-ii  { background: rgba(63, 81, 181, 0.13);  color: #2a3781; border-color: rgba(63, 81, 181, 0.42); }
 .dict-meta-bit.cls-iii { background: rgba(214, 158, 46, 0.15); color: #7a4f0a; border-color: rgba(214, 158, 46, 0.42); }
 
@@ -8414,7 +8425,7 @@ body[data-lang="greco"] .translation-sentence-card .ts-original { font-family: v
   text-transform: uppercase;
   letter-spacing: 0.03em;
   margin-bottom: 6px;
-  color: var(--case-strong, var(--sepia));
+  color: var(--case-text, var(--sepia));
 }
 .ordo-prop-group .ordo-grid { background: transparent; border-color: transparent; padding: 0; min-height: 0; }
 /* ORDO VERBORUM chips */
@@ -8952,33 +8963,39 @@ button.dict-suggest-pill:hover { background: rgba(24, 0, 172, 0.16); }
    blu nominativo · rosso verbo · arancio accusativo
    viola dativo · grigio ablativo · fucsia genitivo · teal vocativo
    ============================================ */
-/* PALETTE DISTINTIVA · soggetto=BLU/AZZURRO · verbo=ROSSO · oggetto=ARANCIO ·
-   genitivo=FUCSIA · dativo=VIOLA · ablativo=VERDE · vocativo=teal */
-.case-nominativo { --case-strong: rgba(37, 99, 235, 0.88);  --case-bg: rgba(37, 99, 235, 0.13);  --case-border: rgba(37, 99, 235, 0.55);  --case-text: #1d4ed8; }
-.case-verbo      { --case-strong: rgba(196, 18, 52, 0.88);  --case-bg: rgba(196, 18, 52, 0.14);  --case-border: rgba(196, 18, 52, 0.58);  --case-text: #a1102e; }  /* verbo · rosso ciliegia */
-.case-accusativo { --case-strong: rgba(245, 124, 0, 0.90);  --case-bg: rgba(245, 124, 0, 0.16);  --case-border: rgba(245, 124, 0, 0.58);  --case-text: #8a4500; }
-.case-dativo     { --case-strong: rgba(124, 58, 237, 0.85); --case-bg: rgba(124, 58, 237, 0.14); --case-border: rgba(124, 58, 237, 0.55); --case-text: #5b2bb8; }
-.case-ablativo   { --case-strong: rgba(22, 128, 61, 0.85);  --case-bg: rgba(22, 128, 61, 0.15);  --case-border: rgba(22, 128, 61, 0.55);  --case-text: #15803d; }
-.case-genitivo   { --case-strong: rgba(217, 70, 161, 0.90); --case-bg: rgba(217, 70, 161, 0.14); --case-border: rgba(217, 70, 161, 0.55); --case-text: #9a1f78; }
-.case-vocativo   { --case-strong: rgba(56, 178, 172, 0.85); --case-bg: rgba(56, 178, 172, 0.16); --case-border: rgba(56, 178, 172, 0.50); --case-text: #1c6f6a; }
-.case-locativo   { --case-strong: rgba(107, 114, 128, 0.70);--case-bg: rgba(107, 114, 128, 0.10);--case-border: rgba(107, 114, 128, 0.40);--case-text: #374151; }
-.case-neutro     { --case-strong: rgba(120, 113, 108, 0.55);--case-bg: rgba(120, 113, 108, 0.08);--case-border: rgba(120, 113, 108, 0.32);--case-text: var(--sepia); }
+/* ═══ RUOLI DAI PIGMENTI · inizio (generato: _build/genera-ruoli-dai-pigmenti.py) ═══
+   I ruoli sintattici vestono i pigmenti storici della collana degli Iperappunti,
+   letti dal motore della skill: il nominativo e' blu di Prussia sul token, sul
+   pulsante e nella tavola della dispensa — il codice attraversa l'ecosistema.
+   `--case-strong` e' il pigmento ABBASSATO DI VALORE finche' regge il bianco come
+   barra (i gialli, vivi, non lo reggerebbero); `--case-strong-ink` e' il testo
+   sopra la campitura piena, deciso dal contrasto misurato; `--case-bg` tiene il
+   pigmento vivo, in velatura. Il verbo non e' un caso: porta la tinta della sua
+   parte del discorso, quella del dizionario (.pos-verbo). Il neutro resta grigio:
+   e' il ripiego, non un pigmento. */
+.case-nominativo { --case-strong: #003153; --case-strong-ink: #FFFFFF; --case-bg: rgba(0, 49, 83, 0.13); --case-border: rgba(0, 49, 83, 0.62); --case-text: #003153; }   /* blu di Prussia */
+.case-verbo { --case-strong: #DC2B2B; --case-strong-ink: #FFFFFF; --case-bg: rgba(220, 43, 43, 0.12); --case-border: rgba(220, 43, 43, 0.62); --case-text: #D82A2A; }   /* il rosso del verbo, dal dizionario (.pos-verbo) */
+.case-accusativo { --case-strong: #B68646; --case-strong-ink: #1A1A1A; --case-bg: rgba(227, 168, 87, 0.22); --case-border: rgba(182, 134, 70, 0.62); --case-text: #916C38; }   /* giallo indiano */
+.case-dativo { --case-strong: #A5903E; --case-strong-ink: #1A1A1A; --case-bg: rgba(250, 218, 94, 0.35); --case-border: rgba(165, 144, 62, 0.62); --case-text: #827131; }   /* giallo di Napoli */
+.case-ablativo { --case-strong: #8E5A3C; --case-strong-ink: #FFFFFF; --case-bg: rgba(142, 90, 60, 0.14); --case-border: rgba(142, 90, 60, 0.62); --case-text: #8E5A3C; }   /* bruno di mummia */
+.case-genitivo { --case-strong: #66023C; --case-strong-ink: #FFFFFF; --case-bg: rgba(102, 2, 60, 0.13); --case-border: rgba(102, 2, 60, 0.62); --case-text: #66023C; }   /* porpora */
+.case-vocativo { --case-strong: #477D3B; --case-strong-ink: #FFFFFF; --case-bg: rgba(71, 125, 59, 0.14); --case-border: rgba(71, 125, 59, 0.62); --case-text: #477D3B; }   /* verde di Scheele */
+.case-locativo { --case-strong: #4A5E7A; --case-strong-ink: #FFFFFF; --case-bg: rgba(74, 94, 122, 0.12); --case-border: rgba(74, 94, 122, 0.62); --case-text: #4A5E7A; }   /* ardesia (dal motore) */
+.case-neutro     { --case-strong: rgba(120, 113, 108, 0.55); --case-strong-ink: #1A1A1A; --case-bg: rgba(120, 113, 108, 0.08); --case-border: rgba(120, 113, 108, 0.32); --case-text: var(--sepia); }
 
-/* IL VERSO DEL BUIO. `--case-text` porta le tinte scure disegnate per la carta
-   chiara: sul fondo notturno l'occhiello del cassetto misurava 2,07:1 e la
-   targhetta 1,95 — illeggibili. Nel buio l'accento schiarisce, e con lui il
-   testo: fondo tenue e bordo restano (sono alfa, e reggono su carta scura).
-   Contrasti verificati su --paper scuro (#1c1f24): da 6,99 a 9,22.
-   `case-neutro` non compare perche' il suo testo e' gia' var(--sepia), che si
-   inverte da se'. */
-:root[data-theme="dark"] .case-nominativo { --case-text: #8AB0F5; }
-:root[data-theme="dark"] .case-verbo      { --case-text: #F58BA0; }
-:root[data-theme="dark"] .case-accusativo { --case-text: #F2A65C; }
-:root[data-theme="dark"] .case-dativo     { --case-text: #B49BF0; }
-:root[data-theme="dark"] .case-ablativo   { --case-text: #6FD693; }
-:root[data-theme="dark"] .case-genitivo   { --case-text: #EE8FD0; }
-:root[data-theme="dark"] .case-vocativo   { --case-text: #5FD1CB; }
-:root[data-theme="dark"] .case-locativo   { --case-text: #AEB6C2; }
+/* IL VERSO DEL BUIO · testo e barra si schiariscono finche' reggono la carta
+   scura (misurato: testo >=6.5, barra >=3). La velatura di fondo e il bordo sono
+   alfa e reggono da se'. Il neutro usa var(--sepia), che si inverte da se'. */
+:root[data-theme="dark"] .case-nominativo { --case-text: #94A8B7; --case-strong: #4C6F87; --case-strong-ink: #FFFFFF; }
+:root[data-theme="dark"] .case-verbo { --case-text: #EB8888; --case-strong: #DC2B2B; --case-strong-ink: #FFFFFF; }
+:root[data-theme="dark"] .case-accusativo { --case-text: #E3A857; --case-strong: #E3A857; --case-strong-ink: #1A1A1A; }
+:root[data-theme="dark"] .case-dativo { --case-text: #FADA5E; --case-strong: #FADA5E; --case-strong-ink: #1A1A1A; }
+:root[data-theme="dark"] .case-ablativo { --case-text: #BD9F8E; --case-strong: #905D40; --case-strong-ink: #FFFFFF; }
+:root[data-theme="dark"] .case-genitivo { --case-text: #C29AB1; --case-strong: #97537A; --case-strong-ink: #FFFFFF; }
+:root[data-theme="dark"] .case-vocativo { --case-text: #89AC82; --case-strong: #477D3B; --case-strong-ink: #FFFFFF; }
+:root[data-theme="dark"] .case-locativo { --case-text: #9AA5B5; --case-strong: #586B85; --case-strong-ink: #FFFFFF; }
+:root[data-theme="dark"] .case-neutro { --case-strong-ink: #1A1A1A; }
+/* ═══ RUOLI DAI PIGMENTI · fine ═══ */
 
 /* Legenda swatches con palette case-X */
 .pos-legend-swatch.case-nominativo, .pos-legend-swatch.case-verbo,
@@ -10506,8 +10523,12 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   letter-spacing: 0.06em;
   border-radius: 99px;
 }
-.lang-flag.lang-latino { background: rgba(197, 48, 48, 0.13); color: #8b1f1f; border: 1px solid rgba(197, 48, 48, 0.35); }
-.lang-flag.lang-greco  { background: rgba(56, 178, 172, 0.18); color: #1c6f6a; border: 1px solid rgba(56, 178, 172, 0.45); }
+/* La bandierina dice QUALE lingua, e la lingua ha i suoi due accenti: rosso
+   pompeiano il latino, indaco il greco. Il teal che c'era non era di nessuno. */
+.lang-flag.lang-latino { background: rgba(162, 46, 55, 0.12); color: #A22E37; border: 1px solid rgba(162, 46, 55, 0.38); }
+.lang-flag.lang-greco  { background: rgba(24, 0, 172, 0.10); color: #1800AC; border: 1px solid rgba(24, 0, 172, 0.38); }
+:root[data-theme="dark"] body .lang-flag.lang-latino { color: #D0979B; }
+:root[data-theme="dark"] body .lang-flag.lang-greco  { color: #A79EDF; }
 
 /* Composizione per campo */
 .prop-insight-fields {
@@ -10620,8 +10641,8 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   border-radius: var(--radius-sm);
   padding: 8px 12px;
 }
-.prop-construct.lat { border-left-color: rgba(197, 48, 48, 0.55); }
-.prop-construct.gr  { border-left-color: rgba(56, 178, 172, 0.55); }
+.prop-construct.lat { border-left-color: rgba(162, 46, 55, 0.60); }
+.prop-construct.gr  { border-left-color: rgba(24, 0, 172, 0.55); }
 .prop-construct-head {
   display: flex;
   align-items: center;
@@ -10640,8 +10661,10 @@ body[data-lang="latino"] .greek-kbd-panel { display: none !important; }
   font-weight: 700;
   border-radius: 50%;
 }
-.prop-construct-badge.lat { background: rgba(197, 48, 48, 0.15); color: #8b1f1f; }
-.prop-construct-badge.gr  { background: rgba(56, 178, 172, 0.20); color: #1c6f6a; }
+.prop-construct-badge.lat { background: rgba(162, 46, 55, 0.13); color: #A22E37; }
+.prop-construct-badge.gr  { background: rgba(24, 0, 172, 0.10); color: #1800AC; }
+:root[data-theme="dark"] body .prop-construct-badge.lat { color: #D0979B; }
+:root[data-theme="dark"] body .prop-construct-badge.gr  { color: #A79EDF; }
 .prop-construct-label {
   font-family: var(--font-ui);
   font-size: 13px;
@@ -40768,17 +40791,19 @@ function fileName(ext) {
    Colori scelti per ALTO CONTRASTO testo/sfondo (testo scuro saturo,
    sfondo tinta pastello chiarissima, bordi marcati).
    ============================================ */
+/* ═ RUOLI DAI PIGMENTI · export · inizio (generato: _build/genera-ruoli-dai-pigmenti.py) ═ */
 const CASE_EXPORT_PALETTE = {
-  nominativo: { bg: 'rgba(24, 0, 172, 0.10)',    border: 'rgba(24, 0, 172, 0.65)',    text: '#08003f', strong: 'rgba(24, 0, 172, 0.85)' },
-  verbo:      { bg: 'rgba(197, 48, 48, 0.10)',   border: 'rgba(197, 48, 48, 0.65)',   text: '#6b0f0f', strong: 'rgba(197, 48, 48, 0.85)' },
-  accusativo: { bg: 'rgba(245, 124, 0, 0.12)',   border: 'rgba(245, 124, 0, 0.70)',   text: '#5e2f00', strong: 'rgba(245, 124, 0, 0.90)' },
-  dativo:     { bg: 'rgba(124, 58, 237, 0.10)',  border: 'rgba(124, 58, 237, 0.65)',  text: '#3f1885', strong: 'rgba(124, 58, 237, 0.85)' },
-  ablativo:   { bg: 'rgba(107, 114, 128, 0.10)', border: 'rgba(107, 114, 128, 0.65)', text: '#1f2937', strong: 'rgba(107, 114, 128, 0.85)' },
-  genitivo:   { bg: 'rgba(217, 70, 161, 0.10)',  border: 'rgba(217, 70, 161, 0.65)',  text: '#6b1356', strong: 'rgba(217, 70, 161, 0.90)' },
-  vocativo:   { bg: 'rgba(56, 178, 172, 0.12)',  border: 'rgba(56, 178, 172, 0.65)',  text: '#0d4f4a', strong: 'rgba(56, 178, 172, 0.85)' },
-  locativo:   { bg: 'rgba(107, 114, 128, 0.08)', border: 'rgba(107, 114, 128, 0.50)', text: '#374151', strong: 'rgba(107, 114, 128, 0.70)' },
-  neutro:     { bg: 'rgba(120, 113, 108, 0.06)', border: 'rgba(120, 113, 108, 0.45)', text: '#4a4540', strong: 'rgba(120, 113, 108, 0.55)' },
+  nominativo: { bg: 'rgba(0, 49, 83, 0.10)', border: 'rgba(0, 49, 83, 0.70)', text: '#003153', strong: '#003153' },
+  verbo:      { bg: 'rgba(220, 43, 43, 0.10)', border: 'rgba(220, 43, 43, 0.70)', text: '#D82A2A', strong: '#DC2B2B' },
+  accusativo: { bg: 'rgba(227, 168, 87, 0.18)', border: 'rgba(182, 134, 70, 0.70)', text: '#916C38', strong: '#B68646' },
+  dativo:     { bg: 'rgba(250, 218, 94, 0.28)', border: 'rgba(165, 144, 62, 0.70)', text: '#827131', strong: '#A5903E' },
+  ablativo:   { bg: 'rgba(142, 90, 60, 0.10)', border: 'rgba(142, 90, 60, 0.70)', text: '#8E5A3C', strong: '#8E5A3C' },
+  genitivo:   { bg: 'rgba(102, 2, 60, 0.10)', border: 'rgba(102, 2, 60, 0.70)', text: '#66023C', strong: '#66023C' },
+  vocativo:   { bg: 'rgba(71, 125, 59, 0.10)', border: 'rgba(71, 125, 59, 0.70)', text: '#477D3B', strong: '#477D3B' },
+  locativo:   { bg: 'rgba(74, 94, 122, 0.10)', border: 'rgba(74, 94, 122, 0.70)', text: '#4A5E7A', strong: '#4A5E7A' },
+  neutro:      { bg: 'rgba(120, 113, 108, 0.06)', border: 'rgba(120, 113, 108, 0.45)', text: '#4a4540', strong: 'rgba(120, 113, 108, 0.55)' },
 };
+/* ═ RUOLI DAI PIGMENTI · export · fine ═ */
 function caseExportStyle(group, extras) {
   const c = CASE_EXPORT_PALETTE[group] || CASE_EXPORT_PALETTE.neutro;
   return `background:${c.bg};border:1.5px solid ${c.border};color:${c.text};font-weight:600;${extras || ''}`;
