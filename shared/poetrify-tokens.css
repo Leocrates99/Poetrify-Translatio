@@ -285,7 +285,7 @@ body[data-lang="grc"], body[data-lang="greco"] {
    orpimento il neutro. Il codice attraversa l'ecosistema: le parti del
    discorso vanno dal dizionario alla dispensa (.pos-*), le categorie flessive
    tornano dalla dispensa al translator. Generato dal motore, non ricopiato:
-   se il motore cambia, si rigenera (scratchpad/codice-categoria.py).
+   se il motore cambia, si rigenera (_build/genera-codice-categoria.py).
    Persona, coniugazione, declinazione e classe NON hanno colore: la spina
    nera basta, e un colore che non serve toglie forza a quelli che servono.
    ═══════════════════════════════════════════════════════════════════════ */
