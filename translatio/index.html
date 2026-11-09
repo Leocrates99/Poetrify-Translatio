@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Translatio · Poetrify</title>
+<meta name="description" content="Analisi e traduzione di frasi e versioni dal latino e dal greco antico: il brano diviso in frasi, ogni parola da vicino, la traduzione a fronte.">
+<!-- Anti-flash del tema: [data-theme] prima del primo disegno (chiave unica della casa) -->
+<script>(function(){try{var t=localStorage.getItem('poetrify-theme');if(t!=='dark'&&t!=='light'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<!-- Font self-hosted e token condivisi della casa: un valore cambiato la' arriva qui -->
+<link rel="stylesheet" href="../vendor/fonts/fonts.css">
+<link rel="stylesheet" href="../shared/poetrify-tokens.css?v=2026-08-23">
+<link rel="stylesheet" href="css/translatio.css?v=2026-11-09">
+<script src="../shared/poetrify-theme.js"></script>
+<script type="module" src="js/app.js?v=2026-11-09"></script>
+</head>
+<body>
+<a class="salta" href="#principale">Vai al lavoro</a>
+
+<header class="testata">
+  <a class="marchio" href="../app.html" title="Gli strumenti di Poetrify">Poetrify</a>
+  <a class="dove" href="#/">Translatio</a>
+  <span class="firma">Analisi e traduzione · latino e greco</span>
+  <button class="btn btn-quieto btn-icona tema" id="tema" type="button" aria-label="Passa al tema scuro"></button>
+</header>
+
+<div id="nastro"></div>
+
+<main id="principale" tabindex="-1">
+  <div class="pagina">
+    <noscript><p class="avviso">Translatio ha bisogno di JavaScript per funzionare.</p></noscript>
+    <p class="prosa">Apro Translatio…</p>
+  </div>
+</main>
+
+<footer class="piede">Poetrify · Translatio · lessico da Lewis, Liddell-Scott-Jones e CLTK · il lavoro resta in questo browser</footer>
+<div id="annunci" class="sr" aria-live="polite"></div>
+</body>
+</html>

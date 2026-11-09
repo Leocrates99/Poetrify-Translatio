@@ -65,6 +65,7 @@ la sorgente "GitHub Actions":
 | `…/app.html` | Dashboard (hub: Translator + Dizionario) |
 | `…/translator.html` | Translator (analisi grammaticale/logica) |
 | `…/dictionary.html` | Dizionario (latino + greco) |
+| `…/translatio/` | Translatio: analisi e traduzione di frasi e versioni (progetto nuovo) |
 
 ---
 
