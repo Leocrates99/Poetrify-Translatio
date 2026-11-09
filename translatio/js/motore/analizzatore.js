@@ -17,7 +17,7 @@ import { lookupConjunctionPreset } from '../../../modules/engine/conjunctions.js
 import { lookupPrepositionPreset } from '../../../modules/engine/prepositions.js';
 import { formaAnalizzata, parolaFrequente, chiaveDolce } from '../../../modules/engine/classi-chiuse.js';
 import { getItalianGloss } from '../../../modules/dictionary/italian-glosses.js';
-import { daParsing, daScheda, dedup, stessiTratti } from './tratti.js';
+import { daParsing, daScheda, dedup, stessiTratti, contiene } from './tratti.js';
 import { paradigmaDi, letturePerForma } from './paradigmi.js';
 
 export const PARTI_DEL_DISCORSO = [
@@ -327,7 +327,17 @@ export function restringiNelContesto(proposte) {
  */
 const POS_DEL_PARADIGMA = { Verbo: 'verbo', Sostantivo: 'sostantivo', Aggettivo: 'aggettivo', nome: 'sostantivo' };
 
-export async function completaConParadigma(p, lang, { primaIlParadigma = true } = {}) {
+/*
+ * Due modi:
+ *   'verifica' (proposte del programma): il paradigma controlla la lettura
+ *     proposta. Se la conferma, resta (nella forma piu' precisa che il paradigma
+ *     da'); se la smentisce, vince il paradigma. Il lessico mescola omografi di
+ *     lemmi diversi (appellantur: indicativo di appellare, congiuntivo di
+ *     appellere), il paradigma del lemma scelto no.
+ *   'aggiungi' (parola gia' toccata o confermata dallo studente): si aggiungono
+ *     in coda le letture mancanti e la scelta in vigore non cambia.
+ */
+export async function completaConParadigma(p, lang, { modo = 'verifica' } = {}) {
   if (!p || !p.lemma) return p;
   if (p.pos && !['sostantivo', 'aggettivo', 'verbo', 'pronome', 'numerale'].includes(p.pos)) return p;
   let par = null;
@@ -343,13 +353,13 @@ export async function completaConParadigma(p, lang, { primaIlParadigma = true } 
      (appellantur: indicativo di appellare, congiuntivo di appellere). Le letture
      del lessico che il paradigma non conosce restano, in coda. */
   const dalParadigma = trovate.map(l => ({ ...l.tratti }));
-  if (primaIlParadigma || !p.letture.length) {
-    p.letture = dedup([...dalParadigma, ...p.letture]);
-    p.tratti = { ...p.letture[0] };
-  } else {
-    /* la scheda aperta su una proposta gia' vista: si aggiungono le letture
-       mancanti in coda, senza cambiare quella in vigore */
+  const inVigore = p.tratti && Object.keys(p.tratti).length ? { ...p.tratti } : null;
+  if (modo === 'aggiungi' && p.letture.length) {
     p.letture = dedup([...p.letture, ...dalParadigma]);
+  } else {
+    const conferma = inVigore && dalParadigma.find(m => contiene(m, inVigore));
+    p.letture = dedup(conferma ? [conferma, ...dalParadigma, ...p.letture] : [...dalParadigma, ...p.letture]);
+    p.tratti = { ...p.letture[0] };
   }
   if (p.fonte === 'nessuna' || p.fonte === 'dedotta') p.fonte = 'paradigma';
   p.segmenti = Object.fromEntries(trovate.map(l => [chiaveTratti(l.tratti), l.segmenti]));

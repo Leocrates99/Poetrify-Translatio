@@ -268,7 +268,7 @@ export function stessiTratti(a, b) {
 
 /* A contiene B quando ogni tratto di B c'e' anche in A, con lo stesso valore:
    «part. perf. nom. f. sg.» e' contenuta in «part. perf. PASS. nom. f. sg.». */
-function contiene(a, b) {
+export function contiene(a, b) {
   return Object.entries(b || {}).every(([k, v]) => !v || (a && a[k] === v));
 }
 

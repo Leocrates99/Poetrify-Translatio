@@ -121,11 +121,17 @@ scorrimento orizzontale, nessun comando sotto i 24 px. Esito al 9 novembre 2026:
   verbi omerici): nei brani attici una parola su otto-dieci resta «da analizzare»
   (ἠσθένει, ὑπώπτευε, τελευτήν nell'esempio di Senofonte). Lo studente le completa a mano;
   la scheda dice che il lessico non le conosce invece di indovinare.
+- **Omografi che il lessico non distingue.** Il lessico latino a volte fonde lemmi
+  diversi sotto una voce sola, e a volte ne manca uno: per *appello* c'è solo
+  *appello, appellere* (3ª), non *appello, appellare* (1ª), e così *appellantur* nel primo
+  esempio di Cesare viene proposto come congiuntivo. Per i verbi il paradigma del lemma
+  verifica la proposta e la corregge quando la smentisce, ma qui il lemma giusto manca
+  dai dati: va aggiunto al lessico (`data/latin/`), non all'interfaccia.
 - **Ambiguità.** Il programma ordina le letture col contesto (la preposizione sceglie il
   caso, l'articolo greco concorda col nome) ma non decide: le letture alternative restano
   nella scheda, e il segno «+N» sotto la parola le conta.
-- **Paradigmi latini pesanti.** Si caricano solo dove il lessico non dà l'analisi e quando
-  si apre la scheda di una parola (per i morfemi), non per l'intero brano.
+- **Paradigmi latini pesanti.** Si caricano per i verbi, dove il lessico non dà l'analisi
+  e quando si apre la scheda di una parola (per i morfemi), non per ogni parola del brano.
 - **Nessuna traduzione automatica.** La traduzione la scrive lo studente: il programma dà
   lemmi, analisi, significati e la costruzione.
 

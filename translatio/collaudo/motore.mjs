@@ -23,7 +23,7 @@ for (const [lang, testo] of Object.entries(BRANI)) {
   for (const f of frasi) {
     const ws = parole(f);
     const prop = await Promise.all(ws.map(w => A.analizzaParola(w.t, lang)));
-    for (const p of prop) await A.completaConParadigma(p, lang);
+    for (const p of prop) if (!p.letture.length || p.pos === 'verbo') await A.completaConParadigma(p, lang);
     A.restringiNelContesto(prop);
     console.log('  «' + f + '»');
     for (const p of prop) {

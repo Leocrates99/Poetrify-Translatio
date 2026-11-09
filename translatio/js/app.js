@@ -220,9 +220,10 @@ let lavoro = null;
 async function analizzaFrase(v, f) {
   const ws = paroleDi(f);
   const prop = await Promise.all(ws.map(w => analizzaParola(w.t, v.lingua)));
-  /* il paradigma solo dove il lessico non dava l'analisi: i paradigmi latini
-     pesano, e si caricano per intero quando serve davvero */
-  for (const p of prop) if (!p.letture.length) await completaConParadigma(p, v.lingua);
+  /* il paradigma dove il lessico non dava l'analisi, e per i verbi, dove la
+     verifica conta di piu' (il predicato regge la frase). Per il resto si
+     carica quando si apre la scheda: i paradigmi latini pesano. */
+  for (const p of prop) if (!p.letture.length || p.pos === 'verbo') await completaConParadigma(p, v.lingua);
   restringiNelContesto(prop);
   ws.forEach((w, k) => {
     const gia = f.parole[w.i];
@@ -284,9 +285,8 @@ async function completaPerScheda(f, i) {
   const p = f.parole[i];
   if (!p || p.paradigmaProvato) return;
   p.paradigmaProvato = true;
-  const tenuta = { ...p.tratti };
-  await completaConParadigma(p, S.v.lingua, { primaIlParadigma: false });
-  if (Object.keys(tenuta).length) p.tratti = tenuta;
+  const scelta = p.toccata || p.stato === 'confermata';
+  await completaConParadigma(p, S.v.lingua, { modo: scelta ? 'aggiungi' : 'verifica' });
   salva();
   if (S.vista === 'analisi' && S.sel === i && frase() === f) render();
 }
