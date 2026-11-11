@@ -48,6 +48,17 @@ poetrify/                       ← cartella attiva di sviluppo
 > sono **archivio storico**: non vanno modificati. Eventuali modifiche fatte
 > per errore lì non si propagano a `poetrify/translator.html` e si perderebbero.
 
+## Translatio · il nuovo banco di analisi e traduzione
+
+`translatio/` è un progetto nuovo, rifondato nell'UX/UI, limitato all'analisi e alla
+traduzione di frasi e versioni latine e greche (flusso Testo → Analisi → Traduzione,
+quattro lenti sulla frase: Parole, Sintagmi, Proposizioni, Resa). Non tocca
+`translator.html`: ha una UI propria e **importa** il motore condiviso
+(`modules/engine/*`), le glosse curate del dizionario, i dati di `data/` e i token di
+`shared/`. Gli ha aggiunto un modulo, `modules/engine/classi-chiuse.js`, generato da
+`_build/estrai-classi-chiuse.mjs` a partire dai dizionari scritti dentro il monolite.
+Dettagli, scelte e limiti: `translatio/README.md`.
+
 ## Convenzioni ES modules
 
 Tutti i moduli usano sintassi ES6:
