@@ -15,6 +15,7 @@ import { tokenizza } from '../motore/testo.js';
 import { etichettaBreve, etichettaLunga, gruppiPer, gruppoPertinente, ETICHETTE, stessiTratti } from '../motore/tratti.js';
 import { NOMI_POS, SIGLE_POS, PARTI_DEL_DISCORSO, segmentiPer } from '../motore/analizzatore.js';
 import { MORFEMI } from '../motore/paradigmi.js';
+import { traslittera } from '../motore/traslitterazione.js';
 import { statoFrase, faseFrase } from '../stato.js';
 import {
   casoDellaFunzione, gruppiDiFunzioni, abbreviaFunzione, suggerisciFunzioni,
@@ -29,6 +30,8 @@ export const LENTI = [
 ];
 
 const langAttr = v => (v.lingua === 'greco' ? 'grc' : 'la');
+
+const due = n => String(n).padStart(2, '0');
 
 /* ── navigazione fra le frasi ─────────────────────────────────────────────── */
 function pallini(S) {
@@ -62,6 +65,7 @@ function guida(S) {
   const v = S.v;
   const n = S.frase;
   return html`<div class="guida-frase">
+    <span class="numero-appeso" aria-hidden="true">${due(n + 1)}</span>
     <div class="navigatore">
       <a class="btn btn-quieto btn-icona btn-piccolo" ${n > 0 ? raw(`href="#/v/${v.id}/analisi/${n}/${S.lente}"`) : raw('aria-disabled="true"')} title="Frase precedente" aria-label="Frase precedente">${raw(ICONE.indietro)}</a>
       <span class="quale" aria-live="polite">Frase ${n + 1} di ${v.frasi.length}</span>
@@ -286,11 +290,12 @@ function schedaParola(S) {
         ${p.via === 'elisione' ? html`<span class="targhetta">forma elisa</span>` : ''}
       </div>
       <p class="forma-grande" lang="${langAttr(v)}">${w.t}</p>
+      ${greco ? html`<p class="traslitterazione">${traslittera(w.t.replace(/[’'ʼ᾽]$/u, ''))}</p>` : ''}
       ${morfemi(p)}
       <div class="lemma-riga">
         ${p.citazione || p.lemma ? html`<span class="citazione" lang="${langAttr(v)}">${p.citazione || p.lemma}</span>` : ''}
       </div>
-      ${glossa ? html`<p class="glossa ${glossa.fonte === 'automatica' ? 'automatica' : ''}">${glossa.it}
+      ${glossa ? html`<p class="glossa ${glossa.fonte === 'automatica' ? 'automatica' : ''}"><span class="testo-glossa">${glossa.it}</span>
         ${glossa.fonte === 'automatica' ? html`<span class="targhetta dedotta" title="Ricavata in automatico dalla definizione inglese">da verificare</span>` : ''}</p>` : ''}
       ${p.nota && (!glossa || glossa.it !== p.nota) ? html`<p class="nota-fonte">${p.nota}</p>` : ''}
       <p class="nota-fonte">${FONTI[p.fonte] || ''}</p>

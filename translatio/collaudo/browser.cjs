@@ -1,4 +1,5 @@
 /* Collaudo nel browser: il flusso intero su quattro classi di schermo.
+   Le due vesti (Poetrify e C2 compatta) passano gli stessi controlli.
    Uso (dalla radice del repo, con un server statico acceso):
      python3 -m http.server 8765 --bind 127.0.0.1
      node translatio/collaudo/browser.cjs [http://127.0.0.1:8765/translatio/]
@@ -6,6 +7,8 @@
    se una pagina scorre in orizzontale o se un comando e' sotto i 24px. */
 const { chromium, devices } = require('playwright');
 const BASE = process.argv[2] || 'http://127.0.0.1:8765/translatio/';
+/* le due vesti si collaudano entrambe: ?veste= la sceglie prima del disegno */
+const VESTI = ['poetrify', 'c2'];
 const CLASSI = [
   ['la mano (greco)', { ...devices['iPhone 13'] }, 2],
   ['il tablet (latino)', { viewport: { width: 1024, height: 768 } }, 1],
@@ -15,12 +18,13 @@ const CLASSI = [
 (async () => {
   const browser = await chromium.launch();
   const guasti = [];
-  for (const [nome, opts, esempio] of CLASSI) {
+  for (const veste of VESTI) for (const [classe, opts, esempio] of CLASSI) {
+    const nome = `${classe} · veste ${veste}`;
     const ctx = await browser.newContext(opts);
     const page = await ctx.newPage();
     page.on('console', m => { if (m.type() === 'error') guasti.push(`${nome}: console · ${m.text()}`); });
     page.on('pageerror', e => guasti.push(`${nome}: eccezione · ${e.message}`));
-    await page.goto(BASE);
+    await page.goto(`${BASE}?veste=${veste}`);
     await page.click(`[data-az="esempio"][data-i="${esempio}"]`);
     await page.waitForFunction(() => !document.querySelector('.stato-lavoro'), null, { timeout: 90000 });
     await page.click('.parola[data-i="1"]');

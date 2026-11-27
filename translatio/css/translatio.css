@@ -470,6 +470,9 @@ main:focus { outline: none; }
 .voce .forma-grande { font-family: var(--font-testo); font-size: 38px; line-height: 1.1; margin: 4px 0 6px; overflow-wrap: anywhere; }
 .voce .forma-grande::first-letter { color: var(--lingua); }
 .voce .lemma-riga { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
+.voce .traslitterazione { margin: -2px 0 6px; font-family: var(--font-ui); font-style: italic; font-size: 14px; color: var(--ink-soft); }
+/* il numero appeso della frase esiste solo nella veste C2 (veste-c2.css) */
+.numero-appeso { display: none; }
 .voce .citazione { font-family: var(--font-testo); font-size: 17px; font-style: italic; color: var(--ink-soft); }
 .voce .glossa { margin-top: 8px; font-family: var(--font-body); font-size: 17px; line-height: 1.45; }
 .voce .glossa.automatica { color: var(--ink-soft); }
@@ -601,6 +604,8 @@ details.dettagli[open] > summary::before { transform: rotate(90deg); }
 .edizione-riga { padding: 16px 0; border-bottom: 1px solid var(--rule-soft); }
 .edizione-riga .n { font-size: 12px; font-weight: 700; color: var(--brass-ink); padding-top: 5px; font-variant-numeric: tabular-nums; }
 .textus { font-family: var(--font-testo); font-size: 19px; line-height: 1.6; }
+/* la frase intera e' il bersaglio che riapre l'analisi: un blocco, non una riga */
+.textus > a { display: block; }
 .textus button { all: unset; cursor: pointer; }
 .textus button:hover { text-decoration: underline dotted var(--sepia); text-underline-offset: 4px; }
 .versio .area { min-height: 64px; font-family: var(--font-body); font-size: 17px; line-height: 1.6; background: var(--ivory); }
@@ -660,7 +665,8 @@ details.dettagli[open] > summary::before { transform: rotate(90deg); }
   .testata .firma { display: none; }
   .testata .dove { margin-left: 16px; font-size: 17px; }
   .testata .marchio { font-size: 20px; }
-  .testata .tema { margin-left: auto; }
+  .testata .veste-interruttore { margin-left: auto; }
+  .testata .tema { margin-left: 4px; }
   /* sul telefono il nastro non resta appiccicato: lo spazio in altezza e' della frase */
   .nastro { position: static; flex-wrap: wrap; gap: 4px 12px; padding-top: 8px; padding-bottom: 4px; }
   .consegna { font-size: 14.5px; margin-bottom: 14px; }

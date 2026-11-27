@@ -41,7 +41,7 @@ export function vistaTraduzione(S) {
   const app = apparato(v);
   const inBella = v.frasi.filter(f => (f.bella || '').trim()).length;
   const inBrutta = v.frasi.filter(f => !(f.bella || '').trim() && (f.brutta || '').trim()).length;
-  return html`<div class="pagina">
+  return html`<div class="pagina pagina-edizione">
     <h1 class="titolo-pagina">${v.titolo || 'La versione'}</h1>
     <p class="sottotitolo">${v.autore || (v.lingua === 'greco' ? 'Dal greco' : 'Dal latino')}</p>
 
@@ -66,7 +66,7 @@ export function vistaTraduzione(S) {
         const valore = mostra === 'bella' ? f.bella : f.brutta;
         const ripiego = mostra === 'bella' && !(f.bella || '').trim() && (f.brutta || '').trim();
         return html`<div class="edizione-riga">
-          <span class="n">${n + 1}</span>
+          <span class="n" data-n="${String(n + 1).padStart(2, '0')}">${n + 1}</span>
           <div class="textus" lang="${langAttr(v)}"><a href="#/v/${v.id}/analisi/${n + 1}/resa" style="color:inherit;text-decoration:none" title="Apri la frase ${n + 1} nell’analisi">${f.testo}</a></div>
           <div class="versio">
             <label class="sr" for="versio-${n}">Traduzione della frase ${n + 1}</label>

@@ -18,7 +18,7 @@ export function anteprimaFrasi(S) {
   }
   return html`<ol class="frasi-anteprima ${S.modoDividi ? 'modo-dividi' : ''}" aria-label="Frasi riconosciute">
     ${frasi.map((f, n) => html`<li class="frase-anteprima">
-      <span class="n">${n + 1}</span>
+      <span class="n" data-n="${String(n + 1).padStart(2, '0')}">${n + 1}</span>
       <span class="t" lang="${S.bozza.lingua === 'greco' ? 'grc' : 'la'}">${S.modoDividi
         ? tokenizza(f).map(t => (t.k === 'w' && t.i > 0
           ? html`<button type="button" class="taglio" data-az="dividi" data-f="${n}" data-i="${t.i}" title="Comincia qui una nuova frase">${t.t}</button>`

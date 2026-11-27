@@ -59,6 +59,43 @@ greco) via `body[data-lang]`, ottone solo nei filetti, greco per codepoint in Ti
 (GFS Didot come ripiego), palette delle undici parti del discorso, codice di categoria
 dei casi, tema scuro della casa.
 
+## La veste C2 compatta (proposta)
+
+Accanto alla veste Poetrify c'è una seconda veste, presa dal sistema di design
+**«C2 compatta»**, la veste dei documenti di studio (capitoli `MAN.`, handout,
+dispense). Si prova con `translatio/?veste=c2`, oppure col pulsante «Veste C2» nella
+testatina; la scelta si ricorda. Vive tutta in `css/veste-c2.css`, sotto
+`html[data-veste="c2"]`: la veste Poetrify non cambia.
+
+| Della C2, alla lettera | Adattato allo schermo |
+|---|---|
+| nero su bianco, **un solo accento** per numeri, etichette, lemmi, link | i corpi 10 · 9 · 7 pt salgono di 1,2 (16 · 14,4 · 11,2 px), le proporzioni restano |
+| **Inter** per tutto; **greco e latino in Times**, sempre | l'accento è della lingua: latino `#b8400e` (l'accento C2), greco `#1d4ed8` (la variante blu C2); una lingua per documento, mai due accenti in una pagina |
+| **colonna di margine appesa**: il numero della frase (44 px), «In breve», i numeri di sezione stanno a sinistra del testo | il tema scuro, che la C2 non ha: stessa grammatica, valori misurati |
+| testatina col **filetto nero di 4 px**; tappe come etichette `01 · 02 · 03` | i contorni dei comandi in `#767676` (4,54:1): il grigio dei filetti C2 (`#9a9a9a`, 2,81:1) non basta a un campo |
+| tre pesi di filetto, nessun fondo, nessuna ombra, nessun angolo arrotondato | il pulsante primario è inchiostro pieno, non colore |
+| la scheda della parola come **nota di lessico**: parola in Times neretto, *traslitterazione*, **«traduzione»** fra caporali, commento | la glossa automatica non si veste da traduzione: corsivo, senza caporali, «da verificare» |
+| il **testo a fronte** a tutta giustezza fra filetti di 2 e 1 px; l'**apparato** come note a piè di pagina su tre colonne | |
+| la categoria la dicono **sigla e filetto**: parte del discorso in maiuscoletto, filetto pieno se confermato, punteggiato se proposto; sintagmi con filo d'inchiostro ed etichetta in accento; proposizioni con tre pesi (principale 2 px, coordinata tratteggiata, subordinata 1 px) | |
+
+**Le scelte che la C2 rovescia** rispetto al canone di Poetrify, da decidere:
+
+1. **Il colore della lingua.** Rosso pompeiano e indaco diventano l'accento C2 e la sua
+   variante blu: la lingua resta distinta dal colore, ma con le tinte della collana.
+2. **Il colore delle categorie.** Le undici tinte delle parti del discorso e i pigmenti
+   dei casi sui sintagmi spariscono: la C2 vuole un colore solo. L'informazione resta
+   in sigle, etichette e filetti, quindi regge anche senza colore; si perde il colpo
+   d'occhio cromatico del banco.
+3. **La carta e i caratteri.** La pergamena calda diventa carta bianca; Playfair e
+   Source Serif diventano Inter; il latino passa in Times come il greco.
+4. **Due vesti o una.** Se la C2 vince, si toglie la veste Poetrify da Translatio e
+   l'interruttore con lei: due vesti nello stesso prodotto sono due dialetti.
+
+La traslitterazione della nota di lessico è nuova anche nella veste Poetrify
+(`js/motore/traslitterazione.js`, convenzione scolastica: *hoûtos*, *rhḗtōr*, *ángelos*).
+Il modulo condiviso `modules/dictionary/transliteration.js` posa l'accento sulla *h* e
+sbaglia lo spirito aspro sui dittonghi (*ohŷtos*), e qui non si usa.
+
 ## Che cosa riusa e che cosa è nuovo
 
 **Riusato, senza copiarlo** (import diretti):
@@ -81,6 +118,7 @@ dei casi, tema scuro della casa.
 translatio/
 ├─ index.html
 ├─ css/translatio.css          componenti (i valori stanno nei token condivisi)
+├─ css/veste-c2.css            la veste C2 compatta, solo sotto html[data-veste="c2"]
 ├─ js/app.js                   rotte, stato della sessione, azioni, analisi in sottofondo
 ├─ js/stato.js                 modello della versione, salvataggio, esportazione
 ├─ js/esempi.js                quattro brani d'apertura
@@ -89,7 +127,8 @@ translatio/
 │  ├─ tratti.js                lingua comune dell'analisi (parsing, schede, paradigmi → tratti)
 │  ├─ paradigmi.js             la forma ritrovata nella flessione: letture e morfemi
 │  ├─ analizzatore.js          la proposta per ogni parola, il contesto, le preposizioni latine
-│  └─ sintassi.js              funzioni per caso, proposte, proposizioni, costruzione
+│  ├─ sintassi.js              funzioni per caso, proposte, proposizioni, costruzione
+│  └─ traslitterazione.js      il greco in lettere latine, per la nota di lessico
 ├─ js/viste/                   archivio · testo · analisi · traduzione
 ├─ js/ui/                      dom (template che escapa), icone
 └─ collaudo/
@@ -112,8 +151,9 @@ node translatio/collaudo/browser.cjs
 ```
 
 Il secondo controlla, sulle quattro classi di schermo (telefono greco, tablet latino,
-leggio greco in tema scuro, tavolo latino): nessun errore in console, nessuno
-scorrimento orizzontale, nessun comando sotto i 24 px. Esito al 9 novembre 2026: conforme.
+leggio greco in tema scuro, tavolo latino) e in tutte e due le vesti: nessun errore in
+console, nessuno scorrimento orizzontale, nessun comando sotto i 24 px. Esito al 27
+novembre 2026: conforme.
 
 ## Limiti dichiarati
 

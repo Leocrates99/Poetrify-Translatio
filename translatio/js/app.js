@@ -557,6 +557,26 @@ const AZIONI = {
   },
 };
 
+/* La veste: Poetrify (pergamena, colore = lingua) o C2 compatta (la veste dei
+   documenti di studio). E' una proposta da confrontare dal vivo; la scelta si
+   ricorda, come il tema. */
+function aggiornaVeste() {
+  const b = $('#veste');
+  const c2 = document.documentElement.getAttribute('data-veste') === 'c2';
+  if (!b) return;
+  b.setAttribute('aria-pressed', c2 ? 'true' : 'false');
+  b.textContent = c2 ? 'Veste Poetrify' : 'Veste C2';
+  b.title = c2 ? 'Torna alla veste Poetrify' : 'Prova la veste C2 compatta dei documenti di studio';
+}
+function cambiaVeste() {
+  const c2 = document.documentElement.getAttribute('data-veste') !== 'c2';
+  if (c2) document.documentElement.setAttribute('data-veste', 'c2');
+  else document.documentElement.removeAttribute('data-veste');
+  try { localStorage.setItem('translatio:veste', c2 ? 'c2' : 'poetrify'); } catch (_) { /* la scelta vale per la sessione */ }
+  aggiornaVeste();
+  annuncia(c2 ? 'Veste C2 compatta.' : 'Veste Poetrify.');
+}
+
 function aggiornaTema() {
   const b = $('#tema');
   if (!b) return;
@@ -673,5 +693,7 @@ function cucitura() {
 
 cucitura();
 document.getElementById('tema').addEventListener('click', () => AZIONI.tema());
+document.getElementById('veste').addEventListener('click', cambiaVeste);
 aggiornaTema();
+aggiornaVeste();
 render();
