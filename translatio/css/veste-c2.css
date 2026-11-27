@@ -7,7 +7,8 @@
    confrontano dal vivo (?veste=c2, o l'interruttore nella testatina).
 
    Che cosa si prende dalla C2, alla lettera:
-     · nero su bianco, UN SOLO ACCENTO per numeri, etichette, lemmi, link;
+     · nero su bianco, UN SOLO ACCENTO per la cornice: numeri, etichette,
+       lemmi, link;
      · Inter per tutto, il greco e il latino in Times, sempre;
      · la colonna di margine appesa: numeri e etichette stanno a sinistra
        del testo, non sopra;
@@ -29,6 +30,14 @@
        nell'accento di base;
      · il tema scuro, che la C2 (nata per la stampa) non ha: stessa
        grammatica, valori misurati per l'AA.
+
+   Che cosa la C2 NON tocca, per decisione del docente (27 novembre 2026):
+     · l'aggancio cromatico dell'analisi grammaticale. Le undici tinte delle
+       parti del discorso, il codice di categoria dei casi (i pigmenti della
+       collana) sui sintagmi e la palette dei morfemi restano quelli della
+       casa. L'accento unico vale per la cornice, non per le categorie: il
+       colore di una categoria e' informazione, e la stessa entita' ha lo
+       stesso colore in ogni veste.
    ============================================================================ */
 
 /* ── token ──────────────────────────────────────────────────────────────── */
@@ -77,10 +86,9 @@ html[data-veste="c2"][data-theme="dark"] {
 }
 html[data-veste="c2"][data-theme="dark"] body[data-lang="greco"] { --c2-accent: #8aa9ff; --c2-accent-deep: #b3c7ff; }
 
-/* tutti i colori di categoria cedono all'inchiostro: in C2 la categoria la
-   dicono l'etichetta e il filetto, non la tinta */
-html[data-veste="c2"] [class*="pos-"] { --pos-c: var(--c2-ink); --pos-ink: var(--c2-ink); }
-html[data-veste="c2"] [class*="caso-"] { --filo-c: var(--c2-ink); }
+/* I colori di categoria (--pos-c, --pos-ink, --filo-c dei casi, i morfemi)
+   NON si ridefiniscono qui: li danno i token condivisi e translatio.css, e
+   valgono identici nelle due vesti. */
 
 /* la veste e' squadrata e senza ombre: vale per ogni elemento, anche per
    quelli che portano un raggio scritto a mano */
@@ -324,28 +332,36 @@ html[data-veste="c2"] .parola[aria-pressed="true"] { background: none; border-co
 /* le parole del gruppo in selezione: la forma in accento, senza riquadri */
 html[data-veste="c2"] .parola.in-selezione { background: none; border-color: transparent; }
 html[data-veste="c2"] .parola.in-selezione .forma { color: var(--c2-accent); }
-html[data-veste="c2"] .parola .forma { font-family: var(--c2-classico); font-size: 28px; border-bottom: 2px solid var(--c2-ink); }
-html[data-veste="c2"] .parola.proposta .forma { border-bottom: 2px dotted var(--c2-rule); }
+/* il filetto della parte del discorso, al peso C2 (2 px): pieno se
+   confermato, tratteggiato se proposto; punteggiato e grigio se ignoto */
+html[data-veste="c2"] .parola .forma { font-family: var(--c2-classico); font-size: 28px; border-bottom: 2px solid var(--pos-c, var(--c2-ink)); }
+html[data-veste="c2"] .parola.proposta .forma { border-bottom: 2px dashed var(--pos-c, var(--c2-rule)); }
 html[data-veste="c2"] .parola.ignota .forma { border-bottom: 2px dotted var(--c2-rule); }
 html[data-veste="c2"] .parola.punto .forma { border-bottom-color: transparent; }
-html[data-veste="c2"] .sotto .pos { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; color: var(--c2-ink); }
-html[data-veste="c2"] .parola[aria-pressed="true"] .sotto .pos { color: var(--c2-accent); }
+html[data-veste="c2"] .sotto .pos { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; color: var(--pos-ink, var(--c2-ink)); }
 html[data-veste="c2"] .parola.confermata .sotto .pos::after { color: var(--c2-accent); }
 html[data-veste="c2"] .parola.ignota .sotto .pos { color: var(--c2-note); font-style: italic; }
 html[data-veste="c2"] .sotto .lemma { font-family: var(--c2-classico); color: var(--c2-muted); }
 html[data-veste="c2"] .sotto .analisi { font-size: var(--c2-nota); color: var(--c2-note); }
 html[data-veste="c2"] .spia-riga { font-size: var(--c2-nota); color: var(--c2-note); }
-html[data-veste="c2"] .spia-riga .pastiglia { display: none; }
-/* i fili: il sintagma sotto (2 px d'inchiostro), la proposizione sopra
-   (principale 2 px, coordinata tratteggiata, subordinata 1 px); le
-   etichette in accento, maiuscole */
-html[data-veste="c2"] .filo { height: 2px; background: var(--c2-ink); }
+/* la pastiglia del caso: quadrata come tutto in C2; il bordo sottile la
+   tiene visibile anche quando il pigmento e' chiaro (giallo di Napoli) */
+html[data-veste="c2"] .spia-riga .pastiglia,
+html[data-veste="c2"] .scelta .pastiglia { outline: 1px solid rgba(0, 0, 0, 0.28); outline-offset: -1px; }
+html[data-veste="c2"][data-theme="dark"] .spia-riga .pastiglia,
+html[data-veste="c2"][data-theme="dark"] .scelta .pastiglia { outline-color: rgba(255, 255, 255, 0.35); }
+/* i fili: il sintagma sotto, nel colore del caso della sua funzione
+   (codice di categoria); la proposizione sopra, d'inchiostro (principale
+   2 px, coordinata tratteggiata, subordinata 1 px); le etichette in accento */
+html[data-veste="c2"] .filo { height: 3px; background: var(--filo-c, var(--c2-ink)); }
 html[data-veste="c2"] .filo.assente { background: transparent; }
-/* il gruppo che si sta modificando: il suo filo passa all'accento */
-html[data-veste="c2"] .filo.attivo { background: var(--c2-accent); }
+/* il gruppo che si sta modificando: il filo raddoppia, il colore resta del caso */
+html[data-veste="c2"] .filo.attivo { height: 6px; }
+html[data-veste="c2"] .fili-sopra .filo { height: 2px; }
+html[data-veste="c2"] .fili-sopra .filo.attivo { height: 4px; }
 html[data-veste="c2"] .prop-principale { background: var(--c2-ink); }
 html[data-veste="c2"] .prop-coordinata { background: repeating-linear-gradient(90deg, var(--c2-ink) 0 6px, transparent 6px 10px); }
-html[data-veste="c2"] .prop-subordinata { height: 1px; margin-top: 1px; background: var(--c2-ink); }
+html[data-veste="c2"] .fili-sopra .prop-subordinata { height: 1px; margin-top: 1px; background: var(--c2-ink); }
 html[data-veste="c2"] .filo-etichetta {
   font-size: 10.5px; line-height: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c2-accent);
 }
@@ -354,8 +370,11 @@ html[data-veste="c2"] .filo-etichetta {
 html[data-veste="c2"] .colonna-scheda { background: var(--c2-paper); border-left: 1px solid var(--c2-ink); }
 html[data-veste="c2"] .scheda { background: var(--c2-paper); }
 html[data-veste="c2"] .scheda-testa { border-bottom: 0; padding-top: 16px; }
+/* la nota apre col filetto della sua categoria: 2 px nel colore della parte
+   del discorso, dove la C2 mette il filetto grigio del blocco di margine */
 html[data-veste="c2"] .voce {
-  padding: 6px 0 14px; margin-bottom: 14px; border-left: 0; border-top: 1px solid var(--c2-rule); border-bottom: 1px solid var(--c2-rule);
+  padding: 6px 0 14px; margin-bottom: 14px; border-left: 0;
+  border-top: 2px solid var(--pos-c, var(--c2-rule)); border-bottom: 1px solid var(--c2-rule);
 }
 html[data-veste="c2"] .voce .forma-grande { font-family: var(--c2-classico); font-weight: 700; font-size: 36px; }
 html[data-veste="c2"] .voce .forma-grande::first-letter { color: inherit; }
@@ -372,10 +391,9 @@ html[data-veste="c2"] .voce .glossa.automatica .testo-glossa::before,
 html[data-veste="c2"] .voce .glossa.automatica .testo-glossa::after { content: none; }
 /* i morfemi: trattini e sigle, l'accento solo sulla desinenza */
 html[data-veste="c2"] .morfemi { font-family: var(--c2-classico); font-size: 26px; }
+/* i morfemi tengono la palette della casa (aumento, tema, vocale, suffisso,
+   desinenza nel colore della lingua); la C2 ne fissa solo il filetto a 1 px */
 html[data-veste="c2"] .mseg { border-bottom-width: 1px; }
-html[data-veste="c2"] .mseg-a, html[data-veste="c2"] .mseg-t,
-html[data-veste="c2"] .mseg-v, html[data-veste="c2"] .mseg-s { color: var(--c2-ink); border-bottom-color: var(--c2-rule); }
-html[data-veste="c2"] .mseg-d { color: var(--c2-accent); border-bottom-color: var(--c2-accent); }
 html[data-veste="c2"] .legenda-morfemi { font-size: var(--c2-nota); color: var(--c2-note); }
 html[data-veste="c2"] .legenda-morfemi b { font-family: var(--c2-classico); font-size: 13px; }
 /* le letture: righe di tavola, il segno quadrato */
@@ -393,7 +411,7 @@ html[data-veste="c2"] .scelta {
 }
 html[data-veste="c2"] .scelta:hover { border-color: var(--c2-ink); }
 html[data-veste="c2"] .scelta[aria-pressed="true"] { background: var(--c2-ink); border-color: var(--c2-ink); color: var(--c2-paper); box-shadow: none; }
-html[data-veste="c2"] .scelta .pastiglia { display: none; }
+
 html[data-veste="c2"] .scelta.stella::before { color: var(--c2-accent); }
 html[data-veste="c2"] .lessico-voce {
   background: none; padding: 6px 0 0; border-top: 1px solid var(--c2-rule);
@@ -405,8 +423,7 @@ html[data-veste="c2"] .tendina { border: 1px solid var(--c2-ink); }
 html[data-veste="c2"] .tendina-gruppo { color: var(--c2-accent); font-size: var(--c2-nota); }
 html[data-veste="c2"] .tendina-voce { font-size: var(--c2-corpo9); }
 html[data-veste="c2"] .tendina-voce:hover, html[data-veste="c2"] .tendina-voce:focus-visible { background: none; color: var(--c2-accent); }
-html[data-veste="c2"] .segno { border: 0; border-top: 1px solid var(--c2-rule); padding: 7px 0; background: none; grid-template-columns: minmax(0, 1fr) auto; }
-html[data-veste="c2"] .segno .colore { display: none; }
+html[data-veste="c2"] .segno { border: 0; border-top: 1px solid var(--c2-rule); padding: 7px 0; background: none; grid-template-columns: 4px minmax(0, 1fr) auto; }
 html[data-veste="c2"] .segno.attivo b { color: var(--c2-accent); }
 html[data-veste="c2"] .segno .testo span { font-family: var(--c2-classico); }
 
@@ -417,7 +434,7 @@ html[data-veste="c2"] .glossario dt { display: inline; font-family: var(--c2-cla
 html[data-veste="c2"] .glossario dd { display: inline; margin-left: 4px; font-size: var(--c2-nota); color: var(--c2-ink); }
 html[data-veste="c2"] .glossario dd.manca { color: var(--c2-note); }
 html[data-veste="c2"] .ordo { gap: 0 18px; }
-html[data-veste="c2"] .ordo-blocco { padding: 4px 0 0; border: 0; border-top: 2px solid var(--c2-ink); background: none; }
+html[data-veste="c2"] .ordo-blocco { padding: 4px 0 0; border: 0; border-top: 3px solid var(--filo-c, var(--c2-ink)); background: none; }
 html[data-veste="c2"] .ordo-blocco b { color: var(--c2-accent); }
 html[data-veste="c2"] .ordo-blocco span { font-family: var(--c2-classico); }
 html[data-veste="c2"] .forma-resa { font-family: var(--c2-classico) !important; }

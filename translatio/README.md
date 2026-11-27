@@ -69,26 +69,28 @@ testatina; la scelta si ricorda. Vive tutta in `css/veste-c2.css`, sotto
 
 | Della C2, alla lettera | Adattato allo schermo |
 |---|---|
-| nero su bianco, **un solo accento** per numeri, etichette, lemmi, link | i corpi 10 · 9 · 7 pt salgono di 1,2 (16 · 14,4 · 11,2 px), le proporzioni restano |
+| nero su bianco, **un solo accento** per la cornice: numeri, etichette, lemmi, link | i corpi 10 · 9 · 7 pt salgono di 1,2 (16 · 14,4 · 11,2 px), le proporzioni restano |
 | **Inter** per tutto; **greco e latino in Times**, sempre | l'accento è della lingua: latino `#b8400e` (l'accento C2), greco `#1d4ed8` (la variante blu C2); una lingua per documento, mai due accenti in una pagina |
 | **colonna di margine appesa**: il numero della frase (44 px), «In breve», i numeri di sezione stanno a sinistra del testo | il tema scuro, che la C2 non ha: stessa grammatica, valori misurati |
 | testatina col **filetto nero di 4 px**; tappe come etichette `01 · 02 · 03` | i contorni dei comandi in `#767676` (4,54:1): il grigio dei filetti C2 (`#9a9a9a`, 2,81:1) non basta a un campo |
 | tre pesi di filetto, nessun fondo, nessuna ombra, nessun angolo arrotondato | il pulsante primario è inchiostro pieno, non colore |
 | la scheda della parola come **nota di lessico**: parola in Times neretto, *traslitterazione*, **«traduzione»** fra caporali, commento | la glossa automatica non si veste da traduzione: corsivo, senza caporali, «da verificare» |
 | il **testo a fronte** a tutta giustezza fra filetti di 2 e 1 px; l'**apparato** come note a piè di pagina su tre colonne | |
-| la categoria la dicono **sigla e filetto**: parte del discorso in maiuscoletto, filetto pieno se confermato, punteggiato se proposto; sintagmi con filo d'inchiostro ed etichetta in accento; proposizioni con tre pesi (principale 2 px, coordinata tratteggiata, subordinata 1 px) | |
+| i pesi C2 dei filetti: parola 2 px (pieno se confermata, tratteggiato se proposta), proposizioni d'inchiostro con tre pesi (principale 2 px, coordinata tratteggiata, subordinata 1 px) | **l'aggancio cromatico dell'analisi grammaticale resta** (decisione del docente): le undici tinte delle parti del discorso sul filetto e sulla sigla, il codice di categoria dei casi sui fili dei sintagmi e sulle pastiglie, la palette dei morfemi, il filetto di categoria in testa alla nota di lessico |
 
-**Le scelte che la C2 rovescia** rispetto al canone di Poetrify, da decidere:
+**Le scelte rispetto al canone di Poetrify.** Una è presa:
+
+- **Il colore delle categorie resta.** Le tinte delle parti del discorso, il codice di
+  categoria dei casi e i morfemi valgono identici nelle due vesti: l'accento unico della
+  C2 governa la cornice, non le categorie grammaticali (decisione del 27 novembre 2026).
+
+Restano da decidere:
 
 1. **Il colore della lingua.** Rosso pompeiano e indaco diventano l'accento C2 e la sua
    variante blu: la lingua resta distinta dal colore, ma con le tinte della collana.
-2. **Il colore delle categorie.** Le undici tinte delle parti del discorso e i pigmenti
-   dei casi sui sintagmi spariscono: la C2 vuole un colore solo. L'informazione resta
-   in sigle, etichette e filetti, quindi regge anche senza colore; si perde il colpo
-   d'occhio cromatico del banco.
-3. **La carta e i caratteri.** La pergamena calda diventa carta bianca; Playfair e
+2. **La carta e i caratteri.** La pergamena calda diventa carta bianca; Playfair e
    Source Serif diventano Inter; il latino passa in Times come il greco.
-4. **Due vesti o una.** Se la C2 vince, si toglie la veste Poetrify da Translatio e
+3. **Due vesti o una.** Se la C2 vince, si toglie la veste Poetrify da Translatio e
    l'interruttore con lei: due vesti nello stesso prodotto sono due dialetti.
 
 La traslitterazione della nota di lessico è nuova anche nella veste Poetrify
