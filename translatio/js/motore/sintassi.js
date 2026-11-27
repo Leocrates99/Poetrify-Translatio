@@ -7,8 +7,9 @@
      · il caso di una funzione, per colorare il suo filo col codice di
        categoria della collana (nominativo blu di Prussia, accusativo giallo
        indiano…);
-     · la costruzione nell'ordine italiano (soggetto, predicato, oggetto,
-       complementi), rimessa in fila coi sintagmi che lo studente ha segnato.
+     · il gruppo dell'analisi logica a cui una funzione appartiene: prima il
+       soggetto e il gruppo del nominativo, poi l'oggetto e il gruppo
+       dell'accusativo, poi i complementi obliqui (l'ordine del metodo).
    ============================================================================ */
 import { FUNZIONI_LATINO, FUNZIONI_GRECO, PROPOSIZIONI } from './tassonomie.js';
 
@@ -79,11 +80,45 @@ export function tipiDiProposizione(ruolo, lang) {
   return { frequenti, altri, tutti };
 }
 
-export function etichettaProposizione(s, lungo = false) {
-  const sigla = s.ruolo === 'Principale' ? 'P' : s.ruolo === 'Coordinata' ? 'C' : `S${s.grado || 1}`;
+/** «A₁ · enunciativa» (breve, sul filo) o «B₁ · subordinata di 1° grado
+ *  relativa propria» (distesa). `info` viene da annotaPeriodo: sigla e livello. */
+export function etichettaProposizione(s, lungo = false, info = null) {
+  const livello = info ? info.livello : (s.ruolo === 'Subordinata' ? (s.grado || 1) : 0);
+  const sigla = info ? info.sigla : (s.ruolo === 'Principale' ? 'P' : s.ruolo === 'Coordinata' ? 'C' : `S${livello}`);
   const tipo = s.tipo ? s.tipo.toLowerCase() : '';
-  if (lungo) return `${s.ruolo}${s.ruolo === 'Subordinata' ? ` di ${s.grado || 1}° grado` : ''}${tipo ? ` · ${tipo}` : ''}`;
+  if (lungo) return `${sigla} · ${String(s.ruolo || '').toLowerCase()}${s.ruolo !== 'Principale' && livello > 0 ? ` di ${livello}° grado` : ''}${tipo ? ` ${tipo}` : ''}`;
   return `${sigla}${tipo ? ' · ' + tipo : ''}`;
+}
+
+/* ── i tre gruppi dell'analisi logica, nell'ordine del metodo ─────────────── */
+export const GRUPPI_LOGICI = ['nominativo', 'accusativo', 'obliqui'];
+const gruppoDelTitolo = titolo => (/^Predicato|nominativo/i.test(titolo) ? 'nominativo' : /accusativo/i.test(titolo) ? 'accusativo' : 'obliqui');
+
+/** Le funzioni che si scelgono in un gruppo: il predicato sta col soggetto
+ *  (e' il nucleo della frase minima). */
+export function funzioniDelGruppo(gruppo, lang) {
+  return gruppiDiFunzioni(lang).filter(g => gruppoDelTitolo(g.group) === gruppo);
+}
+export function gruppoLogico(funzione, lang) {
+  if (/^Predicato|^Copula/i.test(funzione || '')) return 'nominativo';
+  const g = gruppiDiFunzioni(lang).find(x => x.items.includes(funzione));
+  return g ? gruppoDelTitolo(g.group) : 'obliqui';
+}
+
+/* ── la segmentazione del periodo ─────────────────────────────────────────── */
+/* Lo studente taglia il periodo davanti alla parola da cui comincia una nuova
+   proposizione: i tagli sono gli indici di quelle parole. Ne vengono i
+   segmenti, contigui, che la classificazione trasforma in proposizioni. */
+export function segmentiDi(nParole, tagli = []) {
+  const punti = [...new Set(tagli)].filter(i => i > 0 && i < nParole).sort((a, b) => a - b);
+  const out = [];
+  let da = 0;
+  for (const t of punti) { out.push({ da, a: t - 1 }); da = t; }
+  if (nParole) out.push({ da, a: nParole - 1 });
+  return out;
+}
+export function segmentoDi(i, nParole, tagli) {
+  return segmentiDi(nParole, tagli).find(s => i >= s.da && i <= s.a) || { da: i, a: i };
 }
 
 /* ── il disegno dei segni ───────────────────────────────────────────────── */
@@ -100,21 +135,4 @@ export function livelli(segni) {
     out.set(s.id, r);
   }
   return { righe: righe.length, livello: out };
-}
-
-/* ── la costruzione: soggetto, predicato, oggetto, complementi ──────────── */
-const PRIORITA = [
-  [/^Soggetto/, 0], [/^Copula|^Predicato/, 1], [/^Parte nominale|predicativo del soggetto/, 2],
-  [/^Complemento oggetto/, 3], [/predicativo dell'oggetto/, 4],
-];
-export function ordoDellaFrase(f, parole, lang) {
-  const blocchi = (f.sintagmi || []).map(s => ({
-    funzione: s.funzione,
-    caso: casoDellaFunzione(s.funzione, lang),
-    da: s.da,
-    testo: parole.slice(s.da, s.a + 1).map(w => w.t).join(' '),
-    rango: (PRIORITA.find(([re]) => re.test(s.funzione)) || [null, 5])[1],
-  }));
-  /* a parita' di rango (i complementi) vale l'ordine del testo */
-  return blocchi.sort((a, b) => a.rango - b.rango || a.da - b.da);
 }

@@ -26,11 +26,12 @@
      · la scala: i corpi C2 (10 · 9 · 7 pt = 13,33 · 12 · 9,33 px, pensati per
        l'A4 a 96 dpi) salgono di 1,2 → 16 · 14,4 · 11,2 px. Le proporzioni
        10 : 9 : 7 restano;
-     · il colore della lingua: la C2 ammette una variante d'accento per
-       documento, mai due in una pagina. Una versione e' un documento in una
-       lingua: il latino prende l'accento della C2 (#b8400e), il greco la
-       variante blu (#1d4ed8). Le pagine senza lingua (l'archivio) restano
-       nell'accento di base;
+     · il colore della lingua (deciso dal docente: gli accenti della C2, non
+       il rosso pompeiano e l'indaco di Poetrify): la C2 ammette una variante
+       d'accento per documento, mai due in una pagina. Una versione e' un
+       documento in una lingua: il latino prende l'accento della C2
+       (#b8400e), il greco la variante blu (#1d4ed8). Le pagine senza lingua
+       (l'archivio) restano nell'accento di base;
      · il tema scuro, che la C2 (nata per la stampa) non ha: stessa
        grammatica, valori misurati per l'AA;
      · i contorni dei comandi: il grigio dei filetti C2 non regge un campo.
@@ -192,6 +193,32 @@
 :root .segmenti button[aria-pressed="true"],
 :root .segmenti button[aria-selected="true"] { background: none; color: var(--c2-ink); border-bottom-color: var(--c2-ink); }
 :root .segmenti .conto { font-size: var(--c2-nota); color: var(--c2-accent); letter-spacing: 0; }
+:root .lenti .segmenti button::before { font-size: var(--c2-corpo9); letter-spacing: 0; color: var(--c2-accent); margin-right: 1px; }
+/* i passi del periodo: una riga piu' piccola sotto i livelli, filetto grigio */
+:root .lenti .sottopassi { gap: 0 16px; padding-top: 2px; border-top: 1px solid var(--c2-rule); }
+:root .lenti .sottopassi button { min-height: 30px; font-size: 10px; letter-spacing: 0.06em; }
+:root .lenti .sottopassi button::before { font-size: var(--c2-nota); }
+:root .parola.dopo-taglio .forma::before { color: var(--c2-note); }
+:root [data-lente="segmenti"] .parola[aria-pressed="true"],
+:root [data-lente="verbi"] .parola[aria-pressed="true"],
+:root [data-lente="ordo"] .parola[aria-pressed="true"] { border-color: transparent; }
+:root [data-lente="segmenti"] .parola.dopo-taglio .forma::before { color: var(--c2-accent); }
+:root .parola.connettivo .forma { outline: 1px solid var(--c2-ink); }
+:root [data-lente="proposizioni"] .parola.connettivo .forma { outline: 1.5px solid var(--c2-accent); }
+/* l'albero in C2: nodi d'inchiostro senza fondo, sigla in accento, rami 1 px */
+:root .albero .nodo { border-color: var(--c2-ink); background: var(--c2-paper); }
+:root .albero .sigla { color: var(--c2-accent); }
+:root .albero .ruolo { font-size: var(--c2-nota); line-height: var(--c2-nota-lh); color: var(--c2-note); }
+:root .albero .testo-nodo { font-family: var(--c2-classico); }
+:root .albero li::before, :root .albero li::after, :root .albero ul::before { border-color: var(--c2-muted); }
+:root .ordo-verborum, :root .albero-sintattico { border-top: 1px solid var(--c2-rule); }
+:root .riga-ordo { font-family: var(--c2-classico); }
+:root .forma-verbo { font-family: var(--c2-classico); }
+:root .sottopassi .num, :root .scelta-reggente b, :root .ordo-n { color: var(--c2-accent); }
+:root .scelta-reggente[aria-pressed="true"] b { color: inherit; }
+:root .elenco-segmenti .n { color: var(--c2-accent); }
+:root .elenco-segmenti .testo-segmento { font-family: var(--c2-classico); }
+:root .elenco-segmenti .dati-segmento { font-size: var(--c2-nota); line-height: var(--c2-nota-lh); color: var(--c2-note); }
 :root .targhetta {
   padding: 0; border: 0; background: none;
   font-size: var(--c2-nota); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c2-note);
@@ -360,6 +387,8 @@
 :root .prop-principale { background: var(--c2-ink); }
 :root .prop-coordinata { background: repeating-linear-gradient(90deg, var(--c2-ink) 0 6px, transparent 6px 10px); }
 :root .fili-sopra .prop-subordinata { height: 1px; margin-top: 1px; background: var(--c2-ink); }
+/* il livello gia' fatto: il filo resta, schiarito; l'etichetta passa al grigio delle note */
+:root .fili.contesto .filo-etichetta { color: var(--c2-note); }
 :root .filo-etichetta {
   height: 13px; font-size: 10.5px; line-height: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c2-accent);
 }

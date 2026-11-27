@@ -9,10 +9,14 @@
                   consegna: { studente, classe, data, docente, includi },
                   creata, modificata }
      frase    = { id, testo, parole: { [indice]: parola },
+                  tagli: [indice della parola da cui comincia una frase],
+                  proposizioni: [{ id, da, a, ruolo, tipo, dipende, grado }],
                   sintagmi: [{ id, da, a, funzione }],
-                  proposizioni: [{ id, da, a, ruolo, tipo, grado }],
+                  ordo: [indici delle parole nell'ordine scelto],
                   brutta, bella }
-     parola   = { pos, tratti, lemma, senso, morfemi: [{ t, r }], nota }
+     parola   = { pos, tratti, lemma, senso, morfemi: [{ t, r }], nota, connettivo }
+   (una forma verbale segnata nell'analisi periodale e' una parola con
+   pos 'verbo': il passo dopo la ritrova gia' scelta)
 
    Le parole si indicizzano per POSIZIONE nella frase (0, 1, 2…), ricalcolata
    dal testo: se il testo della frase cambia davvero, la frase riparte da capo
@@ -50,13 +54,13 @@ export const nuovoId = (p = 'v') => `${p}${Date.now().toString(36)}${Math.random
 
 /* ── costruzione ──────────────────────────────────────────────────────────── */
 export function nuovaFrase(testo) {
-  return { id: nuovoId('f'), testo, parole: {}, sintagmi: [], proposizioni: [], brutta: '', bella: '' };
+  return { id: nuovoId('f'), testo, parole: {}, tagli: [], sintagmi: [], proposizioni: [], ordo: [], brutta: '', bella: '' };
 }
 
 /* Che cosa entra nel documento da consegnare: tutto, finche' lo studente non
    toglie qualcosa. */
 export const INCLUDI = {
-  grafica: true, parole: true, morfemi: true, costruzione: true,
+  grafica: true, periodo: true, verbi: true, logica: true, parole: true, morfemi: true, ordo: true,
   brutta: true, bella: true, traduzione: true, lessico: true, legenda: true,
 };
 export function nuovaConsegna() {
@@ -66,7 +70,7 @@ export function nuovaConsegna() {
 export function nuovaVersione({ lingua, titolo = '', autore = '', testo = '', corte = false }) {
   const v = {
     id: nuovoId(), schema: SCHEMA, app: 'translatio', lingua, titolo, autore, testo, corte,
-    frasi: [], posizione: { frase: 0, lente: 'parole' }, consegna: nuovaConsegna(), creata: ora(), modificata: ora(),
+    frasi: [], posizione: { frase: 0, lente: 'proposizioni' }, consegna: nuovaConsegna(), creata: ora(), modificata: ora(),
   };
   v.frasi = dividiInFrasi(testo, lingua, { corte }).map(nuovaFrase);
   return v;
@@ -101,20 +105,29 @@ export function riallineaFrasi(v, nuoveFrasi) {
 
 /** Una parola e' analizzata quando lo studente le ha dato la parte del discorso. */
 export const analizzata = p => !!(p && p.pos);
-const scritta = p => !!(p && (p.pos || p.lemma || p.senso || p.nota || (p.morfemi && p.morfemi.length)));
+const scritta = p => !!(p && (p.pos || p.lemma || p.senso || p.nota || p.connettivo || (p.morfemi && p.morfemi.length)));
 
 export function haLavoro(f) {
   return Object.values(f.parole || {}).some(scritta)
-    || (f.sintagmi || []).length || (f.proposizioni || []).length || !!(f.brutta || f.bella);
+    || (f.tagli || []).length || (f.ordo || []).length || (f.sintagmi || []).length || (f.proposizioni || []).length || !!(f.brutta || f.bella);
 }
 
 /* ── avanzamento: che cosa e' fatto, contato in un posto solo ────────────── */
 export function statoFrase(f, nParole) {
-  let analizzate = 0;
-  for (let i = 0; i < nParole; i++) if (analizzata(f.parole && f.parole[i])) analizzate++;
+  let analizzate = 0; let verbi = 0; let connettivi = 0;
+  for (let i = 0; i < nParole; i++) {
+    const p = f.parole && f.parole[i];
+    if (analizzata(p)) analizzate++;
+    if (p && p.pos === 'verbo') verbi++;
+    if (p && p.connettivo) connettivi++;
+  }
   return {
     parole: nParole,
     analizzate,
+    tagli: (f.tagli || []).length,
+    ordo: (f.ordo || []).length,
+    verbi,
+    connettivi,
     sintagmi: (f.sintagmi || []).length,
     proposizioni: (f.proposizioni || []).length,
     brutta: !!(f.brutta || '').trim(),
@@ -127,7 +140,7 @@ export function faseFrase(s) {
   if (s.bella) return 'tradotta';
   if (s.brutta) return 'in-traduzione';
   if (s.parole && s.analizzate === s.parole) return 'analizzata';
-  if (s.analizzate || s.sintagmi || s.proposizioni) return 'in-corso';
+  if (s.analizzate || s.tagli || s.connettivi || s.ordo || s.sintagmi || s.proposizioni) return 'in-corso';
   return 'da-fare';
 }
 
@@ -218,9 +231,13 @@ function daSchema1(p) {
 function migra(v) {
   if (!v || typeof v !== 'object') return null;
   const vecchio = (v.schema || 1) < 2;
-  v.posizione = v.posizione || { frase: 0, lente: 'parole' };
+  v.posizione = v.posizione || { frase: 0, lente: 'proposizioni' };
   v.consegna = { ...nuovaConsegna(), ...(v.consegna || {}) };
-  v.consegna.includi = { ...INCLUDI, ...(v.consegna.includi || {}) };
+  const scelte = v.consegna.includi || {};
+  /* la vecchia voce «costruzione» valeva per periodo e analisi logica insieme */
+  if (scelte.costruzione === false) { scelte.periodo = false; scelte.logica = false; }
+  delete scelte.costruzione;
+  v.consegna.includi = { ...INCLUDI, ...scelte };
   for (const f of v.frasi || []) {
     f.parole = f.parole || {};
     if (vecchio) {
@@ -229,6 +246,8 @@ function migra(v) {
       f.parole = nuove;
       delete f.analizzata;
     }
+    f.tagli = Array.isArray(f.tagli) ? f.tagli : [];
+    f.ordo = Array.isArray(f.ordo) ? f.ordo : [];
     f.sintagmi = f.sintagmi || [];
     f.proposizioni = f.proposizioni || [];
     f.brutta = f.brutta || '';

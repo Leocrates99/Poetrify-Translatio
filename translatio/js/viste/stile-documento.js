@@ -57,6 +57,7 @@ export const CSS_DOCUMENTO = `
 .documento .d-brano { font-family: var(--d-classico); font-size: 15px; line-height: 21px; }
 .documento .d-brano sup { font-family: var(--d-sans); font-size: 8px; font-weight: 700; color: var(--d-accent); margin-right: 2px; }
 .documento .d-blocco { margin-top: 12px; }
+.documento .d-blocco > .d-parole { margin-top: 2px; }
 .documento .d-etichetta { font-size: 9.33px; line-height: 11.2px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--d-note); margin-bottom: 4px; }
 .documento .d-nota { margin-top: 4px; font-size: 9.33px; line-height: 11.2px; color: var(--d-note); }
 .documento .d-manca { color: var(--d-note); font-style: italic; }
@@ -68,6 +69,43 @@ export const CSS_DOCUMENTO = `
 .documento .d-forma { font-family: var(--d-classico); font-size: 18px; line-height: 22px; padding-bottom: 2px; border-bottom: 2px solid var(--d-pos, var(--d-ink)); white-space: nowrap; }
 .documento .d-cella-p .d-forma { border-bottom-color: transparent; color: var(--d-muted); }
 .documento .d-forma.d-da-fare { border-bottom: 2px dotted var(--d-rule); }
+/* l'analisi periodale: la sbarra dove comincia una proposizione, il riquadro
+   del connettivo */
+.documento .d-forma { position: relative; }
+.documento .d-dopo-taglio::before { content: "/"; position: absolute; left: -0.5em; top: 0; font-weight: 700; color: var(--d-accent); }
+.documento .d-connettivo { outline: 1px solid var(--d-ink); outline-offset: 1px; }
+.documento .d-dati-periodo { margin-bottom: 4px; font-size: 12px; line-height: 14.5px; color: var(--d-muted); }
+.documento .d-verbo-finito { background: linear-gradient(transparent 56%, rgba(220, 43, 43, 0.24) 56%); }
+.documento .d-verbo-indefinito { background: repeating-linear-gradient(-45deg, rgba(220, 43, 43, 0.45) 0 2px, transparent 2px 5px) 0 100% / 100% 44% no-repeat; }
+.documento .d-verbi { display: grid; gap: 3px; font-size: 12px; line-height: 14.5px; }
+.documento .d-verbi li { display: grid; grid-template-columns: max-content 1fr; gap: 0 8px; align-items: baseline; }
+.documento .d-forma-verbo { font-family: var(--d-classico); font-size: 14px; }
+.documento .d-gruppo-logico { margin: 6px 0 2px; font-size: 9.33px; line-height: 11.2px; font-style: italic; color: var(--d-muted); }
+.documento .d-riga-ordo { font-family: var(--d-classico); font-size: 15px; line-height: 22px; }
+.documento .d-parola-ordo { padding-bottom: 1px; border-bottom: 2px solid var(--d-filo, transparent); }
+/* l'albero sintattico, alla misura del foglio */
+.documento .d-albero-scorre { overflow: hidden; padding: 2px 0 4px; }
+.documento .d-albero, .documento .d-albero ul { display: flex; justify-content: center; margin: 0; padding: 0; list-style: none; }
+.documento .d-albero { gap: 0 10px; }
+.documento .d-albero ul { position: relative; padding-top: 12px; }
+.documento .d-albero li { position: relative; display: flex; flex-direction: column; align-items: center; padding: 12px 4px 0; }
+.documento .d-albero > li { padding-top: 0; }
+.documento .d-albero li::before, .documento .d-albero li::after { content: ""; position: absolute; top: 0; right: 50%; width: 50%; height: 12px; border-top: 1px solid var(--d-muted); }
+.documento .d-albero li::after { right: auto; left: 50%; border-left: 1px solid var(--d-muted); }
+.documento .d-albero > li::before, .documento .d-albero > li::after, .documento .d-albero li:only-child::before, .documento .d-albero li:only-child::after { display: none; }
+.documento .d-albero li:only-child { padding-top: 0; }
+.documento .d-albero li:first-child::before, .documento .d-albero li:last-child::after { border: 0; }
+.documento .d-albero li:last-child::before { border-right: 1px solid var(--d-muted); }
+.documento .d-albero ul::before { content: ""; position: absolute; top: 0; left: 50%; height: 12px; border-left: 1px solid var(--d-muted); }
+.documento .d-nodo { display: grid; gap: 1px; min-width: 90px; max-width: 160px; padding: 3px 6px 4px; border: 1px solid var(--d-ink); background: #fff; }
+.documento .d-nodo-principale { border-width: 2px; }
+.documento .d-nodo-coordinata { border-style: dashed; }
+.documento .d-sigla { font-size: 11px; font-weight: 800; color: var(--d-accent); }
+.documento .d-ruolo { font-size: 8px; line-height: 10px; color: var(--d-note); }
+.documento .d-ruolo b { color: var(--d-ink); }
+.documento .d-testo-nodo { font-family: var(--d-classico); font-size: 10.5px; line-height: 12.5px; }
+.documento .d-campione-sbarra { display: inline-block; width: 14px; font-family: var(--d-classico); font-weight: 700; font-size: 14px; color: var(--d-accent); text-align: center; }
+.documento .d-campione-riquadro { display: inline-block; padding: 0 2px; font-family: var(--d-classico); font-size: 12px; line-height: 13px; outline: 1px solid var(--d-ink); }
 .documento .d-sotto { display: grid; gap: 0; margin-top: 3px; min-height: 12px; font-size: 9.33px; line-height: 11.5px; }
 .documento .d-pos { font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: color-mix(in srgb, var(--d-pos, var(--d-note)) 58%, #000); }
 .documento .d-lemma { font-family: var(--d-classico); font-size: 11px; color: var(--d-muted); }
@@ -193,5 +231,8 @@ export const CSS_DOCUMENTO = `
   .documento .d-sez { break-inside: auto; }
   .documento .d-margine { break-after: avoid; }
   .documento .d-banco, .documento .d-parole tr, .documento .d-blocco, .documento .d-legenda > div { break-inside: avoid; }
+  /* la tavola delle parole puo' passare alla pagina dopo, riga per riga */
+  .documento .d-blocco-tavola { break-inside: auto; }
+  .documento .d-blocco-tavola > .d-etichetta { break-after: avoid; }
 }
 `;

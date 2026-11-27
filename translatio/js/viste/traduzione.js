@@ -1,5 +1,5 @@
 /* ============================================================================
-   TRADUZIONE · la versione intera, testo a fronte
+   VERSIONE · la versione intera, testo a fronte (la tappa dopo l'analisi)
    ----------------------------------------------------------------------------
    Due colonne, textus e versio, una riga per frase; la brutta e la bella sono
    due stati della stessa riga, non due pagine. In calce l'apparato lessicale:
@@ -76,7 +76,7 @@ export function vistaTraduzione(S) {
       ${app.length ? html`<ul class="apparato-lista">${app.map(r => html`<li>
         <span class="lem" lang="${langAttr(v)}">${r.lemma}</span>
         ${r.sensi.length ? html` · <span class="gl scelto">${r.sensi.join('; ')}</span>` : ''}
-      </li>`)}</ul>` : html`<p class="vuoto">I lemmi compariranno qui man mano che li scrivi nella lente Parole.</p>`}
+      </li>`)}</ul>` : html`<p class="vuoto">I lemmi compariranno qui man mano che li scrivi nell’analisi grammaticale.</p>`}
     </section>
 
     <div class="barra-azioni non-stampa">

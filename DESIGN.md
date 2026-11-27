@@ -53,8 +53,8 @@ letti dal CSS, ritmo osservato su `app.html` renderizzato. Fonte propria; token 
 **Translatio (`translatio/`) veste la «C2 compatta»**, la veste dei documenti di studio, per
 decisione del docente del 27 novembre 2026. Deroga alle regole 1, 3 e 5 e agli stack dei caratteri:
 carta bianca; Inter per tutto, greco **e latino** in Times; un solo accento per documento nella
-cornice (latino `#b8400e`, greco `#1d4ed8`, le varianti della C2) al posto di rosso pompeiano e
-indaco; nessun ottone. Resta vincolata a tutto il resto: il colore informa e non decora, la lingua
+cornice (latino `#b8400e`, greco `#1d4ed8`, le varianti della C2, confermate dal docente) al posto
+di rosso pompeiano e indaco; nessun ottone. Resta vincolata a tutto il resto: il colore informa e non decora, la lingua
 pilota l'accento via `body[data-lang]`, il greco va in Times per codepoint, le ombre non ci sono
 (nemmeno tinte), e **le palette delle categorie grammaticali restano identiche** (parti del
 discorso, codice di categoria dei casi, morfemi). Misure e motivi: `translatio/README.md` e

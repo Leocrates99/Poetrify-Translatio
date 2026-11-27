@@ -15,11 +15,15 @@ import { tokenizza } from '../motore/testo.js';
 import { statoFrase, INCLUDI } from '../stato.js';
 import { documento } from './documento.js';
 
+/* nell'ordine in cui compaiono nel documento, che e' l'ordine del lavoro */
 const VOCI = [
-  ['grafica', 'L’analisi disegnata', 'le parole coi loro filetti, i sintagmi sotto, le proposizioni sopra'],
-  ['parole', 'La tavola delle parole', 'analisi, lemma, significato, osservazioni'],
+  ['grafica', 'L’analisi disegnata', 'le frasi, le proposizioni sopra, i sintagmi sotto, i verbi evidenziati'],
+  ['periodo', 'L’analisi periodale', 'le proposizioni con le sigle e l’albero sintattico'],
+  ['verbi', 'Le forme verbali', 'modo finito o indefinito, tempo, diatesi, persona'],
+  ['logica', 'L’analisi logica', 'nominativo, accusativo, obliqui'],
+  ['parole', 'L’analisi grammaticale', 'la tavola delle parole: analisi, lemma, significato, osservazioni'],
   ['morfemi', 'I morfemi a colori', 'dove hai scomposto le parole'],
-  ['costruzione', 'Il periodo e la costruzione', 'proposizioni e sintagmi nell’ordine italiano'],
+  ['ordo', 'L’ordo verborum', 'la frase nell’ordine in cui l’hai tradotta'],
   ['brutta', 'La brutta copia', 'frase per frase'],
   ['bella', 'La bella copia', 'frase per frase'],
   ['traduzione', 'La traduzione intera', 'di seguito, in fondo'],

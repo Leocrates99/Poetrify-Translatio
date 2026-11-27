@@ -50,8 +50,73 @@ async function misura(page, nome, dove, guasti) {
     await page.click(`[data-az="esempio"][data-i="${esempio}"]`);
     await page.waitForSelector('.parola[data-i="0"]');
     if (await page.$('.parola.analizzata')) guasti.push(`${nome}: una parola risulta analizzata prima che lo studente la tocchi`);
+    const avanti = async atteso => {
+      const b = await page.$('.barra-passi .btn-primario');
+      const t = b ? (await b.textContent()).trim() : '';
+      if (!t.includes(atteso)) guasti.push(`${nome}: il passo dopo dice «${t}», non «${atteso}»`);
+      const href = await b.getAttribute('href');
+      await b.click();
+      /* ridisegnato: il passo dopo non e' piu' quello appena fatto */
+      await page.waitForFunction(h => { const x = document.querySelector('.barra-passi .btn-primario'); return x && x.getAttribute('href') !== h; }, href);
+    };
 
-    /* Parole: la prima a mano, col mouse o col dito */
+    /* 1 · Scomposizione in frasi: la sbarra */
+    const primo = await page.getAttribute('.livelli-analisi [role="tab"][aria-selected="true"]', 'data-lente');
+    if (primo !== 'segmenti') guasti.push(`${nome}: l'analisi non comincia dalla scomposizione (${primo})`);
+    await page.click('.parola[data-i="2"]');
+    if (!await page.$('.parola[data-i="2"].dopo-taglio')) guasti.push(`${nome}: la sbarra della scomposizione non compare`);
+    await avanti('Analisi periodale');
+
+    /* 2 · Analisi periodale: un tocco prende la frase intera; ruolo, tipo,
+       reggente, connettivo; l'albero cresce */
+    await page.click('.parola[data-i="0"]');
+    const scelte = await page.$$eval('.parola.in-selezione', b => b.map(x => x.dataset.i).join(','));
+    if (scelte !== '0,1') guasti.push(`${nome}: il tocco non seleziona la frase intera (${scelte})`);
+    if (await page.$('.stella')) guasti.push(`${nome}: compaiono proposte nella scheda della proposizione`);
+    await page.click('[data-az="ruolo"][data-ruolo="Principale"]');
+    await page.click('[data-az="tipo-prop"][data-tipo="Enunciativa"]');
+    await page.click('.parola[data-i="2"]');
+    await page.click('[data-az="ruolo"][data-ruolo="Subordinata"]');
+    await page.click('[data-az="dipende"]');
+    await page.click('[data-az="connettivo"][data-i="2"]');
+    if (!await page.$('.fili-sopra .filo.prop-principale')) guasti.push(`${nome}: la proposizione non e' disegnata sopra la frase`);
+    if (!await page.$('.albero > li > .nodo-principale') || !await page.$('.albero ul .nodo-subordinata')) guasti.push(`${nome}: l'albero sintattico non mostra la subordinata sotto la reggente`);
+    const sigle = await page.$$eval('.albero .sigla', b => b.map(x => x.textContent.trim()).join(','));
+    if (sigle !== 'A₁,B₁') guasti.push(`${nome}: sigle dell'albero inattese (${sigle})`);
+    if (!await page.$('.parola[data-i="2"].connettivo')) guasti.push(`${nome}: il connettivo segnato non si riquadra`);
+    await page.keyboard.press('Escape');
+    await avanti('Forme verbali');
+
+    /* 3 · Forme verbali: si comincia dal modo; finiti pieni, indefiniti a tratteggio */
+    await page.click('.parola[data-i="1"]');
+    await page.click('[data-az="modo-verbale"][data-x="ind"]');
+    if (!await page.$('.parola[data-i="1"].verbo-finito.pos-verbo')) guasti.push(`${nome}: il verbo di modo finito non si evidenzia`);
+    if (tastiera) {
+      for (const k of ['1', '1']) await page.keyboard.press(k);      // presente · attivo
+      if (await page.getAttribute('[data-g="tempo"][data-x="pres"]', 'aria-pressed') !== 'true') guasti.push(`${nome}: la tastiera non compila il primo gruppo vuoto della forma verbale`);
+    }
+    await page.click('.parola[data-i="3"]');
+    await page.click('[data-az="modo-verbale"][data-x="inf"]');
+    if (!await page.$('.parola[data-i="3"].verbo-indefinito')) guasti.push(`${nome}: il verbo di modo indefinito non si evidenzia a tratteggio`);
+    await page.keyboard.press('Escape');
+    await avanti('Soggetto e gruppo del nominativo');
+
+    /* 4 · Analisi logica nell'ordine: nominativo, accusativo, obliqui */
+    await page.click('.parola[data-i="0"]');
+    await page.click('.parola[data-i="0"]');
+    if (await page.$('.tendina-voce[data-funzione="Complemento oggetto"]')) guasti.push(`${nome}: nel gruppo del nominativo si offre il complemento oggetto`);
+    await page.click('.tendina-voce[data-funzione="Soggetto"]');
+    if (!await page.$('.fili-sopra.contesto .filo.prop-principale')) guasti.push(`${nome}: nell'analisi logica la proposizione non resta sopra la frase`);
+    await avanti('Oggetto e gruppo');
+    await page.click('.parola[data-i="2"]');
+    await page.click('.parola[data-i="2"]');
+    await page.click('.tendina-voce[data-funzione="Complemento oggetto"]');
+    await avanti('Complementi obliqui');
+    if (!await page.$('.tendina-voce, .scheda-invito')) guasti.push(`${nome}: il passo degli obliqui non si apre`);
+    await avanti('Analisi grammaticale');
+
+    /* 5 · Analisi grammaticale: la prima parola a mano; il verbo arriva gia' analizzato */
+    if (!await page.$('.fili.contesto .filo.caso-nom') || !await page.$('.fili-sopra.contesto')) guasti.push(`${nome}: nell'analisi grammaticale non restano i passi di prima`);
     await page.click('.parola[data-i="0"]');
     await page.click('.scelta.pos-sostantivo');
     await page.click('[data-az="tratto"][data-g="caso"][data-x="nom"]');
@@ -67,36 +132,29 @@ async function misura(page, nome, dove, guasti) {
     await misura(page, nome, 'analisi con la scheda', guasti);
     await page.click('[data-az="prossima"]');
     if (!await page.$('.parola[data-i="1"][aria-pressed="true"]')) guasti.push(`${nome}: «Parola successiva» non e' andata avanti`);
+    if (!await page.$('.scelta.pos-verbo[aria-pressed="true"]') || await page.getAttribute('[data-g="modo"][data-x="ind"]', 'aria-pressed') !== 'true') guasti.push(`${nome}: la forma verbale non arriva analizzata alla grammatica`);
+    await page.keyboard.press('Escape');
+    await avanti('Ordo verborum');
 
-    /* la seconda con la tastiera: i numeri compilano il primo gruppo vuoto */
-    if (tastiera) {
-      await page.focus('.parola[data-i="1"]');
-      /* verbo (il quarto in latino, che non ha l'articolo; il quinto in greco) · indicativo · presente · passivo */
-      for (const k of [nome.includes('greco') ? '5' : '4', '1', '1', '2']) await page.keyboard.press(k);
-      const ok = await page.evaluate(() => ['.scelta.pos-verbo', '[data-g="modo"][data-x="ind"]', '[data-g="tempo"][data-x="pres"]']
-        .every(s => document.querySelector(s) && document.querySelector(s).getAttribute('aria-pressed') === 'true'));
-      if (!ok) guasti.push(`${nome}: la tastiera non compila il primo gruppo vuoto`);
-    }
-
-    /* Sintagmi e proposizioni, scelti dallo studente: nessuna proposta */
-    await page.click('[data-az="lente"][data-lente="sintagmi"]');
-    await page.click('.parola[data-i="0"]');
+    /* 6 · Ordo verborum: lo compone lo studente */
     await page.click('.parola[data-i="1"]');
-    if (await page.$('.stella')) guasti.push(`${nome}: compaiono proposte nella scheda del sintagma`);
-    await page.click('.tendina-voce[data-funzione="Soggetto"]');
-    await page.click('[data-az="lente"][data-lente="proposizioni"]');
     await page.click('.parola[data-i="0"]');
-    await page.click('.parola[data-i="2"]');
-    await page.click('[data-az="ruolo"][data-ruolo="Principale"]');
-    await page.click('[data-az="tipo-prop"][data-tipo="Enunciativa"]');
-    if (!await page.$('.fili-sopra .filo.prop-principale')) guasti.push(`${nome}: la proposizione non e' disegnata`);
-    await page.click('[data-az="lente"][data-lente="resa"]');
+    const ordo = await page.$$eval('.riga-ordo .parola-ordo', b => b.length);
+    const numeri = await page.$$eval('.ordo-n', b => b.map(x => x.textContent).join(','));
+    if (ordo !== 2 || numeri !== '2,1') guasti.push(`${nome}: l'ordo non segue i tocchi (${ordo} parole, numeri ${numeri})`);
+    await avanti('Traduzione');
+
+    /* 7 · Traduzione, poi la frase dopo dalla scomposizione */
+    if (!await page.$('.resa .riga-ordo')) guasti.push(`${nome}: la traduzione non mostra l'ordo come traccia`);
     await page.fill('[data-campo="brutta"]', 'prova di brutta');
     await page.fill('[data-campo="bella"]', 'prova di bella');
+    await avanti('Frase 2');
+    const dopo = await page.evaluate(() => location.hash);
+    if (!/\/analisi\/2\/segmenti$/.test(dopo)) guasti.push(`${nome}: dopo la traduzione non si passa alla frase 2 dalla scomposizione (${dopo})`);
 
-    await page.click('.tappa:has-text("Traduzione")');
+    await page.click('.tappa:has-text("Versione")');
     await page.waitForSelector('.edizione-riga');
-    await misura(page, nome, 'traduzione', guasti);
+    await misura(page, nome, 'versione', guasti);
 
     /* Consegna: il foglio, il controllo, la pagina scaricata */
     await page.click('.tappa:has-text("Consegna")');
@@ -105,6 +163,7 @@ async function misura(page, nome, dove, guasti) {
     await page.waitForTimeout(400);
     const foglio = await page.textContent('#anteprima-documento');
     if (!/Anna Rossi/.test(foglio) || !/significato di prova/.test(foglio) || !/prova di bella/.test(foglio)) guasti.push(`${nome}: il foglio non riporta il lavoro dello studente`);
+    if (!await page.$('#anteprima-documento .d-albero .d-nodo-principale') || !await page.$('#anteprima-documento .d-verbo-finito') || !await page.$('#anteprima-documento .d-riga-ordo')) guasti.push(`${nome}: il foglio non porta albero, verbi evidenziati e ordo`);
     await misura(page, nome, 'consegna', guasti);
     const [dl] = await Promise.all([page.waitForEvent('download'), page.click('[data-az="scarica-html"]')]);
     const file = path.join(CARTELLA, `${esempio}-${dl.suggestedFilename()}`);
