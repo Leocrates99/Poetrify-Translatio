@@ -50,8 +50,37 @@ async function misura(page, nome, dove, guasti) {
     await page.click(`[data-az="esempio"][data-i="${esempio}"]`);
     await page.waitForSelector('.parola[data-i="0"]');
     if (await page.$('.parola.analizzata')) guasti.push(`${nome}: una parola risulta analizzata prima che lo studente la tocchi`);
+    const avanti = async atteso => {
+      const b = await page.$('.barra-passi .btn-primario');
+      const t = b ? (await b.textContent()).trim() : '';
+      if (!t.includes(atteso)) guasti.push(`${nome}: il passo dopo dice «${t}», non «${atteso}»`);
+      const href = await b.getAttribute('href');
+      await b.click();
+      /* ridisegnato: il passo dopo non e' piu' quello appena fatto */
+      await page.waitForFunction(h => { const x = document.querySelector('.barra-passi .btn-primario'); return x && x.getAttribute('href') !== h; }, href);
+    };
 
-    /* Parole: la prima a mano, col mouse o col dito */
+    /* 1 · Sintattica: si comincia dal periodo */
+    const primo = await page.getAttribute('[role="tab"][aria-selected="true"]', 'data-lente');
+    if (primo !== 'proposizioni') guasti.push(`${nome}: l'analisi non comincia dal livello sintattico (${primo})`);
+    await page.click('.parola[data-i="0"]');
+    await page.click('.parola[data-i="2"]');
+    if (await page.$('.stella')) guasti.push(`${nome}: compaiono proposte nella scheda della proposizione`);
+    await page.click('[data-az="ruolo"][data-ruolo="Principale"]');
+    await page.click('[data-az="tipo-prop"][data-tipo="Enunciativa"]');
+    if (!await page.$('.fili-sopra .filo.prop-principale')) guasti.push(`${nome}: la proposizione non e' disegnata`);
+    await avanti('Analisi logica');
+
+    /* 2 · Logica: le proposizioni restano sopra, come contesto */
+    if (!await page.$('.fili-sopra.contesto .filo.prop-principale')) guasti.push(`${nome}: nel livello logico la proposizione segnata non resta sopra la frase`);
+    await page.click('.parola[data-i="0"]');
+    await page.click('.parola[data-i="1"]');
+    if (await page.$('.stella')) guasti.push(`${nome}: compaiono proposte nella scheda del sintagma`);
+    await page.click('.tendina-voce[data-funzione="Soggetto"]');
+    await avanti('Analisi grammaticale');
+
+    /* 3 · Grammaticale: la prima parola a mano, col mouse o col dito */
+    if (!await page.$('.fili.contesto .filo.caso-nom') || !await page.$('.fili-sopra.contesto')) guasti.push(`${nome}: nel livello grammaticale non restano i livelli di prima`);
     await page.click('.parola[data-i="0"]');
     await page.click('.scelta.pos-sostantivo');
     await page.click('[data-az="tratto"][data-g="caso"][data-x="nom"]');
@@ -77,26 +106,19 @@ async function misura(page, nome, dove, guasti) {
         .every(s => document.querySelector(s) && document.querySelector(s).getAttribute('aria-pressed') === 'true'));
       if (!ok) guasti.push(`${nome}: la tastiera non compila il primo gruppo vuoto`);
     }
+    await page.keyboard.press('Escape');
+    await avanti('Traduzione');
 
-    /* Sintagmi e proposizioni, scelti dallo studente: nessuna proposta */
-    await page.click('[data-az="lente"][data-lente="sintagmi"]');
-    await page.click('.parola[data-i="0"]');
-    await page.click('.parola[data-i="1"]');
-    if (await page.$('.stella')) guasti.push(`${nome}: compaiono proposte nella scheda del sintagma`);
-    await page.click('.tendina-voce[data-funzione="Soggetto"]');
-    await page.click('[data-az="lente"][data-lente="proposizioni"]');
-    await page.click('.parola[data-i="0"]');
-    await page.click('.parola[data-i="2"]');
-    await page.click('[data-az="ruolo"][data-ruolo="Principale"]');
-    await page.click('[data-az="tipo-prop"][data-tipo="Enunciativa"]');
-    if (!await page.$('.fili-sopra .filo.prop-principale')) guasti.push(`${nome}: la proposizione non e' disegnata`);
-    await page.click('[data-az="lente"][data-lente="resa"]');
+    /* 4 · Traduzione della frase, poi la frase dopo dal livello sintattico */
     await page.fill('[data-campo="brutta"]', 'prova di brutta');
     await page.fill('[data-campo="bella"]', 'prova di bella');
+    await avanti('Frase 2');
+    const dopo = await page.evaluate(() => location.hash);
+    if (!/\/analisi\/2\/proposizioni$/.test(dopo)) guasti.push(`${nome}: dopo la traduzione non si passa alla frase 2 dal livello sintattico (${dopo})`);
 
-    await page.click('.tappa:has-text("Traduzione")');
+    await page.click('.tappa:has-text("Versione")');
     await page.waitForSelector('.edizione-riga');
-    await misura(page, nome, 'traduzione', guasti);
+    await misura(page, nome, 'versione', guasti);
 
     /* Consegna: il foglio, il controllo, la pagina scaricata */
     await page.click('.tappa:has-text("Consegna")');

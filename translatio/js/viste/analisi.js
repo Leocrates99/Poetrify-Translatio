@@ -1,14 +1,18 @@
 /* ============================================================================
-   ANALISI · la frase protagonista, quattro lenti sullo stesso testo
+   ANALISI · la frase protagonista, quattro livelli sullo stesso testo
    ----------------------------------------------------------------------------
-     Parole        parte del discorso, flessione, lemma, significato, morfemi
-     Sintagmi      i gruppi di parole e la loro funzione logica
-     Proposizioni  il periodo: principale, coordinate, subordinate
-     Resa          glossario, costruzione, brutta e bella copia
-   L'analisi la fa lo studente: il banco non propone nulla, disegna cio' che
-   gli si scrive. La frase non cambia mai di posto: cambia solo cio' che le si
-   legge sopra e sotto. La scheda a fianco (o dal basso, sugli schermi
-   stretti) e' il modulo della parola toccata, o del gruppo selezionato.
+   Si scende dal periodo alla parola, poi si traduce:
+     1 Sintattica     il periodo: principale, coordinate, subordinate
+     2 Logica         i sintagmi e la loro funzione logica
+     3 Grammaticale   le parole: parte del discorso, flessione, lemma,
+                      significato, morfemi
+     4 Traduzione     glossario, costruzione, brutta e bella copia
+   I livelli si sovrappongono: cio' che lo studente ha segnato nei livelli
+   prima resta sotto quello su cui lavora, piu' chiaro (le proposizioni sopra
+   la frase, i sintagmi sotto). L'analisi la fa lo studente: il banco non
+   propone nulla, disegna cio' che gli si scrive. La scheda a fianco (o dal
+   basso, sugli schermi stretti) e' il modulo della parola toccata, o del
+   gruppo selezionato.
    ============================================================================ */
 import { html, raw } from '../ui/dom.js';
 import { ICONE } from '../ui/icone.js';
@@ -24,12 +28,31 @@ import {
   tipiDiProposizione, etichettaProposizione, ordoDellaFrase, livelli,
 } from '../motore/sintassi.js';
 
+/* L'ordine dei livelli e' l'ordine del lavoro. Le chiavi restano quelle
+   degli indirizzi (#/v/<id>/analisi/<frase>/<chiave>). */
 export const LENTI = [
-  { k: 'parole', nome: 'Parole' },
-  { k: 'sintagmi', nome: 'Sintagmi' },
-  { k: 'proposizioni', nome: 'Proposizioni' },
-  { k: 'resa', nome: 'Resa' },
+  { k: 'proposizioni', nome: 'Sintattica', esteso: 'Analisi sintattica', oggetto: 'il periodo' },
+  { k: 'sintagmi', nome: 'Logica', esteso: 'Analisi logica', oggetto: 'i sintagmi' },
+  { k: 'parole', nome: 'Grammaticale', esteso: 'Analisi grammaticale', oggetto: 'le parole' },
+  { k: 'resa', nome: 'Traduzione', esteso: 'Traduzione', oggetto: 'la frase in italiano' },
 ];
+export const PRIMA_LENTE = LENTI[0].k;
+const livelloDi = k => LENTI.findIndex(l => l.k === k);
+
+/** Il passo prima e il passo dopo, nell'ordine del lavoro: i quattro livelli
+ *  di una frase, poi la frase seguente dal primo livello. */
+export function passi(v, n, lente) {
+  const k = livelloDi(lente);
+  const url = (f, l) => `#/v/${v.id}/analisi/${f + 1}/${l}`;
+  let prima = null;
+  let dopo = null;
+  if (k > 0) prima = { href: url(n, LENTI[k - 1].k), nome: LENTI[k - 1].esteso };
+  else if (n > 0) prima = { href: url(n - 1, LENTI[LENTI.length - 1].k), nome: `Frase ${n} · traduzione` };
+  if (k < LENTI.length - 1) dopo = { href: url(n, LENTI[k + 1].k), nome: LENTI[k + 1].esteso };
+  else if (n < v.frasi.length - 1) dopo = { href: url(n + 1, PRIMA_LENTE), nome: `Frase ${n + 2} · ${LENTI[0].esteso.toLowerCase()}` };
+  else dopo = { href: `#/v/${v.id}/traduzione`, nome: 'La versione intera' };
+  return { prima, dopo };
+}
 
 const langAttr = v => (v.lingua === 'greco' ? 'grc' : 'la');
 const due = n => String(n).padStart(2, '0');
@@ -84,14 +107,14 @@ function lenti(S, st) {
     proposizioni: st.proposizioni || '',
     resa: st.bella ? '✓' : (st.brutta ? '½' : ''),
   };
-  return html`<div class="lenti"><div class="segmenti" role="tablist" aria-label="Lenti sulla frase">
-    ${LENTI.map(l => html`<button type="button" role="tab" data-az="lente" data-lente="${l.k}" aria-selected="${S.lente === l.k ? 'true' : 'false'}">
+  return html`<div class="lenti"><div class="segmenti" role="tablist" aria-label="I livelli dell’analisi, in ordine">
+    ${LENTI.map(l => html`<button type="button" role="tab" data-az="lente" data-lente="${l.k}" aria-selected="${S.lente === l.k ? 'true' : 'false'}" title="${l.esteso} · ${l.oggetto}">
       ${l.nome}${conti[l.k] !== '' ? html` <span class="conto">${conti[l.k]}</span>` : ''}</button>`)}
   </div></div>`;
 }
 
 /* ── la frase: celle di parole, con i fili sopra e sotto ─────────────────── */
-function fili(segni, wi, { sopra, classe, etichetta, attivo, larghezza }) {
+function fili(segni, wi, { sopra, classe, etichetta, attivo, larghezza, contesto }) {
   if (!segni.length) return '';
   const { righe, livello } = livelli(segni);
   const blocchi = [];
@@ -107,7 +130,7 @@ function fili(segni, wi, { sopra, classe, etichetta, attivo, larghezza }) {
       : html`<span class="filo-etichetta assente">·</span>`;
     blocchi.push(sopra ? html`${lbl}<span class="filo ${cls}"></span>` : html`<span class="filo ${cls}"></span>${lbl}`);
   }
-  return html`<span class="fili ${sopra ? 'fili-sopra' : ''}" aria-hidden="true">${blocchi}</span>`;
+  return html`<span class="fili ${sopra ? 'fili-sopra' : ''} ${contesto ? 'contesto' : ''}" aria-hidden="true">${blocchi}</span>`;
 }
 
 /** La forma, coi morfemi colorati se lo studente l'ha tagliata. */
@@ -154,12 +177,15 @@ function frase(S) {
   const parole = toks.filter(t => t.k === 'w');
   const lente = S.lente;
   const span = S.span;
-  const sintagmi = lente === 'sintagmi' ? f.sintagmi : [];
-  const props = lente === 'proposizioni' ? f.proposizioni : [];
+  /* i livelli si sovrappongono: le proposizioni dalla sintattica in poi, i
+     sintagmi dalla logica in poi; quelli segnati prima sono contesto */
+  const livello = livelloDi(lente);
+  const props = livello >= 0 && livello <= 2 ? f.proposizioni : [];
+  const sintagmi = livello >= 1 && livello <= 2 ? f.sintagmi : [];
   const lungh = s => Math.max(6, parole.slice(s.da, s.a + 1).reduce((n, w) => n + w.t.length * 2 + 2, 0));
 
-  const opzSopra = { sopra: true, classe: s => `prop-${(s.ruolo || '').toLowerCase()}`, etichetta: (s, lungo) => etichettaProposizione(s, lungo), attivo: S.segnoAttivo, larghezza: lungh };
-  const opzSotto = { sopra: false, classe: s => `caso-${casoDellaFunzione(s.funzione, v.lingua)}`, etichetta: (s, lungo) => (lungo ? s.funzione : abbreviaFunzione(s.funzione)), attivo: S.segnoAttivo, larghezza: lungh };
+  const opzSopra = { sopra: true, classe: s => `prop-${(s.ruolo || '').toLowerCase()}`, etichetta: (s, lungo) => etichettaProposizione(s, lungo), attivo: lente === 'proposizioni' ? S.segnoAttivo : null, larghezza: lungh, contesto: lente !== 'proposizioni' };
+  const opzSotto = { sopra: false, classe: s => `caso-${casoDellaFunzione(s.funzione, v.lingua)}`, etichetta: (s, lungo) => (lungo ? s.funzione : abbreviaFunzione(s.funzione)), attivo: lente === 'sintagmi' ? S.segnoAttivo : null, larghezza: lungh, contesto: lente !== 'sintagmi' };
   const celle = [];
   let precedente = -1;
   toks.forEach(t => {
@@ -196,12 +222,12 @@ function frase(S) {
 }
 
 const CONSEGNE = {
-  parole: raw('Tocca una parola e analizzala nella scheda: parte del discorso, flessione, lemma, significato. Il filetto sotto la parola prende il colore della <strong>parte del discorso</strong> che scegli; finché manca resta punteggiato.'),
-  sintagmi: raw('Tocca la <strong>prima</strong> e l’<strong>ultima</strong> parola di un gruppo, poi scegli la sua funzione. Comincia dal predicato, poi soggetto e oggetto, poi i complementi.'),
-  proposizioni: raw('Tocca la prima e l’ultima parola di una <strong>proposizione</strong>, poi dille se è principale, coordinata o subordinata, e di che tipo.'),
+  proposizioni: raw('<strong>Il periodo.</strong> Cerca i verbi: ogni verbo di modo finito regge una proposizione, e anche un infinito o un participio può reggerne una. Tocca la prima e l’ultima parola di ogni proposizione, poi dille se è principale, coordinata o subordinata, e di che tipo.'),
+  sintagmi: raw('<strong>I sintagmi.</strong> Dentro le proposizioni che hai segnato (sopra la frase), tocca la <strong>prima</strong> e l’<strong>ultima</strong> parola di un gruppo e scegli la sua funzione: prima il predicato, poi soggetto e oggetto, poi i complementi.'),
+  parole: raw('<strong>Le parole.</strong> Toccane una e analizzala nella scheda: parte del discorso, flessione, lemma, significato. Il filetto sotto la parola prende il colore della <strong>parte del discorso</strong> che scegli; finché manca resta punteggiato.'),
 };
 
-/* ── la lente Resa ───────────────────────────────────────────────────────── */
+/* ── il livello Traduzione ───────────────────────────────────────────────────────── */
 function resa(S) {
   const v = S.v;
   const f = v.frasi[S.frase];
@@ -222,8 +248,8 @@ function resa(S) {
     ${ordo.length ? html`<section>
       <p class="etichetta" style="margin:0 0 8px">La costruzione, nell’ordine italiano</p>
       <div class="ordo">${ordo.map(b => html`<span class="ordo-blocco caso-${b.caso}"><b>${abbreviaFunzione(b.funzione)}</b><span lang="${langAttr(v)}">${b.testo}</span></span>`)}</div>
-      <p class="nota-fonte">Soggetto, predicato, oggetto e poi gli altri complementi, come li hai segnati nella lente Sintagmi.</p>
-    </section>` : html`<p class="nota-fonte" style="margin:0">Segna i sintagmi e qui troverai la frase rimessa nell’ordine italiano: soggetto, predicato, oggetto, complementi.</p>`}
+      <p class="nota-fonte">Soggetto, predicato, oggetto e poi gli altri complementi, come li hai segnati nell’analisi logica.</p>
+    </section>` : html`<p class="nota-fonte" style="margin:0">Segna i sintagmi nell’analisi logica e qui troverai la frase rimessa nell’ordine italiano: soggetto, predicato, oggetto, complementi.</p>`}
     <label class="campo"><span>Brutta copia · alla lettera</span>
       <textarea class="area area-resa" data-campo="brutta" data-f="${S.frase}" placeholder="Traduci seguendo la costruzione, parola per parola.">${f.brutta}</textarea></label>
     <label class="campo"><span>Bella copia · in buon italiano</span>
@@ -380,7 +406,7 @@ function schedaGruppo(S) {
     return html`${testa}<div class="scheda-corpo">
       <p class="scheda-invito" style="padding:8px 0 0">${sintagmi
         ? raw('Tocca la <strong>prima</strong> parola del gruppo, poi l’<strong>ultima</strong>. Per una parola sola, toccala due volte.')
-        : raw('Tocca la <strong>prima</strong> e l’<strong>ultima</strong> parola della proposizione.')}</p>
+        : raw('Tocca la <strong>prima</strong> e l’<strong>ultima</strong> parola della proposizione. Comincia dai verbi: ogni verbo di modo finito ne regge una.')}</p>
       ${elencoSegni(S, segni, S.lente)}
     </div>`;
   }
@@ -431,7 +457,7 @@ export function scheda(S) {
     <div class="scheda-corpo"><div class="prosa" style="font-size:15.5px">
       <p style="margin-top:0">La <strong>brutta</strong> segue il latino o il greco da vicino: ogni parola ha la sua, anche se l’italiano zoppica.</p>
       <p>La <strong>bella</strong> si scrive dopo, rileggendo la brutta senza guardare il testo: si lavora solo dentro l’italiano.</p>
-      <p>Le parole senza significato nel glossario sono quelle che non hai ancora scritto: tornaci dalla lente Parole.</p>
+      <p>Le parole senza significato nel glossario sono quelle che non hai ancora scritto: tornaci dall’analisi grammaticale.</p>
     </div></div>`;
   }
   if (S.lente === 'parole') return S.sel != null ? schedaParola(S) : invitoScheda();
@@ -452,7 +478,7 @@ export function vistaAnalisi(S) {
   const f = v.frasi[S.frase];
   const st = statoFrase(f, paroleDi(f).length);
   const aperta = apertaScheda(S);
-  const ultima = S.frase >= v.frasi.length - 1;
+  const passo = passi(v, S.frase, S.lente);
   return html`<div class="lavoro ${aperta ? 'con-scheda' : ''}" data-lente="${S.lente}">
     ${colonnaFrasi(S)}
     <section class="colonna-banco" aria-label="Il banco">
@@ -462,12 +488,10 @@ export function vistaAnalisi(S) {
         ${S.lente !== 'resa' ? html`<p class="consegna">${CONSEGNE[S.lente]}</p>` : ''}
         ${S.lente === 'resa' ? resa(S) : html`<div id="frase-viva">${frase(S)}</div>`}
       </div>
-      <div class="barra-azioni" style="padding:0 clamp(16px,3vw,32px) 28px">
-        <div class="gruppo">${S.frase > 0 ? html`<a class="btn btn-quieto" href="#/v/${v.id}/analisi/${S.frase}/${S.lente}">${raw(ICONE.indietro)} Frase precedente</a>` : ''}</div>
-        <div class="gruppo">${ultima
-          ? html`<a class="btn btn-primario" href="#/v/${v.id}/traduzione">La versione intera ${raw(ICONE.avanti)}</a>`
-          : html`<a class="btn ${S.lente === 'resa' ? 'btn-primario' : ''}" href="#/v/${v.id}/analisi/${S.frase + 2}/${S.lente}">Frase successiva ${raw(ICONE.avanti)}</a>`}</div>
-      </div>
+      <nav class="barra-azioni barra-passi" aria-label="Il passo prima e il passo dopo">
+        <div class="gruppo">${passo.prima ? html`<a class="btn btn-quieto" href="${passo.prima.href}">${raw(ICONE.indietro)} ${passo.prima.nome}</a>` : ''}</div>
+        <div class="gruppo"><a class="btn btn-primario" href="${passo.dopo.href}">${passo.dopo.nome} ${raw(ICONE.avanti)}</a></div>
+      </nav>
     </section>
     <aside class="colonna-scheda ${aperta ? 'aperta' : ''}" id="colonna-scheda" aria-label="Scheda">
       <div class="scheda" id="scheda">${scheda(S)}</div>

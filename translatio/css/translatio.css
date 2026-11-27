@@ -340,6 +340,14 @@ main:focus { outline: none; }
 .pallino[aria-current="true"] { background: var(--lingua); border-color: var(--lingua); color: var(--on-primary); }
 
 .lenti { padding: 0 clamp(16px, 3vw, 32px); }
+/* in fondo al banco: il passo prima e il passo dopo, nell'ordine del lavoro */
+.barra-passi { padding: 0 clamp(16px, 3vw, 32px) 28px; }
+/* i livelli dell'analisi sono numerati: l'ordine e' l'ordine del lavoro */
+.lenti .segmenti { counter-reset: livello; }
+.lenti .segmenti button::before {
+  counter-increment: livello; content: counter(livello);
+  font-weight: 800; color: var(--lingua); font-variant-numeric: tabular-nums;
+}
 
 .banco {
   margin: 12px clamp(16px, 3vw, 32px) 0;
@@ -421,6 +429,9 @@ main:focus { outline: none; }
   background: var(--filo-c, var(--rule));
 }
 .filo.assente { background: transparent; }
+/* i livelli gia' fatti restano sotto quello in lavorazione, piu' chiari */
+.fili.contesto .filo { opacity: 0.35; }
+.fili.contesto .filo-etichetta { color: var(--sepia); }
 .filo.inizio { margin-left: 2px; border-top-left-radius: 3px; border-bottom-left-radius: 3px; }
 .filo.fine { margin-right: 2px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; }
 .filo.attivo { box-shadow: 0 0 0 2px var(--paper), 0 0 0 3.5px var(--lingua); }

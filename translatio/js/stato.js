@@ -66,7 +66,7 @@ export function nuovaConsegna() {
 export function nuovaVersione({ lingua, titolo = '', autore = '', testo = '', corte = false }) {
   const v = {
     id: nuovoId(), schema: SCHEMA, app: 'translatio', lingua, titolo, autore, testo, corte,
-    frasi: [], posizione: { frase: 0, lente: 'parole' }, consegna: nuovaConsegna(), creata: ora(), modificata: ora(),
+    frasi: [], posizione: { frase: 0, lente: 'proposizioni' }, consegna: nuovaConsegna(), creata: ora(), modificata: ora(),
   };
   v.frasi = dividiInFrasi(testo, lingua, { corte }).map(nuovaFrase);
   return v;
@@ -218,7 +218,7 @@ function daSchema1(p) {
 function migra(v) {
   if (!v || typeof v !== 'object') return null;
   const vecchio = (v.schema || 1) < 2;
-  v.posizione = v.posizione || { frase: 0, lente: 'parole' };
+  v.posizione = v.posizione || { frase: 0, lente: 'proposizioni' };
   v.consegna = { ...nuovaConsegna(), ...(v.consegna || {}) };
   v.consegna.includi = { ...INCLUDI, ...(v.consegna.includi || {}) };
   for (const f of v.frasi || []) {

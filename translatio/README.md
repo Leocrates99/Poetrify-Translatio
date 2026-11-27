@@ -16,31 +16,42 @@ la chiave del tema (`shared/poetrify-theme.js`) e i caratteri (`vendor/fonts/`).
 ## Il flusso: quattro tappe
 
 ```
-TESTO  →  ANALISI  →  TRADUZIONE  →  CONSEGNA
+TESTO  →  ANALISI  →  VERSIONE  →  CONSEGNA
+           1 sintattica · 2 logica · 3 grammaticale · 4 traduzione
 ```
 
 1. **Testo.** Lo studente incolla il brano. Il banco lo divide in periodi guardando solo la
    punteggiatura (latino `. ? !`; greco `. ;`), ed è una proposta grafica, non grammaticale:
    ⤓ unisce una frase alla successiva, *Dividi* fa cominciare una frase nuova dalla parola
    toccata.
-2. **Analisi.** La frase sta al centro e non cambia mai di posto; cambiano le **lenti**:
-   - **Parole.** Si tocca una parola e nella scheda si scelgono la **parte del discorso** (le
-     undici tinte della casa), poi i tratti che quella parte del discorso ha: caso, numero,
-     genere, grado; modo, tempo, diatesi, persona; declinazione e coniugazione. Si scrivono il
-     **lemma** (come sul dizionario), il **significato** in questa frase e, se si vuole,
-     un'osservazione. Si può **scomporre la parola in morfemi**: si tocca la lettera da cui
-     comincia un pezzo nuovo, e a ogni pezzo si dà un ruolo (prefisso, aumento, tema, vocale
-     tematica, suffisso, desinenza), ciascuno col suo colore. Il filetto sotto la parola
-     prende il colore della parte del discorso scelta; finché manca resta **punteggiato e
-     grigio**. Sotto la parola compaiono sigla, lemma, analisi breve e significato.
-   - **Sintagmi.** Si toccano la prima e l'ultima parola di un gruppo e se ne sceglie la
-     funzione logica (elenco per caso, con la ricerca). Il filo sotto il gruppo ha il colore
-     del **caso** (codice di categoria della collana).
-   - **Proposizioni.** Stesso gesto; il ruolo (principale, coordinata, subordinata) segna la
-     proposizione, poi se ne dicono il tipo e il grado. Il filo sta sopra le parole.
-   - **Resa.** Il glossario della frase (lemmi e significati dello studente), la costruzione
-     nell'ordine italiano rimessa in fila dai sintagmi segnati, brutta e bella copia.
-3. **Traduzione.** La versione intera, testo a fronte; brutta e bella sono due stati della
+2. **Analisi.** La frase sta al centro e non cambia mai di posto. Si analizza **dal periodo
+   alla parola**, poi si traduce: quattro **livelli** numerati, in quest'ordine.
+   1. **Sintattica · il periodo.** Si cercano i verbi; si toccano la prima e l'ultima parola
+      di ogni proposizione, il ruolo (principale, coordinata, subordinata) la segna, poi se ne
+      dicono il tipo e il grado. Il filo sta sopra le parole.
+   2. **Logica · i sintagmi.** Dentro le proposizioni, stesso gesto: si sceglie la funzione
+      logica (elenco per caso, con la ricerca). Il filo sotto il gruppo ha il colore del
+      **caso** (codice di categoria della collana).
+   3. **Grammaticale · le parole.** Si tocca una parola e nella scheda si scelgono la **parte
+      del discorso** (le undici tinte della casa), poi i tratti che quella parte del discorso
+      ha: caso, numero, genere, grado; modo, tempo, diatesi, persona; declinazione e
+      coniugazione. Si scrivono il **lemma** (come sul dizionario), il **significato** in
+      questa frase e, se si vuole, un'osservazione. Si può **scomporre la parola in morfemi**:
+      si tocca la lettera da cui comincia un pezzo nuovo, e a ogni pezzo si dà un ruolo
+      (prefisso, aumento, tema, vocale tematica, suffisso, desinenza), ciascuno col suo
+      colore. Il filetto sotto la parola prende il colore della parte del discorso scelta;
+      finché manca resta **punteggiato e grigio**. Sotto la parola compaiono sigla, lemma,
+      analisi breve e significato.
+   4. **Traduzione · la frase in italiano.** Il glossario della frase (lemmi e significati
+      dello studente), la costruzione nell'ordine italiano rimessa in fila dai sintagmi,
+      brutta e bella copia.
+
+   I livelli **si sovrappongono**: ciò che è stato segnato nei livelli prima resta sotto quello
+   su cui si lavora, più chiaro (nella logica le proposizioni sopra la frase; nella
+   grammaticale proposizioni e sintagmi). In fondo al banco il **passo dopo** porta al livello
+   seguente; dopo la traduzione, alla frase seguente dal livello sintattico; dopo l'ultima
+   frase, alla Versione.
+3. **Versione.** La versione intera, testo a fronte; brutta e bella sono due stati della
    stessa riga. In calce l'apparato lessicale coi lemmi e i significati dello studente.
 4. **Consegna.** Chi consegna (nome, classe, data, docente), che cosa entra nel documento
    (nove voci, tutte accese all'inizio), un controllo di ciò che manca (parole senza parte
@@ -58,10 +69,11 @@ Un foglio A4 in veste C2 (`js/viste/documento.js`, `js/viste/stile-documento.js`
 
 - testatina con il titolo, l'autore, i dati dello studente e il filetto nero di 4 px;
 - **il testo**, con le frasi numerate;
-- per ogni frase, col numero appeso nella colonna di margine: **l'analisi disegnata** (le
-  proposizioni sopra, i sintagmi sotto, la parte del discorso nel filetto, i morfemi a
-  colori), la **tavola delle parole** (forma, analisi distesa, lemma, significato, poi le
-  osservazioni), **il periodo e la costruzione**, la **brutta** e la **bella**;
+- per ogni frase, col numero appeso nella colonna di margine e nell'ordine dei livelli:
+  **l'analisi disegnata** (le proposizioni sopra, i sintagmi sotto, la parte del discorso nel
+  filetto, i morfemi a colori), l'**analisi sintattica** (il periodo), l'**analisi logica**
+  (la costruzione), l'**analisi grammaticale** (la tavola delle parole: forma, analisi
+  distesa, lemma, significato, poi le osservazioni), la **brutta** e la **bella**;
 - **la traduzione** intera, **il lessico**, **la legenda** (solo i colori che il documento usa).
 
 Il foglio ha classi sue (`d-…`) e colori suoi: è sempre bianco, anche col tema scuro
@@ -74,14 +86,16 @@ alla stampa e al file scaricato.
 |---|---|
 | Nessuna proposta del programma | L'analisi è dello studente: il banco non suggerisce la parte del discorso, il lemma, la funzione o il tipo di proposizione. Disegna e impagina |
 | Quattro tappe nominate in parole da studente | Niente da configurare prima di lavorare |
-| La frase al centro, le analisi come lenti | Morfologia, sintassi e periodo si leggono *sul testo* |
+| La frase al centro, l'analisi in quattro livelli numerati | Dal periodo alla parola, poi la traduzione: l'ordine del metodo scolastico, e periodo, sintassi e morfologia si leggono *sul testo* |
+| I livelli si sovrappongono | Quello che si è segnato prima resta visibile, più chiaro: la logica si fa dentro le proposizioni, la grammatica dentro i sintagmi |
+| La tappa dopo l'analisi si chiama «Versione» | Il quarto livello è la Traduzione della frase: due voci «Traduzione» sullo stesso schermo porterebbero in due posti diversi |
 | La scheda della parola come modulo | Si compila dall'alto in basso; si vedono solo i gruppi che quella parte del discorso ha (un infinito non chiede la persona; cambiata la parte del discorso, i tratti che non ha cadono) |
 | La parola vuota non scrive nulla sotto di sé | Il filetto punteggiato dice già che manca; una scritta allargherebbe le parole brevi |
 | I morfemi si tagliano toccando una lettera | Lo stesso gesto di *Dividi* nel testo; le lettere greche si tagliano con accenti e spiriti |
 | La scheda sta dove lo schermo ha margine | ≥ 1280 px colonna fissa a destra; sotto, foglio dal basso (45 % tablet, 60 % telefono) |
 | Quattro classi di schermo della casa | < 768 la mano · 768–1279 il tablet · 1280–1799 il leggio · ≥ 1800 il tavolo |
 | Tastiera | ← → di parola in parola; **1–9 scelgono nel primo gruppo ancora vuoto** (i numeri compaiono sui bottoni, solo col puntatore fine); Invio va alla parola dopo (nel lemma, va al significato); `[` `]` cambiano frase; Esc chiude |
-| Navigazione con l'hash, bidirezionale | Il tasto Indietro cambia vista, lente o frase; ogni stato ha un indirizzo |
+| Navigazione con l'hash, bidirezionale | Il tasto Indietro cambia vista, livello o frase; ogni stato ha un indirizzo (`#/v/<id>/analisi/<frase>/proposizioni · sintagmi · parole · resa`) |
 | Local-first | Tutto nel `localStorage` (in try/catch); il lavoro esce solo quando lo studente lo scarica |
 
 ## La veste: C2 compatta
@@ -138,7 +152,7 @@ corretto, i significati, i sintagmi, le proposizioni e le traduzioni; le propost
 confermate cadono.
 
 **La versione dei file.** `index.html` chiede ogni foglio di stile e ogni modulo con la
-stessa versione (`?v=2026-11-27d`); i moduli interni la ricevono da un'import map. Così,
+stessa versione (`?v=2026-11-27e`); i moduli interni la ricevono da un'import map. Così,
 dopo un aggiornamento, il browser non mescola file nuovi e file vecchi rimasti in cache
 (GitHub Pages li tiene 10 minuti). Quando si cambia un file, si alza la versione in tutte
 le righe di `index.html`; il collaudo controlla che sia la stessa ovunque e che l'import

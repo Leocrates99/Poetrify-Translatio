@@ -193,6 +193,7 @@
 :root .segmenti button[aria-pressed="true"],
 :root .segmenti button[aria-selected="true"] { background: none; color: var(--c2-ink); border-bottom-color: var(--c2-ink); }
 :root .segmenti .conto { font-size: var(--c2-nota); color: var(--c2-accent); letter-spacing: 0; }
+:root .lenti .segmenti button::before { font-size: var(--c2-corpo9); letter-spacing: 0; color: var(--c2-accent); margin-right: 1px; }
 :root .targhetta {
   padding: 0; border: 0; background: none;
   font-size: var(--c2-nota); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c2-note);
@@ -361,6 +362,8 @@
 :root .prop-principale { background: var(--c2-ink); }
 :root .prop-coordinata { background: repeating-linear-gradient(90deg, var(--c2-ink) 0 6px, transparent 6px 10px); }
 :root .fili-sopra .prop-subordinata { height: 1px; margin-top: 1px; background: var(--c2-ink); }
+/* il livello gia' fatto: il filo resta, schiarito; l'etichetta passa al grigio delle note */
+:root .fili.contesto .filo-etichetta { color: var(--c2-note); }
 :root .filo-etichetta {
   height: 13px; font-size: 10.5px; line-height: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c2-accent);
 }

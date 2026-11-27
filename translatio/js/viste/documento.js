@@ -99,7 +99,7 @@ function bancoDellaFrase(v, f, inc) {
 function tavolaDelleParole(v, f, inc) {
   const parole = paroleDi(f);
   const note = parole.filter(w => f.parole[w.i] && f.parole[w.i].nota);
-  return html`<table class="d-parole">
+  return html`<div class="d-blocco d-blocco-tavola"><p class="d-etichetta">Analisi grammaticale · le parole</p><table class="d-parole">
     <thead><tr><th class="d-n">n.</th><th>Forma</th><th>Analisi</th><th>Lemma</th><th>Significato</th></tr></thead>
     <tbody>${parole.map(w => {
       const p = f.parole[w.i] || {};
@@ -113,18 +113,24 @@ function tavolaDelleParole(v, f, inc) {
       </tr>`;
     })}</tbody>
   </table>
-  ${note.length ? html`<dl class="d-note">${note.map(w => html`<div><dt lang="${langAttr(v)}">${w.t}</dt><dd>${f.parole[w.i].nota}</dd></div>`)}</dl>` : ''}`;
+  ${note.length ? html`<dl class="d-note">${note.map(w => html`<div><dt lang="${langAttr(v)}">${w.t}</dt><dd>${f.parole[w.i].nota}</dd></div>`)}</dl>` : ''}</div>`;
+}
+
+/* frase per frase il documento segue l'ordine del lavoro: sintattica (il
+   periodo), logica (la costruzione), grammaticale (la tavola), traduzione */
+function periodo(v, f) {
+  const parole = paroleDi(f);
+  const props = [...f.proposizioni].sort((a, b) => a.da - b.da);
+  if (!props.length) return '';
+  return html`<div class="d-blocco"><p class="d-etichetta">Analisi sintattica · il periodo</p>
+      <ul class="d-periodo">${props.map(s => html`<li class="d-prop-${(s.ruolo || '').toLowerCase()}"><span class="d-segno-prop"></span><b>${etichettaProposizione(s, true)}</b> <span lang="${langAttr(v)}">${parole.slice(s.da, s.a + 1).map(w => w.t).join(' ')}</span></li>`)}</ul></div>`;
 }
 
 function costruzione(v, f) {
-  const parole = paroleDi(f);
-  const props = [...f.proposizioni].sort((a, b) => a.da - b.da);
-  const ordo = ordoDellaFrase(f, parole, v.lingua);
-  if (!props.length && !ordo.length) return '';
-  return html`${props.length ? html`<div class="d-blocco"><p class="d-etichetta">Il periodo</p>
-      <ul class="d-periodo">${props.map(s => html`<li class="d-prop-${(s.ruolo || '').toLowerCase()}"><span class="d-segno-prop"></span><b>${etichettaProposizione(s, true)}</b> <span lang="${langAttr(v)}">${parole.slice(s.da, s.a + 1).map(w => w.t).join(' ')}</span></li>`)}</ul></div>` : ''}
-    ${ordo.length ? html`<div class="d-blocco"><p class="d-etichetta">La costruzione</p>
-      <div class="d-ordo">${ordo.map(b => html`<span class="d-ordo-blocco d-caso-${b.caso}"><b>${abbreviaFunzione(b.funzione)}</b><span lang="${langAttr(v)}">${b.testo}</span></span>`)}</div></div>` : ''}`;
+  const ordo = ordoDellaFrase(f, paroleDi(f), v.lingua);
+  if (!ordo.length) return '';
+  return html`<div class="d-blocco"><p class="d-etichetta">Analisi logica · la costruzione</p>
+      <div class="d-ordo">${ordo.map(b => html`<span class="d-ordo-blocco d-caso-${b.caso}"><b>${abbreviaFunzione(b.funzione)}</b><span lang="${langAttr(v)}">${b.testo}</span></span>`)}</div></div>`;
 }
 
 /* ── il lessico: i lemmi del brano coi significati scelti ───────────────── */
@@ -198,15 +204,15 @@ export function documento(v) {
   </section>
 
   ${perFrase ? v.frasi.map((f, n) => {
-    const cos = inc.costruzione ? costruzione(v, f) : '';
     return html`<section class="d-sez d-frase">
       <h2 class="d-margine d-numero" aria-label="Frase ${n + 1}">${due(n + 1)}</h2>
       <div class="d-corpo">
         ${inc.grafica ? bancoDellaFrase(v, f, inc) : html`<p class="d-brano" lang="${langAttr(v)}">${f.testo}</p>`}
+        ${inc.costruzione ? periodo(v, f) : ''}
+        ${inc.costruzione ? costruzione(v, f) : ''}
         ${inc.parole ? tavolaDelleParole(v, f, inc) : ''}
-        ${cos}
-        ${inc.brutta && f.brutta.trim() ? html`<div class="d-blocco"><p class="d-etichetta">Brutta copia</p><p class="d-resa">${f.brutta}</p></div>` : ''}
-        ${inc.bella && f.bella.trim() ? html`<div class="d-blocco"><p class="d-etichetta">Bella copia</p><p class="d-resa d-bella">${f.bella}</p></div>` : ''}
+        ${inc.brutta && f.brutta.trim() ? html`<div class="d-blocco"><p class="d-etichetta">Traduzione · brutta copia</p><p class="d-resa">${f.brutta}</p></div>` : ''}
+        ${inc.bella && f.bella.trim() ? html`<div class="d-blocco"><p class="d-etichetta">Traduzione · bella copia</p><p class="d-resa d-bella">${f.bella}</p></div>` : ''}
       </div>
     </section>`;
   }) : ''}

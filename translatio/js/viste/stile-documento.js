@@ -57,6 +57,7 @@ export const CSS_DOCUMENTO = `
 .documento .d-brano { font-family: var(--d-classico); font-size: 15px; line-height: 21px; }
 .documento .d-brano sup { font-family: var(--d-sans); font-size: 8px; font-weight: 700; color: var(--d-accent); margin-right: 2px; }
 .documento .d-blocco { margin-top: 12px; }
+.documento .d-blocco > .d-parole { margin-top: 2px; }
 .documento .d-etichetta { font-size: 9.33px; line-height: 11.2px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--d-note); margin-bottom: 4px; }
 .documento .d-nota { margin-top: 4px; font-size: 9.33px; line-height: 11.2px; color: var(--d-note); }
 .documento .d-manca { color: var(--d-note); font-style: italic; }
@@ -193,5 +194,8 @@ export const CSS_DOCUMENTO = `
   .documento .d-sez { break-inside: auto; }
   .documento .d-margine { break-after: avoid; }
   .documento .d-banco, .documento .d-parole tr, .documento .d-blocco, .documento .d-legenda > div { break-inside: avoid; }
+  /* la tavola delle parole puo' passare alla pagina dopo, riga per riga */
+  .documento .d-blocco-tavola { break-inside: auto; }
+  .documento .d-blocco-tavola > .d-etichetta { break-after: avoid; }
 }
 `;

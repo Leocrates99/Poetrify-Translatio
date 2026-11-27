@@ -7,13 +7,15 @@
    documento da consegnare. E' isolato: non legge il lessico, i paradigmi o il
    corpus di Poetrify; ne usa solo i token grafici e i caratteri.
 
-   Un flusso solo, in quattro tappe: TESTO → ANALISI → TRADUZIONE → CONSEGNA.
+   Un flusso solo, in quattro tappe: TESTO → ANALISI → VERSIONE → CONSEGNA.
+   L'analisi scende in quattro livelli, nell'ordine: sintattica (il periodo),
+   logica (i sintagmi), grammaticale (le parole), traduzione della frase.
    Navigazione con l'hash, bidirezionale (il tasto Indietro cambia la vista):
      #/                                  archivio
      #/nuova · #/nuova/<lingua>          porta della lingua · testo nuovo
      #/v/<id>/testo                      il brano e le frasi
      #/v/<id>/analisi/<frase>/<lente>    il banco
-     #/v/<id>/traduzione                 la versione intera
+     #/v/<id>/traduzione                 la versione intera (la tappa «Versione»)
      #/v/<id>/consegna                   il documento da consegnare
    ============================================================================ */
 import { html, raw, $, monta, annuncia, scaricaFile, copiaTesto, nomeFile } from './ui/dom.js';
@@ -28,7 +30,7 @@ import {
 import { vistaArchivio, vistaPorta } from './viste/archivio.js';
 import { vistaTesto, anteprimaFrasi, avvisoLingua } from './viste/testo.js';
 import {
-  vistaAnalisi, scheda, fraseViva, LENTI, gruppoDaCompilare, valoriDelGruppo,
+  vistaAnalisi, scheda, fraseViva, LENTI, PRIMA_LENTE, gruppoDaCompilare, valoriDelGruppo,
 } from './viste/analisi.js';
 import { vistaTraduzione, versioneInMarkdown, soloTraduzione } from './viste/traduzione.js';
 import { vistaConsegna, controllo } from './viste/consegna.js';
@@ -40,7 +42,7 @@ const S = {
   v: null,
   bozza: null,
   frase: 0,
-  lente: 'parole',
+  lente: PRIMA_LENTE,
   sel: null,
   span: null,
   ancora: null,
@@ -98,8 +100,8 @@ function nastro() {
   monta(el, html`<div class="titolo-versione"><strong>${v.titolo || 'Versione senza titolo'}</strong>${v.autore ? html`<span>${v.autore}</span>` : ''}</div>
     <nav class="tappe" aria-label="Tappe della versione">
       ${tappa('testo', `#/v/${v.id}/testo`, 'Testo')}
-      ${tappa('analisi', `#/v/${v.id}/analisi/${(pos.frase || 0) + 1}/${pos.lente || 'parole'}`, 'Analisi')}
-      ${tappa('traduzione', `#/v/${v.id}/traduzione`, 'Traduzione')}
+      ${tappa('analisi', `#/v/${v.id}/analisi/${(pos.frase || 0) + 1}/${pos.lente || PRIMA_LENTE}`, 'Analisi')}
+      ${tappa('traduzione', `#/v/${v.id}/traduzione`, 'Versione')}
       ${tappa('consegna', `#/v/${v.id}/consegna`, 'Consegna')}
     </nav>`, { conservaScroll: false });
 }
@@ -151,7 +153,7 @@ function render() {
     const pos = S.v.posizione || {};
     const n = r.frase != null ? r.frase : (pos.frase || 0);
     S.frase = Math.min(Math.max(0, n), S.v.frasi.length - 1);
-    S.lente = r.lente || pos.lente || 'parole';
+    S.lente = r.lente || pos.lente || PRIMA_LENTE;
     if (prima.id !== S.v.id || prima.frase !== S.frase || prima.lente !== S.lente || prima.vista !== 'analisi') {
       azzeraSelezione();
     }
@@ -159,7 +161,7 @@ function render() {
       S.v.posizione = { frase: S.frase, lente: S.lente };
       salva();
     }
-    /* l'hash si completa da se': #/v/id/analisi → #/v/id/analisi/3/parole */
+    /* l'hash si completa da se': #/v/id/analisi → #/v/id/analisi/3/proposizioni */
     const pieno = `#/v/${S.v.id}/analisi/${S.frase + 1}/${S.lente}`;
     if (location.hash !== pieno) history.replaceState(null, '', pieno);
   }
@@ -306,7 +308,7 @@ const AZIONI = {
     const e = ESEMPI[+el.dataset.i];
     const v = nuovaVersione({ lingua: e.lingua, titolo: e.titolo, autore: e.autore, testo: e.testo });
     salvaVersione(v, contaParole);
-    vai(`#/v/${v.id}/analisi/1/parole`);
+    vai(`#/v/${v.id}/analisi/1/${PRIMA_LENTE}`);
   },
   esporta(el) {
     const v = caricaVersione(el.dataset.id);
@@ -356,7 +358,7 @@ const AZIONI = {
       v.frasi = b.frasi.map(nuovaFrase);
       salvaVersione(v, contaParole);
       S.bozza = null;
-      vai(`#/v/${v.id}/analisi/1/parole`);
+      vai(`#/v/${v.id}/analisi/1/${PRIMA_LENTE}`);
       return;
     }
     const v = S.v;
@@ -364,10 +366,10 @@ const AZIONI = {
     let { frasi, perse } = riallineaFrasi(v, b.frasi);
     if (cambiaLingua) { perse = v.frasi.filter(haLavoro).length; frasi = b.frasi.map(nuovaFrase); }
     if (perse && !confirm(`${perse} ${perse === 1 ? 'frase cambiata perde' : 'frasi cambiate perdono'} il lavoro fatto. Continuo?`)) return;
-    Object.assign(v, { lingua: b.lingua, titolo: b.titolo.trim(), autore: b.autore.trim(), testo: normalizzaSpazi(b.testo), corte: b.corte, frasi, posizione: { frase: 0, lente: 'parole' } });
+    Object.assign(v, { lingua: b.lingua, titolo: b.titolo.trim(), autore: b.autore.trim(), testo: normalizzaSpazi(b.testo), corte: b.corte, frasi, posizione: { frase: 0, lente: PRIMA_LENTE } });
     salvaVersione(v, contaParole);
     S.bozza = null;
-    vai(`#/v/${v.id}/analisi/1/parole`);
+    vai(`#/v/${v.id}/analisi/1/${PRIMA_LENTE}`);
   },
 
   /* analisi · parole */
@@ -402,7 +404,7 @@ const AZIONI = {
     const n = paroleDi(f).length;
     if (i + 1 < n) { S.focusParola = true; scegliParola(i + 1); return; }
     const fatte = paroleDi(f).filter(w => f.parole[w.i] && f.parole[w.i].pos).length;
-    annuncia(fatte === n ? `Frase analizzata: ${n} parole su ${n}. Ora i sintagmi.` : `Fine della frase: ${fatte} parole analizzate su ${n}.`);
+    annuncia(fatte === n ? `Analisi grammaticale fatta: ${n} parole su ${n}. Ora la traduzione.` : `Fine della frase: ${fatte} parole analizzate su ${n}.`);
     S.focusParola = true;
     render();
   },
@@ -587,7 +589,7 @@ document.addEventListener('change', ev => {
       const v = importaJSON(t);
       salvaVersione(v, contaParole);
       annuncia(`Aperta «${v.titolo || 'versione'}».`);
-      vai(`#/v/${v.id}/analisi/1/parole`);
+      vai(`#/v/${v.id}/analisi/1/${PRIMA_LENTE}`);
     }).catch(e => annuncia(e && e.message && !/JSON/.test(e.message) ? e.message : 'Il file non si apre: non sembra un lavoro di Translatio.'));
     el.value = '';
   }
