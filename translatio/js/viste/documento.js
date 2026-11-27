@@ -17,11 +17,13 @@ import { html, raw, esc } from '../ui/dom.js';
 import { tokenizza } from '../motore/testo.js';
 import {
   NOMI_POS, PARTI_DEL_DISCORSO, ETICHETTE, etichettaBreve, etichettaLunga,
-  MORFEMI, morfemiValidi, formaTagliabile,
+  MORFEMI, morfemiValidi, formaTagliabile, classeVerbale,
 } from '../motore/grammatica.js';
 import {
-  casoDellaFunzione, abbreviaFunzione, etichettaProposizione, ordoDellaFrase, livelli,
+  casoDellaFunzione, abbreviaFunzione, etichettaProposizione, livelli, gruppoLogico, GRUPPI_LOGICI,
 } from '../motore/sintassi.js';
+import { annotaPeriodo } from '../motore/periodo.js';
+import { disegnaAlbero } from './albero.js';
 import { analizzata, INCLUDI, ID_DATI } from '../stato.js';
 import { CSS_DOCUMENTO } from './stile-documento.js';
 
@@ -67,7 +69,8 @@ function bancoDellaFrase(v, f, inc) {
   const toks = tokenizza(f.testo);
   const parole = toks.filter(t => t.k === 'w');
   const larghezza = s => Math.max(5, parole.slice(s.da, s.a + 1).reduce((n, w) => n + w.t.length * 1.7 + 2, 0));
-  const sopra = { sopra: true, classe: s => `d-prop-${(s.ruolo || '').toLowerCase()}`, etichetta: s => etichettaProposizione(s), larghezza };
+  const info = annotaPeriodo(f.proposizioni || []);
+  const sopra = { sopra: true, classe: s => `d-prop-${(s.ruolo || '').toLowerCase()}`, etichetta: s => etichettaProposizione(s, false, info.get(s.id)), larghezza };
   const sotto = { sopra: false, classe: s => `d-caso-${casoDellaFunzione(s.funzione, v.lingua)}`, etichetta: s => abbreviaFunzione(s.funzione), larghezza };
   const tagli = new Set(f.tagli || []);
   const celle = [];
@@ -84,7 +87,7 @@ function bancoDellaFrase(v, f, inc) {
     const breve = p ? etichettaBreve(p.tratti) : '';
     celle.push(html`<span class="d-cella">
       ${fili(f.proposizioni, t.i, sopra)}
-      <span class="d-forma ${analizzata(p) ? '' : 'd-da-fare'} ${tagli.has(t.i) ? 'd-dopo-taglio' : ''} ${p && p.connettivo ? 'd-connettivo' : ''}" ${p && p.pos ? raw(`data-pos="${p.pos}"`) : ''} lang="${langAttr(v)}">${forma(t.t, p, inc.morfemi)}</span>
+      <span class="d-forma ${analizzata(p) ? '' : 'd-da-fare'} ${tagli.has(t.i) ? 'd-dopo-taglio' : ''} ${p && p.connettivo ? 'd-connettivo' : ''} ${classeVerbale(p) ? `d-verbo-${classeVerbale(p)}` : ''}" ${p && p.pos ? raw(`data-pos="${p.pos}"`) : ''} lang="${langAttr(v)}">${forma(t.t, p, inc.morfemi)}</span>
       <span class="d-sotto">
         ${p && p.pos ? html`<span class="d-pos" data-pos="${p.pos}">${NOMI_POS[p.pos]}</span>` : ''}
         ${p && p.lemma ? html`<span class="d-lemma" lang="${langAttr(v)}">${p.lemma}</span>` : ''}
@@ -117,25 +120,58 @@ function tavolaDelleParole(v, f, inc) {
   ${note.length ? html`<dl class="d-note">${note.map(w => html`<div><dt lang="${langAttr(v)}">${w.t}</dt><dd>${f.parole[w.i].nota}</dd></div>`)}</dl>` : ''}</div>`;
 }
 
-/* frase per frase il documento segue l'ordine del lavoro: sintattica (il
-   periodo), logica (la costruzione), grammaticale (la tavola), traduzione */
+/* frase per frase il documento segue l'ordine del metodo: scomposizione e
+   periodo (con l'albero), forme verbali, analisi logica, grammaticale, ordo,
+   traduzione */
 function periodo(v, f) {
   const parole = paroleDi(f);
   const props = [...f.proposizioni].sort((a, b) => a.da - b.da);
-  const verbi = parole.filter(w => f.parole[w.i] && f.parole[w.i].pos === 'verbo').map(w => w.t);
   const conn = parole.filter(w => f.parole[w.i] && f.parole[w.i].connettivo).map(w => w.t);
-  const segmenti = (f.tagli || []).length + 1;
-  if (!props.length && !verbi.length && !conn.length && segmenti === 1) return '';
-  return html`<div class="d-blocco"><p class="d-etichetta">Analisi sintattica · il periodo</p>
-      <p class="d-dati-periodo">${segmenti} ${segmenti === 1 ? 'segmento' : 'segmenti'}${verbi.length ? html` · verbi: <i lang="${langAttr(v)}">${verbi.join(', ')}</i>` : ''}${conn.length ? html` · connettivi: <i lang="${langAttr(v)}">${conn.join(', ')}</i>` : ''}</p>
-      ${props.length ? html`<ul class="d-periodo">${props.map(s => html`<li class="d-prop-${(s.ruolo || '').toLowerCase()}"><span class="d-segno-prop"></span><b>${etichettaProposizione(s, true)}</b> <span lang="${langAttr(v)}">${parole.slice(s.da, s.a + 1).map(w => w.t).join(' ')}</span></li>`)}</ul>` : ''}</div>`;
+  const frasi = (f.tagli || []).length + 1;
+  if (!props.length && !conn.length && frasi === 1) return '';
+  const info = annotaPeriodo(props);
+  return html`<div class="d-blocco"><p class="d-etichetta">Analisi periodale</p>
+      <p class="d-dati-periodo">${frasi} ${frasi === 1 ? 'frase' : 'frasi'}${conn.length ? html` · connettivi: <i lang="${langAttr(v)}">${conn.join(', ')}</i>` : ''}</p>
+      ${props.length ? html`<ul class="d-periodo">${props.map(s => html`<li class="d-prop-${(s.ruolo || '').toLowerCase()}"><span class="d-segno-prop"></span><b>${etichettaProposizione(s, true, info.get(s.id))}</b> <span lang="${langAttr(v)}">${parole.slice(s.da, s.a + 1).map(w => w.t).join(' ')}</span></li>`)}</ul>
+        <p class="d-etichetta" style="margin-top:8px">Albero sintattico</p>
+        ${disegnaAlbero(v, f, parole, { prefisso: 'd-' })}` : ''}</div>`;
 }
 
-function costruzione(v, f) {
-  const ordo = ordoDellaFrase(f, paroleDi(f), v.lingua);
+function formeVerbali(v, f) {
+  const verbi = paroleDi(f).filter(w => f.parole[w.i] && f.parole[w.i].pos === 'verbo');
+  if (!verbi.length) return '';
+  return html`<div class="d-blocco"><p class="d-etichetta">Forme verbali</p>
+    <ul class="d-verbi">${verbi.map(w => {
+      const p = f.parole[w.i];
+      const c = classeVerbale(p);
+      return html`<li><span class="d-forma-verbo ${c ? `d-verbo-${c}` : ''}" lang="${langAttr(v)}">${w.t}</span>
+        <span>${c ? html`<b>modo ${c}</b>` : 'modo da scegliere'}${etichettaLunga(p.tratti) ? html` · ${etichettaLunga(p.tratti)}` : ''}${p.lemma ? html` · <i lang="${langAttr(v)}">${p.lemma}</i>` : ''}</span></li>`;
+    })}</ul></div>`;
+}
+
+const NOMI_GRUPPI_LOGICI = { nominativo: 'soggetto e gruppo del nominativo', accusativo: 'oggetto e gruppo dell’accusativo', obliqui: 'complementi obliqui' };
+function logica(v, f) {
+  const parole = paroleDi(f);
+  const sint = [...(f.sintagmi || [])].sort((a, b) => a.da - b.da);
+  if (!sint.length) return '';
+  return html`<div class="d-blocco"><p class="d-etichetta">Analisi logica</p>
+    ${GRUPPI_LOGICI.map(g => {
+      const qui = sint.filter(s => gruppoLogico(s.funzione, v.lingua) === g);
+      return qui.length ? html`<p class="d-gruppo-logico">${NOMI_GRUPPI_LOGICI[g]}</p>
+        <div class="d-ordo">${qui.map(s => html`<span class="d-ordo-blocco d-caso-${casoDellaFunzione(s.funzione, v.lingua)}"><b>${abbreviaFunzione(s.funzione)}</b><span lang="${langAttr(v)}">${parole.slice(s.da, s.a + 1).map(w => w.t).join(' ')}</span></span>`)}</div>` : '';
+    })}</div>`;
+}
+
+function ordoVerborum(v, f) {
+  const parole = paroleDi(f);
+  const ordo = (f.ordo || []).filter(i => parole[i]);
   if (!ordo.length) return '';
-  return html`<div class="d-blocco"><p class="d-etichetta">Analisi logica · la costruzione</p>
-      <div class="d-ordo">${ordo.map(b => html`<span class="d-ordo-blocco d-caso-${b.caso}"><b>${abbreviaFunzione(b.funzione)}</b><span lang="${langAttr(v)}">${b.testo}</span></span>`)}</div></div>`;
+  const sintagmaDi = i => (f.sintagmi || []).filter(s => i >= s.da && i <= s.a).sort((a, b) => (a.a - a.da) - (b.a - b.da))[0];
+  return html`<div class="d-blocco"><p class="d-etichetta">Ordo verborum</p>
+    <p class="d-riga-ordo" lang="${langAttr(v)}">${ordo.map(i => {
+      const s = sintagmaDi(i);
+      return html`<span class="d-parola-ordo ${s ? `d-caso-${casoDellaFunzione(s.funzione, v.lingua)}` : ''}">${parole[i].t}</span> `;
+    })}</p></div>`;
 }
 
 /* ── il lessico: i lemmi del brano coi significati scelti ───────────────── */
@@ -158,11 +194,12 @@ export function lessico(v) {
 /* ── la legenda: solo i colori che il documento usa ─────────────────────── */
 function legenda(v) {
   const pos = new Set(); const casi = new Set(); const ruoli = new Set(); const morfemi = new Set();
-  let sbarre = false; let riquadri = false;
+  let sbarre = false; let riquadri = false; const verbali = new Set();
   for (const f of v.frasi) {
     if ((f.tagli || []).length) sbarre = true;
     for (const p of Object.values(f.parole)) {
       if (p.connettivo) riquadri = true;
+      if (classeVerbale(p)) verbali.add(classeVerbale(p));
       if (p.pos) pos.add(p.pos);
       for (const m of (p.morfemi || [])) if (m.r) morfemi.add(m.r);
     }
@@ -173,7 +210,7 @@ function legenda(v) {
   const ordineCasi = ['pred', 'nom', 'gen', 'dat', 'acc', 'voc', 'abl', 'altro'].filter(x => casi.has(x));
   const ordineRuoli = ['principale', 'coordinata', 'subordinata'].filter(x => ruoli.has(x));
   const ordineMorfemi = Object.keys(MORFEMI).filter(x => morfemi.has(x));
-  if (!sbarre && !riquadri && !ordinePos.length && !ordineCasi.length && !ordineRuoli.length && !ordineMorfemi.length) return '';
+  if (!sbarre && !riquadri && !verbali.size && !ordinePos.length && !ordineCasi.length && !ordineRuoli.length && !ordineMorfemi.length) return '';
   return html`<div class="d-legenda">
     ${ordinePos.length ? html`<div><p class="d-etichetta">Parti del discorso · il filetto sotto la parola</p>
       <ul>${ordinePos.map(x => html`<li><span class="d-campione d-campione-pos" data-pos="${x}"></span>${NOMI_POS[x]}</li>`)}</ul></div>` : ''}
@@ -182,7 +219,9 @@ function legenda(v) {
     ${ordineRuoli.length ? html`<div><p class="d-etichetta">Proposizioni · il filo sopra</p>
       <ul>${ordineRuoli.map(x => html`<li><span class="d-campione-linea d-prop-${x}"></span>${x}</li>`)}</ul></div>` : ''}
     ${sbarre || riquadri ? html`<div><p class="d-etichetta">Il periodo</p>
-      <ul>${sbarre ? html`<li><span class="d-campione-sbarra">/</span>dove comincia una proposizione</li>` : ''}${riquadri ? html`<li><span class="d-campione-riquadro">et</span>connettivo</li>` : ''}</ul></div>` : ''}
+      <ul>${sbarre ? html`<li><span class="d-campione-sbarra">/</span>dove comincia una frase</li>` : ''}${riquadri ? html`<li><span class="d-campione-riquadro">et</span>connettivo</li>` : ''}</ul></div>` : ''}
+    ${verbali.size ? html`<div><p class="d-etichetta">Forme verbali</p>
+      <ul>${verbali.has('finito') ? html`<li><span class="d-forma-verbo d-verbo-finito">verbo</span>modo finito</li>` : ''}${verbali.has('indefinito') ? html`<li><span class="d-forma-verbo d-verbo-indefinito">verbo</span>modo indefinito</li>` : ''}</ul></div>` : ''}
     ${ordineMorfemi.length ? html`<div><p class="d-etichetta">Morfemi</p>
       <ul>${ordineMorfemi.map(x => html`<li><span class="d-m d-m-${x}">abc</span> ${MORFEMI[x]}</li>`)}</ul></div>` : ''}
   </div>`;
@@ -196,7 +235,7 @@ export function documento(v) {
   const lex = inc.lessico ? lessico(v) : [];
   const traduzione = v.frasi.map(f => (f.bella || f.brutta || '').trim()).filter(Boolean);
   const soloBrutta = v.frasi.some(f => !(f.bella || '').trim() && (f.brutta || '').trim());
-  const perFrase = inc.grafica || inc.parole || inc.costruzione || inc.brutta || inc.bella;
+  const perFrase = inc.grafica || inc.periodo || inc.verbi || inc.logica || inc.parole || inc.ordo || inc.brutta || inc.bella;
   const dati = [['Studente', c.studente], ['Classe', c.classe], ['Data', dataLunga(c.data)], ['Docente', c.docente]].filter(([, x]) => x);
   const leg = inc.legenda ? legenda(v) : '';
 
@@ -218,9 +257,11 @@ export function documento(v) {
       <h2 class="d-margine d-numero" aria-label="Frase ${n + 1}">${due(n + 1)}</h2>
       <div class="d-corpo">
         ${inc.grafica ? bancoDellaFrase(v, f, inc) : html`<p class="d-brano" lang="${langAttr(v)}">${f.testo}</p>`}
-        ${inc.costruzione ? periodo(v, f) : ''}
-        ${inc.costruzione ? costruzione(v, f) : ''}
+        ${inc.periodo ? periodo(v, f) : ''}
+        ${inc.verbi ? formeVerbali(v, f) : ''}
+        ${inc.logica ? logica(v, f) : ''}
         ${inc.parole ? tavolaDelleParole(v, f, inc) : ''}
+        ${inc.ordo ? ordoVerborum(v, f) : ''}
         ${inc.brutta && f.brutta.trim() ? html`<div class="d-blocco"><p class="d-etichetta">Traduzione · brutta copia</p><p class="d-resa">${f.brutta}</p></div>` : ''}
         ${inc.bella && f.bella.trim() ? html`<div class="d-blocco"><p class="d-etichetta">Traduzione · bella copia</p><p class="d-resa d-bella">${f.bella}</p></div>` : ''}
       </div>

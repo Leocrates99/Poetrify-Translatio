@@ -44,6 +44,7 @@ const G = await import('../js/motore/grammatica.js');
 const St = await import('../js/stato.js');
 const Sx = await import('../js/motore/sintassi.js');
 const D = await import('../js/viste/documento.js');
+const Pe = await import('../js/motore/periodo.js');
 const A = await import('../js/viste/analisi.js');
 
 console.log('testo');
@@ -120,6 +121,9 @@ prova('lo schema 1 tiene solo il lavoro dello studente', () => {
   assert.deepEqual(v.frasi[0].parole, { 0: { pos: 'verbo', tratti: { modo: 'ind' }, lemma: 'λύω' }, 1: { senso: 'il' } });
   assert.equal(v.frasi[0].analizzata, undefined);
   assert.equal(v.consegna.includi.grafica, true);
+  const v2 = St.importaJSON(JSON.stringify({ ...v1, consegna: { includi: { costruzione: false } } }));
+  assert.equal(v2.consegna.includi.periodo, false, 'la vecchia voce «costruzione» spegne il periodo');
+  assert.equal(v2.consegna.includi.ordo, true);
 });
 
 console.log('documento');
@@ -155,9 +159,31 @@ prova('la segmentazione: le sbarre fanno segmenti contigui, un tocco ne prende u
   assert.deepEqual(Sx.segmentiDi(3, []), [{ da: 0, a: 2 }]);
   assert.deepEqual(Sx.segmentoDi(3, 6, [2, 4]), { da: 2, a: 3 });
 });
-prova('la costruzione rimette in fila soggetto, predicato, oggetto', () => {
-  const g = { sintagmi: [{ da: 2, a: 2, funzione: 'Complemento oggetto' }, { da: 1, a: 1, funzione: 'Predicato verbale' }, { da: 0, a: 0, funzione: 'Soggetto' }] };
-  assert.deepEqual(Sx.ordoDellaFrase(g, [{ t: 'a' }, { t: 'b' }, { t: 'c' }], 'latino').map(b => b.testo), ['a', 'b', 'c']);
+prova('l’albero: sigle per livello, subordinate sotto la reggente, coordinate accanto', () => {
+  const P = [
+    { id: 'a', da: 0, a: 6, ruolo: 'Principale' },
+    { id: 'b', da: 7, a: 10, ruolo: 'Subordinata', dipende: 'a' },
+    { id: 'c', da: 11, a: 12, ruolo: 'Coordinata', dipende: 'b' },
+    { id: 'd', da: 13, a: 20, ruolo: 'Subordinata', dipende: 'c' },
+  ];
+  const info = Pe.annotaPeriodo(P);
+  assert.deepEqual(P.map(p => info.get(p.id).sigla), ['A₁', 'B₁', 'B₂', 'C₁']);
+  const t = Pe.alberoDelPeriodo(P);
+  assert.deepEqual(t.map(n => n.p.id), ['a']);
+  assert.deepEqual(t[0].figli.map(n => n.p.id), ['b', 'c']);
+  assert.deepEqual(t[0].figli[1].figli.map(n => n.p.id), ['d']);
+  assert.deepEqual(Pe.possibiliReggenti(P[1], P).map(p => p.id), ['a'], 'una proposizione non puo’ dipendere da chi dipende da lei');
+  assert.equal(Sx.etichettaProposizione(P[3], true, info.get('d')), 'C₁ · subordinata di 2° grado');
+});
+prova('forme verbali e gruppi della logica', () => {
+  assert.equal(G.classeVerbale({ pos: 'verbo', tratti: { modo: 'cong' } }), 'finito');
+  assert.equal(G.classeVerbale({ pos: 'verbo', tratti: { modo: 'ptc' } }), 'indefinito');
+  assert.equal(G.classeVerbale({ pos: 'verbo' }), '');
+  assert.equal(Sx.gruppoLogico('Soggetto', 'latino'), 'nominativo');
+  assert.equal(Sx.gruppoLogico('Predicato verbale', 'latino'), 'nominativo');
+  assert.equal(Sx.gruppoLogico('Complemento oggetto', 'greco'), 'accusativo');
+  assert.equal(Sx.gruppoLogico('Complemento di mezzo o strumento', 'latino'), 'obliqui');
+  assert.ok(!Sx.funzioniDelGruppo('nominativo', 'latino').some(g => g.items.includes('Complemento oggetto')));
 });
 
 console.log(`\nCONFORME · ${prove} prove superate`);

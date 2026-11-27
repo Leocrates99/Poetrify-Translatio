@@ -8,8 +8,10 @@
    corpus di Poetrify; ne usa solo i token grafici e i caratteri.
 
    Un flusso solo, in quattro tappe: TESTO → ANALISI → VERSIONE → CONSEGNA.
-   L'analisi scende in quattro livelli, nell'ordine: sintattica (il periodo),
-   logica (i sintagmi), grammaticale (le parole), traduzione della frase.
+   L'analisi segue l'ordine del metodo: scomposizione in frasi, analisi
+   periodale (con l'albero sintattico), forme verbali, analisi logica
+   (nominativo, accusativo, obliqui), analisi grammaticale, ordo verborum,
+   traduzione.
    Navigazione con l'hash, bidirezionale (il tasto Indietro cambia la vista):
      #/                                  archivio
      #/nuova · #/nuova/<lingua>          porta della lingua · testo nuovo
@@ -31,7 +33,7 @@ import {
 import { vistaArchivio, vistaPorta } from './viste/archivio.js';
 import { vistaTesto, anteprimaFrasi, avvisoLingua } from './viste/testo.js';
 import {
-  vistaAnalisi, scheda, fraseViva, LENTI, PRIMA_LENTE, gruppoDaCompilare, valoriDelGruppo,
+  vistaAnalisi, scheda, fraseViva, LENTI, PRIMA_LENTE, ALIAS_LENTI, eLogica, gruppoDaCompilare, valoriDelGruppo,
 } from './viste/analisi.js';
 import { vistaTraduzione, versioneInMarkdown, soloTraduzione } from './viste/traduzione.js';
 import { vistaConsegna, controllo } from './viste/consegna.js';
@@ -75,7 +77,8 @@ function rotta() {
     const sez = VISTE_DI_VERSIONE.has(parti[2]) ? parti[2] : 'analisi';
     if (sez !== 'analisi') return { vista: sez, id };
     const n = parseInt(parti[3], 10);
-    return { vista: 'analisi', id, frase: Number.isFinite(n) ? n - 1 : null, lente: NOMI_LENTI.has(parti[4]) ? parti[4] : null };
+    const lente = ALIAS_LENTI[parti[4]] || parti[4];
+    return { vista: 'analisi', id, frase: Number.isFinite(n) ? n - 1 : null, lente: NOMI_LENTI.has(lente) ? lente : null };
   }
   return { vista: 'archivio' };
 }
@@ -101,7 +104,7 @@ function nastro() {
   monta(el, html`<div class="titolo-versione"><strong>${v.titolo || 'Versione senza titolo'}</strong>${v.autore ? html`<span>${v.autore}</span>` : ''}</div>
     <nav class="tappe" aria-label="Tappe della versione">
       ${tappa('testo', `#/v/${v.id}/testo`, 'Testo')}
-      ${tappa('analisi', `#/v/${v.id}/analisi/${(pos.frase || 0) + 1}/${pos.lente || PRIMA_LENTE}`, 'Analisi')}
+      ${tappa('analisi', `#/v/${v.id}/analisi/${(pos.frase || 0) + 1}/${(NOMI_LENTI.has(ALIAS_LENTI[pos.lente] || pos.lente) && (ALIAS_LENTI[pos.lente] || pos.lente)) || PRIMA_LENTE}`, 'Analisi')}
       ${tappa('traduzione', `#/v/${v.id}/traduzione`, 'Versione')}
       ${tappa('consegna', `#/v/${v.id}/consegna`, 'Consegna')}
     </nav>`, { conservaScroll: false });
@@ -154,7 +157,8 @@ function render() {
     const pos = S.v.posizione || {};
     const n = r.frase != null ? r.frase : (pos.frase || 0);
     S.frase = Math.min(Math.max(0, n), S.v.frasi.length - 1);
-    S.lente = r.lente || pos.lente || PRIMA_LENTE;
+    const salvata = ALIAS_LENTI[pos.lente] || pos.lente;
+    S.lente = r.lente || (NOMI_LENTI.has(salvata) ? salvata : PRIMA_LENTE);
     if (prima.id !== S.v.id || prima.frase !== S.frase || prima.lente !== S.lente || prima.vista !== 'analisi') {
       azzeraSelezione();
     }
@@ -314,7 +318,7 @@ function selezionaSegmento(i, estendi) {
 
 function segniCorrenti() {
   const f = frase();
-  return S.lente === 'sintagmi' ? f.sintagmi : f.proposizioni;
+  return eLogica(S.lente) ? f.sintagmi : f.proposizioni;
 }
 
 const AZIONI = {
@@ -403,25 +407,18 @@ const AZIONI = {
         annuncia(t.has(i) ? 'Sbarra: qui comincia una proposizione.' : 'Sbarra tolta.', { visibile: false });
         return;
       }
-      case 'verbi': {
-        const p = parolaDa(i);
-        p.pos = p.pos === 'verbo' ? '' : 'verbo';
-        p.tratti = trattiCoerenti(p, S.v.lingua);
-        riordina(i);
-        salva(); render();
-        return;
-      }
-      case 'connettivi': {
-        const p = parolaDa(i);
-        p.connettivo = !p.connettivo;
-        riordina(i);
-        salva(); render();
-        return;
-      }
       case 'proposizioni': selezionaSegmento(i, ev && ev.shiftKey); return;
-      case 'sintagmi': selezionaInGruppo(i, ev && ev.shiftKey); return;
-      case 'parole': scegliParola(i); return;
+      case 'verbi': case 'parole': scegliParola(i); return;
+      case 'ordo': {
+        /* l'ordo: un tocco mette la parola in fondo, un altro la toglie */
+        const o = f.ordo || (f.ordo = []);
+        const k = o.indexOf(i);
+        if (k >= 0) o.splice(k, 1); else o.push(i);
+        salva(); render();
+        return;
+      }
       default:
+        if (eLogica(S.lente)) selezionaInGruppo(i, ev && ev.shiftKey);
     }
   },
   chiudi() { azzeraSelezione(); render(); },
@@ -449,7 +446,7 @@ const AZIONI = {
     const n = paroleDi(f).length;
     if (i + 1 < n) { S.focusParola = true; scegliParola(i + 1); return; }
     const fatte = paroleDi(f).filter(w => f.parole[w.i] && f.parole[w.i].pos).length;
-    annuncia(fatte === n ? `Analisi grammaticale fatta: ${n} parole su ${n}. Ora la traduzione.` : `Fine della frase: ${fatte} parole analizzate su ${n}.`);
+    annuncia(fatte === n ? `Analisi grammaticale fatta: ${n} parole su ${n}. Ora l’ordo verborum.` : `Fine della frase: ${fatte} parole analizzate su ${n}.`);
     S.focusParola = true;
     render();
   },
@@ -471,6 +468,47 @@ const AZIONI = {
     S.apriMorfemi = true;
     riordina(i);
     salva(); render();
+  },
+  /* forme verbali: il modo fa della parola un verbo, finito o indefinito */
+  'modo-verbale'(el) {
+    const i = +el.dataset.i;
+    const p = parolaDa(i);
+    p.pos = 'verbo';
+    p.tratti = { ...(p.tratti || {}) };
+    if (p.tratti.modo === el.dataset.x) delete p.tratti.modo; else p.tratti.modo = el.dataset.x;
+    p.tratti = trattiCoerenti(p, S.v.lingua);
+    riordina(i);
+    salva(); render();
+  },
+  'non-verbo'(el) {
+    const i = +el.dataset.i;
+    const p = parolaDa(i);
+    if (p.pos === 'verbo') { p.pos = ''; p.tratti = {}; }
+    riordina(i);
+    salva(); render();
+  },
+  connettivo(el) {
+    const i = +el.dataset.i;
+    const p = parolaDa(i);
+    p.connettivo = !p.connettivo;
+    riordina(i);
+    salva(); render();
+  },
+  dipende(el) {
+    const attivo = frase().proposizioni.find(s => s.id === S.segnoAttivo);
+    if (!attivo) return;
+    attivo.dipende = attivo.dipende === el.dataset.id ? '' : el.dataset.id;
+    salva(); render();
+  },
+  'ordo-togli'(el) {
+    const f = frase();
+    f.ordo = (f.ordo || []).filter(x => x !== +el.dataset.i);
+    salva(); render();
+  },
+  'ordo-indietro'() { frase().ordo.pop(); salva(); render(); },
+  'ordo-azzera'() {
+    if (!confirm('Ricomincio l’ordo verborum di questa frase?')) return;
+    frase().ordo = []; salva(); render();
   },
   'ruolo-morfema'(el) {
     const i = +el.dataset.i;
@@ -509,8 +547,10 @@ const AZIONI = {
   },
   'togli-segno'(el) {
     const f = frase();
-    const k = S.lente === 'sintagmi' ? 'sintagmi' : 'proposizioni';
+    const k = eLogica(S.lente) ? 'sintagmi' : 'proposizioni';
     f[k] = f[k].filter(s => s.id !== el.dataset.id);
+    /* chi dipendeva dalla proposizione tolta torna in attesa della reggente */
+    if (k === 'proposizioni') for (const s of f.proposizioni) if (s.dipende === el.dataset.id) s.dipende = '';
     if (S.segnoAttivo === el.dataset.id) { S.segnoAttivo = null; S.span = null; }
     S.schedaGruppoAperta = true;
     salva(); render();
@@ -521,8 +561,8 @@ const AZIONI = {
     const r = el.dataset.ruolo;
     let attivo = f.proposizioni.find(s => s.id === S.segnoAttivo)
       || f.proposizioni.find(s => s.da === S.span.da && s.a === S.span.a);
-    if (attivo) { if (attivo.ruolo !== r) { attivo.ruolo = r; attivo.tipo = ''; } } else {
-      attivo = { id: nuovoId('p'), da: S.span.da, a: S.span.a, ruolo: r, tipo: '', grado: 1 };
+    if (attivo) { if (attivo.ruolo !== r) { attivo.ruolo = r; attivo.tipo = ''; if (r === 'Principale') attivo.dipende = ''; } } else {
+      attivo = { id: nuovoId('p'), da: S.span.da, a: S.span.a, ruolo: r, tipo: '', dipende: '', grado: 1 };
       f.proposizioni.push(attivo);
     }
     S.segnoAttivo = attivo.id; S.ancora = null;
@@ -651,12 +691,13 @@ function tastoNumero(ev) {
   if (!(n >= 1 && n <= 9) || S.sel == null || !tastieraFine()) return false;
   const f = frase();
   const p = f.parole[S.sel];
-  const gruppo = gruppoDaCompilare(p, S.v.lingua);
+  const gruppo = gruppoDaCompilare(p, S.v.lingua, S.lente);
   if (!gruppo) return false;
   const x = valoriDelGruppo(gruppo, p, S.v.lingua)[n - 1];
   if (!x) return false;
   ev.preventDefault();
   if (gruppo === 'pos') AZIONI.pos({ dataset: { i: String(S.sel), pos: x } });
+  else if (gruppo === 'modo' && S.lente === 'verbi') AZIONI['modo-verbale']({ dataset: { i: String(S.sel), x } });
   else AZIONI.tratto({ dataset: { i: String(S.sel), g: gruppo, x } });
   return true;
 }
@@ -679,7 +720,7 @@ document.addEventListener('keydown', ev => {
   if (scrive || ev.altKey || ev.ctrlKey || ev.metaKey) return;
   if (ev.key === '[' && S.frase > 0) { vai(`#/v/${S.v.id}/analisi/${S.frase}/${S.lente}`); return; }
   if (ev.key === ']' && S.frase < S.v.frasi.length - 1) { vai(`#/v/${S.v.id}/analisi/${S.frase + 2}/${S.lente}`); return; }
-  if (S.lente !== 'parole') return;
+  if (S.lente !== 'parole' && S.lente !== 'verbi') return;
   if (tastoNumero(ev)) return;
   const n = paroleDi(frase()).length;
   if (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') {
@@ -690,7 +731,7 @@ document.addEventListener('keydown', ev => {
     scegliParola(i);
     return;
   }
-  if (ev.key === 'Enter' && S.sel != null && (!t.closest('button, a') || (t.matches('.parola') && +t.dataset.i === S.sel))) {
+  if (S.lente === 'parole' && ev.key === 'Enter' && S.sel != null && (!t.closest('button, a') || (t.matches('.parola') && +t.dataset.i === S.sel))) {
     ev.preventDefault();
     AZIONI.prossima({ dataset: { i: String(S.sel) } });
   }

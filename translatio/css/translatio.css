@@ -387,7 +387,66 @@ main:focus { outline: none; }
 [data-lente="segmenti"] .parola.dopo-taglio .forma::before { font-weight: 700; color: var(--lingua); }
 [data-lente="segmenti"] .parola[data-i="0"] { cursor: default; }
 .parola.connettivo .forma { outline: 1.5px solid var(--ink-soft); outline-offset: 2px; }
-[data-lente="connettivi"] .parola.connettivo .forma { outline-color: var(--lingua); }
+[data-lente="proposizioni"] .parola.connettivo .forma { outline-color: var(--lingua); }
+
+/* le forme verbali: il modo finito evidenziato pieno, l'indefinito a
+   tratteggio, nel rosso del verbo; l'evidenziatore sta sotto la forma */
+:root { --evid-finito: rgba(220, 43, 43, 0.24); --evid-indefinito: rgba(220, 43, 43, 0.45); }
+:root[data-theme="dark"] { --evid-finito: rgba(240, 133, 133, 0.30); --evid-indefinito: rgba(240, 133, 133, 0.55); }
+.parola.verbo-finito .forma, .forma-verbo.verbo-finito { background: linear-gradient(transparent 56%, var(--evid-finito) 56%); }
+.parola.verbo-indefinito .forma, .forma-verbo.verbo-indefinito {
+  background: repeating-linear-gradient(-45deg, var(--evid-indefinito) 0 2px, transparent 2px 5px) 0 100% / 100% 44% no-repeat;
+}
+.elenco-verbi { display: grid; gap: 10px; margin: 14px 0; padding: 0; list-style: none; }
+.elenco-verbi .testo { all: unset; display: grid; gap: 2px; cursor: pointer; }
+.elenco-verbi .testo:focus-visible { outline: 2px solid var(--lingua); outline-offset: 2px; }
+.forma-verbo { justify-self: start; font-family: var(--font-testo); font-size: 20px; line-height: 1.3; }
+
+/* l'ordo verborum: le parole gia' messe in fila si spengono e portano il
+   loro numero; sotto la frase, la fila */
+.parola.in-ordo .forma { color: var(--sepia); }
+.ordo-n { position: absolute; top: -0.5em; right: -0.55em; font: 800 11px/1 var(--font-ui); color: var(--lingua); }
+.ordo-verborum, .albero-sintattico { margin-top: 24px; padding-top: 12px; border-top: 1px solid var(--rule-soft); }
+.riga-ordo { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; margin: 8px 0 0; font-family: var(--font-testo); font-size: 24px; line-height: 1.3; }
+.parola-ordo { all: unset; display: inline-block; min-width: 24px; min-height: 28px; text-align: center; padding-bottom: 2px; border-bottom: 3px solid var(--filo-c, var(--rule-soft)); cursor: pointer; }
+span.parola-ordo { cursor: default; }
+.parola-ordo:focus-visible { outline: 2px solid var(--lingua); outline-offset: 2px; }
+
+/* l'albero sintattico: principali in cima, subordinate sotto la reggente,
+   coordinate accanto; si scorre in orizzontale dentro di se', non la pagina */
+.albero-scorre { overflow-x: auto; padding: 8px 0 10px; }
+.albero, .albero ul { display: flex; justify-content: center; margin: 0; padding: 0; list-style: none; }
+.albero { width: max-content; min-width: 100%; gap: 0 14px; }
+.albero ul { position: relative; padding-top: 18px; }
+.albero li { position: relative; display: flex; flex-direction: column; align-items: center; padding: 18px 6px 0; }
+.albero > li { padding-top: 0; }
+.albero li::before, .albero li::after {
+  content: ""; position: absolute; top: 0; right: 50%; width: 50%; height: 18px; border-top: 1px solid var(--ink-soft);
+}
+.albero li::after { right: auto; left: 50%; border-left: 1px solid var(--ink-soft); }
+.albero > li::before, .albero > li::after, .albero li:only-child::before, .albero li:only-child::after { display: none; }
+.albero li:only-child { padding-top: 0; }
+.albero li:first-child::before, .albero li:last-child::after { border: 0; }
+.albero li:last-child::before { border-right: 1px solid var(--ink-soft); }
+.albero ul::before { content: ""; position: absolute; top: 0; left: 50%; height: 18px; border-left: 1px solid var(--ink-soft); }
+.albero .nodo {
+  display: grid; gap: 2px; min-width: 120px; max-width: 230px; padding: 6px 10px 8px;
+  border: 1px solid var(--ink); background: var(--paper); color: var(--ink); text-align: left; font: inherit;
+}
+.albero button.nodo { cursor: pointer; }
+.albero button.nodo:hover { border-color: var(--lingua); }
+.albero .nodo-principale { border-width: 2px; }
+.albero .nodo-coordinata { border-style: dashed; }
+.albero .nodo.attivo { border-color: var(--lingua); box-shadow: inset 0 0 0 1px var(--lingua); }
+.albero .sigla { font-size: 16px; font-weight: 800; line-height: 1.1; color: var(--lingua); }
+.albero .ruolo { font-size: 11.5px; line-height: 1.3; color: var(--sepia); }
+.albero .ruolo b { color: var(--ink); font-weight: 700; }
+.albero .testo-nodo {
+  font-family: var(--font-testo); font-size: 15px; line-height: 1.3;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.scelta-reggente b { color: var(--lingua); }
+.sottopassi .num { font-weight: 800; color: var(--lingua); font-variant-numeric: tabular-nums; }
 
 /* i passi dell'analisi periodale, sotto i livelli */
 .lenti .sottopassi { counter-reset: passo; margin-top: 6px; }
@@ -395,8 +454,8 @@ main:focus { outline: none; }
    sbarra, il filetto del verbo o il riquadro del connettivo */
 [data-lente="segmenti"] .parola[aria-pressed="true"],
 [data-lente="verbi"] .parola[aria-pressed="true"],
-[data-lente="connettivi"] .parola[aria-pressed="true"] { border-color: transparent; box-shadow: none; background: none; }
-.lenti .sottopassi button::before { counter-increment: passo; content: "1." counter(passo); font-size: 11px; }
+[data-lente="ordo"] .parola[aria-pressed="true"] { border-color: transparent; box-shadow: none; background: none; }
+.lenti .sottopassi button::before { content: none; }
 .elenco-segmenti { display: grid; gap: 10px; margin: 0 0 12px; padding: 0; list-style: none; }
 .elenco-segmenti li { display: grid; grid-template-columns: 24px 1fr; gap: 8px; align-items: baseline; }
 .elenco-segmenti .n { font-weight: 800; color: var(--lingua); font-variant-numeric: tabular-nums; }
@@ -468,7 +527,15 @@ main:focus { outline: none; }
   display: block; position: relative; height: 14px; margin: 2px 0 0 2px;
   font-size: 11px; font-weight: 700; line-height: 14px; color: var(--ink-soft);
 }
-.filo-etichetta > span { position: absolute; left: 0; top: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.filo-etichetta > span { position: absolute; left: 0; top: 0; max-width: calc(var(--n, 8) * 1.9ch + 10px); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+@media (max-width: 767px) {
+  .filo-etichetta > span { max-width: calc(var(--n, 8) * 1.5ch + 8px); }
+  /* l'albero piu' compatto: tre nodi stanno in una riga di telefono */
+  .albero { gap: 0 8px; }
+  .albero li { padding-left: 3px; padding-right: 3px; }
+  .albero .nodo { min-width: 0; max-width: 150px; padding: 5px 7px 6px; }
+  .albero .testo-nodo { font-size: 13.5px; }
+}
 .filo-etichetta.assente { visibility: hidden; }
 .fili-sopra .filo-etichetta { margin: 0 0 2px 2px; }
 /* il colore del filo: il caso della funzione (codice di categoria della collana) */

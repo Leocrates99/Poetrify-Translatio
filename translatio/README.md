@@ -17,54 +17,55 @@ la chiave del tema (`shared/poetrify-theme.js`) e i caratteri (`vendor/fonts/`).
 
 ```
 TESTO  →  ANALISI  →  VERSIONE  →  CONSEGNA
-           1 sintattica (1.1 segmentazione · 1.2 verbi · 1.3 connettivi · 1.4 proposizioni)
-           2 logica · 3 grammaticale · 4 traduzione
+           1 scomposizione · 2 periodo · 3 verbi · 4 logica (4.1 nominativo · 4.2 accusativo
+           · 4.3 obliqui) · 5 grammatica · 6 ordo · 7 traduzione
 ```
 
 1. **Testo.** Lo studente incolla il brano. Il banco lo divide in periodi guardando solo la
    punteggiatura (latino `. ? !`; greco `. ;`), ed è una proposta grafica, non grammaticale:
-   ⤓ unisce una frase alla successiva, *Dividi* fa cominciare una frase nuova dalla parola
+   ⤓ unisce un periodo al successivo, *Dividi* fa cominciare un periodo nuovo dalla parola
    toccata.
-2. **Analisi.** La frase sta al centro e non cambia mai di posto. Si analizza **dal periodo
-   alla parola**, poi si traduce: quattro **livelli** numerati, in quest'ordine, che seguono
-   il metodo guidato del Translator di Poetrify (segmentazione → verbi → connettivi →
-   sintassi periodale → sintagmi → grammatica → brutta → bella).
-   1. **Sintattica · l'analisi periodale**, in quattro passi:
-      - **1.1 Segmentazione.** Si scompone il periodo nelle sue proposizioni: si tocca la
-        parola da cui ne comincia una nuova e compare la sbarra **/**; ritoccandola si ricuce.
-      - **1.2 Verbi.** Si toccano le forme verbali, anche infiniti e participi: il filetto
-        diventa rosso, il colore del verbo, e l'analisi grammaticale la ritrova già come verbo.
-      - **1.3 Connettivi.** Si toccano congiunzioni, pronomi e avverbi relativi, particelle:
-        ogni connettivo si chiude in un riquadro.
-      - **1.4 Proposizioni.** Un tocco seleziona un **segmento intero** (col Maiuscolo se ne
-        uniscono più d'uno); il ruolo (principale, coordinata, subordinata) segna la
-        proposizione, poi se ne dicono il tipo e il grado. Il filo sta sopra le parole.
+2. **Analisi.** Il periodo sta al centro e non cambia mai di posto. L'analisi segue
+   **l'ordine del metodo** (il percorso guidato del Translator di Poetrify), in sette passi
+   numerati:
+   1. **Scomposizione in frasi.** Si tocca la parola da cui comincia una nuova frase e compare
+      la sbarra **/**; ritoccandola si ricuce.
+   2. **Analisi periodale.** Un tocco seleziona una frase intera (col Maiuscolo se ne uniscono
+      più d'una) e la si classifica: **ruolo** (principale, coordinata, subordinata),
+      **tipo**, **da quale proposizione dipende** (o a quale è coordinata) e **da che cosa è
+      introdotta** (il connettivo si chiude in un riquadro). Le sigle sono quelle del metodo,
+      **A₁ A₂ B₁ B₂…**: la lettera dice il livello (A principali, B subordinate di 1° grado,
+      C di 2°…), il pedice l'ordine nel testo. Sotto la frase cresce **l'albero sintattico**:
+      principali in cima, subordinate sotto la reggente (in verticale), coordinate accanto a
+      quella cui sono coordinate (in orizzontale, col bordo tratteggiato); un nodo si tocca per
+      riaprire la sua proposizione.
+   3. **Forme verbali.** Si tocca un verbo e lo si analizza cominciando dal **modo**, diviso
+      fra **finiti** (indicativo, congiuntivo, ottativo, imperativo) e **indefiniti** (infinito,
+      participio, gerundio, gerundivo, supino); poi tempo, diatesi, persona e numero (o caso e
+      genere), lemma e significato. I verbi di modo finito si **evidenziano pieni**, quelli di
+      modo indefinito **a tratteggio**, nel rosso del verbo.
+   4. **Analisi logica**, in tre passi e in quest'ordine: **4.1 soggetto e gruppo del
+      nominativo** (col predicato), **4.2 oggetto e gruppo dell'accusativo**, **4.3 complementi
+      obliqui**. Si toccano la prima e l'ultima parola di un gruppo e se ne sceglie la
+      funzione: ogni passo offre solo le funzioni del suo gruppo. Il filo sotto il gruppo ha il
+      colore del **caso** (codice di categoria della collana).
+   5. **Analisi grammaticale.** Si tocca una parola e nella scheda si scelgono la **parte del
+      discorso** (le undici tinte della casa), poi i tratti che quella parte del discorso ha. Si
+      scrivono il **lemma** (come sul dizionario), il **significato** in questa frase e, se si
+      vuole, un'osservazione; si può **scomporre la parola in morfemi** toccando la lettera da
+      cui comincia un pezzo. I verbi arrivano già analizzati dal passo 3. Il filetto sotto la
+      parola prende il colore della parte del discorso; finché manca resta **punteggiato e
+      grigio**.
+   6. **Ordo verborum.** Lo studente rimette le parole nell'ordine in cui le tradurrà,
+      toccandole una dopo l'altra: ogni parola porta il suo numero, sotto la frase cresce la
+      fila, col colore del caso del suo sintagma; un secondo tocco la toglie.
+   7. **Traduzione.** Il glossario della frase, l'ordo come traccia, brutta e bella copia.
 
-      Nei primi tre passi la scheda rilegge il periodo segmento per segmento, coi verbi e i
-      connettivi segnati.
-   2. **Logica · i sintagmi.** Per ogni proposizione si costruisce la frase minima: si toccano
-      la prima e l'ultima parola di un gruppo e se ne sceglie la funzione logica (elenco per
-      caso, con la ricerca), nell'ordine soggetto, oggetto, complementi di movimento, altri
-      complementi. Il filo sotto il gruppo ha il colore del **caso** (codice di categoria della
-      collana).
-   3. **Grammaticale · le parole.** Si tocca una parola e nella scheda si scelgono la **parte
-      del discorso** (le undici tinte della casa), poi i tratti che quella parte del discorso
-      ha: caso, numero, genere, grado; modo, tempo, diatesi, persona; declinazione e
-      coniugazione. Si scrivono il **lemma** (come sul dizionario), il **significato** in
-      questa frase e, se si vuole, un'osservazione. Si può **scomporre la parola in morfemi**:
-      si tocca la lettera da cui comincia un pezzo nuovo, e a ogni pezzo si dà un ruolo
-      (prefisso, aumento, tema, vocale tematica, suffisso, desinenza), ciascuno col suo
-      colore. Il filetto sotto la parola prende il colore della parte del discorso scelta;
-      finché manca resta **punteggiato e grigio**. Sotto la parola compaiono sigla, lemma,
-      analisi breve e significato.
-   4. **Traduzione · la frase in italiano.** Il glossario della frase (lemmi e significati
-      dello studente), la costruzione nell'ordine italiano rimessa in fila dai sintagmi,
-      brutta e bella copia.
-
-   I livelli **si sovrappongono**: ciò che è stato segnato prima resta sotto quello su cui si
-   lavora, più chiaro (sbarre, riquadri e proposizioni fino alla grammaticale; i sintagmi
-   nella grammaticale). In fondo al banco il **passo dopo** porta al passo seguente; dopo la
-   traduzione, alla frase seguente dalla segmentazione; dopo l'ultima frase, alla Versione.
+   I passi **si sovrappongono**: ciò che è stato segnato prima resta sotto il passo su cui si
+   lavora, più chiaro (sbarre, riquadri e proposizioni fino alla grammatica; i sintagmi fino
+   all'ordo; l'evidenziatura dei verbi sempre). In fondo al banco il **passo dopo** porta al
+   passo seguente; dopo la traduzione, alla frase seguente dalla scomposizione; dopo l'ultima,
+   alla Versione.
 3. **Versione.** La versione intera, testo a fronte; brutta e bella sono due stati della
    stessa riga. In calce l'apparato lessicale coi lemmi e i significati dello studente.
 4. **Consegna.** Chi consegna (nome, classe, data, docente), che cosa entra nel documento
@@ -83,12 +84,13 @@ Un foglio A4 in veste C2 (`js/viste/documento.js`, `js/viste/stile-documento.js`
 
 - testatina con il titolo, l'autore, i dati dello studente e il filetto nero di 4 px;
 - **il testo**, con le frasi numerate;
-- per ogni frase, col numero appeso nella colonna di margine e nell'ordine dei livelli:
-  **l'analisi disegnata** (le proposizioni sopra, i sintagmi sotto, la parte del discorso nel
-  filetto, le sbarre della segmentazione, i connettivi riquadrati, i morfemi a colori),
-  l'**analisi sintattica** (i segmenti, i verbi, i connettivi, le proposizioni), l'**analisi logica**
-  (la costruzione), l'**analisi grammaticale** (la tavola delle parole: forma, analisi
-  distesa, lemma, significato, poi le osservazioni), la **brutta** e la **bella**;
+- per ogni frase, col numero appeso nella colonna di margine e nell'ordine del metodo:
+  **l'analisi disegnata** (le sbarre, le proposizioni sopra, i sintagmi sotto, i verbi
+  evidenziati, i connettivi riquadrati, la parte del discorso nel filetto, i morfemi a
+  colori), l'**analisi periodale** (le proposizioni con le sigle e **l'albero sintattico**),
+  le **forme verbali** (finite e indefinite, con l'analisi), l'**analisi logica**
+  (nominativo, accusativo, obliqui), l'**analisi grammaticale** (la tavola delle parole),
+  l'**ordo verborum**, la **brutta** e la **bella**;
 - **la traduzione** intera, **il lessico**, **la legenda** (solo i colori che il documento usa).
 
 Il foglio ha classi sue (`d-…`) e colori suoi: è sempre bianco, anche col tema scuro
@@ -101,9 +103,13 @@ alla stampa e al file scaricato.
 |---|---|
 | Nessuna proposta del programma | L'analisi è dello studente: il banco non suggerisce la parte del discorso, il lemma, la funzione o il tipo di proposizione. Disegna e impagina |
 | Quattro tappe nominate in parole da studente | Niente da configurare prima di lavorare |
-| La frase al centro, l'analisi in quattro livelli numerati | Dal periodo alla parola, poi la traduzione: l'ordine del metodo scolastico, e periodo, sintassi e morfologia si leggono *sul testo* |
-| I livelli si sovrappongono | Quello che si è segnato prima resta visibile, più chiaro: la logica si fa dentro le proposizioni, la grammatica dentro i sintagmi |
-| La tappa dopo l'analisi si chiama «Versione» | Il quarto livello è la Traduzione della frase: due voci «Traduzione» sullo stesso schermo porterebbero in due posti diversi |
+| Il periodo al centro, l'analisi in sette passi numerati | L'ordine del metodo (scomposizione, periodo, verbi, logica, grammatica, ordo, traduzione), e periodo, sintassi e morfologia si leggono *sul testo* |
+| L'albero sintattico cresce sotto la frase | Si vede la gerarchia mentre la si costruisce; le sigle A₁ B₁ sono quelle del Translator |
+| Finiti pieni, indefiniti a tratteggio | La distinzione che decide esplicite e implicite si legge a colpo d'occhio, anche in stampa |
+| L'analisi logica in tre passi | Ogni passo offre solo le funzioni del suo gruppo: l'ordine nominativo → accusativo → obliqui non è un consiglio, è il percorso |
+| L'ordo lo compone lo studente | Non si ricava dai sintagmi: è il ponte fra analisi e brutta, e lo decide chi traduce |
+| I passi si sovrappongono | Quello che si è segnato prima resta visibile, più chiaro |
+| La tappa dopo l'analisi si chiama «Versione» | L'ultimo passo è la Traduzione della frase: due voci «Traduzione» sullo stesso schermo porterebbero in due posti diversi |
 | La scheda della parola come modulo | Si compila dall'alto in basso; si vedono solo i gruppi che quella parte del discorso ha (un infinito non chiede la persona; cambiata la parte del discorso, i tratti che non ha cadono) |
 | La parola vuota non scrive nulla sotto di sé | Il filetto punteggiato dice già che manca; una scritta allargherebbe le parole brevi |
 | I morfemi si tagliano toccando una lettera | Lo stesso gesto di *Dividi* nel testo; le lettere greche si tagliano con accenti e spiriti |
@@ -146,10 +152,12 @@ translatio/
 ├─ js/motore/                  moduli puri, nessun import fuori da translatio/
 │  ├─ testo.js                 frasi e parole (tokenizzatore proprio)
 │  ├─ grammatica.js            parti del discorso, tratti, etichette, morfemi
-│  ├─ sintassi.js              colore dei fili, tipi di proposizione, costruzione
+│  ├─ sintassi.js              colore dei fili, tipi di proposizione, gruppi della logica, segmenti
+│  ├─ periodo.js               sigle, livelli e albero delle proposizioni
 │  ├─ tassonomie.js            funzioni logiche e proposizioni (copia di modules/engine/taxonomies.js)
 │  └─ traslitterazione.js      il greco in lettere latine, nella scheda
 ├─ js/viste/                   archivio · testo · analisi · traduzione · consegna
+│  ├─ albero.js                l'albero sintattico, per il banco e per il documento
 │  ├─ documento.js             il foglio da consegnare e la pagina .html autonoma
 │  └─ stile-documento.js       il foglio di stile del documento, in una stringa
 ├─ js/ui/                      dom (template che escapa), icone
@@ -160,16 +168,17 @@ translatio/
 
 **I dati.** `versione = { id, schema: 2, lingua, titolo, autore, testo, frasi, posizione,
 consegna }`; ogni frase ha `parole` (per posizione), `tagli` (gli indici delle parole da cui
-comincia una proposizione), `sintagmi`, `proposizioni`, `brutta`, `bella`; ogni parola è
+comincia una frase), `proposizioni`, `sintagmi`, `ordo`, `brutta`, `bella`; ogni parola è
 `{ pos, tratti, lemma, senso, morfemi: [{ t, r }], nota, connettivo }` e c'è solo se lo
-studente ci ha scritto qualcosa. La forma verbale segnata nel periodo è una parola con `pos:
-'verbo'`. Le versioni dello schema 1 (Translatio con
+studente ci ha scritto qualcosa. Le proposizioni portano `dipende` (l'id della reggente, o
+di quella cui sono coordinate): da lì vengono livello, sigla e albero. La frase porta anche
+`ordo`, gli indici delle parole nell'ordine scelto. Le versioni dello schema 1 (Translatio con
 l'analisi automatica) si aprono ancora: restano le parole che lo studente aveva confermato o
 corretto, i significati, i sintagmi, le proposizioni e le traduzioni; le proposte mai
 confermate cadono.
 
 **La versione dei file.** `index.html` chiede ogni foglio di stile e ogni modulo con la
-stessa versione (`?v=2026-11-27f`); i moduli interni la ricevono da un'import map. Così,
+stessa versione (`?v=2026-11-27g`); i moduli interni la ricevono da un'import map. Così,
 dopo un aggiornamento, il browser non mescola file nuovi e file vecchi rimasti in cache
 (GitHub Pages li tiene 10 minuti). Quando si cambia un file, si alza la versione in tutte
 le righe di `index.html`; il collaudo controlla che sia la stessa ovunque e che l'import

@@ -143,6 +143,18 @@ export function trattiCoerenti(p, lang) {
   return t;
 }
 
+/* ── modi finiti e indefiniti ──────────────────────────────────────────────── */
+/* L'analisi delle forme verbali li distingue a colpo d'occhio: il verbo di modo
+   finito regge una proposizione esplicita, quello di modo indefinito
+   un'implicita (o un costrutto: infinitiva, participio congiunto, ablativo e
+   genitivo assoluto). */
+export const MODI_FINITI = ['ind', 'cong', 'ott', 'imv'];
+export const MODI_INDEFINITI = ['inf', 'ptc', 'gerundio', 'gerundivo', 'supino'];
+export function classeVerbale(p) {
+  if (!p || p.pos !== 'verbo' || !p.tratti || !p.tratti.modo) return '';
+  return MODI_FINITI.includes(p.tratti.modo) ? 'finito' : 'indefinito';
+}
+
 /* ── etichette ─────────────────────────────────────────────────────────────── */
 const ORDINE_VERBO = ['modo', 'tempo', 'diatesi'];
 const ORDINE_NOME = ['caso', 'genere', 'numero'];

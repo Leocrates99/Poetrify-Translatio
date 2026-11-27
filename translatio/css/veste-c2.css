@@ -201,10 +201,21 @@
 :root .parola.dopo-taglio .forma::before { color: var(--c2-note); }
 :root [data-lente="segmenti"] .parola[aria-pressed="true"],
 :root [data-lente="verbi"] .parola[aria-pressed="true"],
-:root [data-lente="connettivi"] .parola[aria-pressed="true"] { border-color: transparent; }
+:root [data-lente="ordo"] .parola[aria-pressed="true"] { border-color: transparent; }
 :root [data-lente="segmenti"] .parola.dopo-taglio .forma::before { color: var(--c2-accent); }
 :root .parola.connettivo .forma { outline: 1px solid var(--c2-ink); }
-:root [data-lente="connettivi"] .parola.connettivo .forma { outline: 1.5px solid var(--c2-accent); }
+:root [data-lente="proposizioni"] .parola.connettivo .forma { outline: 1.5px solid var(--c2-accent); }
+/* l'albero in C2: nodi d'inchiostro senza fondo, sigla in accento, rami 1 px */
+:root .albero .nodo { border-color: var(--c2-ink); background: var(--c2-paper); }
+:root .albero .sigla { color: var(--c2-accent); }
+:root .albero .ruolo { font-size: var(--c2-nota); line-height: var(--c2-nota-lh); color: var(--c2-note); }
+:root .albero .testo-nodo { font-family: var(--c2-classico); }
+:root .albero li::before, :root .albero li::after, :root .albero ul::before { border-color: var(--c2-muted); }
+:root .ordo-verborum, :root .albero-sintattico { border-top: 1px solid var(--c2-rule); }
+:root .riga-ordo { font-family: var(--c2-classico); }
+:root .forma-verbo { font-family: var(--c2-classico); }
+:root .sottopassi .num, :root .scelta-reggente b, :root .ordo-n { color: var(--c2-accent); }
+:root .scelta-reggente[aria-pressed="true"] b { color: inherit; }
 :root .elenco-segmenti .n { color: var(--c2-accent); }
 :root .elenco-segmenti .testo-segmento { font-family: var(--c2-classico); }
 :root .elenco-segmenti .dati-segmento { font-size: var(--c2-nota); line-height: var(--c2-nota-lh); color: var(--c2-note); }

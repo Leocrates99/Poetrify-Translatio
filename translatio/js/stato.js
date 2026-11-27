@@ -9,9 +9,10 @@
                   consegna: { studente, classe, data, docente, includi },
                   creata, modificata }
      frase    = { id, testo, parole: { [indice]: parola },
-                  tagli: [indice della parola da cui comincia una proposizione],
+                  tagli: [indice della parola da cui comincia una frase],
+                  proposizioni: [{ id, da, a, ruolo, tipo, dipende, grado }],
                   sintagmi: [{ id, da, a, funzione }],
-                  proposizioni: [{ id, da, a, ruolo, tipo, grado }],
+                  ordo: [indici delle parole nell'ordine scelto],
                   brutta, bella }
      parola   = { pos, tratti, lemma, senso, morfemi: [{ t, r }], nota, connettivo }
    (una forma verbale segnata nell'analisi periodale e' una parola con
@@ -53,13 +54,13 @@ export const nuovoId = (p = 'v') => `${p}${Date.now().toString(36)}${Math.random
 
 /* ── costruzione ──────────────────────────────────────────────────────────── */
 export function nuovaFrase(testo) {
-  return { id: nuovoId('f'), testo, parole: {}, tagli: [], sintagmi: [], proposizioni: [], brutta: '', bella: '' };
+  return { id: nuovoId('f'), testo, parole: {}, tagli: [], sintagmi: [], proposizioni: [], ordo: [], brutta: '', bella: '' };
 }
 
 /* Che cosa entra nel documento da consegnare: tutto, finche' lo studente non
    toglie qualcosa. */
 export const INCLUDI = {
-  grafica: true, parole: true, morfemi: true, costruzione: true,
+  grafica: true, periodo: true, verbi: true, logica: true, parole: true, morfemi: true, ordo: true,
   brutta: true, bella: true, traduzione: true, lessico: true, legenda: true,
 };
 export function nuovaConsegna() {
@@ -108,7 +109,7 @@ const scritta = p => !!(p && (p.pos || p.lemma || p.senso || p.nota || p.connett
 
 export function haLavoro(f) {
   return Object.values(f.parole || {}).some(scritta)
-    || (f.tagli || []).length || (f.sintagmi || []).length || (f.proposizioni || []).length || !!(f.brutta || f.bella);
+    || (f.tagli || []).length || (f.ordo || []).length || (f.sintagmi || []).length || (f.proposizioni || []).length || !!(f.brutta || f.bella);
 }
 
 /* ── avanzamento: che cosa e' fatto, contato in un posto solo ────────────── */
@@ -124,6 +125,7 @@ export function statoFrase(f, nParole) {
     parole: nParole,
     analizzate,
     tagli: (f.tagli || []).length,
+    ordo: (f.ordo || []).length,
     verbi,
     connettivi,
     sintagmi: (f.sintagmi || []).length,
@@ -138,7 +140,7 @@ export function faseFrase(s) {
   if (s.bella) return 'tradotta';
   if (s.brutta) return 'in-traduzione';
   if (s.parole && s.analizzate === s.parole) return 'analizzata';
-  if (s.analizzate || s.tagli || s.connettivi || s.sintagmi || s.proposizioni) return 'in-corso';
+  if (s.analizzate || s.tagli || s.connettivi || s.ordo || s.sintagmi || s.proposizioni) return 'in-corso';
   return 'da-fare';
 }
 
@@ -231,7 +233,11 @@ function migra(v) {
   const vecchio = (v.schema || 1) < 2;
   v.posizione = v.posizione || { frase: 0, lente: 'proposizioni' };
   v.consegna = { ...nuovaConsegna(), ...(v.consegna || {}) };
-  v.consegna.includi = { ...INCLUDI, ...(v.consegna.includi || {}) };
+  const scelte = v.consegna.includi || {};
+  /* la vecchia voce «costruzione» valeva per periodo e analisi logica insieme */
+  if (scelte.costruzione === false) { scelte.periodo = false; scelte.logica = false; }
+  delete scelte.costruzione;
+  v.consegna.includi = { ...INCLUDI, ...scelte };
   for (const f of v.frasi || []) {
     f.parole = f.parole || {};
     if (vecchio) {
@@ -241,6 +247,7 @@ function migra(v) {
       delete f.analizzata;
     }
     f.tagli = Array.isArray(f.tagli) ? f.tagli : [];
+    f.ordo = Array.isArray(f.ordo) ? f.ordo : [];
     f.sintagmi = f.sintagmi || [];
     f.proposizioni = f.proposizioni || [];
     f.brutta = f.brutta || '';
