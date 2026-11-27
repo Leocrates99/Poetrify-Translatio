@@ -98,9 +98,11 @@ caricato dopo `css/translatio.css`, che porta la struttura e i componenti.
 | tre pesi di filetto, nessun fondo, nessuna ombra, nessun angolo arrotondato | i contorni dei comandi in `#767676` (4,54:1) |
 | tavole fra filetto nero di 2 px e di 1 px | **l'aggancio cromatico dell'analisi grammaticale resta**: le tinte delle parti del discorso, il codice di categoria dei casi, la palette dei morfemi |
 
-**Da confermare:** il colore della lingua. Sono gli accenti della C2; se si preferiscono
-rosso pompeiano e indaco, sono due valori in testa a `css/veste-c2.css` (e `--d-accent` nel
-foglio del documento).
+**Il colore della lingua è l'accento della C2** (decisione del docente): latino `#b8400e`,
+greco `#1d4ed8`; nel tema scuro `#f08a5d` e `#8aa9ff`. Non il rosso pompeiano e l'indaco
+del resto di Poetrify: in Translatio la cornice ha un accento solo, quello della C2. I valori
+stanno in testa a `css/veste-c2.css` e, per il foglio da consegnare, in `--d-accent`
+(`js/viste/stile-documento.js`).
 
 ## I file
 
