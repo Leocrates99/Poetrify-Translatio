@@ -274,6 +274,37 @@ body[data-lang="grc"], body[data-lang="greco"] {
   .cta-mini { min-height: 44px; padding: 10px 16px; font-size: 13px; }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   IL COMANDO DEL TEMA · convenzione della casa
+   ───────────────────────────────────────────────────────────────────────────
+   Sta DENTRO la testata, ultimo della riga, dopo la firma: la stessa forma di
+   `#tema` in Translatio (pulsante-icona quieto, 40px, luna/sole a tratto).
+   Lo cabla shared/poetrify-theme.js; la pagina lo scrive nel markup:
+     <button class="tema-casa" id="poetrify-theme-toggle" type="button"
+             aria-label="Alterna tema chiaro/scuro"></button>
+   Prima era flottante (fixed, in alto a destra) e copriva la fine della firma.
+
+   I margini verticali negativi tengono il bersaglio a 40px senza alzare la
+   riga della testata. Quando la firma sparisce (schermo stretto) la pagina gli
+   da' `margin-left: auto`, perche' il comando resti sul bordo destro.
+   ═══════════════════════════════════════════════════════════════════════════ */
+.tema-casa {
+  flex: none; align-self: center;
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 40px; height: 40px;
+  margin: -6px 0 -6px 18px; padding: 0;
+  border: 1px solid transparent; border-radius: var(--radius-md, 8px);
+  background: transparent; color: var(--ink-soft);
+  font: inherit; line-height: 1; cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+.tema-casa:hover { background: var(--primary-pale); color: var(--primary); }
+.tema-casa:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.tema-casa svg { width: 18px; height: 18px; flex: none; }
+@media (pointer: coarse) {
+  .tema-casa { width: 44px; height: 44px; margin-top: -8px; margin-bottom: -8px; }
+}
+
 /* ═══════════════════════════════════════════════════════════════════════
    IL CODICE DI CATEGORIA · dalla collana degli Iperappunti
    ───────────────────────────────────────────────────────────────────────

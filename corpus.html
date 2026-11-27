@@ -9,7 +9,7 @@
 <!-- Font self-hosted (vendor/fonts/) — GreekTimes copre il greco POLITONICO -->
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
 <!-- Token condivisi (fonte unica del design system · shared/) -->
-<link rel="stylesheet" href="shared/poetrify-tokens.css?v=2026-08-23">
+<link rel="stylesheet" href="shared/poetrify-tokens.css?v=2026-11-27">
 <style>
 /* I token vivono in shared/poetrify-tokens.css (armonizzazione strutturale).
    Qui restano solo le regole specifiche del Corpus. */
@@ -86,6 +86,9 @@ body[data-lang="la"] { --select-bg: rgba(162,46,55,.22); }
   font-family: var(--font-ui); font-size: 10.5px; font-weight: 600;
   text-transform: uppercase; letter-spacing: .18em; color: var(--sepia);
 }
+/* Il comando del tema chiude la riga dopo la firma (forma in shared/, .tema-casa):
+   lo stacco lo da' gia' il `gap` della testata. */
+.topbar .tema-casa { margin-left: 0; }
 
 /* ── Barra di ricerca ─────────────────────────────────────────── */
 .searchwrap { padding: 18px clamp(16px, 4vw, 40px) 6px; background: var(--paper); }
@@ -836,7 +839,10 @@ body.con-tavolo .stage { padding-bottom: 190px; }
   .browser.open { display: block; }
   .mobtoggle { display: inline-flex; align-items: center; gap: 6px; font-family: var(--font-ui); font-size: 12px; font-weight: 700; color: var(--primary); background: var(--cream); border: 1px solid var(--rule-soft); border-radius: var(--radius-md); padding: 8px 14px; margin: 12px auto 0; }
 }
-@media (max-width: 560px) { .sub.firma { display: none; } .facet-lbl { min-width: 0; } }
+@media (max-width: 560px) {
+  .sub.firma { display: none; } .facet-lbl { min-width: 0; }
+  .topbar .tema-casa { margin-left: auto; }   /* senza firma, il tema resta sul bordo */
+}
 
 /* Dark (D2): token in shared/ [data-theme]. Qui solo le regole del Corpus. */
 :root[data-theme="dark"] { --parchment: #24242c; --parchment-edge: #34343f; --mark: #6b5a1e; }
@@ -858,6 +864,7 @@ body.con-tavolo .stage { padding-bottom: 190px; }
        casa non era nominata: il mark diceva «Corpus». -->
   <div class="brand"><span class="marchio">Poetrify</span><span class="mark">Corpus</span></div>
   <span class="sub firma">biblioteca dei testi antichi</span>
+  <button class="tema-casa" id="poetrify-theme-toggle" type="button" aria-label="Alterna tema chiaro/scuro"></button>
 </header>
 
 <div class="searchwrap">
@@ -3226,7 +3233,7 @@ document.getElementById('openrecog').onclick = () => {
   }
 })();
 </script>
-<!-- Tema condiviso (D2): toggle flottante -->
+<!-- Tema condiviso (D2): cabla il comando del tema nella testata -->
 <script src="shared/poetrify-quarantena.js"></script>
 <script src="shared/poetrify-manuali.js"></script>
 <script src="shared/poetrify-indietro.js"></script>

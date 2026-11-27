@@ -9,7 +9,7 @@
 <!-- Font self-hosted (vendor/fonts/) — nessuna dipendenza da Google Fonts -->
 <link rel="stylesheet" href="vendor/fonts/fonts.css">
 <!-- Token condivisi (fonte unica del design system · shared/) -->
-<link rel="stylesheet" href="shared/poetrify-tokens.css?v=2026-08-23">
+<link rel="stylesheet" href="shared/poetrify-tokens.css?v=2026-11-27">
 <style>
 /* I token vivono in shared/poetrify-tokens.css (armonizzazione strutturale). */
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -226,6 +226,7 @@ footer {
   .topbar-casa .brand-sub { display: none; }   /* stretto: vince il luogo */
   .topbar-casa .topbar-dove { margin-left: 18px; font-size: 17px; }
   .topbar-casa .brand-mark { font-size: 21px; }
+  .topbar-casa .tema-casa { margin-left: auto; }   /* senza firma, il tema resta sul bordo */
 }
 </style>
 <!-- Icone classiche: game-icons.net (CC BY 3.0) - Lorc, Delapouite, DarkZaitzev; ricolorate col design system Poetrify -->
@@ -236,6 +237,7 @@ footer {
   <h1 class="brand-mark">Poetrify</h1>
   <span class="topbar-dove">Strumenti</span>
   <span class="brand-sub">Officina del greco e del latino</span>
+  <button class="tema-casa" id="poetrify-theme-toggle" type="button" aria-label="Alterna tema chiaro/scuro"></button>
 </header>
 
 <p class="intro">Analizza e traduci il latino e il greco antico con un metodo chiaro, completo e diretto.</p>
@@ -364,7 +366,7 @@ console.log('%c Poetrify engine caricato', 'background:#1800AC;color:white;paddi
 console.log('%c Poetrify translator-UI caricato', 'background:#2f855a;color:white;padding:4px 8px;border-radius:3px;', TRANSLATOR_UI_META);
 </script>
 
-<!-- Tema condiviso (D2): toggle flottante -->
+<!-- Tema condiviso (D2): cabla il comando del tema nella testata -->
 <script src="shared/poetrify-quarantena.js"></script>
 <script src="shared/poetrify-indietro.js"></script>
 <script src="shared/poetrify-theme.js" data-inject-toggle></script>
