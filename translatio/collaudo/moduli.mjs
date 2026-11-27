@@ -29,6 +29,16 @@ prova('nessun modulo importa da fuori translatio/js', () => {
   }
 });
 
+prova('l’import map di index.html versiona ogni modulo, tutti con la stessa versione', () => {
+  const pagina = fs.readFileSync(path.join(QUI, '..', 'index.html'), 'utf8');
+  const mappa = JSON.parse(/<script type="importmap">([\s\S]*?)<\/script>/.exec(pagina)[1]).imports;
+  const versione = /js\/app\.js\?v=([\w-]+)/.exec(pagina)[1];
+  const moduli = tutti.map(f => './js/' + path.relative(JS, f).split(path.sep).join('/')).filter(m => m !== './js/app.js');
+  assert.deepEqual(Object.keys(mappa).sort(), moduli.sort(), 'l’import map non elenca esattamente i moduli di js/');
+  for (const [k, x] of Object.entries(mappa)) assert.equal(x, `${k}?v=${versione}`);
+  for (const css of pagina.matchAll(/href="(css\/[^"]+)"/g)) assert.ok(css[1].endsWith(`?v=${versione}`), `${css[1]} non porta la versione`);
+});
+
 const T = await import('../js/motore/testo.js');
 const G = await import('../js/motore/grammatica.js');
 const St = await import('../js/stato.js');

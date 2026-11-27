@@ -135,6 +135,13 @@ l'analisi automatica) si aprono ancora: restano le parole che lo studente aveva 
 corretto, i significati, i sintagmi, le proposizioni e le traduzioni; le proposte mai
 confermate cadono.
 
+**La versione dei file.** `index.html` chiede ogni foglio di stile e ogni modulo con la
+stessa versione (`?v=2026-11-27d`); i moduli interni la ricevono da un'import map. Così,
+dopo un aggiornamento, il browser non mescola file nuovi e file vecchi rimasti in cache
+(GitHub Pages li tiene 10 minuti). Quando si cambia un file, si alza la versione in tutte
+le righe di `index.html`; il collaudo controlla che sia la stessa ovunque e che l'import
+map elenchi tutti i moduli.
+
 ## Collaudo
 
 ```bash

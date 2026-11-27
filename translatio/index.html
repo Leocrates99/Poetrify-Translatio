@@ -10,12 +10,35 @@
 <!-- Font self-hosted e token condivisi della casa: un valore cambiato la' arriva qui -->
 <link rel="stylesheet" href="../vendor/fonts/fonts.css">
 <link rel="stylesheet" href="../shared/poetrify-tokens.css?v=2026-08-23">
-<link rel="stylesheet" href="css/translatio.css?v=2026-11-27c">
+<link rel="stylesheet" href="css/translatio.css?v=2026-11-27d">
 <!-- La veste C2 compatta: Inter (solo latino; il greco va in Times) e il foglio della veste -->
 <link rel="stylesheet" href="../vendor/fonts/inter/inter.css">
-<link rel="stylesheet" href="css/veste-c2.css?v=2026-11-27c">
+<link rel="stylesheet" href="css/veste-c2.css?v=2026-11-27d">
 <script src="../shared/poetrify-theme.js"></script>
-<script type="module" src="js/app.js?v=2026-11-27c"></script>
+<!-- Ogni modulo porta la versione: dopo un aggiornamento il browser non mescola
+     file nuovi e file vecchi rimasti in cache (GitHub Pages li tiene 10 minuti).
+     L'elenco e' controllato da collaudo/moduli.mjs. -->
+<script type="importmap">
+{"imports": {
+  "./js/esempi.js": "./js/esempi.js?v=2026-11-27d",
+  "./js/motore/grammatica.js": "./js/motore/grammatica.js?v=2026-11-27d",
+  "./js/motore/sintassi.js": "./js/motore/sintassi.js?v=2026-11-27d",
+  "./js/motore/tassonomie.js": "./js/motore/tassonomie.js?v=2026-11-27d",
+  "./js/motore/testo.js": "./js/motore/testo.js?v=2026-11-27d",
+  "./js/motore/traslitterazione.js": "./js/motore/traslitterazione.js?v=2026-11-27d",
+  "./js/stato.js": "./js/stato.js?v=2026-11-27d",
+  "./js/ui/dom.js": "./js/ui/dom.js?v=2026-11-27d",
+  "./js/ui/icone.js": "./js/ui/icone.js?v=2026-11-27d",
+  "./js/viste/analisi.js": "./js/viste/analisi.js?v=2026-11-27d",
+  "./js/viste/archivio.js": "./js/viste/archivio.js?v=2026-11-27d",
+  "./js/viste/consegna.js": "./js/viste/consegna.js?v=2026-11-27d",
+  "./js/viste/documento.js": "./js/viste/documento.js?v=2026-11-27d",
+  "./js/viste/stile-documento.js": "./js/viste/stile-documento.js?v=2026-11-27d",
+  "./js/viste/testo.js": "./js/viste/testo.js?v=2026-11-27d",
+  "./js/viste/traduzione.js": "./js/viste/traduzione.js?v=2026-11-27d"
+}}
+</script>
+<script type="module" src="js/app.js?v=2026-11-27d"></script>
 </head>
 <body>
 <a class="salta" href="#principale">Vai al lavoro</a>

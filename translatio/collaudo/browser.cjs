@@ -42,6 +42,8 @@ async function misura(page, nome, dove, guasti) {
     const page = await ctx.newPage();
     page.on('console', m => { if (m.type() === 'error') guasti.push(`${nome}: console · ${m.text()}`); });
     page.on('pageerror', e => guasti.push(`${nome}: eccezione · ${e.message}`));
+    /* ogni modulo si chiede con la versione: niente file vecchi mescolati ai nuovi */
+    page.on('request', r => { const u = r.url(); if (/\/translatio\/js\/.+\.js(\?|$)/.test(u) && !/\?v=/.test(u)) guasti.push(`${nome}: modulo chiesto senza versione · ${u}`); });
     const tastiera = !opts.hasTouch;
 
     await page.goto(BASE);
