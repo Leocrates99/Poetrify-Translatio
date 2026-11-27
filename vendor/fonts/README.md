@@ -17,6 +17,7 @@ stati modificati (clausola Reserved Font Name rispettata).
 | Source Sans 3 | Adobe (RFN "Source") | OFL-1.1 |
 | JetBrains Mono | The JetBrains Mono Project Authors | OFL-1.1 |
 | GFS Didot | Greek Font Society | OFL-1.1 |
+| Inter (cartella `inter/`, veste C2) | The Inter Project Authors | OFL-1.1 |
 
 ## Contenuto
 
@@ -28,3 +29,12 @@ Origine: webfont woff2 di Google Fonts (`fonts.gstatic.com`), versioni del CSS
 `css2` per ciascuna famiglia. Per aggiornare: riscaricare il CSS per famiglia
 (con User-Agent moderno), filtrare i subset, riscaricare i woff2 e rimappare gli
 URL a locale.
+
+## Inter (veste C2)
+
+`inter/` porta le cinque facce di Inter (400, 400 corsivo, 600, 700, 800) della
+veste «C2 compatta», in woff2 e nel solo sottoinsieme latino: il greco e il latino
+della lingua-oggetto, in C2, stanno sempre in Times. Origine: le istanze TTF del
+sistema di design C2 (quelle che lo script di Word incorpora), ridotte con
+`fontTools.subset`. Si caricano da `inter/inter.css`, solo dove serve (Translatio).
+

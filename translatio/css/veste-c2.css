@@ -1,0 +1,510 @@
+/* ============================================================================
+   TRANSLATIO · LA VESTE «C2 COMPATTA»
+   ----------------------------------------------------------------------------
+   La veste dei documenti di studio (sistema di design «C2 compatta», 12-13
+   novembre 2026) e' la veste di Translatio, l'unica (decisione del docente,
+   27 novembre 2026). translatio.css porta la struttura e i componenti; questo
+   foglio, caricato dopo, porta carta, inchiostro, caratteri, filetti.
+   Lo scoping e' su :root, che pesa quanto un attributo: le regole di qui
+   vincono su quelle omonime di translatio.css perche' vengono dopo e pesano
+   una classe in piu'.
+
+   Dalla C2, alla lettera:
+     · carta bianca e inchiostro, UN SOLO ACCENTO per la cornice: numeri,
+       etichette, lemmi, link;
+     · Inter per tutto, il greco e il latino in Times, sempre;
+     · la colonna di margine appesa: numeri e etichette stanno a sinistra
+       del testo, non sopra;
+     · tre pesi di filetto (4 · 2 · 1 px), nessun fondo, nessuna ombra,
+       nessun angolo arrotondato;
+     · tavole fra filetto nero di 2 px e di 1 px, righe in grigio;
+     · la nota di lessico (parola, traslitterazione, «traduzione», commento)
+       come forma della scheda della parola;
+     · il testo a fronte e le note a pie' di pagina su tre colonne.
+
+   Adattato allo schermo:
+     · la scala: i corpi C2 (10 · 9 · 7 pt = 13,33 · 12 · 9,33 px, pensati per
+       l'A4 a 96 dpi) salgono di 1,2 → 16 · 14,4 · 11,2 px. Le proporzioni
+       10 : 9 : 7 restano;
+     · il colore della lingua: la C2 ammette una variante d'accento per
+       documento, mai due in una pagina. Una versione e' un documento in una
+       lingua: il latino prende l'accento della C2 (#b8400e), il greco la
+       variante blu (#1d4ed8). Le pagine senza lingua (l'archivio) restano
+       nell'accento di base;
+     · il tema scuro, che la C2 (nata per la stampa) non ha: stessa
+       grammatica, valori misurati per l'AA;
+     · i contorni dei comandi: il grigio dei filetti C2 non regge un campo.
+
+   Che cosa la C2 NON tocca, per decisione del docente (27 novembre 2026):
+     · l'aggancio cromatico dell'analisi grammaticale. Le undici tinte delle
+       parti del discorso, il codice di categoria dei casi (i pigmenti della
+       collana) sui sintagmi e la palette dei morfemi restano quelli della
+       casa. L'accento unico vale per la cornice, non per le categorie: il
+       colore di una categoria e' informazione.
+   ============================================================================ */
+
+/* ── token ──────────────────────────────────────────────────────────────── */
+:root {
+  --c2-paper: #ffffff;
+  --c2-ink: #111111;
+  --c2-muted: #444444;
+  --c2-note: #555555;
+  --c2-rule: #9a9a9a;            /* filetti: decorano, non delimitano comandi */
+  /* il contorno di un comando vuole 3:1 (WCAG 1.4.11): #9a9a9a su bianco misura
+     2,81, un gradino piu' scuro 4,54. Il filetto della C2 resta per i filetti. */
+  --c2-controllo: #767676;
+  --c2-accent: #b8400e;
+  --c2-accent-deep: #7c2b09;
+  --c2-margine: 144px;          /* colonna di margine: 120 px × 1,2 */
+  --c2-canale: 22px;            /* canale: 18 px × 1,2 */
+  --c2-corpo: 16px;    --c2-corpo-lh: 19.2px;     /* 10 pt */
+  --c2-corpo9: 14.4px; --c2-corpo9-lh: 17.3px;    /* 9 pt  */
+  --c2-nota: 11.2px;   --c2-nota-lh: 13.4px;      /* 7 pt  */
+  --c2-sans: 'GreekTimes', 'Inter', Arial, sans-serif;
+  --c2-classico: 'Times New Roman', Times, 'Liberation Serif', Tinos, 'GFS Didot', serif;
+
+  /* i token della casa, riletti in C2: chi li usa non deve sapere della veste */
+  --paper: var(--c2-paper); --ivory: var(--c2-paper); --cream: var(--c2-paper);
+  --parchment: var(--c2-paper); --parchment-edge: var(--c2-rule);
+  --ink: var(--c2-ink); --ink-soft: var(--c2-muted); --sepia: var(--c2-note); --sepia-soft: var(--c2-rule);
+  --rule: var(--c2-rule); --rule-soft: #d6d6d6;
+  --brass: var(--c2-ink); --brass-ink: var(--c2-accent); --brass-light: var(--c2-rule);
+  --primary: var(--c2-accent); --primary-dark: var(--c2-accent-deep); --primary-pale: transparent;
+  --on-primary: #ffffff;
+  --success-ink: var(--c2-ink); --warning: var(--c2-ink); --warning-ink: var(--c2-ink);
+  --danger: var(--c2-accent); --danger-ink: var(--c2-accent);
+  --shadow-sm: none; --shadow: none; --shadow-strong: none; --shadow-lift: none;
+  --radius-sm: 0; --radius-md: 0; --radius-lg: 0; --radius-pill: 0;
+  --font-display: var(--c2-sans); --font-body: var(--c2-sans); --font-ui: var(--c2-sans);
+  --font-classical: var(--c2-classico);
+}
+/* l'accento della lingua: una variante per documento, mai due in una pagina */
+:root body[data-lang="greco"] { --c2-accent: #1d4ed8; --c2-accent-deep: #1e3a8a; }
+
+/* la notte: la stessa grammatica, valori misurati (testo ≥ 4,5:1, filetti ≥ 3:1) */
+:root[data-theme="dark"] {
+  --c2-paper: #121212; --c2-ink: #ededed; --c2-muted: #c2c2c2; --c2-note: #b0b0b0; --c2-rule: #6e6e6e; --c2-controllo: #8a8a8a;
+  --c2-accent: #f08a5d; --c2-accent-deep: #f7b08f;
+  --rule-soft: #3a3a3a; --on-primary: #121212;
+}
+:root[data-theme="dark"] body[data-lang="greco"] { --c2-accent: #8aa9ff; --c2-accent-deep: #b3c7ff; }
+
+/* I colori di categoria (--pos-c, --pos-ink, --filo-c dei casi, i morfemi)
+   NON si ridefiniscono qui: li danno i token condivisi e translatio.css, e
+   valgono identici nelle due vesti. */
+
+/* la veste e' squadrata e senza ombre: vale per ogni elemento, anche per
+   quelli che portano un raggio scritto a mano */
+:root *, :root *::before, :root *::after {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* ── fondamenta ─────────────────────────────────────────────────────────── */
+:root body {
+  --lingua: var(--c2-accent); --lingua-pale: transparent;
+  --font-testo: var(--c2-classico);
+  background: var(--c2-paper); color: var(--c2-ink);
+  font-family: var(--c2-sans); font-size: var(--c2-corpo); line-height: var(--c2-corpo-lh);
+}
+:root :focus-visible { outline: 2px solid var(--c2-accent); outline-offset: 2px; }
+:root a { color: inherit; }
+
+/* le etichette della C2: 7 pt, maiuscolo spaziato, in accento */
+:root .occhiello,
+:root .etichetta,
+:root .campo > span,
+:root .esempio .chi {
+  font-family: var(--c2-sans); font-size: var(--c2-nota); line-height: var(--c2-nota-lh);
+  font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c2-accent);
+}
+
+/* ── la testatina: filetto di 4 px, titolo corrente, numero ─────────────── */
+:root .testata {
+  border-top: 4px solid var(--c2-ink); border-bottom: 0;
+  min-height: 0; padding: 8px clamp(16px, 3vw, 40px) 6px;
+  background: var(--c2-paper);
+}
+:root .testata .marchio,
+:root .testata .dove,
+:root .testata .firma {
+  font-family: var(--c2-sans); font-size: var(--c2-nota); line-height: var(--c2-nota-lh);
+  font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 0;
+}
+:root .testata .marchio { color: var(--c2-ink); font-weight: 800; }
+:root .testata .dove { margin-left: 0; color: var(--c2-ink); }
+:root .testata .dove::before { content: "·"; margin: 0 8px; color: var(--c2-rule); }
+:root .testata .firma { color: var(--c2-note); }
+
+/* il nastro: il titolo della versione come titolo di sezione, le tappe come
+   etichette numerate 01 · 02 · 03 */
+:root .nastro {
+  position: static; min-height: 0;
+  padding: 14px clamp(16px, 3vw, 40px) 10px;
+  background: var(--c2-paper); border-bottom: 1px solid var(--c2-ink);
+}
+:root .nastro .titolo-versione strong {
+  font-family: var(--c2-sans); font-size: 24px; line-height: 28px; font-weight: 800; letter-spacing: -0.02em;
+}
+:root .nastro .titolo-versione span { font-size: var(--c2-corpo9); color: var(--c2-muted); }
+:root .tappa {
+  min-height: 36px; padding: 4px 0 4px 0; margin-left: 22px; border-bottom: 2px solid transparent;
+  font-size: var(--c2-nota); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c2-note);
+}
+:root .tappa::before {
+  content: counter(tappa, decimal-leading-zero);
+  width: auto; height: auto; border: 0; background: none;
+  font-size: var(--c2-corpo9); font-weight: 800; letter-spacing: 0; color: var(--c2-accent);
+}
+:root .tappa:hover { color: var(--c2-ink); }
+:root .tappa[aria-current="page"] { color: var(--c2-ink); border-bottom-color: var(--c2-ink); }
+:root .tappa[aria-current="page"]::before { background: none; color: var(--c2-accent); }
+
+/* ── comandi ─────────────────────────────────────────────────────────────── */
+:root .btn {
+  min-height: 38px; padding: 7px 14px;
+  border: 1px solid var(--c2-ink); background: var(--c2-paper); color: var(--c2-ink);
+  font-size: var(--c2-corpo9); font-weight: 700;
+}
+:root .btn:hover { border-color: var(--c2-accent); color: var(--c2-accent); }
+/* il primario non ha colore: e' inchiostro pieno, come la spina nera della collana */
+:root .btn-primario { background: var(--c2-ink); border-color: var(--c2-ink); color: var(--c2-paper); }
+:root .btn-primario:hover { background: var(--c2-accent); border-color: var(--c2-accent); color: var(--c2-paper); }
+:root .btn-quieto { border-color: transparent; background: transparent; color: var(--c2-ink); }
+:root .btn-quieto:hover { background: transparent; color: var(--c2-accent); }
+:root .link-freccia { color: var(--c2-accent); font-size: var(--c2-corpo9); }
+:root .link-freccia:hover { color: var(--c2-accent-deep); }
+:root .input,
+:root .area {
+  border: 1px solid var(--c2-controllo); background: var(--c2-paper); font-family: var(--c2-sans);
+}
+:root .input:focus,
+:root .area:focus { border-color: var(--c2-ink); }
+:root .area-testo { font-family: var(--c2-classico); font-size: 20px; line-height: 1.5; }
+:root .area-resa { font-family: var(--c2-sans); font-size: var(--c2-corpo); line-height: 1.5; }
+:root .segmenti { padding: 0; border: 0; background: none; gap: 0 18px; }
+:root .segmenti button {
+  min-height: 34px; padding: 4px 0; border-bottom: 2px solid transparent; background: none;
+  font-size: var(--c2-nota); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c2-note);
+}
+:root .segmenti button:hover { color: var(--c2-ink); }
+:root .segmenti button[aria-pressed="true"],
+:root .segmenti button[aria-selected="true"] { background: none; color: var(--c2-ink); border-bottom-color: var(--c2-ink); }
+:root .segmenti .conto { font-size: var(--c2-nota); color: var(--c2-accent); letter-spacing: 0; }
+:root .targhetta {
+  padding: 0; border: 0; background: none;
+  font-size: var(--c2-nota); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c2-note);
+}
+:root .targhetta + .targhetta::before { content: "·"; margin-right: 6px; color: var(--c2-rule); }
+:root .targhetta.dedotta { font-style: italic; }
+:root .avviso {
+  border: 0; border-top: 2px solid var(--c2-ink); background: none; padding: 8px 0 0; color: var(--c2-ink);
+}
+
+/* ── la pagina e la colonna appesa ──────────────────────────────────────── */
+:root .titolo-pagina {
+  font-family: var(--c2-sans); font-size: 44px; line-height: 1; font-weight: 800; letter-spacing: -0.03em;
+}
+:root .sottotitolo { margin-top: 10px; font-family: var(--c2-sans); font-size: var(--c2-corpo); line-height: 1.45; color: var(--c2-muted); }
+:root .prosa,
+:root .consegna,
+:root .scheda-invito { font-family: var(--c2-sans); color: var(--c2-ink); }
+:root .consegna { font-size: var(--c2-corpo9); line-height: var(--c2-corpo9-lh); }
+:root .nota-fonte { font-size: var(--c2-nota); line-height: var(--c2-nota-lh); color: var(--c2-note); }
+:root .vuoto {
+  border: 0; border-top: 1px solid var(--c2-rule); padding: 10px 0 0; text-align: left;
+  font-family: var(--c2-sans); font-size: var(--c2-corpo9); color: var(--c2-note);
+}
+/* titoli di sezione: filetto nero di 1 px sopra, numero appeso in accento */
+:root .pagina { counter-reset: sezione; }
+:root .sezione > h2,
+:root .titolo-sezione {
+  position: relative; display: flex; align-items: baseline; gap: 10px;
+  margin: 0 0 14px; padding: 12px 0 0; border-bottom: 0; border-top: 1px solid var(--c2-ink);
+  font-family: var(--c2-sans); font-size: 22px; line-height: 26px; font-weight: 800; letter-spacing: -0.02em;
+}
+:root .pagina > .sezione > h2::before {
+  counter-increment: sezione; content: counter(sezione, decimal-leading-zero);
+  font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: var(--c2-accent);
+}
+:root .titolo-sezione .conto,
+:root .sezione > h2 .conto {
+  font-family: var(--c2-sans); font-size: var(--c2-nota); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c2-note);
+}
+/* dal tablet in su il numero esce dalla colonna del testo e si appende a
+   margine; il titolo d'apertura parte dal bordo della colonna di margine */
+@media (min-width: 1024px) {
+  :root .pagina { padding-left: calc(clamp(16px, 3vw, 32px) + var(--c2-margine) + var(--c2-canale)); }
+  :root .pagina > .titolo-pagina,
+  :root .pagina > .sottotitolo { margin-left: calc(-1 * (var(--c2-margine) + var(--c2-canale))); }
+  /* il filetto del titolo corre anche sulla colonna di margine, e il numero ci si appende */
+  :root .pagina > .sezione > h2 {
+    margin-left: calc(-1 * (var(--c2-margine) + var(--c2-canale)));
+    padding-left: calc(var(--c2-margine) + var(--c2-canale));
+  }
+  :root .pagina > .sezione > h2::before {
+    position: absolute; left: 0; top: 10px;
+    font-size: 44px; line-height: 44px; letter-spacing: -0.03em;
+  }
+  /* il testo a fronte e le note rompono la colonna appesa (C2: 674 px a tutta giustezza) */
+  :root .pagina.pagina-edizione { padding-left: clamp(16px, 3vw, 32px); }
+  :root .pagina.pagina-edizione > .titolo-pagina,
+  :root .pagina.pagina-edizione > .sottotitolo { margin-left: 0; }
+}
+
+/* ── archivio ───────────────────────────────────────────────────────────── */
+:root .porte { gap: 0 32px; }
+:root .porta {
+  padding: 12px 0 14px; border: 0; border-top: 2px solid var(--c2-ink); background: none; transform: none;
+}
+:root .porta:hover { transform: none; }
+:root .porta .ico-lingua { width: 34px; height: 34px; color: var(--c2-ink); }
+:root .porta-titolo { font-family: var(--c2-sans); font-size: 22px; line-height: 26px; font-weight: 800; letter-spacing: -0.02em; }
+:root .porta:hover .porta-titolo { color: var(--c2-accent); }
+:root .porta-sotto { font-size: var(--c2-corpo9); color: var(--c2-muted); }
+/* le versioni come una tavola: filetto di 2 px in apertura e in chiusura */
+:root .elenco { gap: 0; border-top: 2px solid var(--c2-ink); border-bottom: 2px solid var(--c2-ink); }
+:root .riga-versione {
+  padding: 10px 0; border: 0; border-bottom: 1px solid var(--c2-rule); background: none;
+}
+:root .riga-versione:last-child { border-bottom: 0; }
+:root .riga-versione .nome { font-family: var(--c2-sans); font-size: var(--c2-corpo); line-height: var(--c2-corpo-lh); font-weight: 700; }
+:root .riga-versione .apri:hover .nome { color: var(--c2-accent); }
+:root .riga-versione .meta { font-size: var(--c2-corpo9); color: var(--c2-muted); }
+:root .riga-versione .incipit { font-family: var(--c2-classico); font-size: var(--c2-corpo9); color: var(--c2-muted); }
+:root .esempi { counter-reset: esempio; gap: 0 28px; }
+:root .esempio {
+  position: relative; padding: 8px 0 12px 34px; border: 0; border-top: 1px solid var(--c2-rule); background: none;
+}
+:root .esempio::before {
+  counter-increment: esempio; content: counter(esempio, decimal-leading-zero);
+  position: absolute; left: 0; top: 8px; font-weight: 800; color: var(--c2-accent); font-variant-numeric: tabular-nums;
+}
+:root .esempio .chi { color: var(--c2-note); }
+:root .esempio .cosa { font-family: var(--c2-sans); font-size: var(--c2-corpo); font-weight: 700; }
+:root .esempio:hover .cosa { color: var(--c2-accent); }
+:root .esempio .assaggio { font-family: var(--c2-classico); font-size: var(--c2-corpo9); color: var(--c2-muted); }
+
+/* ── testo: le frasi numerate 01, 02… in accento ────────────────────────── */
+:root .frase-anteprima {
+  grid-template-columns: 34px 1fr auto; padding: 8px 0; border: 0; border-top: 1px solid var(--c2-rule); background: none;
+}
+:root .frasi-anteprima { border-bottom: 2px solid var(--c2-ink); }
+:root .frase-anteprima .n,
+:root .edizione-riga .n { font-size: 0; }
+:root .frase-anteprima .n::before,
+:root .edizione-riga .n::before {
+  content: attr(data-n); font-size: var(--c2-corpo9); font-weight: 800; color: var(--c2-accent); font-variant-numeric: tabular-nums;
+}
+:root .frase-anteprima .t { font-family: var(--c2-classico); font-size: 18px; line-height: 1.45; }
+
+/* ── analisi: il banco come una pagina con la colonna appesa ────────────── */
+:root .numero-appeso {
+  display: block; font-family: var(--c2-sans); font-size: 44px; line-height: 44px; font-weight: 800;
+  letter-spacing: -0.03em; color: var(--c2-accent); font-variant-numeric: tabular-nums;
+}
+:root .guida-frase { align-items: flex-end; padding-top: 18px; padding-bottom: 12px; }
+:root .navigatore { align-items: flex-end; gap: 10px; }
+:root .navigatore .quale {
+  font-size: var(--c2-nota); font-weight: 700; letter-spacing: 0.08em; color: var(--c2-note); padding-bottom: 6px;
+}
+:root .pallini { gap: 2px; padding-bottom: 4px; }
+:root .pallino {
+  width: 26px; height: 26px; border: 1px solid var(--c2-controllo); background: none;
+  font-size: var(--c2-nota); color: var(--c2-note); text-decoration: none;
+}
+:root .pallino[data-fase="in-corso"] { border: 1px dashed var(--c2-ink); }
+:root .pallino[data-fase="analizzata"],
+:root .pallino[data-fase="in-traduzione"] { border: 2px solid var(--c2-ink); color: var(--c2-ink); }
+:root .pallino[data-fase="tradotta"] { border: 2px solid var(--c2-ink); background: none; color: var(--c2-accent); }
+:root .pallino[aria-current="true"] { background: var(--c2-ink); border-color: var(--c2-ink); color: var(--c2-paper); }
+:root .banco {
+  position: relative; margin-top: 4px; padding-top: 14px; padding-bottom: 18px;
+  background: var(--c2-paper); border: 0; border-top: 1px solid var(--c2-ink);
+}
+:root .stato-lavoro { font-size: var(--c2-nota); color: var(--c2-note); }
+:root .stato-lavoro .barra { height: 2px; background: var(--c2-rule); }
+:root .stato-lavoro .barra > span { background: var(--c2-ink); }
+
+/* la frase: in Times, il filetto sotto la parola e' d'inchiostro, pieno se
+   confermato, punteggiato in grigio se proposto; la categoria e' la sigla */
+:root .parola { padding: 4px 4px 6px; border: 1px solid transparent; }
+:root .parola:hover { background: none; border-color: var(--c2-rule); }
+:root .parola[aria-pressed="true"] { background: none; border-color: var(--c2-ink); }
+/* le parole del gruppo in selezione: la forma in accento, senza riquadri */
+:root .parola.in-selezione { background: none; border-color: transparent; }
+:root .parola.in-selezione .forma { color: var(--c2-accent); }
+/* il filetto della parte del discorso, al peso C2 (2 px): pieno se
+   confermato, tratteggiato se proposto; punteggiato e grigio se ignoto */
+:root .parola .forma { font-family: var(--c2-classico); font-size: 28px; border-bottom: 2px solid var(--pos-c, var(--c2-ink)); }
+:root .parola.proposta .forma { border-bottom: 2px dashed var(--pos-c, var(--c2-rule)); }
+:root .parola.ignota .forma { border-bottom: 2px dotted var(--c2-rule); }
+:root .parola.punto .forma { border-bottom-color: transparent; }
+:root .sotto .pos { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; color: var(--pos-ink, var(--c2-ink)); }
+:root .parola.confermata .sotto .pos::after { color: var(--c2-accent); }
+:root .parola.ignota .sotto .pos { color: var(--c2-note); font-style: italic; }
+:root .sotto .lemma { font-family: var(--c2-classico); color: var(--c2-muted); }
+:root .sotto .analisi { font-size: var(--c2-nota); color: var(--c2-note); }
+:root .spia-riga { font-size: var(--c2-nota); color: var(--c2-note); }
+/* la pastiglia del caso: quadrata come tutto in C2; il bordo sottile la
+   tiene visibile anche quando il pigmento e' chiaro (giallo di Napoli) */
+:root .spia-riga .pastiglia,
+:root .scelta .pastiglia { outline: 1px solid rgba(0, 0, 0, 0.28); outline-offset: -1px; }
+:root[data-theme="dark"] .spia-riga .pastiglia,
+:root[data-theme="dark"] .scelta .pastiglia { outline-color: rgba(255, 255, 255, 0.35); }
+/* i fili: il sintagma sotto, nel colore del caso della sua funzione
+   (codice di categoria); la proposizione sopra, d'inchiostro (principale
+   2 px, coordinata tratteggiata, subordinata 1 px); le etichette in accento */
+:root .filo { height: 3px; background: var(--filo-c, var(--c2-ink)); }
+:root .filo.assente { background: transparent; }
+/* il gruppo che si sta modificando: il filo raddoppia, il colore resta del caso */
+:root .filo.attivo { height: 6px; }
+:root .fili-sopra .filo { height: 2px; }
+:root .fili-sopra .filo.attivo { height: 4px; }
+:root .prop-principale { background: var(--c2-ink); }
+:root .prop-coordinata { background: repeating-linear-gradient(90deg, var(--c2-ink) 0 6px, transparent 6px 10px); }
+:root .fili-sopra .prop-subordinata { height: 1px; margin-top: 1px; background: var(--c2-ink); }
+:root .filo-etichetta {
+  font-size: 10.5px; line-height: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c2-accent);
+}
+
+/* ── la scheda come nota di lessico ─────────────────────────────────────── */
+:root .colonna-scheda { background: var(--c2-paper); border-left: 1px solid var(--c2-ink); }
+:root .scheda { background: var(--c2-paper); }
+:root .scheda-testa { border-bottom: 0; padding-top: 16px; }
+/* la nota apre col filetto della sua categoria: 2 px nel colore della parte
+   del discorso, dove la C2 mette il filetto grigio del blocco di margine */
+:root .voce {
+  padding: 6px 0 14px; margin-bottom: 14px; border-left: 0;
+  border-top: 2px solid var(--pos-c, var(--c2-rule)); border-bottom: 1px solid var(--c2-rule);
+}
+:root .voce .forma-grande { font-family: var(--c2-classico); font-weight: 700; font-size: 36px; }
+:root .voce .forma-grande::first-letter { color: inherit; }
+:root .voce .traslitterazione { font-size: var(--c2-corpo9); }
+:root .voce .citazione { font-family: var(--c2-classico); font-style: normal; font-size: var(--c2-corpo); color: var(--c2-ink); }
+/* la traduzione della nota: neretto, fra caporali */
+:root .voce .glossa { font-family: var(--c2-sans); font-size: var(--c2-corpo); font-weight: 700; }
+:root .voce .glossa .testo-glossa::before { content: "«"; }
+:root .voce .glossa .testo-glossa::after { content: "»"; }
+/* la glossa automatica non si veste da traduzione: niente neretto, niente
+   caporali, e resta la targhetta «da verificare» */
+:root .voce .glossa.automatica { color: var(--c2-muted); font-weight: 400; font-style: italic; }
+:root .voce .glossa.automatica .testo-glossa::before,
+:root .voce .glossa.automatica .testo-glossa::after { content: none; }
+/* i morfemi: trattini e sigle, l'accento solo sulla desinenza */
+:root .morfemi { font-family: var(--c2-classico); font-size: 26px; }
+/* i morfemi tengono la palette della casa (aumento, tema, vocale, suffisso,
+   desinenza nel colore della lingua); la C2 ne fissa solo il filetto a 1 px */
+:root .mseg { border-bottom-width: 1px; }
+:root .legenda-morfemi { font-size: var(--c2-nota); color: var(--c2-note); }
+:root .legenda-morfemi b { font-family: var(--c2-classico); font-size: 13px; }
+/* le letture: righe di tavola, il segno quadrato */
+:root .letture { gap: 0; border-top: 2px solid var(--c2-ink); border-bottom: 2px solid var(--c2-ink); }
+:root .lettura {
+  padding: 7px 0; border: 0; border-bottom: 1px solid var(--c2-rule); background: none; font-size: var(--c2-corpo9);
+}
+:root .lettura:last-child { border-bottom: 0; }
+:root .lettura:hover { color: var(--c2-accent); }
+:root .lettura[aria-checked="true"] { background: none; font-weight: 700; }
+:root .lettura .spia { width: 12px; height: 12px; margin-top: 3px; border: 1px solid var(--c2-ink); }
+:root .lettura[aria-checked="true"] .spia { border: 6px solid var(--c2-ink); }
+:root .scelta {
+  min-height: 30px; padding: 3px 10px; border: 1px solid var(--c2-controllo); background: none; font-size: var(--c2-corpo9); font-weight: 600;
+}
+:root .scelta:hover { border-color: var(--c2-ink); }
+:root .scelta[aria-pressed="true"] { background: var(--c2-ink); border-color: var(--c2-ink); color: var(--c2-paper); box-shadow: none; }
+
+:root .scelta.stella::before { color: var(--c2-accent); }
+:root .lessico-voce {
+  background: none; padding: 6px 0 0; border-top: 1px solid var(--c2-rule);
+  font-family: var(--c2-classico); font-size: var(--c2-corpo9); color: var(--c2-ink);
+}
+:root details.dettagli > summary { color: var(--c2-accent); font-size: var(--c2-nota); letter-spacing: 0.08em; text-transform: uppercase; }
+:root .azioni-scheda { border-top: 2px solid var(--c2-ink); background: var(--c2-paper); }
+:root .tendina { border: 1px solid var(--c2-ink); }
+:root .tendina-gruppo { color: var(--c2-accent); font-size: var(--c2-nota); }
+:root .tendina-voce { font-size: var(--c2-corpo9); }
+:root .tendina-voce:hover, :root .tendina-voce:focus-visible { background: none; color: var(--c2-accent); }
+:root .segno { border: 0; border-top: 1px solid var(--c2-rule); padding: 7px 0; background: none; grid-template-columns: 4px minmax(0, 1fr) auto; }
+:root .segno.attivo b { color: var(--c2-accent); }
+:root .segno .testo span { font-family: var(--c2-classico); }
+
+/* ── resa: la striscia «Lessico» su tre colonne, la costruzione fra filetti ─ */
+:root .glossario { display: block; columns: 3 160px; column-gap: 18px; border-top: 1px solid var(--c2-rule); padding-top: 6px; }
+:root .glossario div { break-inside: avoid; border-bottom: 0; padding: 0 0 6px; }
+:root .glossario dt { display: inline; font-family: var(--c2-classico); font-weight: 700; font-size: 14px; color: var(--c2-accent); }
+:root .glossario dd { display: inline; margin-left: 4px; font-size: var(--c2-nota); color: var(--c2-ink); }
+:root .glossario dd.manca { color: var(--c2-note); }
+:root .ordo { gap: 0 18px; }
+:root .ordo-blocco { padding: 4px 0 0; border: 0; border-top: 3px solid var(--filo-c, var(--c2-ink)); background: none; }
+:root .ordo-blocco b { color: var(--c2-accent); }
+:root .ordo-blocco span { font-family: var(--c2-classico); }
+:root .forma-resa { font-family: var(--c2-classico) !important; }
+
+/* ── traduzione: il testo a fronte e le note a pie' di pagina ───────────── */
+:root .edizione { border-top: 0; }
+:root .edizione-testa {
+  padding: 5px 0; border-top: 2px solid var(--c2-ink); border-bottom: 1px solid var(--c2-ink);
+}
+:root .edizione-testa span { font-size: var(--c2-nota); font-weight: 700; letter-spacing: 0.06em; color: var(--c2-ink); }
+:root .edizione-riga { padding: 10px 0; border-bottom: 1px solid var(--c2-rule); }
+:root .edizione-riga:last-child { border-bottom: 2px solid var(--c2-ink); }
+:root .edizione-riga .n { text-align: center; padding-top: 3px; }
+:root .textus { font-family: var(--c2-classico); font-size: 18px; line-height: 1.5; }
+:root .versio .area {
+  border: 1px solid transparent; border-bottom-color: var(--c2-rule); padding: 2px 0 6px; background: none;
+  font-family: var(--c2-sans); font-size: var(--c2-corpo); line-height: 1.5;
+}
+:root .versio .area:focus { border-color: var(--c2-ink); padding-left: 6px; padding-right: 6px; }
+:root .apparato { margin-top: 28px; }
+:root .apparato .titolo-sezione { border-top: 0; padding-top: 0; }
+:root .apparato-lista {
+  columns: 3 200px; column-gap: 18px; padding-top: 8px;
+  border-top: 1px solid var(--c2-ink); border-image: linear-gradient(90deg, var(--c2-ink) 0 144px, transparent 144px) 1;
+  font-size: var(--c2-nota); line-height: var(--c2-nota-lh);
+}
+:root .apparato-lista li { padding: 0 0 5px; border-bottom: 0; }
+:root .apparato-lista .lem { font-family: var(--c2-classico); font-weight: 700; font-size: 13px; color: var(--c2-accent); }
+:root .apparato-lista .gl { color: var(--c2-note); }
+:root .apparato-lista .gl.scelto { color: var(--c2-ink); font-weight: 600; }
+
+/* ── il resto ────────────────────────────────────────────────────────────── */
+:root .cartiglio { background: var(--c2-ink); color: var(--c2-paper); }
+:root .piede {
+  border-top: 1px solid var(--c2-ink); margin: 0 clamp(16px, 3vw, 40px);
+  font-size: var(--c2-nota); letter-spacing: 0.08em; text-transform: uppercase; text-align: left; color: var(--c2-note);
+}
+:root .colonna-frasi { border-right: 1px solid var(--c2-rule); }
+:root .elenco-frasi a { border: 0; border-top: 1px solid var(--c2-rule); padding: 6px 0; font-family: var(--c2-classico); }
+:root .elenco-frasi a[aria-current="true"] { background: none; color: var(--c2-ink); font-weight: 700; }
+:root .elenco-frasi .n { color: var(--c2-accent); }
+:root .salta { background: var(--c2-ink); color: var(--c2-paper); }
+
+/* ── soglie della veste ─────────────────────────────────────────────────── */
+/* Dal tablet in su il banco ha la colonna appesa: il numero della frase e
+   le lenti stanno a sinistra del testo, come i numeri di parte nel manuale. */
+@media (min-width: 1024px) {
+  :root .guida-frase { display: grid; grid-template-columns: var(--c2-margine) 1fr; column-gap: var(--c2-canale); }
+  :root .lenti { padding-left: calc(clamp(16px, 3vw, 32px) + var(--c2-margine) + var(--c2-canale)); }
+  /* il banco ha gia' il suo margine esterno: dentro bastano colonna e canale */
+  :root .banco { padding-left: calc(var(--c2-margine) + var(--c2-canale)); }
+  :root .banco .consegna::before {
+    content: "In breve"; position: absolute; left: 0; width: var(--c2-margine);
+    font-size: var(--c2-nota); line-height: var(--c2-nota-lh); font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c2-accent);
+  }
+}
+@media (max-width: 1023px) {
+  :root .numero-appeso { font-size: 30px; line-height: 30px; margin-right: 6px; }
+  :root .colonna-scheda.aperta { border-top: 2px solid var(--c2-ink); }
+}
+@media (max-width: 767px) {
+  :root .titolo-pagina { font-size: 34px; }
+  :root .parola .forma { font-size: 23px; }
+  :root .nastro .titolo-versione strong { font-size: 20px; }
+  :root .tappa { margin-left: 0; }
+  :root .testata .firma { display: none; }
+}
+@media print {
+  :root body { font-size: 13.33px; line-height: 16px; }
+}
