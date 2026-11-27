@@ -375,6 +375,33 @@ main:focus { outline: none; }
 .cella-p { padding: 0 3px 0 0; margin-left: -7px; }
 .cella-p .filo { margin: 0; }
 .parola.punto { padding-left: 0; padding-right: 0; border: 0; cursor: default; }
+/* l'analisi periodale sul testo: la sbarra davanti alla parola da cui comincia
+   una proposizione (sta nel vuoto fra le parole, non sposta nulla), il
+   riquadro del connettivo */
+.parola { overflow: visible; }
+.parola .forma { position: relative; }
+.parola.dopo-taglio .forma::before {
+  content: "/"; position: absolute; left: -0.42em; top: 0;
+  font-weight: 400; color: var(--sepia); pointer-events: none;
+}
+[data-lente="segmenti"] .parola.dopo-taglio .forma::before { font-weight: 700; color: var(--lingua); }
+[data-lente="segmenti"] .parola[data-i="0"] { cursor: default; }
+.parola.connettivo .forma { outline: 1.5px solid var(--ink-soft); outline-offset: 2px; }
+[data-lente="connettivi"] .parola.connettivo .forma { outline-color: var(--lingua); }
+
+/* i passi dell'analisi periodale, sotto i livelli */
+.lenti .sottopassi { counter-reset: passo; margin-top: 6px; }
+/* nei passi del periodo la parola premuta non si riquadra: il segno e' la
+   sbarra, il filetto del verbo o il riquadro del connettivo */
+[data-lente="segmenti"] .parola[aria-pressed="true"],
+[data-lente="verbi"] .parola[aria-pressed="true"],
+[data-lente="connettivi"] .parola[aria-pressed="true"] { border-color: transparent; box-shadow: none; background: none; }
+.lenti .sottopassi button::before { counter-increment: passo; content: "1." counter(passo); font-size: 11px; }
+.elenco-segmenti { display: grid; gap: 10px; margin: 0 0 12px; padding: 0; list-style: none; }
+.elenco-segmenti li { display: grid; grid-template-columns: 24px 1fr; gap: 8px; align-items: baseline; }
+.elenco-segmenti .n { font-weight: 800; color: var(--lingua); font-variant-numeric: tabular-nums; }
+.elenco-segmenti .testo-segmento { display: block; font-family: var(--font-testo); font-size: 18px; line-height: 1.35; }
+.elenco-segmenti .dati-segmento { display: block; margin-top: 2px; font-size: 12.5px; color: var(--sepia); }
 .parola.punto:hover { background: none; }
 .parola.punto .forma { border-bottom-color: transparent; color: var(--ink-soft); }
 .parola {

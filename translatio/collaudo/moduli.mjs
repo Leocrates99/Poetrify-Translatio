@@ -150,6 +150,11 @@ prova('la pagina .html e’ autonoma e si riapre in Translatio', () => {
   assert.equal(w.frasi[0].parole[3].nota, 'soggetto <di venerant>');
   assert.notEqual(w.id, v.id);
 });
+prova('la segmentazione: le sbarre fanno segmenti contigui, un tocco ne prende uno intero', () => {
+  assert.deepEqual(Sx.segmentiDi(6, [4, 2, 2, 0, 9]), [{ da: 0, a: 1 }, { da: 2, a: 3 }, { da: 4, a: 5 }]);
+  assert.deepEqual(Sx.segmentiDi(3, []), [{ da: 0, a: 2 }]);
+  assert.deepEqual(Sx.segmentoDi(3, 6, [2, 4]), { da: 2, a: 3 });
+});
 prova('la costruzione rimette in fila soggetto, predicato, oggetto', () => {
   const g = { sintagmi: [{ da: 2, a: 2, funzione: 'Complemento oggetto' }, { da: 1, a: 1, funzione: 'Predicato verbale' }, { da: 0, a: 0, funzione: 'Soggetto' }] };
   assert.deepEqual(Sx.ordoDellaFrase(g, [{ t: 'a' }, { t: 'b' }, { t: 'c' }], 'latino').map(b => b.testo), ['a', 'b', 'c']);

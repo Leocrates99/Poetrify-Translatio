@@ -23,6 +23,7 @@ import { ICONE } from './ui/icone.js';
 import { ESEMPI } from './esempi.js';
 import { dividiInFrasi, tokenizza, normalizzaSpazi } from './motore/testo.js';
 import { trattiCoerenti, taglia, formaTagliabile } from './motore/grammatica.js';
+import { segmentoDi } from './motore/sintassi.js';
 import {
   nuovaVersione, nuovaFrase, riallineaFrasi, haLavoro, caricaVersione, salvaVersione,
   salvaPiuTardi, salvaSubito, eliminaVersione, esportaJSON, importaJSON, nuovoId,
@@ -254,7 +255,7 @@ function riordina(i) {
   const f = frase();
   const p = f.parole[i];
   if (!p) return;
-  for (const k of ['lemma', 'senso', 'nota', 'pos']) if (!p[k]) delete p[k];
+  for (const k of ['lemma', 'senso', 'nota', 'pos', 'connettivo']) if (!p[k]) delete p[k];
   if (p.tratti && !Object.keys(p.tratti).length) delete p.tratti;
   if (p.morfemi && !p.morfemi.length) delete p.morfemi;
   if (!Object.keys(p).length) delete f.parole[i];
@@ -294,6 +295,20 @@ function selezionaInGruppo(i, estendi) {
     S.ancora = i; S.span = { da: i, a: i }; S.segnoAttivo = null;
   }
   S.filtro = '';
+  render();
+}
+
+/* Le proposizioni si scelgono per segmenti: un tocco prende il segmento
+   intero; col Maiuscolo la selezione si allarga ai segmenti fino a quello. */
+function selezionaSegmento(i, estendi) {
+  const f = frase();
+  const n = paroleDi(f).length;
+  const seg = segmentoDi(i, n, f.tagli);
+  if (estendi && S.span) S.span = { da: Math.min(S.span.da, seg.da), a: Math.max(S.span.a, seg.a) };
+  else S.span = seg;
+  S.ancora = null;
+  const gia = f.proposizioni.find(s => s.da === S.span.da && s.a === S.span.a);
+  S.segnoAttivo = gia ? gia.id : null;
   render();
 }
 
@@ -376,8 +391,38 @@ const AZIONI = {
   lente(el) { vai(`#/v/${S.v.id}/analisi/${S.frase + 1}/${el.dataset.lente}`); },
   parola(el, ev) {
     const i = +el.dataset.i;
-    if (S.lente === 'parole') { scegliParola(i); return; }
-    if (S.lente === 'sintagmi' || S.lente === 'proposizioni') selezionaInGruppo(i, ev && ev.shiftKey);
+    const f = frase();
+    switch (S.lente) {
+      case 'segmenti': {
+        /* la sbarra: qui comincia una nuova proposizione */
+        if (i === 0) return;
+        const t = new Set(f.tagli || []);
+        if (t.has(i)) t.delete(i); else t.add(i);
+        f.tagli = [...t].sort((a, b) => a - b);
+        salva(); render();
+        annuncia(t.has(i) ? 'Sbarra: qui comincia una proposizione.' : 'Sbarra tolta.', { visibile: false });
+        return;
+      }
+      case 'verbi': {
+        const p = parolaDa(i);
+        p.pos = p.pos === 'verbo' ? '' : 'verbo';
+        p.tratti = trattiCoerenti(p, S.v.lingua);
+        riordina(i);
+        salva(); render();
+        return;
+      }
+      case 'connettivi': {
+        const p = parolaDa(i);
+        p.connettivo = !p.connettivo;
+        riordina(i);
+        salva(); render();
+        return;
+      }
+      case 'proposizioni': selezionaSegmento(i, ev && ev.shiftKey); return;
+      case 'sintagmi': selezionaInGruppo(i, ev && ev.shiftKey); return;
+      case 'parole': scegliParola(i); return;
+      default:
+    }
   },
   chiudi() { azzeraSelezione(); render(); },
   pos(el) {

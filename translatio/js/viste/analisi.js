@@ -1,8 +1,13 @@
 /* ============================================================================
    ANALISI · la frase protagonista, quattro livelli sullo stesso testo
    ----------------------------------------------------------------------------
-   Si scende dal periodo alla parola, poi si traduce:
-     1 Sintattica     il periodo: principale, coordinate, subordinate
+   Si scende dal periodo alla parola, poi si traduce (l'ordine del metodo
+   guidato del Translator di Poetrify):
+     1 Sintattica     l'analisi periodale, in quattro passi:
+                      1.1 segmentazione  il periodo tagliato in proposizioni ( / )
+                      1.2 verbi          le forme verbali, centro di ogni proposizione
+                      1.3 connettivi     congiunzioni, relativi, particelle che legano
+                      1.4 proposizioni   principale, coordinate, subordinate
      2 Logica         i sintagmi e la loro funzione logica
      3 Grammaticale   le parole: parte del discorso, flessione, lemma,
                       significato, morfemi
@@ -25,22 +30,33 @@ import { traslittera } from '../motore/traslitterazione.js';
 import { statoFrase, faseFrase, analizzata } from '../stato.js';
 import {
   casoDellaFunzione, gruppiDiFunzioni, abbreviaFunzione, RUOLI,
-  tipiDiProposizione, etichettaProposizione, ordoDellaFrase, livelli,
+  tipiDiProposizione, etichettaProposizione, ordoDellaFrase, livelli, segmentiDi,
 } from '../motore/sintassi.js';
 
 /* L'ordine dei livelli e' l'ordine del lavoro. Le chiavi restano quelle
    degli indirizzi (#/v/<id>/analisi/<frase>/<chiave>). */
+export const LIVELLI = [
+  { k: 'sintattica', nome: 'Sintattica', esteso: 'Analisi sintattica', oggetto: 'il periodo' },
+  { k: 'logica', nome: 'Logica', esteso: 'Analisi logica', oggetto: 'i sintagmi' },
+  { k: 'grammaticale', nome: 'Grammaticale', esteso: 'Analisi grammaticale', oggetto: 'le parole' },
+  { k: 'traduzione', nome: 'Traduzione', esteso: 'Traduzione', oggetto: 'la frase in italiano' },
+];
+/* I passi, in fila: i primi quattro sono l'analisi periodale. */
 export const LENTI = [
-  { k: 'proposizioni', nome: 'Sintattica', esteso: 'Analisi sintattica', oggetto: 'il periodo' },
-  { k: 'sintagmi', nome: 'Logica', esteso: 'Analisi logica', oggetto: 'i sintagmi' },
-  { k: 'parole', nome: 'Grammaticale', esteso: 'Analisi grammaticale', oggetto: 'le parole' },
-  { k: 'resa', nome: 'Traduzione', esteso: 'Traduzione', oggetto: 'la frase in italiano' },
+  { k: 'segmenti', livello: 'sintattica', nome: 'Segmentazione', esteso: 'Segmentazione del periodo' },
+  { k: 'verbi', livello: 'sintattica', nome: 'Verbi', esteso: 'Le forme verbali' },
+  { k: 'connettivi', livello: 'sintattica', nome: 'Connettivi', esteso: 'I connettivi' },
+  { k: 'proposizioni', livello: 'sintattica', nome: 'Proposizioni', esteso: 'Le proposizioni' },
+  { k: 'sintagmi', livello: 'logica', nome: 'Sintagmi', esteso: 'Analisi logica' },
+  { k: 'parole', livello: 'grammaticale', nome: 'Parole', esteso: 'Analisi grammaticale' },
+  { k: 'resa', livello: 'traduzione', nome: 'Traduzione', esteso: 'Traduzione' },
 ];
 export const PRIMA_LENTE = LENTI[0].k;
 const livelloDi = k => LENTI.findIndex(l => l.k === k);
+const passoDi = k => LENTI.find(l => l.k === k) || LENTI[0];
 
-/** Il passo prima e il passo dopo, nell'ordine del lavoro: i quattro livelli
- *  di una frase, poi la frase seguente dal primo livello. */
+/** Il passo prima e il passo dopo, nell'ordine del lavoro: i passi di una
+ *  frase, poi la frase seguente dal primo. */
 export function passi(v, n, lente) {
   const k = livelloDi(lente);
   const url = (f, l) => `#/v/${v.id}/analisi/${f + 1}/${l}`;
@@ -102,15 +118,28 @@ function guida(S) {
 
 function lenti(S, st) {
   const conti = {
-    parole: `${st.analizzate}/${st.parole}`,
-    sintagmi: st.sintagmi || '',
+    segmenti: st.tagli ? st.tagli + 1 : '',
+    verbi: st.verbi || '',
+    connettivi: st.connettivi || '',
     proposizioni: st.proposizioni || '',
+    sintagmi: st.sintagmi || '',
+    parole: `${st.analizzate}/${st.parole}`,
     resa: st.bella ? '✓' : (st.brutta ? '½' : ''),
   };
-  return html`<div class="lenti"><div class="segmenti" role="tablist" aria-label="I livelli dell’analisi, in ordine">
-    ${LENTI.map(l => html`<button type="button" role="tab" data-az="lente" data-lente="${l.k}" aria-selected="${S.lente === l.k ? 'true' : 'false'}" title="${l.esteso} · ${l.oggetto}">
+  const qui = passoDi(S.lente);
+  const sotto = LENTI.filter(l => l.livello === qui.livello);
+  return html`<div class="lenti"><div class="segmenti livelli-analisi" role="tablist" aria-label="I livelli dell’analisi, in ordine">
+    ${LIVELLI.map(L => {
+      const primo = LENTI.find(l => l.livello === L.k);
+      const unico = LENTI.filter(l => l.livello === L.k).length === 1;
+      return html`<button type="button" role="tab" data-az="lente" data-lente="${primo.k}" aria-selected="${qui.livello === L.k ? 'true' : 'false'}" title="${L.esteso} · ${L.oggetto}">
+      ${L.nome}${unico && conti[primo.k] !== '' ? html` <span class="conto">${conti[primo.k]}</span>` : ''}</button>`;
+    })}
+  </div>
+  ${sotto.length > 1 ? html`<div class="segmenti sottopassi" role="tablist" aria-label="${LIVELLI.find(L => L.k === qui.livello).esteso}, passo per passo">
+    ${sotto.map(l => html`<button type="button" role="tab" data-az="lente" data-lente="${l.k}" aria-selected="${S.lente === l.k ? 'true' : 'false'}">
       ${l.nome}${conti[l.k] !== '' ? html` <span class="conto">${conti[l.k]}</span>` : ''}</button>`)}
-  </div></div>`;
+  </div>` : ''}</div>`;
 }
 
 /* ── la frase: celle di parole, con i fili sopra e sotto ─────────────────── */
@@ -177,11 +206,15 @@ function frase(S) {
   const parole = toks.filter(t => t.k === 'w');
   const lente = S.lente;
   const span = S.span;
-  /* i livelli si sovrappongono: le proposizioni dalla sintattica in poi, i
-     sintagmi dalla logica in poi; quelli segnati prima sono contesto */
-  const livello = livelloDi(lente);
-  const props = livello >= 0 && livello <= 2 ? f.proposizioni : [];
-  const sintagmi = livello >= 1 && livello <= 2 ? f.sintagmi : [];
+  /* i livelli si sovrappongono: tagli, connettivi e proposizioni dalla
+     sintattica in poi, i sintagmi dalla logica in poi; quelli segnati prima
+     sono contesto. Nella traduzione la frase non si disegna. */
+  const passo = livelloDi(lente);
+  const iSint = livelloDi('sintagmi');
+  const iParole = livelloDi('parole');
+  const props = passo <= iParole ? f.proposizioni : [];
+  const sintagmi = passo >= iSint && passo <= iParole ? f.sintagmi : [];
+  const tagli = new Set(f.tagli || []);
   const lungh = s => Math.max(6, parole.slice(s.da, s.a + 1).reduce((n, w) => n + w.t.length * 2 + 2, 0));
 
   const opzSopra = { sopra: true, classe: s => `prop-${(s.ruolo || '').toLowerCase()}`, etichetta: (s, lungo) => etichettaProposizione(s, lungo), attivo: lente === 'proposizioni' ? S.segnoAttivo : null, larghezza: lungh, contesto: lente !== 'proposizioni' };
@@ -206,12 +239,20 @@ function frase(S) {
     const p = f.parole[t.i];
     const pos = p && p.pos ? `pos-${p.pos}` : '';
     const stato = analizzata(p) ? 'analizzata' : 'vuota';
-    const premuta = lente === 'parole' ? S.sel === t.i : false;
+    /* che cosa vuol dire premere la parola, passo per passo */
+    const premuta = lente === 'parole' ? S.sel === t.i
+      : lente === 'segmenti' ? tagli.has(t.i)
+        : lente === 'verbi' ? !!(p && p.pos === 'verbo')
+          : lente === 'connettivi' ? !!(p && p.connettivo) : false;
     const inSel = span && t.i >= span.da && t.i <= span.a && lente !== 'parole';
+    const gesto = lente === 'segmenti' ? (t.i === 0 ? 'qui comincia il periodo' : (tagli.has(t.i) ? 'qui comincia una proposizione: tocca per ricucire' : 'tocca per cominciare qui una proposizione'))
+      : lente === 'verbi' ? (premuta ? 'forma verbale segnata' : 'tocca se è una forma verbale')
+        : lente === 'connettivi' ? (premuta ? 'connettivo segnato' : 'tocca se è un connettivo') : descrizione(t, p);
+    const segni = [tagli.has(t.i) && passo <= iParole ? 'dopo-taglio' : '', p && p.connettivo && passo <= iParole ? 'connettivo' : ''].join(' ');
     celle.push(html`<span class="cella">
       ${fili(props, t.i, opzSopra)}
-      <button type="button" class="parola ${pos} ${stato} ${inSel ? 'in-selezione' : ''}" data-az="parola" data-i="${t.i}"
-        aria-pressed="${premuta ? 'true' : 'false'}" aria-label="${t.t}: ${descrizione(t, p)}">
+      <button type="button" class="parola ${pos} ${stato} ${segni} ${inSel ? 'in-selezione' : ''}" data-az="parola" data-i="${t.i}"
+        aria-pressed="${premuta ? 'true' : 'false'}" aria-label="${t.t}: ${gesto}" ${lente === 'segmenti' && t.i === 0 ? raw('aria-disabled="true"') : ''}>
         <span class="forma" lang="${langAttr(v)}">${lente === 'parole' ? formaConMorfemi(t.t, p) : t.t}</span>
         ${lente === 'parole' ? rigaSotto(p) : rigaSpia(p)}
       </button>
@@ -222,8 +263,11 @@ function frase(S) {
 }
 
 const CONSEGNE = {
-  proposizioni: raw('<strong>Il periodo.</strong> Cerca i verbi: ogni verbo di modo finito regge una proposizione, e anche un infinito o un participio può reggerne una. Tocca la prima e l’ultima parola di ogni proposizione, poi dille se è principale, coordinata o subordinata, e di che tipo.'),
-  sintagmi: raw('<strong>I sintagmi.</strong> Dentro le proposizioni che hai segnato (sopra la frase), tocca la <strong>prima</strong> e l’<strong>ultima</strong> parola di un gruppo e scegli la sua funzione: prima il predicato, poi soggetto e oggetto, poi i complementi.'),
+  segmenti: raw('<strong>Segmentazione.</strong> Scomponi il periodo nelle sue proposizioni: tocca la parola da cui ne comincia una nuova e compare la sbarra <strong>/</strong>; toccala di nuovo per ricucire. Ti guidano la punteggiatura, i verbi e i connettivi.'),
+  verbi: raw('<strong>Le forme verbali.</strong> Tocca ogni parola che riconosci come <strong>verbo</strong>, anche infiniti e participi: ogni verbo è il centro di una proposizione. Il filetto diventa rosso, il colore del verbo.'),
+  connettivi: raw('<strong>I connettivi.</strong> Tocca tutti i collegamenti fra le proposizioni: <strong>congiunzioni</strong> coordinanti e subordinanti, <strong>pronomi e avverbi relativi</strong>, particelle. Ogni connettivo segnato si chiude in un riquadro.'),
+  proposizioni: raw('<strong>Le proposizioni.</strong> Tocca un segmento: si seleziona intero. Dille se è principale, coordinata o subordinata, di che tipo e di che grado. Con il tasto Maiuscolo unisci più segmenti in una proposizione sola.'),
+  sintagmi: raw('<strong>I sintagmi.</strong> Per ogni proposizione costruisci la frase minima: tocca la <strong>prima</strong> e l’<strong>ultima</strong> parola di un gruppo e scegline la funzione, nell’ordine: soggetto e gruppo del nominativo, complemento oggetto e gruppo dell’accusativo, complementi di movimento, poi gli altri complementi.'),
   parole: raw('<strong>Le parole.</strong> Toccane una e analizzala nella scheda: parte del discorso, flessione, lemma, significato. Il filetto sotto la parola prende il colore della <strong>parte del discorso</strong> che scegli; finché manca resta punteggiato.'),
 };
 
@@ -406,7 +450,7 @@ function schedaGruppo(S) {
     return html`${testa}<div class="scheda-corpo">
       <p class="scheda-invito" style="padding:8px 0 0">${sintagmi
         ? raw('Tocca la <strong>prima</strong> parola del gruppo, poi l’<strong>ultima</strong>. Per una parola sola, toccala due volte.')
-        : raw('Tocca la <strong>prima</strong> e l’<strong>ultima</strong> parola della proposizione. Comincia dai verbi: ogni verbo di modo finito ne regge una.')}</p>
+        : raw('Tocca un <strong>segmento</strong> della frase: si seleziona intero. Se il periodo non è ancora diviso, torna alla segmentazione.')}</p>
       ${elencoSegni(S, segni, S.lente)}
     </div>`;
   }
@@ -451,7 +495,36 @@ function invitoScheda() {
     <p class="nota-fonte solo-tastiera">Con la tastiera: le frecce ← → passano da una parola all’altra; i numeri 1–9 scelgono nel primo gruppo ancora vuoto; Invio va alla parola successiva; [ e ] cambiano frase.</p></div>`;
 }
 
+/* La scheda dei primi tre passi del periodo: non c'e' nulla da compilare, la
+   frase si lavora toccandola. Qui si rilegge il periodo segmento per
+   segmento, coi suoi verbi e i suoi connettivi. */
+function schedaPeriodo(S) {
+  const v = S.v;
+  const f = v.frasi[S.frase];
+  const parole = paroleDi(f);
+  const segmenti = segmentiDi(parole.length, f.tagli);
+  const consigli = {
+    segmenti: 'Una proposizione ha di norma un verbo; la punteggiatura e i connettivi ne segnano spesso l’inizio.',
+    verbi: 'Un segmento senza verbo può averlo sottinteso: succede spesso nelle coordinate.',
+    connettivi: 'Il connettivo sta quasi sempre all’inizio della proposizione che introduce; il relativo può avere davanti una preposizione.',
+  };
+  return html`<div class="scheda-testa"><span class="occhiello">Il periodo · ${segmenti.length} ${segmenti.length === 1 ? 'segmento' : 'segmenti'}</span></div>
+    <div class="scheda-corpo" id="scheda-corpo">
+      <ol class="elenco-segmenti">${segmenti.map((s, n) => {
+        const ws = parole.slice(s.da, s.a + 1);
+        const verbi = ws.filter(w => f.parole[w.i] && f.parole[w.i].pos === 'verbo').map(w => w.t);
+        const conn = ws.filter(w => f.parole[w.i] && f.parole[w.i].connettivo).map(w => w.t);
+        return html`<li><span class="n">${n + 1}</span><div>
+          <span class="testo-segmento" lang="${langAttr(v)}">${ws.map(w => w.t).join(' ')}</span>
+          <span class="dati-segmento">${verbi.length ? html`verbo: <i lang="${langAttr(v)}">${verbi.join(', ')}</i>` : 'nessun verbo segnato'}${conn.length ? html` · connettivo: <i lang="${langAttr(v)}">${conn.join(', ')}</i>` : ''}</span>
+        </div></li>`;
+      })}</ol>
+      <p class="nota-fonte">${consigli[S.lente]}</p>
+    </div>`;
+}
+
 export function scheda(S) {
+  if (['segmenti', 'verbi', 'connettivi'].includes(S.lente)) return schedaPeriodo(S);
   if (S.lente === 'resa') {
     return html`<div class="scheda-testa"><span class="occhiello">Come si traduce</span></div>
     <div class="scheda-corpo"><div class="prosa" style="font-size:15.5px">
@@ -469,7 +542,7 @@ export function fraseViva(S) { return frase(S); }
 
 export function apertaScheda(S) {
   if (S.lente === 'parole') return S.sel != null;
-  if (S.lente === 'resa') return false;
+  if (['resa', 'segmenti', 'verbi', 'connettivi'].includes(S.lente)) return false;
   return !!S.span || S.schedaGruppoAperta;
 }
 

@@ -194,6 +194,20 @@
 :root .segmenti button[aria-selected="true"] { background: none; color: var(--c2-ink); border-bottom-color: var(--c2-ink); }
 :root .segmenti .conto { font-size: var(--c2-nota); color: var(--c2-accent); letter-spacing: 0; }
 :root .lenti .segmenti button::before { font-size: var(--c2-corpo9); letter-spacing: 0; color: var(--c2-accent); margin-right: 1px; }
+/* i passi del periodo: una riga piu' piccola sotto i livelli, filetto grigio */
+:root .lenti .sottopassi { gap: 0 16px; padding-top: 2px; border-top: 1px solid var(--c2-rule); }
+:root .lenti .sottopassi button { min-height: 30px; font-size: 10px; letter-spacing: 0.06em; }
+:root .lenti .sottopassi button::before { font-size: var(--c2-nota); }
+:root .parola.dopo-taglio .forma::before { color: var(--c2-note); }
+:root [data-lente="segmenti"] .parola[aria-pressed="true"],
+:root [data-lente="verbi"] .parola[aria-pressed="true"],
+:root [data-lente="connettivi"] .parola[aria-pressed="true"] { border-color: transparent; }
+:root [data-lente="segmenti"] .parola.dopo-taglio .forma::before { color: var(--c2-accent); }
+:root .parola.connettivo .forma { outline: 1px solid var(--c2-ink); }
+:root [data-lente="connettivi"] .parola.connettivo .forma { outline: 1.5px solid var(--c2-accent); }
+:root .elenco-segmenti .n { color: var(--c2-accent); }
+:root .elenco-segmenti .testo-segmento { font-family: var(--c2-classico); }
+:root .elenco-segmenti .dati-segmento { font-size: var(--c2-nota); line-height: var(--c2-nota-lh); color: var(--c2-note); }
 :root .targhetta {
   padding: 0; border: 0; background: none;
   font-size: var(--c2-nota); font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c2-note);

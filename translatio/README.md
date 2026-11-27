@@ -17,7 +17,8 @@ la chiave del tema (`shared/poetrify-theme.js`) e i caratteri (`vendor/fonts/`).
 
 ```
 TESTO  →  ANALISI  →  VERSIONE  →  CONSEGNA
-           1 sintattica · 2 logica · 3 grammaticale · 4 traduzione
+           1 sintattica (1.1 segmentazione · 1.2 verbi · 1.3 connettivi · 1.4 proposizioni)
+           2 logica · 3 grammaticale · 4 traduzione
 ```
 
 1. **Testo.** Lo studente incolla il brano. Il banco lo divide in periodi guardando solo la
@@ -25,13 +26,27 @@ TESTO  →  ANALISI  →  VERSIONE  →  CONSEGNA
    ⤓ unisce una frase alla successiva, *Dividi* fa cominciare una frase nuova dalla parola
    toccata.
 2. **Analisi.** La frase sta al centro e non cambia mai di posto. Si analizza **dal periodo
-   alla parola**, poi si traduce: quattro **livelli** numerati, in quest'ordine.
-   1. **Sintattica · il periodo.** Si cercano i verbi; si toccano la prima e l'ultima parola
-      di ogni proposizione, il ruolo (principale, coordinata, subordinata) la segna, poi se ne
-      dicono il tipo e il grado. Il filo sta sopra le parole.
-   2. **Logica · i sintagmi.** Dentro le proposizioni, stesso gesto: si sceglie la funzione
-      logica (elenco per caso, con la ricerca). Il filo sotto il gruppo ha il colore del
-      **caso** (codice di categoria della collana).
+   alla parola**, poi si traduce: quattro **livelli** numerati, in quest'ordine, che seguono
+   il metodo guidato del Translator di Poetrify (segmentazione → verbi → connettivi →
+   sintassi periodale → sintagmi → grammatica → brutta → bella).
+   1. **Sintattica · l'analisi periodale**, in quattro passi:
+      - **1.1 Segmentazione.** Si scompone il periodo nelle sue proposizioni: si tocca la
+        parola da cui ne comincia una nuova e compare la sbarra **/**; ritoccandola si ricuce.
+      - **1.2 Verbi.** Si toccano le forme verbali, anche infiniti e participi: il filetto
+        diventa rosso, il colore del verbo, e l'analisi grammaticale la ritrova già come verbo.
+      - **1.3 Connettivi.** Si toccano congiunzioni, pronomi e avverbi relativi, particelle:
+        ogni connettivo si chiude in un riquadro.
+      - **1.4 Proposizioni.** Un tocco seleziona un **segmento intero** (col Maiuscolo se ne
+        uniscono più d'uno); il ruolo (principale, coordinata, subordinata) segna la
+        proposizione, poi se ne dicono il tipo e il grado. Il filo sta sopra le parole.
+
+      Nei primi tre passi la scheda rilegge il periodo segmento per segmento, coi verbi e i
+      connettivi segnati.
+   2. **Logica · i sintagmi.** Per ogni proposizione si costruisce la frase minima: si toccano
+      la prima e l'ultima parola di un gruppo e se ne sceglie la funzione logica (elenco per
+      caso, con la ricerca), nell'ordine soggetto, oggetto, complementi di movimento, altri
+      complementi. Il filo sotto il gruppo ha il colore del **caso** (codice di categoria della
+      collana).
    3. **Grammaticale · le parole.** Si tocca una parola e nella scheda si scelgono la **parte
       del discorso** (le undici tinte della casa), poi i tratti che quella parte del discorso
       ha: caso, numero, genere, grado; modo, tempo, diatesi, persona; declinazione e
@@ -46,11 +61,10 @@ TESTO  →  ANALISI  →  VERSIONE  →  CONSEGNA
       dello studente), la costruzione nell'ordine italiano rimessa in fila dai sintagmi,
       brutta e bella copia.
 
-   I livelli **si sovrappongono**: ciò che è stato segnato nei livelli prima resta sotto quello
-   su cui si lavora, più chiaro (nella logica le proposizioni sopra la frase; nella
-   grammaticale proposizioni e sintagmi). In fondo al banco il **passo dopo** porta al livello
-   seguente; dopo la traduzione, alla frase seguente dal livello sintattico; dopo l'ultima
-   frase, alla Versione.
+   I livelli **si sovrappongono**: ciò che è stato segnato prima resta sotto quello su cui si
+   lavora, più chiaro (sbarre, riquadri e proposizioni fino alla grammaticale; i sintagmi
+   nella grammaticale). In fondo al banco il **passo dopo** porta al passo seguente; dopo la
+   traduzione, alla frase seguente dalla segmentazione; dopo l'ultima frase, alla Versione.
 3. **Versione.** La versione intera, testo a fronte; brutta e bella sono due stati della
    stessa riga. In calce l'apparato lessicale coi lemmi e i significati dello studente.
 4. **Consegna.** Chi consegna (nome, classe, data, docente), che cosa entra nel documento
@@ -71,7 +85,8 @@ Un foglio A4 in veste C2 (`js/viste/documento.js`, `js/viste/stile-documento.js`
 - **il testo**, con le frasi numerate;
 - per ogni frase, col numero appeso nella colonna di margine e nell'ordine dei livelli:
   **l'analisi disegnata** (le proposizioni sopra, i sintagmi sotto, la parte del discorso nel
-  filetto, i morfemi a colori), l'**analisi sintattica** (il periodo), l'**analisi logica**
+  filetto, le sbarre della segmentazione, i connettivi riquadrati, i morfemi a colori),
+  l'**analisi sintattica** (i segmenti, i verbi, i connettivi, le proposizioni), l'**analisi logica**
   (la costruzione), l'**analisi grammaticale** (la tavola delle parole: forma, analisi
   distesa, lemma, significato, poi le osservazioni), la **brutta** e la **bella**;
 - **la traduzione** intera, **il lessico**, **la legenda** (solo i colori che il documento usa).
@@ -144,15 +159,17 @@ translatio/
 ```
 
 **I dati.** `versione = { id, schema: 2, lingua, titolo, autore, testo, frasi, posizione,
-consegna }`; ogni frase ha `parole` (per posizione), `sintagmi`, `proposizioni`, `brutta`,
-`bella`; ogni parola è `{ pos, tratti, lemma, senso, morfemi: [{ t, r }], nota }` e c'è
-solo se lo studente ci ha scritto qualcosa. Le versioni dello schema 1 (Translatio con
+consegna }`; ogni frase ha `parole` (per posizione), `tagli` (gli indici delle parole da cui
+comincia una proposizione), `sintagmi`, `proposizioni`, `brutta`, `bella`; ogni parola è
+`{ pos, tratti, lemma, senso, morfemi: [{ t, r }], nota, connettivo }` e c'è solo se lo
+studente ci ha scritto qualcosa. La forma verbale segnata nel periodo è una parola con `pos:
+'verbo'`. Le versioni dello schema 1 (Translatio con
 l'analisi automatica) si aprono ancora: restano le parole che lo studente aveva confermato o
 corretto, i significati, i sintagmi, le proposizioni e le traduzioni; le proposte mai
 confermate cadono.
 
 **La versione dei file.** `index.html` chiede ogni foglio di stile e ogni modulo con la
-stessa versione (`?v=2026-11-27e`); i moduli interni la ricevono da un'import map. Così,
+stessa versione (`?v=2026-11-27f`); i moduli interni la ricevono da un'import map. Così,
 dopo un aggiornamento, il browser non mescola file nuovi e file vecchi rimasti in cache
 (GitHub Pages li tiene 10 minuti). Quando si cambia un file, si alza la versione in tutte
 le righe di `index.html`; il collaudo controlla che sia la stessa ovunque e che l'import

@@ -60,11 +60,22 @@ async function misura(page, nome, dove, guasti) {
       await page.waitForFunction(h => { const x = document.querySelector('.barra-passi .btn-primario'); return x && x.getAttribute('href') !== h; }, href);
     };
 
-    /* 1 · Sintattica: si comincia dal periodo */
-    const primo = await page.getAttribute('[role="tab"][aria-selected="true"]', 'data-lente');
-    if (primo !== 'proposizioni') guasti.push(`${nome}: l'analisi non comincia dal livello sintattico (${primo})`);
-    await page.click('.parola[data-i="0"]');
+    /* 1 · Sintattica: l'analisi periodale comincia dalla segmentazione */
+    const primo = await page.getAttribute('.sottopassi [role="tab"][aria-selected="true"]', 'data-lente');
+    if (primo !== 'segmenti') guasti.push(`${nome}: l'analisi non comincia dalla segmentazione (${primo})`);
     await page.click('.parola[data-i="2"]');
+    if (!await page.$('.parola[data-i="2"].dopo-taglio')) guasti.push(`${nome}: la sbarra della segmentazione non compare`);
+    await avanti('Le forme verbali');
+    await page.click('.parola[data-i="1"]');
+    if (!await page.$('.parola[data-i="1"].pos-verbo')) guasti.push(`${nome}: la forma verbale segnata non prende il filetto del verbo`);
+    await avanti('I connettivi');
+    await page.click('.parola[data-i="2"]');
+    if (!await page.$('.parola[data-i="2"].connettivo')) guasti.push(`${nome}: il connettivo segnato non si riquadra`);
+    await avanti('Le proposizioni');
+    /* un tocco prende il segmento intero: parole 1–2 */
+    await page.click('.parola[data-i="0"]');
+    const scelte = await page.$$eval('.parola.in-selezione', b => b.map(x => x.dataset.i).join(','));
+    if (scelte !== '0,1') guasti.push(`${nome}: il tocco non seleziona il segmento intero (${scelte})`);
     if (await page.$('.stella')) guasti.push(`${nome}: compaiono proposte nella scheda della proposizione`);
     await page.click('[data-az="ruolo"][data-ruolo="Principale"]');
     await page.click('[data-az="tipo-prop"][data-tipo="Enunciativa"]');
@@ -97,11 +108,12 @@ async function misura(page, nome, dove, guasti) {
     await page.click('[data-az="prossima"]');
     if (!await page.$('.parola[data-i="1"][aria-pressed="true"]')) guasti.push(`${nome}: «Parola successiva» non e' andata avanti`);
 
-    /* la seconda con la tastiera: i numeri compilano il primo gruppo vuoto */
+    /* la seconda e' il verbo segnato nel periodo: la scheda parte gia' dal
+       modo, e la tastiera compila il primo gruppo vuoto */
+    if (!await page.$('.scelta.pos-verbo[aria-pressed="true"]')) guasti.push(`${nome}: il verbo segnato nel periodo non arriva all'analisi grammaticale`);
     if (tastiera) {
       await page.focus('.parola[data-i="1"]');
-      /* verbo (il quarto in latino, che non ha l'articolo; il quinto in greco) · indicativo · presente · passivo */
-      for (const k of [nome.includes('greco') ? '5' : '4', '1', '1', '2']) await page.keyboard.press(k);
+      for (const k of ['1', '1', '2']) await page.keyboard.press(k);   // indicativo · presente · passivo
       const ok = await page.evaluate(() => ['.scelta.pos-verbo', '[data-g="modo"][data-x="ind"]', '[data-g="tempo"][data-x="pres"]']
         .every(s => document.querySelector(s) && document.querySelector(s).getAttribute('aria-pressed') === 'true'));
       if (!ok) guasti.push(`${nome}: la tastiera non compila il primo gruppo vuoto`);
@@ -114,7 +126,7 @@ async function misura(page, nome, dove, guasti) {
     await page.fill('[data-campo="bella"]', 'prova di bella');
     await avanti('Frase 2');
     const dopo = await page.evaluate(() => location.hash);
-    if (!/\/analisi\/2\/proposizioni$/.test(dopo)) guasti.push(`${nome}: dopo la traduzione non si passa alla frase 2 dal livello sintattico (${dopo})`);
+    if (!/\/analisi\/2\/segmenti$/.test(dopo)) guasti.push(`${nome}: dopo la traduzione non si passa alla frase 2 dalla segmentazione (${dopo})`);
 
     await page.click('.tappa:has-text("Versione")');
     await page.waitForSelector('.edizione-riga');

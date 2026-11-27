@@ -69,6 +69,7 @@ function bancoDellaFrase(v, f, inc) {
   const larghezza = s => Math.max(5, parole.slice(s.da, s.a + 1).reduce((n, w) => n + w.t.length * 1.7 + 2, 0));
   const sopra = { sopra: true, classe: s => `d-prop-${(s.ruolo || '').toLowerCase()}`, etichetta: s => etichettaProposizione(s), larghezza };
   const sotto = { sopra: false, classe: s => `d-caso-${casoDellaFunzione(s.funzione, v.lingua)}`, etichetta: s => abbreviaFunzione(s.funzione), larghezza };
+  const tagli = new Set(f.tagli || []);
   const celle = [];
   let prec = -1;
   for (const t of toks) {
@@ -83,7 +84,7 @@ function bancoDellaFrase(v, f, inc) {
     const breve = p ? etichettaBreve(p.tratti) : '';
     celle.push(html`<span class="d-cella">
       ${fili(f.proposizioni, t.i, sopra)}
-      <span class="d-forma ${analizzata(p) ? '' : 'd-da-fare'}" ${p && p.pos ? raw(`data-pos="${p.pos}"`) : ''} lang="${langAttr(v)}">${forma(t.t, p, inc.morfemi)}</span>
+      <span class="d-forma ${analizzata(p) ? '' : 'd-da-fare'} ${tagli.has(t.i) ? 'd-dopo-taglio' : ''} ${p && p.connettivo ? 'd-connettivo' : ''}" ${p && p.pos ? raw(`data-pos="${p.pos}"`) : ''} lang="${langAttr(v)}">${forma(t.t, p, inc.morfemi)}</span>
       <span class="d-sotto">
         ${p && p.pos ? html`<span class="d-pos" data-pos="${p.pos}">${NOMI_POS[p.pos]}</span>` : ''}
         ${p && p.lemma ? html`<span class="d-lemma" lang="${langAttr(v)}">${p.lemma}</span>` : ''}
@@ -121,9 +122,13 @@ function tavolaDelleParole(v, f, inc) {
 function periodo(v, f) {
   const parole = paroleDi(f);
   const props = [...f.proposizioni].sort((a, b) => a.da - b.da);
-  if (!props.length) return '';
+  const verbi = parole.filter(w => f.parole[w.i] && f.parole[w.i].pos === 'verbo').map(w => w.t);
+  const conn = parole.filter(w => f.parole[w.i] && f.parole[w.i].connettivo).map(w => w.t);
+  const segmenti = (f.tagli || []).length + 1;
+  if (!props.length && !verbi.length && !conn.length && segmenti === 1) return '';
   return html`<div class="d-blocco"><p class="d-etichetta">Analisi sintattica · il periodo</p>
-      <ul class="d-periodo">${props.map(s => html`<li class="d-prop-${(s.ruolo || '').toLowerCase()}"><span class="d-segno-prop"></span><b>${etichettaProposizione(s, true)}</b> <span lang="${langAttr(v)}">${parole.slice(s.da, s.a + 1).map(w => w.t).join(' ')}</span></li>`)}</ul></div>`;
+      <p class="d-dati-periodo">${segmenti} ${segmenti === 1 ? 'segmento' : 'segmenti'}${verbi.length ? html` · verbi: <i lang="${langAttr(v)}">${verbi.join(', ')}</i>` : ''}${conn.length ? html` · connettivi: <i lang="${langAttr(v)}">${conn.join(', ')}</i>` : ''}</p>
+      ${props.length ? html`<ul class="d-periodo">${props.map(s => html`<li class="d-prop-${(s.ruolo || '').toLowerCase()}"><span class="d-segno-prop"></span><b>${etichettaProposizione(s, true)}</b> <span lang="${langAttr(v)}">${parole.slice(s.da, s.a + 1).map(w => w.t).join(' ')}</span></li>`)}</ul>` : ''}</div>`;
 }
 
 function costruzione(v, f) {
@@ -153,8 +158,11 @@ export function lessico(v) {
 /* ── la legenda: solo i colori che il documento usa ─────────────────────── */
 function legenda(v) {
   const pos = new Set(); const casi = new Set(); const ruoli = new Set(); const morfemi = new Set();
+  let sbarre = false; let riquadri = false;
   for (const f of v.frasi) {
+    if ((f.tagli || []).length) sbarre = true;
     for (const p of Object.values(f.parole)) {
+      if (p.connettivo) riquadri = true;
       if (p.pos) pos.add(p.pos);
       for (const m of (p.morfemi || [])) if (m.r) morfemi.add(m.r);
     }
@@ -165,7 +173,7 @@ function legenda(v) {
   const ordineCasi = ['pred', 'nom', 'gen', 'dat', 'acc', 'voc', 'abl', 'altro'].filter(x => casi.has(x));
   const ordineRuoli = ['principale', 'coordinata', 'subordinata'].filter(x => ruoli.has(x));
   const ordineMorfemi = Object.keys(MORFEMI).filter(x => morfemi.has(x));
-  if (!ordinePos.length && !ordineCasi.length && !ordineRuoli.length && !ordineMorfemi.length) return '';
+  if (!sbarre && !riquadri && !ordinePos.length && !ordineCasi.length && !ordineRuoli.length && !ordineMorfemi.length) return '';
   return html`<div class="d-legenda">
     ${ordinePos.length ? html`<div><p class="d-etichetta">Parti del discorso · il filetto sotto la parola</p>
       <ul>${ordinePos.map(x => html`<li><span class="d-campione d-campione-pos" data-pos="${x}"></span>${NOMI_POS[x]}</li>`)}</ul></div>` : ''}
@@ -173,6 +181,8 @@ function legenda(v) {
       <ul>${ordineCasi.map(x => html`<li><span class="d-campione d-caso-${x}"></span>${NOME_CASO[x]}</li>`)}</ul></div>` : ''}
     ${ordineRuoli.length ? html`<div><p class="d-etichetta">Proposizioni · il filo sopra</p>
       <ul>${ordineRuoli.map(x => html`<li><span class="d-campione-linea d-prop-${x}"></span>${x}</li>`)}</ul></div>` : ''}
+    ${sbarre || riquadri ? html`<div><p class="d-etichetta">Il periodo</p>
+      <ul>${sbarre ? html`<li><span class="d-campione-sbarra">/</span>dove comincia una proposizione</li>` : ''}${riquadri ? html`<li><span class="d-campione-riquadro">et</span>connettivo</li>` : ''}</ul></div>` : ''}
     ${ordineMorfemi.length ? html`<div><p class="d-etichetta">Morfemi</p>
       <ul>${ordineMorfemi.map(x => html`<li><span class="d-m d-m-${x}">abc</span> ${MORFEMI[x]}</li>`)}</ul></div>` : ''}
   </div>`;

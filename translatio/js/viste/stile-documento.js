@@ -69,6 +69,14 @@ export const CSS_DOCUMENTO = `
 .documento .d-forma { font-family: var(--d-classico); font-size: 18px; line-height: 22px; padding-bottom: 2px; border-bottom: 2px solid var(--d-pos, var(--d-ink)); white-space: nowrap; }
 .documento .d-cella-p .d-forma { border-bottom-color: transparent; color: var(--d-muted); }
 .documento .d-forma.d-da-fare { border-bottom: 2px dotted var(--d-rule); }
+/* l'analisi periodale: la sbarra dove comincia una proposizione, il riquadro
+   del connettivo */
+.documento .d-forma { position: relative; }
+.documento .d-dopo-taglio::before { content: "/"; position: absolute; left: -0.5em; top: 0; font-weight: 700; color: var(--d-accent); }
+.documento .d-connettivo { outline: 1px solid var(--d-ink); outline-offset: 1px; }
+.documento .d-dati-periodo { margin-bottom: 4px; font-size: 12px; line-height: 14.5px; color: var(--d-muted); }
+.documento .d-campione-sbarra { display: inline-block; width: 14px; font-family: var(--d-classico); font-weight: 700; font-size: 14px; color: var(--d-accent); text-align: center; }
+.documento .d-campione-riquadro { display: inline-block; padding: 0 2px; font-family: var(--d-classico); font-size: 12px; line-height: 13px; outline: 1px solid var(--d-ink); }
 .documento .d-sotto { display: grid; gap: 0; margin-top: 3px; min-height: 12px; font-size: 9.33px; line-height: 11.5px; }
 .documento .d-pos { font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: color-mix(in srgb, var(--d-pos, var(--d-note)) 58%, #000); }
 .documento .d-lemma { font-family: var(--d-classico); font-size: 11px; color: var(--d-muted); }

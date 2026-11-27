@@ -86,6 +86,22 @@ export function etichettaProposizione(s, lungo = false) {
   return `${sigla}${tipo ? ' · ' + tipo : ''}`;
 }
 
+/* ── la segmentazione del periodo ─────────────────────────────────────────── */
+/* Lo studente taglia il periodo davanti alla parola da cui comincia una nuova
+   proposizione: i tagli sono gli indici di quelle parole. Ne vengono i
+   segmenti, contigui, che la classificazione trasforma in proposizioni. */
+export function segmentiDi(nParole, tagli = []) {
+  const punti = [...new Set(tagli)].filter(i => i > 0 && i < nParole).sort((a, b) => a - b);
+  const out = [];
+  let da = 0;
+  for (const t of punti) { out.push({ da, a: t - 1 }); da = t; }
+  if (nParole) out.push({ da, a: nParole - 1 });
+  return out;
+}
+export function segmentoDi(i, nParole, tagli) {
+  return segmentiDi(nParole, tagli).find(s => i >= s.da && i <= s.a) || { da: i, a: i };
+}
+
 /* ── il disegno dei segni ───────────────────────────────────────────────── */
 /* Livelli: ogni segno (sintagma o proposizione) prende la prima riga libera,
    cosi' due gruppi annidati stanno su due fili e non si coprono. */

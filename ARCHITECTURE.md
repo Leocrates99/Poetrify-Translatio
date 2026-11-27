@@ -53,7 +53,8 @@ poetrify/                       ← cartella attiva di sviluppo
 `translatio/` è un progetto nuovo e **isolato**: il banco dove lo studente analizza e
 traduce la sua versione latina o greca e la esporta in un documento da consegnare (flusso
 Testo → Analisi → Versione → Consegna; l'analisi in quattro livelli sovrapposti, dal periodo
-alla parola: sintattica, logica, grammaticale, poi la traduzione della frase). Non analizza al posto dello studente e **non importa nulla** dal resto
+alla parola: sintattica (segmentazione, verbi, connettivi, proposizioni), logica,
+grammaticale, poi la traduzione della frase). Non analizza al posto dello studente e **non importa nulla** dal resto
 del progetto: niente `modules/engine/*`, niente `modules/dictionary/*`, niente `data/`,
 nessun rimando al Dizionario o al Corpus. Usa solo i token di `shared/`, la chiave del tema
 e i caratteri di `vendor/fonts/`. Le funzioni logiche e i tipi di proposizione sono una
