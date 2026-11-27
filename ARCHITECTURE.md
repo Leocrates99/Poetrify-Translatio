@@ -57,7 +57,8 @@ quattro lenti sulla frase: Parole, Sintagmi, Proposizioni, Resa). Non tocca
 (`modules/engine/*`), le glosse curate del dizionario, i dati di `data/` e i token di
 `shared/`. Gli ha aggiunto un modulo, `modules/engine/classi-chiuse.js`, generato da
 `_build/estrai-classi-chiuse.mjs` a partire dai dizionari scritti dentro il monolite.
-Dettagli, scelte e limiti: `translatio/README.md`.
+Veste la «C2 compatta» dei documenti di studio (`translatio/css/veste-c2.css`, eccezione
+dichiarata in `DESIGN.md`). Dettagli, scelte e limiti: `translatio/README.md`.
 
 ## Convenzioni ES modules
 

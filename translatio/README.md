@@ -53,50 +53,39 @@ TESTO  →  ANALISI  →  TRADUZIONE
 | Navigazione con l'hash, bidirezionale | Il tasto Indietro cambia vista, lente o frase; ogni stato ha un indirizzo |
 | Local-first | Tutto nel `localStorage` (in try/catch); ogni versione si scarica e si riapre come file |
 
-Il DNA visivo è quello della casa, letto dai token condivisi (`shared/poetrify-tokens.css`):
-pergamena calda per il banco, **colore = lingua** (rosso pompeiano il latino, indaco il
-greco) via `body[data-lang]`, ottone solo nei filetti, greco per codepoint in Times
-(GFS Didot come ripiego), palette delle undici parti del discorso, codice di categoria
-dei casi, tema scuro della casa.
+## La veste: C2 compatta
 
-## La veste C2 compatta (proposta)
-
-Accanto alla veste Poetrify c'è una seconda veste, presa dal sistema di design
-**«C2 compatta»**, la veste dei documenti di studio (capitoli `MAN.`, handout,
-dispense). Si prova con `translatio/?veste=c2`, oppure col pulsante «Veste C2» nella
-testatina; la scelta si ricorda. Vive tutta in `css/veste-c2.css`, sotto
-`html[data-veste="c2"]`: la veste Poetrify non cambia.
+Translatio veste la **C2 compatta**, la veste dei documenti di studio del docente
+(capitoli `MAN.`, handout, dispense): una veste sola, carta bianca e Inter
+(decisioni del 27 novembre 2026). Le misure e i colori vengono dal sistema di design
+«C2 compatta»; il foglio è `css/veste-c2.css`, caricato dopo `css/translatio.css`, che
+porta la struttura e i componenti.
 
 | Della C2, alla lettera | Adattato allo schermo |
 |---|---|
-| nero su bianco, **un solo accento** per la cornice: numeri, etichette, lemmi, link | i corpi 10 · 9 · 7 pt salgono di 1,2 (16 · 14,4 · 11,2 px), le proporzioni restano |
+| **carta bianca** e inchiostro, **un solo accento** per la cornice: numeri, etichette, lemmi, link | i corpi 10 · 9 · 7 pt salgono di 1,2 (16 · 14,4 · 11,2 px), le proporzioni restano |
 | **Inter** per tutto; **greco e latino in Times**, sempre | l'accento è della lingua: latino `#b8400e` (l'accento C2), greco `#1d4ed8` (la variante blu C2); una lingua per documento, mai due accenti in una pagina |
 | **colonna di margine appesa**: il numero della frase (44 px), «In breve», i numeri di sezione stanno a sinistra del testo | il tema scuro, che la C2 non ha: stessa grammatica, valori misurati |
 | testatina col **filetto nero di 4 px**; tappe come etichette `01 · 02 · 03` | i contorni dei comandi in `#767676` (4,54:1): il grigio dei filetti C2 (`#9a9a9a`, 2,81:1) non basta a un campo |
 | tre pesi di filetto, nessun fondo, nessuna ombra, nessun angolo arrotondato | il pulsante primario è inchiostro pieno, non colore |
 | la scheda della parola come **nota di lessico**: parola in Times neretto, *traslitterazione*, **«traduzione»** fra caporali, commento | la glossa automatica non si veste da traduzione: corsivo, senza caporali, «da verificare» |
 | il **testo a fronte** a tutta giustezza fra filetti di 2 e 1 px; l'**apparato** come note a piè di pagina su tre colonne | |
-| i pesi C2 dei filetti: parola 2 px (pieno se confermata, tratteggiato se proposta), proposizioni d'inchiostro con tre pesi (principale 2 px, coordinata tratteggiata, subordinata 1 px) | **l'aggancio cromatico dell'analisi grammaticale resta** (decisione del docente): le undici tinte delle parti del discorso sul filetto e sulla sigla, il codice di categoria dei casi sui fili dei sintagmi e sulle pastiglie, la palette dei morfemi, il filetto di categoria in testa alla nota di lessico |
+| i pesi C2 dei filetti: parola 2 px (pieno se confermata, tratteggiato se proposta), proposizioni d'inchiostro con tre pesi (principale 2 px, coordinata tratteggiata, subordinata 1 px) | **l'aggancio cromatico dell'analisi grammaticale resta**: le undici tinte delle parti del discorso sul filetto e sulla sigla, il codice di categoria dei casi sui fili dei sintagmi e sulle pastiglie, la palette dei morfemi, il filetto di categoria in testa alla nota di lessico |
 
-**Le scelte rispetto al canone di Poetrify.** Una è presa:
+**Che cosa Translatio prende ancora dalla casa Poetrify:** la palette delle parti del
+discorso e il codice di categoria dei casi (dai token condivisi), la palette dei morfemi,
+la lingua sul `body[data-lang]`, le quattro classi di schermo, la chiave del tema. **Che
+cosa lascia:** la pergamena, Playfair e Source Serif, l'ottone dei filetti, il rosso
+pompeiano e l'indaco come colori di lingua (sostituiti dagli accenti C2). Lo scostamento
+dal canone di `DESIGN.md` è dichiarato là, in «Eccezioni dichiarate».
 
-- **Il colore delle categorie resta.** Le tinte delle parti del discorso, il codice di
-  categoria dei casi e i morfemi valgono identici nelle due vesti: l'accento unico della
-  C2 governa la cornice, non le categorie grammaticali (decisione del 27 novembre 2026).
+**Da confermare:** il colore della lingua. Sono gli accenti della C2; se si preferiscono
+rosso pompeiano e indaco, sono due valori in testa a `css/veste-c2.css`.
 
-Restano da decidere:
-
-1. **Il colore della lingua.** Rosso pompeiano e indaco diventano l'accento C2 e la sua
-   variante blu: la lingua resta distinta dal colore, ma con le tinte della collana.
-2. **La carta e i caratteri.** La pergamena calda diventa carta bianca; Playfair e
-   Source Serif diventano Inter; il latino passa in Times come il greco.
-3. **Due vesti o una.** Se la C2 vince, si toglie la veste Poetrify da Translatio e
-   l'interruttore con lei: due vesti nello stesso prodotto sono due dialetti.
-
-La traslitterazione della nota di lessico è nuova anche nella veste Poetrify
-(`js/motore/traslitterazione.js`, convenzione scolastica: *hoûtos*, *rhḗtōr*, *ángelos*).
-Il modulo condiviso `modules/dictionary/transliteration.js` posa l'accento sulla *h* e
-sbaglia lo spirito aspro sui dittonghi (*ohŷtos*), e qui non si usa.
+La traslitterazione della nota di lessico (`js/motore/traslitterazione.js`) segue la
+convenzione scolastica: *hoûtos*, *rhḗtōr*, *ángelos*. Il modulo condiviso
+`modules/dictionary/transliteration.js` posa l'accento sulla *h* e sbaglia lo spirito
+aspro sui dittonghi (*ohŷtos*), e qui non si usa.
 
 ## Che cosa riusa e che cosa è nuovo
 
@@ -119,8 +108,8 @@ sbaglia lo spirito aspro sui dittonghi (*ohŷtos*), e qui non si usa.
 ```
 translatio/
 ├─ index.html
-├─ css/translatio.css          componenti (i valori stanno nei token condivisi)
-├─ css/veste-c2.css            la veste C2 compatta, solo sotto html[data-veste="c2"]
+├─ css/translatio.css          struttura e componenti
+├─ css/veste-c2.css            la veste C2 compatta: carta, inchiostro, caratteri, filetti
 ├─ js/app.js                   rotte, stato della sessione, azioni, analisi in sottofondo
 ├─ js/stato.js                 modello della versione, salvataggio, esportazione
 ├─ js/esempi.js                quattro brani d'apertura
@@ -153,8 +142,7 @@ node translatio/collaudo/browser.cjs
 ```
 
 Il secondo controlla, sulle quattro classi di schermo (telefono greco, tablet latino,
-leggio greco in tema scuro, tavolo latino) e in tutte e due le vesti: nessun errore in
-console, nessuno scorrimento orizzontale, nessun comando sotto i 24 px. Esito al 27
+leggio greco in tema scuro, tavolo latino): nessun errore in console, nessuno scorrimento orizzontale, nessun comando sotto i 24 px. Esito al 27
 novembre 2026: conforme.
 
 ## Limiti dichiarati

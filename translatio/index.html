@@ -7,18 +7,15 @@
 <meta name="description" content="Analisi e traduzione di frasi e versioni dal latino e dal greco antico: il brano diviso in frasi, ogni parola da vicino, la traduzione a fronte.">
 <!-- Anti-flash del tema: [data-theme] prima del primo disegno (chiave unica della casa) -->
 <script>(function(){try{var t=localStorage.getItem('poetrify-theme');if(t!=='dark'&&t!=='light'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
-<!-- La veste (proposta «C2 compatta» accanto a quella Poetrify): ?veste=c2 la
-     sceglie e la ricorda, prima del primo disegno, come il tema -->
-<script>(function(){var v='poetrify';try{var q=new URLSearchParams(location.search).get('veste');if(q==='c2'||q==='poetrify'){localStorage.setItem('translatio:veste',q);}v=localStorage.getItem('translatio:veste')||v;}catch(e){}if(v==='c2')document.documentElement.setAttribute('data-veste','c2');})();</script>
 <!-- Font self-hosted e token condivisi della casa: un valore cambiato la' arriva qui -->
 <link rel="stylesheet" href="../vendor/fonts/fonts.css">
 <link rel="stylesheet" href="../shared/poetrify-tokens.css?v=2026-08-23">
-<link rel="stylesheet" href="css/translatio.css?v=2026-11-27">
-<!-- Veste C2: Inter si scarica solo se la veste lo usa (@font-face e' pigro) -->
+<link rel="stylesheet" href="css/translatio.css?v=2026-11-27b">
+<!-- La veste C2 compatta: Inter (solo latino; il greco va in Times) e il foglio della veste -->
 <link rel="stylesheet" href="../vendor/fonts/inter/inter.css">
-<link rel="stylesheet" href="css/veste-c2.css?v=2026-11-27">
+<link rel="stylesheet" href="css/veste-c2.css?v=2026-11-27b">
 <script src="../shared/poetrify-theme.js"></script>
-<script type="module" src="js/app.js?v=2026-11-27"></script>
+<script type="module" src="js/app.js?v=2026-11-27b"></script>
 </head>
 <body>
 <a class="salta" href="#principale">Vai al lavoro</a>
@@ -27,7 +24,6 @@
   <a class="marchio" href="../app.html" title="Gli strumenti di Poetrify">Poetrify</a>
   <a class="dove" href="#/">Translatio</a>
   <span class="firma">Analisi e traduzione · latino e greco</span>
-  <button class="btn btn-quieto btn-piccolo veste-interruttore" id="veste" type="button" aria-pressed="false" title="Prova la veste C2 compatta dei documenti di studio">Veste C2</button>
   <button class="btn btn-quieto btn-icona tema" id="tema" type="button" aria-label="Passa al tema scuro"></button>
 </header>
 

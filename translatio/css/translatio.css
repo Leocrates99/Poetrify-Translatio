@@ -1,9 +1,11 @@
 /* ============================================================================
-   TRANSLATIO · la veste
+   TRANSLATIO · la struttura e i componenti
    ----------------------------------------------------------------------------
-   Si appoggia a ../shared/poetrify-tokens.css (fonte unica dei valori: carta,
-   inchiostro, ottone, colori di lingua, parti del discorso, codice di
-   categoria, raggi, spazi, moto). Qui stanno solo i componenti.
+   Si appoggia a ../shared/poetrify-tokens.css (fonte unica dei valori: parti
+   del discorso, codice di categoria, spazi, moto). La veste (carta, inchiostro,
+   caratteri, filetti) sta in veste-c2.css, caricato dopo questo foglio, che
+   ne ridefinisce i token: i valori di colore e di carattere scritti qui sono
+   la base su cui la veste lavora, non quello che si vede.
 
    Le soglie sono le quattro della casa (vedi i token): i numeri si scrivono
    alla lettera nelle media query, perche' una custom property li' non scatta.
@@ -471,8 +473,7 @@ main:focus { outline: none; }
 .voce .forma-grande::first-letter { color: var(--lingua); }
 .voce .lemma-riga { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
 .voce .traslitterazione { margin: -2px 0 6px; font-family: var(--font-ui); font-style: italic; font-size: 14px; color: var(--ink-soft); }
-/* il numero appeso della frase esiste solo nella veste C2 (veste-c2.css) */
-.numero-appeso { display: none; }
+
 .voce .citazione { font-family: var(--font-testo); font-size: 17px; font-style: italic; color: var(--ink-soft); }
 .voce .glossa { margin-top: 8px; font-family: var(--font-body); font-size: 17px; line-height: 1.45; }
 .voce .glossa.automatica { color: var(--ink-soft); }
@@ -665,8 +666,7 @@ details.dettagli[open] > summary::before { transform: rotate(90deg); }
   .testata .firma { display: none; }
   .testata .dove { margin-left: 16px; font-size: 17px; }
   .testata .marchio { font-size: 20px; }
-  .testata .veste-interruttore { margin-left: auto; }
-  .testata .tema { margin-left: 4px; }
+  .testata .tema { margin-left: auto; }
   /* sul telefono il nastro non resta appiccicato: lo spazio in altezza e' della frase */
   .nastro { position: static; flex-wrap: wrap; gap: 4px 12px; padding-top: 8px; padding-bottom: 4px; }
   .consegna { font-size: 14.5px; margin-bottom: 14px; }
