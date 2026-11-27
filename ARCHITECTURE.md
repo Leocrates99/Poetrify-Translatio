@@ -48,15 +48,16 @@ poetrify/                       ← cartella attiva di sviluppo
 > sono **archivio storico**: non vanno modificati. Eventuali modifiche fatte
 > per errore lì non si propagano a `poetrify/translator.html` e si perderebbero.
 
-## Translatio · il nuovo banco di analisi e traduzione
+## Translatio · il banco dello studente
 
-`translatio/` è un progetto nuovo, rifondato nell'UX/UI, limitato all'analisi e alla
-traduzione di frasi e versioni latine e greche (flusso Testo → Analisi → Traduzione,
-quattro lenti sulla frase: Parole, Sintagmi, Proposizioni, Resa). Non tocca
-`translator.html`: ha una UI propria e **importa** il motore condiviso
-(`modules/engine/*`), le glosse curate del dizionario, i dati di `data/` e i token di
-`shared/`. Gli ha aggiunto un modulo, `modules/engine/classi-chiuse.js`, generato da
-`_build/estrai-classi-chiuse.mjs` a partire dai dizionari scritti dentro il monolite.
+`translatio/` è un progetto nuovo e **isolato**: il banco dove lo studente analizza e
+traduce la sua versione latina o greca e la esporta in un documento da consegnare (flusso
+Testo → Analisi → Traduzione → Consegna; quattro lenti sulla frase: Parole, Sintagmi,
+Proposizioni, Resa). Non analizza al posto dello studente e **non importa nulla** dal resto
+del progetto: niente `modules/engine/*`, niente `modules/dictionary/*`, niente `data/`,
+nessun rimando al Dizionario o al Corpus. Usa solo i token di `shared/`, la chiave del tema
+e i caratteri di `vendor/fonts/`. Le funzioni logiche e i tipi di proposizione sono una
+copia dichiarata di `modules/engine/taxonomies.js` (`translatio/js/motore/tassonomie.js`).
 Veste la «C2 compatta» dei documenti di studio (`translatio/css/veste-c2.css`, eccezione
 dichiarata in `DESIGN.md`). Dettagli, scelte e limiti: `translatio/README.md`.
 

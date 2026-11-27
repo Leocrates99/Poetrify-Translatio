@@ -18,7 +18,7 @@
      · tre pesi di filetto (4 · 2 · 1 px), nessun fondo, nessuna ombra,
        nessun angolo arrotondato;
      · tavole fra filetto nero di 2 px e di 1 px, righe in grigio;
-     · la nota di lessico (parola, traslitterazione, «traduzione», commento)
+     · la nota di lessico (parola, traslitterazione, analisi, commento)
        come forma della scheda della parola;
      · il testo a fronte e le note a pie' di pagina su tre colonne.
 
@@ -323,29 +323,24 @@
   position: relative; margin-top: 4px; padding-top: 14px; padding-bottom: 18px;
   background: var(--c2-paper); border: 0; border-top: 1px solid var(--c2-ink);
 }
-:root .stato-lavoro { font-size: var(--c2-nota); color: var(--c2-note); }
-:root .stato-lavoro .barra { height: 2px; background: var(--c2-rule); }
-:root .stato-lavoro .barra > span { background: var(--c2-ink); }
 
-/* la frase: in Times, il filetto sotto la parola e' d'inchiostro, pieno se
-   confermato, punteggiato in grigio se proposto; la categoria e' la sigla */
+/* la frase: in Times, il filetto sotto la parola nel colore della parte del
+   discorso scelta dallo studente, punteggiato in grigio finche' manca */
 :root .parola { padding: 4px 4px 6px; border: 1px solid transparent; }
 :root .parola:hover { background: none; border-color: var(--c2-rule); }
 :root .parola[aria-pressed="true"] { background: none; border-color: var(--c2-ink); }
 /* le parole del gruppo in selezione: la forma in accento, senza riquadri */
 :root .parola.in-selezione { background: none; border-color: transparent; }
 :root .parola.in-selezione .forma { color: var(--c2-accent); }
-/* il filetto della parte del discorso, al peso C2 (2 px): pieno se
-   confermato, tratteggiato se proposto; punteggiato e grigio se ignoto */
+/* il filetto della parte del discorso, al peso C2 (2 px) */
 :root .parola .forma { font-family: var(--c2-classico); font-size: 28px; border-bottom: 2px solid var(--pos-c, var(--c2-ink)); }
-:root .parola.proposta .forma { border-bottom: 2px dashed var(--pos-c, var(--c2-rule)); }
-:root .parola.ignota .forma { border-bottom: 2px dotted var(--c2-rule); }
+:root .parola.vuota .forma { border-bottom: 2px dotted var(--c2-rule); }
 :root .parola.punto .forma { border-bottom-color: transparent; }
 :root .sotto .pos { font-size: 10.5px; font-weight: 700; letter-spacing: 0.08em; color: var(--pos-ink, var(--c2-ink)); }
-:root .parola.confermata .sotto .pos::after { color: var(--c2-accent); }
-:root .parola.ignota .sotto .pos { color: var(--c2-note); font-style: italic; }
+:root .parola.vuota .sotto .pos { color: var(--c2-note); font-weight: 400; font-style: italic; letter-spacing: 0; }
 :root .sotto .lemma { font-family: var(--c2-classico); color: var(--c2-muted); }
 :root .sotto .analisi { font-size: var(--c2-nota); color: var(--c2-note); }
+:root .sotto .senso { font-family: var(--c2-sans); font-size: 12.5px; font-style: italic; color: var(--c2-ink); }
 :root .spia-riga { font-size: var(--c2-nota); color: var(--c2-note); }
 /* la pastiglia del caso: quadrata come tutto in C2; il bordo sottile la
    tiene visibile anche quando il pigmento e' chiaro (giallo di Napoli) */
@@ -366,7 +361,7 @@
 :root .prop-coordinata { background: repeating-linear-gradient(90deg, var(--c2-ink) 0 6px, transparent 6px 10px); }
 :root .fili-sopra .prop-subordinata { height: 1px; margin-top: 1px; background: var(--c2-ink); }
 :root .filo-etichetta {
-  font-size: 10.5px; line-height: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c2-accent);
+  height: 13px; font-size: 10.5px; line-height: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c2-accent);
 }
 
 /* ── la scheda come nota di lessico ─────────────────────────────────────── */
@@ -382,44 +377,32 @@
 :root .voce .forma-grande { font-family: var(--c2-classico); font-weight: 700; font-size: 36px; }
 :root .voce .forma-grande::first-letter { color: inherit; }
 :root .voce .traslitterazione { font-size: var(--c2-corpo9); }
-:root .voce .citazione { font-family: var(--c2-classico); font-style: normal; font-size: var(--c2-corpo); color: var(--c2-ink); }
-/* la traduzione della nota: neretto, fra caporali */
-:root .voce .glossa { font-family: var(--c2-sans); font-size: var(--c2-corpo); font-weight: 700; }
-:root .voce .glossa .testo-glossa::before { content: "«"; }
-:root .voce .glossa .testo-glossa::after { content: "»"; }
-/* la glossa automatica non si veste da traduzione: niente neretto, niente
-   caporali, e resta la targhetta «da verificare» */
-:root .voce .glossa.automatica { color: var(--c2-muted); font-weight: 400; font-style: italic; }
-:root .voce .glossa.automatica .testo-glossa::before,
-:root .voce .glossa.automatica .testo-glossa::after { content: none; }
-/* i morfemi: trattini e sigle, l'accento solo sulla desinenza */
-:root .morfemi { font-family: var(--c2-classico); font-size: 26px; }
-/* i morfemi tengono la palette della casa (aumento, tema, vocale, suffisso,
-   desinenza nel colore della lingua); la C2 ne fissa solo il filetto a 1 px */
+:root .voce .riassunto-voce { font-size: var(--c2-corpo9); line-height: var(--c2-corpo9-lh); color: var(--c2-muted); }
+:root .voce .riassunto-voce .manca { color: var(--c2-note); }
+:root .forma-gruppo, :root .forma-resa { font-family: var(--c2-classico); }
+/* i morfemi tengono la palette della casa (prefisso, aumento, tema, vocale,
+   suffisso, desinenza nel colore della lingua); la C2 ne fissa solo il
+   filetto a 1 px */
 :root .mseg { border-bottom-width: 1px; }
-:root .legenda-morfemi { font-size: var(--c2-nota); color: var(--c2-note); }
-:root .legenda-morfemi b { font-family: var(--c2-classico); font-size: 13px; }
-/* le letture: righe di tavola, il segno quadrato */
-:root .letture { gap: 0; border-top: 2px solid var(--c2-ink); border-bottom: 2px solid var(--c2-ink); }
-:root .lettura {
-  padding: 7px 0; border: 0; border-bottom: 1px solid var(--c2-rule); background: none; font-size: var(--c2-corpo9);
-}
-:root .lettura:last-child { border-bottom: 0; }
-:root .lettura:hover { color: var(--c2-accent); }
-:root .lettura[aria-checked="true"] { background: none; font-weight: 700; }
-:root .lettura .spia { width: 12px; height: 12px; margin-top: 3px; border: 1px solid var(--c2-ink); }
-:root .lettura[aria-checked="true"] .spia { border: 6px solid var(--c2-ink); }
+:root .pezzo > .mseg { font-family: var(--c2-classico); }
+/* il tagliere: lettere in Times dentro caselle quadrate, il taglio e' un
+   filetto d'accento a sinistra della lettera da cui comincia il pezzo */
+:root .tagliere { font-family: var(--c2-classico); }
+:root .lettera { border: 1px solid var(--c2-controllo); background: none; color: var(--c2-ink); border-radius: 0; }
+:root .lettera.prima { border-color: var(--c2-rule); color: var(--c2-muted); }
+:root .lettera:hover { border-color: var(--c2-ink); }
+:root .lettera.taglio-qui { box-shadow: inset 3px 0 0 var(--c2-accent); }
+/* il gruppo che la tastiera compila: l'etichetta in accento, i numeri sui bottoni */
+:root .gruppo-scelte.da-compilare > .etichetta { color: var(--c2-accent); }
+:root .tasto { border-radius: 0; border-color: currentColor; font-family: var(--c2-sans); }
 :root .scelta {
   min-height: 30px; padding: 3px 10px; border: 1px solid var(--c2-controllo); background: none; font-size: var(--c2-corpo9); font-weight: 600;
 }
 :root .scelta:hover { border-color: var(--c2-ink); }
 :root .scelta[aria-pressed="true"] { background: var(--c2-ink); border-color: var(--c2-ink); color: var(--c2-paper); box-shadow: none; }
 
-:root .scelta.stella::before { color: var(--c2-accent); }
-:root .lessico-voce {
-  background: none; padding: 6px 0 0; border-top: 1px solid var(--c2-rule);
-  font-family: var(--c2-classico); font-size: var(--c2-corpo9); color: var(--c2-ink);
-}
+:root .scelta.scelta-morfema { min-height: 28px; padding: 2px 7px; font-size: var(--c2-nota); }
+:root .area-nota { font-size: var(--c2-corpo9); }
 :root details.dettagli > summary { color: var(--c2-accent); font-size: var(--c2-nota); letter-spacing: 0.08em; text-transform: uppercase; }
 :root .azioni-scheda { border-top: 2px solid var(--c2-ink); background: var(--c2-paper); }
 :root .tendina { border: 1px solid var(--c2-ink); }
@@ -481,6 +464,18 @@
 :root .elenco-frasi .n { color: var(--c2-accent); }
 :root .salta { background: var(--c2-ink); color: var(--c2-paper); }
 
+/* ── consegna: il modulo in colonna di margine, il foglio su un piano grigio ─ */
+:root .cons-modulo .titolo-sezione { margin: 0; }
+:root .cons-voce small { font-size: var(--c2-nota); line-height: var(--c2-nota-lh); color: var(--c2-note); }
+:root .cons-controllo { font-size: var(--c2-corpo9); line-height: var(--c2-corpo9-lh); }
+:root .cons-controllo li.manca .segno-controllo::before { background: var(--c2-accent); }
+:root .cons-controllo a { color: var(--c2-accent); }
+/* il piano su cui sta il foglio: grigio chiaro col tema chiaro, grigio scuro
+   col tema scuro; il foglio resta bianco, perche' e' la carta che si consegna */
+:root .cons-foglio { background: #ececec; }
+:root[data-theme="dark"] .cons-foglio { background: #262626; }
+:root[data-theme="dark"] .cons-foglio .documento { border-color: #3a3a3a; }
+
 /* ── soglie della veste ─────────────────────────────────────────────────── */
 /* Dal tablet in su il banco ha la colonna appesa: il numero della frase e
    le lenti stanno a sinistra del testo, come i numeri di parte nel manuale. */
@@ -502,7 +497,11 @@
   :root .titolo-pagina { font-size: 34px; }
   :root .parola .forma { font-size: 23px; }
   :root .nastro .titolo-versione strong { font-size: 20px; }
-  :root .tappa { margin-left: 0; }
+  /* quattro tappe in 360 px: il numero senza lo zero, la spaziatura stretta;
+     sotto i 340 px vanno a capo invece di toccarsi */
+  :root .tappe { flex-wrap: wrap; justify-content: space-between; column-gap: 10px; }
+  :root .tappa { margin-left: 0; letter-spacing: 0.03em; }
+  :root .tappa::before { content: counter(tappa); margin-right: 5px; }
   :root .testata .firma { display: none; }
 }
 @media print {

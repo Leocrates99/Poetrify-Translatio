@@ -3,7 +3,7 @@
    ----------------------------------------------------------------------------
    Due colonne, textus e versio, una riga per frase; la brutta e la bella sono
    due stati della stessa riga, non due pagine. In calce l'apparato lessicale:
-   i lemmi del brano col significato scelto. E' la stessa pagina che si stampa.
+   i lemmi che lo studente ha scritto, col significato che ha scelto.
    ============================================================================ */
 import { html, raw } from '../ui/dom.js';
 import { ICONE } from '../ui/icone.js';
@@ -11,24 +11,17 @@ import { tokenizza } from '../motore/testo.js';
 
 const langAttr = v => (v.lingua === 'greco' ? 'grc' : 'la');
 
-/** I lemmi del brano, nell'ordine in cui compaiono, col significato scelto. */
+/** I lemmi del brano, nell'ordine in cui compaiono, coi significati che lo
+ *  studente ha scritto. */
 export function apparato(v) {
   const visti = new Map();
   v.frasi.forEach(f => {
     for (const w of tokenizza(f.testo).filter(t => t.k === 'w')) {
       const p = f.parole[w.i];
-      if (!p || !p.lemma || ['articolo'].includes(p.pos)) continue;
-      /* due lemmi con la stessa citazione (a / ab) sono una voce sola */
-      const k = p.citazione || p.lemma;
-      /* le glosse automatiche non entrano nell'apparato: si stampa, e una glossa
-         sbagliata stampata vale meno di nessuna glossa */
-      const senso = p.senso || (p.glossa && p.glossa.fonte !== 'automatica' ? p.glossa.it : '');
-      if (!visti.has(k)) visti.set(k, { lemma: k, sensi: [], scelti: false, forme: [] });
-      const r = visti.get(k);
-      if (p.senso) {
-        if (!r.scelti) { r.sensi = []; r.scelti = true; }
-        if (!r.sensi.includes(p.senso)) r.sensi.push(p.senso);
-      } else if (senso && !r.scelti && !r.sensi.includes(senso)) r.sensi.push(senso);
+      if (!p || !p.lemma) continue;
+      if (!visti.has(p.lemma)) visti.set(p.lemma, { lemma: p.lemma, sensi: [], forme: [] });
+      const r = visti.get(p.lemma);
+      if (p.senso && !r.sensi.includes(p.senso)) r.sensi.push(p.senso);
       if (!r.forme.includes(w.t)) r.forme.push(w.t);
     }
   });
@@ -82,10 +75,14 @@ export function vistaTraduzione(S) {
       <h2 class="titolo-sezione" id="t-apparato">Apparato lessicale <span class="conto">${app.length} lemmi</span></h2>
       ${app.length ? html`<ul class="apparato-lista">${app.map(r => html`<li>
         <span class="lem" lang="${langAttr(v)}">${r.lemma}</span>
-        ${r.sensi.length ? html` · <span class="gl ${r.scelti ? 'scelto' : ''}">${r.sensi.join('; ')}</span>` : ''}
-      </li>`)}</ul>` : html`<p class="vuoto">I lemmi compariranno qui man mano che analizzi le frasi.</p>`}
-      <p class="nota-fonte">In nero i significati che hai scelto tu; in grigio quelli dei glossari curati. Le parole senza significato aspettano la tua scelta nella lente Parole.</p>
+        ${r.sensi.length ? html` · <span class="gl scelto">${r.sensi.join('; ')}</span>` : ''}
+      </li>`)}</ul>` : html`<p class="vuoto">I lemmi compariranno qui man mano che li scrivi nella lente Parole.</p>`}
     </section>
+
+    <div class="barra-azioni non-stampa">
+      <div class="gruppo"><a class="btn btn-quieto" href="#/v/${v.id}/analisi">${raw(ICONE.indietro)} Torna all’analisi</a></div>
+      <div class="gruppo"><a class="btn btn-primario" href="#/v/${v.id}/consegna">Prepara la consegna ${raw(ICONE.avanti)}</a></div>
+    </div>
   </div>`;
 }
 

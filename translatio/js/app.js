@@ -1,31 +1,39 @@
 /* ============================================================================
-   TRANSLATIO · il banco d'analisi e traduzione di Poetrify
+   TRANSLATIO · il banco dove lo studente analizza e traduce la sua versione
    ----------------------------------------------------------------------------
-   Un flusso solo, in tre tappe: TESTO → ANALISI → TRADUZIONE.
+   Translatio non analizza al posto dello studente: gli da' il banco (il testo
+   diviso in frasi, le caselle della grammatica, i fili dei sintagmi e delle
+   proposizioni), disegna cio' che lui scrive e alla fine lo impagina in un
+   documento da consegnare. E' isolato: non legge il lessico, i paradigmi o il
+   corpus di Poetrify; ne usa solo i token grafici e i caratteri.
+
+   Un flusso solo, in quattro tappe: TESTO → ANALISI → TRADUZIONE → CONSEGNA.
    Navigazione con l'hash, bidirezionale (il tasto Indietro cambia la vista):
      #/                                  archivio
      #/nuova · #/nuova/<lingua>          porta della lingua · testo nuovo
      #/v/<id>/testo                      il brano e le frasi
      #/v/<id>/analisi/<frase>/<lente>    il banco
      #/v/<id>/traduzione                 la versione intera
-   Cucitura con il resto di Poetrify: index.html?lang=la|grc&text=…&titolo=…
-   apre un testo nuovo gia' compilato (lo usa il Corpus).
+     #/v/<id>/consegna                   il documento da consegnare
    ============================================================================ */
 import { html, raw, $, monta, annuncia, scaricaFile, copiaTesto, nomeFile } from './ui/dom.js';
 import { ICONE } from './ui/icone.js';
 import { ESEMPI } from './esempi.js';
 import { dividiInFrasi, tokenizza, normalizzaSpazi } from './motore/testo.js';
-import {
-  analizzaParola, completaConParadigma, restringiNelContesto, voceDelLessico, conLemma,
-} from './motore/analizzatore.js';
+import { trattiCoerenti, taglia, formaTagliabile } from './motore/grammatica.js';
 import {
   nuovaVersione, nuovaFrase, riallineaFrasi, haLavoro, caricaVersione, salvaVersione,
   salvaPiuTardi, salvaSubito, eliminaVersione, esportaJSON, importaJSON, nuovoId,
 } from './stato.js';
 import { vistaArchivio, vistaPorta } from './viste/archivio.js';
 import { vistaTesto, anteprimaFrasi, avvisoLingua } from './viste/testo.js';
-import { vistaAnalisi, scheda, statoLavoro, apertaScheda, LENTI } from './viste/analisi.js';
+import {
+  vistaAnalisi, scheda, fraseViva, LENTI, gruppoDaCompilare, valoriDelGruppo,
+} from './viste/analisi.js';
 import { vistaTraduzione, versioneInMarkdown, soloTraduzione } from './viste/traduzione.js';
+import { vistaConsegna, controllo } from './viste/consegna.js';
+import { documento, paginaDaConsegnare, oggi } from './viste/documento.js';
+import { CSS_DOCUMENTO } from './viste/stile-documento.js';
 
 const S = {
   vista: 'archivio',
@@ -37,20 +45,20 @@ const S = {
   span: null,
   ancora: null,
   segnoAttivo: null,
-  ruoloBozza: null,
   filtro: '',
   schedaGruppoAperta: false,
-  lessico: null,
-  lavoro: null,
+  apriMorfemi: false,
   mostra: 'bella',
   modoDividi: false,
   focusParola: false,
 };
+const VISTE_DI_VERSIONE = new Set(['testo', 'analisi', 'traduzione', 'consegna']);
 const NOMI_LENTI = new Set(LENTI.map(l => l.k));
 const contaParole = f => tokenizza(f.testo).filter(t => t.k === 'w').length;
 const paroleDi = f => tokenizza(f.testo).filter(t => t.k === 'w');
 const salva = () => salvaPiuTardi(S.v, contaParole);
 const frase = () => S.v && S.v.frasi[S.frase];
+const tastieraFine = () => { try { return matchMedia('(pointer: fine)').matches; } catch (_) { return true; } };
 
 /* ── rotte ────────────────────────────────────────────────────────────────── */
 function rotta() {
@@ -61,9 +69,8 @@ function rotta() {
   }
   if (parti[0] === 'v' && parti[1]) {
     const id = parti[1];
-    const sez = parti[2] || 'analisi';
-    if (sez === 'testo') return { vista: 'testo', id };
-    if (sez === 'traduzione') return { vista: 'traduzione', id };
+    const sez = VISTE_DI_VERSIONE.has(parti[2]) ? parti[2] : 'analisi';
+    if (sez !== 'analisi') return { vista: sez, id };
     const n = parseInt(parti[3], 10);
     return { vista: 'analisi', id, frase: Number.isFinite(n) ? n - 1 : null, lente: NOMI_LENTI.has(parti[4]) ? parti[4] : null };
   }
@@ -77,7 +84,7 @@ function vai(h, { sostituisci = false } = {}) {
 
 function azzeraSelezione() {
   S.sel = null; S.span = null; S.ancora = null; S.segnoAttivo = null;
-  S.ruoloBozza = null; S.filtro = ''; S.schedaGruppoAperta = false;
+  S.filtro = ''; S.schedaGruppoAperta = false; S.apriMorfemi = false;
 }
 
 /* ── disegno ──────────────────────────────────────────────────────────────── */
@@ -85,18 +92,21 @@ function nastro() {
   const el = $('#nastro');
   if (!S.v) { el.innerHTML = ''; el.className = ''; return; }
   const v = S.v;
+  const pos = v.posizione || {};
+  const tappa = (vista, href, nome) => html`<a class="tappa" href="${href}" ${S.vista === vista ? raw('aria-current="page"') : ''}>${nome}</a>`;
   el.className = 'nastro';
   monta(el, html`<div class="titolo-versione"><strong>${v.titolo || 'Versione senza titolo'}</strong>${v.autore ? html`<span>${v.autore}</span>` : ''}</div>
     <nav class="tappe" aria-label="Tappe della versione">
-      <a class="tappa" href="#/v/${v.id}/testo" ${S.vista === 'testo' ? raw('aria-current="page"') : ''}>Testo</a>
-      <a class="tappa" href="#/v/${v.id}/analisi/${(v.posizione && v.posizione.frase || 0) + 1}/${(v.posizione && v.posizione.lente) || 'parole'}" ${S.vista === 'analisi' ? raw('aria-current="page"') : ''}>Analisi</a>
-      <a class="tappa" href="#/v/${v.id}/traduzione" ${S.vista === 'traduzione' ? raw('aria-current="page"') : ''}>Traduzione</a>
+      ${tappa('testo', `#/v/${v.id}/testo`, 'Testo')}
+      ${tappa('analisi', `#/v/${v.id}/analisi/${(pos.frase || 0) + 1}/${pos.lente || 'parole'}`, 'Analisi')}
+      ${tappa('traduzione', `#/v/${v.id}/traduzione`, 'Traduzione')}
+      ${tappa('consegna', `#/v/${v.id}/consegna`, 'Consegna')}
     </nav>`, { conservaScroll: false });
 }
 
 /* Il fuoco e lo scorrimento sopravvivono al ridisegno: chi sta scrivendo nel
    filtro, o scorrendo la scheda, non deve accorgersi che la pagina e' rifatta. */
-const ATTR_FUOCO = ['az', 'campo', 'i', 'f', 'k', 'lente', 'pos', 'g', 'x', 'funzione', 'ruolo', 'tipo', 'mostra', 'id'];
+const ATTR_FUOCO = ['az', 'campo', 'i', 'f', 'k', 'n', 'r', 'lente', 'pos', 'g', 'x', 'funzione', 'ruolo', 'tipo', 'grado', 'mostra', 'id'];
 function chiaveFuoco(el) {
   if (!el || el === document.body || !el.dataset) return null;
   const parti = ATTR_FUOCO.filter(a => el.dataset[a] != null).map(a => `[data-${a}="${CSS.escape(el.dataset[a])}"]`);
@@ -112,7 +122,7 @@ function render() {
       salvaSubito();
       const v = caricaVersione(r.id);
       if (!v) { annuncia('Questa versione non c’è più in questo browser.'); vai('#/', { sostituisci: true }); return; }
-      S.v = v; S.lessico = null; azzeraSelezione();
+      S.v = v; azzeraSelezione();
     }
   } else {
     if (S.v) salvaSubito();
@@ -132,7 +142,7 @@ function render() {
     S.bozza = null; S.modoDividi = false;
   }
 
-  if ((r.vista === 'analisi' || r.vista === 'traduzione') && !S.v.frasi.length) {
+  if (['analisi', 'traduzione', 'consegna'].includes(r.vista) && !S.v.frasi.length) {
     /* una versione senza frasi (un file importato vuoto) si apre dal testo */
     vai(`#/v/${S.v.id}/testo`, { sostituisci: true });
     return;
@@ -153,8 +163,10 @@ function render() {
     const pieno = `#/v/${S.v.id}/analisi/${S.frase + 1}/${S.lente}`;
     if (location.hash !== pieno) history.replaceState(null, '', pieno);
   }
+  if (r.vista === 'consegna' && !S.v.consegna.data) { S.v.consegna.data = oggi(); salva(); }
 
   document.body.classList.toggle('vista-analisi', S.vista === 'analisi');
+  document.body.classList.toggle('vista-consegna', S.vista === 'consegna');
   const lingua = S.v ? S.v.lingua : (S.bozza ? S.bozza.lingua : '');
   if (lingua) document.body.dataset.lang = lingua; else delete document.body.dataset.lang;
   document.title = S.v ? `${S.v.titolo || 'Versione'} · Translatio` : 'Translatio · Poetrify';
@@ -180,10 +192,13 @@ function render() {
     case 'testo': corpoPagina = vistaTesto(S); break;
     case 'analisi': corpoPagina = vistaAnalisi(S); break;
     case 'traduzione': corpoPagina = vistaTraduzione(S); break;
+    case 'consegna': corpoPagina = vistaConsegna(S); break;
     default: corpoPagina = vistaArchivio();
   }
+  const yPagina = window.scrollY;
   monta(main, corpoPagina, { conservaScroll: false });
   if (prima.vista !== S.vista || prima.id !== (S.v && S.v.id)) window.scrollTo(0, 0);
+  else window.scrollTo(0, yPagina);
 
   /* fuoco e scorrimento, dopo */
   const corpoDopo = $('#scheda-corpo');
@@ -202,8 +217,6 @@ function render() {
     }
   }
   autoaltezza();
-
-  if (S.v && (S.vista === 'analisi' || S.vista === 'traduzione')) avviaAnalisi(S.v, S.frase);
 }
 
 /* Le aree della traduzione crescono col testo, invece di scorrere dentro di se'. */
@@ -214,94 +227,39 @@ function autoaltezza(dove = document) {
   });
 }
 
-/* ── il lavoro lento: l'analisi automatica del brano ─────────────────────── */
-let lavoro = null;
-
-async function analizzaFrase(v, f) {
-  const ws = paroleDi(f);
-  const prop = await Promise.all(ws.map(w => analizzaParola(w.t, v.lingua)));
-  /* il paradigma dove il lessico non dava l'analisi, e per i verbi, dove la
-     verifica conta di piu' (il predicato regge la frase). Per il resto si
-     carica quando si apre la scheda: i paradigmi latini pesano. */
-  for (const p of prop) if (!p.letture.length || p.pos === 'verbo') await completaConParadigma(p, v.lingua);
-  restringiNelContesto(prop);
-  ws.forEach((w, k) => {
-    const gia = f.parole[w.i];
-    if (gia && (gia.stato === 'confermata' || gia.toccata)) return;      // il lavoro dello studente non si tocca
-    const p = prop[k];
-    f.parole[w.i] = {
-      forma: p.forma, stato: 'proposta', lemma: p.lemma, citazione: p.citazione, pos: p.pos,
-      tratti: p.tratti, letture: (p.letture || []).slice(0, 12), glossa: p.glossa, nota: p.nota,
-      altriLemmi: p.altriLemmi, fonte: p.fonte, classe: p.classe || '', segmenti: p.segmenti || null,
-      via: p.via, enclitica: p.enclitica, casiRetti: p.casiRetti, senso: gia ? gia.senso || '' : '',
-    };
-  });
-  f.analizzata = true;
+/* Mentre lo studente scrive lemma e significato, la riga sotto la parola si
+   aggiorna; la scheda (dove ha il cursore) no. */
+let _fraseTimer = null;
+function aggiornaFraseViva() {
+  clearTimeout(_fraseTimer);
+  _fraseTimer = setTimeout(() => { const el = $('#frase-viva'); if (el && S.vista === 'analisi') monta(el, fraseViva(S)); }, 120);
+}
+let _foglioTimer = null;
+function aggiornaAnteprima() {
+  clearTimeout(_foglioTimer);
+  _foglioTimer = setTimeout(() => {
+    const el = $('#anteprima-documento'); if (el) monta(el, documento(S.v));
+    const c = $('#controllo-consegna'); if (c) monta(c, controllo(S.v));
+  }, 180);
 }
 
-function aggiornaStatoLavoro() {
-  const el = $('#stato-lavoro');
-  if (el) monta(el, statoLavoro(S));
+/* ── la parola: si crea quando lo studente ci scrive, sparisce se la svuota ─ */
+function parolaDa(i) {
+  const f = frase();
+  return f.parole[i] || (f.parole[i] = {});
 }
-
-async function avviaAnalisi(v, prima) {
-  if (lavoro && lavoro.vid === v.id) { lavoro.prima = prima; return; }
-  const daFare = () => v.frasi.map((f, n) => n).filter(n => !v.frasi[n].analizzata);
-  if (!daFare().length) return;
-  const job = lavoro = { vid: v.id, prima };
-  const totale = daFare().length;
-  let fatte = 0;
-  S.lavoro = { attivo: true, fatte: 0, totale, messaggio: `Leggo il brano: ${totale} ${totale === 1 ? 'frase' : 'frasi'} da analizzare.` };
-  aggiornaStatoLavoro();
-  try {
-    let coda;
-    while ((coda = daFare()).length) {
-      if (!S.v || S.v.id !== v.id) break;
-      const n = coda.includes(job.prima) ? job.prima : coda[0];
-      S.lavoro.messaggio = `Leggo la frase ${n + 1}: lemmi, analisi, significati…`;
-      aggiornaStatoLavoro();
-      await analizzaFrase(v, v.frasi[n]);
-      fatte++;
-      S.lavoro.fatte = fatte;
-      salvaVersione(v, contaParole);
-      const scrive = document.activeElement && document.activeElement.matches('textarea, input');
-      if (S.vista === 'analisi' && S.frase === n && !scrive) render();
-      else aggiornaStatoLavoro();
-    }
-  } catch (e) {
-    console.error('[translatio] analisi interrotta', e);
-    annuncia('L’analisi automatica si è interrotta: puoi continuare a mano.');
-  } finally {
-    if (lavoro === job) lavoro = null;
-    S.lavoro = null;
-    aggiornaStatoLavoro();
-    if (S.vista === 'analisi' && S.v && S.v.id === v.id && !(document.activeElement && document.activeElement.matches('textarea, input'))) render();
-  }
-}
-
-/* La scheda di una parola completa la proposta col paradigma (i morfemi) la
-   prima volta che si apre: e' il momento in cui serve, non prima. */
-async function completaPerScheda(f, i) {
+function riordina(i) {
+  const f = frase();
   const p = f.parole[i];
-  if (!p || p.paradigmaProvato) return;
-  p.paradigmaProvato = true;
-  const scelta = p.toccata || p.stato === 'confermata';
-  await completaConParadigma(p, S.v.lingua, { modo: scelta ? 'aggiungi' : 'verifica' });
-  salva();
-  if (S.vista === 'analisi' && S.sel === i && frase() === f) render();
-}
-
-async function apriLessico(lemma) {
-  if (!S.v || !lemma) return;
-  if (S.lessico && S.lessico.lemma === lemma) return;
-  const r = await voceDelLessico(lemma, S.v.lingua);
-  S.lessico = { lemma, testo: r ? r.definizione : 'Il lessico non ha una voce per questo lemma.' };
-  const el = $('#lessico-voce');
-  if (el) el.textContent = S.lessico.testo;
+  if (!p) return;
+  for (const k of ['lemma', 'senso', 'nota', 'pos']) if (!p[k]) delete p[k];
+  if (p.tratti && !Object.keys(p.tratti).length) delete p.tratti;
+  if (p.morfemi && !p.morfemi.length) delete p.morfemi;
+  if (!Object.keys(p).length) delete f.parole[i];
 }
 
 /* ── le azioni ───────────────────────────────────────────────────────────── */
-function aggiornaAnteprima() {
+function aggiornaFrasiBozza() {
   const b = S.bozza;
   b.frasi = dividiInFrasi(b.testo, b.lingua, { corte: b.corte });
   monta($('#anteprima'), anteprimaFrasi(S));
@@ -317,10 +275,9 @@ function scegliParola(i) {
   if (!f) return;
   const n = paroleDi(f).length;
   if (i < 0 || i >= n) return;
+  if (S.sel !== i) S.apriMorfemi = false;
   S.sel = i;
-  S.lessico = null;
   render();
-  completaPerScheda(f, i);
 }
 
 function selezionaInGruppo(i, estendi) {
@@ -332,7 +289,7 @@ function selezionaInGruppo(i, estendi) {
     S.span = { da: Math.min(S.ancora, i), a: Math.max(S.ancora, i) };
     S.ancora = null;
   } else {
-    S.ancora = i; S.span = { da: i, a: i }; S.segnoAttivo = null; S.ruoloBozza = null;
+    S.ancora = i; S.span = { da: i, a: i }; S.segnoAttivo = null;
   }
   S.filtro = '';
   render();
@@ -388,7 +345,7 @@ const AZIONI = {
     S.bozza.lingua = el.dataset.lingua;
     if (!S.bozza.id) { history.replaceState(null, '', `#/nuova/${S.bozza.lingua}`); }
     document.body.dataset.lang = S.bozza.lingua;
-    aggiornaAnteprima();
+    aggiornaFrasiBozza();
     render();
   },
   'conferma-testo'() {
@@ -413,61 +370,72 @@ const AZIONI = {
     vai(`#/v/${v.id}/analisi/1/parole`);
   },
 
-  /* analisi */
+  /* analisi · parole */
   lente(el) { vai(`#/v/${S.v.id}/analisi/${S.frase + 1}/${el.dataset.lente}`); },
   parola(el, ev) {
     const i = +el.dataset.i;
     if (S.lente === 'parole') { scegliParola(i); return; }
-    if (S.lente === 'sintagmi' || S.lente === 'proposizioni') selezionaInGruppo(i, ev.shiftKey);
+    if (S.lente === 'sintagmi' || S.lente === 'proposizioni') selezionaInGruppo(i, ev && ev.shiftKey);
   },
   chiudi() { azzeraSelezione(); render(); },
-  conferma(el) {
-    const f = frase();
-    const i = +el.dataset.i;
-    const p = f.parole[i];
-    if (!p) return;
-    const nuova = p.stato !== 'confermata';
-    p.stato = 'confermata';
-    salva();
-    const n = paroleDi(f).length;
-    const prossima = paroleDi(f).findIndex((w, k) => k > i && (!f.parole[k] || f.parole[k].stato !== 'confermata'));
-    if (prossima >= 0) { S.focusParola = true; scegliParola(prossima); return; }
-    const tutte = paroleDi(f).every((w, k) => f.parole[k] && f.parole[k].stato === 'confermata');
-    if (tutte && nuova) annuncia(`Frase analizzata: tutte le ${n} parole sono confermate. Ora i sintagmi.`);
-    if (i + 1 < n) { S.focusParola = true; scegliParola(i + 1); } else render();
-  },
-  lettura(el) {
-    const p = frase().parole[+el.dataset.i];
-    p.tratti = { ...p.letture[+el.dataset.k] };
-    p.toccata = true;
-    salva(); render();
-  },
   pos(el) {
-    const p = frase().parole[+el.dataset.i];
-    if (p.pos === el.dataset.pos) return;
-    p.pos = el.dataset.pos;
-    p.toccata = true;
-    if (['avverbio', 'preposizione', 'congiunzione', 'particella', 'interiezione'].includes(p.pos)) p.tratti = {};
+    const i = +el.dataset.i;
+    const p = parolaDa(i);
+    p.pos = p.pos === el.dataset.pos ? '' : el.dataset.pos;
+    p.tratti = trattiCoerenti(p, S.v.lingua);
+    riordina(i);
     salva(); render();
   },
   tratto(el) {
-    const p = frase().parole[+el.dataset.i];
+    const i = +el.dataset.i;
+    const p = parolaDa(i);
     const g = el.dataset.g; const x = el.dataset.x;
     p.tratti = { ...(p.tratti || {}) };
     if (p.tratti[g] === x) delete p.tratti[g]; else p.tratti[g] = x;
-    p.toccata = true;
+    p.tratti = trattiCoerenti(p, S.v.lingua);       // cambiato il modo, la persona puo' non servire piu'
+    riordina(i);
     salva(); render();
   },
-  async 'altro-lemma'(el) {
-    const f = frase(); const i = +el.dataset.i;
-    const p = f.parole[i];
-    const alt = p.altriLemmi[+el.dataset.k];
-    const n = await conLemma(p, alt, S.v.lingua);
-    f.parole[i] = { ...n, stato: 'proposta', toccata: true, senso: p.senso || '', paradigmaProvato: true };
-    S.lessico = null;
-    salva(); render();
-    annuncia(`Riletta come forma di ${n.lemma}.`, { visibile: false });
+  prossima(el) {
+    const i = +el.dataset.i;
+    const f = frase();
+    const n = paroleDi(f).length;
+    if (i + 1 < n) { S.focusParola = true; scegliParola(i + 1); return; }
+    const fatte = paroleDi(f).filter(w => f.parole[w.i] && f.parole[w.i].pos).length;
+    annuncia(fatte === n ? `Frase analizzata: ${n} parole su ${n}. Ora i sintagmi.` : `Fine della frase: ${fatte} parole analizzate su ${n}.`);
+    S.focusParola = true;
+    render();
   },
+  'svuota-parola'(el) {
+    const i = +el.dataset.i;
+    const p = frase().parole[i];
+    if (!p) return;
+    if ((p.lemma || p.senso || p.nota) && !confirm('Svuoto l’analisi di questa parola, con lemma, significato e osservazioni?')) return;
+    delete frase().parole[i];
+    S.apriMorfemi = false;
+    salva(); render();
+    annuncia('Parola svuotata.', { visibile: false });
+  },
+  taglio(el) {
+    const i = +el.dataset.i;
+    const w = paroleDi(frase())[i];
+    const p = parolaDa(i);
+    p.morfemi = taglia(formaTagliabile(w.t), p.morfemi, +el.dataset.k);
+    S.apriMorfemi = true;
+    riordina(i);
+    salva(); render();
+  },
+  'ruolo-morfema'(el) {
+    const i = +el.dataset.i;
+    const p = parolaDa(i);
+    const m = p.morfemi && p.morfemi[+el.dataset.n];
+    if (!m) return;
+    m.r = m.r === el.dataset.r ? '' : el.dataset.r;
+    S.apriMorfemi = true;
+    salva(); render();
+  },
+
+  /* analisi · sintagmi e proposizioni */
   funzione(el) {
     if (!S.span) return;
     const f = frase();
@@ -477,22 +445,19 @@ const AZIONI = {
     else {
       /* lo stesso gruppo, ri-segnato, cambia funzione invece di raddoppiarsi */
       const uguale = f.sintagmi.find(s => s.da === S.span.da && s.a === S.span.a);
-      if (uguale) { uguale.funzione = funzione; S.segnoAttivo = uguale.id; } else {
-        const s = { id: nuovoId('s'), da: S.span.da, a: S.span.a, funzione };
-        f.sintagmi.push(s); S.segnoAttivo = s.id;
-      }
+      if (uguale) uguale.funzione = funzione;
+      else f.sintagmi.push({ id: nuovoId('s'), da: S.span.da, a: S.span.a, funzione });
     }
-    S.ancora = null; S.filtro = '';
     salva();
     annuncia(`${funzione}: segnato.`, { visibile: false });
     /* fatto un gruppo, la scheda torna all'elenco: il gesto dopo e' il gruppo seguente */
-    S.span = null; S.segnoAttivo = null; S.schedaGruppoAperta = true;
+    S.span = null; S.segnoAttivo = null; S.ancora = null; S.filtro = ''; S.schedaGruppoAperta = true;
     render();
   },
   segno(el) {
     const s = segniCorrenti().find(x => x.id === el.dataset.id);
     if (!s) return;
-    S.segnoAttivo = s.id; S.span = { da: s.da, a: s.a }; S.ancora = null; S.ruoloBozza = null;
+    S.segnoAttivo = s.id; S.span = { da: s.da, a: s.a }; S.ancora = null;
     render();
   },
   'togli-segno'(el) {
@@ -504,26 +469,25 @@ const AZIONI = {
     salva(); render();
   },
   ruolo(el) {
-    const r = el.dataset.ruolo;
-    const attivo = frase().proposizioni.find(s => s.id === S.segnoAttivo);
-    if (attivo) { if (attivo.ruolo !== r) { attivo.ruolo = r; attivo.tipo = ''; salva(); } } else S.ruoloBozza = r;
-    render();
-  },
-  'tipo-prop'(el) {
     if (!S.span) return;
     const f = frase();
-    const { ruolo, tipo } = el.dataset;
+    const r = el.dataset.ruolo;
     let attivo = f.proposizioni.find(s => s.id === S.segnoAttivo)
       || f.proposizioni.find(s => s.da === S.span.da && s.a === S.span.a);
-    if (attivo) Object.assign(attivo, { ruolo, tipo });
-    else {
-      attivo = { id: nuovoId('p'), da: S.span.da, a: S.span.a, ruolo, tipo, grado: 1 };
+    if (attivo) { if (attivo.ruolo !== r) { attivo.ruolo = r; attivo.tipo = ''; } } else {
+      attivo = { id: nuovoId('p'), da: S.span.da, a: S.span.a, ruolo: r, tipo: '', grado: 1 };
       f.proposizioni.push(attivo);
     }
     S.segnoAttivo = attivo.id; S.ancora = null;
     salva();
-    annuncia(`${ruolo} ${tipo.toLowerCase()}: segnata.`, { visibile: false });
+    annuncia(`${r}: segnata.`, { visibile: false });
     render();
+  },
+  'tipo-prop'(el) {
+    const attivo = frase().proposizioni.find(s => s.id === S.segnoAttivo);
+    if (!attivo) return;
+    attivo.tipo = attivo.tipo === el.dataset.tipo ? '' : el.dataset.tipo;
+    salva(); render();
   },
   grado(el) {
     const attivo = frase().proposizioni.find(s => s.id === S.segnoAttivo);
@@ -548,7 +512,20 @@ const AZIONI = {
   'scarica-md'() {
     scaricaFile(`${nomeFile(S.v.titolo)}.md`, versioneInMarkdown(S.v, { mostra: S.mostra }), 'text/markdown');
   },
-  stampa() { window.print(); },
+  stampa() { salvaSubito(); window.print(); },
+
+  /* consegna */
+  'scarica-html'() {
+    salvaSubito();
+    const v = S.v;
+    const nome = [nomeFile(v.titolo), v.consegna.studente ? nomeFile(v.consegna.studente) : ''].filter(Boolean).join('-');
+    scaricaFile(`${nome}.html`, paginaDaConsegnare(v, esportaJSON(v)), 'text/html');
+    annuncia('Pagina scaricata: è il file da consegnare.');
+  },
+  'scarica-json'() {
+    salvaSubito();
+    scaricaFile(`${nomeFile(S.v.titolo)}.translatio.json`, esportaJSON(S.v), 'application/json');
+  },
 
   /* tema */
   tema() {
@@ -573,21 +550,19 @@ const CAMPI = {
   testo(el) {
     S.bozza.testo = el.value;
     clearTimeout(_anteprimaTimer);
-    _anteprimaTimer = setTimeout(aggiornaAnteprima, 220);
+    _anteprimaTimer = setTimeout(aggiornaFrasiBozza, 220);
   },
-  corte(el) { S.bozza.corte = el.checked; aggiornaAnteprima(); },
-  senso(el) {
-    const p = frase().parole[+el.dataset.i];
-    if (p) { p.senso = el.value; salva(); }
-  },
-  lemma(el) {
-    const p = frase().parole[+el.dataset.i];
-    if (p) { p.lemma = el.value.trim() || p.forma; p.citazione = el.value.trim(); p.toccata = true; salva(); }
-  },
+  corte(el) { S.bozza.corte = el.checked; aggiornaFrasiBozza(); },
+  lemma(el) { const i = +el.dataset.i; parolaDa(i).lemma = el.value.trim(); riordina(i); salva(); aggiornaFraseViva(); },
+  senso(el) { const i = +el.dataset.i; parolaDa(i).senso = el.value.trim(); riordina(i); salva(); aggiornaFraseViva(); },
+  nota(el) { const i = +el.dataset.i; parolaDa(i).nota = el.value; riordina(i); salva(); },
   filtro(el) { S.filtro = el.value; monta($('#scheda'), scheda(S)); const i = $('[data-campo="filtro"]'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } },
   brutta(el) { S.v.frasi[+el.dataset.f].brutta = el.value; salva(); autoaltezza(el.parentElement); },
   bella(el) { S.v.frasi[+el.dataset.f].bella = el.value; salva(); autoaltezza(el.parentElement); },
+  consegna(el) { S.v.consegna[el.dataset.k] = el.value; salva(); aggiornaAnteprima(); },
+  includi(el) { S.v.consegna.includi[el.dataset.k] = el.checked; salva(); aggiornaAnteprima(); },
 };
+const CAMPI_A_SCELTA = new Set(['corte', 'includi']);
 
 /* ── ascoltatori ─────────────────────────────────────────────────────────── */
 document.addEventListener('click', ev => {
@@ -602,25 +577,42 @@ document.addEventListener('click', ev => {
 
 document.addEventListener('input', ev => {
   const el = ev.target.closest('[data-campo]');
-  if (el && CAMPI[el.dataset.campo] && el.type !== 'checkbox') CAMPI[el.dataset.campo](el);
+  if (el && CAMPI[el.dataset.campo] && !CAMPI_A_SCELTA.has(el.dataset.campo)) CAMPI[el.dataset.campo](el);
 });
 document.addEventListener('change', ev => {
   const el = ev.target;
-  if (el.matches('[data-campo="corte"]')) CAMPI.corte(el);
+  if (el.matches('[data-campo]') && CAMPI_A_SCELTA.has(el.dataset.campo)) CAMPI[el.dataset.campo](el);
   if (el.matches('[data-az="importa"]') && el.files && el.files[0]) {
     el.files[0].text().then(t => {
       const v = importaJSON(t);
       salvaVersione(v, contaParole);
       annuncia(`Aperta «${v.titolo || 'versione'}».`);
       vai(`#/v/${v.id}/analisi/1/parole`);
-    }).catch(e => annuncia(e.message || 'Il file non si apre.'));
+    }).catch(e => annuncia(e && e.message && !/JSON/.test(e.message) ? e.message : 'Il file non si apre: non sembra un lavoro di Translatio.'));
+    el.value = '';
   }
 });
-/* «toggle» non risale: si ascolta in cattura */
+/* «toggle» non risale: si ascolta in cattura. La scomposizione aperta resta
+   aperta anche quando la scheda si ridisegna. */
 document.addEventListener('toggle', ev => {
   const d = ev.target;
-  if (d.matches && d.matches('[data-az-apri="lessico"]') && d.open) apriLessico(d.dataset.lemma);
+  if (d.matches && d.matches('details[data-apri="morfemi"]')) S.apriMorfemi = d.open;
 }, true);
+
+function tastoNumero(ev) {
+  const n = +ev.key;
+  if (!(n >= 1 && n <= 9) || S.sel == null || !tastieraFine()) return false;
+  const f = frase();
+  const p = f.parole[S.sel];
+  const gruppo = gruppoDaCompilare(p, S.v.lingua);
+  if (!gruppo) return false;
+  const x = valoriDelGruppo(gruppo, p, S.v.lingua)[n - 1];
+  if (!x) return false;
+  ev.preventDefault();
+  if (gruppo === 'pos') AZIONI.pos({ dataset: { i: String(S.sel), pos: x } });
+  else AZIONI.tratto({ dataset: { i: String(S.sel), g: gruppo, x } });
+  return true;
+}
 
 document.addEventListener('keydown', ev => {
   if (S.vista !== 'analisi') return;
@@ -631,10 +623,17 @@ document.addEventListener('keydown', ev => {
     if (S.sel != null || S.span || S.schedaGruppoAperta) { azzeraSelezione(); render(); }
     return;
   }
+  if (ev.key === 'Enter' && scrive && S.lente === 'parole' && S.sel != null && t.matches('input[data-campo="lemma"], input[data-campo="senso"]')) {
+    /* Invio nel lemma va al significato; nel significato, alla parola dopo */
+    ev.preventDefault();
+    if (t.dataset.campo === 'lemma') { const s = $('input[data-campo="senso"]'); if (s) s.focus(); } else AZIONI.prossima({ dataset: { i: String(S.sel) } });
+    return;
+  }
   if (scrive || ev.altKey || ev.ctrlKey || ev.metaKey) return;
   if (ev.key === '[' && S.frase > 0) { vai(`#/v/${S.v.id}/analisi/${S.frase}/${S.lente}`); return; }
   if (ev.key === ']' && S.frase < S.v.frasi.length - 1) { vai(`#/v/${S.v.id}/analisi/${S.frase + 2}/${S.lente}`); return; }
   if (S.lente !== 'parole') return;
+  if (tastoNumero(ev)) return;
   const n = paroleDi(frase()).length;
   if (ev.key === 'ArrowRight' || ev.key === 'ArrowLeft') {
     ev.preventDefault();
@@ -646,7 +645,7 @@ document.addEventListener('keydown', ev => {
   }
   if (ev.key === 'Enter' && S.sel != null && (!t.closest('button, a') || (t.matches('.parola') && +t.dataset.i === S.sel))) {
     ev.preventDefault();
-    AZIONI.conferma({ dataset: { i: String(S.sel) } });
+    AZIONI.prossima({ dataset: { i: String(S.sel) } });
   }
 });
 
@@ -654,24 +653,13 @@ window.addEventListener('hashchange', render);
 window.addEventListener('pagehide', salvaSubito);
 document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'hidden') salvaSubito(); });
 
-/* ── avvio, con la cucitura ?lang=&text= dal resto di Poetrify ───────────── */
-function cucitura() {
-  const q = new URLSearchParams(location.search);
-  if (![...q.keys()].length) return;
-  const lang = { la: 'latino', latino: 'latino', grc: 'greco', greco: 'greco' }[q.get('lang') || ''];
-  const testo = q.get('text') || q.get('testo') || '';
-  history.replaceState(null, '', location.pathname + (location.hash || ''));
-  if (!lang) return;
-  if (testo) {
-    S.bozza = {
-      lingua: lang, titolo: q.get('titolo') || '', autore: q.get('autore') || q.get('src') || '',
-      testo, corte: false, frasi: dividiInFrasi(testo, lang),
-    };
-  }
-  history.replaceState(null, '', `${location.pathname}#/nuova/${lang}`);
-}
+/* ── avvio ───────────────────────────────────────────────────────────────── */
+/* il foglio del documento: lo stesso che viaggia dentro il file .html */
+const stile = document.createElement('style');
+stile.id = 'stile-documento';
+stile.textContent = CSS_DOCUMENTO;
+document.head.appendChild(stile);
 
-cucitura();
 document.getElementById('tema').addEventListener('click', () => AZIONI.tema());
 aggiornaTema();
 render();

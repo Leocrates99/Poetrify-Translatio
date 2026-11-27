@@ -1,19 +1,16 @@
 /* ============================================================================
    SINTASSI · sintagmi, proposizioni, costruzione
    ----------------------------------------------------------------------------
-   Le funzioni logiche e i tipi di proposizione vengono dalle tassonomie del
-   motore condiviso (modules/engine/taxonomies.js): qui non se ne scrive una
-   seconda lista. Si aggiunge solo cio' che serve a QUESTA interfaccia:
+   Le funzioni logiche e i tipi di proposizione sono quelli delle tassonomie
+   (tassonomie.js). Qui non si propone nulla: lo studente segna, il banco
+   disegna. Si aggiunge solo cio' che serve al disegno:
      · il caso di una funzione, per colorare il suo filo col codice di
        categoria della collana (nominativo blu di Prussia, accusativo giallo
        indiano…);
-     · le proposte (★), che non decidono mai al posto dello studente;
-     · la costruzione nell'ordine italiano: soggetto, predicato, oggetto,
-       complementi.
+     · la costruzione nell'ordine italiano (soggetto, predicato, oggetto,
+       complementi), rimessa in fila coi sintagmi che lo studente ha segnato.
    ============================================================================ */
-import { funzioniLogicheGroupedFor, PROPOSIZIONI } from '../../../modules/engine/taxonomies.js';
-import { lookupConjunctionPreset } from '../../../modules/engine/conjunctions.js';
-import { preposizione } from './analizzatore.js';
+import { FUNZIONI_LATINO, FUNZIONI_GRECO, PROPOSIZIONI } from './tassonomie.js';
 
 const CASO_DEL_GRUPPO = [
   [/^Predicato/i, 'pred'],
@@ -22,7 +19,7 @@ const CASO_DEL_GRUPPO = [
 ];
 
 export function gruppiDiFunzioni(lang) {
-  return funzioniLogicheGroupedFor(lang);
+  return lang === 'greco' ? FUNZIONI_GRECO : FUNZIONI_LATINO;
 }
 
 const _casoCache = new Map();
@@ -33,7 +30,7 @@ export function casoDellaFunzione(funzione, lang) {
   let caso = 'altro';
   if (/^Predicato|^Copula/i.test(funzione)) caso = 'pred';
   else {
-    for (const g of funzioniLogicheGroupedFor(lang)) {
+    for (const g of gruppiDiFunzioni(lang)) {
       if (g.items.includes(funzione)) {
         const hit = CASO_DEL_GRUPPO.find(([re]) => re.test(g.group));
         caso = hit ? hit[1] : 'altro';
@@ -55,67 +52,13 @@ export function abbreviaFunzione(f) {
     .replace(/^Predicato nominale/i, 'pred. nominale');
 }
 
-/* ── le proposte di funzione ─────────────────────────────────────────────── */
-const FINITI = new Set(['ind', 'cong', 'ott', 'imv']);
-const PER_CASO = {
-  latino: {
-    nom: ['Soggetto', 'Attributo', 'Apposizione', 'Parte nominale'],
-    acc: ['Complemento oggetto', 'Complemento di luogo (moto a)', 'Complemento di tempo continuato'],
-    gen: ['Complemento di specificazione', 'Complemento partitivo'],
-    dat: ['Complemento di termine', 'Complemento di vantaggio', 'Dativo di possesso'],
-    abl: ['Complemento di mezzo o strumento', 'Complemento di modo', 'Complemento di causa', 'Complemento di tempo determinato', 'Complemento di luogo (stato in)'],
-    voc: ['Complemento di vocazione'],
-  },
-  greco: {
-    nom: ['Soggetto', 'Attributo', 'Apposizione', 'Parte nominale'],
-    acc: ['Complemento oggetto', 'Complemento di limitazione', 'Complemento di tempo continuato'],
-    gen: ['Complemento di specificazione', 'Complemento partitivo', 'Complemento di paragone'],
-    dat: ['Complemento di termine', 'Complemento di mezzo o strumento', 'Complemento di modo', 'Complemento di tempo determinato'],
-    voc: ['Complemento di vocazione'],
-  },
-};
-const ESSERE = /^(sum|εἰμί|esse)$/i;
-
-export function suggerisciFunzioni(f, span, parole, lang) {
-  const out = [];
-  const add = x => { if (x && !out.includes(x)) out.push(x); };
-  const dentro = [];
-  for (let i = span.da; i <= span.a; i++) dentro.push({ w: parole[i], p: f.parole[parole[i] && parole[i].i] });
-
-  /* un verbo di modo finito: e' il predicato (o la copula, se e' «essere») */
-  const verbo = dentro.find(x => x.p && x.p.pos === 'verbo' && x.p.tratti && FINITI.has(x.p.tratti.modo));
-  if (verbo) {
-    if (ESSERE.test(verbo.p.lemma || '')) { add('Copula'); add('Predicato nominale'); add('Predicato verbale'); }
-    else add('Predicato verbale');
-  }
-
-  /* una preposizione in testa: i complementi che apre, col caso della parola che regge */
-  const testa = dentro[0];
-  const nominale = dentro.find(x => x.p && x.p.tratti && x.p.tratti.caso && x.p.pos !== 'preposizione');
-  if (testa && testa.p && testa.p.pos === 'preposizione') {
-    const prep = preposizione(testa.w.t, lang);
-    if (prep) {
-      const caso = nominale && nominale.p.tratti.caso;
-      const lista = caso && prep.complementi[caso] ? prep.complementi[caso] : Object.values(prep.complementi).flat();
-      lista.forEach(add);
-    }
-  } else if (nominale && !verbo) {
-    (PER_CASO[lang] && PER_CASO[lang][nominale.p.tratti.caso] || []).forEach(add);
-    /* l'ablativo latino con un verbo passivo nella frase puo' essere d'agente */
-    if (lang === 'latino' && nominale.p.tratti.caso === 'abl') {
-      const passivo = Object.values(f.parole).some(p => p && p.tratti && p.tratti.diatesi === 'pass' && FINITI.has(p.tratti.modo));
-      if (passivo) add('Complemento di causa efficiente');
-    }
-  }
-  return out.slice(0, 6);
-}
-
 /* ── proposizioni ────────────────────────────────────────────────────────── */
+export const RUOLI = ['Principale', 'Coordinata', 'Subordinata'];
 const SUFFISSO = { latino: /\s*\(latino\)$/, greco: /\s*\(greco\)$/ };
 const ALTRA = { latino: /\(greco\)$/, greco: /\(latino\)$/ };
 
 /* I tipi che si incontrano in quasi ogni versione stanno davanti; gli altri
-   restano a un tocco, sotto «Altri tipi». Trentatre pastiglie in fila non
+   restano a un tocco, sotto «Altri tipi». Trentadue pastiglie in fila non
    sono una scelta, sono un elenco da scorrere a memoria. */
 const FREQUENTI = {
   Principale: ['Enunciativa', 'Interrogativa diretta', 'Imperativa', 'Esclamativa'],
@@ -136,55 +79,27 @@ export function tipiDiProposizione(ruolo, lang) {
   return { frequenti, altri, tutti };
 }
 
-/* «Subordinante finale (ἵνa, ὅπως)» → «Finale»; «Coordinante copulativa» → «Copulativa» */
-function tipoDaPreset(tipo) {
-  const m = /^(Subordinante|Coordinante)\s+([^\s(]+)/i.exec(tipo || '');
-  if (!m) return null;
-  const t = m[2].charAt(0).toUpperCase() + m[2].slice(1).toLowerCase();
-  const ruolo = /^Sub/i.test(m[1]) ? 'Subordinata' : 'Coordinata';
-  const mappa = { Condizionale: 'Condizionale (protasi)', Completiva: 'Dichiarativa' };
-  return { ruolo, tipo: mappa[t] || t };
-}
-
-export function suggerisciProposizione(f, span, parole, lang) {
-  const prima = parole[span.da];
-  const p = prima && f.parole[prima.i];
-  const out = { ruolo: 'Principale', tipo: 'Enunciativa', connettivo: '', perche: '' };
-  if (!prima) return out;
-  const preset = lookupConjunctionPreset(prima.t, lang);
-  if (preset && preset.tipo) {
-    const d = tipoDaPreset(preset.tipo);
-    if (d) {
-      out.ruolo = d.ruolo;
-      out.tipo = d.tipo;
-      out.connettivo = prima.t;
-      out.perche = preset.tipo.toLowerCase();
-      return out;
-    }
-  }
-  if (p && p.pos === 'pronome' && /relativ/i.test(p.nota || '')) {
-    return { ruolo: 'Subordinata', tipo: 'Relativa propria', connettivo: prima.t, perche: 'pronome relativo' };
-  }
-  /* participio in caso obliquo + nome concordato: costrutto assoluto */
-  const ptc = [];
-  for (let i = span.da; i <= span.a; i++) {
-    const q = f.parole[parole[i].i];
-    if (q && q.tratti && q.tratti.modo === 'ptc') ptc.push(q);
-  }
-  if (ptc.some(q => q.tratti.caso === 'abl') && lang === 'latino') {
-    return { ruolo: 'Subordinata', tipo: 'Ablativo assoluto', connettivo: '', perche: 'participio in ablativo' };
-  }
-  if (ptc.some(q => q.tratti.caso === 'gen') && lang === 'greco') {
-    return { ruolo: 'Subordinata', tipo: 'Genitivo assoluto', connettivo: '', perche: 'participio in genitivo' };
-  }
-  return out;
-}
-
 export function etichettaProposizione(s, lungo = false) {
   const sigla = s.ruolo === 'Principale' ? 'P' : s.ruolo === 'Coordinata' ? 'C' : `S${s.grado || 1}`;
   const tipo = s.tipo ? s.tipo.toLowerCase() : '';
   if (lungo) return `${s.ruolo}${s.ruolo === 'Subordinata' ? ` di ${s.grado || 1}° grado` : ''}${tipo ? ` · ${tipo}` : ''}`;
   return `${sigla}${tipo ? ' · ' + tipo : ''}`;
+}
+
+/* ── il disegno dei segni ───────────────────────────────────────────────── */
+/* Livelli: ogni segno (sintagma o proposizione) prende la prima riga libera,
+   cosi' due gruppi annidati stanno su due fili e non si coprono. */
+export function livelli(segni) {
+  const ordinati = [...segni].sort((a, b) => a.da - b.da || (b.a - b.da) - (a.a - a.da));
+  const righe = [];
+  const out = new Map();
+  for (const s of ordinati) {
+    let r = 0;
+    while (righe[r] && righe[r].some(x => !(s.a < x.da || s.da > x.a))) r++;
+    (righe[r] || (righe[r] = [])).push(s);
+    out.set(s.id, r);
+  }
+  return { righe: righe.length, livello: out };
 }
 
 /* ── la costruzione: soggetto, predicato, oggetto, complementi ──────────── */

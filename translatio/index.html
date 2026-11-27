@@ -4,18 +4,41 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Translatio · Poetrify</title>
-<meta name="description" content="Analisi e traduzione di frasi e versioni dal latino e dal greco antico: il brano diviso in frasi, ogni parola da vicino, la traduzione a fronte.">
+<meta name="description" content="Il banco dove lo studente analizza e traduce la sua versione dal latino o dal greco, e la esporta in un documento da consegnare.">
 <!-- Anti-flash del tema: [data-theme] prima del primo disegno (chiave unica della casa) -->
 <script>(function(){try{var t=localStorage.getItem('poetrify-theme');if(t!=='dark'&&t!=='light'){t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <!-- Font self-hosted e token condivisi della casa: un valore cambiato la' arriva qui -->
 <link rel="stylesheet" href="../vendor/fonts/fonts.css">
 <link rel="stylesheet" href="../shared/poetrify-tokens.css?v=2026-08-23">
-<link rel="stylesheet" href="css/translatio.css?v=2026-11-27b">
+<link rel="stylesheet" href="css/translatio.css?v=2026-11-27d">
 <!-- La veste C2 compatta: Inter (solo latino; il greco va in Times) e il foglio della veste -->
 <link rel="stylesheet" href="../vendor/fonts/inter/inter.css">
-<link rel="stylesheet" href="css/veste-c2.css?v=2026-11-27b">
+<link rel="stylesheet" href="css/veste-c2.css?v=2026-11-27d">
 <script src="../shared/poetrify-theme.js"></script>
-<script type="module" src="js/app.js?v=2026-11-27b"></script>
+<!-- Ogni modulo porta la versione: dopo un aggiornamento il browser non mescola
+     file nuovi e file vecchi rimasti in cache (GitHub Pages li tiene 10 minuti).
+     L'elenco e' controllato da collaudo/moduli.mjs. -->
+<script type="importmap">
+{"imports": {
+  "./js/esempi.js": "./js/esempi.js?v=2026-11-27d",
+  "./js/motore/grammatica.js": "./js/motore/grammatica.js?v=2026-11-27d",
+  "./js/motore/sintassi.js": "./js/motore/sintassi.js?v=2026-11-27d",
+  "./js/motore/tassonomie.js": "./js/motore/tassonomie.js?v=2026-11-27d",
+  "./js/motore/testo.js": "./js/motore/testo.js?v=2026-11-27d",
+  "./js/motore/traslitterazione.js": "./js/motore/traslitterazione.js?v=2026-11-27d",
+  "./js/stato.js": "./js/stato.js?v=2026-11-27d",
+  "./js/ui/dom.js": "./js/ui/dom.js?v=2026-11-27d",
+  "./js/ui/icone.js": "./js/ui/icone.js?v=2026-11-27d",
+  "./js/viste/analisi.js": "./js/viste/analisi.js?v=2026-11-27d",
+  "./js/viste/archivio.js": "./js/viste/archivio.js?v=2026-11-27d",
+  "./js/viste/consegna.js": "./js/viste/consegna.js?v=2026-11-27d",
+  "./js/viste/documento.js": "./js/viste/documento.js?v=2026-11-27d",
+  "./js/viste/stile-documento.js": "./js/viste/stile-documento.js?v=2026-11-27d",
+  "./js/viste/testo.js": "./js/viste/testo.js?v=2026-11-27d",
+  "./js/viste/traduzione.js": "./js/viste/traduzione.js?v=2026-11-27d"
+}}
+</script>
+<script type="module" src="js/app.js?v=2026-11-27d"></script>
 </head>
 <body>
 <a class="salta" href="#principale">Vai al lavoro</a>
@@ -23,7 +46,7 @@
 <header class="testata">
   <a class="marchio" href="../app.html" title="Gli strumenti di Poetrify">Poetrify</a>
   <a class="dove" href="#/">Translatio</a>
-  <span class="firma">Analisi e traduzione · latino e greco</span>
+  <span class="firma">La tua analisi · latino e greco</span>
   <button class="btn btn-quieto btn-icona tema" id="tema" type="button" aria-label="Passa al tema scuro"></button>
 </header>
 
@@ -36,7 +59,7 @@
   </div>
 </main>
 
-<footer class="piede">Poetrify · Translatio · lessico da Lewis, Liddell-Scott-Jones e CLTK · il lavoro resta in questo browser</footer>
+<footer class="piede">Poetrify · Translatio · l’analisi è tua e resta in questo browser, finché non la scarichi</footer>
 <div id="annunci" class="sr" aria-live="polite"></div>
 </body>
 </html>

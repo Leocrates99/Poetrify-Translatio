@@ -1,20 +1,22 @@
 /* ============================================================================
    STATO · le versioni, la loro forma e la loro conservazione
    ----------------------------------------------------------------------------
-   Una VERSIONE e' un brano con le sue frasi. Ogni frase porta tre analisi e
-   due rese, tutte sullo stesso testo:
+   Una VERSIONE e' un brano con le sue frasi. Tutto cio' che contiene l'ha
+   scritto lo studente: Translatio non propone analisi.
 
      versione = { id, schema, lingua, titolo, autore, testo, corte,
-                  frasi: [frase], posizione: { frase, lente }, creata, modificata }
-     frase    = { id, testo, parole: { [indice]: parola }, analizzata,
+                  frasi: [frase], posizione: { frase, lente },
+                  consegna: { studente, classe, data, docente, includi },
+                  creata, modificata }
+     frase    = { id, testo, parole: { [indice]: parola },
                   sintagmi: [{ id, da, a, funzione }],
                   proposizioni: [{ id, da, a, ruolo, tipo, grado }],
                   brutta, bella }
-     parola   = la proposta dell'analizzatore + { stato: 'proposta'|'confermata', senso }
+     parola   = { pos, tratti, lemma, senso, morfemi: [{ t, r }], nota }
 
    Le parole si indicizzano per POSIZIONE nella frase (0, 1, 2…), ricalcolata
-   dal testo: se il testo della frase cambia, la frase riparte da capo — ed e'
-   giusto, perche' e' un'altra frase.
+   dal testo: se il testo della frase cambia davvero, la frase riparte da capo
+   — ed e' giusto, perche' e' un'altra frase.
 
    Tutto vive nel browser (localStorage), in try/catch: in file:// o in
    navigazione privata lo storage puo' lanciare, e una pagina che muore in cima
@@ -22,7 +24,7 @@
    ============================================================================ */
 import { dividiInFrasi, chiaveFrase } from './motore/testo.js';
 
-export const SCHEMA = 1;
+export const SCHEMA = 2;
 const K_INDICE = 'translatio:indice';
 const K_VERSIONE = id => `translatio:v:${id}`;
 
@@ -48,13 +50,23 @@ export const nuovoId = (p = 'v') => `${p}${Date.now().toString(36)}${Math.random
 
 /* ── costruzione ──────────────────────────────────────────────────────────── */
 export function nuovaFrase(testo) {
-  return { id: nuovoId('f'), testo, parole: {}, analizzata: false, sintagmi: [], proposizioni: [], brutta: '', bella: '' };
+  return { id: nuovoId('f'), testo, parole: {}, sintagmi: [], proposizioni: [], brutta: '', bella: '' };
+}
+
+/* Che cosa entra nel documento da consegnare: tutto, finche' lo studente non
+   toglie qualcosa. */
+export const INCLUDI = {
+  grafica: true, parole: true, morfemi: true, costruzione: true,
+  brutta: true, bella: true, traduzione: true, lessico: true, legenda: true,
+};
+export function nuovaConsegna() {
+  return { studente: '', classe: '', data: '', docente: '', includi: { ...INCLUDI } };
 }
 
 export function nuovaVersione({ lingua, titolo = '', autore = '', testo = '', corte = false }) {
   const v = {
     id: nuovoId(), schema: SCHEMA, app: 'translatio', lingua, titolo, autore, testo, corte,
-    frasi: [], posizione: { frase: 0, lente: 'parole' }, creata: ora(), modificata: ora(),
+    frasi: [], posizione: { frase: 0, lente: 'parole' }, consegna: nuovaConsegna(), creata: ora(), modificata: ora(),
   };
   v.frasi = dividiInFrasi(testo, lingua, { corte }).map(nuovaFrase);
   return v;
@@ -78,25 +90,31 @@ export function riallineaFrasi(v, nuoveFrasi) {
   const frasi = nuoveFrasi.map(t => {
     const lista = vecchie.get(chiaveFrase(t)) || [];
     const f = lista.find(x => !usate.has(x));
-    if (f) { usate.add(f); return { ...f, testo: t, parole: f.testo === t ? f.parole : {}, analizzata: f.testo === t && f.analizzata }; }
+    /* stessa chiave vuol dire stesse parole nello stesso ordine: l'analisi
+       resta (un accento corretto non cambia la frase) */
+    if (f) { usate.add(f); return { ...f, testo: t }; }
     return nuovaFrase(t);
   });
   for (const f of v.frasi) if (!usate.has(f) && haLavoro(f)) perse++;
   return { frasi, perse };
 }
 
+/** Una parola e' analizzata quando lo studente le ha dato la parte del discorso. */
+export const analizzata = p => !!(p && p.pos);
+const scritta = p => !!(p && (p.pos || p.lemma || p.senso || p.nota || (p.morfemi && p.morfemi.length)));
+
 export function haLavoro(f) {
-  return Object.values(f.parole || {}).some(p => p.stato === 'confermata' || p.senso)
+  return Object.values(f.parole || {}).some(scritta)
     || (f.sintagmi || []).length || (f.proposizioni || []).length || !!(f.brutta || f.bella);
 }
 
 /* ── avanzamento: che cosa e' fatto, contato in un posto solo ────────────── */
 export function statoFrase(f, nParole) {
-  const parole = Object.values(f.parole || {});
-  const confermate = parole.filter(p => p.stato === 'confermata').length;
+  let analizzate = 0;
+  for (let i = 0; i < nParole; i++) if (analizzata(f.parole && f.parole[i])) analizzate++;
   return {
     parole: nParole,
-    confermate,
+    analizzate,
     sintagmi: (f.sintagmi || []).length,
     proposizioni: (f.proposizioni || []).length,
     brutta: !!(f.brutta || '').trim(),
@@ -108,8 +126,8 @@ export function statoFrase(f, nParole) {
 export function faseFrase(s) {
   if (s.bella) return 'tradotta';
   if (s.brutta) return 'in-traduzione';
-  if (s.parole && s.confermate === s.parole) return 'analizzata';
-  if (s.confermate || s.sintagmi || s.proposizioni) return 'in-corso';
+  if (s.parole && s.analizzate === s.parole) return 'analizzata';
+  if (s.analizzate || s.sintagmi || s.proposizioni) return 'in-corso';
   return 'da-fare';
 }
 
@@ -136,7 +154,7 @@ function riassunto(v, contaParole) {
   let analizzate = 0, inBella = 0, inBrutta = 0;
   for (const f of frasi) {
     const s = statoFrase(f, contaParole ? contaParole(f) : Object.keys(f.parole || {}).length);
-    if (s.parole && s.confermate === s.parole) analizzate++;
+    if (s.parole && s.analizzate === s.parole) analizzate++;
     if (s.bella) inBella++;
     else if (s.brutta) inBrutta++;
   }
@@ -176,17 +194,47 @@ export function salvaSubito() {
 }
 
 /* ── migrazioni: il dato vecchio si porta avanti, non si butta ───────────── */
+/* Lo schema 1 (Translatio con l'analisi automatica, novembre 2026) teneva
+   accanto al lavoro dello studente le proposte del programma. Passando allo
+   schema 2 resta solo cio' che lo studente ha fatto: le parole che aveva
+   confermato o corretto, i significati scelti, i sintagmi, le proposizioni,
+   le traduzioni. Le proposte mai confermate cadono. */
+function daSchema1(p) {
+  if (!p || typeof p !== 'object') return null;
+  const sua = p.stato === 'confermata' || p.toccata;
+  const out = {};
+  if (sua && p.pos) out.pos = p.pos;
+  if (sua && p.tratti && Object.keys(p.tratti).length) {
+    out.tratti = {};
+    for (const [k, v] of Object.entries(p.tratti)) if (typeof v === 'string' && v) out.tratti[k] = v;
+  }
+  /* un lemma uguale alla forma (et, in, λύω) e' un lemma: lo studente l'aveva confermato */
+  const lemma = p.citazione || p.lemma || '';
+  if (sua && lemma) out.lemma = lemma;
+  if (p.senso) out.senso = p.senso;
+  return Object.keys(out).length ? out : null;
+}
+
 function migra(v) {
   if (!v || typeof v !== 'object') return null;
-  v.schema = v.schema || 1;
+  const vecchio = (v.schema || 1) < 2;
   v.posizione = v.posizione || { frase: 0, lente: 'parole' };
+  v.consegna = { ...nuovaConsegna(), ...(v.consegna || {}) };
+  v.consegna.includi = { ...INCLUDI, ...(v.consegna.includi || {}) };
   for (const f of v.frasi || []) {
     f.parole = f.parole || {};
+    if (vecchio) {
+      const nuove = {};
+      for (const [i, p] of Object.entries(f.parole)) { const q = daSchema1(p); if (q) nuove[i] = q; }
+      f.parole = nuove;
+      delete f.analizzata;
+    }
     f.sintagmi = f.sintagmi || [];
     f.proposizioni = f.proposizioni || [];
     f.brutta = f.brutta || '';
     f.bella = f.bella || '';
   }
+  v.schema = SCHEMA;
   return v;
 }
 
@@ -195,8 +243,19 @@ export function esportaJSON(v) {
   return JSON.stringify({ formato: 'translatio', schema: SCHEMA, versione: v }, null, 1);
 }
 
+/* Il documento HTML che lo studente consegna porta dentro di se' il lavoro,
+   in un <script type="application/json">: lo stesso file si legge in
+   qualunque browser e si riapre in Translatio. */
+export const ID_DATI = 'translatio-dati';
+
 export function importaJSON(testo) {
-  const j = JSON.parse(testo);
+  let sorgente = String(testo || '');
+  if (/^\s*</.test(sorgente)) {
+    const m = new RegExp(`<script[^>]*id=["']${ID_DATI}["'][^>]*>([\\s\\S]*?)</script>`, 'i').exec(sorgente);
+    if (!m) throw new Error('Questa pagina non contiene un lavoro di Translatio.');
+    sorgente = m[1];
+  }
+  const j = JSON.parse(sorgente);
   const v = migra(j && j.formato === 'translatio' ? j.versione : j);
   if (!v || !Array.isArray(v.frasi) || !v.lingua) throw new Error('Il file non contiene una versione di Translatio.');
   v.id = nuovoId();            // un'importazione non sovrascrive mai una versione che c'e' gia'

@@ -353,9 +353,6 @@ main:focus { outline: none; }
 }
 .consegna strong { color: var(--ink); }
 .consegna .ico { width: 16px; height: 16px; vertical-align: -3px; }
-.stato-lavoro { display: flex; align-items: center; gap: 8px; margin: 0 0 14px; font-size: 13px; color: var(--sepia); }
-.stato-lavoro .barra { flex: 0 0 120px; height: 4px; border-radius: 2px; background: var(--rule-soft); overflow: hidden; }
-.stato-lavoro .barra > span { display: block; height: 100%; background: var(--lingua); }
 
 /* La frase: celle in fila, che vanno a capo come il testo. Le celle si toccano
    (niente gap nel flex) perche' i filetti dei sintagmi devono correre continui
@@ -386,12 +383,12 @@ main:focus { outline: none; }
   font-family: var(--font-testo);
   font-size: 28px; line-height: 1.15; letter-spacing: 0.005em;
   color: var(--ink);
-  /* il filetto della parte del discorso: pieno se confermato, tratteggiato se proposto */
+  /* il filetto della parte del discorso: pieno quando lo studente l'ha scelta */
   padding-bottom: 3px;
   border-bottom: 3px solid var(--pos-c, var(--rule-soft));
 }
-.parola.proposta .forma { border-bottom-style: dashed; }
-.parola.ignota .forma { border-bottom: 3px dotted var(--rule); }
+/* finche' la parte del discorso manca, il filetto e' punteggiato e grigio */
+.parola.vuota .forma { border-bottom: 3px dotted var(--rule); }
 .sotto {
   display: grid; gap: 1px; margin-top: 5px; min-height: 46px;
   font-size: 12px; line-height: 1.3;
@@ -402,13 +399,13 @@ main:focus { outline: none; }
 }
 .sotto .lemma { font-family: var(--font-testo); font-style: italic; font-size: 14px; color: var(--ink-soft); }
 .sotto .analisi { color: var(--sepia); font-size: 12px; }
-.sotto .analisi .piu { color: var(--sepia); font-weight: 700; }
+.sotto .senso { font-family: var(--font-body); font-style: italic; font-size: 13px; color: var(--ink); max-width: 22ch; }
+.parola.vuota .sotto .pos { font-weight: 400; font-style: italic; letter-spacing: 0; text-transform: none; color: var(--sepia); }
 .spia-riga {
   display: flex; align-items: center; gap: 5px; min-height: 18px; margin-top: 4px;
   font-size: 11.5px; color: var(--sepia); white-space: nowrap;
 }
 .spia-riga .pastiglia { width: 9px; height: 9px; border-radius: 50%; box-shadow: 0 0 0 1px rgba(0,0,0,.18); flex: none; }
-.parola.confermata .sotto .pos::after { content: " ✓"; color: var(--success-ink); }
 
 /* la variante d'inchiostro della parte del discorso: la tinta che riempie non
    e' quella che scrive (l'articolo ciano su pergamena non regge come testo) */
@@ -427,11 +424,13 @@ main:focus { outline: none; }
 .filo.inizio { margin-left: 2px; border-top-left-radius: 3px; border-bottom-left-radius: 3px; }
 .filo.fine { margin-right: 2px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; }
 .filo.attivo { box-shadow: 0 0 0 2px var(--paper), 0 0 0 3.5px var(--lingua); }
+/* l'etichetta del gruppo sta sopra (o sotto) il filo, larga quanto il gruppo,
+   senza allargare la prima parola: il testo e' sospeso, la riga ne tiene il posto */
 .filo-etichetta {
-  display: block; margin: 2px 0 0 2px; max-width: 220px;
-  font-size: 11px; font-weight: 700; line-height: 1.25; color: var(--ink-soft);
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  display: block; position: relative; height: 14px; margin: 2px 0 0 2px;
+  font-size: 11px; font-weight: 700; line-height: 14px; color: var(--ink-soft);
 }
+.filo-etichetta > span { position: absolute; left: 0; top: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .filo-etichetta.assente { visibility: hidden; }
 .fili-sopra .filo-etichetta { margin: 0 0 2px 2px; }
 /* il colore del filo: il caso della funzione (codice di categoria della collana) */
@@ -466,52 +465,68 @@ main:focus { outline: none; }
 .scheda-invito strong { color: var(--ink); }
 .voce {
   position: relative; padding: 2px 0 16px 16px; margin-bottom: 18px;
-  border-left: 4px solid var(--voce-c, var(--rule));        /* la categoria: il filetto della casa */
+  border-left: 4px solid var(--pos-c, var(--rule));        /* la categoria: il filetto della casa */
   border-bottom: 1px solid var(--rule-soft);
 }
 .voce .forma-grande { font-family: var(--font-testo); font-size: 38px; line-height: 1.1; margin: 4px 0 6px; overflow-wrap: anywhere; }
 .voce .forma-grande::first-letter { color: var(--lingua); }
-.voce .lemma-riga { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; }
 .voce .traslitterazione { margin: -2px 0 6px; font-family: var(--font-ui); font-style: italic; font-size: 14px; color: var(--ink-soft); }
+.voce .riassunto-voce { margin: 2px 0 0; font-size: 14.5px; line-height: 1.45; color: var(--ink-soft); }
+.voce .riassunto-voce .nome-pos { color: var(--pos-ink, var(--ink)); }
+.voce .riassunto-voce .manca { color: var(--sepia); font-style: italic; }
+.forma-gruppo { margin: 0 0 4px; font-family: var(--font-testo); font-size: 27px; line-height: 1.28; overflow-wrap: anywhere; }
 
-.voce .citazione { font-family: var(--font-testo); font-size: 17px; font-style: italic; color: var(--ink-soft); }
-.voce .glossa { margin-top: 8px; font-family: var(--font-body); font-size: 17px; line-height: 1.45; }
-.voce .glossa.automatica { color: var(--ink-soft); }
-.morfemi { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px; margin: 4px 0 2px; font-family: var(--font-testo); font-size: 26px; }
-.morfemi .sep { color: var(--sepia-soft); padding: 0 1px; }
+/* i morfemi, tagliati dallo studente: prefisso · aumento · tema · vocale
+   tematica · suffisso · desinenza (nel colore della lingua, come nel
+   dizionario). Il pezzo senza ruolo resta d'inchiostro, sottolineato a
+   tratti: aspetta che gli si dica che cos'e'. */
+:root {
+  --morfema-p: #4d7c0f; --morfema-a: #7c3aed; --morfema-t: var(--ink);
+  --morfema-v: #b45309; --morfema-s: #0f766e; --morfema-d: var(--lingua);
+}
+:root[data-theme="dark"] { --morfema-p: #a3e635; --morfema-a: #a78bfa; --morfema-v: #fbbf24; --morfema-s: #2dd4bf; }
 .mseg { padding: 0 1px; border-bottom: 2px solid currentColor; }
-/* i morfemi: aumento · tema · vocale tematica · suffisso · desinenza
-   (la desinenza porta il colore della lingua, come nel dizionario) */
-.mseg-a { color: #7c3aed; }
-.mseg-t { color: var(--ink); border-bottom-color: var(--rule); }
-.mseg-v { color: #b45309; }
-.mseg-s { color: #0f766e; }
-.mseg-d { color: var(--lingua); }
-:root[data-theme="dark"] .mseg-a { color: #a78bfa; }
-:root[data-theme="dark"] .mseg-v { color: #fbbf24; }
-:root[data-theme="dark"] .mseg-s { color: #2dd4bf; }
-.legenda-morfemi { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 12px; color: var(--sepia); }
-.legenda-morfemi b { font-weight: 700; }
+.mseg + .mseg { margin-left: 1px; }
+.parola .forma .mseg { padding: 0; border-bottom: 0; }
+.mseg-p { color: var(--morfema-p); }
+.mseg-a { color: var(--morfema-a); }
+.mseg-t { color: var(--morfema-t); border-bottom-color: var(--rule); }
+.mseg-v { color: var(--morfema-v); }
+.mseg-s { color: var(--morfema-s); }
+.mseg-d { color: var(--morfema-d); }
+.mseg-nessuno { color: var(--ink); border-bottom: 1px dashed var(--rule); }
+
+/* il tagliere: le lettere della parola; si tocca quella da cui comincia un
+   pezzo nuovo (lo stesso gesto di «Dividi» nel testo) */
+.tagliere { display: flex; flex-wrap: wrap; gap: 2px; font-family: var(--font-testo); font-size: 24px; line-height: 1; }
+.lettera {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 28px; height: 40px; padding: 0 3px;
+  border: 1px solid var(--rule-soft); background: var(--paper); color: var(--ink);
+  font: inherit; cursor: pointer;
+}
+.lettera.prima { cursor: default; color: var(--ink-soft); }
+.lettera:hover { border-color: var(--lingua); }
+.lettera.taglio-qui { box-shadow: inset 3px 0 0 var(--lingua); }
+.pezzi { display: grid; gap: 8px; margin-top: 12px; }
+.pezzo { display: grid; grid-template-columns: minmax(48px, auto) 1fr; gap: 10px; align-items: center; }
+.pezzo > .mseg { font-family: var(--font-testo); font-size: 22px; justify-self: start; }
+.scelte-strette { gap: 4px; }
+.scelta.scelta-morfema { min-height: 28px; padding: 2px 8px; font-size: 12px; }
 
 .blocco { margin-top: 20px; }
 .blocco > .etichetta { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
-.letture { display: grid; gap: 6px; }
-.lettura {
-  display: grid; grid-template-columns: 20px 1fr; gap: 10px; align-items: start;
-  padding: 9px 12px; border: 1px solid var(--rule-soft); border-radius: var(--radius-md);
-  background: var(--ivory); text-align: left; color: inherit; font-size: 14.5px; line-height: 1.4;
-}
-.lettura:hover { border-color: var(--lingua); }
-.lettura[aria-checked="true"] { border-color: var(--lingua); background: var(--lingua-pale); }
-.lettura .spia {
-  width: 16px; height: 16px; margin-top: 2px; border-radius: 50%;
-  border: 1.5px solid var(--rule); background: var(--paper);
-}
-.lettura[aria-checked="true"] .spia { border: 5px solid var(--lingua); }
-.lettura .tipo { display: block; font-size: 12px; color: var(--sepia); }
 
 .gruppo-scelte { margin-top: 12px; }
 .gruppo-scelte .etichetta { display: block; margin-bottom: 6px; }
+/* il gruppo che la tastiera compila: i numeri compaiono sui bottoni */
+.tasto {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 15px; height: 15px; padding: 0 3px; margin-right: 1px;
+  border: 1px solid currentColor; border-radius: 3px;
+  font: 700 10px/1 var(--font-ui); opacity: 0.7;
+}
+@media (pointer: coarse) { .tasto, .solo-tastiera { display: none; } }
 .scelte { display: flex; flex-wrap: wrap; gap: 6px; }
 .scelta {
   display: inline-flex; align-items: center; gap: 6px;
@@ -527,13 +542,8 @@ main:focus { outline: none; }
 }
 .scelta .pastiglia { width: 10px; height: 10px; border-radius: 50%; background: var(--scelta-c, var(--rule)); flex: none; }
 .scelta.pos { --scelta-c: var(--pos-c); }
-.scelta.stella::before { content: "★"; color: var(--brass); font-size: 12px; }
 
-.lessico-voce {
-  margin-top: 8px; padding: 12px 14px; border-radius: var(--radius-md); background: var(--cream);
-  font-family: var(--font-testo); font-size: 14.5px; line-height: 1.55; color: var(--ink-soft);
-  max-height: 220px; overflow: auto;
-}
+.area-nota { min-height: 72px; font-size: 14.5px; }
 details.dettagli > summary {
   cursor: pointer; list-style: none; display: inline-flex; align-items: center; gap: 6px;
   font-size: 13px; font-weight: 700; color: var(--lingua);
@@ -574,13 +584,15 @@ details.dettagli[open] > summary::before { transform: rotate(90deg); }
   padding: 8px 10px; border: 1px solid var(--rule-soft); border-radius: var(--radius-md); background: var(--ivory);
 }
 .segno .colore { width: 6px; align-self: stretch; border-radius: 3px; background: var(--filo-c, var(--rule)); }
-.segno .testo { min-width: 0; }
+.segno .testo { all: unset; min-width: 0; cursor: pointer; }
+.segno .testo:focus-visible { outline: 2px solid var(--lingua); outline-offset: 2px; }
 .segno .testo b { display: block; font-size: 13.5px; }
 .segno .testo span { font-family: var(--font-testo); font-size: 15px; color: var(--ink-soft); }
 .segno.attivo { border-color: var(--lingua); }
 
 /* ── RESA: glossario, costruzione, brutta e bella ───────────────────────── */
 .resa { display: grid; gap: 22px; }
+.forma-resa { margin: 0; font-family: var(--font-testo); font-size: 23px; line-height: 1.5; }
 .glossario { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 6px 18px; margin: 0; }
 .glossario div { display: grid; gap: 0; padding: 4px 0; border-bottom: 1px dotted var(--rule); }
 .glossario dt { font-family: var(--font-testo); font-size: 16px; }
@@ -635,6 +647,36 @@ details.dettagli[open] > summary::before { transform: rotate(90deg); }
   font-size: 11.5px; letter-spacing: 0.04em; color: var(--sepia); text-align: center;
 }
 .piede a { color: var(--sepia); }
+
+/* ── CONSEGNA: il modulo a sinistra, il foglio a destra ─────────────────── */
+.cons-griglia { display: grid; gap: 28px; align-items: start; }
+.cons-modulo { display: grid; gap: 26px; min-width: 0; }
+.cons-modulo section { display: grid; gap: 10px; }
+.facoltativo { font-style: normal; font-weight: 400; color: var(--sepia); text-transform: none; letter-spacing: 0; }
+.cons-includi { display: grid; gap: 4px; }
+.cons-voce { align-items: flex-start; }
+.cons-voce input { margin-top: 2px; flex: none; }
+.cons-voce span { display: grid; gap: 1px; }
+.cons-voce b { color: var(--ink); font-weight: 600; }
+.cons-voce small { font-size: 12.5px; color: var(--sepia); }
+.cons-controllo { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; font-size: 14.5px; line-height: 1.45; }
+.cons-controllo li { display: grid; grid-template-columns: 20px 1fr; gap: 8px; align-items: start; }
+.cons-controllo .segno-controllo { display: inline-flex; width: 18px; height: 18px; margin-top: 1px; }
+.cons-controllo .segno-controllo .ico { width: 18px; height: 18px; }
+.cons-controllo li.manca .segno-controllo::before { content: ""; width: 8px; height: 8px; margin: 5px; background: var(--lingua); }
+.cons-azioni { justify-items: start; }
+.cons-azioni .nota-fonte { margin: -4px 0 6px; }
+.cons-foglio { min-width: 0; overflow-x: auto; background: #ececec; padding: 24px; }
+.cons-foglio .documento { border: 1px solid #d6d6d6; }
+@media (min-width: 1280px) {
+  .pagina-consegna { max-width: min(1480px, calc(100vw - 64px)); }
+  .cons-griglia { grid-template-columns: 360px minmax(0, 1fr); gap: 40px; }
+  .cons-modulo { position: sticky; top: 76px; max-height: calc(100vh - 96px); overflow-y: auto; padding-right: 6px; }
+}
+@media (max-width: 767px) {
+  .cons-foglio { padding: 0; background: none; margin: 0 -16px; }
+  .cons-foglio .documento { border-left: 0; border-right: 0; }
+}
 
 /* ══════════════════════════════════════════════════════════════════════════
    LE SOGLIE · in fondo al foglio, perche' a parita' di peso vince l'ultima
@@ -749,8 +791,15 @@ details.dettagli[open] > summary::before { transform: rotate(90deg); }
   .tappa { min-height: 44px; }
 }
 
-/* ── stampa: la versione come edizione, senza comandi ───────────────────── */
+/* ── stampa: la versione come edizione, senza comandi; la consegna come
+   foglio solo ───────────────────────────────────────────────────────────── */
 @media print {
+  body.vista-consegna .pagina-consegna > .titolo-pagina,
+  body.vista-consegna .pagina-consegna > .sottotitolo,
+  body.vista-consegna .cons-modulo { display: none !important; }
+  body.vista-consegna .cons-griglia { display: block; margin: 0; }
+  body.vista-consegna .cons-foglio { padding: 0; background: none; overflow: visible; }
+  body.vista-consegna .cons-foglio .documento { border: 0; }
   .testata, .nastro, .barra-azioni, .non-stampa, .piede, .cartiglio { display: none !important; }
   body { background: #fff; }
   .pagina { max-width: none; padding: 0; }

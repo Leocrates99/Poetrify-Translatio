@@ -1,25 +1,27 @@
 /* ============================================================================
    ANALISI · la frase protagonista, quattro lenti sullo stesso testo
    ----------------------------------------------------------------------------
-     Parole        lemma, parte del discorso, analisi, significato
+     Parole        parte del discorso, flessione, lemma, significato, morfemi
      Sintagmi      i gruppi di parole e la loro funzione logica
      Proposizioni  il periodo: principale, coordinate, subordinate
      Resa          glossario, costruzione, brutta e bella copia
-   La frase non cambia mai di posto: cambia solo cio' che le si legge sopra e
-   sotto. La scheda a fianco (o dal basso, sugli schermi stretti) e' il
-   dizionario vivo della parola toccata, o l'editor del gruppo selezionato.
+   L'analisi la fa lo studente: il banco non propone nulla, disegna cio' che
+   gli si scrive. La frase non cambia mai di posto: cambia solo cio' che le si
+   legge sopra e sotto. La scheda a fianco (o dal basso, sugli schermi
+   stretti) e' il modulo della parola toccata, o del gruppo selezionato.
    ============================================================================ */
 import { html, raw } from '../ui/dom.js';
 import { ICONE } from '../ui/icone.js';
 import { tokenizza } from '../motore/testo.js';
-import { etichettaBreve, etichettaLunga, gruppiPer, gruppoPertinente, ETICHETTE, stessiTratti } from '../motore/tratti.js';
-import { NOMI_POS, SIGLE_POS, PARTI_DEL_DISCORSO, segmentiPer } from '../motore/analizzatore.js';
-import { MORFEMI } from '../motore/paradigmi.js';
-import { traslittera } from '../motore/traslitterazione.js';
-import { statoFrase, faseFrase } from '../stato.js';
 import {
-  casoDellaFunzione, gruppiDiFunzioni, abbreviaFunzione, suggerisciFunzioni,
-  tipiDiProposizione, suggerisciProposizione, etichettaProposizione, ordoDellaFrase,
+  NOMI_POS, SIGLE_POS, partiPer, ETICHETTE, NOMI_GRUPPI, nomeValore, gruppiDellaParola,
+  etichettaBreve, etichettaLunga, MORFEMI, MORFEMI_BREVI, grafemi, inizi, morfemiValidi, formaTagliabile,
+} from '../motore/grammatica.js';
+import { traslittera } from '../motore/traslitterazione.js';
+import { statoFrase, faseFrase, analizzata } from '../stato.js';
+import {
+  casoDellaFunzione, gruppiDiFunzioni, abbreviaFunzione, RUOLI,
+  tipiDiProposizione, etichettaProposizione, ordoDellaFrase, livelli,
 } from '../motore/sintassi.js';
 
 export const LENTI = [
@@ -30,25 +32,25 @@ export const LENTI = [
 ];
 
 const langAttr = v => (v.lingua === 'greco' ? 'grc' : 'la');
-
 const due = n => String(n).padStart(2, '0');
+const paroleDi = f => tokenizza(f.testo).filter(t => t.k === 'w');
 
 /* ── navigazione fra le frasi ─────────────────────────────────────────────── */
+const FASI = {
+  'da-fare': 'da analizzare', 'in-corso': 'analisi in corso', analizzata: 'analizzata',
+  'in-traduzione': 'brutta scritta', tradotta: 'tradotta',
+};
+
 function pallini(S) {
   const v = S.v;
   return html`<div class="pallini" role="list" aria-label="Frasi della versione">
     ${v.frasi.map((f, n) => {
-      const st = statoFrase(f, tokenizza(f.testo).filter(t => t.k === 'w').length);
-      const fase = faseFrase(st);
+      const fase = faseFrase(statoFrase(f, paroleDi(f).length));
       return html`<a class="pallino" role="listitem" href="#/v/${v.id}/analisi/${n + 1}/${S.lente}" data-fase="${fase}"
         aria-current="${n === S.frase ? 'true' : 'false'}" title="Frase ${n + 1} · ${FASI[fase]}">${n + 1}</a>`;
     })}
   </div>`;
 }
-const FASI = {
-  'da-fare': 'da analizzare', 'in-corso': 'analisi in corso', analizzata: 'analizzata',
-  'in-traduzione': 'brutta scritta', tradotta: 'tradotta',
-};
 
 function colonnaFrasi(S) {
   const v = S.v;
@@ -77,7 +79,7 @@ function guida(S) {
 
 function lenti(S, st) {
   const conti = {
-    parole: `${st.confermate}/${st.parole}`,
+    parole: `${st.analizzate}/${st.parole}`,
     sintagmi: st.sintagmi || '',
     proposizioni: st.proposizioni || '',
     resa: st.bella ? '✓' : (st.brutta ? '½' : ''),
@@ -89,22 +91,6 @@ function lenti(S, st) {
 }
 
 /* ── la frase: celle di parole, con i fili sopra e sotto ─────────────────── */
-
-/* Livelli: ogni segno (sintagma o proposizione) prende la prima riga libera,
-   cosi' due gruppi annidati stanno su due fili e non si coprono. */
-function livelli(segni) {
-  const ordinati = [...segni].sort((a, b) => a.da - b.da || (b.a - b.da) - (a.a - a.da));
-  const righe = [];
-  const out = new Map();
-  for (const s of ordinati) {
-    let r = 0;
-    while (righe[r] && righe[r].some(x => !(s.a < x.da || s.da > x.a))) r++;
-    (righe[r] || (righe[r] = [])).push(s);
-    out.set(s.id, r);
-  }
-  return { righe: righe.length, livello: out };
-}
-
 function fili(segni, wi, { sopra, classe, etichetta, attivo, larghezza }) {
   if (!segni.length) return '';
   const { righe, livello } = livelli(segni);
@@ -117,34 +103,48 @@ function fili(segni, wi, { sopra, classe, etichetta, attivo, larghezza }) {
     }
     const cls = [classe(s), wi === s.da ? 'inizio' : '', wi === s.a ? 'fine' : '', attivo === s.id ? 'attivo' : ''].join(' ');
     const lbl = wi === s.da
-      ? html`<span class="filo-etichetta" style="max-width:${larghezza(s)}ch" title="${etichetta(s, true)}">${etichetta(s)}</span>`
+      ? html`<span class="filo-etichetta" title="${etichetta(s, true)}"><span style="max-width:${larghezza(s)}ch">${etichetta(s)}</span></span>`
       : html`<span class="filo-etichetta assente">·</span>`;
     blocchi.push(sopra ? html`${lbl}<span class="filo ${cls}"></span>` : html`<span class="filo ${cls}"></span>${lbl}`);
   }
   return html`<span class="fili ${sopra ? 'fili-sopra' : ''}" aria-hidden="true">${blocchi}</span>`;
 }
 
+/** La forma, coi morfemi colorati se lo studente l'ha tagliata. */
+export function formaConMorfemi(forma, p) {
+  const base = formaTagliabile(forma);
+  if (!p || !morfemiValidi(p.morfemi, base)) return forma;
+  return html`${p.morfemi.map(m => html`<span class="mseg ${m.r ? `mseg-${m.r}` : 'mseg-nessuno'}">${m.t}</span>`)}${forma.slice(base.length)}`;
+}
+
 function rigaSotto(p) {
-  if (!p) return html`<span class="sotto"></span>`;
+  /* una parola vuota non scrive nulla sotto di se': lo dice gia' il filetto
+     punteggiato, e una scritta allargherebbe le parole brevi */
+  if (!analizzata(p) && !(p && (p.lemma || p.senso))) return html`<span class="sotto"></span>`;
   const breve = etichettaBreve(p.tratti);
-  const altre = (p.letture || []).length - 1;
   return html`<span class="sotto">
-    <span class="pos">${p.pos ? SIGLE_POS[p.pos] : 'da analizzare'}</span>
-    ${p.lemma && p.lemma !== p.forma ? html`<span class="lemma">${p.lemma}</span>` : ''}
-    ${breve ? html`<span class="analisi">${breve}${altre > 0 && p.stato !== 'confermata' ? html` <span class="piu" title="${altre} altre letture possibili">+${altre}</span>` : ''}</span>` : ''}
+    <span class="pos">${p.pos ? SIGLE_POS[p.pos] : 'parte del discorso?'}</span>
+    ${p.lemma ? html`<span class="lemma">${p.lemma}</span>` : ''}
+    ${breve ? html`<span class="analisi">${breve}</span>` : ''}
+    ${p.senso ? html`<span class="senso">${p.senso}</span>` : ''}
   </span>`;
 }
 
 /* Nelle lenti della sintassi basta il dato che decide: il caso (col suo
-   colore di categoria) o il modo del verbo. */
+   colore di categoria) o il modo del verbo, come l'ha scelto lo studente. */
 function rigaSpia(p) {
-  if (!p || !p.tratti) return html`<span class="spia-riga"></span>`;
-  const t = p.tratti;
+  const t = (p && p.tratti) || {};
   if (t.caso) {
     return html`<span class="spia-riga"><span class="pastiglia" style="background:var(--cat-${ETICHETTE.caso[t.caso]})"></span>${ETICHETTE.caso[t.caso].slice(0, 3)}.${t.numero ? ' ' + (t.numero === 'sg' ? 'sing.' : t.numero === 'pl' ? 'plur.' : 'duale') : ''}</span>`;
   }
   if (t.modo) return html`<span class="spia-riga">${ETICHETTE.modo[t.modo]}</span>`;
-  return html`<span class="spia-riga">${p.pos ? SIGLE_POS[p.pos] : ''}</span>`;
+  return html`<span class="spia-riga">${p && p.pos ? SIGLE_POS[p.pos] : ''}</span>`;
+}
+
+function descrizione(t, p) {
+  if (!p || !(p.pos || p.lemma || p.senso)) return 'da analizzare';
+  return [p.pos ? NOMI_POS[p.pos] : 'parte del discorso da scegliere', etichettaLunga(p.tratti),
+    p.lemma ? `lemma ${p.lemma}` : '', p.senso ? `significato «${p.senso}»` : ''].filter(Boolean).join(', ');
 }
 
 function frase(S) {
@@ -153,7 +153,6 @@ function frase(S) {
   const toks = tokenizza(f.testo);
   const parole = toks.filter(t => t.k === 'w');
   const lente = S.lente;
-  const sel = S.sel;
   const span = S.span;
   const sintagmi = lente === 'sintagmi' ? f.sintagmi : [];
   const props = lente === 'proposizioni' ? f.proposizioni : [];
@@ -163,7 +162,7 @@ function frase(S) {
   const opzSotto = { sopra: false, classe: s => `caso-${casoDellaFunzione(s.funzione, v.lingua)}`, etichetta: (s, lungo) => (lungo ? s.funzione : abbreviaFunzione(s.funzione)), attivo: S.segnoAttivo, larghezza: lungh };
   const celle = [];
   let precedente = -1;
-  toks.forEach((t, k) => {
+  toks.forEach(t => {
     if (t.k === 's') return;
     if (t.k === 'p') {
       /* La punteggiatura ha la stessa ossatura di una parola (fili sopra, forma,
@@ -180,15 +179,14 @@ function frase(S) {
     precedente = t.i;
     const p = f.parole[t.i];
     const pos = p && p.pos ? `pos-${p.pos}` : '';
-    const stato = !p ? 'proposta' : (p.stato === 'confermata' ? 'confermata' : (p.pos ? 'proposta' : 'ignota'));
-    const premuta = lente === 'parole' ? sel === t.i : false;
+    const stato = analizzata(p) ? 'analizzata' : 'vuota';
+    const premuta = lente === 'parole' ? S.sel === t.i : false;
     const inSel = span && t.i >= span.da && t.i <= span.a && lente !== 'parole';
-    const descr = p ? [p.pos ? NOMI_POS[p.pos] : 'da analizzare', p.lemma && p.lemma !== p.forma ? `lemma ${p.lemma}` : '', etichettaLunga(p.tratti), stato === 'confermata' ? 'confermata' : 'proposta'].filter(Boolean).join(', ') : '';
     celle.push(html`<span class="cella">
       ${fili(props, t.i, opzSopra)}
       <button type="button" class="parola ${pos} ${stato} ${inSel ? 'in-selezione' : ''}" data-az="parola" data-i="${t.i}"
-        aria-pressed="${premuta ? 'true' : 'false'}" aria-label="${t.t}${descr ? ': ' + descr : ''}">
-        <span class="forma" lang="${langAttr(v)}">${t.t}</span>
+        aria-pressed="${premuta ? 'true' : 'false'}" aria-label="${t.t}: ${descrizione(t, p)}">
+        <span class="forma" lang="${langAttr(v)}">${lente === 'parole' ? formaConMorfemi(t.t, p) : t.t}</span>
         ${lente === 'parole' ? rigaSotto(p) : rigaSpia(p)}
       </button>
       ${fili(sintagmi, t.i, opzSotto)}
@@ -198,34 +196,26 @@ function frase(S) {
 }
 
 const CONSEGNE = {
-  parole: raw('Tocca una parola: nella scheda trovi lemma, analisi e significato. Il filetto sotto la parola ha il colore della <strong>parte del discorso</strong>: tratteggiato finché è una proposta, pieno quando l’hai confermata.'),
+  parole: raw('Tocca una parola e analizzala nella scheda: parte del discorso, flessione, lemma, significato. Il filetto sotto la parola prende il colore della <strong>parte del discorso</strong> che scegli; finché manca resta punteggiato.'),
   sintagmi: raw('Tocca la <strong>prima</strong> e l’<strong>ultima</strong> parola di un gruppo, poi scegli la sua funzione. Comincia dal predicato, poi soggetto e oggetto, poi i complementi.'),
-  proposizioni: raw('Tocca la prima e l’ultima parola di una <strong>proposizione</strong>, poi dille se è principale, coordinata o subordinata. Ogni verbo di modo finito ne regge una.'),
+  proposizioni: raw('Tocca la prima e l’ultima parola di una <strong>proposizione</strong>, poi dille se è principale, coordinata o subordinata, e di che tipo.'),
 };
-
-function statoLavoro(S) {
-  const L = S.lavoro;
-  if (!L || !L.attivo) return '';
-  const pct = L.totale ? Math.round((L.fatte / L.totale) * 100) : 0;
-  return html`<p class="stato-lavoro" role="status"><span class="barra"><span style="width:${pct}%"></span></span> ${L.messaggio}</p>`;
-}
 
 /* ── la lente Resa ───────────────────────────────────────────────────────── */
 function resa(S) {
   const v = S.v;
   const f = v.frasi[S.frase];
-  const parole = tokenizza(f.testo).filter(t => t.k === 'w');
+  const parole = paroleDi(f);
   const ordo = ordoDellaFrase(f, parole, v.lingua);
   return html`<div class="resa">
-    <p class="forma-resa" lang="${langAttr(v)}" style="margin:0;font-family:var(--font-testo);font-size:23px;line-height:1.5">${f.testo}</p>
+    <p class="forma-resa" lang="${langAttr(v)}">${f.testo}</p>
     <section>
       <p class="etichetta" style="margin:0 0 8px">Le parole</p>
       <dl class="glossario">
         ${parole.map(w => {
           const p = f.parole[w.i] || {};
-          const senso = p.senso || (p.glossa && p.glossa.fonte !== 'automatica' ? p.glossa.it : '');
           return html`<div><dt lang="${langAttr(v)}">${w.t}</dt>
-            <dd class="${senso ? '' : 'manca'}">${p.lemma && p.lemma !== w.t ? html`<i>${p.lemma}</i> · ` : ''}${senso || 'significato da scegliere'}</dd></div>`;
+            <dd class="${p.senso ? '' : 'manca'}">${p.lemma ? html`<i lang="${langAttr(v)}">${p.lemma}</i> · ` : ''}${p.senso || 'significato da scrivere'}</dd></div>`;
         })}
       </dl>
     </section>
@@ -233,7 +223,7 @@ function resa(S) {
       <p class="etichetta" style="margin:0 0 8px">La costruzione, nell’ordine italiano</p>
       <div class="ordo">${ordo.map(b => html`<span class="ordo-blocco caso-${b.caso}"><b>${abbreviaFunzione(b.funzione)}</b><span lang="${langAttr(v)}">${b.testo}</span></span>`)}</div>
       <p class="nota-fonte">Soggetto, predicato, oggetto e poi gli altri complementi, come li hai segnati nella lente Sintagmi.</p>
-    </section>` : html`<p class="nota-fonte" style="margin:0">Segna i sintagmi e qui troverai la frase ricostruita nell’ordine italiano: soggetto, predicato, oggetto, complementi.</p>`}
+    </section>` : html`<p class="nota-fonte" style="margin:0">Segna i sintagmi e qui troverai la frase rimessa nell’ordine italiano: soggetto, predicato, oggetto, complementi.</p>`}
     <label class="campo"><span>Brutta copia · alla lettera</span>
       <textarea class="area area-resa" data-campo="brutta" data-f="${S.frase}" placeholder="Traduci seguendo la costruzione, parola per parola.">${f.brutta}</textarea></label>
     <label class="campo"><span>Bella copia · in buon italiano</span>
@@ -242,109 +232,101 @@ function resa(S) {
   </div>`;
 }
 
-/* ── la scheda della parola ──────────────────────────────────────────────── */
-function morfemi(p) {
-  const seg = segmentiPer(p);
-  if (!seg || seg.length < 2) return '';
-  const usati = [...new Set(seg.map(s => s[1]))];
-  return html`<div class="morfemi" aria-label="Scomposizione in morfemi">
-      ${seg.map(([t, r], i) => html`${i ? html`<span class="sep">-</span>` : ''}<span class="mseg mseg-${r}" title="${MORFEMI[r] || r}">${t}</span>`)}
-    </div>
-    <p class="legenda-morfemi">${usati.map(r => html`<span><b class="mseg-${r}">${seg.filter(s => s[1] === r).map(s => s[0]).join(' ')}</b> ${MORFEMI[r] || r}</span>`)}</p>`;
+/* ── la scheda della parola: il modulo che lo studente compila ──────────── */
+
+/** Il primo gruppo ancora vuoto: e' quello che la tastiera compila (1–9). */
+export function gruppoDaCompilare(p, lang) {
+  if (!p || !p.pos) return 'pos';
+  const g = gruppiDellaParola(p, lang).find(([k]) => !(p.tratti && p.tratti[k]));
+  return g ? g[0] : null;
+}
+/** I valori del gruppo, nell'ordine dei bottoni: il tasto n preme l'n-esimo. */
+export function valoriDelGruppo(gruppo, p, lang) {
+  if (gruppo === 'pos') return partiPer(lang);
+  const g = gruppiDellaParola(p, lang).find(([k]) => k === gruppo);
+  return g ? g[1] : [];
 }
 
-const FONTI = {
-  'classe-chiusa': 'riconosciuta dalle tabelle curate delle parole più frequenti',
-  lessico: 'trovata nel lessico del progetto',
-  paradigma: 'ritrovata nella flessione del lemma',
-  dedotta: 'dedotta da un indizio: va verificata',
-  nessuna: 'il lessico non conosce questa forma',
-};
+const tasto = (n, attivo) => (attivo && n < 9 ? html`<kbd class="tasto" aria-hidden="true">${n + 1}</kbd>` : '');
+
+function tagliere(w, p, v) {
+  const g = grafemi(formaTagliabile(w.t));
+  if (g.length < 2) return html`<p class="nota-fonte" style="margin:0">Una lettera sola: non si scompone.</p>`;
+  const pezzi = p && morfemiValidi(p.morfemi, g.join('')) ? p.morfemi : null;
+  const tagli = new Set(pezzi ? inizi(pezzi).filter(k => k > 0) : []);
+  return html`<p class="nota-fonte" style="margin:0 0 8px">Tocca la lettera da cui comincia un nuovo pezzo; toccala di nuovo per ricucire.</p>
+    <div class="tagliere" role="group" aria-label="Lettere di ${w.t}">
+      ${g.map((l, k) => (k === 0
+        ? html`<span class="lettera prima" aria-hidden="true">${l}</span>`
+        : html`<button type="button" class="lettera ${tagli.has(k) ? 'taglio-qui' : ''}" data-az="taglio" data-i="${w.i}" data-k="${k}"
+            aria-pressed="${tagli.has(k) ? 'true' : 'false'}" aria-label="${tagli.has(k) ? 'Ricuci' : 'Taglia'} prima di «${l}» (lettera ${k + 1})">${l}</button>`))}
+    </div>
+    ${pezzi ? html`<div class="pezzi">${pezzi.map((m, n) => html`<div class="pezzo">
+        <span class="mseg ${m.r ? `mseg-${m.r}` : 'mseg-nessuno'}" lang="${langAttr(v)}">${m.t}</span>
+        <div class="scelte scelte-strette" role="group" aria-label="Che cos’è «${m.t}»">${Object.keys(MORFEMI).map(r => html`<button type="button" class="scelta scelta-morfema" data-az="ruolo-morfema" data-i="${w.i}" data-n="${n}" data-r="${r}"
+          style="--scelta-c: var(--morfema-${r})" aria-pressed="${m.r === r ? 'true' : 'false'}" title="${MORFEMI[r]}">${MORFEMI_BREVI[r]}</button>`)}</div>
+      </div>`)}</div>` : ''}`;
+}
 
 function schedaParola(S) {
   const v = S.v;
   const f = v.frasi[S.frase];
-  const parole = tokenizza(f.testo).filter(t => t.k === 'w');
+  const parole = paroleDi(f);
   const w = parole[S.sel];
   if (!w) return '';
-  const p = f.parole[w.i];
+  const p = f.parole[w.i] || {};
   const greco = v.lingua === 'greco';
-  const occhiello = html`<span class="occhiello">Parola ${S.sel + 1} di ${parole.length}${p && p.stato === 'confermata' ? ' · confermata' : ' · proposta'}</span>`;
-  const testa = html`<div class="scheda-testa">${occhiello}
-    <button class="btn btn-quieto btn-icona btn-piccolo chiudi-scheda" type="button" data-az="chiudi" aria-label="Chiudi la scheda">${raw(ICONE.chiudi)}</button></div>`;
-  if (!p) {
-    return html`${testa}<div class="scheda-corpo"><p class="scheda-invito">Sto analizzando la frase…</p></div>`;
-  }
-  const letture = p.letture || [];
-  const gruppi = gruppiPer(p.pos, v.lingua).filter(([g]) => gruppoPertinente(g, p.pos, p.tratti));
-  const glossa = p.glossa;
-  const linkDiz = `../dictionary.html?lang=${greco ? 'grc' : 'la'}&lemma=${encodeURIComponent(p.lemma || w.t)}`;
+  const fatta = analizzata(p);
+  const gruppi = gruppiDellaParola(p, v.lingua);
+  const daCompilare = gruppoDaCompilare(p, v.lingua);
+  const ultima = S.sel >= parole.length - 1;
+  const lunga = etichettaLunga(p.tratti);
+  const morfemiAperti = !!(p.morfemi && p.morfemi.length) || S.apriMorfemi;
 
-  return html`${testa}
+  return html`<div class="scheda-testa"><span class="occhiello">Parola ${S.sel + 1} di ${parole.length} · ${fatta ? 'analizzata' : 'da analizzare'}</span>
+    <button class="btn btn-quieto btn-icona btn-piccolo chiudi-scheda" type="button" data-az="chiudi" aria-label="Chiudi la scheda">${raw(ICONE.chiudi)}</button></div>
   <div class="scheda-corpo" id="scheda-corpo">
-    <div class="voce ${p.pos ? `pos-${p.pos}` : ''}" style="--voce-c: var(--pos-c, var(--rule))">
-      <div class="lemma-riga">
-        <span class="targhetta" style="border-color:var(--pos-c, var(--rule));color:var(--pos-ink, var(--sepia))">${p.pos ? NOMI_POS[p.pos] : 'parte del discorso da scegliere'}</span>
-        ${p.classe ? html`<span class="targhetta">${p.classe}</span>` : ''}
-        ${p.enclitica ? html`<span class="targhetta">con l’enclitica ${p.enclitica}</span>` : ''}
-        ${p.via === 'elisione' ? html`<span class="targhetta">forma elisa</span>` : ''}
-      </div>
-      <p class="forma-grande" lang="${langAttr(v)}">${w.t}</p>
+    <div class="voce ${p.pos ? `pos-${p.pos}` : ''}">
+      <p class="forma-grande" lang="${langAttr(v)}">${formaConMorfemi(w.t, p)}</p>
       ${greco ? html`<p class="traslitterazione">${traslittera(w.t.replace(/[’'ʼ᾽]$/u, ''))}</p>` : ''}
-      ${morfemi(p)}
-      <div class="lemma-riga">
-        ${p.citazione || p.lemma ? html`<span class="citazione" lang="${langAttr(v)}">${p.citazione || p.lemma}</span>` : ''}
-      </div>
-      ${glossa ? html`<p class="glossa ${glossa.fonte === 'automatica' ? 'automatica' : ''}"><span class="testo-glossa">${glossa.it}</span>
-        ${glossa.fonte === 'automatica' ? html`<span class="targhetta dedotta" title="Ricavata in automatico dalla definizione inglese">da verificare</span>` : ''}</p>` : ''}
-      ${p.nota && (!glossa || glossa.it !== p.nota) ? html`<p class="nota-fonte">${p.nota}</p>` : ''}
-      <p class="nota-fonte">${FONTI[p.fonte] || ''}</p>
+      <p class="riassunto-voce">${p.pos
+        ? html`<b class="nome-pos">${NOMI_POS[p.pos]}</b>${lunga ? html` · ${lunga}` : ''}`
+        : html`<span class="manca">Comincia dalla parte del discorso.</span>`}</p>
     </div>
 
-    <label class="blocco campo"><span>Il significato in questa frase</span>
-      <input class="input" type="text" data-campo="senso" data-i="${w.i}" value="${p.senso || ''}" placeholder="la parola italiana che scegli qui" autocomplete="off"></label>
-
-    ${!p.pos || p.fonte === 'nessuna' ? html`<label class="blocco campo"><span>Lemma</span>
-      <input class="input" type="text" data-campo="lemma" data-i="${w.i}" value="${p.lemma === w.t ? '' : p.lemma}" placeholder="la forma del dizionario" lang="${langAttr(v)}" autocomplete="off"></label>` : ''}
-
-    <div class="blocco">
-      <p class="etichetta">${letture.length > 1 ? `Analisi · ${letture.length} letture possibili` : 'Analisi'}</p>
-      ${letture.length ? html`<div class="letture" role="radiogroup" aria-label="Letture possibili">
-        ${letture.map((t, k) => html`<button type="button" class="lettura" role="radio" data-az="lettura" data-i="${w.i}" data-k="${k}"
-          aria-checked="${stessiTratti(t, p.tratti) ? 'true' : 'false'}"><span class="spia"></span>
-          <span>${etichettaLunga(t) || 'senza analisi'}</span></button>`)}
-      </div>` : html`<p class="nota-fonte" style="margin:0">${p.pos && gruppi.length ? 'Nessuna lettura proposta: scegli tu caso, modo, tempo qui sotto.' : (p.pos ? 'Parola invariabile: non ha flessione.' : 'Scegli la parte del discorso.')}</p>`}
+    <div class="gruppo-scelte ${daCompilare === 'pos' ? 'da-compilare' : ''}">
+      <span class="etichetta">Parte del discorso</span>
+      <div class="scelte">${partiPer(v.lingua).map((x, n) => html`<button type="button" class="scelta pos pos-${x}" data-az="pos" data-i="${w.i}" data-pos="${x}" aria-pressed="${p.pos === x ? 'true' : 'false'}">${tasto(n, daCompilare === 'pos')}<span class="pastiglia"></span>${NOMI_POS[x]}</button>`)}</div>
     </div>
+    ${gruppi.map(([g, valori]) => html`<div class="gruppo-scelte ${daCompilare === g ? 'da-compilare' : ''}">
+      <span class="etichetta">${NOMI_GRUPPI[g]}</span>
+      <div class="scelte">${valori.map((x, n) => html`<button type="button" class="scelta" data-az="tratto" data-i="${w.i}" data-g="${g}" data-x="${x}"
+        style="${g === 'caso' ? `--scelta-c: var(--cat-${ETICHETTE.caso[x]})` : ''}"
+        aria-pressed="${p.tratti && p.tratti[g] === x ? 'true' : 'false'}" ${g !== 'caso' && nomeValore(g, x) !== ETICHETTE[g][x] ? raw(`title="${ETICHETTE[g][x]}"`) : ''}>${tasto(n, daCompilare === g)}${g === 'caso' ? html`<span class="pastiglia"></span>` : ''}${nomeValore(g, x)}</button>`)}</div>
+    </div>`)}
+    ${p.pos && !gruppi.length ? html`<p class="nota-fonte">Parola invariabile: non ha flessione da indicare.</p>` : ''}
 
-    <details class="blocco dettagli" ${!p.pos || !letture.length ? 'open' : ''}>
-      <summary>Correggi a mano</summary>
-      <div class="gruppo-scelte">
-        <span class="etichetta">Parte del discorso</span>
-        <div class="scelte">${PARTI_DEL_DISCORSO.filter(x => greco || x !== 'articolo').map(x => html`<button type="button" class="scelta pos pos-${x}" data-az="pos" data-i="${w.i}" data-pos="${x}" aria-pressed="${p.pos === x ? 'true' : 'false'}"><span class="pastiglia"></span>${NOMI_POS[x]}</button>`)}</div>
-      </div>
-      ${gruppi.map(([g, valori]) => html`<div class="gruppo-scelte">
-        <span class="etichetta">${g}</span>
-        <div class="scelte">${valori.map(x => html`<button type="button" class="scelta" data-az="tratto" data-i="${w.i}" data-g="${g}" data-x="${x}"
-          style="${g === 'caso' ? `--scelta-c: var(--cat-${ETICHETTE.caso[x]})` : ''}"
-          aria-pressed="${p.tratti && p.tratti[g] === x ? 'true' : 'false'}">${g === 'caso' ? html`<span class="pastiglia"></span>` : ''}${ETICHETTE[g][x]}</button>`)}</div>
-      </div>`)}
+    <label class="blocco campo"><span>Lemma · come sul dizionario</span>
+      <input class="input" type="text" data-campo="lemma" data-i="${w.i}" value="${p.lemma || ''}" lang="${langAttr(v)}" autocomplete="off" spellcheck="false"
+        placeholder="${greco ? 'λύω, λύσω, ἔλυσα…' : 'laudo, -as, -avi, -atum, -are'}"></label>
+    <label class="blocco campo"><span>Significato · in questa frase</span>
+      <input class="input" type="text" data-campo="senso" data-i="${w.i}" value="${p.senso || ''}" autocomplete="off" placeholder="la parola italiana che scegli qui"></label>
+
+    <details class="blocco dettagli" data-apri="morfemi" ${morfemiAperti ? 'open' : ''}>
+      <summary>Scomponi in morfemi</summary>
+      <div style="margin-top:10px">${tagliere(w, p, v)}</div>
     </details>
-
-    ${(p.altriLemmi || []).length ? html`<div class="blocco">
-      <p class="etichetta">Potrebbe venire anche da</p>
-      <div class="scelte">${p.altriLemmi.map((a, k) => html`<button type="button" class="scelta" data-az="altro-lemma" data-i="${w.i}" data-k="${k}" lang="${langAttr(v)}">${a.lemma}</button>`)}</div>
-    </div>` : ''}
-
-    <details class="blocco dettagli" data-az-apri="lessico" data-lemma="${p.lemma}">
-      <summary>Voce del lessico</summary>
-      <div class="lessico-voce" id="lessico-voce" lang="${greco ? 'en' : 'en'}">${S.lessico && S.lessico.lemma === p.lemma ? S.lessico.testo : 'Apro la voce…'}</div>
-      <p class="nota-fonte">${greco ? 'Liddell-Scott-Jones, in inglese.' : 'Lewis, in inglese; le voci curate sono in italiano.'}</p>
+    <details class="blocco dettagli" ${p.nota ? 'open' : ''}>
+      <summary>Osservazioni</summary>
+      <label class="campo" style="margin-top:10px"><span class="sr">Osservazioni su ${w.t}</span>
+        <textarea class="area area-nota" data-campo="nota" data-i="${w.i}" rows="3" placeholder="Che cosa regge, perché questo caso, un dubbio da chiedere…">${p.nota || ''}</textarea></label>
     </details>
-
   </div>
   <div class="azioni-scheda">
-    <a class="btn btn-piccolo" href="${linkDiz}" target="_blank" rel="noopener">${raw(ICONE.libro)} Dizionario ${raw(ICONE.esterno)}</a>
-    <button class="btn btn-primario" type="button" data-az="conferma" data-i="${w.i}">${raw(ICONE.spunta)} ${p.stato === 'confermata' ? 'Avanti' : 'Confermo'}</button>
+    ${p.pos || p.lemma || p.senso || p.nota || (p.morfemi && p.morfemi.length)
+      ? html`<button class="btn btn-quieto btn-piccolo btn-pericolo" type="button" data-az="svuota-parola" data-i="${w.i}">${raw(ICONE.cestino)} Svuota</button>`
+      : html`<span></span>`}
+    <button class="btn btn-primario" type="button" data-az="prossima" data-i="${w.i}">${ultima ? html`${raw(ICONE.spunta)} Fatto` : html`Parola successiva ${raw(ICONE.avanti)}`}</button>
   </div>`;
 }
 
@@ -366,14 +348,14 @@ function tendina(S, voci, selezionata) {
 
 function elencoSegni(S, segni, tipo) {
   const v = S.v;
-  const parole = tokenizza(v.frasi[S.frase].testo).filter(t => t.k === 'w');
+  const parole = paroleDi(v.frasi[S.frase]);
   if (!segni.length) return '';
   const ordinati = [...segni].sort((a, b) => a.da - b.da);
   return html`<div class="blocco">
     <p class="etichetta">${tipo === 'sintagmi' ? 'I sintagmi segnati' : 'Le proposizioni segnate'}</p>
     <div class="elenco-segni">${ordinati.map(s => html`<div class="segno ${S.segnoAttivo === s.id ? 'attivo' : ''} ${tipo === 'sintagmi' ? `caso-${casoDellaFunzione(s.funzione, v.lingua)}` : `prop-${(s.ruolo || '').toLowerCase()}`}">
       <span class="colore"></span>
-      <button type="button" class="testo" data-az="segno" data-id="${s.id}" style="all:unset;cursor:pointer;min-width:0">
+      <button type="button" class="testo" data-az="segno" data-id="${s.id}">
         <b>${tipo === 'sintagmi' ? s.funzione : etichettaProposizione(s, true)}</b>
         <span lang="${langAttr(v)}">${parole.slice(s.da, s.a + 1).map(w => w.t).join(' ')}</span>
       </button>
@@ -385,7 +367,7 @@ function elencoSegni(S, segni, tipo) {
 function schedaGruppo(S) {
   const v = S.v;
   const f = v.frasi[S.frase];
-  const parole = tokenizza(f.testo).filter(t => t.k === 'w');
+  const parole = paroleDi(f);
   const sintagmi = S.lente === 'sintagmi';
   const segni = sintagmi ? f.sintagmi : f.proposizioni;
   const attivo = segni.find(s => s.id === S.segnoAttivo) || null;
@@ -406,48 +388,41 @@ function schedaGruppo(S) {
   const inCorso = S.ancora != null;
 
   if (sintagmi) {
-    const sugg = suggerisciFunzioni(f, span, parole, v.lingua);
     return html`${testa}<div class="scheda-corpo">
-      <p class="forma-grande" lang="${langAttr(v)}" style="font-family:var(--font-testo);font-size:28px;line-height:1.25;margin:0 0 4px">${testo}</p>
+      <p class="forma-gruppo" lang="${langAttr(v)}">${testo}</p>
       ${inCorso ? html`<p class="nota-fonte" style="margin:0">Tocca l’ultima parola del gruppo, o scegli già la funzione se è una parola sola.</p>` : ''}
-      ${sugg.length ? html`<div class="blocco"><p class="etichetta">Proposte</p>
-        <div class="scelte">${sugg.map(s => html`<button type="button" class="scelta stella caso-${casoDellaFunzione(s, v.lingua)}" style="--scelta-c:var(--filo-c)" data-az="funzione" data-funzione="${s}" aria-pressed="${attivo && attivo.funzione === s ? 'true' : 'false'}">${s}</button>`)}</div></div>`
-        : html`<p class="nota-fonte">Nessuna proposta: in questo gruppo non c’è ancora una parola con il caso o un verbo di modo finito. Se manca, sceglilo nella lente Parole; intanto puoi cercare la funzione qui sotto.</p>`}
-      <div class="blocco"><p class="etichetta">Tutte le funzioni, per caso</p>${tendina(S, gruppiDiFunzioni(v.lingua), attivo && attivo.funzione)}</div>
+      <div class="blocco"><p class="etichetta">La funzione logica, per caso</p>${tendina(S, gruppiDiFunzioni(v.lingua), attivo && attivo.funzione)}</div>
       ${elencoSegni(S, segni, 'sintagmi')}
     </div>
     ${attivo ? html`<div class="azioni-scheda"><button class="btn btn-pericolo btn-piccolo" type="button" data-az="togli-segno" data-id="${attivo.id}">${raw(ICONE.cestino)} Togli questo sintagma</button><button class="btn btn-piccolo" type="button" data-az="chiudi">Fatto</button></div>` : ''}`;
   }
 
-  const sug = suggerisciProposizione(f, span, parole, v.lingua);
-  const ruolo = (attivo && attivo.ruolo) || S.ruoloBozza || sug.ruolo;
-  const tipi = tipiDiProposizione(ruolo, v.lingua);
+  const ruolo = attivo ? attivo.ruolo : null;
+  const tipi = ruolo ? tipiDiProposizione(ruolo, v.lingua) : null;
   return html`${testa}<div class="scheda-corpo">
-    <p class="forma-grande" lang="${langAttr(v)}" style="font-family:var(--font-testo);font-size:26px;line-height:1.3;margin:0 0 4px">${testo}</p>
-    ${sug.connettivo ? html`<p class="nota-fonte" style="margin:0">Introdotta da <i lang="${langAttr(v)}">${sug.connettivo}</i>${sug.perche ? html` · ${sug.perche}` : ''}</p>` : ''}
+    <p class="forma-gruppo" lang="${langAttr(v)}">${testo}</p>
+    ${inCorso ? html`<p class="nota-fonte" style="margin:0">Tocca l’ultima parola della proposizione, poi scegli il ruolo.</p>` : ''}
     <div class="blocco"><p class="etichetta">Ruolo</p>
-      <div class="scelte">${['Principale', 'Coordinata', 'Subordinata'].map(r => html`<button type="button" class="scelta ${r === sug.ruolo && !attivo ? 'stella' : ''}" data-az="ruolo" data-ruolo="${r}" aria-pressed="${ruolo === r ? 'true' : 'false'}">${r}</button>`)}</div></div>
-    <div class="blocco"><p class="etichetta">Tipo</p>
+      <div class="scelte">${RUOLI.map(r => html`<button type="button" class="scelta" data-az="ruolo" data-ruolo="${r}" aria-pressed="${ruolo === r ? 'true' : 'false'}">${r}</button>`)}</div></div>
+    ${tipi ? html`<div class="blocco"><p class="etichetta">Tipo</p>
       ${(() => {
-        const bottone = t => html`<button type="button" class="scelta ${t === sug.tipo && !attivo ? 'stella' : ''}" data-az="tipo-prop" data-ruolo="${ruolo}" data-tipo="${t}" aria-pressed="${attivo && attivo.tipo === t && attivo.ruolo === ruolo ? 'true' : 'false'}">${t}</button>`;
+        const bottone = t => html`<button type="button" class="scelta" data-az="tipo-prop" data-tipo="${t}" aria-pressed="${attivo.tipo === t ? 'true' : 'false'}">${t}</button>`;
         const { frequenti, altri } = tipi;
-        const scelto = attivo && attivo.ruolo === ruolo && attivo.tipo;
-        const apri = (scelto && altri.includes(scelto)) || (altri.includes(sug.tipo) && !attivo);
         return html`<div class="scelte">${frequenti.map(bottone)}</div>
-          ${altri.length ? html`<details class="dettagli" style="margin-top:10px" ${apri ? 'open' : ''}><summary>Altri tipi</summary>
+          ${altri.length ? html`<details class="dettagli" style="margin-top:10px" ${attivo.tipo && altri.includes(attivo.tipo) ? 'open' : ''}><summary>Altri tipi</summary>
             <div class="scelte" style="margin-top:8px">${altri.map(bottone)}</div></details>` : ''}`;
-      })()}</div>
+      })()}</div>` : html`<p class="nota-fonte">Scelto il ruolo, la proposizione è segnata; poi ne dici il tipo.</p>`}
     ${ruolo === 'Subordinata' ? html`<div class="blocco"><p class="etichetta">Grado</p>
-      <div class="scelte">${[1, 2, 3, 4].map(g => html`<button type="button" class="scelta" data-az="grado" data-grado="${g}" aria-pressed="${(attivo ? attivo.grado || 1 : 1) === g ? 'true' : 'false'}" ${attivo ? '' : 'disabled'}>${g}°</button>`)}</div></div>` : ''}
+      <div class="scelte">${[1, 2, 3, 4].map(g => html`<button type="button" class="scelta" data-az="grado" data-grado="${g}" aria-pressed="${(attivo.grado || 1) === g ? 'true' : 'false'}">${g}°</button>`)}</div></div>` : ''}
     ${elencoSegni(S, segni, 'proposizioni')}
   </div>
   ${attivo ? html`<div class="azioni-scheda"><button class="btn btn-pericolo btn-piccolo" type="button" data-az="togli-segno" data-id="${attivo.id}">${raw(ICONE.cestino)} Togli</button><button class="btn btn-piccolo" type="button" data-az="chiudi">Fatto</button></div>` : ''}`;
 }
 
-function invitoScheda(S) {
+function invitoScheda() {
   return html`<div class="scheda-testa"><span class="occhiello">La scheda</span></div>
-    <div class="scheda-corpo"><p class="scheda-invito" style="padding:8px 0 0">Tocca una parola della frase: qui comparirà la sua scheda, con lemma, analisi e significato.</p>
-    <p class="nota-fonte">Con la tastiera: le frecce ← → passano da una parola all’altra, Invio conferma e va avanti, [ e ] cambiano frase.</p></div>`;
+    <div class="scheda-corpo"><p class="scheda-invito" style="padding:8px 0 0">Tocca una parola della frase: qui ne scrivi l’analisi, la parte del discorso, la flessione, il lemma, il significato.</p>
+    <p class="nota-fonte solo-tastiera">Con la tastiera: le frecce ← → passano da una parola all’altra; i numeri 1–9 scelgono nel primo gruppo ancora vuoto; Invio va alla parola successiva; [ e ] cambiano frase.</p></div>`;
 }
 
 export function scheda(S) {
@@ -456,12 +431,15 @@ export function scheda(S) {
     <div class="scheda-corpo"><div class="prosa" style="font-size:15.5px">
       <p style="margin-top:0">La <strong>brutta</strong> segue il latino o il greco da vicino: ogni parola ha la sua, anche se l’italiano zoppica.</p>
       <p>La <strong>bella</strong> si scrive dopo, rileggendo la brutta senza guardare il testo: si lavora solo dentro l’italiano.</p>
-      <p>Le parole senza significato nel glossario sono quelle che non hai ancora scelto: tornaci dalla lente Parole.</p>
+      <p>Le parole senza significato nel glossario sono quelle che non hai ancora scritto: tornaci dalla lente Parole.</p>
     </div></div>`;
   }
-  if (S.lente === 'parole') return S.sel != null ? schedaParola(S) : invitoScheda(S);
+  if (S.lente === 'parole') return S.sel != null ? schedaParola(S) : invitoScheda();
   return schedaGruppo(S);
 }
+
+/** La frase da sola, per ridisegnarla mentre lo studente scrive nella scheda. */
+export function fraseViva(S) { return frase(S); }
 
 export function apertaScheda(S) {
   if (S.lente === 'parole') return S.sel != null;
@@ -472,8 +450,7 @@ export function apertaScheda(S) {
 export function vistaAnalisi(S) {
   const v = S.v;
   const f = v.frasi[S.frase];
-  const nParole = tokenizza(f.testo).filter(t => t.k === 'w').length;
-  const st = statoFrase(f, nParole);
+  const st = statoFrase(f, paroleDi(f).length);
   const aperta = apertaScheda(S);
   const ultima = S.frase >= v.frasi.length - 1;
   return html`<div class="lavoro ${aperta ? 'con-scheda' : ''}" data-lente="${S.lente}">
@@ -483,8 +460,7 @@ export function vistaAnalisi(S) {
       ${lenti(S, st)}
       <div class="banco" id="banco">
         ${S.lente !== 'resa' ? html`<p class="consegna">${CONSEGNE[S.lente]}</p>` : ''}
-        <div id="stato-lavoro">${statoLavoro(S)}</div>
-        ${S.lente === 'resa' ? resa(S) : frase(S)}
+        ${S.lente === 'resa' ? resa(S) : html`<div id="frase-viva">${frase(S)}</div>`}
       </div>
       <div class="barra-azioni" style="padding:0 clamp(16px,3vw,32px) 28px">
         <div class="gruppo">${S.frase > 0 ? html`<a class="btn btn-quieto" href="#/v/${v.id}/analisi/${S.frase}/${S.lente}">${raw(ICONE.indietro)} Frase precedente</a>` : ''}</div>
@@ -498,5 +474,3 @@ export function vistaAnalisi(S) {
     </aside>
   </div>`;
 }
-
-export { statoLavoro };

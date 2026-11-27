@@ -1,136 +1,151 @@
-# Translatio · analisi e traduzione di frasi e versioni
+# Translatio · il banco dove lo studente analizza e traduce la sua versione
 
-Il banco di Poetrify per **analizzare e tradurre** un brano latino o greco: il brano
-si divide in frasi, ogni frase si guarda parola per parola, la traduzione si scrive a
-fronte. È un progetto nuovo, rifondato da capo nell'UX/UI, e per ora fa **solo questo**:
-niente dizionario autonomo, niente corpus, niente grammatica (restano nelle loro pagine).
+Translatio serve allo **studente** per analizzare una versione latina o greca e per
+**esportare digitalmente l'analisi che fa lui**. Il programma non analizza: divide il brano
+in frasi, offre le caselle della grammatica, **disegna** ciò che lo studente sceglie
+(filetti, fili, colori) e alla fine lo impagina in un documento da consegnare.
+
+È un lavoro **isolato**: non legge il lessico, i paradigmi, le glosse o il corpus di Poetrify
+e non rimanda al Dizionario. Della casa usa solo i token grafici (`shared/poetrify-tokens.css`),
+la chiave del tema (`shared/poetrify-theme.js`) e i caratteri (`vendor/fonts/`).
 
 - In locale: dalla radice del repository `python3 -m http.server 8000`, poi
   `http://localhost:8000/translatio/`
-- Online (dopo il merge su `main`): `…/Poetrify-Translatio/translatio/`
+- Online: `https://leocrates99.github.io/Poetrify-Translatio/translatio/`
 
-## Il flusso: tre tappe, una sola strada
+## Il flusso: quattro tappe
 
 ```
-TESTO  →  ANALISI  →  TRADUZIONE
+TESTO  →  ANALISI  →  TRADUZIONE  →  CONSEGNA
 ```
 
-1. **Testo.** Si incolla il brano; il programma lo divide in periodi (latino: `. ? !`;
-   greco: `. ;`). Le frasi si correggono: ⤓ unisce una frase alla successiva, *Dividi*
-   fa cominciare una frase nuova dalla parola toccata. Se il testo sembra dell'altra
-   lingua, un avviso propone di cambiarla.
-2. **Analisi.** La frase è la protagonista e non cambia mai di posto; cambiano le
-   **lenti** che le si appoggiano sopra:
-   - **Parole**: lemma, parte del discorso, analisi morfologica, significato. Il
-     filetto sotto la parola ha il colore della parte del discorso: *tratteggiato*
-     finché è una proposta del programma, *pieno* quando lo studente l'ha confermata.
-   - **Sintagmi**: si toccano la prima e l'ultima parola di un gruppo e se ne sceglie
-     la funzione logica. Il filo sotto il gruppo ha il colore del **caso** (codice di
-     categoria della collana: nominativo blu di Prussia, accusativo giallo indiano…).
-   - **Proposizioni**: stesso gesto; principale, coordinata o subordinata (col grado),
-     e il tipo. Il filo sta sopra le parole: lingua per la principale, ottone per le
-     dipendenti, tratteggio per le coordinate.
-   - **Resa**: glossario della frase, la costruzione nell'ordine italiano (soggetto,
-     predicato, oggetto, complementi, ricavata dai sintagmi), brutta e bella copia.
-3. **Traduzione.** La versione intera, testo a fronte: una riga per frase, la brutta e
-   la bella sono due stati della stessa riga. In calce l'**apparato lessicale** con i
-   significati scelti. Copia, scarica in Markdown, stampa (la stampa toglie i comandi).
+1. **Testo.** Lo studente incolla il brano. Il banco lo divide in periodi guardando solo la
+   punteggiatura (latino `. ? !`; greco `. ;`), ed è una proposta grafica, non grammaticale:
+   ⤓ unisce una frase alla successiva, *Dividi* fa cominciare una frase nuova dalla parola
+   toccata.
+2. **Analisi.** La frase sta al centro e non cambia mai di posto; cambiano le **lenti**:
+   - **Parole.** Si tocca una parola e nella scheda si scelgono la **parte del discorso** (le
+     undici tinte della casa), poi i tratti che quella parte del discorso ha: caso, numero,
+     genere, grado; modo, tempo, diatesi, persona; declinazione e coniugazione. Si scrivono il
+     **lemma** (come sul dizionario), il **significato** in questa frase e, se si vuole,
+     un'osservazione. Si può **scomporre la parola in morfemi**: si tocca la lettera da cui
+     comincia un pezzo nuovo, e a ogni pezzo si dà un ruolo (prefisso, aumento, tema, vocale
+     tematica, suffisso, desinenza), ciascuno col suo colore. Il filetto sotto la parola
+     prende il colore della parte del discorso scelta; finché manca resta **punteggiato e
+     grigio**. Sotto la parola compaiono sigla, lemma, analisi breve e significato.
+   - **Sintagmi.** Si toccano la prima e l'ultima parola di un gruppo e se ne sceglie la
+     funzione logica (elenco per caso, con la ricerca). Il filo sotto il gruppo ha il colore
+     del **caso** (codice di categoria della collana).
+   - **Proposizioni.** Stesso gesto; il ruolo (principale, coordinata, subordinata) segna la
+     proposizione, poi se ne dicono il tipo e il grado. Il filo sta sopra le parole.
+   - **Resa.** Il glossario della frase (lemmi e significati dello studente), la costruzione
+     nell'ordine italiano rimessa in fila dai sintagmi segnati, brutta e bella copia.
+3. **Traduzione.** La versione intera, testo a fronte; brutta e bella sono due stati della
+   stessa riga. In calce l'apparato lessicale coi lemmi e i significati dello studente.
+4. **Consegna.** Chi consegna (nome, classe, data, docente), che cosa entra nel documento
+   (nove voci, tutte accese all'inizio), un controllo di ciò che manca (parole senza parte
+   del discorso, frasi senza bella copia, con il collegamento alla frase: non blocca nulla),
+   e il **foglio** come uscirà. Tre modi di portarlo fuori:
+   - **Stampa o salva in PDF**: la stampa del browser stampa solo il foglio, in A4;
+   - **Scarica la pagina (.html)**: un file solo, con lo stile dentro e nessun file esterno,
+     che si apre in qualunque browser; porta con sé il lavoro in JSON
+     (`<script type="application/json" id="translatio-dati">`), e Translatio lo riapre;
+   - **Scarica il file di lavoro (.json)**: per continuare su un altro computer.
+
+## Il documento da consegnare
+
+Un foglio A4 in veste C2 (`js/viste/documento.js`, `js/viste/stile-documento.js`):
+
+- testatina con il titolo, l'autore, i dati dello studente e il filetto nero di 4 px;
+- **il testo**, con le frasi numerate;
+- per ogni frase, col numero appeso nella colonna di margine: **l'analisi disegnata** (le
+  proposizioni sopra, i sintagmi sotto, la parte del discorso nel filetto, i morfemi a
+  colori), la **tavola delle parole** (forma, analisi distesa, lemma, significato, poi le
+  osservazioni), **il periodo e la costruzione**, la **brutta** e la **bella**;
+- **la traduzione** intera, **il lessico**, **la legenda** (solo i colori che il documento usa).
+
+Il foglio ha classi sue (`d-…`) e colori suoi: è sempre bianco, anche col tema scuro
+dell'applicazione, perché è la carta che si consegna. Lo stesso HTML serve all'anteprima,
+alla stampa e al file scaricato.
 
 ## Le scelte di UX/UI
 
 | Scelta | Perché |
 |---|---|
-| Tre tappe nominate in parole da studente, nessun asse da configurare | Il translator storico aveva quattro assi (Profilo, Metodo, Vista, Guida) e combinazioni che non facevano niente: qui non c'è niente da scegliere prima di lavorare |
-| La frase al centro, le analisi come lenti | La morfologia, la sintassi e il periodo si leggono *sul testo*, non in tre stanze diverse |
-| Il programma propone, lo studente conferma | Ogni proposta dichiara la fonte (tabelle curate, lessico, paradigma, indizio): tratteggio = proposta, pieno = confermato. Una forma sbagliata vale meno di una forma assente |
-| Le glosse automatiche (tradotte dall'inglese) solo nella scheda, segnate «da verificare» | Non entrano nel glossario, nell'apparato né nella stampa: sbagliano spesso |
-| La scheda della parola come dizionario vivo | Forma grande con l'iniziale nel colore della lingua, **morfemi colorati** (tema, vocale tematica, suffisso, desinenza) dai paradigmi del progetto, letture possibili, correzione a mano, voce del lessico, rimando al Dizionario |
-| La scheda sta dove lo schermo ha margine | ≥ 1280 px colonna fissa a destra; sotto, foglio dal basso (45 % tablet, 60 % telefono) con la frase sopra, scorrevole |
-| Quattro classi di schermo della casa | < 768 la mano · 768–1279 il tablet · 1280–1799 il leggio (banco + scheda) · ≥ 1800 il tavolo (frasi · banco · scheda) |
-| Il banco da lavoro sta fermo, scorrono i pannelli | Dal leggio in su la cornice non scorre: banco e scheda hanno ciascuno il proprio scorrimento |
-| Proposte segnate ★, mai scelte al posto dello studente | Per i sintagmi le funzioni del caso (e quelle aperte dalla preposizione); per le proposizioni il tipo suggerito dal connettivo |
-| Tastiera | ← → passano di parola in parola, Invio conferma e va avanti, `[` `]` cambiano frase, Esc chiude |
+| Nessuna proposta del programma | L'analisi è dello studente: il banco non suggerisce la parte del discorso, il lemma, la funzione o il tipo di proposizione. Disegna e impagina |
+| Quattro tappe nominate in parole da studente | Niente da configurare prima di lavorare |
+| La frase al centro, le analisi come lenti | Morfologia, sintassi e periodo si leggono *sul testo* |
+| La scheda della parola come modulo | Si compila dall'alto in basso; si vedono solo i gruppi che quella parte del discorso ha (un infinito non chiede la persona; cambiata la parte del discorso, i tratti che non ha cadono) |
+| La parola vuota non scrive nulla sotto di sé | Il filetto punteggiato dice già che manca; una scritta allargherebbe le parole brevi |
+| I morfemi si tagliano toccando una lettera | Lo stesso gesto di *Dividi* nel testo; le lettere greche si tagliano con accenti e spiriti |
+| La scheda sta dove lo schermo ha margine | ≥ 1280 px colonna fissa a destra; sotto, foglio dal basso (45 % tablet, 60 % telefono) |
+| Quattro classi di schermo della casa | < 768 la mano · 768–1279 il tablet · 1280–1799 il leggio · ≥ 1800 il tavolo |
+| Tastiera | ← → di parola in parola; **1–9 scelgono nel primo gruppo ancora vuoto** (i numeri compaiono sui bottoni, solo col puntatore fine); Invio va alla parola dopo (nel lemma, va al significato); `[` `]` cambiano frase; Esc chiude |
 | Navigazione con l'hash, bidirezionale | Il tasto Indietro cambia vista, lente o frase; ogni stato ha un indirizzo |
-| Local-first | Tutto nel `localStorage` (in try/catch); ogni versione si scarica e si riapre come file |
+| Local-first | Tutto nel `localStorage` (in try/catch); il lavoro esce solo quando lo studente lo scarica |
 
 ## La veste: C2 compatta
 
-Translatio veste la **C2 compatta**, la veste dei documenti di studio del docente
-(capitoli `MAN.`, handout, dispense): una veste sola, carta bianca e Inter
-(decisioni del 27 novembre 2026). Le misure e i colori vengono dal sistema di design
-«C2 compatta»; il foglio è `css/veste-c2.css`, caricato dopo `css/translatio.css`, che
-porta la struttura e i componenti.
+Translatio veste la **C2 compatta**, la veste dei documenti di studio del docente: una sola,
+carta bianca e Inter (decisioni del 27 novembre 2026). Il foglio è `css/veste-c2.css`,
+caricato dopo `css/translatio.css`, che porta la struttura e i componenti.
 
 | Della C2, alla lettera | Adattato allo schermo |
 |---|---|
-| **carta bianca** e inchiostro, **un solo accento** per la cornice: numeri, etichette, lemmi, link | i corpi 10 · 9 · 7 pt salgono di 1,2 (16 · 14,4 · 11,2 px), le proporzioni restano |
-| **Inter** per tutto; **greco e latino in Times**, sempre | l'accento è della lingua: latino `#b8400e` (l'accento C2), greco `#1d4ed8` (la variante blu C2); una lingua per documento, mai due accenti in una pagina |
-| **colonna di margine appesa**: il numero della frase (44 px), «In breve», i numeri di sezione stanno a sinistra del testo | il tema scuro, che la C2 non ha: stessa grammatica, valori misurati |
-| testatina col **filetto nero di 4 px**; tappe come etichette `01 · 02 · 03` | i contorni dei comandi in `#767676` (4,54:1): il grigio dei filetti C2 (`#9a9a9a`, 2,81:1) non basta a un campo |
-| tre pesi di filetto, nessun fondo, nessuna ombra, nessun angolo arrotondato | il pulsante primario è inchiostro pieno, non colore |
-| la scheda della parola come **nota di lessico**: parola in Times neretto, *traslitterazione*, **«traduzione»** fra caporali, commento | la glossa automatica non si veste da traduzione: corsivo, senza caporali, «da verificare» |
-| il **testo a fronte** a tutta giustezza fra filetti di 2 e 1 px; l'**apparato** come note a piè di pagina su tre colonne | |
-| i pesi C2 dei filetti: parola 2 px (pieno se confermata, tratteggiato se proposta), proposizioni d'inchiostro con tre pesi (principale 2 px, coordinata tratteggiata, subordinata 1 px) | **l'aggancio cromatico dell'analisi grammaticale resta**: le undici tinte delle parti del discorso sul filetto e sulla sigla, il codice di categoria dei casi sui fili dei sintagmi e sulle pastiglie, la palette dei morfemi, il filetto di categoria in testa alla nota di lessico |
-
-**Che cosa Translatio prende ancora dalla casa Poetrify:** la palette delle parti del
-discorso e il codice di categoria dei casi (dai token condivisi), la palette dei morfemi,
-la lingua sul `body[data-lang]`, le quattro classi di schermo, la chiave del tema. **Che
-cosa lascia:** la pergamena, Playfair e Source Serif, l'ottone dei filetti, il rosso
-pompeiano e l'indaco come colori di lingua (sostituiti dagli accenti C2). Lo scostamento
-dal canone di `DESIGN.md` è dichiarato là, in «Eccezioni dichiarate».
+| **carta bianca** e inchiostro, **un solo accento** per la cornice | i corpi 10 · 9 · 7 pt salgono di 1,2 (16 · 14,4 · 11,2 px); il documento da consegnare li tiene alla misura del foglio |
+| **Inter** per tutto; **greco e latino in Times** | l'accento è della lingua: latino `#b8400e`, greco `#1d4ed8`; mai due in una pagina |
+| **colonna di margine appesa**: numeri di frase e di sezione a sinistra del testo | il tema scuro, che la C2 non ha: stessa grammatica, valori misurati |
+| tre pesi di filetto, nessun fondo, nessuna ombra, nessun angolo arrotondato | i contorni dei comandi in `#767676` (4,54:1) |
+| tavole fra filetto nero di 2 px e di 1 px | **l'aggancio cromatico dell'analisi grammaticale resta**: le tinte delle parti del discorso, il codice di categoria dei casi, la palette dei morfemi |
 
 **Da confermare:** il colore della lingua. Sono gli accenti della C2; se si preferiscono
-rosso pompeiano e indaco, sono due valori in testa a `css/veste-c2.css`.
+rosso pompeiano e indaco, sono due valori in testa a `css/veste-c2.css` (e `--d-accent` nel
+foglio del documento).
 
-La traslitterazione della nota di lessico (`js/motore/traslitterazione.js`) segue la
-convenzione scolastica: *hoûtos*, *rhḗtōr*, *ángelos*. Il modulo condiviso
-`modules/dictionary/transliteration.js` posa l'accento sulla *h* e sbaglia lo spirito
-aspro sui dittonghi (*ohŷtos*), e qui non si usa.
-
-## Che cosa riusa e che cosa è nuovo
-
-**Riusato, senza copiarlo** (import diretti):
-- `modules/engine/lexicon-engine.js` · forma → lemma, parsing, definizione, glossa;
-- `modules/engine/taxonomies.js` · funzioni logiche per caso, tipi di proposizione;
-- `modules/engine/conjunctions.js`, `prepositions.js` · connettivi e preposizioni greche;
-- `modules/dictionary/italian-glosses.js` · glosse italiane curate;
-- `data/<lingua>/` · lessico a shard, paradigmi segmentati in morfemi, glosse;
-- `shared/poetrify-tokens.css`, `shared/poetrify-theme.js`, `vendor/fonts/`.
-
-**Nuovo nel motore condiviso:**
-- `modules/engine/classi-chiuse.js` · generato da `_build/estrai-classi-chiuse.mjs`, che
-  *valuta* i dizionari scritti a mano dentro `translator.html` (parole d'altissima
-  frequenza, sum/εἰμί, pronomi) invece di ricopiarli. In greco la chiave tiene spiriti e
-  accenti: ἡ articolo, ἤ disgiuntiva e ἥ relativo restano tre parole.
-
-**Nuovo in `translatio/`:**
+## I file
 
 ```
 translatio/
 ├─ index.html
 ├─ css/translatio.css          struttura e componenti
-├─ css/veste-c2.css            la veste C2 compatta: carta, inchiostro, caratteri, filetti
-├─ js/app.js                   rotte, stato della sessione, azioni, analisi in sottofondo
-├─ js/stato.js                 modello della versione, salvataggio, esportazione
+├─ css/veste-c2.css            la veste C2 compatta
+├─ js/app.js                   rotte, stato della sessione, azioni, tastiera
+├─ js/stato.js                 la versione (schema 2), salvataggio, migrazione, file
 ├─ js/esempi.js                quattro brani d'apertura
-├─ js/motore/
-│  ├─ testo.js                 frasi e parole
-│  ├─ tratti.js                lingua comune dell'analisi (parsing, schede, paradigmi → tratti)
-│  ├─ paradigmi.js             la forma ritrovata nella flessione: letture e morfemi
-│  ├─ analizzatore.js          la proposta per ogni parola, il contesto, le preposizioni latine
-│  ├─ sintassi.js              funzioni per caso, proposte, proposizioni, costruzione
-│  └─ traslitterazione.js      il greco in lettere latine, per la nota di lessico
-├─ js/viste/                   archivio · testo · analisi · traduzione
+├─ js/motore/                  moduli puri, nessun import fuori da translatio/
+│  ├─ testo.js                 frasi e parole (tokenizzatore proprio)
+│  ├─ grammatica.js            parti del discorso, tratti, etichette, morfemi
+│  ├─ sintassi.js              colore dei fili, tipi di proposizione, costruzione
+│  ├─ tassonomie.js            funzioni logiche e proposizioni (copia di modules/engine/taxonomies.js)
+│  └─ traslitterazione.js      il greco in lettere latine, nella scheda
+├─ js/viste/                   archivio · testo · analisi · traduzione · consegna
+│  ├─ documento.js             il foglio da consegnare e la pagina .html autonoma
+│  └─ stile-documento.js       il foglio di stile del documento, in una stringa
 ├─ js/ui/                      dom (template che escapa), icone
 └─ collaudo/
-   ├─ motore.mjs               il motore su Cesare e Senofonte, in Node
-   └─ browser.cjs              il flusso intero su quattro classi di schermo (Playwright)
+   ├─ moduli.mjs               isolamento, frasi, grammatica, morfemi, migrazione, documento (Node)
+   └─ browser.cjs              il lavoro intero su quattro classi di schermo (Playwright)
 ```
+
+**I dati.** `versione = { id, schema: 2, lingua, titolo, autore, testo, frasi, posizione,
+consegna }`; ogni frase ha `parole` (per posizione), `sintagmi`, `proposizioni`, `brutta`,
+`bella`; ogni parola è `{ pos, tratti, lemma, senso, morfemi: [{ t, r }], nota }` e c'è
+solo se lo studente ci ha scritto qualcosa. Le versioni dello schema 1 (Translatio con
+l'analisi automatica) si aprono ancora: restano le parole che lo studente aveva confermato o
+corretto, i significati, i sintagmi, le proposizioni e le traduzioni; le proposte mai
+confermate cadono.
+
+**La versione dei file.** `index.html` chiede ogni foglio di stile e ogni modulo con la
+stessa versione (`?v=2026-11-27d`); i moduli interni la ricevono da un'import map. Così,
+dopo un aggiornamento, il browser non mescola file nuovi e file vecchi rimasti in cache
+(GitHub Pages li tiene 10 minuti). Quando si cambia un file, si alza la versione in tutte
+le righe di `index.html`; il collaudo controlla che sia la stessa ovunque e che l'import
+map elenchi tutti i moduli.
 
 ## Collaudo
 
 ```bash
-node translatio/collaudo/motore.mjs
+node translatio/collaudo/moduli.mjs
 ```
 
 ```bash
@@ -141,35 +156,23 @@ python3 -m http.server 8765 --bind 127.0.0.1
 node translatio/collaudo/browser.cjs
 ```
 
-Il secondo controlla, sulle quattro classi di schermo (telefono greco, tablet latino,
-leggio greco in tema scuro, tavolo latino): nessun errore in console, nessuno scorrimento orizzontale, nessun comando sotto i 24 px. Esito al 27
-novembre 2026: conforme.
+Il primo verifica fra l'altro che nessun modulo importi da fuori `translatio/js` e che
+nessuno chiami il dizionario, il corpus o `data/`. Il secondo percorre, sulle quattro classi
+di schermo (telefono greco, tablet latino, leggio greco in tema scuro, tavolo latino), il
+lavoro dello studente dall'esempio alla consegna: nessuna parola analizzata prima che lo
+studente la tocchi, la tastiera, i morfemi, sintagmi e proposizioni senza proposte, il
+foglio, il file `.html` scaricato e riaperto, la stampa del solo foglio; nessun errore in
+console, nessuno scorrimento orizzontale, nessun comando sotto i 24 px. Esito al 27
+novembre 2026: conforme su entrambi.
 
 ## Limiti dichiarati
 
-- **Copertura del greco.** Il lessico conosce circa 81 000 forme greche (in buona parte
-  verbi omerici): nei brani attici una parola su otto-dieci resta «da analizzare»
-  (ἠσθένει, ὑπώπτευε, τελευτήν nell'esempio di Senofonte). Lo studente le completa a mano;
-  la scheda dice che il lessico non le conosce invece di indovinare.
-- **Omografi che il lessico non distingue.** Il lessico latino a volte fonde lemmi
-  diversi sotto una voce sola, e a volte ne manca uno: per *appello* c'è solo
-  *appello, appellere* (3ª), non *appello, appellare* (1ª), e così *appellantur* nel primo
-  esempio di Cesare viene proposto come congiuntivo. Per i verbi il paradigma del lemma
-  verifica la proposta e la corregge quando la smentisce, ma qui il lemma giusto manca
-  dai dati: va aggiunto al lessico (`data/latin/`), non all'interfaccia.
-- **Ambiguità.** Il programma ordina le letture col contesto (la preposizione sceglie il
-  caso, l'articolo greco concorda col nome) ma non decide: le letture alternative restano
-  nella scheda, e il segno «+N» sotto la parola le conta.
-- **Paradigmi latini pesanti.** Si caricano per i verbi, dove il lessico non dà l'analisi
-  e quando si apre la scheda di una parola (per i morfemi), non per ogni parola del brano.
-- **Nessuna traduzione automatica.** La traduzione la scrive lo studente: il programma dà
-  lemmi, analisi, significati e la costruzione.
-
-## Prossimi passi possibili
-
-- La card di Translatio nell'hub (`app.html`) e la cucitura dal Corpus
-  (`translatio/?lang=&text=&titolo=` funziona già).
-- Promuovere le preposizioni latine (`PREPOSIZIONI_LATINE` in `analizzatore.js`) nel
-  motore condiviso, dove `prepositions.js` ha per il latino solo un segnaposto.
-- Un indice inverso delle forme greche dei paradigmi, per alzare la copertura.
-- La tastiera che compila il primo gruppo vuoto (cifre 1-9) nella correzione a mano.
+- **Nessun controllo di correttezza.** Translatio non sa se l'analisi è giusta: registra e
+  disegna. Il controllo in Consegna guarda solo che cosa manca.
+- **Il PDF passa dalla stampa del browser.** Si sceglie «Salva come PDF» al posto della
+  stampante; i colori escono perché il foglio chiede la stampa esatta dei colori, ma alcuni
+  browser hanno un'opzione «grafica di sfondo» da lasciare accesa.
+- **La pagina .html non porta con sé Inter.** Usa Inter se è installato, altrimenti
+  Helvetica o Arial; il latino e il greco restano in Times.
+- **Le tassonomie sono una copia.** `js/motore/tassonomie.js` riprende alla lettera
+  `modules/engine/taxonomies.js`: se una lista cambia là, va riportata qui a mano.

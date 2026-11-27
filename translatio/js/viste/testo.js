@@ -44,7 +44,7 @@ export function vistaTesto(S) {
   const greco = b.lingua === 'greco';
   return html`<div class="pagina">
     <h1 class="titolo-pagina">Il testo</h1>
-    <p class="sottotitolo">Incolla il brano ${greco ? 'greco' : 'latino'}. Lo divido in periodi: sono le frasi che analizzerai una per una, e puoi correggerle.</p>
+    <p class="sottotitolo">Incolla il brano ${greco ? 'greco' : 'latino'}. Lo divido in periodi guardando solo la punteggiatura: sono le frasi che analizzerai tu, una per una, e puoi correggerle.</p>
 
     <div class="griglia-testo sezione">
       <div class="modulo">
@@ -71,7 +71,7 @@ export function vistaTesto(S) {
 
     <div class="barra-azioni">
       <div class="gruppo"><a class="btn btn-quieto" href="${S.v ? `#/v/${S.v.id}/analisi` : '#/'}">${raw(ICONE.indietro)} ${S.v ? 'Torna all’analisi' : 'Torna all’archivio'}</a></div>
-      <div class="gruppo"><button class="btn btn-primario" type="button" data-az="conferma-testo" ${b.frasi.length ? '' : 'disabled'}>Analizza le frasi ${raw(ICONE.avanti)}</button></div>
+      <div class="gruppo"><button class="btn btn-primario" type="button" data-az="conferma-testo" ${b.frasi.length ? '' : 'disabled'}>Passa all’analisi ${raw(ICONE.avanti)}</button></div>
     </div>
   </div>`;
 }
