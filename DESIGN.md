@@ -58,7 +58,9 @@ indaco; nessun ottone. Resta vincolata a tutto il resto: il colore informa e non
 pilota l'accento via `body[data-lang]`, il greco va in Times per codepoint, le ombre non ci sono
 (nemmeno tinte), e **le palette delle categorie grammaticali restano identiche** (parti del
 discorso, codice di categoria dei casi, morfemi). Misure e motivi: `translatio/README.md` e
-`translatio/css/veste-c2.css`. Le altre superfici restano sul canone di questo file.
+`translatio/css/veste-c2.css`. Il documento che lo studente consegna (`translatio/js/viste/stile-documento.js`)
+porta la stessa veste alla misura del foglio A4 ed è sempre su carta bianca, anche col tema scuro.
+Le altre superfici restano sul canone di questo file.
 
 ## Motion stance
 **Motion-cut** — nessuna libreria, zero `@keyframes`, nessun reveal; un solo token di transizione, `prefers-reduced-motion` azzerante. La quiete è una scelta: il prodotto si legge.

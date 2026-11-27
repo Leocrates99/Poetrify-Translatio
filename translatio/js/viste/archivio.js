@@ -44,7 +44,7 @@ export function vistaArchivio() {
   const elenco = elencoVersioni();
   return html`<div class="pagina">
     <h1 class="titolo-pagina">Analizza e traduci una versione</h1>
-    <p class="sottotitolo">Incolli il brano, lo dividi in frasi, guardi ogni parola da vicino e scrivi la traduzione a fronte. Il programma propone, tu confermi.</p>
+    <p class="sottotitolo">Incolli il brano e lo dividi in frasi; poi l’analisi la fai tu, parola per parola, sintagmi e proposizioni, e scrivi la traduzione. Il banco la disegna e la impagina in un documento da consegnare.</p>
 
     <section class="sezione" aria-labelledby="s-comincia">
       <h2 id="s-comincia">Comincia una versione</h2>
@@ -73,10 +73,10 @@ export function vistaArchivio() {
 
     <section class="sezione" aria-labelledby="s-file">
       <h2 id="s-file">Da un file</h2>
-      <p class="prosa">Una versione scaricata da Translatio, su questo o su un altro computer, si riapre da qui con tutto il lavoro fatto.</p>
+      <p class="prosa">Un lavoro scaricato da Translatio, su questo o su un altro computer, si riapre da qui con tutto ciò che c’era: il file di lavoro (.json) o la pagina consegnata (.html).</p>
       <label class="btn" style="margin-top:10px">
         ${raw(ICONE.carica)} Apri un file di Translatio
-        <input class="sr" type="file" accept=".json,application/json" data-az="importa">
+        <input class="sr" type="file" accept=".json,.html,.htm,application/json,text/html" data-az="importa">
       </label>
     </section>
   </div>`;
@@ -85,7 +85,7 @@ export function vistaArchivio() {
 export function vistaPorta() {
   return html`<div class="pagina pagina-stretta">
     <h1 class="titolo-pagina">Da quale lingua traduci?</h1>
-    <p class="sottotitolo">La lingua decide il lessico, la grammatica e il colore di tutto il lavoro.</p>
+    <p class="sottotitolo">La lingua decide le caselle della grammatica (il greco ha l’articolo, l’aoristo e il duale; il latino l’ablativo) e il colore di tutto il lavoro.</p>
     <div class="sezione">${porteLingua()}</div>
   </div>`;
 }

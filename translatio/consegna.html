@@ -1,0 +1,750 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Il lupo e l’agnello · Anna Rossi</title>
+<meta name="generator" content="Translatio · Poetrify">
+<style>
+html { background: #ececec; }
+body { margin: 0; padding: 32px 16px 48px; }
+.documento { border: 1px solid #d6d6d6; }
+@media (max-width: 700px) { body { padding: 0; } .documento { border: 0; } }
+@media print { html, body { background: #fff; padding: 0; } .documento { border: 0; } }
+
+.documento {
+  --d-ink: #111111; --d-muted: #444444; --d-note: #555555; --d-rule: #9a9a9a; --d-rule-soft: #d6d6d6;
+  --d-accent: #b8400e;
+  --d-sans: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --d-classico: 'Times New Roman', Times, 'Liberation Serif', Tinos, 'GFS Didot', serif;
+  --d-margine: 120px; --d-canale: 18px;
+  --d-m-p: #4d7c0f; --d-m-a: #7c3aed; --d-m-t: #111111; --d-m-v: #b45309; --d-m-s: #0f766e; --d-m-d: var(--d-accent);
+  container-type: inline-size;
+  box-sizing: border-box;
+  max-width: 794px; margin: 0 auto; padding: 52px 56px 40px;
+  background: #ffffff; color: var(--d-ink);
+  font-family: var(--d-sans); font-size: 13.33px; line-height: 16px; font-weight: 400;
+  text-align: left; font-kerning: normal;
+  -webkit-print-color-adjust: exact; print-color-adjust: exact;
+}
+.documento[data-lingua="greco"] { --d-accent: #1d4ed8; }
+.documento *, .documento *::before, .documento *::after { box-sizing: border-box; }
+.documento [lang="la"], .documento [lang="grc"] { font-family: var(--d-classico); }
+.documento p, .documento ul, .documento dl, .documento dd, .documento h1, .documento h2 { margin: 0; padding: 0; }
+.documento ul { list-style: none; }
+
+/* testatina */
+.documento .d-testa { padding-bottom: 14px; border-bottom: 4px solid var(--d-ink); margin-bottom: 18px; }
+.documento .d-occhiello { font-size: 9.33px; line-height: 11.2px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--d-accent); }
+.documento .d-titolo { margin-top: 6px; font-size: 26px; line-height: 30px; font-weight: 800; letter-spacing: -0.01em; color: var(--d-ink); }
+.documento .d-autore { margin-top: 4px; font-size: 13.33px; color: var(--d-muted); }
+.documento .d-dati { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0 18px; margin-top: 14px; border-top: 1px solid var(--d-rule); padding-top: 6px; }
+.documento .d-dati dt { font-size: 9.33px; line-height: 11.2px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--d-note); }
+.documento .d-dati dd { font-size: 13.33px; font-weight: 600; }
+
+/* le sezioni: la colonna di margine appesa a sinistra; la prima sta gia'
+   sotto il filetto di 4 px della testatina */
+.documento .d-sez { display: grid; grid-template-columns: var(--d-margine) minmax(0, 1fr); column-gap: var(--d-canale); padding: 12px 0 14px; border-top: 1px solid var(--d-rule); }
+.documento .d-testa + .d-sez { border-top: 0; padding-top: 0; }
+.documento .d-margine { font-size: 9.33px; line-height: 11.2px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--d-accent); padding-top: 3px; }
+.documento .d-numero { font-size: 30px; line-height: 30px; font-weight: 800; letter-spacing: -0.02em; text-transform: none; }
+.documento .d-corpo { min-width: 0; }
+.documento .d-brano { font-family: var(--d-classico); font-size: 15px; line-height: 21px; }
+.documento .d-brano sup { font-family: var(--d-sans); font-size: 8px; font-weight: 700; color: var(--d-accent); margin-right: 2px; }
+.documento .d-blocco { margin-top: 12px; }
+.documento .d-etichetta { font-size: 9.33px; line-height: 11.2px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--d-note); margin-bottom: 4px; }
+.documento .d-nota { margin-top: 4px; font-size: 9.33px; line-height: 11.2px; color: var(--d-note); }
+.documento .d-manca { color: var(--d-note); font-style: italic; }
+
+/* la frase disegnata */
+.documento .d-banco { display: flex; flex-wrap: wrap; align-items: flex-start; row-gap: 12px; padding: 4px 0 2px; }
+.documento .d-cella { display: inline-flex; flex-direction: column; align-items: flex-start; padding: 0 5px; min-width: 0; }
+.documento .d-cella-p { padding: 0 2px 0 0; margin-left: -5px; }
+.documento .d-forma { font-family: var(--d-classico); font-size: 18px; line-height: 22px; padding-bottom: 2px; border-bottom: 2px solid var(--d-pos, var(--d-ink)); white-space: nowrap; }
+.documento .d-cella-p .d-forma { border-bottom-color: transparent; color: var(--d-muted); }
+.documento .d-forma.d-da-fare { border-bottom: 2px dotted var(--d-rule); }
+.documento .d-sotto { display: grid; gap: 0; margin-top: 3px; min-height: 12px; font-size: 9.33px; line-height: 11.5px; }
+.documento .d-pos { font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: color-mix(in srgb, var(--d-pos, var(--d-note)) 58%, #000); }
+.documento .d-lemma { font-family: var(--d-classico); font-size: 11px; color: var(--d-muted); }
+.documento .d-an { color: var(--d-note); }
+.documento .d-senso { font-style: italic; color: var(--d-ink); }
+.documento .d-fili { display: grid; gap: 2px; width: 100%; margin-top: 4px; }
+.documento .d-fili.d-sopra { margin: 0 0 4px; }
+.documento .d-filo { display: block; height: 3px; margin: 0 -5px; background: var(--d-filo, var(--d-ink)); }
+.documento .d-cella-p .d-filo { margin: 0; }
+.documento .d-filo.d-vuoto { background: transparent; }
+.documento .d-filo.d-inizio { margin-left: 1px; }
+.documento .d-filo.d-fine { margin-right: 1px; }
+.documento .d-etichetta-filo { display: block; position: relative; height: 10px; margin: 1px 0 0 1px; font-size: 8px; line-height: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--d-accent); }
+.documento .d-etichetta-filo > span { position: absolute; left: 0; top: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.documento .d-sopra .d-etichetta-filo { margin: 0 0 1px 1px; }
+.documento .d-etichetta-filo.d-vuoto { visibility: hidden; }
+.documento .d-sopra .d-filo { height: 2px; }
+.documento .d-sopra .d-filo.d-prop-subordinata { height: 1px; margin-top: 1px; }
+
+/* le categorie: parti del discorso, casi, proposizioni, morfemi */
+.documento [data-pos="sostantivo"] { --d-pos: #1F63D6; }
+.documento [data-pos="verbo"] { --d-pos: #DC2B2B; }
+.documento [data-pos="aggettivo"] { --d-pos: #0FA3A3; }
+.documento [data-pos="pronome"] { --d-pos: #D19A16; }
+.documento [data-pos="avverbio"] { --d-pos: #1FA24F; }
+.documento [data-pos="preposizione"] { --d-pos: #9C2D8E; }
+.documento [data-pos="congiunzione"] { --d-pos: #4A45C0; }
+.documento [data-pos="numerale"] { --d-pos: #E9720C; }
+.documento [data-pos="interiezione"] { --d-pos: #E5389A; }
+.documento [data-pos="articolo"] { --d-pos: #17B4CE; }
+.documento [data-pos="particella"] { --d-pos: #6B7280; }
+.documento .d-caso-nom { --d-filo: #003153; }
+.documento .d-caso-gen { --d-filo: #66023C; }
+.documento .d-caso-dat { --d-filo: #FADA5E; }
+.documento .d-caso-acc { --d-filo: #E3A857; }
+.documento .d-caso-voc { --d-filo: #477D3B; }
+.documento .d-caso-abl { --d-filo: #8E5A3C; }
+.documento .d-caso-pred { --d-filo: #DC2B2B; }
+.documento .d-caso-altro { --d-filo: #9a9a9a; }
+.documento .d-prop-principale { --d-filo: var(--d-ink); }
+.documento .d-prop-coordinata { --d-filo: var(--d-ink); }
+.documento .d-filo.d-prop-coordinata, .documento .d-campione-linea.d-prop-coordinata { background: repeating-linear-gradient(90deg, var(--d-ink) 0 5px, transparent 5px 8px); }
+.documento .d-prop-subordinata { --d-filo: var(--d-ink); }
+.documento .d-m { padding: 0 0.5px; border-bottom: 1px solid currentColor; }
+.documento .d-forma .d-m { border-bottom: 0; }
+.documento .d-m-p { color: var(--d-m-p); }
+.documento .d-m-a { color: var(--d-m-a); }
+.documento .d-m-t { color: var(--d-m-t); }
+.documento .d-m-v { color: var(--d-m-v); }
+.documento .d-m-s { color: var(--d-m-s); }
+.documento .d-m-d { color: var(--d-m-d); }
+.documento .d-m-x { color: var(--d-ink); }
+.documento .d-m + .d-m { margin-left: 1px; }
+
+/* la tavola delle parole: fra filetto nero di 2 px e di 1 px, righe in grigio */
+.documento .d-parole { width: 100%; margin-top: 12px; border-collapse: collapse; border-top: 2px solid var(--d-ink); border-bottom: 1px solid var(--d-ink); font-size: 12px; line-height: 14.5px; }
+.documento .d-parole th { padding: 4px 6px 3px 0; text-align: left; vertical-align: bottom; font-size: 9.33px; line-height: 11.2px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--d-note); border-bottom: 1px solid var(--d-ink); }
+.documento .d-parole td { padding: 4px 6px 4px 0; vertical-align: top; border-bottom: 1px solid var(--d-rule-soft); }
+.documento .d-parole tr:last-child td { border-bottom: 0; }
+.documento .d-parole .d-n { width: 22px; color: var(--d-note); font-size: 9.33px; }
+.documento .d-parole tr[data-pos] .d-n { box-shadow: inset 3px 0 0 var(--d-pos); padding-left: 6px; }
+.documento .d-parole thead .d-n { padding-left: 0; }
+.documento .d-forma-tav { font-family: var(--d-classico); font-size: 14px; white-space: nowrap; }
+.documento .d-lemma-tav { font-family: var(--d-classico); font-size: 13px; }
+.documento .d-pos-tav { font-weight: 700; color: color-mix(in srgb, var(--d-pos, var(--d-ink)) 58%, #000); }
+.documento .d-note { margin-top: 8px; display: grid; gap: 3px; font-size: 12px; line-height: 14.5px; }
+.documento .d-note div { display: grid; grid-template-columns: max-content 1fr; gap: 0 8px; }
+.documento .d-note dt { font-family: var(--d-classico); font-weight: 700; color: var(--d-accent); }
+
+/* periodo e costruzione */
+.documento .d-periodo { display: grid; gap: 3px; font-size: 12px; line-height: 14.5px; }
+.documento .d-periodo li { display: grid; grid-template-columns: 22px 1fr; gap: 0 6px; align-items: baseline; }
+.documento .d-periodo li > span[lang] { grid-column: 2; font-size: 13px; }
+.documento .d-segno-prop { display: block; height: 2px; margin-top: 6px; background: var(--d-filo, var(--d-ink)); }
+.documento .d-prop-coordinata .d-segno-prop { background: repeating-linear-gradient(90deg, var(--d-ink) 0 5px, transparent 5px 8px); }
+.documento .d-prop-subordinata .d-segno-prop { height: 1px; }
+.documento .d-ordo { display: flex; flex-wrap: wrap; gap: 6px 14px; }
+.documento .d-ordo-blocco { display: grid; padding-top: 3px; border-top: 3px solid var(--d-filo, var(--d-ink)); }
+.documento .d-ordo-blocco b { font-size: 8px; line-height: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--d-note); }
+.documento .d-ordo-blocco span { font-size: 14px; line-height: 18px; }
+
+/* le rese */
+.documento .d-resa { font-size: 13.33px; line-height: 18px; white-space: pre-line; }
+.documento .d-bella { font-size: 14px; line-height: 20px; }
+.documento .d-traduzione .d-bella { font-size: 14px; line-height: 21px; }
+
+/* lessico e legenda */
+.documento .d-lessico { columns: 2 220px; column-gap: 18px; font-size: 12px; line-height: 15px; }
+.documento .d-lessico li { break-inside: avoid; padding-bottom: 3px; }
+.documento .d-lessico b { font-weight: 700; color: var(--d-accent); font-size: 13px; }
+.documento .d-lessico i { color: var(--d-note); font-size: 9.33px; }
+.documento .d-legenda { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px 18px; }
+.documento .d-legenda ul { display: grid; gap: 2px; font-size: 12px; line-height: 14px; }
+.documento .d-legenda li { display: flex; align-items: center; gap: 6px; }
+.documento .d-campione { display: inline-block; width: 14px; height: 10px; background: var(--d-filo, var(--d-pos)); outline: 1px solid rgba(0, 0, 0, 0.28); outline-offset: -1px; flex: none; }
+.documento .d-campione-pos { height: 3px; outline: 0; background: var(--d-pos); }
+.documento .d-campione-linea { display: inline-block; width: 22px; height: 2px; background: var(--d-ink); flex: none; }
+.documento .d-campione-linea.d-prop-subordinata { height: 1px; }
+.documento .d-legenda .d-m { font-family: var(--d-classico); font-size: 13px; }
+
+.documento .d-piede { margin-top: 18px; padding-top: 6px; border-top: 2px solid var(--d-ink); font-size: 9.33px; line-height: 11.2px; color: var(--d-note); }
+
+/* il foglio stretto (telefono): la colonna di margine va sopra */
+@container (max-width: 560px) {
+  .documento .d-sez { display: block; }
+  .documento .d-margine { margin-bottom: 6px; }
+  .documento .d-numero { font-size: 24px; line-height: 24px; }
+  .documento .d-parole thead { display: none; }
+  .documento .d-parole, .documento .d-parole tbody, .documento .d-parole td { display: block; width: auto; }
+  .documento .d-parole tr { display: grid; grid-template-columns: 22px auto 1fr; gap: 0 8px; padding: 5px 0; border-bottom: 1px solid var(--d-rule-soft); }
+  .documento .d-parole td { border: 0; padding: 0; }
+  .documento .d-parole td:nth-child(n+3) { grid-column: 2 / -1; }
+}
+@media screen and (max-width: 700px) {
+  .documento { padding: 24px 16px; }
+}
+
+/* la stampa: il foglio e' gia' la pagina */
+@page { size: A4; margin: 14mm 13mm 15mm; }
+@media print {
+  .documento { max-width: none; padding: 0; margin: 0; }
+  .documento .d-testa { break-after: avoid; }
+  .documento .d-sez { break-inside: auto; }
+  .documento .d-margine { break-after: avoid; }
+  .documento .d-banco, .documento .d-parole tr, .documento .d-blocco, .documento .d-legenda > div { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<article class="documento" data-lingua="latino" lang="it">
+  <header class="d-testa">
+    <p class="d-occhiello">Versione dal latino · analisi e traduzione</p>
+    <h1 class="d-titolo">Il lupo e l’agnello</h1>
+    <p class="d-autore">Fedro, Fabulae I 1, 1-5</p>
+    <dl class="d-dati"><div><dt>Studente</dt><dd>Anna Rossi</dd></div><div><dt>Classe</dt><dd>III B</dd></div><div><dt>Data</dt><dd>27 novembre 2026</dd></div></dl>
+  </header>
+
+  <section class="d-sez">
+    <h2 class="d-margine">Il testo</h2>
+    <div class="d-corpo"><p class="d-brano" lang="la"><sup>1</sup>Ad rivum eundem lupus et agnus venerant, siti compulsi. <sup>2</sup>Superior stabat lupus, longeque inferior agnus. <sup>3</sup>Tunc fauce improba latro incitatus iurgii causam intulit. </p></div>
+  </section>
+
+  <section class="d-sez d-frase">
+      <h2 class="d-margine d-numero" aria-label="Frase 1">01</h2>
+      <div class="d-corpo">
+        <div class="d-banco"><span class="d-cella">
+      <span class="d-fili d-sopra"><span class="d-etichetta-filo"><span style="max-width:54.5ch">P · enunciativa</span></span><span class="d-filo d-prop-principale d-inizio "></span></span>
+      <span class="d-forma d-da-fare"  lang="la">Ad</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      <span class="d-fili "><span class="d-filo d-vuoto"></span><span class="d-etichetta-filo d-vuoto">·</span></span>
+    </span><span class="d-cella">
+      <span class="d-fili d-sopra"><span class="d-etichetta-filo d-vuoto">·</span><span class="d-filo d-prop-principale  "></span></span>
+      <span class="d-forma d-da-fare"  lang="la">rivum</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      <span class="d-fili "><span class="d-filo d-vuoto"></span><span class="d-etichetta-filo d-vuoto">·</span></span>
+    </span><span class="d-cella">
+      <span class="d-fili d-sopra"><span class="d-etichetta-filo d-vuoto">·</span><span class="d-filo d-prop-principale  "></span></span>
+      <span class="d-forma " data-pos="sostantivo" lang="la"><span class="d-m d-m-t">eun</span><span class="d-m d-m-d">dem</span></span>
+      <span class="d-sotto">
+        <span class="d-pos" data-pos="sostantivo">sostantivo</span>
+        <span class="d-lemma" lang="la">lupus, -i</span>
+        <span class="d-an">nom. m. sing.</span>
+        <span class="d-senso">il lupo</span>
+      </span>
+      <span class="d-fili "><span class="d-filo d-caso-nom d-inizio d-fine"></span><span class="d-etichetta-filo"><span style="max-width:12.2ch">Soggetto</span></span></span>
+    </span><span class="d-cella">
+      <span class="d-fili d-sopra"><span class="d-etichetta-filo d-vuoto">·</span><span class="d-filo d-prop-principale  "></span></span>
+      <span class="d-forma d-da-fare"  lang="la">lupus</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      <span class="d-fili "><span class="d-filo d-vuoto"></span><span class="d-etichetta-filo d-vuoto">·</span></span>
+    </span><span class="d-cella">
+      <span class="d-fili d-sopra"><span class="d-etichetta-filo d-vuoto">·</span><span class="d-filo d-prop-principale  "></span></span>
+      <span class="d-forma d-da-fare"  lang="la">et</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      <span class="d-fili "><span class="d-filo d-vuoto"></span><span class="d-etichetta-filo d-vuoto">·</span></span>
+    </span><span class="d-cella">
+      <span class="d-fili d-sopra"><span class="d-etichetta-filo d-vuoto">·</span><span class="d-filo d-prop-principale  d-fine"></span></span>
+      <span class="d-forma d-da-fare"  lang="la">agnus</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      <span class="d-fili "><span class="d-filo d-vuoto"></span><span class="d-etichetta-filo d-vuoto">·</span></span>
+    </span><span class="d-cella">
+      <span class="d-fili d-sopra"><span class="d-filo d-vuoto"></span><span class="d-etichetta-filo d-vuoto">·</span></span>
+      <span class="d-forma d-da-fare"  lang="la">venerant</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      <span class="d-fili "><span class="d-filo d-vuoto"></span><span class="d-etichetta-filo d-vuoto">·</span></span>
+    </span><span class="d-cella d-cella-p"><span class="d-fili d-sopra"><span class="d-filo d-vuoto"></span><span class="d-etichetta-filo d-vuoto">·</span></span><span class="d-forma">,</span><span class="d-sotto"></span><span class="d-fili "><span class="d-filo d-vuoto"></span><span class="d-etichetta-filo d-vuoto">·</span></span></span><span class="d-cella">
+      <span class="d-fili d-sopra"><span class="d-filo d-vuoto"></span><span class="d-etichetta-filo d-vuoto">·</span></span>
+      <span class="d-forma d-da-fare"  lang="la">siti</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      <span class="d-fili "><span class="d-filo d-vuoto"></span><span class="d-etichetta-filo d-vuoto">·</span></span>
+    </span><span class="d-cella">
+      <span class="d-fili d-sopra"><span class="d-filo d-vuoto"></span><span class="d-etichetta-filo d-vuoto">·</span></span>
+      <span class="d-forma d-da-fare"  lang="la">compulsi</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      <span class="d-fili "><span class="d-filo d-vuoto"></span><span class="d-etichetta-filo d-vuoto">·</span></span>
+    </span><span class="d-cella d-cella-p"><span class="d-fili d-sopra"><span class="d-filo d-vuoto"></span><span class="d-etichetta-filo d-vuoto">·</span></span><span class="d-forma">.</span><span class="d-sotto"></span><span class="d-fili "><span class="d-filo d-vuoto"></span><span class="d-etichetta-filo d-vuoto">·</span></span></span></div>
+        <table class="d-parole">
+    <thead><tr><th class="d-n">n.</th><th>Forma</th><th>Analisi</th><th>Lemma</th><th>Significato</th></tr></thead>
+    <tbody><tr >
+        <td class="d-n">1</td>
+        <td class="d-forma-tav" lang="la">Ad</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">2</td>
+        <td class="d-forma-tav" lang="la">rivum</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr data-pos="sostantivo">
+        <td class="d-n">3</td>
+        <td class="d-forma-tav" lang="la"><span class="d-m d-m-t">eun</span><span class="d-m d-m-d">dem</span></td>
+        <td><b class="d-pos-tav">sostantivo</b>, nominativo maschile singolare</td>
+        <td lang="la" class="d-lemma-tav">lupus, -i</td>
+        <td>il lupo</td>
+      </tr><tr >
+        <td class="d-n">4</td>
+        <td class="d-forma-tav" lang="la">lupus</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">5</td>
+        <td class="d-forma-tav" lang="la">et</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">6</td>
+        <td class="d-forma-tav" lang="la">agnus</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">7</td>
+        <td class="d-forma-tav" lang="la">venerant</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">8</td>
+        <td class="d-forma-tav" lang="la">siti</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">9</td>
+        <td class="d-forma-tav" lang="la">compulsi</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr></tbody>
+  </table>
+  
+        <div class="d-blocco"><p class="d-etichetta">Il periodo</p>
+      <ul class="d-periodo"><li class="d-prop-principale"><span class="d-segno-prop"></span><b>Principale · enunciativa</b> <span lang="la">Ad rivum eundem lupus et agnus</span></li></ul></div>
+    <div class="d-blocco"><p class="d-etichetta">La costruzione</p>
+      <div class="d-ordo"><span class="d-ordo-blocco d-caso-nom"><b>Soggetto</b><span lang="la">eundem</span></span></div></div>
+        <div class="d-blocco"><p class="d-etichetta">Brutta copia</p><p class="d-resa">Allo stesso ruscello il lupo e l’agnello erano venuti.</p></div>
+        <div class="d-blocco"><p class="d-etichetta">Bella copia</p><p class="d-resa d-bella">Al medesimo ruscello erano giunti un lupo e un agnello.</p></div>
+      </div>
+    </section><section class="d-sez d-frase">
+      <h2 class="d-margine d-numero" aria-label="Frase 2">02</h2>
+      <div class="d-corpo">
+        <div class="d-banco"><span class="d-cella">
+      
+      <span class="d-forma d-da-fare"  lang="la">Superior</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      
+    </span><span class="d-cella">
+      
+      <span class="d-forma d-da-fare"  lang="la">stabat</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      
+    </span><span class="d-cella">
+      
+      <span class="d-forma d-da-fare"  lang="la">lupus</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      
+    </span><span class="d-cella d-cella-p"><span class="d-forma">,</span><span class="d-sotto"></span></span><span class="d-cella">
+      
+      <span class="d-forma d-da-fare"  lang="la">longeque</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      
+    </span><span class="d-cella">
+      
+      <span class="d-forma d-da-fare"  lang="la">inferior</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      
+    </span><span class="d-cella">
+      
+      <span class="d-forma d-da-fare"  lang="la">agnus</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      
+    </span><span class="d-cella d-cella-p"><span class="d-forma">.</span><span class="d-sotto"></span></span></div>
+        <table class="d-parole">
+    <thead><tr><th class="d-n">n.</th><th>Forma</th><th>Analisi</th><th>Lemma</th><th>Significato</th></tr></thead>
+    <tbody><tr >
+        <td class="d-n">1</td>
+        <td class="d-forma-tav" lang="la">Superior</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">2</td>
+        <td class="d-forma-tav" lang="la">stabat</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">3</td>
+        <td class="d-forma-tav" lang="la">lupus</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">4</td>
+        <td class="d-forma-tav" lang="la">longeque</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">5</td>
+        <td class="d-forma-tav" lang="la">inferior</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">6</td>
+        <td class="d-forma-tav" lang="la">agnus</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr></tbody>
+  </table>
+  
+        
+        
+        
+      </div>
+    </section><section class="d-sez d-frase">
+      <h2 class="d-margine d-numero" aria-label="Frase 3">03</h2>
+      <div class="d-corpo">
+        <div class="d-banco"><span class="d-cella">
+      
+      <span class="d-forma d-da-fare"  lang="la">Tunc</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      
+    </span><span class="d-cella">
+      
+      <span class="d-forma d-da-fare"  lang="la">fauce</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      
+    </span><span class="d-cella">
+      
+      <span class="d-forma d-da-fare"  lang="la">improba</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      
+    </span><span class="d-cella">
+      
+      <span class="d-forma d-da-fare"  lang="la">latro</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      
+    </span><span class="d-cella">
+      
+      <span class="d-forma d-da-fare"  lang="la">incitatus</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      
+    </span><span class="d-cella">
+      
+      <span class="d-forma d-da-fare"  lang="la">iurgii</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      
+    </span><span class="d-cella">
+      
+      <span class="d-forma d-da-fare"  lang="la">causam</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      
+    </span><span class="d-cella">
+      
+      <span class="d-forma d-da-fare"  lang="la">intulit</span>
+      <span class="d-sotto">
+        <span class="d-pos" >—</span>
+        
+        
+        
+      </span>
+      
+    </span><span class="d-cella d-cella-p"><span class="d-forma">.</span><span class="d-sotto"></span></span></div>
+        <table class="d-parole">
+    <thead><tr><th class="d-n">n.</th><th>Forma</th><th>Analisi</th><th>Lemma</th><th>Significato</th></tr></thead>
+    <tbody><tr >
+        <td class="d-n">1</td>
+        <td class="d-forma-tav" lang="la">Tunc</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">2</td>
+        <td class="d-forma-tav" lang="la">fauce</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">3</td>
+        <td class="d-forma-tav" lang="la">improba</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">4</td>
+        <td class="d-forma-tav" lang="la">latro</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">5</td>
+        <td class="d-forma-tav" lang="la">incitatus</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">6</td>
+        <td class="d-forma-tav" lang="la">iurgii</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">7</td>
+        <td class="d-forma-tav" lang="la">causam</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr><tr >
+        <td class="d-n">8</td>
+        <td class="d-forma-tav" lang="la">intulit</td>
+        <td><span class="d-manca">da analizzare</span></td>
+        <td lang="la" class="d-lemma-tav"></td>
+        <td></td>
+      </tr></tbody>
+  </table>
+  
+        
+        
+        
+      </div>
+    </section>
+
+  <section class="d-sez d-traduzione">
+    <h2 class="d-margine">La traduzione</h2>
+    <div class="d-corpo"><p class="d-resa d-bella">Al medesimo ruscello erano giunti un lupo e un agnello.</p></div>
+  </section>
+
+  <section class="d-sez">
+    <h2 class="d-margine">Lessico</h2>
+    <div class="d-corpo"><ul class="d-lessico"><li><b lang="la">lupus, -i</b> <i>sostantivo</i> · il lupo</li></ul></div>
+  </section>
+
+  <section class="d-sez">
+    <h2 class="d-margine">Legenda</h2>
+    <div class="d-corpo"><div class="d-legenda">
+    <div><p class="d-etichetta">Parti del discorso · il filetto sotto la parola</p>
+      <ul><li><span class="d-campione d-campione-pos" data-pos="sostantivo"></span>sostantivo</li></ul></div>
+    <div><p class="d-etichetta">Sintagmi · il filo sotto, nel colore del caso</p>
+      <ul><li><span class="d-campione d-caso-nom"></span>nominativo</li></ul></div>
+    <div><p class="d-etichetta">Proposizioni · il filo sopra</p>
+      <ul><li><span class="d-campione-linea d-prop-principale"></span>principale</li></ul></div>
+    <div><p class="d-etichetta">Morfemi</p>
+      <ul><li><span class="d-m d-m-t">abc</span> tema</li><li><span class="d-m d-m-d">abc</span> desinenza</li></ul></div>
+  </div></div>
+  </section>
+
+  <footer class="d-piede">Analisi di Anna Rossi · Translatio · Poetrify · 27 novembre 2026</footer>
+</article>
+<script type="application/json" id="translatio-dati">{
+ "formato": "translatio",
+ "schema": 2,
+ "versione": {
+  "id": "vmwze8exq6kw3",
+  "schema": 2,
+  "app": "translatio",
+  "lingua": "latino",
+  "titolo": "Il lupo e l’agnello",
+  "autore": "Fedro, Fabulae I 1, 1-5",
+  "testo": "Ad rivum eundem lupus et agnus venerant, siti compulsi. Superior stabat lupus, longeque inferior agnus. Tunc fauce improba latro incitatus iurgii causam intulit.",
+  "corte": false,
+  "frasi": [
+   {
+    "id": "fmwze8exqcea2",
+    "testo": "Ad rivum eundem lupus et agnus venerant, siti compulsi.",
+    "parole": {
+     "2": {
+      "pos": "sostantivo",
+      "tratti": {
+       "caso": "nom",
+       "numero": "sg",
+       "genere": "m"
+      },
+      "lemma": "lupus, -i",
+      "senso": "il lupo",
+      "morfemi": [
+       {
+        "t": "eun",
+        "r": "t"
+       },
+       {
+        "t": "dem",
+        "r": "d"
+       }
+      ]
+     }
+    },
+    "sintagmi": [
+     {
+      "id": "smwze8fkcbe9r",
+      "da": 2,
+      "a": 2,
+      "funzione": "Soggetto"
+     }
+    ],
+    "proposizioni": [
+     {
+      "id": "pmwze8fqbjqmh",
+      "da": 0,
+      "a": 5,
+      "ruolo": "Principale",
+      "tipo": "Enunciativa",
+      "grado": 1
+     }
+    ],
+    "brutta": "Allo stesso ruscello il lupo e l’agnello erano venuti.",
+    "bella": "Al medesimo ruscello erano giunti un lupo e un agnello."
+   },
+   {
+    "id": "fmwze8exqlzws",
+    "testo": "Superior stabat lupus, longeque inferior agnus.",
+    "parole": {},
+    "sintagmi": [],
+    "proposizioni": [],
+    "brutta": "",
+    "bella": ""
+   },
+   {
+    "id": "fmwze8exq7szn",
+    "testo": "Tunc fauce improba latro incitatus iurgii causam intulit.",
+    "parole": {},
+    "sintagmi": [],
+    "proposizioni": [],
+    "brutta": "",
+    "bella": ""
+   }
+  ],
+  "posizione": {
+   "frase": 0,
+   "lente": "resa"
+  },
+  "consegna": {
+   "studente": "Anna Rossi",
+   "classe": "III B",
+   "data": "2026-11-27",
+   "docente": "",
+   "includi": {
+    "grafica": true,
+    "parole": true,
+    "morfemi": true,
+    "costruzione": true,
+    "brutta": true,
+    "bella": true,
+    "traduzione": true,
+    "lessico": true,
+    "legenda": true
+   }
+  },
+  "creata": "2026-11-27T19:47:48.254Z",
+  "modificata": "2026-11-27T19:47:50.040Z"
+ }
+}</script>
+</body>
+</html>
